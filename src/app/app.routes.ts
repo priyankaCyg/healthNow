@@ -20,7 +20,7 @@ import { AppAccessdeniedComponent } from './pages/app.accessdenied.component';
 import { AppLoginComponent } from './pages/app.login.component';
 
 export const routes: Routes = [
-    { path: '', component: AppMainComponent,
+    { path: 'app', component: AppMainComponent,
         children: [
             { path: '', component: DashboardDemoComponent },
             { path: 'components/sample', component: SampleDemoComponent },
@@ -40,7 +40,7 @@ export const routes: Routes = [
     {path: 'error', component: AppErrorComponent},
     {path: 'accessdenied', component: AppAccessdeniedComponent},
     {path: 'notfound', component: AppNotfoundComponent},
-    {path: 'login', component: AppLoginComponent},
+    {path: '', component: AppLoginComponent},
     {path: '**', redirectTo: '/notfound'},
 
 ];
