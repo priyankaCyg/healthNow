@@ -13,27 +13,27 @@ export class AppMenuComponent implements OnInit {
 
     ngOnInit() {
         this.model = [
-            {label: 'Dashboard', icon: 'pi pi-fw pi-home', routerLink: ['/']},
+            {label: 'Dashboard', icon: 'pi pi-fw pi-home', routerLink: ['/app']},
             {
                 label: 'Components', icon: 'pi pi-fw pi-star', routerLink: ['/components'],
                 items: [
-                    { label: 'Sample Page', icon: 'pi pi-fw pi-th-large', routerLink: ['/components/sample']},
-                    { label: 'Forms', icon: 'pi pi-fw pi-file', routerLink: ['/components/forms'] },
-                    { label: 'Data', icon: 'pi pi-fw pi-table', routerLink: ['/components/data'] },
-                    { label: 'Panels', icon: 'pi pi-fw pi-list', routerLink: ['/components/panels'] },
-                    { label: 'Overlays', icon: 'pi pi-fw pi-clone', routerLink: ['/components/overlays'] },
-                    { label: 'Menus', icon: 'pi pi-fw pi-plus', routerLink: ['/components/menus'] },
-                    { label: 'Messages', icon: 'pi pi-fw pi-envelope', routerLink: ['/components/messages'] },
+                    { label: 'Sample Page', icon: 'pi pi-fw pi-th-large', routerLink: ['/app/components/sample']},
+                    { label: 'Forms', icon: 'pi pi-fw pi-file', routerLink: ['/app/components/forms'] },
+                    { label: 'Data', icon: 'pi pi-fw pi-table', routerLink: ['/app/components/data'] },
+                    { label: 'Panels', icon: 'pi pi-fw pi-list', routerLink: ['/app/components/panels'] },
+                    { label: 'Overlays', icon: 'pi pi-fw pi-clone', routerLink: ['/app/components/overlays'] },
+                    { label: 'Menus', icon: 'pi pi-fw pi-plus', routerLink: ['/app/components/menus'] },
+                    { label: 'Messages', icon: 'pi pi-fw pi-envelope', routerLink: ['/app/components/messages'] },
                     { label: 'Charts', icon: 'pi pi-fw pi-chart-bar', routerLink: ['/components/charts'] },
-                    { label: 'File', icon: 'pi pi-fw pi-upload', routerLink: ['/components/file'] },
-                    { label: 'Misc', icon: 'pi pi-fw pi-spinner', routerLink: ['/components/misc'] }
+                    { label: 'File', icon: 'pi pi-fw pi-upload', routerLink: ['/app/components/file'] },
+                    { label: 'Misc', icon: 'pi pi-fw pi-spinner', routerLink: ['/app/components/misc'] }
                 ]
             },
             {
                 label: 'Pages', icon: 'pi pi-fw pi-copy', routerLink: ['/pages'],
                 items: [
                     { label: 'Empty', icon: 'pi pi-fw pi-clone', routerLink: ['/pages/empty'] },
-                    { label: 'Login', icon: 'pi pi-fw pi-sign-in', routerLink: ['/login'], target: '_blank' },
+                    { label: 'Login', icon: 'pi pi-fw pi-sign-in', routerLink: ['/'], target: '_blank' },
                     { label: 'Landing', icon: 'pi pi-fw pi-globe', url: 'assets/pages/landing.html', target: '_blank' },
                     { label: 'Error', icon: 'pi pi-fw pi-exclamation-triangle', routerLink: ['/error'], target: '_blank' },
                     { label: '404', icon: 'pi pi-fw pi-times', routerLink: ['/404'], target: '_blank' },
