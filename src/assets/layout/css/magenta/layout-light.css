@@ -285,7 +285,7 @@ body {
   padding: 0;
   margin: 0;
   min-height: 100%;
-  background-color: #eceff4;
+  background-color: #f7fafe;
 }
 body .ajax-loader {
   font-size: 32px;
@@ -688,7 +688,7 @@ body.hidden-overflow {
     color: #ffffff;
   }
   .layout-wrapper.layout-sidebar-mobile-active .layout-topbar .layout-topbar-wrapper .layout-topbar-left .sidebar-menu-button:hover {
-    background-color: #BD69AE;
+    background-color: #76256e;
     -moz-transition: background-color 0.15s;
     -o-transition: background-color 0.15s;
     -webkit-transition: background-color 0.15s;
@@ -870,8 +870,8 @@ body.hidden-overflow {
     margin: 0 10px;
   }
   .layout-wrapper.layout-horizontal .layout-topbar .layout-topbar-logo-wrapper .layout-topbar-logo img {
-    height: 45px;
-    width: 45px;
+    height: 40px;
+    width: auto;
   }
 }
 .layout-menu-light .layout-sidebar {
@@ -896,10 +896,10 @@ body.hidden-overflow {
   outline: none;
 }
 .layout-menu-light .layout-sidebar .layout-menu li > a.active-menuitem-routerlink .menuitem-text {
-  color: #BD69AE;
+  color: #76256e;
 }
 .layout-menu-light .layout-sidebar .layout-menu li > a.active-menuitem-routerlink i {
-  color: #BD69AE;
+  color: #76256e;
 }
 .layout-menu-light .layout-sidebar .layout-menu > li > a .menuitem-text {
   color: #2e3440;
@@ -911,7 +911,7 @@ body.hidden-overflow {
   background-color: #f4f4f4;
 }
 .layout-menu-light .layout-sidebar .layout-menu > li.active-menuitem > a {
-  background-color: #BD69AE;
+  background-color: #76256e;
 }
 .layout-menu-light .layout-sidebar .layout-menu > li.active-menuitem > a .menuitem-text {
   color: #ffffff;
@@ -920,7 +920,7 @@ body.hidden-overflow {
   color: #ffffff;
 }
 .layout-menu-light .layout-sidebar .layout-menu > li.active-menuitem > a.active-menuitem-routerlink {
-  background-color: #BD69AE;
+  background-color: #76256e;
 }
 .layout-menu-light .layout-sidebar .layout-menu > li.active-menuitem > a.active-menuitem-routerlink .menuitem-text {
   color: #ffffff;
@@ -941,20 +941,20 @@ body.hidden-overflow {
   background-color: #f4f4f4;
 }
 .layout-menu-light .layout-sidebar .layout-menu > li ul li.active-menuitem > a .menuitem-text {
-  color: #BD69AE;
+  color: #76256e;
 }
 .layout-menu-light .layout-sidebar .layout-menu > li ul li.active-menuitem > a i {
-  color: #BD69AE;
+  color: #76256e;
 }
 @media (min-width: 992px) {
   .layout-menu-light.layout-horizontal .layout-sidebar {
     background-color: #ffffff;
   }
   .layout-menu-light.layout-horizontal .layout-sidebar .layout-menu li > a.active-menuitem-routerlink .menuitem-text {
-    color: #BD69AE;
+    color: #76256e;
   }
   .layout-menu-light.layout-horizontal .layout-sidebar .layout-menu li > a.active-menuitem-routerlink i {
-    color: #BD69AE;
+    color: #76256e;
   }
   .layout-menu-light.layout-horizontal .layout-sidebar .layout-menu > li > a .menuitem-text {
     color: #2e3440;
@@ -966,7 +966,7 @@ body.hidden-overflow {
     background-color: #f4f4f4;
   }
   .layout-menu-light.layout-horizontal .layout-sidebar .layout-menu > li.active-menuitem > a {
-    background-color: #BD69AE;
+    background-color: #76256e;
   }
   .layout-menu-light.layout-horizontal .layout-sidebar .layout-menu > li.active-menuitem > a .menuitem-text {
     color: #ffffff;
@@ -987,10 +987,10 @@ body.hidden-overflow {
     background-color: #f4f4f4;
   }
   .layout-menu-light.layout-horizontal .layout-sidebar .layout-menu > li ul li.active-menuitem > a .menuitem-text {
-    color: #BD69AE;
+    color: #76256e;
   }
   .layout-menu-light.layout-horizontal .layout-sidebar .layout-menu > li ul li.active-menuitem > a i {
-    color: #BD69AE;
+    color: #76256e;
   }
 }
 
@@ -1031,7 +1031,7 @@ body.hidden-overflow {
   background-color: #4c566a;
 }
 .layout-menu-dark .layout-sidebar .layout-menu > li.active-menuitem > a {
-  background-color: #BD69AE;
+  background-color: #76256e;
 }
 .layout-menu-dark .layout-sidebar .layout-menu > li.active-menuitem > a .menuitem-text {
   color: #ffffff;
@@ -1040,7 +1040,7 @@ body.hidden-overflow {
   color: #ffffff;
 }
 .layout-menu-dark .layout-sidebar .layout-menu > li.active-menuitem > a.active-menuitem-routerlink {
-  background-color: #BD69AE;
+  background-color: #76256e;
 }
 .layout-menu-dark .layout-sidebar .layout-menu > li.active-menuitem > a.active-menuitem-routerlink .menuitem-text {
   color: #ffffff;
@@ -1086,7 +1086,7 @@ body.hidden-overflow {
     background-color: #4c566a;
   }
   .layout-menu-dark.layout-horizontal .layout-sidebar .layout-menu > li.active-menuitem > a {
-    background-color: #BD69AE;
+    background-color: #76256e;
   }
   .layout-menu-dark.layout-horizontal .layout-sidebar .layout-menu > li.active-menuitem > a .menuitem-text {
     color: #ffffff;
@@ -6297,7 +6297,7 @@ body.hidden-overflow {
   vertical-align: middle;
 }
 .layout-topbar .layout-topbar-wrapper .layout-topbar-left .layout-megamenu-button:hover, .layout-topbar .layout-topbar-wrapper .layout-topbar-left .layout-megamenu-button:focus {
-  background-color: #BD69AE;
+  background-color: #76256e;
   color: #ffffff;
 }
 .layout-topbar .layout-topbar-wrapper .layout-topbar-left .layout-megamenu {
@@ -6323,7 +6323,7 @@ body.hidden-overflow {
 .layout-topbar .layout-topbar-wrapper .layout-topbar-left .layout-megamenu:before {
   width: 100%;
   height: 6px;
-  background-color: #BD69AE;
+  background-color: #76256e;
   content: " ";
   -moz-border-radius-topleft: 2px;
   -webkit-border-top-left-radius: 2px;
@@ -6385,10 +6385,10 @@ body.hidden-overflow {
   color: #a3be8c;
 }
 .layout-topbar .layout-topbar-wrapper .layout-topbar-left .layout-megamenu > li > ul > li:hover i {
-  color: #BD69AE;
+  color: #76256e;
 }
 .layout-topbar .layout-topbar-wrapper .layout-topbar-left .layout-megamenu > li > ul > li:hover > span h3 {
-  color: #BD69AE;
+  color: #76256e;
   -moz-transition: color 0.15s;
   -o-transition: color 0.15s;
   -webkit-transition: color 0.15s;
@@ -6445,7 +6445,7 @@ body.hidden-overflow {
   font-size: 30px;
 }
 .layout-topbar .layout-topbar-wrapper .layout-topbar-right .layout-topbar-actions > li > a:hover i, .layout-topbar .layout-topbar-wrapper .layout-topbar-right .layout-topbar-actions > li > a:focus i {
-  color: #BD69AE;
+  color: #76256e;
   -moz-transition: color 0.15s;
   -o-transition: color 0.15s;
   -webkit-transition: color 0.15s;
@@ -6475,7 +6475,7 @@ body.hidden-overflow {
 .layout-topbar .layout-topbar-wrapper .layout-topbar-right .layout-topbar-actions > li > ul:before {
   width: 50px;
   height: 6px;
-  background-color: #BD69AE;
+  background-color: #76256e;
   content: " ";
   -moz-border-radius-topleft: 2px;
   -webkit-border-top-left-radius: 2px;
@@ -6488,7 +6488,7 @@ body.hidden-overflow {
   left: 0px;
 }
 .layout-topbar .layout-topbar-wrapper .layout-topbar-right .layout-topbar-actions > li > ul .layout-submenu-header {
-  background-color: #BD69AE;
+  background-color: #76256e;
   padding: 18px;
   display: block;
 }
@@ -6705,7 +6705,7 @@ body.hidden-overflow {
 .layout-topbar .layout-topbar-wrapper .layout-topbar-right .profile-item > ul:before {
   width: 54px;
   height: 6px;
-  background-color: #BD69AE;
+  background-color: #76256e;
   content: " ";
   -moz-border-radius-topleft: 2px;
   -webkit-border-top-left-radius: 2px;
@@ -6917,7 +6917,7 @@ body.hidden-overflow {
   .layout-wrapper .layout-topbar .layout-topbar-wrapper .layout-topbar-left .sidebar-menu-button:hover i,
 .layout-wrapper .layout-topbar .layout-topbar-wrapper .layout-topbar-left .megamenu-mobile-button:hover i,
 .layout-wrapper .layout-topbar .layout-topbar-wrapper .layout-topbar-left .topbar-menu-mobile-button:hover i {
-    color: #BD69AE;
+    color: #76256e;
     font-size: 26px;
   }
   .layout-wrapper .layout-topbar .layout-topbar-wrapper .layout-topbar-left .layout-topbar-logo-wrapper {
@@ -7058,7 +7058,7 @@ body.hidden-overflow {
     transition: background-color 0.15s;
   }
   .layout-wrapper .layout-topbar .layout-topbar-wrapper .layout-topbar-left .layout-megamenu > li.active-topmenuitem > a {
-    background-color: #BD69AE;
+    background-color: #76256e;
     -moz-transition: background-color 0.15s;
     -o-transition: background-color 0.15s;
     -webkit-transition: background-color 0.15s;
@@ -7105,7 +7105,7 @@ body.hidden-overflow {
     color: #4c566a;
   }
   .layout-wrapper .layout-topbar .layout-topbar-wrapper .layout-topbar-right .layout-topbar-actions > li > a:hover i, .layout-wrapper .layout-topbar .layout-topbar-wrapper .layout-topbar-right .layout-topbar-actions > li > a:focus i {
-    color: #BD69AE;
+    color: #76256e;
     -moz-transition: color 0.15s;
     -o-transition: color 0.15s;
     -webkit-transition: color 0.15s;
@@ -7121,7 +7121,7 @@ body.hidden-overflow {
     display: none;
     width: 100%;
     height: 6px;
-    background-color: #BD69AE;
+    background-color: #76256e;
     content: " ";
     -moz-border-radius-topleft: 2px;
     -webkit-border-top-left-radius: 2px;
@@ -7271,7 +7271,7 @@ body.hidden-overflow {
     color: #ffffff;
   }
   .layout-wrapper.layout-topbar-mobile-active .layout-topbar .layout-topbar-wrapper .layout-topbar-left .topbar-menu-mobile-button:hover {
-    background-color: #BD69AE;
+    background-color: #76256e;
     -moz-transition: background-color 0.15s;
     -o-transition: background-color 0.15s;
     -webkit-transition: background-color 0.15s;
@@ -7305,7 +7305,7 @@ body.hidden-overflow {
     color: #ffffff;
   }
   .layout-wrapper.layout-megamenu-mobile-active .layout-topbar .layout-topbar-wrapper .layout-topbar-left .megamenu-mobile-button:hover {
-    background-color: #BD69AE;
+    background-color: #76256e;
     -moz-transition: background-color 0.15s;
     -o-transition: background-color 0.15s;
     -webkit-transition: background-color 0.15s;
@@ -8875,7 +8875,7 @@ body.hidden-overflow {
 }
 .login-body .login-content .login-panel {
   width: 40%;
-  height: 100vh;
+  height: 75vh;
   text-align: center;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -8886,6 +8886,7 @@ body.hidden-overflow {
   -webkit-box-align: center;
   -ms-flex-align: center;
   align-items: center;
+  margin-top: 50px;
 }
 .login-body .login-content .login-panel .login-panel-content {
   z-index: 100;
@@ -8906,7 +8907,7 @@ body.hidden-overflow {
   align-items: center;
 }
 .login-body .login-content .login-panel .login-panel-content .logo img {
-  width: 80px;
+  width: 281px;
 }
 .login-body .login-content .login-panel .login-panel-content h1 {
   font-size: 42px;
@@ -8992,7 +8993,7 @@ body.hidden-overflow {
   background-image: url("../../images/pages/asset-desert.svg");
 }
 .login-body.layout-light {
-  background-color: #eceff4;
+  background-color: #f7fafe;
 }
 .login-body.layout-light .login-content .night-switch .ui-button {
   color: #5a657c;
@@ -9004,7 +9005,7 @@ body.hidden-overflow {
   display: block;
 }
 .login-body.layout-light .login-content .login-panel {
-  background-color: rgba(216, 222, 233, 0.3);
+   background-color: rgba(238, 249, 188, 0.2) ;/*rgba(245, 250, 221, 0.3) */
 }
 .login-body.layout-light .login-content .login-panel .login-panel-content h1 {
   color: #2e3440;
@@ -9024,7 +9025,7 @@ body.hidden-overflow {
   color: #4c566a;
 }
 .login-body.layout-light .login-content .login-panel .login-panel-content .buttons button, .login-body.layout-light .login-content .login-panel .login-panel-content .buttons a {
-  background-color: #5e81ac;
+  background-color: #76256e;
 }
 .login-body.layout-light .login-content .login-panel .login-panel-content .buttons button.secondary-button, .login-body.layout-light .login-content .login-panel .login-panel-content .buttons a.secondary-button {
   background-color: transparent;
@@ -9754,7 +9755,7 @@ body.hidden-overflow {
   display: none;
   width: 100%;
   height: 13px;
-  background-color: #BD69AE;
+  background-color: #76256e;
   content: " ";
   -moz-border-radius-topleft: 4px;
   -webkit-border-top-left-radius: 4px;

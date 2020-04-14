@@ -113,6 +113,7 @@ import {NodeService} from './demo/service/nodeservice';
 import {BreadcrumbService} from './breadcrumb.service';
 import {MenuService} from './app.menu.service';
 
+
 @NgModule({
     imports: [
         BrowserModule,
@@ -213,7 +214,8 @@ import {MenuService} from './app.menu.service';
         ChartsDemoComponent,
         EmptyDemoComponent,
         FileDemoComponent,
-        DocumentationComponent
+        DocumentationComponent,
+        LoginComponent
     ],
     providers: [
         {provide: LocationStrategy, useClass: HashLocationStrategy},

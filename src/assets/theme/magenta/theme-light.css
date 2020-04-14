@@ -249,8 +249,8 @@ body .ui-splitbutton.success-btn > .ui-button,
 body .ui-button.ui-state-default.ui-button-success,
 body .ui-buttonset.ui-button-success > .ui-button.ui-state-default {
   color: #ffffff;
-  background-color: #99CE6B;
-  border-color: #99CE6B;
+  background-color: #a4bb3a;
+  border-color: #a4bb3a;
 }
 body .success-btn.ui-button:enabled:hover,
 body .success-btn > .ui-button:enabled:hover,
