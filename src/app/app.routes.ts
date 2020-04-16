@@ -19,6 +19,7 @@ import { AppErrorComponent } from './pages/app.error.component';
 import { AppAccessdeniedComponent } from './pages/app.accessdenied.component';
 import { AppLoginComponent } from './pages/app.login.component';
 import { CompanyComponent } from './company/company.component';
+import { AuthGuard } from './services/authguard';
 
 export const routes: Routes = [
     { path: 'app', component: AppMainComponent,
@@ -37,6 +38,11 @@ export const routes: Routes = [
             { path: 'components/file', component: FileDemoComponent },
             { path: 'documentation', component: DocumentationComponent },
             { path: 'company', component: CompanyComponent}
+            {
+                path: "landingPage",
+                loadChildren: "./landing-page/landing-page.module#LandingPageModule",
+                canActivate: [AuthGuard]
+              }
         ]
     },
     {path: 'error', component: AppErrorComponent},
