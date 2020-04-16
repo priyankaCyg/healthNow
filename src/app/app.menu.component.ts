@@ -26,13 +26,15 @@ export class AppMenuComponent implements OnInit {
                     { label: 'Messages', icon: 'pi pi-fw pi-envelope', routerLink: ['/app/components/messages'] },
                     { label: 'Charts', icon: 'pi pi-fw pi-chart-bar', routerLink: ['/components/charts'] },
                     { label: 'File', icon: 'pi pi-fw pi-upload', routerLink: ['/app/components/file'] },
-                    { label: 'Misc', icon: 'pi pi-fw pi-spinner', routerLink: ['/app/components/misc'] }
+                    { label: 'Misc', icon: 'pi pi-fw pi-spinner', routerLink: ['/app/components/misc'] },
+                    { label: 'Landing Page', icon: 'pi pi-fw pi-spinner', routerLink: ['/app/landingPage'] }
+
                 ]
             },
             {
                 label: 'Pages', icon: 'pi pi-fw pi-copy', routerLink: ['/pages'],
                 items: [
-                    { label: 'Empty', icon: 'pi pi-fw pi-clone', routerLink: ['/pages/empty'] },
+                    { label: 'Empty', icon: 'pi pi-fw pi-clone', routerLink: ['/app/pages/empty'] },
                     { label: 'Login', icon: 'pi pi-fw pi-sign-in', routerLink: ['/'], target: '_blank' },
                     { label: 'Landing', icon: 'pi pi-fw pi-globe', url: 'assets/pages/landing.html', target: '_blank' },
                     { label: 'Error', icon: 'pi pi-fw pi-exclamation-triangle', routerLink: ['/error'], target: '_blank' },
