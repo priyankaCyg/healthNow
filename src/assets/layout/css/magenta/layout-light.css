@@ -18,7 +18,7 @@
 }
 .card h1 {
   font-size: 18px;
-  font-weight: 400;
+  font-weight: 500;
   margin: 18px 0;
 }
 .card h1:first-child {
@@ -328,7 +328,12 @@ body.hidden-overflow {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  height: 120px;
+  height: 70px;
+  position:fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  background-size: cover;
 }
 .layout-footer .logo-text {
   display: -webkit-box;
@@ -338,8 +343,8 @@ body.hidden-overflow {
   height: 100%;
 }
 .layout-footer .logo-text img {
-  height: 50px;
-  width: 50px;
+  height: 32px;
+  width: 150px;
 }
 .layout-footer .logo-text .text {
   margin-left: 15px;
@@ -6233,7 +6238,7 @@ body.hidden-overflow {
 }
 
 .layout-topbar {
-  background-color: #eceff4;
+  /* background-color: #eceff4; */
   position: fixed;
   top: 0;
   z-index: 998;
@@ -6941,7 +6946,7 @@ body.hidden-overflow {
   }
   .layout-wrapper .layout-topbar .layout-topbar-wrapper .layout-topbar-left .layout-topbar-logo-wrapper .layout-topbar-logo img {
     height: 45px;
-    width: 45px;
+    width: 188px;
     border: 0 none;
   }
   .layout-wrapper .layout-topbar .layout-topbar-wrapper .layout-topbar-left .layout-megamenu-button {
@@ -7574,7 +7579,7 @@ body.hidden-overflow {
   }
 }
 .layout-breadcrumb {
-  background-color: #d8dee9;
+  background-color: #f2f5f8;
   padding: 10px 30px;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -9027,6 +9032,7 @@ body.hidden-overflow {
 .login-body.layout-light .login-content .login-panel .login-panel-content .buttons button, .login-body.layout-light .login-content .login-panel .login-panel-content .buttons a {
   background-color: #76256e;
 }
+
 .login-body.layout-light .login-content .login-panel .login-panel-content .buttons button.secondary-button, .login-body.layout-light .login-content .login-panel .login-panel-content .buttons a.secondary-button {
   background-color: transparent;
   color: #9199a9;
@@ -9040,7 +9046,7 @@ body.hidden-overflow {
   transition: color 0.15s;
 }
 .login-body.layout-light .login-content .login-panel .login-panel-content .buttons button:enabled:hover, .login-body.layout-light .login-content .login-panel .login-panel-content .buttons a:enabled:hover {
-  background-color: #76a1d6;
+  background-color: #76256e;
   -moz-transition: background-color 0.15s;
   -o-transition: background-color 0.15s;
   -webkit-transition: background-color 0.15s;

@@ -90,6 +90,9 @@ export class AppMenuComponent implements OnInit {
             },
             {
                 label: 'Buy Now', icon: 'pi pi-fw pi-money-bill', url: ['https://www.primefaces.org/store']
+            },
+            {
+                label: 'Company', icon: 'pi pi-fw pi-globe', routerLink: ['/app/company']
             }
         ];
     }
