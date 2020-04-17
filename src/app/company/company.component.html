@@ -6,10 +6,11 @@
                 <p-tabPanel header="General" >
                   <div class="p-grid ui-fluid  p-justify-end">
                  
-                  <div class="p-col-2 text-center mt-1">
-                       <p-button icon="pi pi-fw pi-pencil " label="Edit"></p-button>
+                  <div class="p-col-1 text-center mt-1">
+                       <button (click)="openDialogForGeneraledit()" pButton icon="pi pi-fw pi-pencil" label="Edit"></button>
                   </div>
-                     <div class="p-col-12"> 
+
+                     <div class="p-col-12">
                         <div class="p-grid form-group">
                             <div class="p-col-12 p-md-6 p-lg-3">
                                 <label for="companyName">Company Name</label>
@@ -24,21 +25,85 @@
                                 <input id="legalEntity" type="text" pInputText>
                             </div>
                             <div class="p-col-12 p-md-6 p-lg-3">
-                            <label for="pan">PAN</label>
+                                <label for="pan">PAN</label>
                                 <input id="pan" type="text" pInputText>
+                            </div>
+                        </div>
+                        <div class="separator separator--border-dashed separator--space-sm separator--portlet-fit"></div>
+                        <div class="p-grid form-group">
+                            <div class="p-col-12 p-md-6 p-lg-3">
+                                <label for="website">Website</label>
+                                 <input id="website" type="text" pInputText>
+                             </div>
+                            <div class="p-col-12 p-md-6 p-lg-3">
+                            <label for="telNo1">Tel No.1</label>
+                                <input id="telNo1" type="text" pInputText>
+                            </div>
+                            <div class="p-col-12 p-md-6 p-lg-3">
+                            <label for="telNo2">Tel No.2</label>
+                                <input id="telNo2" type="text" pInputText>
+                            </div>
+                            <div class="p-col-12 p-md-6 p-lg-3">
+                                <label for="fax">Fax</label>
+                                <input id="fax" type="text" pInputText>
                             </div>
                         </div>
                       </div>              
                   </div>  
                 </p-tabPanel>
+                <!-- General tab End here -->
+
                 <p-tabPanel header="Address">
-                    Francis Ford Coppola's legendary continuation and sequel to his landmark 1972 film, The_Godfather parallels the young Vito
-                    Corleone's rise with his son Michael's spiritual fall, deepening The_Godfather's depiction of the dark
-                    side of the American dream. In the early 1900s, the child Vito flees his Sicilian village for America
-                    after the local Mafia kills his family. Vito struggles to make a living, legally or illegally, for his
-                    wife and growing brood in Little Italy, killing the local Black Hand Fanucci after he demands his customary
-                    cut of the tyro's business. With Fanucci gone, Vito's communal stature grows.
+                    <div class="p-grid ui-fluid  p-justify-end">
+                        <div class="p-col-1 text-center mt-1">
+                            <button (click)="openDialogForaddNewAddress()" pButton icon="pi pi-fw pi-plus" label="Add New"></button>
+                            
+                        </div>
+                        <div class="p-col-12"> 
+                            <p-table [value]="address">
+                                <ng-template pTemplate="caption">
+                               
+                                    <div class="ui-table-globalfilter-container text-left">
+                                        <input type="text" pInputText size="50" placeholder="Global Filter" (input)="dt.filterGlobal($event.target.value, 'contains')" style="width:250px;">
+                                    </div>
+                                </ng-template>
+                                <ng-template pTemplate="header">
+                                    <tr>
+                                        <th>Address Type</th>
+                                        <th>Address 1</th>
+                                        <th>Address 2</th>
+                                        <th>State</th>
+                                        <th>City</th>
+                                        <th>Landmark</th>
+                                        <th>Tel No. 1</th>
+                                        <th>Tel No. 2</th>
+                                        <th>FAX</th>
+                                        <th>Status</th>
+                                        <th colspan="2">Action</th>
+                                    </tr>
+                                </ng-template>
+                                <ng-template pTemplate="body" let-address>
+                                    <tr>
+                                        <td>{{address.addresstype}}</td>
+                                        <td>{{address.address1}}</td>
+                                        <td>{{address.address2}}</td>
+                                        <td>{{address.state}}</td>
+                                        <td>{{address.city}}</td>
+                                        <td>{{address.landmark}}</td>
+                                        <td>{{address.tel1}}</td>
+                                        <td>{{address.tel2}}</td>
+                                        <td>{{address.fax}}</td>
+                                        <td>{{address.status}}</td>
+                                        <td><button pButton type="button" class="ui-button-success" icon="pi pi-pencil" style="margin-right: .5em"></button></td>
+                                         <td><button pButton type="button" class="ui-button-danger" icon="pi pi-trash"></button></td>
+                                    </tr>
+                                </ng-template>
+                            </p-table>
+                        </div>
+                    </div>
                 </p-tabPanel>
+            <!-- Address tab End here -->
+                
                 <p-tabPanel header="Department">
                     After a break of more than 15 years, director Francis Ford Coppola and writer Mario Puzo returned to the well for this third
                     and final story of the fictional Corleone crime family. Two decades have passed, and crime kingpin Michael
@@ -75,3 +140,5 @@
         </div>
     </div>
 </div>
+
+

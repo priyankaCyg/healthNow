@@ -37,7 +37,7 @@ export class AuthGuard implements CanActivate,CanActivateChild {
         // if(this._loginService.isLoggednIn()){
         //     return true;
         // }else{
-        //     this.myRoute.navigate(["login"], { queryParams: { returnUrl: state.url } });
+        //     this.myRoute.navigate(["/"], { queryParams: { returnUrl: state.url } });
         //     return false;
         // }
     }
