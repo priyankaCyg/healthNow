@@ -37,7 +37,7 @@ export const routes: Routes = [
             { path: 'components/charts', component: ChartsDemoComponent },
             { path: 'components/file', component: FileDemoComponent },
             { path: 'documentation', component: DocumentationComponent },
-            { path: 'company', component: CompanyComponent}
+            { path: 'company', component: CompanyComponent},
             {
                 path: "landingPage",
                 loadChildren: "./landing-page/landing-page.module#LandingPageModule",

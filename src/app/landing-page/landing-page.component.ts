@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { BreadcrumbService } from '../breadcrumb.service';
 import { CountryService } from '../demo/service/countryservice';
 import { SelectItem, MenuItem } from 'primeng/api';
+import { ToastService } from '../services/toast.service';
 
 @Component({
   selector: 'app-landing-page',
@@ -56,7 +57,7 @@ export class LandingPageComponent implements OnInit {
 
   color: string;
 
-  constructor(private countryService: CountryService,private breadcrumbService: BreadcrumbService) {
+  constructor(private toastService: ToastService,private countryService: CountryService,private breadcrumbService: BreadcrumbService) {
     this.breadcrumbService.setItems([
         { label: 'App' },
         { label: 'landingPage', routerLink: ['/app/landingPage'] }
@@ -65,6 +66,8 @@ export class LandingPageComponent implements OnInit {
 
   ngOnInit(): void {
     
+    this.toastService.addSingle("success", "Role Updated", "");
+
     this.carOptions = [];
     this.carOptions.push({ label: 'Audi', value: 'Audi' });
     this.carOptions.push({ label: 'BMW', value: 'BMW' });

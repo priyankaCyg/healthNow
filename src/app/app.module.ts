@@ -118,6 +118,8 @@ import {BreadcrumbService} from './breadcrumb.service';
 import {MenuService} from './app.menu.service';
 import { CompanyComponent } from './company/company.component';
 
+// Prime NG
+import { MessageService } from 'primeng/api';
 
 @NgModule({
     imports: [
@@ -225,6 +227,7 @@ import { CompanyComponent } from './company/company.component';
     providers: [
         AuthGuard,
         httpInterceptorProviders,
+        MessageService,
         {provide: LocationStrategy, useClass: HashLocationStrategy},
         CarService, CountryService, EventService, NodeService, BreadcrumbService, MenuService,
         LoginService
