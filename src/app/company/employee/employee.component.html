@@ -1,0 +1,94 @@
+<div class="p-grid ui-fluid">
+        <div class="p-col-12"> 
+            <div class="p-grid form-group">
+             <div class="p-col-12 p-md-6 p-lg-3">
+                    <label for="employeeCode">Employee Code</label>
+                    <input id="employeeCode" type="text" pInputText>
+             </div>
+            <div class="p-col-12 p-md-6 p-lg-3">
+                    <label for="firstName">First Name</label>
+                    <input id="firstName" type="text" pInputText>
+             </div>
+             <div class="p-col-12 p-md-6 p-lg-3">
+                    <label for="middleName">Middle Name</label>
+                    <input id="middleName" type="text" pInputText>
+             </div>
+              <div class="p-col-12 p-md-6 p-lg-3">
+                    <label for="lasteName">Last Name</label>
+                    <input id="lasteName" type="text" pInputText>
+             </div>
+            </div>
+            <div class="p-grid form-group">
+                <div class="p-col-12 p-md-6 p-lg-3">
+                    <label for="gender">Gender</label>
+                    <p-dropdown [options]="gender" [(ngModel)]="selectedgender"></p-dropdown>
+                </div>
+
+                <div class="p-col-12 p-md-6 p-lg-6">
+                    <label for="address">Address</label>
+                    <p-dropdown id="address" [options]="status" [(ngModel)]="selectedstatus"></p-dropdown>
+                </div>
+                <div class="p-col-12 p-md-6 p-lg-3">
+                    <label for="emailId">Email ID</label>
+                    <input id="emailId" type="text" pInputText>
+                </div>
+                
+            </div>
+            <div class="separator separator--border-dashed separator--space-sm separator--portlet-fit"></div>
+            <div class="p-grid form-group">
+                <div class="p-col-12 p-md-6 p-lg-3">
+                    <label for="mobile">Mobile No.</label>
+                    <input id="mobile" type="text" pInputText>
+                </div>
+                <div class="p-col-12 p-md-6 p-lg-3">
+                    <label for="contact">Contact No.</label>
+                    <input id="contact" type="text" pInputText>
+                </div>
+                <div class="p-col-12 p-md-6 p-lg-3">
+                    <label for="directNo">Direct No.</label>
+                    <input id="directNo" type="text" pInputText>
+                </div>
+                <div class="p-col-12 p-md-6 p-lg-3">
+                    <label for="landmark">Landmark</label>
+                    <input id="landmark" type="text" pInputText>
+                </div>
+            </div>
+
+            <div class="separator separator--border-dashed separator--space-sm separator--portlet-fit"></div>
+    
+            <div class="p-grid form-group">
+                <div class="p-col-12 p-md-6 p-lg-3">
+                    <label for="department">Department</label>
+                    <p-dropdown id="department" [options]="department" [(ngModel)]="selecteddepartment"></p-dropdown>
+                </div>
+                <div class="p-col-12 p-md-6 p-lg-3">
+                    <label for="designation">Designation</label>
+                    <p-dropdown id="designation" [options]="designation" [(ngModel)]="selecteddesignation"></p-dropdown>
+                </div>
+                <div class="p-col-12 p-md-6 p-lg-3">
+                    <label for="reportingTo">Reporting To</label>
+                    <p-dropdown id="reportingTo" [options]="reportingTo" [(ngModel)]="selectedreportingTo"></p-dropdown>
+                </div>
+                <div class="p-col-12 p-md-6 p-lg-3">
+                    <label for="role">Role</label>
+                    <p-dropdown id="role" [options]="role" [(ngModel)]="selectedrole"></p-dropdown>
+                </div>
+                <div class="p-col-12 p-md-6 p-lg-3">
+                    <label for="status">Status</label>
+                    <p-dropdown id="status" [options]="status" [(ngModel)]="selectedstatus"></p-dropdown>
+                </div>
+    
+            </div>
+            <div class="separator separator--border-solid separator--space-sm separator--portlet-fit"></div>
+            <div class="p-grid form-group ui-fluid p-justify-end">
+                <div class="p-col-12 p-md-2 p-lg-1">
+                    <button pButton type="button" label="Cancel" style="margin-bottom:10px" class="ui-button-light"></button>
+                </div>
+                 <div class="p-col-12 p-md-2 p-lg-1">
+                    <button pButton type="button" label="Save" style="margin-bottom:10px" class="ui-button"></button>
+                </div>
+            </div>
+
+        </div>
+       
+    </div>

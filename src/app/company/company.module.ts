@@ -7,10 +7,15 @@ import { httpInterceptorProviders } from '../interceptors/httpinterceptors';
 import {FormsModule} from '@angular/forms';
 import {GeneralEditComponent} from './general-edit/general-edit.component'
 import { AddNewAddressComponent } from './add-new-address/add-new-address.component';
+import { DepartmentComponent } from './department/department.component';
+import { DesignationComponent } from './designation/designation.component';
+import { EmployeeComponent } from './employee/employee.component';
+import { BankComponent } from './bank/bank.component';
+import { GstComponent } from './gst/gst.component';
 
 //Prime Ng Service
 import { DialogService } from 'primeng';
-
+import {TreeTableModule} from 'primeng/treetable';
 //Prime Ng Module
 import {ButtonModule} from 'primeng/button';
 import {PanelModule} from 'primeng/panel';
@@ -24,8 +29,9 @@ import {InputTextareaModule} from 'primeng/inputtextarea';
 import {InputTextModule} from 'primeng/inputtext';
 
 
+
 @NgModule({
-  declarations: [CompanyComponent,GeneralEditComponent, AddNewAddressComponent],
+  declarations: [CompanyComponent,GeneralEditComponent, AddNewAddressComponent, DepartmentComponent, DesignationComponent, EmployeeComponent, BankComponent, GstComponent],
   imports: [
     CommonModule,
     CompanyRoutingModule,
@@ -39,9 +45,10 @@ import {InputTextModule} from 'primeng/inputtext';
     DialogModule,
     DropdownModule,
     InputTextModule,
-    InputTextareaModule
+    InputTextareaModule,
+    TreeTableModule
   ],
   providers:[httpInterceptorProviders,DialogService],
-  entryComponents:[GeneralEditComponent,AddNewAddressComponent]
+  entryComponents:[GeneralEditComponent,AddNewAddressComponent,DepartmentComponent,DesignationComponent,EmployeeComponent,BankComponent,GstComponent]
 })
 export class CompanyModule { }

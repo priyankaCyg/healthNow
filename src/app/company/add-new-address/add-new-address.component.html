@@ -3,17 +3,17 @@
         <div class="p-col-12"> 
             <div class="p-grid form-group">
                 <div class="p-col-12 p-md-6 p-lg-4">
-                    <label for="companyName">Address Type</label>
-                    <p-dropdown [options]="addressType1" [(ngModel)]="selectedaddressType"></p-dropdown>
+                    <label for="addressType">Address Type</label>
+                    <p-dropdown [options]="addressType" [(ngModel)]="selectedaddressType"></p-dropdown>
                 </div>
                 <div class="p-col-12 p-md-6 p-lg-4">
-                    <label for="shortCode">Address1</label>
-                    <textarea  pInputTextarea autoResize="autoResize"></textarea>
+                    <label for="address1">Address1</label>
+                    <input id="address1" type="text" pInputText>
                     
                 </div>
                 <div class="p-col-12 p-md-6 p-lg-4">
-                    <label for="legalEntity">Address2</label>
-                    <textarea  pInputTextarea autoResize="autoResize"></textarea>
+                    <label for="address2">Address2</label>
+                    <input id="address2" type="text" pInputText>
                 </div>
                 
             </div>
@@ -62,5 +62,16 @@
                 </div>
     
             </div>
+            <div class="separator separator--border-solid separator--space-sm separator--portlet-fit"></div>
+            <div class="p-grid form-group ui-fluid p-justify-end">
+                <div class="p-col-12 p-md-2 p-lg-1">
+                    <button pButton type="button" label="Cancel" style="margin-bottom:10px" class="ui-button-light"></button>
+                </div>
+                 <div class="p-col-12 p-md-2 p-lg-1">
+                    <button pButton type="button" label="Save" style="margin-bottom:10px" class="ui-button"></button>
+                </div>
+            </div>
+
         </div>
-    
+       
+    </div>
