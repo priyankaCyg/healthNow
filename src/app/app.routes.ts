@@ -37,12 +37,8 @@ export const routes: Routes = [
             { path: 'components/charts', component: ChartsDemoComponent },
             { path: 'components/file', component: FileDemoComponent },
             { path: 'documentation', component: DocumentationComponent },
-<<<<<<< HEAD
-            { path: 'company', component: CompanyComponent},
-=======
             // { path: 'company', component: CompanyComponent},
             { path: 'company', loadChildren:"./company/company.module#CompanyModule"},
->>>>>>> 824f526fb4bf9ec1ad3c684d3801f776924b39a4
             {
                 path: "landingPage",
                 loadChildren: "./landing-page/landing-page.module#LandingPageModule",
