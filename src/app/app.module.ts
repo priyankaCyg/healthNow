@@ -116,7 +116,8 @@ import {NodeService} from './demo/service/nodeservice';
 // Application services
 import {BreadcrumbService} from './breadcrumb.service';
 import {MenuService} from './app.menu.service';
-import { CompanyComponent } from './company/company.component';
+// import { CompanyComponent } from './company/company.component';
+// import { GeneralEditComponent } from './company/general-edit/general-edit.component';
 
 // Prime NG
 import { MessageService } from 'primeng/api';
@@ -222,7 +223,8 @@ import { MessageService } from 'primeng/api';
         EmptyDemoComponent,
         FileDemoComponent,
         DocumentationComponent,
-        CompanyComponent,
+        // CompanyComponent,
+        // GeneralEditComponent,
     ],
     providers: [
         AuthGuard,

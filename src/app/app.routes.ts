@@ -18,7 +18,7 @@ import { AppNotfoundComponent } from './pages/app.notfound.component';
 import { AppErrorComponent } from './pages/app.error.component';
 import { AppAccessdeniedComponent } from './pages/app.accessdenied.component';
 import { AppLoginComponent } from './pages/app.login.component';
-import { CompanyComponent } from './company/company.component';
+// import { CompanyComponent } from './company/company.component';
 import { AuthGuard } from './services/authguard';
 
 export const routes: Routes = [
@@ -37,7 +37,12 @@ export const routes: Routes = [
             { path: 'components/charts', component: ChartsDemoComponent },
             { path: 'components/file', component: FileDemoComponent },
             { path: 'documentation', component: DocumentationComponent },
+<<<<<<< HEAD
             { path: 'company', component: CompanyComponent},
+=======
+            // { path: 'company', component: CompanyComponent},
+            { path: 'company', loadChildren:"./company/company.module#CompanyModule"},
+>>>>>>> 824f526fb4bf9ec1ad3c684d3801f776924b39a4
             {
                 path: "landingPage",
                 loadChildren: "./landing-page/landing-page.module#LandingPageModule",

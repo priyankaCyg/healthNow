@@ -167,9 +167,7 @@
   box-shadow: 0 19px 38px rgba(0, 0, 0, 0.3), 0 15px 12px rgba(0, 0, 0, 0.22);
 }
 
-.ui-g {
-  -ms-flex-wrap: wrap;
-}
+
 .ui-g.form-group > div {
   padding: 12px 16px;
 }
@@ -6236,9 +6234,8 @@ body.hidden-overflow {
     color: #88C0D0;
   }
 }
-
 .layout-topbar {
-  /* background-color: #eceff4; */
+  background-color: #f7fafe;
   position: fixed;
   top: 0;
   z-index: 998;
@@ -10297,3 +10294,4 @@ body.hidden-overflow {
   }
 }
 /* Add your customizations of layout here */
+
