@@ -5,6 +5,7 @@ import { SelectItem, MenuItem } from 'primeng/api';
 import {GenrelEditComponent} from './generalEdit/generalEdit.component'
 import { GeneratedFile } from '@angular/compiler';
 import { DialogService } from 'primeng';
+import {ToastService} from '../services/toast.service'
 
 @Component({
   selector: 'app-landing-page',
@@ -16,7 +17,8 @@ export class LandingPageComponent implements OnInit {
     items: MenuItem[];
   
 
-  constructor(private countryService: CountryService,private breadcrumbService: BreadcrumbService,private dialogService: DialogService,) {
+  constructor(private countryService: CountryService,private breadcrumbService: BreadcrumbService,
+    private dialogService: DialogService,private toastService:ToastService) {
     this.breadcrumbService.setItems([
         { label: 'App' },
         { label: 'landingPage', routerLink: ['/app/landingPage'] }
@@ -24,7 +26,8 @@ export class LandingPageComponent implements OnInit {
 }
 
   ngOnInit(): void {
-    
+    // alert("Hi")
+
      this.items = [
             { label: 'Angular.io', icon: 'pi pi-external-link', url: 'http://angular.io' },
             { label: 'Theming', icon: 'pi pi-file', routerLink: ['/theming'] }
@@ -33,6 +36,8 @@ export class LandingPageComponent implements OnInit {
 
 
   openDialogForMail() {
+    this.toastService.addSingle("info", "Info Message", "PrimeNG rocks");
+
     const ref = this.dialogService.open(GenrelEditComponent, {
       data: {
       },
