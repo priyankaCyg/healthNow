@@ -34,8 +34,8 @@ import {AppMainComponent} from './app.main.component';
 						<ul class="layout-megamenu" [ngClass]="{'layout-megamenu-active fadeInDown': app.megaMenuActive}"
                             (click)="app.onMegaMenuClick($event)">
 							<li [ngClass]="{'active-topmenuitem': activeItem === 1}" (click)="mobileMegaMenuItemClick(1)">
-								<a routerLink="./app/company">Company <i class="pi pi-angle-down"></i></a>
-								<ul>
+								<a >Company <i class="pi pi-angle-down"></i></a>
+								<ul routerLink="/app/company">
 									<li class="active-row ">
 										<i class="pi pi-circle-on"></i>
 										<span>
