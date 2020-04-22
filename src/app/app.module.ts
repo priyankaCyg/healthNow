@@ -121,6 +121,7 @@ import {MenuService} from './app.menu.service';
 
 // Prime NG
 import { MessageService } from 'primeng/api';
+import { ProductComponent } from './product/product.component';
 
 @NgModule({
     imports: [
@@ -223,6 +224,7 @@ import { MessageService } from 'primeng/api';
         EmptyDemoComponent,
         FileDemoComponent,
         DocumentationComponent,
+        ProductComponent
         // CompanyComponent,
         // GeneralEditComponent,
     ],
