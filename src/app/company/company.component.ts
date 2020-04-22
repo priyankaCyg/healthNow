@@ -12,6 +12,7 @@ import { GstComponent } from './gst/gst.component';
 import { GeneratedFile } from '@angular/compiler';
 import { DialogService } from 'primeng';
 import { from } from 'rxjs';
+import {APIService} from '../services/apieservice';
 
 @Component({
   selector: 'app-company',
@@ -34,7 +35,8 @@ export class CompanyComponent implements OnInit {
 
     gst: any[];
 
-    constructor(private breadcrumbService: BreadcrumbService, private dialogService:DialogService) {
+    constructor(private breadcrumbService: BreadcrumbService, private dialogService:DialogService,
+      private apiService:APIService) {
         this.breadcrumbService.setItems([
             { label: 'Dashboard' },
             { label: 'Company', routerLink: ['/app/company'] }
@@ -105,6 +107,13 @@ export class CompanyComponent implements OnInit {
           {state: 'Maharashtra', gst1: '27AACCC1130A1ZL', status: 'Active'},
           {state: 'Haryana', gst1: '4243453STt06', status: 'Active'}
         ];
+
+        // this.apiService.getDetails()
+
+        // this.apiService.getDetails().then(files => {
+        //   this.employee = files
+        // });
+
       
     }
 
@@ -181,6 +190,7 @@ export class CompanyComponent implements OnInit {
     openDialogForBank() {
       const ref = this.dialogService.open( BankComponent , {
         data: {
+          roleId:"123"
         },
         header: 'Add New Bank',
         width: '50%'
