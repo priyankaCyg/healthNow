@@ -48,20 +48,20 @@ import {AppMainComponent} from './app.main.component';
 							<li [ngClass]="{'active-topmenuitem': activeItem === 2}" (click)="mobileMegaMenuItemClick(2)">
 								<a href="#">Product <i class="pi pi-angle-down"></i></a>
 								<ul>
-									<li>
+									<li routerLink="/app/product-category">
 										<i class="pi pi-circle-on"></i>
 										<span>
                                         <h3>Product Category</h3>
                                     </span>
 
 									</li>
-									<li>
+									<li routerLink="/app/producer">
 										<i class="pi pi-circle-on"></i>
 										<span>
                                         <h3>Producer</h3>
                                     </span>
 									</li>
-									<li>
+									<li routerLink="/app/product">
 										<i class="pi pi-circle-on"></i>
 										<span>
                                         <h3>Product</h3>
