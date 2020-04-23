@@ -14,6 +14,7 @@ import { DialogService } from 'primeng';
 import { from } from 'rxjs';
 import { ApiService } from '../services/api.service';
 import { departmentData } from '../model/department';
+import { gstData } from '../model/gst';
 
 @Component({
   selector: 'app-company',
@@ -34,10 +35,11 @@ export class CompanyComponent implements OnInit {
 
   bank: any[];
 
-  gst: any[];
+  gst: gstData[];
 
   constructor(private breadcrumbService: BreadcrumbService, private dialogService: DialogService,
-    private _apiService: ApiService) {
+    private _apiService: ApiService
+  ) {
     this.breadcrumbService.setItems([
       { label: 'Dashboard' },
       { label: 'Company', routerLink: ['/app/company'] }
@@ -73,19 +75,7 @@ export class CompanyComponent implements OnInit {
     //   {departmentName: 'HR', status: 'Active'}
     // ];
 
-    const department_data =
-    {
-      "iRequestID": 2055,
-      "iCID": 1
-    };
-    this._apiService.callPostApi(department_data).subscribe(
-      data => {
-        console.log(data);
-        this.department = data;
-
-      },
-      error => console.log(error)
-    );
+    this.departmentList();
 
     this.designation = [
       { designationName: 'CFO', designationLevel: '2', status: 'Active' },
@@ -118,10 +108,25 @@ export class CompanyComponent implements OnInit {
       { bankName: 'KOTAK MAHINDRA BANK', accounttype: 'KMBL/ CA', accountNo: '06402000000484', IFSC: 'KKBK0000640', bankBranch: 'PAREL', status: 'Active' }
     ];
 
-    this.gst = [
-      { state: 'Maharashtra', gst1: '27AACCC1130A1ZL', status: 'Active' },
-      { state: 'Haryana', gst1: '4243453STt06', status: 'Active' }
-    ];
+    // this.gst = [
+    //   { state: 'Maharashtra', gst1: '27AACCC1130A1ZL', status: 'Active' },
+    //   { state: 'Haryana', gst1: '4243453STt06', status: 'Active' }
+    // ];
+    const gst_data =
+    {
+
+      "iRequestID": 2063,
+      "iCID": 1
+
+    };
+    this._apiService.callPostApi(gst_data).subscribe(
+      data => {
+        console.log(data);
+        this.gst = data;
+
+      },
+      error => console.log(error)
+    );
 
   }
 
@@ -168,12 +173,10 @@ export class CompanyComponent implements OnInit {
     });
   }
 
-  openDialogForeditDepartment() {
+  openDialogForeditDepartment(department) {
     const ref = this.dialogService.open(DepartmentComponent, {
-      data: {
-        iDeptID: ""
-
-      },
+      data:
+        department,
       header: 'Edit Department',
       width: '28%'
     });
@@ -185,10 +188,49 @@ export class CompanyComponent implements OnInit {
     });
   }
 
+  departmentList() {
+    const department_data =
+    {
+      "iRequestID": 2055,
+      "iCID": 1
+    };
+    this._apiService.callPostApi(department_data).subscribe(
+      data => {
+        console.log(data);
+        this.department = data;
 
-  // selectEmployee(departmentdata: departmentData) {
-  //   this.departmentdata = Object.assign({}, departmentdata);
-  // }
+      },
+      error => console.log(error)
+    );
+  }
+
+
+  deleteService(department: departmentData) {
+
+    let dep_id = department.iDeptID;
+    let delete_data_api = {
+
+      "iRequestID": 2054,
+      "iCID": 1,
+      "iDeptID": dep_id
+    };
+    this._apiService.callPostApi(delete_data_api).subscribe(
+      data => {
+        console.log(data);
+
+      },
+      error => console.log(error)
+    );
+
+    // this._apiService.callPostApi(delete_data_api).subscribe((data) => {
+    //   if (data.success) {
+    //     //this.department = this.department.filter((c) => c !== department);
+    //   }
+    // });
+    // console.log("delete");
+
+
+  }
 
   openDialogForDesignation() {
     const ref = this.dialogService.open(DesignationComponent, {
@@ -237,6 +279,20 @@ export class CompanyComponent implements OnInit {
       data: {
       },
       header: 'Add New GST',
+      width: '28%'
+    });
+
+    ref.onClose.subscribe((success: boolean) => {
+      if (success) {
+        // this.toastService.addSingle("success", "Mail send successfully", "");
+      }
+    });
+  }
+
+  openDialogForEditGST(gst) {
+    const ref = this.dialogService.open(GstComponent, {
+      data: gst,
+      header: 'Edit GST',
       width: '28%'
     });
 

@@ -7,8 +7,8 @@
 
                 <div class="p-col-12">
                     <label for="departmentname">Department Name</label>
-                    <input id="departmentid" class="form-control" type="text" formControlName="departmentname"
-                        pInputText editable="true">
+                    <input id="departmentname" class="form-control" type="text" formControlName="departmentname"
+                        pInputText editable="true" required>
                 </div>
 
                 <div class="p-col-12">
@@ -19,7 +19,8 @@
                 <div class="p-col-12">
                     <label for="status">Status</label>
                     <p-dropdown id="status" class="form-control" [options]="seldepartmentStatus"
-                        formControlName="depstatus" optionLabel="sKVValue" editable="true" placeholder="select">
+                        formControlName="depstatus" optionLabel="sKVValue" editable="true" placeholder="select"
+                        required>
                     </p-dropdown>
                 </div>
 
@@ -32,7 +33,8 @@
                         class="ui-button-light"></button>
                 </div>
                 <div class="p-col-12 p-md-3 p-lg-3">
-                    <button pButton type="submit" label="Save" style="margin-bottom:10px" class="ui-button"></button>
+                    <button pButton type="submit" label="Save" [disabled]="!DepartmentSubmit.valid"
+                        style="margin-bottom:10px" class="ui-button"></button>
                 </div>
             </div>
 
