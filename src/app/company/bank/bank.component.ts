@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+// import {DynamicDialogConfig} from ''
+
+import {DynamicDialogConfig} from 'primeng/dynamicdialog';
 
 @Component({
   selector: 'app-bank',
@@ -7,9 +10,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class BankComponent implements OnInit {
 
-  constructor() { }
+  constructor(public config: DynamicDialogConfig) { }
 
   ngOnInit(): void {
+
+    alert(this.config.data.roleId)
   }
 
 }

@@ -122,6 +122,7 @@ import { MenuService } from './app.menu.service';
 // Prime NG
 import { MessageService } from 'primeng/api';
 import { ApiService } from './services/api.service';
+import { ProductComponent } from './product/product.component';
 
 @NgModule({
     imports: [
@@ -224,6 +225,7 @@ import { ApiService } from './services/api.service';
         EmptyDemoComponent,
         FileDemoComponent,
         DocumentationComponent,
+        ProductComponent
         // CompanyComponent,
         // GeneralEditComponent,
     ],

@@ -26,7 +26,83 @@ import {AppMainComponent} from './app.main.component';
 						<i class="pi pi-ellipsis-v"></i>
 					</a>
 
-					
+					<div class="layout-megamenu-wrapper">
+						<a class="layout-megamenu-button" href="#" (click)="app.onMegaMenuButtonClick($event)">
+							<i class="pi pi-comment"></i>
+							Master
+						</a>
+						<ul class="layout-megamenu" [ngClass]="{'layout-megamenu-active fadeInDown': app.megaMenuActive}"
+                            (click)="app.onMegaMenuClick($event)">
+							<li [ngClass]="{'active-topmenuitem': activeItem === 1}" (click)="mobileMegaMenuItemClick(1)">
+								<a >Company <i class="pi pi-angle-down"></i></a>
+								<ul routerLink="/app/company">
+									<li class="active-row ">
+										<i class="pi pi-circle-on"></i>
+										<span>
+                                        <h3>Company</h3>
+                                    </span>
+									</li>
+									
+								</ul>
+							</li>
+							<li [ngClass]="{'active-topmenuitem': activeItem === 2}" (click)="mobileMegaMenuItemClick(2)">
+								<a href="#">Product <i class="pi pi-angle-down"></i></a>
+								<ul>
+									<li routerLink="/app/product-category">
+										<i class="pi pi-circle-on"></i>
+										<span>
+                                        <h3>Product Category</h3>
+                                    </span>
+
+									</li>
+									<li routerLink="/app/producer">
+										<i class="pi pi-circle-on"></i>
+										<span>
+                                        <h3>Producer</h3>
+                                    </span>
+									</li>
+									<li routerLink="/app/product">
+										<i class="pi pi-circle-on"></i>
+										<span>
+                                        <h3>Product</h3>
+                                    </span>
+									</li>
+									<li>
+										<i class="pi pi-circle-on"></i>
+										<span>
+                                        <h3>Unit</h3>
+                                    </span>
+									</li>
+									<li>
+										<i class="pi pi-circle-on"></i>
+										<span>
+                                        <h3>Product Price</h3>
+                                    </span>
+									</li>
+									
+								</ul>
+							</li>
+							<li [ngClass]="{'active-topmenuitem': activeItem === 3}" (click)="mobileMegaMenuItemClick(3)">
+								<a href="#">React <i class="pi pi-angle-down"></i></a>
+								<ul>
+									<li>
+										<i class="pi pi-circle-on"></i>
+										<span>
+                                        <h3>PrimeReact</h3>
+                                        <span>UI Components for React</span>
+                                    </span>
+									</li>
+									<li class="active-row">
+										<i class="pi pi-circle-on"></i>
+										<span>
+                                        <h3>Premium Templates</h3>
+                                        <span>UI Components for React</span>
+                                    </span>
+									</li>
+								</ul>
+							</li>
+						</ul>
+					</div>
                 </div>
                 <div class="layout-topbar-right fadeInDown">
 					<ul class="layout-topbar-actions">

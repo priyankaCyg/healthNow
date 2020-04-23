@@ -113,7 +113,7 @@ export class AppMenuitemComponent implements OnInit, OnDestroy {
         this.key = this.parentKey ? this.parentKey + '-' + this.index : String(this.index);
         // Changes done by Priyanka for Horizontal Menu
                 this.app.sidebarActive = false;
-                this.app.horizontalMenu = true;
+                this.app.horizontalMenu = false;
     }
 
     updateActiveStateFromRoute() {

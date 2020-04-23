@@ -1,0 +1,267 @@
+<div class="p-grid">
+    <div class="p-col-12">
+        <div class="card card-w-title">
+            <h1>Product</h1>
+            <p-tabView>
+                <p-tabPanel header="Product" >
+                  <div class="p-grid ui-fluid  p-justify-end">
+                 
+                  <div class="p-col-1 text-center mt-1">
+                       <button (click)="openDialogForaddProduct()" pButton icon="pi pi-fw pi-pencil" label="Add New"></button>
+                  </div>
+
+                  <div class="p-col-12"> 
+                    <p-table [value]="product">
+                        <ng-template pTemplate="caption">
+                       
+                            <div class="ui-table-globalfilter-container text-left">
+                                <input type="text" pInputText size="50" placeholder="Search" (input)="dt.filterGlobal($event.target.value, 'contains')" style="width:250px;">
+                            </div>
+                        </ng-template>
+                        <ng-template pTemplate="header">
+                            <tr>
+                                <th>#</th>
+                                <th>Product Category</th>
+                                <th>Product Code</th>
+                                <th>Product Name</th>
+                                <th>Short Description</th>
+                                <th>Unit</th>
+                                <th>Veg</th>
+                                <th>Producer</th>
+                                <th>Status</th>
+                                <th colspan="2">Action</th>
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="body" let-product>
+                            <tr>
+                                <td>{{product.srNo}}</td>
+                                <td>{{product.address1}}</td>
+                                <td>{{product.address2}}</td>
+                                <td>{{product.state}}</td>
+                                <td>{{product.city}}</td>
+                                <td>{{product.landmark}}</td>
+                                <td>{{product.tel1}}</td>
+                                <td>{{product.tel2}}</td>
+                                <td>{{product.fax}}</td>
+                                <td>{{product.status}}</td>
+                                <td><button pButton type="button" class="ui-button-success" icon="pi pi-pencil" style="margin-right: .5em"></button></td>
+                                 <td><button pButton type="button" class="ui-button-danger" icon="pi pi-trash"></button></td>
+                            </tr>
+                        </ng-template>
+                    </p-table>
+                </div>             
+                  </div>  
+                </p-tabPanel>
+                <!-- Product tab End here -->
+
+                <p-tabPanel header="Product Image">
+                    <div class="p-grid ui-fluid p-justify-end">
+                        <div class="p-col-1 text-center mt-1">
+                            <button (click)="openDialogForaddProductImage()" pButton icon="pi pi-fw pi-plus" label="Add New"></button>
+                            
+                        </div>
+                        <div class="p-col-12"> 
+                            <p-table [value]="productImage">
+                                <ng-template pTemplate="caption">
+                               
+                                    <div class="ui-table-globalfilter-container text-left">
+                                        <input type="text" pInputText size="50" placeholder="Search" (input)="dt.filterGlobal($event.target.value, 'contains')" style="width:250px;">
+                                    </div>
+                                </ng-template>
+                                <ng-template pTemplate="header">
+                                    <tr>
+                                        <th>Address Type</th>
+                                        <th>Address 1</th>
+                                        <th>Address 2</th>
+                                        <th>State</th>
+                                        <th>City</th>
+                                        <th>Landmark</th>
+                                        <th>Tel No. 1</th>
+                                        <th>Tel No. 2</th>
+                                        <th>FAX</th>
+                                        <th>Status</th>
+                                        <th colspan="2">Action</th>
+                                    </tr>
+                                </ng-template>
+                                <ng-template pTemplate="body" let-productImage>
+                                    <tr>
+                                        <td>{{productImage.addresstype}}</td>
+                                        <td>{{productImage.address1}}</td>
+                                        <td>{{productImage.address2}}</td>
+                                        <td>{{productImage.state}}</td>
+                                        <td>{{productImage.city}}</td>
+                                        <td>{{productImage.landmark}}</td>
+                                        <td>{{productImage.tel1}}</td>
+                                        <td>{{productImage.tel2}}</td>
+                                        <td>{{productImage.fax}}</td>
+                                        <td>{{productImage.status}}</td>
+                                        <td><button pButton type="button" class="ui-button-success" icon="pi pi-pencil" style="margin-right: .5em"></button></td>
+                                         <td><button pButton type="button" class="ui-button-danger" icon="pi pi-trash"></button></td>
+                                    </tr>
+                                </ng-template>
+                            </p-table>
+                        </div>
+                    </div>
+                </p-tabPanel>
+            <!-- Product Image tab End here -->
+                
+                <p-tabPanel header="Product Variant">
+                    <div class="p-grid ui-fluid p-justify-end">
+                        <div class="p-col-1 text-center mt-1">
+                            <button (click)="openDialogForProductVariant()" pButton icon="pi pi-fw pi-plus" label="Add New"></button>
+                            
+                        </div>
+                        <div class="p-col-12"> 
+                            <p-table [value]="productVariant">
+                                <ng-template pTemplate="caption">
+                               
+                                    <div class="ui-table-globalfilter-container text-left">
+                                        <input type="text" pInputText size="50" placeholder="Search" (input)="dt.filterGlobal($event.target.value, 'contains')" style="width:250px;">
+                                    </div>
+                                </ng-template>
+                                <ng-template pTemplate="header">
+                                    <tr>
+                                        <th>Department Name</th>
+                                        <th>Status</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </ng-template>
+                                <ng-template pTemplate="body" let-productVariant>
+                                    <tr>
+                                        <td>{{department.departmentName}}</td>
+                                        <td>{{department.status}}</td>
+                                        <td><button pButton type="button" class="ui-button-success" icon="pi pi-pencil" style="margin-right: .5em"></button>
+                                         <button pButton type="button" class="ui-button-danger" icon="pi pi-trash"></button></td>
+                                    </tr>
+                                </ng-template>
+                            </p-table>
+                        </div>
+                    </div>
+                </p-tabPanel>
+                <!-- Product Variant tab End here -->
+
+                <p-tabPanel header="Product Info">
+                    <div class="p-grid ui-fluid p-justify-end">
+                        <div class="p-col-1 text-center mt-1">
+                            <button (click)="openDialogForProductInfo()" pButton icon="pi pi-fw pi-plus" label="Add New"></button>
+                            
+                        </div>
+                        <div class="p-col-12"> 
+                            <p-table [value]="productInfo">
+                                <ng-template pTemplate="caption">
+                               
+                                    <div class="ui-table-globalfilter-container text-left">
+                                        <input type="text" pInputText size="50" placeholder="Search" (input)="dt.filterGlobal($event.target.value, 'contains')" style="width:250px;">
+                                    </div>
+                                </ng-template>
+                                <ng-template pTemplate="header">
+                                    <tr>
+                                        <th>Designation Name</th>
+                                        <th>Designation Level</th>
+                                        <th>Status</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </ng-template>
+                                <ng-template pTemplate="body" let-productInfo>
+                                    <tr>
+                                        <td>{{designation.designationName}}</td>
+                                        <td>{{designation.designationLevel}}</td>
+                                        <td>{{designation.status}}</td>
+                                        <td><button pButton type="button" class="ui-button-success" icon="pi pi-pencil" style="margin-right: .5em"></button></td>
+                                    </tr>
+                                </ng-template>
+                            </p-table>
+                        </div>
+                    </div>
+                </p-tabPanel>
+                <!-- Product Info tab End here -->
+                <p-tabPanel header="Product Description">
+                    <div class="p-grid ui-fluid p-justify-end">
+                        <div class="p-col-1 text-center mt-1">
+                            <button (click)="openDialogForProductDesc()" pButton icon="pi pi-fw pi-plus" label="Add New"></button>
+                            
+                        </div>
+                        <div class="p-col-12"> 
+                            <p-table [value]="productDesc">
+                                <ng-template pTemplate="header">
+                                    <tr>
+                                        <th>Employee Code</th>
+                                        <th>First Name</th>
+                                        <th>Middle Name</th>
+                                        <th>Last Name</th>
+                                        <th>Department</th>
+                                        <th>Designation</th>
+                                        <th>Reporting To</th>
+                                        <th>Status</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </ng-template>
+                                <ng-template pTemplate="body" let-productDesc>
+                                    <tr>
+                                            <td>{{employee.employeeCode}}</td>
+                                            <td>{{employee.firstName}}</td>
+                                            <td>{{employee.middleName}}</td>
+                                            <td>{{employee.lastName}}</td>
+                                            <td>{{employee.department}}</td>
+                                            <td>{{employee.designation}}</td>
+                                            <td>{{employee.reportingTo}}</td>
+                                            <td>{{employee.status}}</td>
+                                            <td>
+                                                <button pButton type="button" class="ui-button-success" icon="pi pi-pencil" style="margin-right: .5em"></button>
+                                                <button pButton type="button" class="ui-button-danger" icon="pi pi-trash"></button>
+                                            </td>
+                                    </tr>
+                                </ng-template>
+                            </p-table>
+
+
+
+                           
+                        </div>
+                    </div>
+                </p-tabPanel>
+                <!-- Description tab End here -->
+                <p-tabPanel header="Product Queries">
+                    <div class="p-grid ui-fluid p-justify-end">
+                        <div class="p-col-1 text-center mt-1">
+                            <button (click)="openDialogForProductQueries()" pButton icon="pi pi-fw pi-plus" label="Add New"></button>
+                        </div>
+                        <div class="p-col-12"> 
+                            <p-table [value]="bank">
+                                <ng-template pTemplate="productQueries">
+                                    <tr>
+                                        <th>Bank Name</th>
+                                        <th>Short Code/Account Type</th>
+                                        <th>Account No.</th>
+                                        <th>IFSC</th>
+                                        <th>Bank Branch</th>
+                                        <th>Status</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </ng-template>
+                                <ng-template pTemplate="body" let-productQueries>
+                                    <tr>
+                                            <td>{{bank.bankName}}</td>
+                                            <td>{{bank.accounttype}}</td>
+                                            <td>{{bank.accountNo}}</td>
+                                            <td>{{bank.IFSC}}</td>
+                                            <td>{{bank.bankBranch}}</td>
+                                            <td>{{bank.status}}</td>
+                                            <td>
+                                                <button pButton type="button" class="ui-button-success" icon="pi pi-pencil" style="margin-right: .5em"></button>
+                                                <button pButton type="button" class="ui-button-danger" icon="pi pi-trash"></button>
+                                            </td>
+                                    </tr>
+                                </ng-template>
+                            </p-table>
+                        </div>
+                    </div>
+                </p-tabPanel>
+                <!-- ProductQueries tab End here -->
+               
+            </p-tabView>
+        </div>
+    </div>
+</div>
+
+
