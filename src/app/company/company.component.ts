@@ -16,6 +16,8 @@ import { BankData } from "../model/slelectAllBank.model";
 import { ApiService } from "../services/api.service";
 import { ToastService } from "../services/toast.service";
 import { DesignationData } from "../model/selectAllDesignation";
+import { departmentData } from "../model/department";
+import { gstData } from "../model/gst";
 
 @Component({
   selector: "app-company",
@@ -368,6 +370,69 @@ export class CompanyComponent implements OnInit {
     });
   }
 
+  openDialogForeditDepartment(department) {
+    const ref = this.dialogService.open(DepartmentComponent, {
+      data: department,
+      header: "Edit Department",
+      width: "28%",
+    });
+
+    ref.onClose.subscribe((success: boolean) => {
+      if (success) {
+        // this.toastService.addSingle("success", "Mail send successfully", "");
+      }
+    });
+  }
+
+  departmentList() {
+    const department_data = {
+      iRequestID: 2055,
+      iCID: 1,
+    };
+    this.apiService.callPostApi(department_data).subscribe(
+      (data) => {
+        console.log(data);
+        this.department = data;
+      },
+      (error) => console.log(error)
+    );
+  }
+
+  deleteService(department: departmentData) {
+    let dep_id = department.iDeptID;
+    let delete_data_api = {
+      iRequestID: 2054,
+      iCID: 1,
+      iDeptID: dep_id,
+    };
+    this.apiService.callPostApi(delete_data_api).subscribe(
+      (data) => {
+        console.log(data);
+      },
+      (error) => console.log(error)
+    );
+
+    // this._apiService.callPostApi(delete_data_api).subscribe((data) => {
+    //   if (data.success) {
+    //     //this.department = this.department.filter((c) => c !== department);
+    //   }
+    // });
+    // console.log("delete");
+  }
+
+  openDialogForDesignation() {
+    const ref = this.dialogService.open(DesignationComponent, {
+      data: {},
+      header: "Add New Designation",
+      width: "28%",
+    });
+
+    ref.onClose.subscribe((success: boolean) => {
+      if (success) {
+        // this.toastService.addSingle("success", "Mail send successfully", "");
+      }
+    });
+  }
   openDialogForEmployee() {
     const ref = this.dialogService.open(EmployeeComponent, {
       data: {},
@@ -381,7 +446,19 @@ export class CompanyComponent implements OnInit {
       }
     });
   }
+  openDialogForBank() {
+    const ref = this.dialogService.open(BankComponent, {
+      data: {},
+      header: "Add New Bank",
+      width: "50%",
+    });
 
+    ref.onClose.subscribe((success: boolean) => {
+      if (success) {
+        // this.toastService.addSingle("success", "Mail send successfully", "");
+      }
+    });
+  }
   openDialogForGST() {
     const ref = this.dialogService.open(GstComponent, {
       data: {},
@@ -396,49 +473,30 @@ export class CompanyComponent implements OnInit {
     });
   }
 
-  bankSelectData() {
-    const selectBank_data = {
-      iRequestID: 2045,
-      iCID: 1,
-    };
-
-    this.apiService.callPostApi(selectBank_data).subscribe(
-      (data) => {
-        console.log(data);
-        this.bankData = data;
-
-        console.log(this.bankData);
-      },
-      (error) => console.log(error)
-    );
-  }
-
-  openDialogForBank() {
-    const ref = this.dialogService.open(BankComponent, {
-      data: {},
-      header: "Add New Bank",
-      width: "50%",
+  updateDesig(desig) {
+    const ref = this.dialogService.open(DesignationComponent, {
+      data: desig,
+      header: "Edit Designation",
+      width: "28%",
     });
 
     ref.onClose.subscribe((success: boolean) => {
-      this.bankSelectData();
+      this.designationSelectData();
       if (success) {
         // this.toastService.addSingle("success", "Record Added successfully", "");
       }
     });
   }
-
-  updateBank(bank) {
-    const ref = this.dialogService.open(BankComponent, {
-      data: bank,
-      header: "Edit Bank",
-      width: "50%",
+  openDialogForEditGST(gst) {
+    const ref = this.dialogService.open(GstComponent, {
+      data: gst,
+      header: "Edit GST",
+      width: "28%",
     });
 
     ref.onClose.subscribe((success: boolean) => {
-      this.bankSelectData();
       if (success) {
-        // this.toastService.addSingle("success", "Record Added successfully", "");
+        // this.toastService.addSingle("success", "Mail send successfully", "");
       }
     });
   }
@@ -477,33 +535,35 @@ export class CompanyComponent implements OnInit {
     );
   }
 
-  openDialogForDesignation() {
-    const ref = this.dialogService.open(DesignationComponent, {
-      data: {},
-      header: "Add New Designation",
-      width: "28%",
+  updateBank(bank) {
+    const ref = this.dialogService.open(BankComponent, {
+      data: bank,
+      header: "Edit Bank",
+      width: "50%",
     });
 
     ref.onClose.subscribe((success: boolean) => {
-      this.designationSelectData();
-      if (success) {
-        // this.toastService.addSingle("success", "Mail send successfully", "");
-      }
-    });
-  }
-
-  updateDesig(desig) {
-    const ref = this.dialogService.open(DesignationComponent, {
-      data: desig,
-      header: "Edit Designation",
-      width: "28%",
-    });
-
-    ref.onClose.subscribe((success: boolean) => {
-      this.designationSelectData();
+      this.bankSelectData();
       if (success) {
         // this.toastService.addSingle("success", "Record Added successfully", "");
       }
     });
+  }
+
+  bankSelectData() {
+    const selectBank_data = {
+      iRequestID: 2045,
+      iCID: 1,
+    };
+
+    this.apiService.callPostApi(selectBank_data).subscribe(
+      (data) => {
+        console.log(data);
+        this.bankData = data;
+
+        console.log(this.bankData);
+      },
+      (error) => console.log(error)
+    );
   }
 }

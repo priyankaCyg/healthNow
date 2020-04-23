@@ -1,63 +1,255 @@
 <div class="p-grid">
-  <div class="p-col-12">
-    <div class="card card-w-title">
-      <h1>Company</h1>
-      <p-tabView>
-        <p-tabPanel header="General">
-          <div class="p-grid ui-fluid p-justify-end">
-            <div class="p-col-1 text-center mt-1">
-              <button
-                (click)="openDialogForGeneraledit()"
-                pButton
-                icon="pi pi-fw pi-pencil"
-                label="Edit"
-              ></button>
-            </div>
+    <div class="p-col-12">
+        <div class="card card-w-title">
+            <h1>Company</h1>
+            <p-tabView>
+                <p-tabPanel header="General">
+                    <div class="p-grid ui-fluid  p-justify-end">
 
-            <div class="p-col-12">
-              <div class="p-grid form-group">
-                <div class="p-col-12 p-md-6 p-lg-3">
-                  <label for="companyName">Company Name</label>
-                  <input id="companyName" type="text" pInputText />
-                </div>
-                <div class="p-col-12 p-md-6 p-lg-3">
-                  <label for="shortCode">Short Code</label>
-                  <input id="shortCode" type="text" pInputText />
-                </div>
-                <div class="p-col-12 p-md-6 p-lg-3">
-                  <label for="legalEntity">Legal Entity</label>
-                  <input id="legalEntity" type="text" pInputText />
-                </div>
-                <div class="p-col-12 p-md-6 p-lg-3">
-                  <label for="pan">PAN</label>
-                  <input id="pan" type="text" pInputText />
-                </div>
-              </div>
-              <div
-                class="separator separator--border-dashed separator--space-sm separator--portlet-fit"
-              ></div>
-              <div class="p-grid form-group">
-                <div class="p-col-12 p-md-6 p-lg-3">
-                  <label for="website">Website</label>
-                  <input id="website" type="text" pInputText />
-                </div>
-                <div class="p-col-12 p-md-6 p-lg-3">
-                  <label for="telNo1">Tel No.1</label>
-                  <input id="telNo1" type="text" pInputText />
-                </div>
-                <div class="p-col-12 p-md-6 p-lg-3">
-                  <label for="telNo2">Tel No.2</label>
-                  <input id="telNo2" type="text" pInputText />
-                </div>
-                <div class="p-col-12 p-md-6 p-lg-3">
-                  <label for="fax">Fax</label>
-                  <input id="fax" type="text" pInputText />
-                </div>
-              </div>
-            </div>
-          </div>
-        </p-tabPanel>
-        <!-- General tab End here -->
+                        <div class="p-col-1 text-center mt-1">
+                            <button (click)="openDialogForGeneraledit()" pButton icon="pi pi-fw pi-pencil"
+                                label="Edit"></button>
+                        </div>
+
+                        <div class="p-col-12">
+                            <div class="p-grid form-group">
+                                <div class="p-col-12 p-md-6 p-lg-3">
+                                    <label for="companyName">Company Name</label>
+                                    <input id="companyName" type="text" pInputText>
+                                </div>
+                                <div class="p-col-12 p-md-6 p-lg-3">
+                                    <label for="shortCode">Short Code</label>
+                                    <input id="shortCode" type="text" pInputText>
+                                </div>
+                                <div class="p-col-12 p-md-6 p-lg-3">
+                                    <label for="legalEntity">Legal Entity</label>
+                                    <input id="legalEntity" type="text" pInputText>
+                                </div>
+                                <div class="p-col-12 p-md-6 p-lg-3">
+                                    <label for="pan">PAN</label>
+                                    <input id="pan" type="text" pInputText>
+                                </div>
+                            </div>
+                            <div class="separator separator--border-dashed separator--space-sm separator--portlet-fit">
+                            </div>
+                            <div class="p-grid form-group">
+                                <div class="p-col-12 p-md-6 p-lg-3">
+                                    <label for="website">Website</label>
+                                    <input id="website" type="text" pInputText>
+                                </div>
+                                <div class="p-col-12 p-md-6 p-lg-3">
+                                    <label for="telNo1">Tel No.1</label>
+                                    <input id="telNo1" type="text" pInputText>
+                                </div>
+                                <div class="p-col-12 p-md-6 p-lg-3">
+                                    <label for="telNo2">Tel No.2</label>
+                                    <input id="telNo2" type="text" pInputText>
+                                </div>
+                                <div class="p-col-12 p-md-6 p-lg-3">
+                                    <label for="fax">Fax</label>
+                                    <input id="fax" type="text" pInputText>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </p-tabPanel>
+                <!-- General tab End here -->
+
+                <p-tabPanel header="Address">
+                    <div class="p-grid ui-fluid p-justify-end">
+                        <div class="p-col-1 text-center mt-1">
+                            <button (click)="openDialogForaddNewAddress()" pButton icon="pi pi-fw pi-plus"
+                                label="Add New"></button>
+
+                        </div>
+                        <div class="p-col-12">
+                            <p-table [value]="address">
+                                <ng-template pTemplate="caption">
+
+                                    <div class="ui-table-globalfilter-container text-left">
+                                        <input type="text" pInputText size="50" placeholder="Search"
+                                            (input)="dt.filterGlobal($event.target.value, 'contains')"
+                                            style="width:250px;">
+                                    </div>
+                                </ng-template>
+                                <ng-template pTemplate="header">
+                                    <tr>
+                                        <th>Address Type</th>
+                                        <th>Address 1</th>
+                                        <th>Address 2</th>
+                                        <th>State</th>
+                                        <th>City</th>
+                                        <th>Landmark</th>
+                                        <th>Tel No. 1</th>
+                                        <th>Tel No. 2</th>
+                                        <th>FAX</th>
+                                        <th>Status</th>
+                                        <th colspan="2">Action</th>
+                                    </tr>
+                                </ng-template>
+                                <ng-template pTemplate="body" let-address>
+                                    <tr>
+                                        <td>{{address.addresstype}}</td>
+                                        <td>{{address.address1}}</td>
+                                        <td>{{address.address2}}</td>
+                                        <td>{{address.state}}</td>
+                                        <td>{{address.city}}</td>
+                                        <td>{{address.landmark}}</td>
+                                        <td>{{address.tel1}}</td>
+                                        <td>{{address.tel2}}</td>
+                                        <td>{{address.fax}}</td>
+                                        <td>{{address.status}}</td>
+                                        <td><button pButton type="button" class="ui-button-success" icon="pi pi-pencil"
+                                                style="margin-right: .5em"></button></td>
+                                        <td><button pButton type="button" class="ui-button-danger"
+                                                icon="pi pi-trash"></button></td>
+                                    </tr>
+                                </ng-template>
+                            </p-table>
+                        </div>
+                    </div>
+                </p-tabPanel>
+                <!-- Address tab End here -->
+
+                <p-tabPanel header="Department">
+                    <div class="p-grid ui-fluid p-justify-end">
+                        <div class="p-col-1 text-center mt-1">
+                            <button (click)="openDialogForaddDepartment()" pButton icon="pi pi-fw pi-plus"
+                                label="Add New"></button>
+
+                        </div>
+                        <div class="p-col-12">
+                            <p-table #dt [value]="department" [rowHover]="true"
+                                [globalFilterFields]="['sDeptName','iStatusID']">
+                                <ng-template pTemplate="caption">
+
+                                    <div class="ui-table-globalfilter-container text-left">
+                                        <input type="text" pInputText size="50" placeholder="Search"
+                                            (input)="dt.filterGlobal($event.target.value, 'contains')"
+                                            style="width:250px;">
+                                    </div>
+                                </ng-template>
+                                <ng-template pTemplate="header">
+                                    <tr>
+                                        <th>Department Name</th>
+                                        <th>Status</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </ng-template>
+                                <ng-template pTemplate="body" let-department>
+                                    <tr>
+                                        <td>{{department.sDeptName}}</td>
+                                        <td>
+                                            <button *ngIf="department.iStatusID == 11" pButton type="button"
+                                                class="ui-button-rounded ui-button-success"
+                                                style="width: 100px; height: 25px;">
+                                                Active
+                                            </button>
+                                            <button *ngIf="department.iStatusID == 12" pButton type="button"
+                                                class="ui-button-rounded ui-button-danger"
+                                                style="width: 100px; height: 25px;">
+                                                Inactive
+                                            </button>
+                                            <button *ngIf="department.iStatusID == 13" pButton type="button"
+                                                class="ui-button-rounded ui-button-warning"
+                                                style="width: 100px; height: 25px;">
+                                                Deleted
+                                            </button>
+                                        </td>
+                                        <td><button pButton type="button" class="ui-button-success" icon="pi pi-pencil"
+                                                style="margin-right: .5em"
+                                                (click)="openDialogForeditDepartment(department)"></button>
+                                            <button pButton type="button" class="ui-button-danger" icon="pi pi-trash"
+                                                (click)="deleteService(department)"></button></td>
+                                    </tr>
+                                </ng-template>
+                            </p-table>
+                        </div>
+                    </div>
+                </p-tabPanel>
+
+                <!-- Department tab End here -->
+
+                <p-tabPanel header="Designation">
+                    <div class="p-grid ui-fluid p-justify-end">
+                        <div class="p-col-1 text-center mt-1">
+                            <button (click)="openDialogForDesignation()" pButton icon="pi pi-fw pi-plus"
+                                label="Add New"></button>
+
+                        </div>
+                        <div class="p-col-12">
+                            <p-table [value]="designation">
+                                <ng-template pTemplate="caption">
+
+                                    <div class="ui-table-globalfilter-container text-left">
+                                        <input type="text" pInputText size="50" placeholder="Search"
+                                            (input)="dt.filterGlobal($event.target.value, 'contains')"
+                                            style="width:250px;">
+                                    </div>
+                                </ng-template>
+                                <ng-template pTemplate="header">
+                                    <tr>
+                                        <th>Designation Name</th>
+                                        <th>Designation Level</th>
+                                        <th>Status</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </ng-template>
+                                <ng-template pTemplate="body" let-designation>
+                                    <tr>
+                                        <td>{{designation.designationName}}</td>
+                                        <td>{{designation.designationLevel}}</td>
+                                        <td>{{designation.status}}</td>
+                                        <td><button pButton type="button" class="ui-button-success" icon="pi pi-pencil"
+                                                style="margin-right: .5em"></button></td>
+                                    </tr>
+                                </ng-template>
+                            </p-table>
+                        </div>
+                    </div>
+                </p-tabPanel>
+                <!-- Designation tab End here -->
+                <p-tabPanel header="Employee">
+                    <div class="p-grid ui-fluid p-justify-end">
+                        <div class="p-col-1 text-center mt-1">
+                            <button (click)="openDialogForEmployee()" pButton icon="pi pi-fw pi-plus"
+                                label="Add New"></button>
+
+                        </div>
+                        <div class="p-col-12">
+                            <p-table [value]="employee">
+                                <ng-template pTemplate="header">
+                                    <tr>
+                                        <th>Employee Code</th>
+                                        <th>First Name</th>
+                                        <th>Middle Name</th>
+                                        <th>Last Name</th>
+                                        <th>Department</th>
+                                        <th>Designation</th>
+                                        <th>Reporting To</th>
+                                        <th>Status</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </ng-template>
+                                <ng-template pTemplate="body" let-employee>
+                                    <tr>
+                                        <td>{{employee.employeeCode}}</td>
+                                        <td>{{employee.firstName}}</td>
+                                        <td>{{employee.middleName}}</td>
+                                        <td>{{employee.lastName}}</td>
+                                        <td>{{employee.department}}</td>
+                                        <td>{{employee.designation}}</td>
+                                        <td>{{employee.reportingTo}}</td>
+                                        <td>{{employee.status}}</td>
+                                        <td>
+                                            <button pButton type="button" class="ui-button-success" icon="pi pi-pencil"
+                                                style="margin-right: .5em"></button>
+                                            <button pButton type="button" class="ui-button-danger"
+                                                icon="pi pi-trash"></button>
+                                        </td>
+                                    </tr>
+                                </ng-template>
+                            </p-table>
 
         <p-tabPanel header="Address">
           <div class="p-grid ui-fluid p-justify-end">
@@ -490,7 +682,7 @@
             </div>
           </div>
         </p-tabPanel>
-      </p-tabView>
+      <!-- </p-tabView> -->
     </div>
   </div>
-</div>
+<!-- </div> -->

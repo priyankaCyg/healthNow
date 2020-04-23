@@ -19,6 +19,7 @@ import { AppErrorComponent } from './pages/app.error.component';
 import { AppAccessdeniedComponent } from './pages/app.accessdenied.component';
 import { AppLoginComponent } from './pages/app.login.component';
 // import { CompanyComponent } from './company/company.component';
+
 import { AuthGuard } from './services/authguard';
 
 export const routes: Routes = [
@@ -43,7 +44,10 @@ export const routes: Routes = [
                 path: "landingPage",
                 loadChildren: "./landing-page/landing-page.module#LandingPageModule",
                 canActivate: [AuthGuard]
-              }
+              },
+
+              { path: 'product-category', loadChildren:"./product-category/product-category.module#ProductCategoryModule"},
+              { path: 'producer', loadChildren:"./producer/producer.module#ProducerModule"}
         ]
     },
     {path: 'error', component: AppErrorComponent},

@@ -845,7 +845,7 @@ body.hidden-overflow {
   }
   .layout-wrapper.layout-horizontal .layout-main {
     margin-left: 0px;
-    padding-top: 125px;
+    padding-top: 65px;
   }
   .layout-wrapper.layout-horizontal .layout-topbar {
     width: 100%;
@@ -6278,7 +6278,7 @@ body.hidden-overflow {
   display: none;
 }
 .layout-topbar .layout-topbar-wrapper .layout-topbar-left .layout-megamenu-button {
-  padding: 8px;
+  padding: 8px 20px;
   -moz-border-radius: 4px;
   -webkit-border-radius: 4px;
   border-radius: 4px;

@@ -1,0 +1,88 @@
+<div class="p-grid">
+                <div class="p-col-12">
+                    <div class="card card-w-title">
+                        <h1>Producer</h1>
+                        <p-tabView> 
+                            <p-tabPanel header="Producer">
+                                <div class="p-grid ui-fluid p-justify-end">
+                                    <div class="p-col-1 text-center mt-1">
+                                        <button (click)="openDialogForaddProducer()" pButton icon="pi pi-fw pi-plus" label="Add New"></button>
+                                        
+                                    </div>
+                                    <div class="p-col-12"> 
+                                        <p-table [value]="producer">
+                                            <ng-template pTemplate="caption">
+                                        
+                                                <div class="ui-table-globalfilter-container text-left">
+                                                    <input type="text" pInputText size="50" placeholder="Search" (input)="dt.filterGlobal($event.target.value, 'contains')" style="width:250px;">
+                                                </div>
+                                            </ng-template>
+                                            <ng-template pTemplate="header">
+                                                <tr>
+                                                    <th>Producer Name</th>
+                                                    <th>Cuntry</th>
+                                                    <th>Status</th>
+                                                    <th>Action</th>
+                                                </tr>
+                                            </ng-template>
+                                            <ng-template pTemplate="body" let-producer>
+                                                <tr>
+                                                    <td>{{producer.producerName}}</td>
+                                                    <td>{{producer.cuntry}}</td>
+                                                    <td>{{producer.status}}</td>
+                                                    <td>
+                                                        <button pButton type="button" class="ui-button-success" icon="pi pi-pencil" style="margin-right: .5em"></button>
+                                                    <button pButton type="button" class="ui-button-danger" icon="pi pi-trash"></button></td>
+                                                </tr>
+                                            </ng-template>
+                                        </p-table>
+                                    </div>
+                                </div>
+                            </p-tabPanel>
+                            <!-- Producer tab End here -->
+
+                            <p-tabPanel header="Brand">
+                                <div class="p-grid ui-fluid p-justify-end">
+                                    <div class="p-col-1 text-center mt-1">
+                                        <button (click)="openDialogForBrand()" pButton icon="pi pi-fw pi-plus" label="Add New"></button>
+                                        
+                                    </div>
+                                    <div class="p-col-12"> 
+                                        <p-table [value]="brand">
+                                            <ng-template pTemplate="caption">
+                                        
+                                                <div class="ui-table-globalfilter-container text-left">
+                                                    <input type="text" pInputText size="50" placeholder="Search" (input)="dt.filterGlobal($event.target.value, 'contains')" style="width:250px;">
+                                                </div>
+                                            </ng-template>
+                                            <ng-template pTemplate="header">
+                                                <tr>
+                                                    <th>Brand Name</th>
+                                                    <th>Short Code</th>
+                                                    <th>Status</th>
+                                                    <th>Action</th>
+                                                </tr>
+                                            </ng-template>
+                                            <ng-template pTemplate="body" let-brand>
+                                                <tr>
+                                                    <td>{{brand.brandName}}</td>
+                                                    <td>{{brand.shortCode}}</td>
+                                                    <td>{{brand.status}}</td>
+                                                    <td>
+                                                        <button pButton type="button" class="ui-button-success" icon="pi pi-pencil" style="margin-right: .5em"></button>
+                                                        <button pButton type="button" class="ui-button-danger" icon="pi pi-trash"></button>
+                                                    </td>
+                                                </tr>
+                                            </ng-template>
+                                        </p-table>
+                                    </div>
+                                </div>
+                            </p-tabPanel>
+                            <!-- Designation tab End here -->
+                        
+                        </p-tabView>
+                    </div>
+                </div>
+ </div>
+        
+
