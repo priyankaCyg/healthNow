@@ -138,29 +138,29 @@
                                 </ng-template>
                                 <ng-template pTemplate="body" let-department>
                                     <tr>
-                                        <td>{{department.sDeptName}}</td>
-                                        <td>
-                                            <button *ngIf="department.iStatusID == 11" pButton type="button"
+                                        <td style="text-align: center;">{{department.sDeptName}}</td>
+                                        <td style="text-align: center;">
+                                            <button *ngIf="department.iStatusID == 1" pButton type="button"
                                                 class="ui-button-rounded ui-button-success"
                                                 style="width: 100px; height: 25px;">
                                                 Active
                                             </button>
-                                            <button *ngIf="department.iStatusID == 12" pButton type="button"
+                                            <button *ngIf="department.iStatusID == 2" pButton type="button"
                                                 class="ui-button-rounded ui-button-danger"
                                                 style="width: 100px; height: 25px;">
                                                 Inactive
                                             </button>
-                                            <button *ngIf="department.iStatusID == 13" pButton type="button"
+                                            <button *ngIf="department.iStatusID == 3" pButton type="button"
                                                 class="ui-button-rounded ui-button-warning"
                                                 style="width: 100px; height: 25px;">
                                                 Deleted
                                             </button>
                                         </td>
-                                        <td><button pButton type="button" class="ui-button-success" icon="pi pi-pencil"
-                                                style="margin-right: .5em"
+                                        <td style="text-align: center;"><button pButton type="button"
+                                                class="ui-button-success" icon="pi pi-pencil" style="margin-right: .5em"
                                                 (click)="openDialogForeditDepartment(department)"></button>
                                             <button pButton type="button" class="ui-button-danger" icon="pi pi-trash"
-                                                (click)="deleteService(department)"></button></td>
+                                                (click)="deleteDepartemnt(department)"></button></td>
                                     </tr>
                                 </ng-template>
                             </p-table>
@@ -311,36 +311,36 @@
                                     <tr>
                                         <th>State</th>
                                         <th>GST</th>
-                                        <th>Status</th>
+                                        <!-- <th>Status</th> -->
                                         <th>Action</th>
                                     </tr>
                                 </ng-template>
                                 <ng-template pTemplate="body" let-gst>
                                     <tr>
-                                        <td>{{gst.sStateName}}</td>
-                                        <td>{{gst.sGST}}</td>
-                                        <td>
-                                            <button *ngIf="department.iStatusID == 11" pButton type="button"
+                                        <td style="text-align: center;">{{gst.sStateName}}</td>
+                                        <td style="text-align: center;">{{gst.sGST}}</td>
+                                        <!-- <td style="text-align: center;">
+                                            <button *ngIf="department.iStatusID == 1" pButton type="button"
                                                 class="ui-button-rounded ui-button-success"
                                                 style="width: 100px; height: 25px;">
                                                 Active
                                             </button>
-                                            <button *ngIf="department.iStatusID == 12" pButton type="button"
+                                            <button *ngIf="department.iStatusID == 2" pButton type="button"
                                                 class="ui-button-rounded ui-button-danger"
                                                 style="width: 100px; height: 25px;">
                                                 Inactive
                                             </button>
-                                            <button *ngIf="department.iStatusID == 13" pButton type="button"
+                                            <button *ngIf="department.iStatusID == 3" pButton type="button"
                                                 class="ui-button-rounded ui-button-warning"
                                                 style="width: 100px; height: 25px;">
                                                 Deleted
                                             </button>
-                                        </td>
-                                        <td>
+                                        </td> -->
+                                        <td style="text-align: center;">
                                             <button pButton type="button" class="ui-button-success" icon="pi pi-pencil"
                                                 style="margin-right: .5em" (click)="openDialogForEditGST(gst)"></button>
-                                            <button pButton type="button" class="ui-button-danger"
-                                                icon="pi pi-trash"></button>
+                                            <button pButton type="button" class="ui-button-danger" icon="pi pi-trash"
+                                                (click)="deleteGst(gst)"></button>
                                         </td>
                                     </tr>
                                 </ng-template>

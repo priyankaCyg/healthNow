@@ -1,4 +1,4 @@
 export class seldepData {
-    iKVID: string;
+    iKVID: Number;
     sKVValue: string;
 }

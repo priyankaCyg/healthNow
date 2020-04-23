@@ -112,21 +112,7 @@ export class CompanyComponent implements OnInit {
     //   { state: 'Maharashtra', gst1: '27AACCC1130A1ZL', status: 'Active' },
     //   { state: 'Haryana', gst1: '4243453STt06', status: 'Active' }
     // ];
-    const gst_data =
-    {
-
-      "iRequestID": 2063,
-      "iCID": 1
-
-    };
-    this._apiService.callPostApi(gst_data).subscribe(
-      data => {
-        console.log(data);
-        this.gst = data;
-
-      },
-      error => console.log(error)
-    );
+    this.gstList();
 
   }
 
@@ -158,6 +144,7 @@ export class CompanyComponent implements OnInit {
       }
     });
   }
+  //open dialog for add departemnt
   openDialogForaddDepartment() {
     const ref = this.dialogService.open(DepartmentComponent, {
       data: {
@@ -170,9 +157,10 @@ export class CompanyComponent implements OnInit {
       if (success) {
         // this.toastService.addSingle("success", "Mail send successfully", "");
       }
+      this.departmentList();
     });
   }
-
+  //open dialog for edit department
   openDialogForeditDepartment(department) {
     const ref = this.dialogService.open(DepartmentComponent, {
       data:
@@ -185,9 +173,10 @@ export class CompanyComponent implements OnInit {
       if (success) {
         // this.toastService.addSingle("success", "Mail send successfully", "");
       }
+      this.departmentList();
     });
   }
-
+  //show all list of department
   departmentList() {
     const department_data =
     {
@@ -204,8 +193,8 @@ export class CompanyComponent implements OnInit {
     );
   }
 
-
-  deleteService(department: departmentData) {
+  //delete department
+  deleteDepartemnt(department: departmentData) {
 
     let dep_id = department.iDeptID;
     let delete_data_api = {
@@ -221,14 +210,7 @@ export class CompanyComponent implements OnInit {
       },
       error => console.log(error)
     );
-
-    // this._apiService.callPostApi(delete_data_api).subscribe((data) => {
-    //   if (data.success) {
-    //     //this.department = this.department.filter((c) => c !== department);
-    //   }
-    // });
-    // console.log("delete");
-
+    this.departmentList();
 
   }
 
@@ -274,6 +256,7 @@ export class CompanyComponent implements OnInit {
       }
     });
   }
+  //open dialog  for add gst
   openDialogForGST() {
     const ref = this.dialogService.open(GstComponent, {
       data: {
@@ -286,9 +269,10 @@ export class CompanyComponent implements OnInit {
       if (success) {
         // this.toastService.addSingle("success", "Mail send successfully", "");
       }
+      this.gstList();
     });
   }
-
+  //open dialog for edit gst
   openDialogForEditGST(gst) {
     const ref = this.dialogService.open(GstComponent, {
       data: gst,
@@ -300,7 +284,46 @@ export class CompanyComponent implements OnInit {
       if (success) {
         // this.toastService.addSingle("success", "Mail send successfully", "");
       }
+      this.gstList();
     });
+  }
+
+  gstList() {
+    const gst_data =
+    {
+
+      "iRequestID": 2063,
+      "iCID": 1
+
+    };
+    this._apiService.callPostApi(gst_data).subscribe(
+      data => {
+        console.log(data);
+        this.gst = data;
+
+      },
+      error => console.log(error)
+    );
+  }
+  //delete for gst
+  deleteGst(gst: gstData) {
+
+    //let dep_id = department.iDeptID;
+    let delete_gst_data_api = {
+
+      "iRequestID": 2064,
+      "iStateID": 12,
+      "iCID": 1
+    };
+    this._apiService.callPostApi(delete_gst_data_api).subscribe(
+      data => {
+        console.log(data);
+
+      },
+      error => console.log(error)
+    );
+    this.gstList();
+
   }
 
 

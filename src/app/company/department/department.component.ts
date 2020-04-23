@@ -2,7 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { ApiService } from 'src/app/services/api.service';
 import { seldepData } from 'src/app/model/selDepStatus';
 import { FormBuilder, Validators } from '@angular/forms'
-import { DynamicDialogConfig } from 'primeng/dynamicdialog';
+import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 @Component({
   selector: 'app-department',
   templateUrl: './department.component.html',
@@ -10,8 +10,10 @@ import { DynamicDialogConfig } from 'primeng/dynamicdialog';
 })
 export class DepartmentComponent implements OnInit {
   seldepartmentStatus: seldepData[];
+  submitted = false;
 
-  constructor(private _apiService: ApiService, private fb: FormBuilder, public config: DynamicDialogConfig) { }
+  constructor(private _apiService: ApiService, private fb: FormBuilder, public config: DynamicDialogConfig,
+    private ref: DynamicDialogRef) { }
 
   ngOnInit(): void {
 
@@ -26,7 +28,7 @@ export class DepartmentComponent implements OnInit {
       data => {
         console.log(data);
         this.seldepartmentStatus = data;
-
+        this.seldepartmentStatus.unshift({ "iKVID": 0, "sKVValue": "select" });
       },
       error => console.log(error)
     );
@@ -43,8 +45,10 @@ export class DepartmentComponent implements OnInit {
     depstatus: ['', Validators.required]
   });
 
+  get f() { return this.DepartmentSubmit.controls; }
   onSubmit() {
-    if (this.config.data.iDeptID == undefined) {
+    this.submitted = true;
+    if (this.config.data.iDeptID == undefined && this.DepartmentSubmit.invalid) {
       let dep_name = this.DepartmentSubmit.controls["departmentname"].value;
       console.log(dep_name);
       const dep_submit_data =
@@ -85,5 +89,19 @@ export class DepartmentComponent implements OnInit {
         error => console.log(error)
       );
     }
+    this.ref.close();
+    this.DepartmentSubmit.reset();
+  }
+
+  get hasDropDownError() {
+    return (
+      this.DepartmentSubmit.get('depstatus').touched &&
+      this.DepartmentSubmit.get('depstatus').errors &&
+      this.DepartmentSubmit.get('depstatus').errors.required
+    )
+  }
+
+  close() {
+    this.ref.close();
   }
 }
