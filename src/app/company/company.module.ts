@@ -15,7 +15,7 @@ import { GstComponent } from './gst/gst.component';
 
 //Prime Ng Service
 import { DialogService } from 'primeng';
-import {TreeTableModule} from 'primeng/treetable';
+import { TreeTableModule } from 'primeng/treetable';
 //Prime Ng Module
 import {ButtonModule} from 'primeng/button';
 import {PanelModule} from 'primeng/panel';
@@ -31,11 +31,12 @@ import { MessageModule} from 'primeng/message';
 
 
 @NgModule({
-  declarations: [CompanyComponent,GeneralEditComponent, AddNewAddressComponent, DepartmentComponent, DesignationComponent, EmployeeComponent, BankComponent, GstComponent],
+  declarations: [CompanyComponent, GeneralEditComponent, AddNewAddressComponent, DepartmentComponent, DesignationComponent, EmployeeComponent, BankComponent, GstComponent],
   imports: [
     CommonModule,
     CompanyRoutingModule,
     FormsModule,
+    ReactiveFormsModule,
     ButtonModule,
     PanelModule,
     TabMenuModule,
@@ -50,7 +51,7 @@ import { MessageModule} from 'primeng/message';
     ReactiveFormsModule,
     MessageModule
   ],
-  providers:[httpInterceptorProviders,DialogService],
-  entryComponents:[GeneralEditComponent,AddNewAddressComponent,DepartmentComponent,DesignationComponent,EmployeeComponent,BankComponent,GstComponent]
+  providers: [httpInterceptorProviders, DialogService],
+  entryComponents: [GeneralEditComponent, AddNewAddressComponent, DepartmentComponent, DesignationComponent, EmployeeComponent, BankComponent, GstComponent]
 })
 export class CompanyModule { }
