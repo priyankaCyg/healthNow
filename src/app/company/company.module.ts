@@ -1,8 +1,8 @@
-import { NgModule } from "@angular/core";
-import { CommonModule } from "@angular/common";
-import { CompanyRoutingModule } from "./company-routing.module";
-import { CompanyComponent } from "./company.component";
-import { httpInterceptorProviders } from "../interceptors/httpinterceptors";
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { CompanyRoutingModule } from './company-routing.module';
+import { CompanyComponent } from './company.component';
+import { httpInterceptorProviders } from '../interceptors/httpinterceptors';
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { GeneralEditComponent } from './general-edit/general-edit.component'
@@ -47,10 +47,8 @@ import { InputTextModule } from 'primeng/inputtext';
     DropdownModule,
     InputTextModule,
     InputTextareaModule,
-    TreeTableModule,
-    ReactiveFormsModule,
+    TreeTableModule
   ],
-
   providers: [httpInterceptorProviders, DialogService],
   entryComponents: [GeneralEditComponent, AddNewAddressComponent, DepartmentComponent, DesignationComponent, EmployeeComponent, BankComponent, GstComponent]
 })

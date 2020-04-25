@@ -1,5 +1,5 @@
 import { Component, OnInit } from "@angular/core";
-import { FormBuilder, Validators } from "@angular/forms";
+import { FormBuilder, Validators, AbstractControl } from "@angular/forms";
 import { ApiService } from "src/app/services/api.service";
 import { StatusData } from "src/app/model/status.model";
 import { DynamicDialogConfig, DynamicDialogRef } from "primeng/dynamicdialog";
@@ -86,6 +86,7 @@ export class DesignationComponent implements OnInit {
     status: ["", Validators.required],
   });
 
+
   onSubmit() {
     let desig_id = this.config.data.iDesigID;
 
@@ -95,52 +96,59 @@ export class DesignationComponent implements OnInit {
     let status = this.desigForm.controls["status"].value;
     // console.log(this.desigForm.controls["status"].value);
     let status_id = status.iKVID;
-
-    if (!this.desigForm.invalid) {
-      if (desig_id == undefined) {
-        const addDesig_data = {
-          iRequestID: 2081,
-          iCID: 1,
-          sDesigName: desig_name,
-          iDesigLevel: desig_level,
-          iUserID: 1,
-        };
-        console.log(addDesig_data, "add");
-        this.apiService.callPostApi(addDesig_data).subscribe(
-          (data) => {
-            console.log(data);
-          },
-          (error) => console.log(error)
-        );
-      } else {
-        const updateDesig_data = {
-          iRequestID: 2082,
-          iCID: 1,
-          iDesigID: desig_id,
-          sDesigName: desig_name,
-          iDesigLevel: desig_level,
-          iUserID: 2,
-          iStatusID: status_id
-        };
-        console.log(updateDesig_data, "update");
-        this.apiService.callPostApi(updateDesig_data).subscribe(
-          (data) => {
-            console.log(data);
-          },
-          (error) => console.log(error)
-        );
-      }
-      this.ref.close();
-      this.desigForm.reset();
-    } else {
-      console.log("Error");
+    if (status_id == 0) {
+      console.log("abc")
+      this.desigForm.setErrors({ 'invalid': true });
     }
+    else {
+      if (!this.desigForm.invalid) {
+        if (desig_id == undefined) {
+          const addDesig_data = {
+            iRequestID: 2081,
+            iCID: 1,
+            sDesigName: desig_name,
+            iDesigLevel: desig_level,
+            iUserID: 1,
+          };
+          console.log(addDesig_data, "add");
+          this.apiService.callPostApi(addDesig_data).subscribe(
+            (data) => {
+              console.log(data);
+            },
+            (error) => console.log(error)
+          );
+        } else {
+          const updateDesig_data = {
+            iRequestID: 2082,
+            iCID: 1,
+            iDesigID: desig_id,
+            sDesigName: desig_name,
+            iDesigLevel: desig_level,
+            iUserID: 2,
+            iStatusID: status_id
+          };
+          console.log(updateDesig_data, "update");
+          this.apiService.callPostApi(updateDesig_data).subscribe(
+            (data) => {
+              console.log(data);
+            },
+            (error) => console.log(error)
+          );
+        }
+        this.ref.close();
+        this.desigForm.reset();
+      } else {
+        console.log("Error");
+      }
+    }
+
   }
   onClose() {
     this.ref.close();
     this.desigForm.reset();
 
   }
+
   // getData(){
   //   console.log(this.statusData,"final")
   //   console.log(this.temp)

@@ -21,14 +21,9 @@ export class ApiService {
   getDropDownData(requestData): Promise<any> {
 
     return new Promise((resolve, reject) => {
-
       this.http.post(this._baseUrl, requestData).subscribe((response: any) => {
-
         resolve(response);
-
       }, reject);
-
     });
-
   }
 }

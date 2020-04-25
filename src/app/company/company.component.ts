@@ -28,21 +28,10 @@ import { companyData } from '../model/company';
 export class CompanyComponent implements OnInit {
 
   items: MenuItem[];
-
   compData: companyData[];
-
   address: any[];
-
   department: departmentData[];
-
-  //designation: any[];
-
-  employee: any[];
-
-  //bank: any[];
-
   gst: gstData[];
-
   bankData: BankData[];
   designationData: DesignationData[];
 
@@ -67,7 +56,6 @@ export class CompanyComponent implements OnInit {
       },
       { label: "Theming", icon: "pi pi-file", routerLink: ["/theming"] },
     ];
-
     this.companyData();
     this.departmentList();
     this.bankSelectData();
@@ -183,7 +171,6 @@ export class CompanyComponent implements OnInit {
 
   }
 
-
   openDialogForEmployee() {
     const ref = this.dialogService.open(EmployeeComponent, {
       data: {},
@@ -270,6 +257,8 @@ export class CompanyComponent implements OnInit {
   }
 
   //new code
+
+
 
   designationSelectData() {
     const selectDesig_data = {
@@ -405,12 +394,5 @@ export class CompanyComponent implements OnInit {
     this.bankSelectData();
 
   }
-
-
-
-
-
-
-
 
 }
