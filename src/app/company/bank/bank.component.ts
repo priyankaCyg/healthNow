@@ -2,7 +2,7 @@ import { Component, OnInit, Input } from "@angular/core";
 import { FormBuilder, Validators } from "@angular/forms";
 import { ApiService } from "src/app/services/api.service";
 import { StatusData } from "src/app/model/status.model";
-import { DynamicDialogConfig } from "primeng/dynamicdialog";
+import { DynamicDialogConfig, DynamicDialogRef } from "primeng/dynamicdialog";
 
 @Component({
   selector: "app-bank",
@@ -11,44 +11,79 @@ import { DynamicDialogConfig } from "primeng/dynamicdialog";
 })
 export class BankComponent implements OnInit {
   statusData: StatusData[];
-
+  setStatus: object;
+  temp;
   constructor(
     private apiService: ApiService,
     private fb: FormBuilder,
-    private config: DynamicDialogConfig
-  ) {}
+    private config: DynamicDialogConfig,
+    private ref: DynamicDialogRef
+  ) { }
 
-  ngOnInit(): void {
-    console.log(this.config.data, "edit");
-    if (this.config.data.iBankID != undefined) {
-      this.bankForm.setValue({
-        bank_name: this.config.data.sBankName,
-        short_code: this.config.data.sShortCode,
-        account_no: this.config.data.sAccountNo,
-        ifsc_code: this.config.data.sIFSC,
-        bank_branch: this.config.data.sBankBranch,
-        status: this.config.data.sStatusName,
-      });
-    }
+  async ngOnInit(): Promise<void> {
     const status_data = {
       iRequestID: 2071,
       sKVName: "Status",
     };
 
-    this.apiService.callPostApi(status_data).subscribe(
-      (data) => {
-        console.log(data);
+    await this.apiService.getDropDownData(status_data).then(
+      data => {
+
         this.statusData = data;
+        this.statusData.unshift({ "iKVID": 0, "sKVValue": "Select" });
+        //  console.log(this.statusData, "check");
+        // this.getData();
+
       },
-      (error) => console.log(error)
+      error => console.log(error)
     );
+
+
+    console.log(this.statusData, "Promise")
+    console.log(this.config.data, "edit");
+    this.temp = this.config.data.iStatusID;
+
+
+    let tempData = this.statusData.filter(t => t.iKVID == this.temp);
+    this.setStatus = tempData[0];
+    // console.log(this.config.data, "edit");
+    // let temp = this.config.data.iStatusID;
+    // if(temp ==1){
+    //   this.setStatus = {sKVValue: 'Active', iKVID: 1}
+    // }
+    // else{
+    //   this.setStatus = {sKVValue: 'Inactive', iKVID: 2}
+    // }
+    if (this.config.data.iBankID != undefined) {
+      this.bankForm.patchValue({
+        bank_name: this.config.data.sBankName,
+        short_code: this.config.data.sShortCode,
+        account_no: this.config.data.sAccountNo,
+        ifsc_code: this.config.data.sIFSC,
+        bank_branch: this.config.data.sBankBranch,
+        status: this.setStatus
+      });
+    }
+    // const status_data = {
+    //   iRequestID: 2071,
+    //   sKVName: "Status",
+    // };
+
+    // this.apiService.callPostApi(status_data).subscribe(
+    //   (data) => {
+    //     console.log(data);
+    //     this.statusData = data;
+    //     this.statusData.unshift({"iKVID":0, "sKVValue": "Select"});
+    //   },
+    //   (error) => console.log(error)
+    // );
   }
   bankForm = this.fb.group({
-    bank_name: ["", Validators.required],
+    bank_name: ["", [Validators.required, Validators.pattern('^[a-zA-Z ]*$')]],
     short_code: ["", Validators.required],
-    account_no: ["", Validators.required],
-    ifsc_code: ["", Validators.required],
-    bank_branch: ["", Validators.required],
+    account_no: ["", [Validators.required, Validators.pattern('^[0-9]*$')]],
+    ifsc_code: ["", [Validators.required, Validators.pattern('^[0-9a-zA-Z]+$')]],
+    bank_branch: ["", [Validators.required, Validators.pattern('^[a-zA-Z ]*$')]],
     status: ["", Validators.required],
   });
 
@@ -82,6 +117,7 @@ export class BankComponent implements OnInit {
           },
           (error) => console.log(error)
         );
+
       } else {
         const updateBank_data = {
           iRequestID: 2042,
@@ -102,8 +138,14 @@ export class BankComponent implements OnInit {
           (error) => console.log(error)
         );
       }
+      this.ref.close();
+      this.bankForm.reset();
     } else {
       console.log("Error");
     }
+  }
+  onClose() {
+    this.ref.close();
+    this.bankForm.reset();
   }
 }

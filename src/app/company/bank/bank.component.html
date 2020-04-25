@@ -4,89 +4,66 @@
       <div class="p-grid form-group">
         <div class="p-col-12 p-md-6 p-lg-6">
           <label for="bankName">Bank Name</label>
-          <input
-            id="bankName"
-            type="text"
-            pInputText
-            formControlName="bank_name"
-          />
+          <input id="bankName" type="text" pInputText formControlName="bank_name" />
+          <span class="text-danger" *ngIf="bankForm.get('bank_name').errors 
+              && (bankForm.get('bank_name').touched|| bankForm.get('bank_name').dirty)">
+            <span *ngIf="bankForm.get('bank_name').errors.pattern">Numeric values not allowed</span>
+            <span *ngIf="bankForm.get('bank_name').errors.required">This field is required</span>
+          </span>
         </div>
         <div class="p-col-12 p-md-6 p-lg-6">
           <label for="middleName">Short Code/Account Type</label>
-          <input
-            id="middleName"
-            type="text"
-            pInputText
-            formControlName="short_code"
-          />
+          <input id="middleName" type="text" pInputText formControlName="short_code" />
+          <span class="text-danger" *ngIf="bankForm.get('short_code').errors 
+          && (bankForm.get('short_code').touched|| bankForm.get('short_code').dirty)">
+            <span *ngIf="bankForm.get('short_code').errors.required">This field is required</span>
+          </span>
         </div>
         <div class="p-col-12 p-md-6 p-lg-6">
           <label for="lasteName">Account No</label>
-          <input
-            id="lasteName"
-            type="text"
-            pInputText
-            formControlName="account_no"
-          />
+          <input id="lasteName" type="text" pInputText formControlName="account_no" />
+          <span class="text-danger" *ngIf="bankForm.get('account_no').errors 
+              && (bankForm.get('account_no').touched|| bankForm.get('account_no').dirty)">
+            <span *ngIf="bankForm.get('account_no').errors.pattern">Please enter numeric values olny</span>
+            <span *ngIf="bankForm.get('account_no').errors.required">This field is required</span>
+          </span>
         </div>
         <div class="p-col-12 p-md-6 p-lg-6">
           <label for="lasteName">IFSC</label>
-          <input
-            id="lasteName"
-            type="text"
-            pInputText
-            formControlName="ifsc_code"
-          />
+          <input id="lasteName" type="text" pInputText formControlName="ifsc_code" />
+          <span class="text-danger" *ngIf="bankForm.get('ifsc_code').errors 
+          && (bankForm.get('ifsc_code').touched|| bankForm.get('ifsc_code').dirty)">
+            <span *ngIf="bankForm.get('ifsc_code').errors.pattern">Please enter valid IFSC code</span>
+            <span *ngIf="bankForm.get('ifsc_code').errors.required">This field is required</span>
+          </span>
         </div>
         <div class="p-col-12 p-md-12 p-lg-12">
           <label for="bankBranch">Bank Branch</label>
-          <textarea
-            rows="3"
-            pInputTextarea
-            autoResize="autoResize"
-            formControlName="bank_branch"
-          ></textarea>
+          <textarea rows="3" pInputTextarea autoResize="autoResize" formControlName="bank_branch"></textarea>
+          <span class="text-danger" *ngIf="bankForm.get('bank_branch').errors 
+          && (bankForm.get('bank_branch').touched|| bankForm.get('bank_branch').dirty)">
+            <span *ngIf="bankForm.get('bank_branch').errors.pattern">Numeric values not allowed</span>
+            <span *ngIf="bankForm.get('bank_branch').errors.required">This field is required</span>
+          </span>
         </div>
       </div>
-      <div
-        class="separator separator--border-dashed separator--space-sm separator--portlet-fit"
-      ></div>
+      <div class="separator separator--border-dashed separator--space-sm separator--portlet-fit"></div>
       <div class="p-grid form-group">
         <div class="p-col-12 p-md-6 p-lg-6">
           <label for="status">Status</label>
-          <p-dropdown
-            id="status"
-            [options]="statusData"
-            optionLabel="sKVValue"
-            formControlName="status"
-            editable="true"
-            placeholder="select"
-          ></p-dropdown>
+          <p-dropdown id="status" [options]="statusData" optionLabel="sKVValue" formControlName="status"></p-dropdown>
         </div>
       </div>
 
-      <div
-        class="separator separator--border-solid separator--space-sm separator--portlet-fit"
-      ></div>
+      <div class="separator separator--border-solid separator--space-sm separator--portlet-fit"></div>
       <div class="p-grid form-group ui-fluid p-justify-end">
         <div class="p-col-12 p-md-2 p-lg-1">
-          <button
-            pButton
-            type="button"
-            label="Cancel"
-            style="margin-bottom: 10px;"
-            class="ui-button-light"
-          ></button>
+          <button pButton type="button" label="Cancel" style="margin-bottom: 10px;" class="ui-button-light"
+            (click)="onClose()"></button>
         </div>
         <div class="p-col-12 p-md-2 p-lg-1">
-          <button
-            pButton
-            type="submit"
-            label="Save"
-            style="margin-bottom: 10px;"
-            class="ui-button"
-            [disabled]="!bankForm.valid"
-          ></button>
+          <button pButton type="submit" label="Save" style="margin-bottom: 10px;" class="ui-button"
+            [disabled]="!bankForm.valid"></button>
         </div>
       </div>
     </div>

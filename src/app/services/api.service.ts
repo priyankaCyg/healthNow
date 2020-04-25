@@ -10,11 +10,25 @@ export class ApiService {
 
   headers = new HttpHeaders({ "Content-Type": "application/json" });
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   callPostApi(requestBody: Object): Observable<any> {
     return this.http.post(this._baseUrl, requestBody, {
       headers: this.headers,
     });
+  }
+
+  getDropDownData(requestData): Promise<any> {
+
+    return new Promise((resolve, reject) => {
+
+      this.http.post(this._baseUrl, requestData).subscribe((response: any) => {
+
+        resolve(response);
+
+      }, reject);
+
+    });
+
   }
 }

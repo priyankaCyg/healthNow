@@ -5,15 +5,29 @@
 
             <div class="p-grid form-group">
 
-                <div class="p-col-12">
+                <div class="p-col-12" [ngClass]="{'has-error': GSTSubmit.get('state').errors &&
+                (GSTSubmit.get('state').touched || GSTSubmit.get('state').dirty)}">
                     <label for="state">State</label>
-                    <p-dropdown id="state" class="form-control" editable="true" [options]="status"
-                        formControlName="state"></p-dropdown>
+                    <p-dropdown id="state" class="form-control" [options]="gstState" formControlName="state"
+                        optionLabel="sLocName" placeholder="Select" [showClear]="true" required="true"></p-dropdown>
+                    <span *ngIf="GSTSubmit.get('state').errors &&
+                        (GSTSubmit.get('state').touched || GSTSubmit.get('state').dirty)">
+                        <span class="text-danger" *ngIf="GSTSubmit.get('state').errors.required">
+                            This Field is Required
+                        </span>
+                    </span>
                 </div>
 
-                <div class="p-col-12">
+                <div class="p-col-12" [ngClass]="{'has-error': GSTSubmit.get('gst').errors &&
+                (GSTSubmit.get('gst').touched || GSTSubmit.get('gst').dirty)}">
                     <label for="gst">GST</label>
                     <input id="gst" class="form-control" formControlName="gst" type="text" pInputText>
+                    <span *ngIf="GSTSubmit.get('gst').errors &&
+                    (GSTSubmit.get('gst').touched || GSTSubmit.get('gst').dirty)">
+                        <span *ngIf="GSTSubmit.get('gst').errors.required">
+                            This Field is Required
+                        </span>
+                    </span>
                 </div>
 
                 <!-- <div class="p-col-12">
@@ -33,8 +47,8 @@
             <div class="p-grid form-group ui-fluid">
                 <div class="p-md-6 p-lg-6"></div>
                 <div class="p-col-12 p-md-3 p-lg-3">
-                    <button pButton type="button" label="Cancel" style="margin-bottom:10px"
-                        class="ui-button-light"></button>
+                    <button pButton type="button" label="Cancel" style="margin-bottom:10px" class="ui-button-light"
+                        (click)="close()"></button>
                 </div>
                 <div class="p-col-12 p-md-3 p-lg-3">
                     <button pButton type="submit" label="Save" style="margin-bottom:10px" [disabled]="!GSTSubmit.valid"
