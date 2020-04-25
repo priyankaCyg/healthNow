@@ -4,7 +4,7 @@ import { CompanyRoutingModule } from './company-routing.module';
 import { CompanyComponent } from './company.component';
 import { httpInterceptorProviders } from '../interceptors/httpinterceptors';
 
-import {FormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {GeneralEditComponent} from './general-edit/general-edit.component'
 import { AddNewAddressComponent } from './add-new-address/add-new-address.component';
 import { DepartmentComponent } from './department/department.component';
@@ -27,7 +27,7 @@ import {DynamicDialogModule} from 'primeng/dynamicdialog';
 import {DropdownModule} from 'primeng/dropdown';
 import {InputTextareaModule} from 'primeng/inputtextarea';
 import {InputTextModule} from 'primeng/inputtext';
-
+import { MessageModule} from 'primeng/message';
 
 
 @NgModule({
@@ -46,7 +46,9 @@ import {InputTextModule} from 'primeng/inputtext';
     DropdownModule,
     InputTextModule,
     InputTextareaModule,
-    TreeTableModule
+    TreeTableModule,
+    ReactiveFormsModule,
+    MessageModule
   ],
   providers:[httpInterceptorProviders,DialogService],
   entryComponents:[GeneralEditComponent,AddNewAddressComponent,DepartmentComponent,DesignationComponent,EmployeeComponent,BankComponent,GstComponent]

@@ -60,11 +60,13 @@
                             
                         </div>
                         <div class="p-col-12"> 
-                            <p-table [value]="address">
+                            <p-table [value]="addressDataArray" #AddressSearch [paginator]="true" [rows]="10" [showCurrentPageReport]="true"
+                    [rowsPerPageOptions]="[10, 25, 50]" [filterDelay]="0" [globalFilterFields]="['sAddType','sAdd1','sAdd2','sStateName','sCityName','sLandmark'
+                    ,'sTelNo1','sTelNo2','sFaxNo','sStatusName']" class="defaultDataTable">
                                 <ng-template pTemplate="caption">
                                
                                     <div class="ui-table-globalfilter-container text-left">
-                                        <input type="text" pInputText size="50" placeholder="Search" (input)="dt.filterGlobal($event.target.value, 'contains')" style="width:250px;">
+                                        <input type="text" pInputText size="50" placeholder="Search" (input)="AddressSearch.filterGlobal($event.target.value, 'contains')" style="width:250px;">
                                     </div>
                                 </ng-template>
                                 <ng-template pTemplate="header">
@@ -75,8 +77,8 @@
                                         <th>State</th>
                                         <th>City</th>
                                         <th>Landmark</th>
-                                        <th>Tel No. 1</th>
-                                        <th>Tel No. 2</th>
+                                        <th>Tel No.1</th>
+                                        <th>Tel No.2</th>
                                         <th>FAX</th>
                                         <th>Status</th>
                                         <th colspan="2">Action</th>
@@ -84,24 +86,25 @@
                                 </ng-template>
                                 <ng-template pTemplate="body" let-address>
                                     <tr>
-                                        <td>{{address.addresstype}}</td>
-                                        <td>{{address.address1}}</td>
-                                        <td>{{address.address2}}</td>
-                                        <td>{{address.state}}</td>
-                                        <td>{{address.city}}</td>
-                                        <td>{{address.landmark}}</td>
-                                        <td>{{address.tel1}}</td>
-                                        <td>{{address.tel2}}</td>
-                                        <td>{{address.fax}}</td>
-                                        <td>{{address.status}}</td>
-                                        <td><button pButton type="button" class="ui-button-success" icon="pi pi-pencil" style="margin-right: .5em"></button></td>
-                                         <td><button pButton type="button" class="ui-button-danger" icon="pi pi-trash"></button></td>
+                                        <td>{{address.sAddType}}</td>
+                                        <td>{{address.sAdd1}}</td>
+                                        <td>{{address.sAdd2}}</td>
+                                        <td>{{address.sStateName}}</td>
+                                        <td>{{address.sCityName}}</td>
+                                        <td>{{address.sLandmark}}</td>
+                                        <td>{{address.sTelNo1}}</td>
+                                        <td>{{address.sTelNo2}}</td>
+                                        <td>{{address.sFaxNo}}</td>
+                                        <td>{{address.sStatusName}}</td>
+                                        <td><button pButton type="button" class="ui-button-success" icon="pi pi-pencil" style="margin-right: .5em" (click)="openDialogForeditAddress(address)"></button></td>
+                                         <td><button pButton type="button" class="ui-button-danger" icon="pi pi-trash" (click)="onDeleteAddress(address.iAddID)"></button></td>
                                     </tr>
                                 </ng-template>
                             </p-table>
                         </div>
                     </div>
                 </p-tabPanel>
+                
             <!-- Address tab End here -->
                 
                 <p-tabPanel header="Department">
