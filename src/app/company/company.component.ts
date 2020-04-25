@@ -18,6 +18,7 @@ import { ToastService } from "../services/toast.service";
 import { DesignationData } from "../model/selectAllDesignation";
 import { departmentData } from "../model/department";
 import { gstData } from "../model/gst";
+import { companyData } from '../model/company';
 
 @Component({
   selector: "app-company",
@@ -25,20 +26,12 @@ import { gstData } from "../model/gst";
   styleUrls: ["./company.component.css"],
 })
 export class CompanyComponent implements OnInit {
+  
   items: MenuItem[];
-
+  compData: companyData[];
   address: any[];
-
-  department: any[];
-
-  designation: any[];
-
-  employee: any[];
-
-  bank: any[];
-
-  gst: any[];
-
+  department: departmentData[];
+  gst: gstData[];
   bankData: BankData[];
   designationData: DesignationData[];
 
@@ -63,276 +56,34 @@ export class CompanyComponent implements OnInit {
       },
       { label: "Theming", icon: "pi pi-file", routerLink: ["/theming"] },
     ];
-
+    this.companyData();
+    this.departmentList();
     this.bankSelectData();
     this.designationSelectData();
-    this.address = [
-      {
-        addresstype: "Registered",
-        address1: "address01",
-        address2: "address001",
-        state: "Maharashtra",
-        city: "Thane",
-        landmark: "Hirandadni",
-        tel1: "4564466456",
-        tel2: "77887897899",
-        fax: "25588525858",
-        status: "Active",
-      },
-      {
-        addresstype: "Wearhouse",
-        address1: "address02",
-        address2: "address002",
-        state: "Maharashtra",
-        city: "Bhiwandi",
-        landmark: "Hirandadni",
-        tel1: "4564466456",
-        tel2: "77887897899",
-        fax: "25588525858",
-        status: "Active",
-      },
-      {
-        addresstype: "Registered",
-        address1: "address03",
-        address2: "address003",
-        state: "Maharashtra",
-        city: "Mumbai",
-        landmark: "Hirandadni",
-        tel1: "4564466456",
-        tel2: "77887897899",
-        fax: "25588525858",
-        status: "Active",
-      },
-      {
-        addresstype: "Wearhouse",
-        address1: "address04",
-        address2: "address004",
-        state: "Maharashtra",
-        city: "Bhiwandi",
-        landmark: "Hirandadni",
-        tel1: "4564466456",
-        tel2: "77887897899",
-        fax: "25588525858",
-        status: "Active",
-      },
-      {
-        addresstype: "Wearhouse",
-        address1: "address05",
-        address2: "address005",
-        state: "Maharashtra",
-        city: "Mumbai",
-        landmark: "Hirandadni",
-        tel1: "4564466456",
-        tel2: "77887897899",
-        fax: "25588525858",
-        status: "Active",
-      },
-      {
-        addresstype: "Registered",
-        address1: "address06",
-        address2: "address006",
-        state: "Maharashtra",
-        city: "Thane",
-        landmark: "Hirandadni",
-        tel1: "4564466456",
-        tel2: "77887897899",
-        fax: "25588525858",
-        status: "Active",
-      },
-      {
-        addresstype: "Registered",
-        address1: "address07",
-        address2: "address007",
-        state: "Maharashtra",
-        city: "Bhiwandi",
-        landmark: "Hirandadni",
-        tel1: "4564466456",
-        tel2: "77887897899",
-        fax: "25588525858",
-        status: "Active",
-      },
-      {
-        addresstype: "Wearhouse",
-        address1: "address08",
-        address2: "address008",
-        state: "Maharashtra",
-        city: "Mumbai",
-        landmark: "Hirandadni",
-        tel1: "4564466456",
-        tel2: "77887897899",
-        fax: "25588525858",
-        status: "Active",
-      },
-      {
-        addresstype: "Registered",
-        address1: "address09",
-        address2: "address009",
-        state: "Maharashtra",
-        city: "Thane",
-        landmark: "Hirandadni",
-        tel1: "4564466456",
-        tel2: "77887897899",
-        fax: "25588525858",
-        status: "Active",
-      },
-      {
-        addresstype: "Wearhouse",
-        address1: "address010",
-        address2: "address0010",
-        state: "Maharashtra",
-        city: "Bhiwandi",
-        landmark: "Hirandadni",
-        tel1: "4564466456",
-        tel2: "77887897899",
-        fax: "25588525858",
-        status: "Active",
-      },
-    ];
-
-    this.department = [
-      { departmentName: "Sales", status: "Active" },
-      { departmentName: "Accounts", status: "Active" },
-      { departmentName: "Service", status: "Active" },
-      { departmentName: "IT", status: "Active" },
-      { departmentName: "Admin", status: "Active" },
-      { departmentName: "HR", status: "Active" },
-    ];
-
-    // this.designation = [
-    //   { designationName: "CFO", designationLevel: "2", status: "Active" },
-    //   { designationName: "CTO", designationLevel: "3", status: "Active" },
-    //   { designationName: "COO", designationLevel: "4", status: "Active" },
-    //   { designationName: "Manager", designationLevel: "5", status: "Active" },
-    //   {
-    //     designationName: "Sales Manager",
-    //     designationLevel: "6",
-    //     status: "Active",
-    //   },
-    //   {
-    //     designationName: "Service Manager",
-    //     designationLevel: "7",
-    //     status: "Active",
-    //   },
-    //   {
-    //     designationName: "Account Manager",
-    //     designationLevel: "8",
-    //     status: "Active",
-    //   },
-    //   {
-    //     designationName: "Accountant",
-    //     designationLevel: "9",
-    //     status: "Active",
-    //   },
-    //   {
-    //     designationName: "Account Assistant",
-    //     designationLevel: "10",
-    //     status: "Active",
-    //   },
-    //   {
-    //     designationName: "Service coordinator",
-    //     designationLevel: "11",
-    //     status: "Active",
-    //   },
-    //   { designationName: "Engineer", designationLevel: "12", status: "Active" },
-    //   {
-    //     designationName: "Warehouse Incharge",
-    //     designationLevel: "13",
-    //     status: "Active",
-    //   },
-    //   {
-    //     designationName: "Sales coordinator",
-    //     designationLevel: "14",
-    //     status: "Active",
-    //   },
-    //   {
-    //     designationName: "Office Assistant",
-    //     designationLevel: "15",
-    //     status: "Active",
-    //   },
-    //   { designationName: "HR", designationLevel: "16", status: "Active" },
-    // ];
-
-    this.employee = [
-      {
-        employeeCode: "190104254",
-        firstName: "Pragati",
-        middleName: "Baghwandas",
-        lastName: "Varma",
-        department: "Sales",
-        designation: "Sales coordinator",
-        reportingTo: "Vikas Sitaram Narkar",
-        status: "Active",
-      },
-      {
-        employeeCode: "120403180",
-        firstName: "Santosh",
-        middleName: "Chandrakant",
-        lastName: "Trimbake",
-        department: "Sales",
-        designation: "Warehouse Incharge",
-        reportingTo: "Rajiv A Gandhi",
-        status: "Active",
-      },
-      {
-        employeeCode: "130106184",
-        firstName: "Nilesh",
-        middleName: "Sunil",
-        lastName: "Mahadik",
-        department: "Sales",
-        designation: "Sales Manager",
-        reportingTo: "Krishna KamalKishor Biyani",
-        status: "Active",
-      },
-      {
-        employeeCode: "102102162",
-        firstName: "Hemangi",
-        middleName: "Raju",
-        lastName: "Bavkar",
-        department: "Sales",
-        designation: "Manager",
-        reportingTo: "Pragati Kunal Jadhav",
-        status: "Active",
-      },
-      {
-        employeeCode: "162206230",
-        firstName: "Supriya",
-        middleName: "Vilas",
-        lastName: "Bandarkar",
-        department: "Sales",
-        designation: "Sales coordinator",
-        reportingTo: "Priyanka Omprakash Motiani",
-        status: "Active",
-      },
-    ];
-
-    // this.bank = [
-    //   {
-    //     bankName: "GS MAHANAGAR CO-OP BANK LTD.",
-    //     accounttype: "GSMHA/Current account",
-    //     accountNo: "007011200003797",
-    //     IFSC: "MCBL0960007",
-    //     bankBranch: "LALBAUG",
-    //     status: "Active",
-    //   },
-    //   {
-    //     bankName: "KOTAK MAHINDRA BANK",
-    //     accounttype: "KMBL/ CA",
-    //     accountNo: "06402000000484",
-    //     IFSC: "KKBK0000640",
-    //     bankBranch: "PAREL",
-    //     status: "Active",
-    //   },
-    // ];
-
-    this.gst = [
-      { state: "Maharashtra", gst1: "27AACCC1130A1ZL", status: "Active" },
-      { state: "Haryana", gst1: "4243453STt06", status: "Active" },
-    ];
+    this.gstList();
+   
   }
 
-  openDialogForGeneraledit() {
+   // company field data 
+   companyData() {
+    const company_data =
+    {
+      "iRequestID": 2001,
+      "iCID": 1
+
+    };
+    this.apiService.callPostApi(company_data).subscribe(
+      data => {
+        console.log(data);
+        this.compData = data;
+      },
+      error => console.log(error)
+    );
+  }
+  // dialog for general edit
+  openDialogForGeneraledit(dt) {
     const ref = this.dialogService.open(GeneralEditComponent, {
-      data: {},
+      data: dt,
       header: "Edit Details",
       width: "28%",
     });
@@ -341,6 +92,7 @@ export class CompanyComponent implements OnInit {
       if (success) {
         // this.toastService.addSingle("success", "Mail send successfully", "");
       }
+      this.companyData();
     });
   }
   openDialogForaddNewAddress() {
@@ -356,6 +108,7 @@ export class CompanyComponent implements OnInit {
       }
     });
   }
+  //open dialog for add departemnt
   openDialogForaddDepartment() {
     const ref = this.dialogService.open(DepartmentComponent, {
       data: {},
@@ -367,9 +120,10 @@ export class CompanyComponent implements OnInit {
       if (success) {
         // this.toastService.addSingle("success", "Mail send successfully", "");
       }
+      this.departmentList();
     });
   }
-
+  //open dialog for edit department
   openDialogForeditDepartment(department) {
     const ref = this.dialogService.open(DepartmentComponent, {
       data: department,
@@ -381,9 +135,10 @@ export class CompanyComponent implements OnInit {
       if (success) {
         // this.toastService.addSingle("success", "Mail send successfully", "");
       }
+      this.departmentList();
     });
   }
-
+  //show all list of department
   departmentList() {
     const department_data = {
       iRequestID: 2055,
@@ -397,8 +152,8 @@ export class CompanyComponent implements OnInit {
       (error) => console.log(error)
     );
   }
-
-  deleteService(department: departmentData) {
+  // delete departemnt
+  deleteDepartemnt(department: departmentData) {
     let dep_id = department.iDeptID;
     let delete_data_api = {
       iRequestID: 2054,
@@ -411,28 +166,10 @@ export class CompanyComponent implements OnInit {
       },
       (error) => console.log(error)
     );
+    this.departmentList();
 
-    // this._apiService.callPostApi(delete_data_api).subscribe((data) => {
-    //   if (data.success) {
-    //     //this.department = this.department.filter((c) => c !== department);
-    //   }
-    // });
-    // console.log("delete");
   }
 
-  openDialogForDesignation() {
-    const ref = this.dialogService.open(DesignationComponent, {
-      data: {},
-      header: "Add New Designation",
-      width: "28%",
-    });
-
-    ref.onClose.subscribe((success: boolean) => {
-      if (success) {
-        // this.toastService.addSingle("success", "Mail send successfully", "");
-      }
-    });
-  }
   openDialogForEmployee() {
     const ref = this.dialogService.open(EmployeeComponent, {
       data: {},
@@ -446,19 +183,8 @@ export class CompanyComponent implements OnInit {
       }
     });
   }
-  openDialogForBank() {
-    const ref = this.dialogService.open(BankComponent, {
-      data: {},
-      header: "Add New Bank",
-      width: "50%",
-    });
-
-    ref.onClose.subscribe((success: boolean) => {
-      if (success) {
-        // this.toastService.addSingle("success", "Mail send successfully", "");
-      }
-    });
-  }
+  
+  //open dialog  for add gst
   openDialogForGST() {
     const ref = this.dialogService.open(GstComponent, {
       data: {},
@@ -470,23 +196,11 @@ export class CompanyComponent implements OnInit {
       if (success) {
         // this.toastService.addSingle("success", "Mail send successfully", "");
       }
+      this.gstList();
     });
   }
 
-  updateDesig(desig) {
-    const ref = this.dialogService.open(DesignationComponent, {
-      data: desig,
-      header: "Edit Designation",
-      width: "28%",
-    });
-
-    ref.onClose.subscribe((success: boolean) => {
-      this.designationSelectData();
-      if (success) {
-        // this.toastService.addSingle("success", "Record Added successfully", "");
-      }
-    });
-  }
+  // open dialog for edit gst
   openDialogForEditGST(gst) {
     const ref = this.dialogService.open(GstComponent, {
       data: gst,
@@ -498,25 +212,52 @@ export class CompanyComponent implements OnInit {
       if (success) {
         // this.toastService.addSingle("success", "Mail send successfully", "");
       }
+      this.gstList();
     });
   }
+  // show all list of gst
+  gstList() {
+    const gst_data =
+    {
 
-  deleteBank(bank) {
-    let bank_id = bank.iBankID;
-    const deleteBank_data = {
-      iRequestID: 2044,
-      iCID: 1,
-      iBankID: bank_id,
+      "iRequestID": 2063,
+      "iCID": 1
+
     };
-    console.log(deleteBank_data);
-    this.apiService.callPostApi(deleteBank_data).subscribe(
-      (data) => {
+    this.apiService.callPostApi(gst_data).subscribe(
+      data => {
         console.log(data);
+        this.gst = data;
+
       },
-      (error) => console.log(error)
+      error => console.log(error)
     );
-    this.bankSelectData();
   }
+  //delete for gst
+  deleteGst(gst: gstData) {
+
+    let state_id = +gst.iStateID;
+    let delete_gst_data_api = {
+
+      "iRequestID": 2064,
+      "iStateID": state_id,
+      "iCID": 1
+    };
+    console.log(delete_gst_data_api);
+    this.apiService.callPostApi(delete_gst_data_api).subscribe(
+      data => {
+        console.log(data);
+
+      },
+      error => console.log(error)
+    );
+    this.gstList();
+
+  }
+
+  //new code
+
+ 
 
   designationSelectData() {
     const selectDesig_data = {
@@ -534,22 +275,57 @@ export class CompanyComponent implements OnInit {
       (error) => console.log(error)
     );
   }
-
-  updateBank(bank) {
-    const ref = this.dialogService.open(BankComponent, {
-      data: bank,
-      header: "Edit Bank",
-      width: "50%",
+  openDialogForDesignation() {
+    const ref = this.dialogService.open(DesignationComponent, {
+      data: {},
+      header: "Add New Designation",
+      width: "28%",
     });
 
     ref.onClose.subscribe((success: boolean) => {
-      this.bankSelectData();
+      
+      if (success) {
+        // this.toastService.addSingle("success", "Mail send successfully", "");
+      }
+      this.designationSelectData();
+    });
+  }
+  updateDesig(desig) {
+    const ref = this.dialogService.open(DesignationComponent, {
+      data: desig,
+      header: "Edit Designation",
+      width: "28%",
+    });
+
+    ref.onClose.subscribe((success: boolean) => {
+     
       if (success) {
         // this.toastService.addSingle("success", "Record Added successfully", "");
       }
+      this.designationSelectData();
     });
   }
-
+  deleteDesig(desig) {
+    let desig_id = desig.iDesigID;
+    const deleteDesig_data = {
+      iRequestID: 2083,
+      iCID: 1,
+      iDesigID: desig_id,
+      iUserID:2
+  
+    };
+    console.log(deleteDesig_data);
+    this.apiService.callPostApi(deleteDesig_data).subscribe(
+      (data) => {
+        console.log(data);
+        
+      },
+      (error) => console.log(error)
+    );
+    this.designationSelectData();
+    
+  }
+  
   bankSelectData() {
     const selectBank_data = {
       iRequestID: 2045,
@@ -566,4 +342,56 @@ export class CompanyComponent implements OnInit {
       (error) => console.log(error)
     );
   }
+  openDialogForBank() {
+    const ref = this.dialogService.open(BankComponent, {
+      data: {},
+      header: "Add New Bank",
+      width: "50%",
+    });
+  
+    ref.onClose.subscribe((success: boolean) => {
+     
+      if (success) {
+        // this.toastService.addSingle("success", "Mail send successfully", "");
+      }
+      this.bankSelectData();
+    });
+  }
+
+  updateBank(bank) {
+    const ref = this.dialogService.open(BankComponent, {
+      data: bank,
+      header: "Edit Bank",
+      width: "50%",
+    });
+
+    ref.onClose.subscribe((success: boolean) => {
+      console.log("123")
+    
+      if (success) {
+      
+        // this.toastService.addSingle("success", "Record Added successfully", "");
+      }
+      this.bankSelectData();
+    });
+  }
+  deleteBank(bank) {
+    let bank_id = bank.iBankID;
+    const deleteBank_data = {
+      iRequestID: 2044,
+      iCID: 1,
+      iBankID: bank_id,
+    };
+    console.log(deleteBank_data);
+    this.apiService.callPostApi(deleteBank_data).subscribe(
+      (data) => {
+        console.log(data);
+        
+      },
+      (error) => console.log(error)
+    );
+    this.bankSelectData();
+
+  }
+
 }

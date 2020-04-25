@@ -5,10 +5,17 @@
 
             <div class="p-grid form-group">
 
-                <div class="p-col-12">
+                <div class="p-col-12" [ngClass]="{'has-error': DepartmentSubmit.get('departmentname').errors &&
+                (DepartmentSubmit.get('departmentname').touched || DepartmentSubmit.get('departmentname').dirty)}">
                     <label for="departmentname">Department Name</label>
                     <input id="departmentname" class="form-control" type="text" formControlName="departmentname"
-                        pInputText editable="true" required>
+                        pInputText>
+                    <span *ngIf="DepartmentSubmit.get('departmentname').errors &&
+                    (DepartmentSubmit.get('departmentname').touched || DepartmentSubmit.get('departmentname').dirty)">
+                        <span class="text-danger" *ngIf="DepartmentSubmit.get('departmentname').errors.required">
+                            This Field is Required
+                        </span>
+                    </span>
                 </div>
 
                 <div class="p-col-12">
@@ -19,9 +26,10 @@
                 <div class="p-col-12">
                     <label for="status">Status</label>
                     <p-dropdown id="status" class="form-control" [options]="seldepartmentStatus"
-                        formControlName="depstatus" optionLabel="sKVValue" editable="true" placeholder="select"
-                        required>
+                        formControlName="depstatus" name="depstatus" optionLabel="sKVValue">
                     </p-dropdown>
+
+                    <span *ngIf="hasDropDownError">This Field is Required</span>
                 </div>
 
             </div>
@@ -29,8 +37,8 @@
             <div class="p-grid form-group ui-fluid">
                 <div class="p-md-6 p-lg-6"></div>
                 <div class="p-col-12 p-md-3 p-lg-3">
-                    <button pButton type="button" label="Cancel" style="margin-bottom:10px"
-                        class="ui-button-light"></button>
+                    <button pButton type="button" label="Cancel" style="margin-bottom:10px" class="ui-button-light"
+                        (click)="close()"></button>
                 </div>
                 <div class="p-col-12 p-md-3 p-lg-3">
                     <button pButton type="submit" label="Save" [disabled]="!DepartmentSubmit.valid"

@@ -10,6 +10,12 @@
             pInputText
             formControlName="desig_name"
           />
+          <span class="text-danger" *ngIf="desigForm.get('desig_name').errors 
+          && (desigForm.get('desig_name').touched|| desigForm.get('desig_name').dirty)">
+          <span *ngIf="desigForm.get('desig_name').errors.pattern">Numeric values not allowed</span>
+      
+        <span *ngIf="desigForm.get('desig_name').errors.required">This field is required</span>
+        </span>
         </div>
 
         <div class="p-col-12">
@@ -20,6 +26,10 @@
             pInputText
             formControlName="desig_level"
           />
+          <span class="text-danger" *ngIf="desigForm.get('desig_level').errors 
+          && (desigForm.get('desig_level').touched|| desigForm.get('desig_level').dirty)">
+          <span *ngIf="desigForm.get('desig_level').errors.required">This field is required</span>
+          </span>
         </div>
 
         <div class="p-col-12">
@@ -34,9 +44,12 @@
             [options]="statusData"
             optionLabel="sKVValue"
             formControlName="status"
-            editable="true"
-            placeholder="select"
           ></p-dropdown>
+          <span class="text-danger" *ngIf="desigForm.get('status').errors 
+          && (desigForm.get('status').touched|| desigForm.get('status').dirty)">
+          <span *ngIf="desigForm.get('status').errors.required">This field is required</span>
+          
+          </span>
         </div>
       </div>
       <div
@@ -51,6 +64,7 @@
             label="Cancel"
             style="margin-bottom: 10px;"
             class="ui-button-light"
+            (click)="onClose()"
           ></button>
         </div>
         <div class="p-col-12 p-md-3 p-lg-3">
