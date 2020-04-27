@@ -65,6 +65,7 @@ items: MenuItem[];
     this.designationSelectData();
     this.gstList();
     this.getAllAddressesList();
+    this.showEmployee();
 
 
   }
@@ -479,7 +480,7 @@ onDeleteAddress(addressId : number){
       data: {
         "employeeId":employeeId
       },
-      header: 'Add New Employee',
+      header: 'Edit Employee',
       width: '80%'
     });
 
