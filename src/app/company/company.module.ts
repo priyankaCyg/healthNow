@@ -4,7 +4,7 @@ import { CompanyRoutingModule } from './company-routing.module';
 import { CompanyComponent } from './company.component';
 // import { httpInterceptorProviders } from '../interceptors/httpinterceptors';
 
-import {FormsModule,ReactiveFormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {GeneralEditComponent} from './general-edit/general-edit.component'
 import { AddNewAddressComponent } from './add-new-address/add-new-address.component';
 import { DepartmentComponent } from './department/department.component';
@@ -38,12 +38,13 @@ import {APIService} from '../services/apieservice'
 
 
 @NgModule({
-  declarations: [CompanyComponent,GeneralEditComponent, AddNewAddressComponent, DepartmentComponent, DesignationComponent, EmployeeComponent, BankComponent, GstComponent],
+  declarations: [CompanyComponent, GeneralEditComponent, AddNewAddressComponent, DepartmentComponent, DesignationComponent, EmployeeComponent, BankComponent, GstComponent],
   imports: [
     CommonModule,
     CompanyRoutingModule,
     ReactiveFormsModule,
     FormsModule,
+    ReactiveFormsModule,
     ButtonModule,
     PanelModule,
     TabMenuModule,
