@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { BreadcrumbService } from '../breadcrumb.service';
-import { CountryService } from '../demo/service/countryservice';
 import { SelectItem, MenuItem } from 'primeng/api';
 import { GeneralEditComponent } from './general-edit/general-edit.component';
 import { AddNewAddressComponent } from './add-new-address/add-new-address.component';
@@ -13,6 +12,8 @@ import { GeneratedFile } from '@angular/compiler';
 import { DialogService } from 'primeng';
 import { from } from 'rxjs';
 import {APIService} from '../services/apieservice';
+import {ConfirmationService} from 'primeng/api';
+import {ToastService} from '../services/toast.service'
 
 @Component({
   selector: 'app-company',
@@ -36,7 +37,7 @@ export class CompanyComponent implements OnInit {
     gst: any[];
 
     constructor(private breadcrumbService: BreadcrumbService, private dialogService:DialogService,
-      private apiService:APIService) {
+      private confirmationService: ConfirmationService,private apiService:APIService,private toastService:ToastService) {
         this.breadcrumbService.setItems([
             { label: 'Dashboard' },
             { label: 'Company', routerLink: ['/app/company'] }
@@ -45,77 +46,12 @@ export class CompanyComponent implements OnInit {
 
    ngOnInit() {
 
-        this.items = [
-            { label: 'Angular.io', icon: 'pi pi-external-link', url: 'http://angular.io' },
-            { label: 'Theming', icon: 'pi pi-file', routerLink: ['/theming'] }
-        ];
 
-        this.address = [
-          { addresstype: 'Registered', address1: 'address01', address2: 'address001', state: 'Maharashtra', city: 'Thane', landmark: 'Hirandadni', tel1:'4564466456',tel2:'77887897899',fax:'25588525858', status:'Active'},
-          { addresstype: 'Wearhouse', address1: 'address02', address2: 'address002', state: 'Maharashtra', city: 'Bhiwandi', landmark: 'Hirandadni', tel1:'4564466456',tel2:'77887897899',fax:'25588525858', status:'Active' },
-          { addresstype: 'Registered', address1: 'address03', address2: 'address003', state: 'Maharashtra', city: 'Mumbai', landmark: 'Hirandadni', tel1:'4564466456',tel2:'77887897899',fax:'25588525858', status:'Active' },
-          { addresstype: 'Wearhouse', address1: 'address04', address2: 'address004', state: 'Maharashtra', city: 'Bhiwandi', landmark: 'Hirandadni', tel1:'4564466456',tel2:'77887897899',fax:'25588525858', status:'Active' },
-          { addresstype: 'Wearhouse', address1: 'address05', address2: 'address005', state: 'Maharashtra', city: 'Mumbai', landmark: 'Hirandadni', tel1:'4564466456',tel2:'77887897899',fax:'25588525858', status:'Active' },
-          { addresstype: 'Registered', address1: 'address06', address2: 'address006', state: 'Maharashtra', city: 'Thane', landmark: 'Hirandadni', tel1:'4564466456',tel2:'77887897899',fax:'25588525858', status:'Active' },
-          { addresstype: 'Registered', address1: 'address07', address2: 'address007', state: 'Maharashtra', city: 'Bhiwandi', landmark: 'Hirandadni', tel1:'4564466456',tel2:'77887897899',fax:'25588525858', status:'Active' },
-          { addresstype: 'Wearhouse', address1: 'address08', address2: 'address008', state: 'Maharashtra', city: 'Mumbai', landmark: 'Hirandadni', tel1:'4564466456',tel2:'77887897899',fax:'25588525858', status:'Active' },
-          { addresstype: 'Registered', address1: 'address09', address2: 'address009', state: 'Maharashtra', city: 'Thane', landmark: 'Hirandadni', tel1:'4564466456',tel2:'77887897899',fax:'25588525858', status:'Active' },
-          { addresstype: 'Wearhouse', address1: 'address010', address2: 'address0010', state: 'Maharashtra', city: 'Bhiwandi', landmark: 'Hirandadni', tel1:'4564466456',tel2:'77887897899',fax:'25588525858', status:'Active' }
-        ];
-
-        this.department =[
-          {departmentName: 'Sales', status: 'Active'},
-          {departmentName: 'Accounts', status: 'Active'},
-          {departmentName: 'Service', status: 'Active'},
-          {departmentName: 'IT', status: 'Active'},
-          {departmentName: 'Admin', status: 'Active'},
-          {departmentName: 'HR', status: 'Active'}
-        ];
-
-        this.designation = [
-          {designationName: 'CFO', designationLevel: '2', status: 'Active'},
-          {designationName: 'CTO', designationLevel: '3', status: 'Active'},
-          {designationName: 'COO', designationLevel: '4', status: 'Active'},
-          {designationName: 'Manager', designationLevel: '5', status: 'Active'},
-          {designationName: 'Sales Manager', designationLevel: '6', status: 'Active'},
-          {designationName: 'Service Manager', designationLevel: '7', status: 'Active'},
-          {designationName: 'Account Manager', designationLevel: '8', status: 'Active'},
-          {designationName: 'Accountant', designationLevel: '9', status: 'Active'},
-          {designationName: 'Account Assistant', designationLevel: '10', status: 'Active'},
-          {designationName: 'Service coordinator', designationLevel: '11', status: 'Active'},
-          {designationName: 'Engineer', designationLevel: '12', status: 'Active'},
-          {designationName: 'Warehouse Incharge', designationLevel: '13', status: 'Active'},
-          {designationName: 'Sales coordinator', designationLevel: '14', status: 'Active'},
-          {designationName: 'Office Assistant', designationLevel: '15', status: 'Active'},
-          {designationName: 'HR', designationLevel: '16', status: 'Active'}
-        ];
-
-        this.employee = [
-          { employeeCode: '190104254', firstName: 'Pragati', middleName: 'Baghwandas', lastName: 'Varma', department: 'Sales', designation: 'Sales coordinator', reportingTo:'Vikas Sitaram Narkar', status:'Active'},
-          { employeeCode: '120403180', firstName: 'Santosh', middleName: 'Chandrakant', lastName: 'Trimbake', department: 'Sales', designation: 'Warehouse Incharge', reportingTo:'Rajiv A Gandhi', status:'Active'},
-          { employeeCode: '130106184', firstName: 'Nilesh', middleName: 'Sunil', lastName: 'Mahadik', department: 'Sales', designation: 'Sales Manager', reportingTo:'Krishna KamalKishor Biyani', status:'Active'},
-          { employeeCode: '102102162', firstName: 'Hemangi', middleName: 'Raju', lastName: 'Bavkar', department: 'Sales', designation: 'Manager', reportingTo:'Pragati Kunal Jadhav', status:'Active'},
-          { employeeCode: '162206230', firstName: 'Supriya', middleName: 'Vilas', lastName: 'Bandarkar', department: 'Sales', designation: 'Sales coordinator', reportingTo:'Priyanka Omprakash Motiani', status:'Active'}
-        ];
-
-        this.bank = [
-          {bankName: 'GS MAHANAGAR CO-OP BANK LTD.', accounttype: 'GSMHA/Current account', accountNo: '007011200003797', IFSC: 'MCBL0960007', bankBranch: 'LALBAUG',  status: 'Active'},
-          {bankName: 'KOTAK MAHINDRA BANK', accounttype: 'KMBL/ CA', accountNo: '06402000000484', IFSC: 'KKBK0000640', bankBranch: 'PAREL',  status: 'Active'}
-        ];
-
-        this.gst = [
-          {state: 'Maharashtra', gst1: '27AACCC1130A1ZL', status: 'Active'},
-          {state: 'Haryana', gst1: '4243453STt06', status: 'Active'}
-        ];
-
-        // this.apiService.getDetails()
-
-        // this.apiService.getDetails().then(files => {
-        //   this.employee = files
-        // });
+        this.showEmployee();
 
       
     }
+    
 
     openDialogForGeneraledit() {
       const ref = this.dialogService.open( GeneralEditComponent , {
@@ -173,6 +109,8 @@ export class CompanyComponent implements OnInit {
         }
       });
     }
+
+    //Open Dialog To Add Employee
     openDialogForEmployee() {
       const ref = this.dialogService.open( EmployeeComponent , {
         data: {
@@ -183,10 +121,70 @@ export class CompanyComponent implements OnInit {
   
       ref.onClose.subscribe((success: boolean) => {
         if (success) {
-          // this.toastService.addSingle("success", "Mail send successfully", "");
+          this.showEmployee();
+          this.toastService.addSingle("success", "Employee Added Successfully", "");
         }
       });
     }
+
+    //List Employee Details
+    showEmployee()
+    {
+      var dataToSend ={
+        "iRequestID":2031,
+        "iCID" :1
+    }
+      this.apiService.getDetails(dataToSend).then(response => {
+        console.log("Response for Employee ",response)
+        this.employee = response
+      });
+    }
+
+    //Open Dialog To Edit Employee
+    editEmployee(employeeId) {
+      const ref = this.dialogService.open( EmployeeComponent , {
+        data: {
+          "employeeId":employeeId
+        },
+        header: 'Add New Employee',
+        width: '80%'
+      });
+  
+      ref.onClose.subscribe((success: boolean) => {
+        if (success) {
+          this.showEmployee();
+          this.toastService.addSingle("success", "Updated Successfully", "");
+        }
+      });
+    }
+
+    //Open Dialog To Delete Employee
+    deleteEmployee(employeeId){
+      this.confirmationService.confirm({
+        message: 'Are you sure that you want to proceed?',
+        header: 'Confirmation',
+        icon: 'pi pi-exclamation-triangle',
+        accept: () => {
+          var dataToSendDelete = {
+            "iRequestID":2034,
+            "iEmpID":employeeId,
+            "iCID":1
+          }
+
+          this.apiService.getDetails(dataToSendDelete).then(response => {
+            console.log("Response for Employee Delete ",response)
+            this.toastService.addSingle("info", "Successfully Deleted", "Successfully Deleted");
+            this.showEmployee();
+          });
+        },
+        reject: () => {
+    this.toastService.addSingle("info", "Rejected", "Rejected");
+
+        }
+    });
+    }
+
+
     openDialogForBank() {
       const ref = this.dialogService.open( BankComponent , {
         data: {

@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { LandingPageRoutingModule } from './landing-page-routing.module';
 import { LandingPageComponent } from './landing-page.component';
-import { httpInterceptorProviders } from '../interceptors/httpinterceptors';
+// import { httpInterceptorProviders } from '../interceptors/httpinterceptors';
 
 import {FormsModule} from '@angular/forms';
 import {GenrelEditComponent} from './generalEdit/generalEdit.component'
@@ -42,7 +42,9 @@ import {DynamicDialogModule} from 'primeng/dynamicdialog';
     TabViewModule,
     DynamicDialogModule
   ],
-  providers:[httpInterceptorProviders,DialogService,MessageService],
+  providers:[
+    // httpInterceptorProviders,
+    DialogService,MessageService],
   entryComponents:[GenrelEditComponent]
 })
 export class LandingPageModule { }

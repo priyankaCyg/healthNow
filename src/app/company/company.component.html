@@ -1,3 +1,5 @@
+<p-confirmDialog header="Confirmation" icon="pi pi-info" [style]="{width: '425px'}" rejectButtonStyleClass="ui-button-secondary"></p-confirmDialog>
+
 <div class="p-grid">
     <div class="p-col-12">
         <div class="card card-w-title">
@@ -197,17 +199,17 @@
                                 </ng-template>
                                 <ng-template pTemplate="body" let-employee>
                                     <tr>
-                                            <td>{{employee.employeeCode}}</td>
-                                            <td>{{employee.firstName}}</td>
-                                            <td>{{employee.middleName}}</td>
-                                            <td>{{employee.lastName}}</td>
-                                            <td>{{employee.department}}</td>
-                                            <td>{{employee.designation}}</td>
-                                            <td>{{employee.reportingTo}}</td>
-                                            <td>{{employee.status}}</td>
+                                            <td>{{employee.sEmpCode}}</td>
+                                            <td>{{employee.sFirstName}}</td>
+                                            <td>{{employee.sMiddleName}}</td>
+                                            <td>{{employee.sLastName}}</td>
+                                            <td>{{employee.sDeptName}}</td>
+                                            <td>{{employee.sDesigName}}</td>
+                                            <td>{{employee.sReportingTo}}</td>
+                                            <td>{{employee.iStatusID}}</td>
                                             <td>
-                                                <button pButton type="button" class="ui-button-success" icon="pi pi-pencil" style="margin-right: .5em"></button>
-                                                <button pButton type="button" class="ui-button-danger" icon="pi pi-trash"></button>
+                                                <button pButton type="button" (click)="editEmployee(employee.iEmpID)" class="ui-button-success" icon="pi pi-pencil" style="margin-right: .5em"></button>
+                                                <button pButton type="button" (click)="deleteEmployee(employee.iEmpID)"   class="ui-button-danger" icon="pi pi-trash"></button>
                                             </td>
                                     </tr>
                                 </ng-template>

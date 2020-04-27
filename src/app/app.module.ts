@@ -7,7 +7,7 @@ import {HashLocationStrategy, LocationStrategy} from '@angular/common';
 import {AppRoutes} from './app.routes';
 import { AuthGuard } from './services/authguard';
 import { LoginService } from './services/login.service';
-import { httpInterceptorProviders } from './interceptors/httpinterceptors';
+// import { httpInterceptorProviders } from './interceptors/httpinterceptors';
 
 
 // PrimeNG Components for demos
@@ -230,7 +230,7 @@ import { ProductComponent } from './product/product.component';
     ],
     providers: [
         AuthGuard,
-        httpInterceptorProviders,
+        // httpInterceptorProviders,
         MessageService,
         {provide: LocationStrategy, useClass: HashLocationStrategy},
         CarService, CountryService, EventService, NodeService, BreadcrumbService, MenuService,

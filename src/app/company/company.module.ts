@@ -2,9 +2,9 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CompanyRoutingModule } from './company-routing.module';
 import { CompanyComponent } from './company.component';
-import { httpInterceptorProviders } from '../interceptors/httpinterceptors';
+// import { httpInterceptorProviders } from '../interceptors/httpinterceptors';
 
-import {FormsModule} from '@angular/forms';
+import {FormsModule,ReactiveFormsModule} from '@angular/forms';
 import {GeneralEditComponent} from './general-edit/general-edit.component'
 import { AddNewAddressComponent } from './add-new-address/add-new-address.component';
 import { DepartmentComponent } from './department/department.component';
@@ -16,6 +16,7 @@ import { GstComponent } from './gst/gst.component';
 //Prime Ng Service
 import { DialogService } from 'primeng';
 import {TreeTableModule} from 'primeng/treetable';
+import {ConfirmationService} from 'primeng/api';
 //Prime Ng Module
 import {ButtonModule} from 'primeng/button';
 import {PanelModule} from 'primeng/panel';
@@ -27,6 +28,12 @@ import {DynamicDialogModule} from 'primeng/dynamicdialog';
 import {DropdownModule} from 'primeng/dropdown';
 import {InputTextareaModule} from 'primeng/inputtextarea';
 import {InputTextModule} from 'primeng/inputtext';
+import {MessagesModule} from 'primeng/messages';
+import {MessageModule} from 'primeng/message';
+import {ConfirmDialogModule} from 'primeng/confirmdialog';
+
+//custom services
+import {APIService} from '../services/apieservice'
 
 
 
@@ -35,6 +42,7 @@ import {InputTextModule} from 'primeng/inputtext';
   imports: [
     CommonModule,
     CompanyRoutingModule,
+    ReactiveFormsModule,
     FormsModule,
     ButtonModule,
     PanelModule,
@@ -46,9 +54,12 @@ import {InputTextModule} from 'primeng/inputtext';
     DropdownModule,
     InputTextModule,
     InputTextareaModule,
-    TreeTableModule
+    TreeTableModule,
+    MessagesModule,
+    MessageModule,
+    ConfirmDialogModule
   ],
-  providers:[httpInterceptorProviders,DialogService],
+  providers:[DialogService,APIService,ConfirmationService],
   entryComponents:[GeneralEditComponent,AddNewAddressComponent,DepartmentComponent,DesignationComponent,EmployeeComponent,BankComponent,GstComponent]
 })
 export class CompanyModule { }
