@@ -282,11 +282,13 @@ export class EmployeeComponent implements OnInit {
       "iCID":1
           }
     
-          // alert(JSON.stringify(dataToSend1))
+          console.log("For Reporting To ",JSON.stringify(dataToSend1))
     
         this.apiService.getDetails(dataToSend1).then(response => {
           console.log("Response for Reporting To ",response)
           this.reportingToData = response
+      this.reportingToData.splice(0, 0, {iEmpID: "", sReportingTo: "Select Reporting to"})
+
           if(response!=null || response!="")
           {
           let selectedReportToObj = this.reportingToData.find(x => x.iEmpID == this.employeeData.iReportingToID);
@@ -324,11 +326,15 @@ export class EmployeeComponent implements OnInit {
 	"iCID":1
       }
 
-      // alert(JSON.stringify(dataToSend1))
+      console.log(JSON.stringify(dataToSend1))
 
     this.apiService.getDetails(dataToSend1).then(response => {
       console.log("Response for Reporting To ",response)
       this.reportingToData = response
+      this.reportingToData.splice(0, 0, {iEmpID: "", sReportingTo: "Select Reporting to"})
+
+    this.selectedreportingTo = {iEmpID: "", sReportingTo: "Select Reporting to"};
+
     });
   }
 
@@ -361,7 +367,7 @@ export class EmployeeComponent implements OnInit {
     }
 
     
-    this.apiService.getDetails(dataToSendAdd).then(response => {
+    this.apiService.getApiDetails(dataToSendAdd).then(response => {
       console.log("Response for Employee Add ",response)
       // alert(response)
     this.ref.close();
@@ -400,8 +406,8 @@ export class EmployeeComponent implements OnInit {
 
     
     this.apiService.getApiDetails(dataToSendAdd).then(response => {
-      console.log("Response for Employee Add ",response)
-      alert(response)
+      console.log("Response for Employee Edit ",response)
+      // alert(response)
     this.ref.close();
 
     });
@@ -450,39 +456,40 @@ export class EmployeeComponent implements OnInit {
 
   dropDownValidityCheck()
   {
+    console.log(this.employeeForm.invalid)
    
     if(this.selectedgender.iKVID=='')
     {
-      return false;
+      return true;
     }
     else if(this.selectedsaddress.iAddID=='')
     {
-      return false
+      return true
     }
     else if(this.selectedstatus.iKVID=='')
     {
-      return false
+      return true
     }
     else if(this.selecteddepartment.iDeptID=='')
     {
-      return false
+      return true
     }
     else if(this.selecteddesignation.iDesigID=='')
     {
-      return false
+      return true
     }
     else if(this.selectedreportingTo.iEmpID=='')
     {
-      return false
-    }
-    else if(this.selectedstatus.iRoleID=='')
-    {
-      return false
-    }
-    else{
       return true
     }
+    else if(this.selectedrole.iRoleID=='')
+    {
+      return true
+    }
+    else{
+      return false
+    }
+    
     
   }
-
 }
