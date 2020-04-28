@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { BreadcrumbService } from '../breadcrumb.service';
-import { CountryService } from '../demo/service/countryservice';
 import { SelectItem, MenuItem } from 'primeng/api';
 import { GeneralEditComponent } from './general-edit/general-edit.component';
 import { AddNewAddressComponent } from './add-new-address/add-new-address.component';
@@ -12,198 +11,511 @@ import { GstComponent } from './gst/gst.component';
 import { GeneratedFile } from '@angular/compiler';
 import { DialogService } from 'primeng';
 import { from } from 'rxjs';
+import {APIService} from '../services/apieservice';
+import {ConfirmationService} from 'primeng/api';
+import { CompanyAddress } from '../models/company-address.model';
+import { BankData } from "../model/slelectAllBank.model";
+import { ApiService } from "../services/api.service";
+import { ToastService } from "../services/toast.service";
+import { DesignationData } from "../model/selectAllDesignation";
+import { departmentData } from "../model/department";
+import { gstData } from "../model/gst";
+import { companyData } from '../model/company';
 
 @Component({
-  selector: 'app-company',
-  templateUrl: './company.component.html',
-  styleUrls: ['./company.component.css']
+  selector: "app-company",
+  templateUrl: "./company.component.html",
+  styleUrls: ["./company.component.css"],
 })
 export class CompanyComponent implements OnInit {
 
-    items: MenuItem[];
+items: MenuItem[];
+  compData: companyData[];
+  addressDataArray: CompanyAddress[];
+  addressData : CompanyAddress;
+  department: departmentData[];
+  gst: gstData[];
+  bankData: BankData[];
+  designationData: DesignationData[];
+  employee;
+  constructor(
+    private breadcrumbService: BreadcrumbService,
+    private dialogService: DialogService,
+    private apiService: ApiService,
+    private toastService: ToastService,
+    private confirmationService: ConfirmationService,private _apiService:APIService) {
+    this.breadcrumbService.setItems([
+      { label: "Dashboard" },
+      { label: "Company", routerLink: ["/app/company"] },
+    ]);
+  }
 
-    address: any[];
+  ngOnInit() {
+    this.items = [
+      {
+        label: "Angular.io",
+        icon: "pi pi-external-link",
+        url: "http://angular.io",
+      },
+      { label: "Theming", icon: "pi pi-file", routerLink: ["/theming"] },
+    ];
+    this.companyData();
+    this.departmentList();
+    this.bankSelectData();
+    this.designationSelectData();
+    this.gstList();
+    this.getAllAddressesList();
+    this.showEmployee();
 
-    department: any[];
 
-    designation: any[];
+  }
+  // company field data 
+  companyData() {
+    const company_data =
+    {
+      "iRequestID": 2001,
+      "iCID": 1
 
-    employee: any[];
+    };
+    this.apiService.callPostApi(company_data).subscribe(
+      data => {
+        console.log(data);
+        this.compData = data;
+      },
+      error => console.log(error)
+    );
+  }
+  // dialog for general edit
+  openDialogForGeneraledit(dt) {
+    const ref = this.dialogService.open(GeneralEditComponent, {
+      data: dt,
+      header: "Edit Details",
+      width: "28%",
+    });
 
-    bank: any[];
+    ref.onClose.subscribe((success: boolean) => {
+      if (success) {
+        // this.toastService.addSingle("success", "Mail send successfully", "");
+      }
+      this.companyData();
+    });
+  }
+ // Get address list start
+ getAllAddressesList(){
+  const all_address_api =
+  {
+    "iRequestID":2015,
+    "iCID" :1
+}
+this.apiService.callPostApi(all_address_api).subscribe(
+ data => { 
+ console.log(data);
+ this.addressDataArray = data;
+ }, 
+ error => console.log(error)
+ );
+}
+// Get address list end
 
-    gst: any[];
+// open modal for new address start
+openDialogForaddNewAddress() {
+  const ref = this.dialogService.open( AddNewAddressComponent , {
+    data: {
+    },
+    header: 'Add New Address',
+    width: '80%'
+  });
 
-    constructor(private breadcrumbService: BreadcrumbService, private dialogService:DialogService) {
-        this.breadcrumbService.setItems([
-            { label: 'Dashboard' },
-            { label: 'Company', routerLink: ['/app/company'] }
-        ]);
+  ref.onClose.subscribe((success: boolean) => {
+    this.getAllAddressesList();
+    if (success) {
+      // this.toastService.addSingle("success", "Mail send successfully", "");
     }
+  });
+}
+// open modal for new address end
 
-   ngOnInit() {
+// open modal for edit address start
+openDialogForeditAddress(address : CompanyAddress) {
+  const ref = this.dialogService.open(AddNewAddressComponent, {
+    data:address,
+    header: 'Edit Addrees',
+    width: '80%'
+  });
 
-        this.items = [
-            { label: 'Angular.io', icon: 'pi pi-external-link', url: 'http://angular.io' },
-            { label: 'Theming', icon: 'pi pi-file', routerLink: ['/theming'] }
-        ];
-
-        this.address = [
-          { addresstype: 'Registered', address1: 'address01', address2: 'address001', state: 'Maharashtra', city: 'Thane', landmark: 'Hirandadni', tel1:'4564466456',tel2:'77887897899',fax:'25588525858', status:'Active'},
-          { addresstype: 'Wearhouse', address1: 'address02', address2: 'address002', state: 'Maharashtra', city: 'Bhiwandi', landmark: 'Hirandadni', tel1:'4564466456',tel2:'77887897899',fax:'25588525858', status:'Active' },
-          { addresstype: 'Registered', address1: 'address03', address2: 'address003', state: 'Maharashtra', city: 'Mumbai', landmark: 'Hirandadni', tel1:'4564466456',tel2:'77887897899',fax:'25588525858', status:'Active' },
-          { addresstype: 'Wearhouse', address1: 'address04', address2: 'address004', state: 'Maharashtra', city: 'Bhiwandi', landmark: 'Hirandadni', tel1:'4564466456',tel2:'77887897899',fax:'25588525858', status:'Active' },
-          { addresstype: 'Wearhouse', address1: 'address05', address2: 'address005', state: 'Maharashtra', city: 'Mumbai', landmark: 'Hirandadni', tel1:'4564466456',tel2:'77887897899',fax:'25588525858', status:'Active' },
-          { addresstype: 'Registered', address1: 'address06', address2: 'address006', state: 'Maharashtra', city: 'Thane', landmark: 'Hirandadni', tel1:'4564466456',tel2:'77887897899',fax:'25588525858', status:'Active' },
-          { addresstype: 'Registered', address1: 'address07', address2: 'address007', state: 'Maharashtra', city: 'Bhiwandi', landmark: 'Hirandadni', tel1:'4564466456',tel2:'77887897899',fax:'25588525858', status:'Active' },
-          { addresstype: 'Wearhouse', address1: 'address08', address2: 'address008', state: 'Maharashtra', city: 'Mumbai', landmark: 'Hirandadni', tel1:'4564466456',tel2:'77887897899',fax:'25588525858', status:'Active' },
-          { addresstype: 'Registered', address1: 'address09', address2: 'address009', state: 'Maharashtra', city: 'Thane', landmark: 'Hirandadni', tel1:'4564466456',tel2:'77887897899',fax:'25588525858', status:'Active' },
-          { addresstype: 'Wearhouse', address1: 'address010', address2: 'address0010', state: 'Maharashtra', city: 'Bhiwandi', landmark: 'Hirandadni', tel1:'4564466456',tel2:'77887897899',fax:'25588525858', status:'Active' }
-        ];
-
-        this.department =[
-          {departmentName: 'Sales', status: 'Active'},
-          {departmentName: 'Accounts', status: 'Active'},
-          {departmentName: 'Service', status: 'Active'},
-          {departmentName: 'IT', status: 'Active'},
-          {departmentName: 'Admin', status: 'Active'},
-          {departmentName: 'HR', status: 'Active'}
-        ];
-
-        this.designation = [
-          {designationName: 'CFO', designationLevel: '2', status: 'Active'},
-          {designationName: 'CTO', designationLevel: '3', status: 'Active'},
-          {designationName: 'COO', designationLevel: '4', status: 'Active'},
-          {designationName: 'Manager', designationLevel: '5', status: 'Active'},
-          {designationName: 'Sales Manager', designationLevel: '6', status: 'Active'},
-          {designationName: 'Service Manager', designationLevel: '7', status: 'Active'},
-          {designationName: 'Account Manager', designationLevel: '8', status: 'Active'},
-          {designationName: 'Accountant', designationLevel: '9', status: 'Active'},
-          {designationName: 'Account Assistant', designationLevel: '10', status: 'Active'},
-          {designationName: 'Service coordinator', designationLevel: '11', status: 'Active'},
-          {designationName: 'Engineer', designationLevel: '12', status: 'Active'},
-          {designationName: 'Warehouse Incharge', designationLevel: '13', status: 'Active'},
-          {designationName: 'Sales coordinator', designationLevel: '14', status: 'Active'},
-          {designationName: 'Office Assistant', designationLevel: '15', status: 'Active'},
-          {designationName: 'HR', designationLevel: '16', status: 'Active'}
-        ];
-
-        this.employee = [
-          { employeeCode: '190104254', firstName: 'Pragati', middleName: 'Baghwandas', lastName: 'Varma', department: 'Sales', designation: 'Sales coordinator', reportingTo:'Vikas Sitaram Narkar', status:'Active'},
-          { employeeCode: '120403180', firstName: 'Santosh', middleName: 'Chandrakant', lastName: 'Trimbake', department: 'Sales', designation: 'Warehouse Incharge', reportingTo:'Rajiv A Gandhi', status:'Active'},
-          { employeeCode: '130106184', firstName: 'Nilesh', middleName: 'Sunil', lastName: 'Mahadik', department: 'Sales', designation: 'Sales Manager', reportingTo:'Krishna KamalKishor Biyani', status:'Active'},
-          { employeeCode: '102102162', firstName: 'Hemangi', middleName: 'Raju', lastName: 'Bavkar', department: 'Sales', designation: 'Manager', reportingTo:'Pragati Kunal Jadhav', status:'Active'},
-          { employeeCode: '162206230', firstName: 'Supriya', middleName: 'Vilas', lastName: 'Bandarkar', department: 'Sales', designation: 'Sales coordinator', reportingTo:'Priyanka Omprakash Motiani', status:'Active'}
-        ];
-
-        this.bank = [
-          {bankName: 'GS MAHANAGAR CO-OP BANK LTD.', accounttype: 'GSMHA/Current account', accountNo: '007011200003797', IFSC: 'MCBL0960007', bankBranch: 'LALBAUG',  status: 'Active'},
-          {bankName: 'KOTAK MAHINDRA BANK', accounttype: 'KMBL/ CA', accountNo: '06402000000484', IFSC: 'KKBK0000640', bankBranch: 'PAREL',  status: 'Active'}
-        ];
-
-        this.gst = [
-          {state: 'Maharashtra', gst1: '27AACCC1130A1ZL', status: 'Active'},
-          {state: 'Haryana', gst1: '4243453STt06', status: 'Active'}
-        ];
-      
+  ref.onClose.subscribe((success: boolean) => {
+    this.getAllAddressesList();
+    if (success) {
+      // this.toastService.addSingle("success", "Mail send successfully", "");
     }
+  });
+}
 
-    openDialogForGeneraledit() {
-      const ref = this.dialogService.open( GeneralEditComponent , {
-        data: {
-        },
-        header: 'Edit Details',
-        width: '28%'
-      });
-  
-      ref.onClose.subscribe((success: boolean) => {
-        if (success) {
-          // this.toastService.addSingle("success", "Mail send successfully", "");
+
+ // open modal for delete address start
+onDeleteAddress(addressId : number){
+  const deleteAddressApi = {
+    "iRequestID":2014,
+    "iCID" :1,
+    "iAddID":addressId
+  }
+  if(confirm("Are you sure to delete this record?")){
+    this.apiService.callPostApi(deleteAddressApi).subscribe(
+      data => {
+        this.getAllAddressesList();
+    },
+    error => {
+      console.log(error)
+    }
+      ) 
+  }
+}
+ // open modal for delete address end
+  openDialogForaddDepartment() {
+    const ref = this.dialogService.open(DepartmentComponent, {
+      data: {},
+      header: "Add New Department",
+      width: "28%",
+    });
+
+    ref.onClose.subscribe((success: boolean) => {
+      if (success) {
+        // this.toastService.addSingle("success", "Mail send successfully", "");
+      }
+      this.departmentList();
+    });
+  }
+  //open dialog for edit department
+  openDialogForeditDepartment(department) {
+    const ref = this.dialogService.open(DepartmentComponent, {
+      data: department,
+      header: "Edit Department",
+      width: "28%",
+    });
+
+    ref.onClose.subscribe((success: boolean) => {
+      if (success) {
+        // this.toastService.addSingle("success", "Mail send successfully", "");
+      }
+      this.departmentList();
+    });
+  }
+  //show all list of department
+  departmentList() {
+    const department_data = {
+      iRequestID: 2055,
+      iCID: 1,
+    };
+    this.apiService.callPostApi(department_data).subscribe(
+      (data) => {
+        console.log(data);
+        this.department = data;
+      },
+      (error) => console.log(error)
+    );
+  }
+  // delete departemnt
+  deleteDepartemnt(department: departmentData) {
+    let dep_id = department.iDeptID;
+    let delete_data_api = {
+      iRequestID: 2054,
+      iCID: 1,
+      iDeptID: dep_id,
+    };
+    this.apiService.callPostApi(delete_data_api).subscribe(
+      (data) => {
+        console.log(data);
+      },
+      (error) => console.log(error)
+    );
+    this.departmentList();
+
+  }
+
+
+  //open dialog  for add gst
+  openDialogForGST() {
+    const ref = this.dialogService.open(GstComponent, {
+      data: {},
+      header: "Add New GST",
+      width: "28%",
+    });
+
+    ref.onClose.subscribe((success: boolean) => {
+      if (success) {
+        // this.toastService.addSingle("success", "Mail send successfully", "");
+      }
+      this.gstList();
+    });
+  }
+
+  // open dialog for edit gst
+  openDialogForEditGST(gst) {
+    const ref = this.dialogService.open(GstComponent, {
+      data: gst,
+      header: "Edit GST",
+      width: "28%",
+    });
+
+    ref.onClose.subscribe((success: boolean) => {
+      if (success) {
+        // this.toastService.addSingle("success", "Mail send successfully", "");
+      }
+      this.gstList();
+    });
+  }
+  // show all list of gst
+  gstList() {
+    const gst_data =
+    {
+
+      "iRequestID": 2063,
+      "iCID": 1
+
+    };
+    this.apiService.callPostApi(gst_data).subscribe(
+      data => {
+        console.log(data);
+        this.gst = data;
+
+      },
+      error => console.log(error)
+    );
+  }
+  //delete for gst
+  deleteGst(gst: gstData) {
+
+    let state_id = +gst.iStateID;
+    let delete_gst_data_api = {
+
+      "iRequestID": 2064,
+      "iStateID": state_id,
+      "iCID": 1
+    };
+    console.log(delete_gst_data_api);
+    this.apiService.callPostApi(delete_gst_data_api).subscribe(
+      data => {
+        console.log(data);
+
+      },
+      error => console.log(error)
+    );
+    this.gstList();
+
+  }
+
+  //new code
+
+
+
+  designationSelectData() {
+    const selectDesig_data = {
+      iRequestID: 2084,
+      iCID: 1,
+    };
+
+    this.apiService.callPostApi(selectDesig_data).subscribe(
+      (data) => {
+        console.log(data);
+        this.designationData = data;
+
+        console.log(this.designationData);
+      },
+      (error) => console.log(error)
+    );
+  }
+  openDialogForDesignation() {
+    const ref = this.dialogService.open(DesignationComponent, {
+      data: {},
+      header: "Add New Designation",
+      width: "28%",
+    });
+
+    ref.onClose.subscribe((success: boolean) => {
+
+      if (success) {
+        // this.toastService.addSingle("success", "Mail send successfully", "");
+      }
+      this.designationSelectData();
+    });
+  }
+  updateDesig(desig) {
+    const ref = this.dialogService.open(DesignationComponent, {
+      data: desig,
+      header: "Edit Designation",
+      width: "28%",
+    });
+
+    ref.onClose.subscribe((success: boolean) => {
+
+      if (success) {
+        // this.toastService.addSingle("success", "Record Added successfully", "");
+      }
+      this.designationSelectData();
+    });
+  }
+  deleteDesig(desig) {
+    let desig_id = desig.iDesigID;
+    const deleteDesig_data = {
+      iRequestID: 2083,
+      iCID: 1,
+      iDesigID: desig_id,
+      iUserID: 2
+
+    };
+    console.log(deleteDesig_data);
+    this.apiService.callPostApi(deleteDesig_data).subscribe(
+      (data) => {
+        console.log(data);
+
+      },
+      (error) => console.log(error)
+    );
+    this.designationSelectData();
+
+  }
+
+  bankSelectData() {
+    const selectBank_data = {
+      iRequestID: 2045,
+      iCID: 1,
+    };
+
+    this.apiService.callPostApi(selectBank_data).subscribe(
+      (data) => {
+        console.log(data);
+        this.bankData = data;
+
+        console.log(this.bankData);
+      },
+      (error) => console.log(error)
+    );
+  }
+  openDialogForBank() {
+    const ref = this.dialogService.open(BankComponent, {
+      data: {},
+      header: "Add New Bank",
+      width: "50%",
+    });
+
+    ref.onClose.subscribe((success: boolean) => {
+
+      if (success) {
+        // this.toastService.addSingle("success", "Mail send successfully", "");
+      }
+      this.bankSelectData();
+    });
+  }
+
+  updateBank(bank) {
+    const ref = this.dialogService.open(BankComponent, {
+      data: bank,
+      header: "Edit Bank",
+      width: "50%",
+    });
+
+    ref.onClose.subscribe((success: boolean) => {
+      console.log("123")
+
+      if (success) {
+
+        // this.toastService.addSingle("success", "Record Added successfully", "");
+      }
+      this.bankSelectData();
+    });
+  }
+  deleteBank(bank) {
+    let bank_id = bank.iBankID;
+    const deleteBank_data = {
+      iRequestID: 2044,
+      iCID: 1,
+      iBankID: bank_id,
+    };
+    console.log(deleteBank_data);
+    this.apiService.callPostApi(deleteBank_data).subscribe(
+      (data) => {
+        console.log(data);
+
+      },
+      (error) => console.log(error)
+    );
+    this.bankSelectData();
+
+  }
+
+
+  //Open Dialog To Add Employee
+  openDialogForEmployee() {
+    const ref = this.dialogService.open( EmployeeComponent , {
+      data: {
+      },
+      header: 'Add New Employee',
+      width: '80%'
+    });
+
+    ref.onClose.subscribe((success: boolean) => {
+      // if (success) {
+        this.showEmployee();
+        this.toastService.addSingle("success", "Employee Added Successfully", "");
+      // }
+    });
+  }
+
+  //List Employee Details
+  showEmployee()
+  {
+    var dataToSend ={
+      "iRequestID":2031,
+      "iCID" :1
+  }
+    this._apiService.getDetails(dataToSend).then(response => {
+      console.log("Response for Employee ",response)
+      this.employee = response
+    });
+  }
+
+  //Open Dialog To Edit Employee
+  editEmployee(employeeId) {
+    const ref = this.dialogService.open( EmployeeComponent , {
+      data: {
+        "employeeId":employeeId
+      },
+      header: 'Edit Employee',
+      width: '80%'
+    });
+
+    ref.onClose.subscribe((success: boolean) => {
+      // if (success) {
+        this.showEmployee();
+        this.toastService.addSingle("success", "Updated Successfully", "");
+      // }
+    });
+  }
+
+  //Open Dialog To Delete Employee
+  deleteEmployee(employeeId){
+    this.confirmationService.confirm({
+      message: 'Are you sure that you want to proceed?',
+      header: 'Confirmation',
+      icon: 'pi pi-exclamation-triangle',
+      accept: () => {
+        var dataToSendDelete = {
+          "iRequestID":2034,
+          "iEmpID":employeeId,
+          "iCID":1
         }
-      });
-    }
-    openDialogForaddNewAddress() {
-      const ref = this.dialogService.open( AddNewAddressComponent , {
-        data: {
-        },
-        header: 'Add New Address',
-        width: '80%'
-      });
-  
-      ref.onClose.subscribe((success: boolean) => {
-        if (success) {
-          // this.toastService.addSingle("success", "Mail send successfully", "");
-        }
-      });
-    }
-    openDialogForaddDepartment() {
-      const ref = this.dialogService.open( DepartmentComponent , {
-        data: {
-        },
-        header: 'Add New Department',
-        width: '28%'
-      });
-  
-      ref.onClose.subscribe((success: boolean) => {
-        if (success) {
-          // this.toastService.addSingle("success", "Mail send successfully", "");
-        }
-      });
-    }
-    openDialogForDesignation() {
-      const ref = this.dialogService.open( DesignationComponent , {
-        data: {
-        },
-        header: 'Add New Designation',
-        width: '28%'
-      });
-  
-      ref.onClose.subscribe((success: boolean) => {
-        if (success) {
-          // this.toastService.addSingle("success", "Mail send successfully", "");
-        }
-      });
-    }
-    openDialogForEmployee() {
-      const ref = this.dialogService.open( EmployeeComponent , {
-        data: {
-        },
-        header: 'Add New Employee',
-        width: '80%'
-      });
-  
-      ref.onClose.subscribe((success: boolean) => {
-        if (success) {
-          // this.toastService.addSingle("success", "Mail send successfully", "");
-        }
-      });
-    }
-    openDialogForBank() {
-      const ref = this.dialogService.open( BankComponent , {
-        data: {
-        },
-        header: 'Add New Bank',
-        width: '50%'
-      });
-  
-      ref.onClose.subscribe((success: boolean) => {
-        if (success) {
-          // this.toastService.addSingle("success", "Mail send successfully", "");
-        }
-      });
-    }
-    openDialogForGST() {
-      const ref = this.dialogService.open( GstComponent , {
-        data: {
-        },
-        header: 'Add New GST',
-        width: '28%'
-      });
-  
-      ref.onClose.subscribe((success: boolean) => {
-        if (success) {
-          // this.toastService.addSingle("success", "Mail send successfully", "");
-        }
-      });
-    }
+
+        this._apiService.getDetails(dataToSendDelete).then(response => {
+          console.log("Response for Employee Delete ",response)
+          this.toastService.addSingle("info", "Successfully Deleted", "Successfully Deleted");
+          this.showEmployee();
+        });
+      },
+      reject: () => {
+  this.toastService.addSingle("info", "Rejected", "Rejected");
+
+      }
+  });
+  }
+
 }

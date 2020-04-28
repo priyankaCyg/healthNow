@@ -1,94 +1,173 @@
 <div class="p-grid ui-fluid">
+    <form [formGroup]="employeeForm" (ngSubmit)="onSubmit()">
         <div class="p-col-12"> 
             <div class="p-grid form-group">
              <div class="p-col-12 p-md-6 p-lg-3">
-                    <label for="employeeCode">Employee Code</label>
-                    <input id="employeeCode" type="text" pInputText>
+                    <label for="sEmpCode">Employee Code</label>
+                    <input id="sEmpCode" type="text" formControlName="sEmpCode" pInputText required>
+                    <div>
+                        <p-message severity="error" [text]="employeeForm.controls['sEmpCode'].errors['required'] ? 'Employee Code is required' : employeeForm.controls['sEmpCode'].errors['pattern'] ? 'Should be alpha numeric' : ''" 
+                        *ngIf="!employeeForm.controls['sEmpCode'].valid&&employeeForm.controls['sEmpCode'].dirty"></p-message>
+                    </div>
              </div>
             <div class="p-col-12 p-md-6 p-lg-3">
-                    <label for="firstName">First Name</label>
-                    <input id="firstName" type="text" pInputText>
+                    <label for="sFirstName">First Name</label>
+                    <input id="sFirstName" type="text" formControlName="sFirstName" pInputText>
+                    <div>
+                        <p-message severity="error" [text]="employeeForm.controls['sFirstName'].errors['required'] ? 'Firstname is required' : employeeForm.controls['sFirstName'].errors['pattern'] ? 'Should be alpha numeric' : ''" 
+                        *ngIf="!employeeForm.controls['sFirstName'].valid&&employeeForm.controls['sFirstName'].dirty"></p-message>
+                    </div>
              </div>
              <div class="p-col-12 p-md-6 p-lg-3">
-                    <label for="middleName">Middle Name</label>
-                    <input id="middleName" type="text" pInputText>
+                    <label for="sMiddleName">Middle Name</label>
+                    <input id="sMiddleName" type="text" formControlName="sMiddleName" pInputText>
+                    <div>
+                        <p-message severity="error" [text]="employeeForm.controls['sMiddleName'].errors['required'] ? 'Middle Name is required' : employeeForm.controls['sMiddleName'].errors['pattern'] ? 'Should be alpha numeric' : ''" 
+                        *ngIf="!employeeForm.controls['sMiddleName'].valid&&employeeForm.controls['sMiddleName'].dirty"></p-message>
+                    </div>
              </div>
               <div class="p-col-12 p-md-6 p-lg-3">
-                    <label for="lasteName">Last Name</label>
-                    <input id="lasteName" type="text" pInputText>
+                    <label for="sLastName">Last Name</label>
+                    <input id="sLastName" type="text" formControlName="sLastName" pInputText>
+                    <div>
+                        <p-message severity="error" [text]="employeeForm.controls['sLastName'].errors['required'] ? 'Last Name is required' : employeeForm.controls['sLastName'].errors['pattern'] ? 'Should be alpha numeric' : ''" 
+                        *ngIf="!employeeForm.controls['sLastName'].valid&&employeeForm.controls['sLastName'].dirty"></p-message>
+                    </div>
              </div>
             </div>
             <div class="p-grid form-group">
                 <div class="p-col-12 p-md-6 p-lg-3">
-                    <label for="gender">Gender</label>
-                    <p-dropdown [options]="gender" [(ngModel)]="selectedgender"></p-dropdown>
+                    <label for="sGender">Gender</label>
+                    <p-dropdown formControlName="sGender"  optionLabel="sKVValue" [filter]="true" [options]="genderData" [(ngModel)]="selectedgender"></p-dropdown>
+                    <div>
+                        <p-message severity="error" text="Address to is required" *ngIf="employeeForm.controls['sGender'].touched  && (selectedgender.iKVID=='' || employeeForm.controls['sGender'].hasError('required'))"></p-message>
+
+                    </div>
                 </div>
 
                 <div class="p-col-12 p-md-6 p-lg-6">
-                    <label for="address">Address</label>
-                    <p-dropdown id="address" [options]="status" [(ngModel)]="selectedstatus"></p-dropdown>
+                    <label for="sFullAddress">Address</label>
+                    <p-dropdown formControlName="sFullAddress" optionLabel="sAddress"  [filter]="true" id="sFullAddress" [options]="addressData" [(ngModel)]="selectedsaddress"></p-dropdown>
+                    <div>
+                        <p-message severity="error" text="Address to is required" *ngIf="employeeForm.controls['sFullAddress'].touched  && (selectedsaddress.iAddID=='' || employeeForm.controls['sFullAddress'].hasError('required'))"></p-message>
+
+                    </div>
                 </div>
                 <div class="p-col-12 p-md-6 p-lg-3">
-                    <label for="emailId">Email ID</label>
-                    <input id="emailId" type="text" pInputText>
+                    <label for="sEmailID">Email ID</label>
+                    <input id="sEmailID" formControlName="sEmailID" type="text" pInputText>
+                    <div>
+                        <p-message severity="error" [text]="employeeForm.controls['sEmailID'].errors['required'] ? 'Email Id is required' : employeeForm.controls['sEmailID'].errors['pattern'] ? 'Should be alpha numeric' : ''" 
+                        *ngIf="!employeeForm.controls['sEmailID'].valid&&employeeForm.controls['sEmailID'].dirty"></p-message>
+                    </div>
                 </div>
                 
             </div>
             <div class="separator separator--border-dashed separator--space-sm separator--portlet-fit"></div>
             <div class="p-grid form-group">
                 <div class="p-col-12 p-md-6 p-lg-3">
-                    <label for="mobile">Mobile No.</label>
-                    <input id="mobile" type="text" pInputText>
+                    <label for="sMobileNo">Mobile No.</label>
+                    <input id="sMobileNo" formControlName="sMobileNo" type="text" pInputText>
+                    <div>
+                        <p-message severity="error" [text]="employeeForm.controls['sMobileNo'].errors['required'] ? 'Mobile No. is required' : employeeForm.controls['sMobileNo'].errors['pattern'] ? 'Should be alpha numeric' : ''" 
+                        *ngIf="!employeeForm.controls['sMobileNo'].valid&&employeeForm.controls['sMobileNo'].dirty"></p-message>
+                    </div>
                 </div>
                 <div class="p-col-12 p-md-6 p-lg-3">
-                    <label for="contact">Contact No.</label>
-                    <input id="contact" type="text" pInputText>
+                    <label for="sContactNo">Contact No.</label>
+                    <input id="sContactNo" formControlName="sContactNo" type="text" pInputText>
+                    <div>
+                        <p-message severity="error" [text]="employeeForm.controls['sContactNo'].errors['required'] ? 'Contact No. is required' : employeeForm.controls['sContactNo'].errors['pattern'] ? 'Should be alpha numeric' : ''" 
+                        *ngIf="!employeeForm.controls['sContactNo'].valid&&employeeForm.controls['sContactNo'].dirty"></p-message>
+                    </div>
                 </div>
                 <div class="p-col-12 p-md-6 p-lg-3">
-                    <label for="directNo">Direct No.</label>
-                    <input id="directNo" type="text" pInputText>
+                    <label for="sDirect">Direct No.</label>
+                    <input id="sDirect" formControlName="sDirect" type="text" pInputText>
+                    <div>
+                        <p-message severity="error" [text]="employeeForm.controls['sDirect'].errors['required'] ? 'Direct No. is required' : employeeForm.controls['sDirect'].errors['pattern'] ? 'Should be alpha numeric' : ''" 
+                        *ngIf="!employeeForm.controls['sDirect'].valid&&employeeForm.controls['sDirect'].dirty"></p-message>
+                    </div>
                 </div>
-                <div class="p-col-12 p-md-6 p-lg-3">
+                <!-- <div class="p-col-12 p-md-6 p-lg-3">
                     <label for="landmark">Landmark</label>
-                    <input id="landmark" type="text" pInputText>
+                    <input id="landmark" formControlName="iStatusID" type="text" pInputText>
+                    <div>
+                        <p-message severity="error" [text]="employeeForm.controls['iStatusID'].errors['required'] ? 'Landmark is required' : employeeForm.controls['iStatusID'].errors['pattern'] ? 'Should be alpha numeric' : ''" 
+                        *ngIf="!employeeForm.controls['iStatusID'].valid&&employeeForm.controls['iStatusID'].dirty"></p-message>
+                    </div>
+                </div> -->
+                <div class="p-col-12 p-md-6 p-lg-3">
+                    <label for="iStatusID">Status</label>
+                    <p-dropdown formControlName="iStatusID" optionLabel="sKVValue"  [filter]="true" id="iStatusID" [options]="statusData" [(ngModel)]="selectedstatus"></p-dropdown>
+                    <div>
+                        <p-message severity="error" text="Status to is required" *ngIf="employeeForm.controls['iStatusID'].touched  && (selectedstatus.iKVID=='' || employeeForm.controls['iStatusID'].hasError('required'))"></p-message>
+
+                    </div>
                 </div>
+    
             </div>
 
             <div class="separator separator--border-dashed separator--space-sm separator--portlet-fit"></div>
     
             <div class="p-grid form-group">
                 <div class="p-col-12 p-md-6 p-lg-3">
-                    <label for="department">Department</label>
-                    <p-dropdown id="department" [options]="department" [(ngModel)]="selecteddepartment"></p-dropdown>
+                    <label for="sDeptName">Department</label>
+                    <p-dropdown (onChange)="setDepartmentId($event)" formControlName="sDeptName" optionLabel="sDeptName"  [filter]="true" id="sDeptName" [options]="departmentData" [(ngModel)]="selecteddepartment"></p-dropdown>
+                    <div>
+                        <p-message severity="error" text="Department is required" *ngIf="employeeForm.controls['sDeptName'].touched && (selecteddepartment.iDeptID=='' || employeeForm.controls['sDeptName'].hasError('required'))"></p-message>
+                    </div>
                 </div>
                 <div class="p-col-12 p-md-6 p-lg-3">
-                    <label for="designation">Designation</label>
-                    <p-dropdown id="designation" [options]="designation" [(ngModel)]="selecteddesignation"></p-dropdown>
+                    <label for="sDesigName">Designation</label>
+                    <p-dropdown (onChange)="setDesignationId($event)" formControlName="sDesigName" optionLabel="sDesigName"  [filter]="true" id="sDesigName" [options]="designationData" [(ngModel)]="selecteddesignation"></p-dropdown>
+                    <div>
+                        <p-message severity="error" text="Designation is required" *ngIf="employeeForm.controls['sDesigName'].touched  && (selecteddesignation.iDesigID=='' || employeeForm.controls['sDesigName'].hasError('required'))"></p-message>
+                    </div>
                 </div>
                 <div class="p-col-12 p-md-6 p-lg-3">
-                    <label for="reportingTo">Reporting To</label>
-                    <p-dropdown id="reportingTo" [options]="reportingTo" [(ngModel)]="selectedreportingTo"></p-dropdown>
+                    <label for="sReportingTo">Reporting To</label>
+                    <p-dropdown formControlName="sReportingTo" optionLabel="sReportingTo"  [filter]="true" id="sReportingTo" [options]="reportingToData" [(ngModel)]="selectedreportingTo"></p-dropdown>
+                    <div>
+                        <p-message severity="error" text="Reporting to is required" *ngIf="employeeForm.controls['sReportingTo'].touched  && (selectedreportingTo.iEmpID=='' || employeeForm.controls['sReportingTo'].hasError('required'))"></p-message>
+                    </div>
                 </div>
                 <div class="p-col-12 p-md-6 p-lg-3">
-                    <label for="role">Role</label>
-                    <p-dropdown id="role" [options]="role" [(ngModel)]="selectedrole"></p-dropdown>
+                    <label for="sRoleName">Role</label>
+                    <p-dropdown formControlName="sRoleName" optionLabel="sRoleName"  [filter]="true" id="sRoleName" [options]="roleData"  [(ngModel)]="selectedrole"></p-dropdown>
+                    <div>
+                        <p-message severity="error" text="Role to is required" *ngIf="employeeForm.controls['sRoleName'].touched  && (selectedstatus.iRoleID=='' || employeeForm.controls['sRoleName'].hasError('required'))"></p-message>
+
+                    </div>
                 </div>
-                <div class="p-col-12 p-md-6 p-lg-3">
-                    <label for="status">Status</label>
-                    <p-dropdown id="status" [options]="status" [(ngModel)]="selectedstatus"></p-dropdown>
+                <!-- <div class="p-col-12 p-md-6 p-lg-3">
+                    <label for="iStatusID">Status</label>
+                    <p-dropdown formControlName="iStatusID" optionLabel="sKVValue"  [filter]="true" id="iStatusID" [options]="statusData" [(ngModel)]="selectedstatus"></p-dropdown>
+                    <div>
+                        <p-message severity="error" text="Status to is required" *ngIf="employeeForm.controls['iStatusID'].touched  && (selectedstatus.iKVID=='' || employeeForm.controls['iStatusID'].hasError('required'))"></p-message>
+
+                    </div>
                 </div>
-    
+     -->
             </div>
             <div class="separator separator--border-solid separator--space-sm separator--portlet-fit"></div>
             <div class="p-grid form-group ui-fluid p-justify-end">
                 <div class="p-col-12 p-md-2 p-lg-1">
-                    <button pButton type="button" label="Cancel" style="margin-bottom:10px" class="ui-button-light"></button>
+                    <button pButton type="button" (click)="closeDialog()" label="Cancel" style="margin-bottom:10px" class="ui-button-light"></button>
                 </div>
-                 <div class="p-col-12 p-md-2 p-lg-1">
-                    <button pButton type="button" label="Save" style="margin-bottom:10px" class="ui-button"></button>
+                 <div class="p-col-12 p-md-2 p-lg-1" *ngIf="!isEdit">
+                     <!-- {{!employeeForm.valid && dropDownValidityCheck()}}
+                     {{dropDownValidityCheck()}}
+                     {{!employeeForm.valid}} -->
+
+                    <button pButton type="button" label="Save" [disabled]="!employeeForm.valid " (click)="addEmployee()" style="margin-bottom:10px" class="ui-button"></button>
+                </div>
+
+                <div class="p-col-12 p-md-2 p-lg-1" *ngIf="isEdit">
+                    <button pButton type="button" label="Update" (click)="updateEmployee()" style="margin-bottom:10px" class="ui-button"></button>
                 </div>
             </div>
 
         </div>
-       
+    </form>
     </div>

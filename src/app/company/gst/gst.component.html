@@ -1,41 +1,62 @@
+<form [formGroup]="GSTSubmit" (ngSubmit)="onSubmit()">
 
     <div class="p-grid ui-fluid">
-        <div class="p-col-12"> 
-    
+        <div class="p-col-12">
+
             <div class="p-grid form-group">
-               
-                <div class="p-col-12">
+
+                <div class="p-col-12" [ngClass]="{'has-error': GSTSubmit.get('state').errors &&
+                (GSTSubmit.get('state').touched || GSTSubmit.get('state').dirty)}">
                     <label for="state">State</label>
-                    <p-dropdown id="state" [options]="status" [(ngModel)]="selectedstatus"></p-dropdown>
+                    <p-dropdown id="state" class="form-control" [options]="gstState" formControlName="state"
+                        optionLabel="sLocName" placeholder="Select" [showClear]="true" required="true"></p-dropdown>
+                    <span *ngIf="GSTSubmit.get('state').errors &&
+                        (GSTSubmit.get('state').touched || GSTSubmit.get('state').dirty)">
+                        <span class="text-danger" *ngIf="GSTSubmit.get('state').errors.required">
+                            This Field is Required
+                        </span>
+                    </span>
                 </div>
 
-                <div class="p-col-12">
+                <div class="p-col-12" [ngClass]="{'has-error': GSTSubmit.get('gst').errors &&
+                (GSTSubmit.get('gst').touched || GSTSubmit.get('gst').dirty)}">
                     <label for="gst">GST</label>
-                    <input id="gst" type="text" pInputText>
+                    <input id="gst" class="form-control" formControlName="gst" type="text" pInputText>
+                    <span *ngIf="GSTSubmit.get('gst').errors &&
+                    (GSTSubmit.get('gst').touched || GSTSubmit.get('gst').dirty)">
+                        <span *ngIf="GSTSubmit.get('gst').errors.required">
+                            This Field is Required
+                        </span>
+                    </span>
                 </div>
-    
-            <div class="p-col-12">
-            <div class="separator separator--border-dashed separator--space-sm separator--portlet-fit"></div>
-        </div>
-    
-           
-                <div class="p-col-12">
+
+                <!-- <div class="p-col-12">
+                    <div class="separator separator--border-dashed separator--space-sm separator--portlet-fit"></div>
+                </div> -->
+
+
+                <!-- <div class="p-col-12">
                     <label for="status">Status</label>
-                    <p-dropdown id="status" [options]="status" [(ngModel)]="selectedstatus"></p-dropdown>
-                </div>
-    
+                    <p-dropdown id="status" class="form-control" [options]="gstStatus" formControlName="gststatus"
+                        optionLabel="sKVValue" editable="true" placeholder="select">
+                    </p-dropdown>
+                </div> -->
+
             </div>
             <div class="separator separator--border-solid separator--space-sm separator--portlet-fit"></div>
             <div class="p-grid form-group ui-fluid">
                 <div class="p-md-6 p-lg-6"></div>
                 <div class="p-col-12 p-md-3 p-lg-3">
-                    <button pButton type="button" label="Cancel" style="margin-bottom:10px" class="ui-button-light"></button>
+                    <button pButton type="button" label="Cancel" style="margin-bottom:10px" class="ui-button-light"
+                        (click)="close()"></button>
                 </div>
-                 <div class="p-col-12 p-md-3 p-lg-3">
-                    <button pButton type="button" label="Save" style="margin-bottom:10px" class="ui-button"></button>
+                <div class="p-col-12 p-md-3 p-lg-3">
+                    <button pButton type="submit" label="Save" style="margin-bottom:10px" [disabled]="!GSTSubmit.valid"
+                        class="ui-button"></button>
                 </div>
             </div>
 
         </div>
-       
+
     </div>
+</form>

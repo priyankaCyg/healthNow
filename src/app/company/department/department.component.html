@@ -1,36 +1,60 @@
+<form #id [formGroup]="DepartmentSubmit" (ngSubmit)="onSubmit()">
 
     <div class="p-grid ui-fluid">
-        <div class="p-col-12"> 
-    
+        <div class="p-col-12">
+
             <div class="p-grid form-group">
-               
-                <div class="p-col-12">
+
+                <div class="p-col-12" [ngClass]="{'has-error': DepartmentSubmit.get('departmentname').errors &&
+                (DepartmentSubmit.get('departmentname').touched || DepartmentSubmit.get('departmentname').dirty)}">
                     <label for="departmentname">Department Name</label>
-                    <input id="departmentname" type="text" pInputText>
+                    <input id="departmentname" class="form-control" type="text" formControlName="departmentname"
+                        pInputText>
+                    <span *ngIf="DepartmentSubmit.get('departmentname').errors &&
+                    (DepartmentSubmit.get('departmentname').touched || DepartmentSubmit.get('departmentname').dirty)">
+                        <span class="text-danger" *ngIf="DepartmentSubmit.get('departmentname').errors.required">
+                            This Field is Required
+                        </span>
+                    </span>
                 </div>
-    
-            <div class="p-col-12">
-            <div class="separator separator--border-dashed separator--space-sm separator--portlet-fit"></div>
-        </div>
-    
-           
+
                 <div class="p-col-12">
-                    <label for="status">Status</label>
-                    <p-dropdown id="status" [options]="status" [(ngModel)]="selectedstatus"></p-dropdown>
+                    <div class="separator separator--border-dashed separator--space-sm separator--portlet-fit"></div>
                 </div>
-    
+
+
+                <div class="p-col-12" [ngClass]="{'has-error': DepartmentSubmit.get('depstatus').errors &&
+                (DepartmentSubmit.get('depstatus').touched || DepartmentSubmit.get('depstatus').dirty)}">
+                    <label for="status">Status</label>
+                    <p-dropdown id="status" class="form-control" [options]="seldepartmentStatus"
+                        formControlName="depstatus" placeholder="Select" optionLabel="sKVValue" [showClear]="true"
+                        required="true">
+
+                    </p-dropdown>
+                    <span *ngIf="DepartmentSubmit.get('depstatus').errors &&
+                    (DepartmentSubmit.get('depstatus').touched || DepartmentSubmit.get('depstatus').dirty)">
+                        <span class="text-danger" *ngIf="DepartmentSubmit.get('depstatus').errors.required">
+                            This Field is Required
+                        </span>
+                    </span>
+
+                </div>
+
             </div>
             <div class="separator separator--border-solid separator--space-sm separator--portlet-fit"></div>
             <div class="p-grid form-group ui-fluid">
                 <div class="p-md-6 p-lg-6"></div>
                 <div class="p-col-12 p-md-3 p-lg-3">
-                    <button pButton type="button" label="Cancel" style="margin-bottom:10px" class="ui-button-light"></button>
+                    <button pButton type="button" label="Cancel" style="margin-bottom:10px" class="ui-button-light"
+                        (click)="close()"></button>
                 </div>
-                 <div class="p-col-12 p-md-3 p-lg-3">
-                    <button pButton type="button" label="Save" style="margin-bottom:10px" class="ui-button"></button>
+                <div class="p-col-12 p-md-3 p-lg-3">
+                    <button pButton type="submit" label="Save" [disabled]="!DepartmentSubmit.valid"
+                        style="margin-bottom:10px" class="ui-button"></button>
                 </div>
             </div>
 
         </div>
-       
+
     </div>
+</form>
