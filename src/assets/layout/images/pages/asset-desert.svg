@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 24.1.1, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 1440 380" style="enable-background:new 0 0 1440 380;" xml:space="preserve">
+<style type="text/css">
+	.st0{display:none;}
+	.st1{display:inline;fill-rule:evenodd;clip-rule:evenodd;fill:url(#SVGID_1_);}
+	.st2{display:inline;}
+	.st3{filter:url(#b);}
+	.st4{fill-rule:evenodd;clip-rule:evenodd;}
+	.st5{fill-rule:evenodd;clip-rule:evenodd;fill:url(#c_2_);}
+	.st6{fill-rule:evenodd;clip-rule:evenodd;fill:#76256E;}
+	.st7{fill-rule:evenodd;clip-rule:evenodd;fill:#A4BB3A;}
+	.st8{fill-rule:evenodd;clip-rule:evenodd;fill:#F05A4A;}
+</style>
+<filter  filterUnits="objectBoundingBox" height="120.7%" id="b" width="105.1%" x="-2.6%" y="-10.9%">
+	<feOffset  dy="-2" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+	<feGaussianBlur  in="shadowOffsetOuter1" result="shadowBlurOuter1" stdDeviation="12"></feGaussianBlur>
+	<feColorMatrix  in="shadowBlurOuter1" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.11 0"></feColorMatrix>
+</filter>
+<g id="Layer_1" class="st0">
+	<g>
+		
+			<linearGradient id="SVGID_1_" gradientUnits="userSpaceOnUse" x1="414.2125" y1="586.328" x2="414.2125" y2="585.328" gradientTransform="matrix(1440 0 0 -305.0645 -595746 178942.8281)">
+			<stop  offset="0" style="stop-color:#F7E7BF"/>
+			<stop  offset="1" style="stop-color:#EBCB8B"/>
+		</linearGradient>
+		<path class="st1" d="M0,224.5c142.3-66.7,249-90,320-70c106.5,30,122,83.5,195,83.5h292c92.6-106.5,190.3-160.8,293-163
+			s216,47.6,340,149.5V380H0V224.5z"/>
+		<g transform="translate(0 22.5)" class="st2">
+			<g class="st3">
+				<path id="c_2_" class="st4" d="M0,107c225.3,61.3,364.3,92,417,92c79,0,194-79.5,293-79.5S914,244,1002,244s156-45,195-68.5
+					c26-15.7,107-74.2,243-175.5v357.5H0V107z"/>
+			</g>
+			<g>
+				
+					<linearGradient id="c_2_" gradientUnits="userSpaceOnUse" x1="414.2125" y1="563.9266" x2="414.2125" y2="562.9266" gradientTransform="matrix(1440 0 0 -357.5 -595746 201603.75)">
+					<stop  offset="0" style="stop-color:#EABCA9"/>
+					<stop  offset="1" style="stop-color:#D08770"/>
+				</linearGradient>
+				<path id="c_1_" class="st5" d="M0,107c225.3,61.3,364.3,92,417,92c79,0,194-79.5,293-79.5S914,244,1002,244s156-45,195-68.5
+					c26-15.7,107-74.2,243-175.5v357.5H0V107z"/>
+			</g>
+		</g>
+	</g>
+</g>
+<g id="Layer_2">
+	<rect y="163" class="st6" width="1440" height="7"/>
+	<rect y="190" class="st7" width="1440" height="7"/>
+	<rect y="206" class="st8" width="1440" height="7"/>
+</g>
+</svg>

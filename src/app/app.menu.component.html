@@ -1,0 +1,21 @@
+<!-- Changes done by Priyanka for Horizontal Menu -->
+<!-- [ngClass]="{'layout-sidebar-active': app.sidebarActive}" Earlier code -->
+<div class="layout-sidebar" [ngClass]="{'layout-sidebar-active': false}" (click)="app.onSidebarClick($event)"
+     (mouseover)="app.sidebarActive=true" (mouseleave)="app.sidebarActive=false">
+    <div class="sidebar-logo">
+        <a href="#" class="sidebar-pin" title="Toggle Menu" (click)="app.onToggleMenuClick($event)">
+            <i class="pi pi-lock" *ngIf="app.staticMenuActive"></i>
+            <i class="pi pi-lock-open" *ngIf="!app.staticMenuActive"></i>
+        </a>
+        <a routerLink="/">
+            <img alt="logo" src="assets/layout/images/logo.png" />
+            <!-- <span class="app-name">Mirage</span> -->
+        </a>
+    </div>
+
+    <div class="layout-menu-container" (click)="onMenuClick()">
+        <ul class="layout-menu">
+            <li app-menuitem *ngFor="let item of model; let i = index;" [item]="item" [index]="i" [root]="true"></li>
+        </ul>
+    </div>
+</div>
