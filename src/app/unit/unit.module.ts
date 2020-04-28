@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { httpInterceptorProviders } from '../interceptors/httpinterceptors';
 
 import { UnitRoutingModule } from './unit-routing.module';
 import { UnitComponent } from './unit.component';
@@ -34,7 +33,7 @@ import {TableModule} from 'primeng/table';
     TreeTableModule,
     TableModule
   ],
-  providers:[httpInterceptorProviders,DialogService],
+  providers:[DialogService],
   entryComponents:[UnitComponent,AddUnitComponent]
 })
 export class UnitModule { }

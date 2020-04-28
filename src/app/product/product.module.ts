@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { httpInterceptorProviders } from '../interceptors/httpinterceptors';
 
 
 import { ProductRoutingModule } from './product-routing.module';
@@ -62,7 +61,7 @@ import {CheckboxModule} from 'primeng/checkbox';
     CheckboxModule
 
   ],
-  providers:[httpInterceptorProviders,DialogService],
+  providers:[DialogService],
   entryComponents:[ProductComponent, NewProductComponent, ProductImageComponent,  ProductVariantComponent, ProductInfoComponent, ProductDescriptionComponent, ProductQueriesComponent, PrcategoriesComponent]
 })
 export class ProductModule { }

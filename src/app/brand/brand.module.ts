@@ -7,7 +7,6 @@ import { NewBrandComponent } from './new-brand/new-brand.component';
 
 
 
-import { httpInterceptorProviders } from '../interceptors/httpinterceptors';
 
 import {InputTextModule} from 'primeng/inputtext';
 import {FormsModule} from '@angular/forms';
@@ -44,7 +43,7 @@ import { from } from 'rxjs';
     TreeTableModule,
     TableModule
   ],
-  providers:[httpInterceptorProviders,DialogService],
+  providers:[DialogService],
   entryComponents:[BrandComponent, NewBrandComponent]
 })
 export class BrandModule { }

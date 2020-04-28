@@ -5,7 +5,6 @@ import { SupplierCategoryRoutingModule } from './supplier-category-routing.modul
 import { SupplierCategoryComponent } from './supplier-category.component';
 import { AddSupCategoryComponent } from './add-sup-category/add-sup-category.component';
 
-import { httpInterceptorProviders } from '../interceptors/httpinterceptors';
 
 import {InputTextModule} from 'primeng/inputtext';
 import {FormsModule} from '@angular/forms';
@@ -39,7 +38,7 @@ import { from } from 'rxjs';
     TreeTableModule,
     TableModule
   ],
-  providers:[httpInterceptorProviders,DialogService],
+  providers:[DialogService],
   entryComponents:[AddSupCategoryComponent]
 })
 export class SupplierCategoryModule { }

@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { httpInterceptorProviders } from '../interceptors/httpinterceptors';
 
 import { SupplierRoutingModule } from './supplier-routing.module';
 import { SupplierComponent } from './supplier.component';
@@ -49,7 +48,7 @@ import { from } from 'rxjs';
     InputTextareaModule,
     TreeTableModule
   ],
-  providers:[httpInterceptorProviders,DialogService],
+  providers:[DialogService],
   entryComponents:[SupplierComponent, AddNewSupplierComponent, AddressComponent, ContactComponent, BankComponent, GstComponent]
 })
 export class SupplierModule { }
