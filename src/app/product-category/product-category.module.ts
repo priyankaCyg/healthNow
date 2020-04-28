@@ -4,7 +4,6 @@ import { ProductCategoryRoutingModule } from './product-category-routing.module'
 import { ProductCategoryComponent } from './product-category.component';
 import { AddProductCategoryComponent } from './add-product-category/add-product-category.component';
 
-import { httpInterceptorProviders } from '../interceptors/httpinterceptors';
 
 import {InputTextModule} from 'primeng/inputtext';
 import {FormsModule} from '@angular/forms';
@@ -37,7 +36,7 @@ import { from } from 'rxjs';
     TreeTableModule,
     TableModule
   ],
-  providers:[httpInterceptorProviders,DialogService],
+  providers:[DialogService],
   entryComponents:[AddProductCategoryComponent]
 })
 export class ProductCategoryModule { }

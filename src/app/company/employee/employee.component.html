@@ -1,5 +1,5 @@
 <div class="p-grid ui-fluid">
-    <form [formGroup]="employeeForm" (ngSubmit)="onSubmit()">
+    <form [formGroup]="employeeForm">
         <div class="p-col-12"> 
             <div class="p-grid form-group">
              <div class="p-col-12 p-md-6 p-lg-3">
@@ -156,15 +156,16 @@
                     <button pButton type="button" (click)="closeDialog()" label="Cancel" style="margin-bottom:10px" class="ui-button-light"></button>
                 </div>
                  <div class="p-col-12 p-md-2 p-lg-1" *ngIf="!isEdit">
-                     <!-- {{!employeeForm.valid && dropDownValidityCheck()}}
+                     {{!employeeForm.valid && dropDownValidityCheck()}}
                      {{dropDownValidityCheck()}}
-                     {{!employeeForm.valid}} -->
+                     {{!employeeForm.valid}}
+                     {{true&&false}}
 
-                    <button pButton type="button" label="Save" [disabled]="!employeeForm.valid " (click)="addEmployee()" style="margin-bottom:10px" class="ui-button"></button>
+                    <button pButton type="button" label="Save" [disabled]="employeeForm.valid&&dropDownValidityCheck()" (click)="addEmployee()" style="margin-bottom:10px" class="ui-button"></button>
                 </div>
 
                 <div class="p-col-12 p-md-2 p-lg-1" *ngIf="isEdit">
-                    <button pButton type="button" label="Update" (click)="updateEmployee()" style="margin-bottom:10px" class="ui-button"></button>
+                    <button pButton type="button" [disabled]="employeeForm.valid && dropDownValidityCheck()" label="Update" (click)="updateEmployee()" style="margin-bottom:10px" class="ui-button"></button>
                 </div>
             </div>
 

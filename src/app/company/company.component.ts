@@ -454,10 +454,8 @@ onDeleteAddress(addressId : number){
     });
 
     ref.onClose.subscribe((success: boolean) => {
-      // if (success) {
         this.showEmployee();
         this.toastService.addSingle("success", "Employee Added Successfully", "");
-      // }
     });
   }
 
@@ -485,10 +483,8 @@ onDeleteAddress(addressId : number){
     });
 
     ref.onClose.subscribe((success: boolean) => {
-      // if (success) {
         this.showEmployee();
         this.toastService.addSingle("success", "Updated Successfully", "");
-      // }
     });
   }
 

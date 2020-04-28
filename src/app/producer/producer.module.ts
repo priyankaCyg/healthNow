@@ -6,7 +6,6 @@ import { ProducerComponent } from './producer.component';
 import { AddProducerComponent } from './add-producer/add-producer.component';
 
 
-import { httpInterceptorProviders } from '../interceptors/httpinterceptors';
 
 import {InputTextModule} from 'primeng/inputtext';
 import {FormsModule} from '@angular/forms';
@@ -44,7 +43,7 @@ import { from } from 'rxjs';
     TreeTableModule,
     TableModule
   ],
-  providers:[httpInterceptorProviders,DialogService],
+  providers:[DialogService],
   entryComponents:[AddProducerComponent]
 })
 export class ProducerModule { }
