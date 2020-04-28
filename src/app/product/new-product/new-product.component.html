@@ -1,0 +1,343 @@
+<div class="p-grid">
+        <div class="p-col-12">
+            <div class="card card-w-title">
+                <h1>Product</h1>
+                <p-tabView>
+                    <p-tabPanel header="Product" >
+                      <div class="p-grid ui-fluid  p-justify-end mt-3">
+
+                      <div class="p-col-12"> 
+                            <div class="p-grid form-group">
+                                <!-- <div class="p-col-12 p-md-6 p-lg-4">
+                                    <label for="productCategory">Product Category</label>
+                                    <p-dropdown [options]="addressType" [(ngModel)]="selectedproductCategory"></p-dropdown>
+                                </div> -->
+                                <div class="p-col-12 p-md-6 p-lg-4 mb-2">
+                                    <label for="address2">Product Name</label>
+                                    <input id="address2" type="text" pInputText>
+                                </div>
+                                <div class="p-col-12 p-md-6 p-lg-4 mb-2">
+                                    <label for="address1">Product Code</label>
+                                    <input id="address1" type="text" pInputText>
+                                </div>
+                                <div class="p-col-12 p-md-6 p-lg-4 mb-2">
+                                    <label for="producer">Producer</label>
+                                    <p-dropdown [options]="city" [(ngModel)]="selectedproducer"></p-dropdown>
+                                </div>
+
+                            </div>
+                    
+                            <div class="p-grid form-group">
+                                <div class="p-col-12 p-md-6 p-lg-4">
+                                    <label for="pincode">Short Description</label>
+                                    <input id="pincode" type="text" pInputText>
+                                </div>
+                                <div class="p-col-12 p-md-6 p-lg-4">
+                                    <label for="unit">Unit</label>
+                                    <p-dropdown id="unit" [options]="unit" [(ngModel)]="selectedunit"></p-dropdown>
+                                </div>
+                                <div class="p-col-12 p-md-6 p-lg-4">
+                                    <label for="foodCulture">Food Culture</label>
+                                    <p-dropdown id="foodCulture" [options]="foodCulture" [(ngModel)]="selectedfoodCulture"></p-dropdown>
+                                </div> 
+                            </div>
+                            
+                            <div class="separator separator--border-solid separator--space-sm separator--portlet-fit mt-5"></div>
+                            <div class="p-grid form-group ui-fluid p-justify-end mt-3">
+                                <div class="p-col-12 p-md-2 p-lg-1">
+                                    <button pButton type="button" label="Cancel" style="margin-bottom:10px" class="ui-button-light"></button>
+                                </div>
+                                 <div class="p-col-12 p-md-2 p-lg-1">
+                                    <button pButton type="button" label="Save" style="margin-bottom:10px" class="ui-button"></button>
+                                </div>
+                            </div>
+                
+                        </div>
+    
+                                  
+                      </div>  
+                    </p-tabPanel>
+                    <!-- Product tab End here -->
+
+                    <p-tabPanel header="Product Image" >
+                        <div class="p-grid ui-fluid  p-justify-end">
+                            <div class="p-grid ui-fluid p-justify-end mt-3">
+   
+                                <div class="p-col-12"> 
+                                    <p-table [value]="prImage">
+                                        <ng-template pTemplate="header">
+                                            <tr> 
+                                                <th style="width: 3em">#</th>
+                                                <th>Image Name</th>
+                                                <th>Image</th>
+                                                <th></th>
+                                            </tr>
+                                        </ng-template>
+                                        <ng-template pTemplate="body" let-prImage>
+                                           
+                                            <tr>
+                                                <td>{{prImage.sequence}}</td>
+                                                <td></td>
+                                                <td></td>
+                                                <td>
+                                                    <button class="ui-button-success" (click)="openDialogForaddProductImage()" pButton icon="pi pi-fw pi-upload" title="Upload Product Image"></button>
+                                                </td>
+                                            </tr>
+                                        </ng-template>
+                                    </p-table>
+                                </div>
+                             
+                               
+                            </div>
+                        </div>
+                    </p-tabPanel>    
+                    <!-- ProductImage tab End here -->
+                    <p-tabPanel header="Product Variant">
+                        <div class="p-grid ui-fluid p-justify-end">
+                            <div class="p-col-1 text-center mt-1">
+                                <button (click)="openDialogForProductVariant()" pButton icon="pi pi-fw pi-plus" label="Add New"></button>
+                                
+                            </div>
+                            <div class="p-col-12"> 
+                                <p-table [value]="productVariant">
+                                    <ng-template pTemplate="caption">
+                                   
+                                        <div class="ui-table-globalfilter-container text-left">
+                                            <input type="text" pInputText size="50" placeholder="Search" (input)="dt.filterGlobal($event.target.value, 'contains')" style="width:250px;">
+                                        </div>
+                                    </ng-template>
+                                    <ng-template pTemplate="header">
+                                        <tr>
+                                            <th>Unit</th>
+                                            <th>Variant</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </ng-template>
+                                    <ng-template pTemplate="body" let-productVariant>
+                                        <tr>
+                                            <td>{{productVariant.Unit}}</td>
+                                            <td>{{productVariant.variant}}</td>
+                                            <td>
+                                                <button pButton type="button" class="ui-button-success" icon="pi pi-pencil" style="margin-right: .5em"></button>
+                                                <button pButton type="button" class="ui-button-danger" icon="pi pi-trash"></button>
+                                            </td>
+                                        </tr>
+                                    </ng-template>
+                                </p-table>
+                            </div>
+                        </div>
+                    </p-tabPanel>
+                    <!-- Product Variant tab End here -->
+    
+                    <p-tabPanel header="Product Info">
+                        <div class="p-grid ui-fluid p-justify-end">
+                            <div class="p-col-1 text-center mt-1">
+                                <button (click)="openDialogForProductInfo()" pButton icon="pi pi-fw pi-plus" label="Add / Edit"></button>
+                                
+                            </div>
+                            <div class="p-col-12"> 
+                                <p-table [value]="productInfo">
+                                    <ng-template pTemplate="caption">
+                                   
+                                        <div class="ui-table-globalfilter-container text-left">
+                                            <input type="text" pInputText size="50" placeholder="Search" (input)="dt.filterGlobal($event.target.value, 'contains')" style="width:250px;">
+                                        </div>
+                                    </ng-template>
+                                    <ng-template pTemplate="header">
+                                        <tr>
+                                            <th style="width: 3em">#</th>
+                                            <th>Information</th>
+                                            
+                                        </tr>
+                                    </ng-template>
+                                    <ng-template pTemplate="body" let-productInfo>
+                                        <tr>
+                                            <td>{{productInfo.srNo}}</td>
+                                            <td>{{productInfo.prInfo}}</td>
+                                        </tr>
+                                    </ng-template>
+                                </p-table>
+                            </div>
+                        </div>
+                    </p-tabPanel>
+                    <!-- Product Info tab End here -->
+                    <p-tabPanel header="Product Description">
+                        <div class="p-grid ui-fluid p-justify-end">
+                            <div class="p-col-1 text-center mt-1">
+                                <button (click)="openDialogForProductDesc()" pButton icon="pi pi-fw pi-plus" label="Add / Edit"></button>
+                                
+                            </div>
+                            <div class="p-col-12"> 
+                                <p-table [value]="productDesc" [resizableColumns]="true">
+                                    <ng-template pTemplate="header">
+                                        <tr>
+                                            <th pResizableColumn>Description</th>
+                                            <th pResizableColumn>Action</th>
+                                        </tr>
+                                    </ng-template>
+                                    <ng-template pTemplate="body" let-productDesc>
+                                        <tr>
+                                                <td class="ui-resizable-column">{{productDesc.prDesc}}</td>
+                                                <td class="ui-resizable-column">
+                                                    <button pButton type="button" class="ui-button-success" icon="pi pi-pencil" style="margin-right: .5em"></button>
+                                                    <button pButton type="button" class="ui-button-danger" icon="pi pi-trash"></button>
+                                                </td>
+                                        </tr>
+                                    </ng-template>
+                                </p-table>
+    
+    
+    
+                               
+                            </div>
+                        </div>
+                    </p-tabPanel>
+                    <!-- Description tab End here -->
+                    <p-tabPanel header="Product Queries">
+                        <div class="p-grid ui-fluid p-justify-end">
+                            <div class="p-col-1 text-center mt-1">
+                                <button (click)="openDialogForPrQueries()" pButton icon="pi pi-fw pi-plus" label="Add / Edit"></button>
+                            </div>
+                            <div class="p-col-12"></div>
+                            <div class="p-col-6">
+                                <div class="card prcat-shdw border">
+                                    <p> <strong>1 Question:</strong> What will be delivery charge for Horlicks </p>
+                                    <p><strong>Answer:</strong> It depends ..chk the site</p>
+                                </div>
+                            </div>
+                            
+                            <div class="p-col-6">
+                                <div class="card prcat-shdw border">
+                                        <p> <strong>2 Question:</strong> My age 21 i can use it  </p>
+                                        <p><strong>Answer:</strong>  Yes you can.</p>
+                                </div>
+                            </div>
+                            
+                            <div class="p-col-6">
+                                <div class="card prcat-shdw border">
+                                    <p> <strong>3 Question:</strong> What will be delivery charge for Horlicks </p>
+                                    <p><strong>Answer:</strong> It depends ..chk the site</p>
+                                </div>
+                            </div>
+                            
+                            <div class="p-col-6">
+                                <div class="card prcat-shdw border">
+                                    <p> <strong>4 Question:</strong> My age 21 i can use it  </p>
+                                    <p><strong>Answer:</strong>  Yes you can.</p>
+                                 </div>
+                            </div>
+                           
+                            <div class="p-col-6">
+                                <div class="card prcat-shdw border">
+                                <p> <strong>5 Question:</strong> What will be delivery charge for Horlicks </p>
+                                <p><strong>Answer:</strong> It depends ..chk the site</p>
+                            </div>
+                        </div>
+                            
+                            <div class="p-col-6">
+                                <div class="card prcat-shdw border">
+                                    <p> <strong>6 Question:</strong> My age 21 i can use it  </p>
+                                    <p><strong>Answer:</strong>  Yes you can.</p>
+                                </div>
+                            </div>
+                           
+                            <div class="p-col-6">
+                                <div class="card prcat-shdw border">
+                                    <p> <strong>7 Question:</strong> What will be delivery charge for Horlicks </p>
+                                    <p><strong>Answer:</strong> It depends ..chk the site</p>
+                                </div>
+                            </div>
+                            
+                            <div class="p-col-6">
+                                <div class="card prcat-shdw border">
+                                    <p> <strong>8 Question:</strong> My age 21 i can use it  </p>
+                                    <p><strong>Answer:</strong>  Yes you can.</p>
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </p-tabPanel>
+                    <!-- ProductQueries tab End here -->
+                    <p-tabPanel header="Product Category">
+                        <div class="p-grid p-justify-center mt-4">
+                            
+                            <div class="p-col-12 p-md-6 p-lg-4">
+                                <div class="card bg-dark prcat-shdw">
+                                    <p-checkbox name="FV" value="Food - Vitamin" label="Food - Vitamin" [(ngModel)]="checkboxValues"></p-checkbox>
+                                </div>
+                            </div>
+
+                            <div class="p-col-12 p-md-6 p-lg-4">
+                                <div class="card bg-success prcat-shdw">
+                                <p-checkbox name="FS" value="Food - Supplements" label="Food - Supplements" [(ngModel)]="checkboxValues"></p-checkbox>
+                                </div>
+                            </div>
+
+                            <div class="p-col-12 p-md-6 p-lg-4">
+                                <div class="card bg-dark prcat-shdw">
+                                    <p-checkbox name="FD" value="Food - Dairy" label="Food - Dairy" [(ngModel)]="checkboxValues"></p-checkbox>
+                                </div>
+                            </div>
+
+                            <div class="p-col-12 p-md-6 p-lg-4">
+                            <div class="card bg-dark prcat-shdw">
+                                    <p-checkbox name="FCO" value="Food - Cookinig Oil" label="Food - Cookinig Oil" [(ngModel)]="checkboxValues"></p-checkbox>
+                                </div>
+                            </div>
+
+                            <div class="p-col-12 p-md-6 p-lg-4">
+                                <div class="card bg-dark prcat-shdw">
+                                <p-checkbox name="HCD" value="Health Concern - Diabetes" label="Health Concern - Diabetes" [(ngModel)]="checkboxValues"></p-checkbox>
+                                </div>
+                            </div>
+
+                            <div class="p-col-12 p-md-6 p-lg-4">
+                                <div class="card bg-success prcat-shdw">
+                                    <p-checkbox name="HCWL" value="Health Concern - Weight Loss" label="Health Concern - Weight Loss" [(ngModel)]="checkboxValues" selected></p-checkbox>
+                                </div>
+                            </div>  
+
+                        </div>
+
+                        <div class="separator separator--border-solid separator--space-sm separator--portlet-fit mt-5"></div>
+                           
+                            <div class="p-grid form-group ui-fluid p-justify-end mt-3">
+                                <div class="p-col-12 p-md-2 p-lg-1">
+                                    <button pButton type="button" label="Cancel" style="margin-bottom:10px" class="ui-button-light"></button>
+                                </div>
+                                 <div class="p-col-12 p-md-2 p-lg-1">
+                                    <button pButton type="button" label="Save" style="margin-bottom:10px" class="ui-button"></button>
+                                </div>
+                            </div>
+                    </p-tabPanel>
+
+
+
+                    <!-- <p-tabPanel header="Product Category">
+                        <div class="p-grid ui-fluid p-justify-end">
+                            <div class="p-col-1 text-center mt-1">
+                                <button (click)="openDialogFormultiCategory()" pButton icon="pi pi-fw pi-plus" label="Add New"></button>
+                                
+                            </div>
+                            <div class="p-col-12"> 
+                                
+                                <p-pickList [source]="sourceCars" [target]="targetCars" filterBy="brand" filterPlaceholder="Search by Brand" sourceHeader="Available"
+                                    targetHeader="Selected" [responsive]="true" [sourceStyle]="{'height':'250px'}" [targetStyle]="{'height':'250px'}">
+                                    <ng-template let-car pTemplate="item">
+                                        <div class="ui-helper-clearfix">
+                                            <div style="font-size:16px;float:left;margin:15px 5px 0 0">{{car.brand}}</div>
+                                        </div>
+                                    </ng-template>
+                                </p-pickList>
+
+                            </div>
+                        </div>
+                    </p-tabPanel> -->
+                </p-tabView>
+            </div>
+        </div>
+    </div>
+    
+    
+    

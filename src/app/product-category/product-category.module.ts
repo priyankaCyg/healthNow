@@ -21,9 +21,6 @@ import {TableModule} from 'primeng/table';
 
 import { from } from 'rxjs';
 
-
-
-
 @NgModule({
   declarations: [ProductCategoryComponent, AddProductCategoryComponent],
   imports: [

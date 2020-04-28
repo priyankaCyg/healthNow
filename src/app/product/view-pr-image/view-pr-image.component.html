@@ -1,0 +1,27 @@
+<div class="p-grid ui-fluid p-justify-end">
+   
+    <div class="p-col-12"> 
+        <p-table [value]="viewImage">
+            <ng-template pTemplate="header">
+                <tr> 
+                    <th>Sequence</th>
+                    <th>Image Name</th>
+                    <th>Image</th>
+                    <th></th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-viewImage>
+                <tr>
+                    <td>{{viewImage.sequence}}</td>
+                    <td>{{viewImage.imgName}}</td>
+                    <td><p-lightbox [images]="images"></p-lightbox></td>
+                    <td>
+                        <button class="ui-button-danger" pButton icon="pi pi-trash" title="Upload Product Image"></button>
+                    </td>
+                </tr>
+            </ng-template>
+        </p-table>
+    </div>
+ 
+   
+</div>

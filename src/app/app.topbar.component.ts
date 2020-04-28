@@ -36,7 +36,7 @@ import {AppMainComponent} from './app.main.component';
 							<li [ngClass]="{'active-topmenuitem': activeItem === 1}" (click)="mobileMegaMenuItemClick(1)">
 								<a >Company <i class="pi pi-angle-down"></i></a>
 								<ul routerLink="/app/company">
-									<li class="active-row ">
+									<li>
 										<i class="pi pi-circle-on"></i>
 										<span>
                                         <h3>Company</h3>
@@ -61,18 +61,25 @@ import {AppMainComponent} from './app.main.component';
                                         <h3>Producer</h3>
                                     </span>
 									</li>
+									<li routerLink="/app/brand">
+										<i class="pi pi-circle-on"></i>
+										<span>
+                                        <h3>Brand</h3>
+                                    </span>
+									</li>
+									<li routerLink="/app/unit">
+										<i class="pi pi-circle-on"></i>
+										<span>
+                                        <h3>Unit</h3>
+                                    </span>
+									</li>
 									<li routerLink="/app/product">
 										<i class="pi pi-circle-on"></i>
 										<span>
                                         <h3>Product</h3>
                                     </span>
 									</li>
-									<li>
-										<i class="pi pi-circle-on"></i>
-										<span>
-                                        <h3>Unit</h3>
-                                    </span>
-									</li>
+									
 									<li>
 										<i class="pi pi-circle-on"></i>
 										<span>
@@ -83,21 +90,19 @@ import {AppMainComponent} from './app.main.component';
 								</ul>
 							</li>
 							<li [ngClass]="{'active-topmenuitem': activeItem === 3}" (click)="mobileMegaMenuItemClick(3)">
-								<a href="#">React <i class="pi pi-angle-down"></i></a>
+								<a href="#">Supplier <i class="pi pi-angle-down"></i></a>
 								<ul>
-									<li>
+									<li routerLink="/app/supplier-category">
 										<i class="pi pi-circle-on"></i>
 										<span>
-                                        <h3>PrimeReact</h3>
-                                        <span>UI Components for React</span>
-                                    </span>
+                                       		 <h3>Supplier Category</h3>
+                                   		 </span>
 									</li>
-									<li class="active-row">
+									<li class="active-row"  routerLink="/app/supplier">
 										<i class="pi pi-circle-on"></i>
 										<span>
-                                        <h3>Premium Templates</h3>
-                                        <span>UI Components for React</span>
-                                    </span>
+                                       	 <h3>Supplier</h3>
+                                    	</span>
 									</li>
 								</ul>
 							</li>

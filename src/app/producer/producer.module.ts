@@ -4,7 +4,7 @@ import { CommonModule } from '@angular/common';
 import { ProducerRoutingModule } from './producer-routing.module';
 import { ProducerComponent } from './producer.component';
 import { AddProducerComponent } from './add-producer/add-producer.component';
-import { BrandComponent } from './brand/brand.component';
+
 
 
 import {InputTextModule} from 'primeng/inputtext';
@@ -25,7 +25,7 @@ import {DropdownModule} from 'primeng/dropdown';
 import { from } from 'rxjs';
 
 @NgModule({
-  declarations: [ProducerComponent, AddProducerComponent,BrandComponent],
+  declarations: [ProducerComponent, AddProducerComponent],
   imports: [
     CommonModule,
     ProducerRoutingModule,
@@ -44,6 +44,6 @@ import { from } from 'rxjs';
     TableModule
   ],
   providers:[DialogService],
-  entryComponents:[AddProducerComponent,BrandComponent]
+  entryComponents:[AddProducerComponent]
 })
 export class ProducerModule { }
