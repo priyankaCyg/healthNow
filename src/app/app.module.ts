@@ -94,11 +94,8 @@ import {AppFooterComponent} from './app.footer.component';
 
 // Demo pages
 import {DashboardDemoComponent} from './demo/view/dashboarddemo.component';
-import {SampleDemoComponent} from './demo/view/sampledemo.component';
 import {FormsDemoComponent} from './demo/view/formsdemo.component';
-import {DataDemoComponent} from './demo/view/datademo.component';
 import {PanelsDemoComponent} from './demo/view/panelsdemo.component';
-import {OverlaysDemoComponent} from './demo/view/overlaysdemo.component';
 import {MenusDemoComponent} from './demo/view/menusdemo.component';
 import {MessagesDemoComponent} from './demo/view/messagesdemo.component';
 import {MiscDemoComponent} from './demo/view/miscdemo.component';
@@ -116,12 +113,14 @@ import {NodeService} from './demo/service/nodeservice';
 // Application services
 import {BreadcrumbService} from './breadcrumb.service';
 import {MenuService} from './app.menu.service';
+//import { UnitComponent } from './uniy/UnitComponent';
 // import { CompanyComponent } from './company/company.component';
 // import { GeneralEditComponent } from './company/general-edit/general-edit.component';
 
 // Prime NG
 import { MessageService } from 'primeng/api';
-import { ProductComponent } from './product/product.component';
+import { from } from 'rxjs';
+
 
 @NgModule({
     imports: [
@@ -211,11 +210,8 @@ import { ProductComponent } from './product/product.component';
         AppAccessdeniedComponent,
         AppLoginComponent,
         DashboardDemoComponent,
-        SampleDemoComponent,
         FormsDemoComponent,
-        DataDemoComponent,
         PanelsDemoComponent,
-        OverlaysDemoComponent,
         MenusDemoComponent,
         MessagesDemoComponent,
         MessagesDemoComponent,
@@ -223,8 +219,9 @@ import { ProductComponent } from './product/product.component';
         ChartsDemoComponent,
         EmptyDemoComponent,
         FileDemoComponent,
-        DocumentationComponent,
-        ProductComponent
+        DocumentationComponent
+        
+        //UnitComponent
         // CompanyComponent,
         // GeneralEditComponent,
     ],

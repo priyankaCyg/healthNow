@@ -9,7 +9,11 @@
                     <input id="designationname" type="text" pInputText>
                 </div>
     
-           
+                <div class="p-col-12">
+                    <label for="parentCategory">Parent Category</label>
+                    <p-dropdown id="parentCategory" [options]="status" [(ngModel)]="selectedparentCategory"></p-dropdown>
+                </div>
+
                 <div class="p-col-12">
                     <label for="status">Status</label>
                     <p-dropdown id="status" [options]="status" [(ngModel)]="selectedstatus"></p-dropdown>

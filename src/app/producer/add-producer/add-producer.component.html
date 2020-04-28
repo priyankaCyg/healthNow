@@ -5,13 +5,18 @@
             <div class="p-grid form-group">
                
                 <div class="p-col-12">
-                    <label for="designationname">Product Category Name</label>
-                    <input id="designationname" type="text" pInputText>
+                    <label for="pcName">Product Category Name</label>
+                    <input id="pcName" type="text" pInputText>
                 </div>
     
                 <div class="p-col-12">
-                    <label for="status">Cuntry</label>
+                    <label for="cuntry">Country</label>
                     <p-dropdown id="cuntry" [options]="status" [(ngModel)]="selectedstatus"></p-dropdown>
+                </div>
+
+                <div class="p-col-12">
+                    <label for="shortCode">Short Code</label>
+                    <input id="shortCode" type="text" pInputText>
                 </div>
 
                 <div class="p-col-12">

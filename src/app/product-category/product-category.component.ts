@@ -4,7 +4,6 @@ import { CountryService } from '../demo/service/countryservice';
 import { SelectItem, MenuItem } from 'primeng/api';
 import { GeneratedFile } from '@angular/compiler';
 import { DialogService } from 'primeng';
-import { from } from 'rxjs';
 import { AddProductCategoryComponent } from './add-product-category/add-product-category.component';
 
 
@@ -28,14 +27,14 @@ export class ProductCategoryComponent implements OnInit {
   ngOnInit(): void {
         
     this.productCategory = [
-      {productCategoryName: 'Health & Personal Care ', status: 'Active'},
-      {productCategoryName: 'Supplements', status: 'Active'},
-      {productCategoryName: 'Oil', status: 'Active'},
-      {productCategoryName: 'Grain', status: 'Active'},
-      {productCategoryName: 'Diet & Nutrition', status: 'Active'},
-      {productCategoryName: 'Immunity', status: 'Active'},
-      {productCategoryName: 'Diabetes', status: 'Active'},
-      {productCategoryName: 'Weight Management', status: 'Active'}
+      {productCategoryName: 'Product', parentCategory: '',  status: 'Active'},
+      {productCategoryName: 'Health Concerns', parentCategory: '',  status: 'Active'},
+      {productCategoryName: 'Supplements', parentCategory: 'Product', status: 'Active'},
+      {productCategoryName: 'Oil', parentCategory: 'Product', status: 'Active'},
+      {productCategoryName: 'Grain', parentCategory: 'Product', status: 'Active'},
+      {productCategoryName: 'Nutrition', parentCategory: 'Health Concerns', status: 'Active'},
+      {productCategoryName: 'Immunity', parentCategory: 'Health Concerns', status: 'Active'},
+      {productCategoryName: 'Diabetes', parentCategory: 'Health Concerns', status: 'Active'}
     ];
   }
 
@@ -43,7 +42,7 @@ export class ProductCategoryComponent implements OnInit {
     const ref = this.dialogService.open( AddProductCategoryComponent  , {
       data: {
       },
-      header: 'Edit Details',
+      header: 'Add Product Category',
       width: '28%'
     });
 

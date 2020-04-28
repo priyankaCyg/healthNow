@@ -1,11 +1,8 @@
 import { Routes, RouterModule } from '@angular/router';
 import { ModuleWithProviders } from '@angular/core';
 import { DashboardDemoComponent } from './demo/view/dashboarddemo.component';
-import { SampleDemoComponent } from './demo/view/sampledemo.component';
 import { FormsDemoComponent } from './demo/view/formsdemo.component';
-import { DataDemoComponent } from './demo/view/datademo.component';
 import { PanelsDemoComponent } from './demo/view/panelsdemo.component';
-import { OverlaysDemoComponent } from './demo/view/overlaysdemo.component';
 import { MenusDemoComponent } from './demo/view/menusdemo.component';
 import { MessagesDemoComponent } from './demo/view/messagesdemo.component';
 import { MiscDemoComponent } from './demo/view/miscdemo.component';
@@ -26,11 +23,8 @@ export const routes: Routes = [
     { path: 'app', component: AppMainComponent,
         children: [
             { path: '', component: DashboardDemoComponent },
-            { path: 'components/sample', component: SampleDemoComponent },
             { path: 'components/forms', component: FormsDemoComponent },
-            { path: 'components/data', component: DataDemoComponent },
             { path: 'components/panels', component: PanelsDemoComponent },
-            { path: 'components/overlays', component: OverlaysDemoComponent },
             { path: 'components/menus', component: MenusDemoComponent },
             { path: 'components/messages', component: MessagesDemoComponent },
             { path: 'components/misc', component: MiscDemoComponent },
@@ -47,7 +41,13 @@ export const routes: Routes = [
               },
 
               { path: 'product-category', loadChildren:"./product-category/product-category.module#ProductCategoryModule"},
-              { path: 'producer', loadChildren:"./producer/producer.module#ProducerModule"}
+              { path: 'producer', loadChildren:"./producer/producer.module#ProducerModule"},
+              { path: 'brand', loadChildren:"./brand/brand.module#BrandModule" },
+              { path: 'unit', loadChildren:"./unit/unit.module#UnitModule" },
+              { path: 'product', loadChildren:"./product/product.module#ProductModule" },
+              { path: 'supplier-category', loadChildren:"./supplier-category/supplier-category.module#SupplierCategoryModule"},
+              { path: 'supplier', loadChildren:"./supplier/supplier.module#SupplierModule" }
+              
         ]
     },
     {path: 'error', component: AppErrorComponent},
