@@ -50,13 +50,7 @@ export class EmployeeComponent implements OnInit {
   ngOnInit(): void {
     // alert(this.config.data.employeeId)
    
-    this.selectedrole={iRoleID: "", sRoleName: "Select Role"}
-    this.selectedsaddress={iAddID: "", sAddress: "Select Address"}
-    this.selectedgender={iKVID: "", sKVValue: "Select Gender"}
-    this.selectedstatus={iKVID: "", sKVValue: "Select Status"}
-    this.selecteddepartment={iDeptID: "", sDeptName: "Select Department"};
-    this.selecteddesignation = {iDesigID: "", sDesigName: "Select Designation"}
-    this.selectedreportingTo = {iEmpID: "", sReportingTo: "Select Reporting to"};
+   this.defaultDropDwnValue();
     this.employeeId = this.config.data.employeeId
 
     this.employeeData = new EmployeeMaster();
@@ -103,6 +97,17 @@ export class EmployeeComponent implements OnInit {
     this.employeeForm.valueChanges.subscribe((changedObj: any) => {
       this.dropDownValidityCheck()
       });
+  }
+
+  defaultDropDwnValue()
+  {
+    this.selectedrole={iRoleID: "", sRoleName: "Select Role"}
+    this.selectedsaddress={iAddID: "", sAddress: "Select Address"}
+    this.selectedgender={iKVID: "", sKVValue: "Select Gender"}
+    this.selectedstatus={iKVID: "", sKVValue: "Select Status"}
+    this.selecteddepartment={iDeptID: "", sDeptName: "Select Department"};
+    this.selecteddesignation = {iDesigID: "", sDesigName: "Select Designation"}
+    this.selectedreportingTo = {iEmpID: "", sReportingTo: "Select Reporting to"};
   }
 
   getRoleDrpDwn(): Promise<any> 
@@ -370,7 +375,10 @@ export class EmployeeComponent implements OnInit {
     this.apiService.getApiDetails(dataToSendAdd).then(response => {
       console.log("Response for Employee Add ",response)
       // alert(response)
-    this.ref.close();
+    // this.ref.close();
+    // this.ref.close(response);
+
+    this.ref.close(true);
 
     });
   }
@@ -408,7 +416,9 @@ export class EmployeeComponent implements OnInit {
     this.apiService.getApiDetails(dataToSendAdd).then(response => {
       console.log("Response for Employee Edit ",response)
       // alert(response)
-    this.ref.close();
+    // this.ref.close(response);
+
+    this.ref.close(true);
 
     });
 
@@ -456,8 +466,6 @@ export class EmployeeComponent implements OnInit {
 
   dropDownValidityCheck()
   {
-    console.log(this.employeeForm.invalid)
-   
     if(this.selectedgender.iKVID=='')
     {
       return true;

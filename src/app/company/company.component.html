@@ -236,9 +236,15 @@
               </div>
               <div class="p-col-12"> 
                   <!-- <p-table [value]="employee"> -->
-                    <p-table [value]="employee" #AddressSearch [paginator]="true" [rows]="10" [showCurrentPageReport]="true"
+                    <p-table [value]="employee" #EmployeeSearch [paginator]="true" [rows]="10" [showCurrentPageReport]="true"
                     [rowsPerPageOptions]="[10, 25, 50]" [filterDelay]="0" [globalFilterFields]="['sEmpCode','sFirstName','sMiddleName','sLastName','sDeptName','sDesigName'
                     ,'sReportingTo','iStatusID']" class="defaultDataTable">
+                    <ng-template pTemplate="caption">
+                               
+                      <div class="ui-table-globalfilter-container text-left">
+                          <input type="text" pInputText size="50" placeholder="Search" (input)="EmployeeSearch.filterGlobal($event.target.value, 'contains')" style="width:250px;">
+                      </div>
+                  </ng-template>
                       <ng-template pTemplate="header">
                           <tr>
                               <th>Employee Code</th>
