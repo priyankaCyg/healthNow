@@ -8,6 +8,7 @@ import { SelectItem, MenuItem } from 'primeng/api';
 import { AddProducerComponent } from './add-producer/add-producer.component';
 import {APIService} from '../services/apieservice';
 import { ToastService } from "../services/toast.service";
+import {ConfirmationService} from 'primeng/api';
 
 
 @Component({
@@ -24,7 +25,8 @@ export class ProducerComponent implements OnInit {
 
 
   constructor(private breadcrumbService: BreadcrumbService, private dialogService:DialogService,private _apiService:APIService,
-    private toastService: ToastService) {
+    private toastService: ToastService,
+    private confirmationService: ConfirmationService) {
     this.breadcrumbService.setItems([
         { label: 'Dashboard' },
         { label: 'Producer', routerLink: ['/app/producer'] }
@@ -33,21 +35,13 @@ export class ProducerComponent implements OnInit {
 
 
 ngOnInit() {
-  
-  // this.producer =[
-  //   {producerName: 'Nordic Naturals', country: 'US', shortCode: 'NOR', status: 'Active'},
-  //   {producerName: 'HealthyHey', country: 'India',  shortCode: 'HHY', status: 'Active'},
-  //   {producerName: 'Abbott ', country: 'US', shortCode: 'ABOT',  status: 'Active'},
-  //   {producerName: 'Nestle ', country: 'Switzerland', shortCode: 'NST', status: 'Active'},
-  //   {producerName: 'Danone', country: 'Spain', shortCode: 'DNN',  status: 'Active'}
-  // ];
 
   this.showProducers();
 
 }
 
 
-  //List Employee Details
+  //List Producer Details
   showProducers()
   {
     var dataToSend ={
@@ -91,6 +85,31 @@ ngOnInit() {
         this.showProducers();
 
         }
+      });
+      }
+
+      deleteProducer(producerId)
+      {
+        this.confirmationService.confirm({
+          message: 'Are you sure that you want to proceed?',
+          header: 'Confirmation',
+          icon: 'pi pi-exclamation-triangle',
+          accept: () => {
+            var dataToSendDelete = {
+              "iRequestID":2123,
+              "iProducerID":producerId
+            }
+    
+            this._apiService.getDetails(dataToSendDelete).then(response => {
+              console.log("Response for Producer Delete ",response)
+              this.toastService.addSingle("info", "Successfully Deleted", "Successfully Deleted");
+              this.showProducers();
+            });
+          },
+          reject: () => {
+      this.toastService.addSingle("info", "Rejected", "Rejected");
+    
+          }
       });
       }
 

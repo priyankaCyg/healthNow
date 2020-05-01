@@ -1,19 +1,25 @@
 
     <div class="p-grid ui-fluid">
+    <form [formGroup]="unitForm">
+
         <div class="p-col-12"> 
     
             <div class="p-grid form-group">
                
                 <div class="p-col-12">
                     <label for="unitName">Unit </label>
-                    <input id="unitName" type="text" pInputText>
+                    <input id="unitName" type="text" formControlName="sUnitName" pInputText>
+                    <p-message severity="error" [text]="unitForm.controls['sUnitName'].errors['required'] ? 'Brand Name is required' : unitForm.controls['sUnitName'].errors['pattern'] ? 'Should be alpha numeric' : ''" 
+                    *ngIf="!unitForm.controls['sUnitName'].valid&&unitForm.controls['sUnitName'].dirty"></p-message>
                 </div>
                 
            
-                <!-- <div class="p-col-12">
-                    <label for="status">Status</label>
-                    <p-dropdown id="status" [options]="status" [(ngModel)]="selectedstatus"></p-dropdown>
-                </div> -->
+                <div class="p-col-12">
+                    <label for="iStatusID">Status</label>
+                    <p-dropdown id="iStatusID" optionLabel="sKVValue" formControlName="iStatusID" [options]="statusData" [(ngModel)]="selectedstatus"></p-dropdown>
+                    <p-message severity="error" text="Status is required" *ngIf="unitForm.controls['iStatusID'].touched && (selectedstatus.iKVID=='' || unitForm.controls['iStatusID'].hasError('required'))"></p-message>
+                
+                </div>
     
             </div>
             <div class="separator separator--border-solid separator--space-sm separator--portlet-fit"></div>
@@ -21,13 +27,17 @@
             <div class="p-grid form-group ui-fluid">
                 <div class="p-md-6 p-lg-6"></div>
                 <div class="p-col-12 p-md-3 p-lg-3">
-                    <button pButton type="button" label="Cancel" style="margin-bottom:10px" class="ui-button-light"></button>
+                    <button pButton type="button" label="Cancel" (click)="closeDialog()" style="margin-bottom:10px" class="ui-button-light"></button>
                 </div>
-                 <div class="p-col-12 p-md-3 p-lg-3">
-                    <button pButton type="button" label="Save" style="margin-bottom:10px" class="ui-button"></button>
+                 <div class="p-col-12 p-md-3 p-lg-3" *ngIf="!isEdit">
+                    <button pButton type="button" label="Save" [disabled]="!(!unitForm.invalid && !dropDownValidityCheck())" (click)="addUnit()" style="margin-bottom:10px" class="ui-button"></button>
+                </div>
+
+                <div class="p-col-12 p-md-3 p-lg-3" *ngIf="isEdit">
+                    <button pButton type="button" label="Update" [disabled]="!(!unitForm.invalid && !dropDownValidityCheck())" (click)="updateUnit()" style="margin-bottom:10px" class="ui-button"></button>
                 </div>
             </div>
 
         </div>
-       
+       </form>
     </div>

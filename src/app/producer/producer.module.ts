@@ -13,6 +13,8 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 //Prime Ng Service
 import { DialogService } from 'primeng';
 import {TreeTableModule} from 'primeng/treetable';
+import {ConfirmationService} from 'primeng/api';
+
 //Prime Ng Module
 import {ButtonModule} from 'primeng/button';
 import {PanelModule} from 'primeng/panel';
@@ -24,6 +26,8 @@ import {DynamicDialogModule} from 'primeng/dynamicdialog';
 import {DropdownModule} from 'primeng/dropdown';
 import {MessagesModule} from 'primeng/messages';
 import {MessageModule} from 'primeng/message';
+import {ConfirmDialogModule} from 'primeng/confirmdialog';
+
 import { from } from 'rxjs';
 
 
@@ -49,8 +53,9 @@ import {APIService} from '../services/apieservice';
     TreeTableModule,
     MessagesModule,
     MessageModule,
+    ConfirmDialogModule
   ],
-  providers:[DialogService,APIService],
+  providers:[DialogService,APIService,ConfirmationService],
   entryComponents:[AddProducerComponent]
 })
 export class ProducerModule { }

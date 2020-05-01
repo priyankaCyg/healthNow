@@ -5,6 +5,10 @@ import { SelectItem, MenuItem } from 'primeng/api';
 import { DialogService } from 'primeng';
 import { from } from 'rxjs';
 
+import {APIService} from '../services/apieservice';
+import { ToastService } from "../services/toast.service";
+import {ConfirmationService} from 'primeng/api';
+
 import { AddUnitComponent } from './add-unit/add-unit.component';
 
 @Component({
@@ -18,7 +22,9 @@ export class UnitComponent implements OnInit {
 
   unit: any[];
 
-  constructor(private breadcrumbService: BreadcrumbService, private dialogService:DialogService) {
+  constructor(private breadcrumbService: BreadcrumbService, private dialogService:DialogService,private _apiService:APIService,
+    private toastService: ToastService,
+    private confirmationService: ConfirmationService) {
     this.breadcrumbService.setItems([
       { label: 'Dashboard' },
       { label: 'Unit', routerLink: ['/app/unit'] }
@@ -27,13 +33,24 @@ export class UnitComponent implements OnInit {
 
   ngOnInit(): void {
     
-    this.unit = [
-      {srNo: '1', unitName: 'Gram'},
-      {srNo: '2', unitName: 'Kg'},
-      {srNo: '3', unitName: 'Nos'},
-      {srNo: '4', unitName: 'Liter'}
-    ];
+    this.showUnit();
+
   }
+
+
+
+  showUnit()
+  {
+    var dataToSend ={
+      "iRequestID": 2144
+  }
+    this._apiService.getDetails(dataToSend).then(response => {
+      console.log("Response for Unit ",response)
+      this.unit = response
+    });
+  }
+
+
     openDialogForaddUnit() {
       const ref = this.dialogService.open( AddUnitComponent , {
     data: {
@@ -43,8 +60,57 @@ export class UnitComponent implements OnInit {
   });
   ref.onClose.subscribe((success: boolean) => {
     if (success) {
-      // this.toastService.addSingle("success", "Mail send successfully", "");
+      this.toastService.addSingle("success", "Record Added successfully", "");
+    this.showUnit();
+
     }
   });
 }
+
+
+
+
+editUnit(unitId) {
+  const ref = this.dialogService.open( AddUnitComponent , {
+    data: {
+      unitId:unitId
+    },
+    header: 'Edit Brand',
+    width: '28%'
+  });
+
+  ref.onClose.subscribe((success: boolean) => {
+    if (success) {
+      this.toastService.addSingle("success", "Updated successfully", "");
+    this.showUnit();
+
+    }
+  });
+  }
+
+  deleteUnit(unitId)
+  {
+    this.confirmationService.confirm({
+      message: 'Are you sure that you want to proceed?',
+      header: 'Confirmation',
+      icon: 'pi pi-exclamation-triangle',
+      accept: () => {
+        var dataToSendDelete = {
+          "iRequestID":2143,
+          "iUnitID":unitId
+        }
+
+        this._apiService.getDetails(dataToSendDelete).then(response => {
+          console.log("Response for Brand Delete ",response)
+          this.toastService.addSingle("info", "Successfully Deleted", "Successfully Deleted");
+          this.showUnit();
+        });
+      },
+      reject: () => {
+  this.toastService.addSingle("info", "Rejected", "Rejected");
+
+      }
+  });
+  }
+
 }

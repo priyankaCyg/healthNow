@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { GeneratedFile } from '@angular/compiler';
 import { DialogService } from 'primeng';
 import { from } from 'rxjs';
 import { BreadcrumbService } from '../breadcrumb.service';
-import { CountryService } from '../demo/service/countryservice';
-import { SelectItem, MenuItem } from 'primeng/api';
 import { NewBrandComponent } from './new-brand/new-brand.component';
+import {APIService} from '../services/apieservice';
+import { ToastService } from "../services/toast.service";
+import {ConfirmationService} from 'primeng/api';
 
 @Component({
   selector: 'app-brand',
@@ -14,11 +14,12 @@ import { NewBrandComponent } from './new-brand/new-brand.component';
 })
 export class BrandComponent implements OnInit {
 
-  items: MenuItem[];
 
   brand: any[];
 
-  constructor(private breadcrumbService: BreadcrumbService, private dialogService:DialogService) {
+  constructor(private breadcrumbService: BreadcrumbService, private dialogService:DialogService,private _apiService:APIService,
+    private toastService: ToastService,
+    private confirmationService: ConfirmationService) {
     this.breadcrumbService.setItems([
         { label: 'Dashboard' },
         { label: 'Brand', routerLink: ['/app/brand'] }
@@ -26,14 +27,20 @@ export class BrandComponent implements OnInit {
 }
 ngOnInit() {
   
-  this.brand =[
-    {producer:'HealthyHey', brandName: 'HealthyHey', status: 'Active'},
-    {producer:'Nestle', brandName: 'Nescafe Coffee', status: 'Active'},
-    {producer:'Danone', brandName: 'ProtineX ', status: 'Active'},
-    {producer:'Abbott', brandName: 'Ensure ',  status: 'Active'},
-    {producer:'Hindustan Unilever', brandName: 'Horlicks ', status: 'Active'}
-  ];
+  this.showProducers();
 
+
+}
+
+showProducers()
+{
+  var dataToSend ={
+    "iRequestID": 2134
+}
+  this._apiService.getDetails(dataToSend).then(response => {
+    console.log("Response for Brand ",response)
+    this.brand = response
+  });
 }
 
 openDialogFornewBrand() {
@@ -50,4 +57,49 @@ openDialogFornewBrand() {
     }
   });
 }
+
+
+editBrand(brandId) {
+  const ref = this.dialogService.open( NewBrandComponent , {
+    data: {
+      brandId:brandId
+    },
+    header: 'Edit Brand',
+    width: '28%'
+  });
+
+  ref.onClose.subscribe((success: boolean) => {
+    if (success) {
+      this.toastService.addSingle("success", "Updated successfully", "");
+    this.showProducers();
+
+    }
+  });
+  }
+
+  deleteBrand(brandId)
+  {
+    this.confirmationService.confirm({
+      message: 'Are you sure that you want to proceed?',
+      header: 'Confirmation',
+      icon: 'pi pi-exclamation-triangle',
+      accept: () => {
+        var dataToSendDelete = {
+          "iRequestID":2133,
+          "iBrandID":brandId
+        }
+
+        this._apiService.getDetails(dataToSendDelete).then(response => {
+          console.log("Response for Brand Delete ",response)
+          this.toastService.addSingle("info", "Successfully Deleted", "Successfully Deleted");
+          this.showProducers();
+        });
+      },
+      reject: () => {
+  this.toastService.addSingle("info", "Rejected", "Rejected");
+
+      }
+  });
+  }
+
 }

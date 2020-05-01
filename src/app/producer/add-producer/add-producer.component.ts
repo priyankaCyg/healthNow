@@ -217,7 +217,8 @@ export class AddProducerComponent implements OnInit {
     else{
       return false
     }
-    
-    
   }
+
+
+  
 }
