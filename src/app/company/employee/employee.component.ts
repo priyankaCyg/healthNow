@@ -50,13 +50,7 @@ export class EmployeeComponent implements OnInit {
   ngOnInit(): void {
     // alert(this.config.data.employeeId)
 
-    this.selectedrole = { iRoleID: "", sRoleName: "Select Role" }
-    this.selectedsaddress = { iAddID: "", sAddress: "Select Address" }
-    this.selectedgender = { iKVID: "", sKVValue: "Select Gender" }
-    this.selectedstatus = { iKVID: "", sKVValue: "Select Status" }
-    this.selecteddepartment = { iDeptID: "", sDeptName: "Select Department" };
-    this.selecteddesignation = { iDesigID: "", sDesigName: "Select Designation" }
-    this.selectedreportingTo = { iEmpID: "", sReportingTo: "Select Reporting to" };
+    this.defaultDropDwnValue();
     this.employeeId = this.config.data.employeeId
 
     this.employeeData = new EmployeeMaster();
@@ -101,6 +95,16 @@ export class EmployeeComponent implements OnInit {
     this.employeeForm.valueChanges.subscribe((changedObj: any) => {
       this.dropDownValidityCheck()
     });
+  }
+
+  defaultDropDwnValue() {
+    this.selectedrole = { iRoleID: "", sRoleName: "Select Role" }
+    this.selectedsaddress = { iAddID: "", sAddress: "Select Address" }
+    this.selectedgender = { iKVID: "", sKVValue: "Select Gender" }
+    this.selectedstatus = { iKVID: "", sKVValue: "Select Status" }
+    this.selecteddepartment = { iDeptID: "", sDeptName: "Select Department" };
+    this.selecteddesignation = { iDesigID: "", sDesigName: "Select Designation" }
+    this.selectedreportingTo = { iEmpID: "", sReportingTo: "Select Reporting to" };
   }
 
   getRoleDrpDwn(): Promise<any> {
@@ -275,9 +279,20 @@ export class EmployeeComponent implements OnInit {
 
     // alert(JSON.stringify(dataToSend1))
 
+    var dataToSend1 = {
+      "iRequestID": 2035,
+      "iDesigID": this.employeeData.iDesigID,
+      "iDeptID": this.employeeData.iDeptID,
+      "iCID": 1
+    }
+
+    console.log("For Reporting To ", JSON.stringify(dataToSend1))
+
     this.apiService.getDetails(dataToSend1).then(response => {
       console.log("Response for Reporting To ", response)
       this.reportingToData = response
+      this.reportingToData.splice(0, 0, { iEmpID: "", sReportingTo: "Select Reporting to" })
+
       if (response != null || response != "") {
         let selectedReportToObj = this.reportingToData.find(x => x.iEmpID == this.employeeData.iReportingToID);
 
@@ -311,11 +326,15 @@ export class EmployeeComponent implements OnInit {
       "iCID": 1
     }
 
-    // alert(JSON.stringify(dataToSend1))
+    console.log(JSON.stringify(dataToSend1))
 
     this.apiService.getDetails(dataToSend1).then(response => {
       console.log("Response for Reporting To ", response)
       this.reportingToData = response
+      this.reportingToData.splice(0, 0, { iEmpID: "", sReportingTo: "Select Reporting to" })
+
+      this.selectedreportingTo = { iEmpID: "", sReportingTo: "Select Reporting to" };
+
     });
   }
 
@@ -347,10 +366,13 @@ export class EmployeeComponent implements OnInit {
     }
 
 
-    this.apiService.getDetails(dataToSendAdd).then(response => {
+    this.apiService.getApiDetails(dataToSendAdd).then(response => {
       console.log("Response for Employee Add ", response)
       // alert(response)
-      this.ref.close();
+      // this.ref.close();
+      // this.ref.close(response);
+
+      this.ref.close(true);
 
     });
   }
@@ -385,9 +407,11 @@ export class EmployeeComponent implements OnInit {
 
 
     this.apiService.getApiDetails(dataToSendAdd).then(response => {
-      console.log("Response for Employee Add ", response)
-      alert(response)
-      this.ref.close();
+      console.log("Response for Employee Edit ", response)
+      // alert(response)
+      // this.ref.close(response);
+
+      this.ref.close(true);
 
     });
 
@@ -433,32 +457,31 @@ export class EmployeeComponent implements OnInit {
   }
 
   dropDownValidityCheck() {
-
     if (this.selectedgender.iKVID == '') {
-      return false;
+      return true;
     }
     else if (this.selectedsaddress.iAddID == '') {
-      return false
-    }
-    else if (this.selectedstatus.iKVID == '') {
-      return false
-    }
-    else if (this.selecteddepartment.iDeptID == '') {
-      return false
-    }
-    else if (this.selecteddesignation.iDesigID == '') {
-      return false
-    }
-    else if (this.selectedreportingTo.iEmpID == '') {
-      return false
-    }
-    else if (this.selectedstatus.iRoleID == '') {
-      return false
-    }
-    else {
       return true
     }
+    else if (this.selectedstatus.iKVID == '') {
+      return true
+    }
+    else if (this.selecteddepartment.iDeptID == '') {
+      return true
+    }
+    else if (this.selecteddesignation.iDesigID == '') {
+      return true
+    }
+    else if (this.selectedreportingTo.iEmpID == '') {
+      return true
+    }
+    else if (this.selectedrole.iRoleID == '') {
+      return true
+    }
+    else {
+      return false
+    }
+
 
   }
-
 }

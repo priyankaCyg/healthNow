@@ -14,6 +14,7 @@
                         <ng-template pTemplate="header">
                             <tr>
                                 <th>Product Category Name</th>
+                                <th>Parent Category</th>
                                 <th>Status</th>
                                 <th>Action</th>
                             </tr>
@@ -21,6 +22,7 @@
                         <ng-template pTemplate="body" let-productCategory>
                             <tr>
                                     <td>{{productCategory.productCategoryName}}</td>
+                                    <td>{{productCategory.parentCategory}}</td>
                                     <td>{{productCategory.status}}</td>
                                     <td>
                                         <button pButton type="button" class="ui-button-success" icon="pi pi-pencil" style="margin-right: .5em"></button>

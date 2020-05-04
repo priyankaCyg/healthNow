@@ -4,16 +4,17 @@ import { CommonModule } from '@angular/common';
 import { ProducerRoutingModule } from './producer-routing.module';
 import { ProducerComponent } from './producer.component';
 import { AddProducerComponent } from './add-producer/add-producer.component';
-import { BrandComponent } from './brand/brand.component';
 
-import { httpInterceptorProviders } from '../interceptors/httpinterceptors';
+
 
 import {InputTextModule} from 'primeng/inputtext';
-import {FormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 
 //Prime Ng Service
 import { DialogService } from 'primeng';
 import {TreeTableModule} from 'primeng/treetable';
+import {ConfirmationService} from 'primeng/api';
+
 //Prime Ng Module
 import {ButtonModule} from 'primeng/button';
 import {PanelModule} from 'primeng/panel';
@@ -23,15 +24,23 @@ import {TabViewModule} from 'primeng/tabview';
  import {DialogModule} from 'primeng/dialog';
 import {DynamicDialogModule} from 'primeng/dynamicdialog';
 import {DropdownModule} from 'primeng/dropdown';
+import {MessagesModule} from 'primeng/messages';
+import {MessageModule} from 'primeng/message';
+import {ConfirmDialogModule} from 'primeng/confirmdialog';
+
 import { from } from 'rxjs';
 
+
+import {APIService} from '../services/apieservice';
+
 @NgModule({
-  declarations: [ProducerComponent, AddProducerComponent,BrandComponent],
+  declarations: [ProducerComponent, AddProducerComponent],
   imports: [
     CommonModule,
     ProducerRoutingModule,
     CommonModule,
     FormsModule,
+    ReactiveFormsModule,
     ButtonModule,
     PanelModule,
     TabMenuModule,
@@ -42,9 +51,11 @@ import { from } from 'rxjs';
     DropdownModule,
     InputTextModule,
     TreeTableModule,
-    TableModule
+    MessagesModule,
+    MessageModule,
+    ConfirmDialogModule
   ],
-  providers:[httpInterceptorProviders,DialogService],
-  entryComponents:[AddProducerComponent,BrandComponent]
+  providers:[DialogService,APIService,ConfirmationService],
+  entryComponents:[AddProducerComponent]
 })
 export class ProducerModule { }

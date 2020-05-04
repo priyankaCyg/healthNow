@@ -239,7 +239,17 @@
 
             </div>
             <div class="p-col-12">
-              <p-table [value]="employee">
+              <!-- <p-table [value]="employee"> -->
+              <p-table [value]="employee" #EmployeeSearch [paginator]="true" [rows]="10" [showCurrentPageReport]="true"
+                [rowsPerPageOptions]="[10, 25, 50]" [filterDelay]="0" [globalFilterFields]="['sEmpCode','sFirstName','sMiddleName','sLastName','sDeptName','sDesigName'
+                    ,'sReportingTo','iStatusID']" class="defaultDataTable">
+                <ng-template pTemplate="caption">
+
+                  <div class="ui-table-globalfilter-container text-left">
+                    <input type="text" pInputText size="50" placeholder="Search"
+                      (input)="EmployeeSearch.filterGlobal($event.target.value, 'contains')" style="width:250px;">
+                  </div>
+                </ng-template>
                 <ng-template pTemplate="header">
                   <tr>
                     <th>Employee Code</th>
@@ -262,7 +272,17 @@
                     <td>{{employee.sDeptName}}</td>
                     <td>{{employee.sDesigName}}</td>
                     <td>{{employee.sReportingTo}}</td>
-                    <td>{{employee.iStatusID}}</td>
+                    <!-- <td>{{employee.iStatusID}}</td> -->
+                    <td style="text-align: center;">
+                      <button *ngIf="employee.iStatusID == 1" pButton type="button"
+                        class="ui-button-rounded ui-button-success" style="width: 100px; height: 20px;">
+                        Active
+                      </button>
+                      <button *ngIf="employee.iStatusID == 2" pButton type="button"
+                        class="ui-button-rounded ui-button-warning" style="width: 100px; height: 20px;">
+                        Inactive
+                      </button>
+                    </td>
                     <td>
                       <button pButton type="button" (click)="editEmployee(employee.iEmpID)" class="ui-button-success"
                         icon="pi pi-pencil" style="margin-right: .5em"></button>

@@ -66,6 +66,7 @@ export class CompanyComponent implements OnInit {
     this.designationSelectData();
     this.gstList();
     this.getAllAddressesList();
+    this.showEmployee();
 
 
   }
@@ -472,7 +473,8 @@ export class CompanyComponent implements OnInit {
     });
 
     ref.onClose.subscribe((success: boolean) => {
-      if (success) {
+      if(success)
+      {
         this.showEmployee();
         this.toastService.addSingle("success", "Employee Added Successfully", "");
       }
@@ -497,12 +499,14 @@ export class CompanyComponent implements OnInit {
       data: {
         "employeeId": employeeId
       },
-      header: 'Add New Employee',
+      header: 'Edit Employee',
       width: '80%'
     });
 
-    ref.onClose.subscribe((success: boolean) => {
-      if (success) {
+    ref.onClose.subscribe((success: any) => {
+      // alert(success)
+      if(success)
+      {
         this.showEmployee();
         this.toastService.addSingle("success", "Updated Successfully", "");
       }
