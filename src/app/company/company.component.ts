@@ -11,8 +11,8 @@ import { GstComponent } from './gst/gst.component';
 import { GeneratedFile } from '@angular/compiler';
 import { DialogService } from 'primeng';
 import { from } from 'rxjs';
-import {APIService} from '../services/apieservice';
-import {ConfirmationService} from 'primeng/api';
+import { APIService } from '../services/apieservice';
+import { ConfirmationService } from 'primeng/api';
 import { CompanyAddress } from '../models/company-address.model';
 import { BankData } from "../model/slelectAllBank.model";
 import { ApiService } from "../services/api.service";
@@ -29,10 +29,10 @@ import { companyData } from '../model/company';
 })
 export class CompanyComponent implements OnInit {
 
-items: MenuItem[];
+  items: MenuItem[];
   compData: companyData[];
   addressDataArray: CompanyAddress[];
-  addressData : CompanyAddress;
+  addressData: CompanyAddress;
   department: departmentData[];
   gst: gstData[];
   bankData: BankData[];
@@ -43,7 +43,7 @@ items: MenuItem[];
     private dialogService: DialogService,
     private apiService: ApiService,
     private toastService: ToastService,
-    private confirmationService: ConfirmationService,private _apiService:APIService) {
+    private confirmationService: ConfirmationService, private _apiService: APIService) {
     this.breadcrumbService.setItems([
       { label: "Dashboard" },
       { label: "Company", routerLink: ["/app/company"] },
@@ -60,6 +60,7 @@ items: MenuItem[];
       { label: "Theming", icon: "pi pi-file", routerLink: ["/theming"] },
     ];
     this.companyData();
+    this.showEmployee();
     this.departmentList();
     this.bankSelectData();
     this.designationSelectData();
@@ -100,77 +101,77 @@ items: MenuItem[];
       this.companyData();
     });
   }
- // Get address list start
- getAllAddressesList(){
-  const all_address_api =
-  {
-    "iRequestID":2015,
-    "iCID" :1
-}
-this.apiService.callPostApi(all_address_api).subscribe(
- data => { 
- console.log(data);
- this.addressDataArray = data;
- }, 
- error => console.log(error)
- );
-}
-// Get address list end
-
-// open modal for new address start
-openDialogForaddNewAddress() {
-  const ref = this.dialogService.open( AddNewAddressComponent , {
-    data: {
-    },
-    header: 'Add New Address',
-    width: '80%'
-  });
-
-  ref.onClose.subscribe((success: boolean) => {
-    this.getAllAddressesList();
-    if (success) {
-      // this.toastService.addSingle("success", "Mail send successfully", "");
+  // Get address list start
+  getAllAddressesList() {
+    const all_address_api =
+    {
+      "iRequestID": 2015,
+      "iCID": 1
     }
-  });
-}
-// open modal for new address end
-
-// open modal for edit address start
-openDialogForeditAddress(address : CompanyAddress) {
-  const ref = this.dialogService.open(AddNewAddressComponent, {
-    data:address,
-    header: 'Edit Addrees',
-    width: '80%'
-  });
-
-  ref.onClose.subscribe((success: boolean) => {
-    this.getAllAddressesList();
-    if (success) {
-      // this.toastService.addSingle("success", "Mail send successfully", "");
-    }
-  });
-}
-
-
- // open modal for delete address start
-onDeleteAddress(addressId : number){
-  const deleteAddressApi = {
-    "iRequestID":2014,
-    "iCID" :1,
-    "iAddID":addressId
-  }
-  if(confirm("Are you sure to delete this record?")){
-    this.apiService.callPostApi(deleteAddressApi).subscribe(
+    this.apiService.callPostApi(all_address_api).subscribe(
       data => {
-        this.getAllAddressesList();
-    },
-    error => {
-      console.log(error)
-    }
-      ) 
+        console.log(data);
+        this.addressDataArray = data;
+      },
+      error => console.log(error)
+    );
   }
-}
- // open modal for delete address end
+  // Get address list end
+
+  // open modal for new address start
+  openDialogForaddNewAddress() {
+    const ref = this.dialogService.open(AddNewAddressComponent, {
+      data: {
+      },
+      header: 'Add New Address',
+      width: '80%'
+    });
+
+    ref.onClose.subscribe((success: boolean) => {
+      this.getAllAddressesList();
+      if (success) {
+        // this.toastService.addSingle("success", "Mail send successfully", "");
+      }
+    });
+  }
+  // open modal for new address end
+
+  // open modal for edit address start
+  openDialogForeditAddress(address: CompanyAddress) {
+    const ref = this.dialogService.open(AddNewAddressComponent, {
+      data: address,
+      header: 'Edit Addrees',
+      width: '80%'
+    });
+
+    ref.onClose.subscribe((success: boolean) => {
+      this.getAllAddressesList();
+      if (success) {
+        // this.toastService.addSingle("success", "Mail send successfully", "");
+      }
+    });
+  }
+
+
+  // open modal for delete address start
+  onDeleteAddress(addressId: number) {
+    const deleteAddressApi = {
+      "iRequestID": 2014,
+      "iCID": 1,
+      "iAddID": addressId
+    }
+    if (confirm("Are you sure to delete this record?")) {
+      this.apiService.callPostApi(deleteAddressApi).subscribe(
+        data => {
+          this.getAllAddressesList();
+        },
+        error => {
+          console.log(error)
+        }
+      )
+    }
+  }
+  // open modal for delete address end
   openDialogForaddDepartment() {
     const ref = this.dialogService.open(DepartmentComponent, {
       data: {},
@@ -180,9 +181,11 @@ onDeleteAddress(addressId : number){
 
     ref.onClose.subscribe((success: boolean) => {
       if (success) {
-        // this.toastService.addSingle("success", "Mail send successfully", "");
+        //this.toastService.addSingle("success", "Record Added successfully", "");
+
       }
       this.departmentList();
+
     });
   }
   //open dialog for edit department
@@ -195,9 +198,9 @@ onDeleteAddress(addressId : number){
 
     ref.onClose.subscribe((success: boolean) => {
       if (success) {
-        // this.toastService.addSingle("success", "Mail send successfully", "");
       }
       this.departmentList();
+
     });
   }
   //show all list of department
@@ -216,19 +219,28 @@ onDeleteAddress(addressId : number){
   }
   // delete departemnt
   deleteDepartemnt(department: departmentData) {
-    let dep_id = department.iDeptID;
-    let delete_data_api = {
-      iRequestID: 2054,
-      iCID: 1,
-      iDeptID: dep_id,
-    };
-    this.apiService.callPostApi(delete_data_api).subscribe(
-      (data) => {
-        console.log(data);
-      },
-      (error) => console.log(error)
-    );
-    this.departmentList();
+    this.confirmationService.confirm({
+      message: 'Are you sure that you want to proceed?',
+      header: 'Confirmation',
+      icon: 'pi pi-exclamation-triangle',
+      accept: () => {
+        let dep_id = department.iDeptID;
+        let delete_data_api = {
+          iRequestID: 2054,
+          iCID: 1,
+          iDeptID: dep_id,
+        };
+        this.apiService.callPostApi(delete_data_api).subscribe(
+          (data) => {
+            console.log(data);
+            this.toastService.addSingle("info", "Successfully Deleted", "Successfully Deleted");
+            this.departmentList();
+          },
+          (error) => console.log(error)
+        );
+      }
+
+    });
 
   }
 
@@ -284,24 +296,31 @@ onDeleteAddress(addressId : number){
   }
   //delete for gst
   deleteGst(gst: gstData) {
+    this.confirmationService.confirm({
+      message: 'Are you sure that you want to proceed?',
+      header: 'Confirmation',
+      icon: 'pi pi-exclamation-triangle',
+      accept: () => {
+        let state_id = +gst.iStateID;
+        let delete_gst_data_api = {
 
-    let state_id = +gst.iStateID;
-    let delete_gst_data_api = {
+          "iRequestID": 2064,
+          "iStateID": state_id,
+          "iCID": 1
+        };
+        console.log(delete_gst_data_api);
+        this.apiService.callPostApi(delete_gst_data_api).subscribe(
+          data => {
+            console.log(data);
+            this.toastService.addSingle("info", "Successfully Deleted", "Successfully Deleted");
+            this.gstList();
 
-      "iRequestID": 2064,
-      "iStateID": state_id,
-      "iCID": 1
-    };
-    console.log(delete_gst_data_api);
-    this.apiService.callPostApi(delete_gst_data_api).subscribe(
-      data => {
-        console.log(data);
+          },
+          error => console.log(error)
+        );
+      }
 
-      },
-      error => console.log(error)
-    );
-    this.gstList();
-
+    });
   }
 
   //Function for Designation Table Data 
@@ -450,7 +469,7 @@ onDeleteAddress(addressId : number){
 
   //Open Dialog To Add Employee
   openDialogForEmployee() {
-    const ref = this.dialogService.open( EmployeeComponent , {
+    const ref = this.dialogService.open(EmployeeComponent, {
       data: {
       },
       header: 'Add New Employee',
@@ -458,7 +477,8 @@ onDeleteAddress(addressId : number){
     });
 
     ref.onClose.subscribe((success: boolean) => {
-      if (success) {
+      if(success)
+      {
         this.showEmployee();
         this.toastService.addSingle("success", "Employee Added Successfully", "");
       }
@@ -466,30 +486,31 @@ onDeleteAddress(addressId : number){
   }
 
   //List Employee Details
-  showEmployee()
-  {
-    var dataToSend ={
-      "iRequestID":2031,
-      "iCID" :1
-  }
+  showEmployee() {
+    var dataToSend = {
+      "iRequestID": 2031,
+      "iCID": 1
+    }
     this._apiService.getDetails(dataToSend).then(response => {
-      console.log("Response for Employee ",response)
+      console.log("Response for Employee ", response)
       this.employee = response
     });
   }
 
   //Open Dialog To Edit Employee
   editEmployee(employeeId) {
-    const ref = this.dialogService.open( EmployeeComponent , {
+    const ref = this.dialogService.open(EmployeeComponent, {
       data: {
-        "employeeId":employeeId
+        "employeeId": employeeId
       },
-      header: 'Add New Employee',
+      header: 'Edit Employee',
       width: '80%'
     });
 
-    ref.onClose.subscribe((success: boolean) => {
-      if (success) {
+    ref.onClose.subscribe((success: any) => {
+      // alert(success)
+      if(success)
+      {
         this.showEmployee();
         this.toastService.addSingle("success", "Updated Successfully", "");
       }
@@ -497,29 +518,29 @@ onDeleteAddress(addressId : number){
   }
 
   //Open Dialog To Delete Employee
-  deleteEmployee(employeeId){
+  deleteEmployee(employeeId) {
     this.confirmationService.confirm({
       message: 'Are you sure that you want to proceed?',
       header: 'Confirmation',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
         var dataToSendDelete = {
-          "iRequestID":2034,
-          "iEmpID":employeeId,
-          "iCID":1
+          "iRequestID": 2034,
+          "iEmpID": employeeId,
+          "iCID": 1
         }
 
         this._apiService.getDetails(dataToSendDelete).then(response => {
-          console.log("Response for Employee Delete ",response)
+          console.log("Response for Employee Delete ", response)
           this.toastService.addSingle("info", "Successfully Deleted", "Successfully Deleted");
           this.showEmployee();
         });
       },
       reject: () => {
-  this.toastService.addSingle("info", "Rejected", "Rejected");
+        this.toastService.addSingle("info", "Rejected", "Rejected");
 
       }
-  });
+    });
   }
 
 }

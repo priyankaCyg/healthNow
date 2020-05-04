@@ -6,7 +6,10 @@ import { BreadcrumbService } from '../breadcrumb.service';
 import { CountryService } from '../demo/service/countryservice';
 import { SelectItem, MenuItem } from 'primeng/api';
 import { AddProducerComponent } from './add-producer/add-producer.component';
-import { BrandComponent } from './brand/brand.component';
+import {APIService} from '../services/apieservice';
+import { ToastService } from "../services/toast.service";
+import {ConfirmationService} from 'primeng/api';
+
 
 @Component({
   selector: 'app-producer',
@@ -17,37 +20,38 @@ export class ProducerComponent implements OnInit {
 
   items: MenuItem[];
 
-    producer: any[];
+    // producer: any[];
+    producer;
 
-    brand: any[];
 
-  constructor(private breadcrumbService: BreadcrumbService, private dialogService:DialogService) {
+  constructor(private breadcrumbService: BreadcrumbService, private dialogService:DialogService,private _apiService:APIService,
+    private toastService: ToastService,
+    private confirmationService: ConfirmationService) {
     this.breadcrumbService.setItems([
         { label: 'Dashboard' },
-        { label: 'Company', routerLink: ['/app/producer'] }
+        { label: 'Producer', routerLink: ['/app/producer'] }
     ]);
 }
 
 
 ngOnInit() {
-  this.producer =[
-    {producerName: 'Nordic Naturals', cuntry: 'US', status: 'Active'},
-    {producerName: 'HealthyHey', cuntry: 'India',  status: 'Active'},
-    {producerName: 'Abbott ', cuntry: 'US',  status: 'Active'},
-    {producerName: 'Nestle ', cuntry: 'Switzerland',  status: 'Active'},
-    {producerName: 'Danone', cuntry: 'Spain',  status: 'Active'}
-  ];
 
-  this.brand = [
-    {brandName: 'HealthyHey', shortCode: 'HHY', status: 'Active'},
-    {brandName: 'Protinex', shortCode: 'PTX', status: 'Active'},
-    {brandName: 'Ensure', shortCode: 'ENR', status: 'Active'},
-    {brandName: 'Horlicks', shortCode: 'HRL', status: 'Active'},
-    {brandName: 'PediaSure', shortCode: 'PDS', status: 'Active'},
-    {brandName: 'Bournvita ', shortCode: 'BRV', status: 'Active'}
-  ];
+  this.showProducers();
 
 }
+
+
+  //List Producer Details
+  showProducers()
+  {
+    var dataToSend ={
+      "iRequestID": 2124
+  }
+    this._apiService.getDetails(dataToSend).then(response => {
+      console.log("Response for Producers ",response)
+      this.producer = response
+    });
+  }
 
     openDialogForaddProducer() {
     const ref = this.dialogService.open( AddProducerComponent , {
@@ -59,24 +63,54 @@ ngOnInit() {
 
     ref.onClose.subscribe((success: boolean) => {
       if (success) {
-        // this.toastService.addSingle("success", "Mail send successfully", "");
+        this.toastService.addSingle("success", "Added successfully", "");
+        this.showProducers();
       }
     });
     }
-    openDialogForBrand() {
-    const ref = this.dialogService.open( BrandComponent , {
-      data: {
-      },
-      header: 'Add New GST',
-      width: '28%'
-    });
 
-    ref.onClose.subscribe((success: boolean) => {
-      if (success) {
-        // this.toastService.addSingle("success", "Mail send successfully", "");
+
+    editProducer(producerId) {
+      const ref = this.dialogService.open( AddProducerComponent , {
+        data: {
+          producerId:producerId
+        },
+        header: 'Edit Producer',
+        width: '28%'
+      });
+  
+      ref.onClose.subscribe((success: boolean) => {
+        if (success) {
+          this.toastService.addSingle("success", "Updated successfully", "");
+        this.showProducers();
+
+        }
+      });
       }
-    });
 
-}
+      deleteProducer(producerId)
+      {
+        this.confirmationService.confirm({
+          message: 'Are you sure that you want to proceed?',
+          header: 'Confirmation',
+          icon: 'pi pi-exclamation-triangle',
+          accept: () => {
+            var dataToSendDelete = {
+              "iRequestID":2123,
+              "iProducerID":producerId
+            }
+    
+            this._apiService.getDetails(dataToSendDelete).then(response => {
+              console.log("Response for Producer Delete ",response)
+              this.toastService.addSingle("info", "Successfully Deleted", "Successfully Deleted");
+              this.showProducers();
+            });
+          },
+          reject: () => {
+      this.toastService.addSingle("info", "Rejected", "Rejected");
+    
+          }
+      });
+      }
 
 }

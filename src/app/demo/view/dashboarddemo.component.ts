@@ -98,7 +98,7 @@ export class DashboardDemoComponent implements OnInit {
             {label: '2014', value: 2014}
         ];
 
-        this.carService.getCarsSmall().then(cars => this.cars = cars);
+        
 
         this.cols = [
             { field: 'year', header: 'Year' },

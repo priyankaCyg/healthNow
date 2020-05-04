@@ -93,19 +93,16 @@ import { AppTopBarComponent } from './app.topbar.component';
 import { AppFooterComponent } from './app.footer.component';
 
 // Demo pages
-import { DashboardDemoComponent } from './demo/view/dashboarddemo.component';
-import { SampleDemoComponent } from './demo/view/sampledemo.component';
-import { FormsDemoComponent } from './demo/view/formsdemo.component';
-import { DataDemoComponent } from './demo/view/datademo.component';
-import { PanelsDemoComponent } from './demo/view/panelsdemo.component';
-import { OverlaysDemoComponent } from './demo/view/overlaysdemo.component';
-import { MenusDemoComponent } from './demo/view/menusdemo.component';
-import { MessagesDemoComponent } from './demo/view/messagesdemo.component';
-import { MiscDemoComponent } from './demo/view/miscdemo.component';
-import { EmptyDemoComponent } from './demo/view/emptydemo.component';
-import { ChartsDemoComponent } from './demo/view/chartsdemo.component';
-import { FileDemoComponent } from './demo/view/filedemo.component';
-import { DocumentationComponent } from './demo/view/documentation.component';
+import {DashboardDemoComponent} from './demo/view/dashboarddemo.component';
+import {FormsDemoComponent} from './demo/view/formsdemo.component';
+import {PanelsDemoComponent} from './demo/view/panelsdemo.component';
+import {MenusDemoComponent} from './demo/view/menusdemo.component';
+import {MessagesDemoComponent} from './demo/view/messagesdemo.component';
+import {MiscDemoComponent} from './demo/view/miscdemo.component';
+import {EmptyDemoComponent} from './demo/view/emptydemo.component';
+import {ChartsDemoComponent} from './demo/view/chartsdemo.component';
+import {FileDemoComponent} from './demo/view/filedemo.component';
+import {DocumentationComponent} from './demo/view/documentation.component';
 
 // Demo services
 import { CarService } from './demo/service/carservice';
@@ -114,15 +111,14 @@ import { EventService } from './demo/service/eventservice';
 import { NodeService } from './demo/service/nodeservice';
 
 // Application services
-import { BreadcrumbService } from './breadcrumb.service';
-import { MenuService } from './app.menu.service';
-// import { CompanyComponent } from './company/company.component';
-// import { GeneralEditComponent } from './company/general-edit/general-edit.component';
+import {BreadcrumbService} from './breadcrumb.service';
+import {MenuService} from './app.menu.service';
 
 // Prime NG
 import { MessageService } from 'primeng/api';
+import { from } from 'rxjs';
+
 import { ApiService } from './services/api.service';
-import { ProductComponent } from './product/product.component';
 
 @NgModule({
     imports: [
@@ -213,11 +209,8 @@ import { ProductComponent } from './product/product.component';
         AppAccessdeniedComponent,
         AppLoginComponent,
         DashboardDemoComponent,
-        SampleDemoComponent,
         FormsDemoComponent,
-        DataDemoComponent,
         PanelsDemoComponent,
-        OverlaysDemoComponent,
         MenusDemoComponent,
         MessagesDemoComponent,
         MessagesDemoComponent,
@@ -225,8 +218,9 @@ import { ProductComponent } from './product/product.component';
         ChartsDemoComponent,
         EmptyDemoComponent,
         FileDemoComponent,
-        DocumentationComponent,
-        ProductComponent
+        DocumentationComponent
+        
+        //UnitComponent
         // CompanyComponent,
         // GeneralEditComponent,
     ],

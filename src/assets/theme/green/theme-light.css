@@ -2523,7 +2523,7 @@ body .ui-tabview.ui-tabview-top .ui-tabview-nav li, body .ui-tabview.ui-tabview-
   border-radius: 0;
   margin: 0;
   box-sizing: border-box;
-  background: #ffffff;
+  background: #f8f8f8;
   border: 1px solid transparent;
 }
 body .ui-tabview.ui-tabview-top .ui-tabview-nav li a, body .ui-tabview.ui-tabview-bottom .ui-tabview-nav li a, body .ui-tabview.ui-tabview-left .ui-tabview-nav li a, body .ui-tabview.ui-tabview-right .ui-tabview-nav li a {

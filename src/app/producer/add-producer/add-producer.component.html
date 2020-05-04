@@ -1,22 +1,40 @@
 
     <div class="p-grid ui-fluid">
+    <form [formGroup]="producerForm">
+
         <div class="p-col-12"> 
     
             <div class="p-grid form-group">
                
                 <div class="p-col-12">
-                    <label for="designationname">Product Category Name</label>
-                    <input id="designationname" type="text" pInputText>
+                    <label for="pcName">Producer Name</label>
+                    <input id="pcName" type="text" formControlName="sProducerName" pInputText>
+                    <p-message severity="error" [text]="producerForm.controls['sProducerName'].errors['required'] ? 'Producer Name is required' : producerForm.controls['sProducerName'].errors['pattern'] ? 'Should be alpha numeric' : ''" 
+                        *ngIf="!producerForm.controls['sProducerName'].valid&&producerForm.controls['sProducerName'].dirty"></p-message>
                 </div>
     
+                
                 <div class="p-col-12">
-                    <label for="status">Cuntry</label>
-                    <p-dropdown id="cuntry" [options]="status" [(ngModel)]="selectedstatus"></p-dropdown>
+                    <label for="sCountryName">Country</label>
+                    <p-dropdown formControlName="sCountryName" optionLabel="sLocName"  [filter]="true" id="sCountryName" [options]="countryData" [(ngModel)]="selectedCountry"></p-dropdown>
+                    <div>
+                        <p-message severity="error" text="Country is required" *ngIf="producerForm.controls['sCountryName'].touched && (selectedCountry.iLocationID=='' || producerForm.controls['sCountryName'].hasError('required'))"></p-message>
+                    </div>
+                </div>
+
+                <div class="p-col-12">
+                    <label for="sShortCode">Short Code</label>
+                    <input id="sShortCode" formControlName="sShortCode" type="text" pInputText>
+                    <p-message severity="error" [text]="producerForm.controls['sShortCode'].errors['required'] ? 'Short Name is required' : producerForm.controls['sShortCode'].errors['pattern'] ? 'Should be alpha numeric' : ''" 
+                    *ngIf="!producerForm.controls['sShortCode'].valid&&producerForm.controls['sShortCode'].dirty"></p-message>
                 </div>
 
                 <div class="p-col-12">
                     <label for="status">Status</label>
-                    <p-dropdown id="status" [options]="status" [(ngModel)]="selectedstatus"></p-dropdown>
+                    <!-- <p-dropdown id="status" [options]="status" [(ngModel)]="selectedstatus"></p-dropdown> -->
+                    <p-dropdown formControlName="iStatusID" optionLabel="sKVValue"  [filter]="true" id="iStatusID" [options]="statusData" [(ngModel)]="selectedstatus"></p-dropdown>
+                    <p-message severity="error" text="Status is required" *ngIf="producerForm.controls['iStatusID'].touched && (selectedstatus.iKVID=='' || producerForm.controls['iStatusID'].hasError('required'))"></p-message>
+
                 </div>
     
             </div>
@@ -25,13 +43,17 @@
             <div class="p-grid form-group ui-fluid">
                 <div class="p-md-6 p-lg-6"></div>
                 <div class="p-col-12 p-md-3 p-lg-3">
-                    <button pButton type="button" label="Cancel" style="margin-bottom:10px" class="ui-button-light"></button>
+                    <button pButton type="button" label="Cancel" (click)="closeDialog()" style="margin-bottom:10px" class="ui-button-light"></button>
                 </div>
-                 <div class="p-col-12 p-md-3 p-lg-3">
-                    <button pButton type="button" label="Save" style="margin-bottom:10px" class="ui-button"></button>
+                 <div class="p-col-12 p-md-3 p-lg-3" *ngIf="!isEdit">
+                    <button pButton type="button" label="Save" [disabled]="!(!producerForm.invalid && !dropDownValidityCheck())" (click)="addProducer()" style="margin-bottom:10px" class="ui-button"></button>
+                </div>
+
+                <div class="p-col-12 p-md-3 p-lg-3" *ngIf="isEdit">
+                    <button pButton type="button" label="Update" [disabled]="!(!producerForm.invalid && !dropDownValidityCheck())" (click)="updateProducer()" style="margin-bottom:10px" class="ui-button"></button>
                 </div>
             </div>
 
         </div>
-       
+       </form>
     </div>
