@@ -1,3 +1,5 @@
+<p-confirmDialog header="Confirmation" icon="pi pi-info" [style]="{width: '425px'}" rejectButtonStyleClass="ui-button-secondary"></p-confirmDialog>
+
 <div class="p-grid">
   <div class="p-col-12">
     <div class="card card-w-title">
@@ -114,6 +116,7 @@
                 <div class="p-grid ui-fluid p-justify-end">
                   <div class="p-col-1 text-center mt-1">
                     <button (click)="openDialogForaddDepartment()" pButton icon="pi pi-fw pi-plus" label="Add New"></button>
+                  </div>
             <div class="p-col-12">
               <p-table #dt [value]="department" [rowHover]="true" [paginator]="true" [rows]="10"
                 [showCurrentPageReport]="true" [rowsPerPageOptions]="[10, 25, 50]" [filterDelay]="0"
@@ -159,7 +162,7 @@
               </p-table>
             </div>
           </div>
-          </div>
+          
         </p-tabPanel>
 
         <!-- Department tab End here -->

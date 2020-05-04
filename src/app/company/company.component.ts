@@ -65,6 +65,7 @@ items: MenuItem[];
     this.designationSelectData();
     this.gstList();
     this.getAllAddressesList();
+    this.showEmployee();
 
 
   }
@@ -303,143 +304,147 @@ onDeleteAddress(addressId : number){
 
   }
 
-  //new code
-
-
-
+  //Function for Designation Table Data 
   designationSelectData() {
     const selectDesig_data = {
       iRequestID: 2084,
       iCID: 1,
     };
-
     this.apiService.callPostApi(selectDesig_data).subscribe(
       (data) => {
         console.log(data);
         this.designationData = data;
-
         console.log(this.designationData);
       },
       (error) => console.log(error)
     );
   }
+
+  // Dialog box to add designation
   openDialogForDesignation() {
     const ref = this.dialogService.open(DesignationComponent, {
       data: {},
       header: "Add New Designation",
       width: "28%",
     });
-
     ref.onClose.subscribe((success: boolean) => {
-
-      if (success) {
-        // this.toastService.addSingle("success", "Mail send successfully", "");
-      }
+      if (success) {}
       this.designationSelectData();
     });
   }
+
+  // Dialog box to update designation
   updateDesig(desig) {
     const ref = this.dialogService.open(DesignationComponent, {
       data: desig,
       header: "Edit Designation",
       width: "28%",
     });
-
     ref.onClose.subscribe((success: boolean) => {
-
-      if (success) {
-        // this.toastService.addSingle("success", "Record Added successfully", "");
-      }
+      if (success) {}
       this.designationSelectData();
     });
   }
+
+  // Delete Function for Designation
   deleteDesig(desig) {
+    
     let desig_id = desig.iDesigID;
-    const deleteDesig_data = {
-      iRequestID: 2083,
-      iCID: 1,
-      iDesigID: desig_id,
-      iUserID: 2
-
-    };
-    console.log(deleteDesig_data);
-    this.apiService.callPostApi(deleteDesig_data).subscribe(
-      (data) => {
-        console.log(data);
-
+    this.confirmationService.confirm({
+      message: 'Are you sure that you want to proceed?',
+      header: 'Confirmation',
+      icon: 'pi pi-exclamation-triangle',
+      accept: () => {
+        const deleteDesig_data = {
+          iRequestID: 2083,
+          iCID: 1,
+          iDesigID: desig_id,
+          iUserID: 2
+        };
+        this.apiService.callPostApi(deleteDesig_data).subscribe(
+          (data) => {
+            console.log(data);
+          },
+          (error) => console.log(error)
+        );
+        this.toastService.addSingle("info", "Record Successfully Deleted", "Record Successfully Deleted");
+        this.designationSelectData();
       },
-      (error) => console.log(error)
-    );
-    this.designationSelectData();
-
+      reject: () => {
+        this.toastService.addSingle("info", "Rejected", "Rejected");
+      }
+  });
   }
 
+  // Function for Bank table data
   bankSelectData() {
     const selectBank_data = {
       iRequestID: 2045,
       iCID: 1,
     };
-
     this.apiService.callPostApi(selectBank_data).subscribe(
       (data) => {
         console.log(data);
         this.bankData = data;
-
         console.log(this.bankData);
       },
       (error) => console.log(error)
     );
   }
+
+  //Dialog box to add bank
   openDialogForBank() {
     const ref = this.dialogService.open(BankComponent, {
       data: {},
       header: "Add New Bank",
       width: "50%",
     });
-
     ref.onClose.subscribe((success: boolean) => {
-
-      if (success) {
-        // this.toastService.addSingle("success", "Mail send successfully", "");
-      }
+      if (success) {}
       this.bankSelectData();
     });
   }
 
+  // Dialog box to update bank
   updateBank(bank) {
     const ref = this.dialogService.open(BankComponent, {
       data: bank,
       header: "Edit Bank",
       width: "50%",
     });
-
     ref.onClose.subscribe((success: boolean) => {
-      console.log("123")
-
-      if (success) {
-
-        // this.toastService.addSingle("success", "Record Added successfully", "");
-      }
+      if (success) {}
       this.bankSelectData();
     });
   }
+
+  // Delete function for bank
   deleteBank(bank) {
     let bank_id = bank.iBankID;
-    const deleteBank_data = {
-      iRequestID: 2044,
-      iCID: 1,
-      iBankID: bank_id,
-    };
-    console.log(deleteBank_data);
-    this.apiService.callPostApi(deleteBank_data).subscribe(
-      (data) => {
-        console.log(data);
-
+    this.confirmationService.confirm({
+      message: 'Are you sure that you want to proceed?',
+      header: 'Confirmation',
+      icon: 'pi pi-exclamation-triangle',
+      accept: () => {
+        const deleteBank_data = {
+          iRequestID: 2044,
+          iCID: 1,
+          iBankID: bank_id,
+        };
+        console.log(deleteBank_data);
+        this.apiService.callPostApi(deleteBank_data).subscribe(
+          (data) => {
+            console.log(data);
+          },
+          (error) => console.log(error)
+        );
+        this.toastService.addSingle("info", "Record Successfully Deleted", "Record Successfully Deleted");
+        this.bankSelectData();
       },
-      (error) => console.log(error)
-    );
-    this.bankSelectData();
-
+      reject: () => {
+        this.toastService.addSingle("info", "Rejected", "Rejected");
+      }
+   });
   }
 
 
