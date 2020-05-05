@@ -6,7 +6,7 @@
                         <h1 class="mt-2">Supplier</h1>
                     </div>
                     <div class="p-col-1 p-col-align-end text-center">
-                            <button routerLink="/app/supplier/add-new-supplier" pButton icon="pi pi-fw pi-plus" label="Add New"></button>
+                            <button routerLink="/app/supplier/new-supplier" pButton icon="pi pi-fw pi-plus" label="Add New"></button>
                         
                     </div>
                     <div class="p-col-12"> 
@@ -22,12 +22,6 @@
                                         <th>Supplier Name</th>
                                         <th>Supplier Category</th>
                                         <th>Short Code</th>
-                                        <th>Legal Entity</th>
-                                        <th>Website</th>
-                                        <th>Tel 1</th>
-                                        <th>Tel 2</th>
-                                        <th>Fax</th>
-                                        <th>Pan</th>
                                         <th>Status</th>
                                         <th>Action</th>
                                     </tr>
@@ -37,14 +31,9 @@
                                         <td class="ui-resizable-column">{{supplier.supplierName}}</td>
                                         <td class="ui-resizable-column">{{supplier.supplierCat}}</td>
                                         <td class="ui-resizable-column">{{supplier.shortCode}}</td>
-                                        <td class="ui-resizable-column">{{supplier.legalEntity}}</td>
-                                        <td class="ui-resizable-column">{{supplier.website}}</td>
-                                        <td class="ui-resizable-column">{{supplier.Tel1}}</td>
-                                        <td class="ui-resizable-column">{{supplier.Tel2}}</td>
-                                        <td class="ui-resizable-column">{{supplier.Tel2}}</td>
-                                        <td class="ui-resizable-column">{{supplier.fax}}</td>
-                                        <td class="ui-resizable-column">{{supplier.panNo}}</td>
+                                        <td class="ui-resizable-column">{{supplier.status}}</td>
                                         <td class="ui-resizable-column">
+                                        <button routerLink="/app/supplier/product-mapping" pButton type="button" class="ui-button-success mr-2" icon="pi pi-sitemap" title="Product Mapping"></button>
                                          <button pButton type="button" class="ui-button-success mr-2" icon="pi pi-pencil" title="Edit"></button>
                                          <button pButton type="button" class="ui-button-danger mr-2" icon="pi pi-trash" title="Delete"></button>
                                          <button pButton type="button" class="ui-button-success" icon="pi pi-arrow-circle-right" title="Send for approval"></button>

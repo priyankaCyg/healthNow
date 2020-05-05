@@ -9,7 +9,6 @@ import { AuthGuard } from './services/authguard';
 import { LoginService } from './services/login.service';
 // import { httpInterceptorProviders } from './interceptors/httpinterceptors';
 
-
 // PrimeNG Components for demos
 import { AccordionModule } from 'primeng/accordion';
 import { AutoCompleteModule } from 'primeng/autocomplete';
@@ -120,6 +119,7 @@ import { from } from 'rxjs';
 
 import { ApiService } from './services/api.service';
 
+
 @NgModule({
     imports: [
         BrowserModule,
@@ -219,7 +219,7 @@ import { ApiService } from './services/api.service';
         EmptyDemoComponent,
         FileDemoComponent,
         DocumentationComponent
-        
+       
         //UnitComponent
         // CompanyComponent,
         // GeneralEditComponent,

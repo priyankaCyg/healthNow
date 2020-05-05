@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { MultiCategoryComponent } from './multi-category.component';
+import { ProductMappingComponent } from './product-mapping.component';
 
-describe('MultiCategoryComponent', () => {
-  let component: MultiCategoryComponent;
-  let fixture: ComponentFixture<MultiCategoryComponent>;
+describe('ProductMappingComponent', () => {
+  let component: ProductMappingComponent;
+  let fixture: ComponentFixture<ProductMappingComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ MultiCategoryComponent ]
+      declarations: [ ProductMappingComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(MultiCategoryComponent);
+    fixture = TestBed.createComponent(ProductMappingComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

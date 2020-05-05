@@ -246,7 +246,93 @@
                     </div>
                 </p-tabPanel>
                 <!-- GST Info tab End here -->
-               
+
+                <p-tabPanel header="Category Mapping">
+                    <h2>Food Type</h2>
+                         <div class="p-grid p-justify-center mt-3">
+                             
+                             <div class="p-col-12 p-md-6 p-lg-4">
+                                 <div class="card bg-dark prcat-shdw border-light">
+                                     <p-checkbox name="VNS" value="Vitamin & Supplements" label="Vitamin & Supplements" [(ngModel)]="checkboxValues"></p-checkbox>
+                                 </div>
+                             </div>
+ 
+                             <div class="p-col-12 p-md-6 p-lg-4">
+                                 <div class="card bg-success prcat-shdw border-light">
+                                 <p-checkbox name="GRN" value="Food - Supplements" label="Grains" [(ngModel)]="checkboxValues"></p-checkbox>
+                                 </div>
+                             </div>
+ 
+                             <div class="p-col-12 p-md-6 p-lg-4">
+                                 <div class="card bg-dark prcat-shdw border-light">
+                                     <p-checkbox name="MND" value="Milk & Dairy" label="Milk & Dairy" [(ngModel)]="checkboxValues"></p-checkbox>
+                                 </div>
+                             </div>
+ 
+                             <div class="p-col-12 p-md-6 p-lg-4">
+                             <div class="card bg-dark prcat-shdw border-light">
+                                     <p-checkbox name="VEG" value="Vegetables" label="Vegetables" [(ngModel)]="checkboxValues"></p-checkbox>
+                                 </div>
+                             </div>
+ 
+                             <div class="p-col-12 p-md-6 p-lg-4">
+                                 <div class="card bg-dark prcat-shdw border-light">
+                                 <p-checkbox name="FRT" value="Fruits" label="Fruits" [(ngModel)]="checkboxValues"></p-checkbox>
+                                 </div>
+                             </div>
+ 
+                             <div class="p-col-12 p-md-6 p-lg-4">
+                                 <div class="card bg-success prcat-shdw border-light">
+                                     <p-checkbox name="COL" value="Cooking Oil" label="Cooking Oil" [(ngModel)]="checkboxValues" selected></p-checkbox>
+                                 </div>
+                             </div>  
+ 
+                         </div>
+ 
+                         <div class="separator separator--border-solid separator--space-sm separator--portlet-fit mt-5"></div>
+ 
+                     <h2>Health Condition</h2>
+                     <div class="p-grid p-justify-center mt-3">
+                             
+                         <div class="p-col-12 p-md-6 p-lg-4">
+                             <div class="card bg-dark prcat-shdw border-light">
+                                 <p-checkbox name="WTL" value="Weigth Loss" label="Weigth Loss" [(ngModel)]="checkboxValues"></p-checkbox>
+                             </div>
+                         </div>
+ 
+                         <div class="p-col-12 p-md-6 p-lg-4">
+                             <div class="card bg-success prcat-shdw border-light">
+                             <p-checkbox name="IMU" value="Immunity" label="Immunity" [(ngModel)]="checkboxValues"></p-checkbox>
+                             </div>
+                         </div>
+ 
+                         <div class="p-col-12 p-md-6 p-lg-4">
+                             <div class="card bg-dark prcat-shdw border-light">
+                                 <p-checkbox name="DIB" value="Diabetes" label="Diabetes" [(ngModel)]="checkboxValues"></p-checkbox>
+                             </div>
+                         </div>
+ 
+                         <div class="p-col-12 p-md-6 p-lg-4">
+                         <div class="card bg-dark prcat-shdw border-light">
+                                 <p-checkbox name="THD" value="Thyroid" label="Thyroid" [(ngModel)]="checkboxValues"></p-checkbox>
+                             </div>
+                         </div>
+ 
+                         <div class="p-col-12 p-md-6 p-lg-4">
+                             <div class="card bg-dark prcat-shdw border-light">
+                             <p-checkbox name="STR" value="Stress" label="Stress" [(ngModel)]="checkboxValues"></p-checkbox>
+                             </div>
+                         </div>
+ 
+                         <div class="p-col-12 p-md-6 p-lg-4">
+                             <!-- <div class="card bg-success prcat-shdw">
+                                 <p-checkbox name="HCWL" value="Health Concern - Weight Loss" label="Health Concern - Weight Loss" [(ngModel)]="checkboxValues" selected></p-checkbox>
+                             </div> -->
+                         </div>  
+ 
+                     </div>
+                 </p-tabPanel>
+               <!-- category mapping Info tab End here -->
             </p-tabView>
         </div>
     </div>
