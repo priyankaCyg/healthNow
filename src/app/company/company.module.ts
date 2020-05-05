@@ -28,7 +28,6 @@ import {DynamicDialogModule} from 'primeng/dynamicdialog';
 import {DropdownModule} from 'primeng/dropdown';
 import {InputTextareaModule} from 'primeng/inputtextarea';
 import {InputTextModule} from 'primeng/inputtext';
-import {MessagesModule} from 'primeng/messages';
 import {MessageModule} from 'primeng/message';
 import {ConfirmDialogModule} from 'primeng/confirmdialog';
 
@@ -56,7 +55,6 @@ import {APIService} from '../services/apieservice'
     InputTextModule,
     InputTextareaModule,
     TreeTableModule,
-    MessagesModule,
     MessageModule,
     ConfirmDialogModule
   ],
