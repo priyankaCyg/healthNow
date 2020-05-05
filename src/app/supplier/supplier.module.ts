@@ -11,21 +11,27 @@ import { GstComponent } from './gst/gst.component';
 
 //Prime Ng Service
 import { DialogService } from 'primeng';
-import {FormsModule} from '@angular/forms';
+import { ConfirmationService } from 'primeng/api';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 //Prime Ng Module
-import {ButtonModule} from 'primeng/button';
-import {PanelModule} from 'primeng/panel';
-import {TabMenuModule} from 'primeng/tabmenu';
-import {TableModule} from 'primeng/table';
-import {TabViewModule} from 'primeng/tabview';
- import {DialogModule} from 'primeng/dialog';
-import {DynamicDialogModule} from 'primeng/dynamicdialog';
-import {DropdownModule} from 'primeng/dropdown';
-import {InputTextareaModule} from 'primeng/inputtextarea';
-import {InputTextModule} from 'primeng/inputtext';
-import {TreeTableModule} from 'primeng/treetable';
+import { ButtonModule } from 'primeng/button';
+import { PanelModule } from 'primeng/panel';
+import { TabMenuModule } from 'primeng/tabmenu';
+import { TableModule } from 'primeng/table';
+import { TabViewModule } from 'primeng/tabview';
+import { DialogModule } from 'primeng/dialog';
+import { DynamicDialogModule } from 'primeng/dynamicdialog';
+import { DropdownModule } from 'primeng/dropdown';
+import { InputTextareaModule } from 'primeng/inputtextarea';
+import { InputTextModule } from 'primeng/inputtext';
+import { TreeTableModule } from 'primeng/treetable';
 import { from } from 'rxjs';
+import { MessageModule } from 'primeng/message';
+import { MessagesModule } from 'primeng/messages';
+
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
+
 
 
 
@@ -36,6 +42,7 @@ import { from } from 'rxjs';
     CommonModule,
     SupplierRoutingModule,
     FormsModule,
+    ReactiveFormsModule,
     ButtonModule,
     PanelModule,
     TabMenuModule,
@@ -46,9 +53,12 @@ import { from } from 'rxjs';
     DropdownModule,
     InputTextModule,
     InputTextareaModule,
-    TreeTableModule
+    TreeTableModule,
+    ConfirmDialogModule,
+    MessageModule,
+    MessagesModule
   ],
-  providers:[DialogService],
-  entryComponents:[SupplierComponent, AddNewSupplierComponent, AddressComponent, ContactComponent, BankComponent, GstComponent]
+  providers: [DialogService, ConfirmationService],
+  entryComponents: [SupplierComponent, AddNewSupplierComponent, AddressComponent, ContactComponent, BankComponent, GstComponent]
 })
 export class SupplierModule { }

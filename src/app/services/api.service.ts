@@ -6,7 +6,7 @@ import { Observable } from "rxjs";
   providedIn: "root",
 })
 export class ApiService {
-  private _baseUrl = "http://13.126.132.149:8080/healthnow/DataAPI";
+  private _baseUrl = "http://13.126.132.149/healthnow/DataAPI";
 
   headers = new HttpHeaders({ "Content-Type": "application/json" });
 

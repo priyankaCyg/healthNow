@@ -4,7 +4,7 @@ import { SupplierComponent } from './supplier.component';
 import { AddNewSupplierComponent } from './add-new-supplier/add-new-supplier.component';
 import { from } from 'rxjs';
 
-const routes: Routes = [ {
+const routes: Routes = [{
   path: "",
   component: SupplierComponent,
   data: {
@@ -16,6 +16,13 @@ const routes: Routes = [ {
   component: AddNewSupplierComponent,
   data: {
     title: "New Supplier"
+  }
+},
+{
+  path: "edit-supplier/:iSupID",
+  component: AddNewSupplierComponent,
+  data: {
+    title: "Edit Supplier"
   }
 }
 
