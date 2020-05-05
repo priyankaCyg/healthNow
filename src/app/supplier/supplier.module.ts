@@ -12,29 +12,36 @@ import { ProductMappingComponent } from './product-mapping/product-mapping.compo
 
 //Prime Ng Service
 import { DialogService } from 'primeng';
-import {FormsModule} from '@angular/forms';
+import { ConfirmationService } from 'primeng/api';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 //Prime Ng Module
-import {ButtonModule} from 'primeng/button';
-import {PanelModule} from 'primeng/panel';
-import {TabMenuModule} from 'primeng/tabmenu';
-import {TableModule} from 'primeng/table';
-import {TabViewModule} from 'primeng/tabview';
- import {DialogModule} from 'primeng/dialog';
-import {DynamicDialogModule} from 'primeng/dynamicdialog';
-import {DropdownModule} from 'primeng/dropdown';
-import {InputTextareaModule} from 'primeng/inputtextarea';
-import {InputTextModule} from 'primeng/inputtext';
-import {TreeTableModule} from 'primeng/treetable';
-import {CheckboxModule} from 'primeng/checkbox';
+import { ButtonModule } from 'primeng/button';
+import { PanelModule } from 'primeng/panel';
+import { TabMenuModule } from 'primeng/tabmenu';
+import { TableModule } from 'primeng/table';
+import { TabViewModule } from 'primeng/tabview';
+import { DialogModule } from 'primeng/dialog';
+import { DynamicDialogModule } from 'primeng/dynamicdialog';
+import { DropdownModule } from 'primeng/dropdown';
+import { InputTextareaModule } from 'primeng/inputtextarea';
+import { InputTextModule } from 'primeng/inputtext';
+import { TreeTableModule } from 'primeng/treetable';
+import { CheckboxModule } from 'primeng/checkbox';
 import { from } from 'rxjs';
+import { MessageModule } from 'primeng/message';
+import { MessagesModule } from 'primeng/messages';
+
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
+
 
 @NgModule({
-  declarations: [SupplierComponent, AddNewSupplierComponent, AddressComponent, ContactComponent, BankComponent, GstComponent, ProductMappingComponent,ProductMappingComponent],
+  declarations: [SupplierComponent, AddNewSupplierComponent, AddressComponent, ContactComponent, BankComponent, GstComponent, ProductMappingComponent, ProductMappingComponent],
   imports: [
     CommonModule,
     SupplierRoutingModule,
     FormsModule,
+    ReactiveFormsModule,
     ButtonModule,
     PanelModule,
     TabMenuModule,
@@ -46,9 +53,12 @@ import { from } from 'rxjs';
     InputTextModule,
     InputTextareaModule,
     TreeTableModule,
+    ConfirmDialogModule,
+    MessageModule,
+    MessagesModule,
     CheckboxModule
   ],
-  providers:[DialogService],
-  entryComponents:[SupplierComponent, AddNewSupplierComponent, AddressComponent, ContactComponent, BankComponent, GstComponent,ProductMappingComponent]
+  providers: [DialogService, ConfirmationService],
+  entryComponents: [SupplierComponent, AddNewSupplierComponent, AddressComponent, ContactComponent, BankComponent, GstComponent, ProductMappingComponent]
 })
 export class SupplierModule { }

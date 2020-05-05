@@ -1,96 +1,163 @@
+<p-confirmDialog header="Confirmation" icon="pi pi-info" [style]="{width: '425px'}"
+    rejectButtonStyleClass="ui-button-secondary"></p-confirmDialog>
 <div class="p-grid">
     <div class="p-col-12">
         <div class="card card-w-title">
             <h1>Supplier</h1>
             <p-tabView>
-                <p-tabPanel header="Supplier" >
-                  <div class="p-grid ui-fluid  p-justify-end mt-3">
+                <p-tabPanel header="Supplier">
+                    <form [formGroup]="addSupplierForm">
 
-                  <div class="p-col-12"> 
-                        <div class="p-grid form-group">
-                            
-                            <div class="p-col-12 p-md-6 p-lg-3 mb-2">
-                                <label for="suppName">Supplier Name</label>
-                                <input id="suppName" type="text" pInputText>
+                        <div class="p-grid ui-fluid  p-justify-end mt-3">
+
+                            <div class="p-col-12">
+                                <div class="p-grid form-group">
+
+                                    <div class="p-col-12 p-md-6 p-lg-3 mb-2">
+                                        <label for="suppName">Supplier Name</label>
+                                        <input id="suppName" class="form-control" formControlName="sSupName" type="text"
+                                            pInputText>
+                                        <p-message severity="error"
+                                            [text]="addSupplierForm.controls['sSupName'].errors['required'] ? 'Supplier Name is required' : addSupplierForm.controls['sSupName'].errors"
+                                            *ngIf="!addSupplierForm.controls['sSupName'].valid && addSupplierForm.controls['sSupName'].dirty">
+                                        </p-message>
+                                    </div>
+
+
+                                    <div class="p-col-12 p-md-6 p-lg-3 mb-2">
+                                        <label for="shotCode">Short Code</label>
+                                        <input id="shotCode" class="form-control" type="text"
+                                            formControlName="sShortCode" pInputText>
+                                        <p-message severity="error"
+                                            [text]="addSupplierForm.controls['sShortCode'].errors['required'] ? 'Short Code is required' : addSupplierForm.controls['sShortCode'].errors"
+                                            *ngIf="!addSupplierForm.controls['sShortCode'].valid && addSupplierForm.controls['sShortCode'].dirty">
+                                        </p-message>
+                                    </div>
+
+                                    <div class="p-col-12 p-md-6 p-lg-3 mb-2">
+                                        <label for="legalEntity">Legal Entity ID</label>
+                                        <input id="legalEntity" class="form-control" type="text"
+                                            formControlName="iLegalEntityID" pInputText>
+                                        <p-message severity="error"
+                                            [text]="addSupplierForm.controls['iLegalEntityID'].errors['required'] ? 'Entity Id is required' : addSupplierForm.controls['iLegalEntityID'].errors"
+                                            *ngIf="!addSupplierForm.controls['iLegalEntityID'].valid && addSupplierForm.controls['iLegalEntityID'].dirty">
+                                        </p-message>
+                                    </div>
+                                    <div class="p-col-12 p-md-6 p-lg-3 mb-2">
+                                        <label for="website">Website</label>
+                                        <input id="website" class="form-control" type="text" formControlName="sWebsite"
+                                            pInputText>
+                                        <p-message severity="error"
+                                            [text]="addSupplierForm.controls['sWebsite'].errors['required'] ? 'Website Name is required' : addSupplierForm.controls['sWebsite'].errors"
+                                            *ngIf="!addSupplierForm.controls['sWebsite'].valid && addSupplierForm.controls['sWebsite'].dirty">
+                                        </p-message>
+                                    </div>
+
+                                </div>
+                                <div
+                                    class="separator separator--border-solid separator--space-sm separator--portlet-fit">
+                                </div>
+                                <div class="p-grid form-group">
+                                    <div class="p-col-12 p-md-6 p-lg-3 mb-2">
+                                        <label for="telNo1">Tel No. 1</label>
+                                        <input id="telNo1" class="form-control" type="text" formControlName="sTelNo1"
+                                            pInputText>
+                                        <p-message severity="error"
+                                            [text]="addSupplierForm.controls['sTelNo1'].errors['required'] ? 'Telephone 1 is required' : addSupplierForm.controls['sTelNo1'].errors"
+                                            *ngIf="!addSupplierForm.controls['sTelNo1'].valid && addSupplierForm.controls['sTelNo1'].dirty">
+                                        </p-message>
+                                    </div>
+                                    <div class="p-col-12 p-md-6 p-lg-3 mb-2">
+                                        <label for="telNo2">Tel No. 2</label>
+                                        <input id="telNo2" class="form-control" type="text" formControlName="sTelNo2"
+                                            pInputText>
+                                        <p-message severity="error"
+                                            [text]="addSupplierForm.controls['sTelNo2'].errors['required'] ? 'Telephone 2 is required' : addSupplierForm.controls['sTelNo2'].errors"
+                                            *ngIf="!addSupplierForm.controls['sTelNo2'].valid && addSupplierForm.controls['sTelNo2'].dirty">
+                                        </p-message>
+                                    </div>
+                                    <div class="p-col-12 p-md-6 p-lg-3 mb-2">
+                                        <label for="fax">Fax</label>
+                                        <input id="fax" class="form-control" type="text" formControlName="sFaxNo"
+                                            pInputText>
+                                        <p-message severity="error"
+                                            [text]="addSupplierForm.controls['sFaxNo'].errors['required'] ? 'Fax Number is required' : addSupplierForm.controls['sFaxNo'].errors"
+                                            *ngIf="!addSupplierForm.controls['sFaxNo'].valid && addSupplierForm.controls['sFaxNo'].dirty">
+                                        </p-message>
+                                    </div>
+                                    <div class="p-col-12 p-md-6 p-lg-3 mb-2">
+                                        <label for="pincode">Pan No.</label>
+                                        <input id="pincode" class="form-control" type="text" formControlName="sPAN"
+                                            pInputText>
+                                        <p-message severity="error"
+                                            [text]="addSupplierForm.controls['sPAN'].errors['required'] ? 'PAN Number is required' : addSupplierForm.controls['sPAN'].errors"
+                                            *ngIf="!addSupplierForm.controls['sPAN'].valid && addSupplierForm.controls['sPAN'].dirty">
+                                        </p-message>
+                                    </div>
+                                </div>
+
+                                <div
+                                    class="separator separator--border-solid separator--space-sm separator--portlet-fit">
+                                </div>
+                                <div class="p-grid form-group">
+
+                                    <div class="p-col-12 p-md-6 p-lg-3 mb-2">
+                                        <label for="status">Status</label>
+                                        <p-dropdown id="status" class="form-control" [options]="statusData"
+                                            formControlName="iStatusID" placeholder="Select" optionLabel="sKVValue"
+                                            [(ngModel)]="selectedstatus" required="true"></p-dropdown>
+                                        <p-message severity="error" text="select Status is required"
+                                            *ngIf="addSupplierForm.controls['iStatusID'].touched && (selectedstatus.iKVID=='' || addSupplierForm.controls['iStatusID'].hasError('required'))">
+                                        </p-message>
+                                    </div>
+
+                                </div>
+
+                                <div
+                                    class="separator separator--border-solid separator--space-sm separator--portlet-fit mt-5">
+                                </div>
+                                <div class="p-grid form-group ui-fluid p-justify-end mt-3">
+                                    <div class="p-col-12 p-md-2 p-lg-1">
+                                        <button pButton type="button" label="Cancel" routerLink="/app/supplier"
+                                            style="margin-bottom:10px" class="ui-button-light"></button>
+                                    </div>
+                                    <div class="p-col-12 p-md-2 p-lg-1" *ngIf="!isEdit">
+                                        <button pButton type="submit"
+                                            [disabled]="!(!addSupplierForm.invalid && !dropDownValidityCheck())"
+                                            (click)="addSupplier()" label="Save" style="margin-bottom:10px"
+                                            class="ui-button"></button>
+                                    </div>
+                                    <div class="p-col-12 p-md-2 p-lg-1" *ngIf="isEdit">
+                                        <button pButton type="submit"
+                                            [disabled]="!(!addSupplierForm.invalid && !dropDownValidityCheck())"
+                                            (click)="editSupplier()" label="Update" style="margin-bottom:10px"
+                                            class="ui-button"></button>
+                                    </div>
+                                </div>
+
                             </div>
 
-                            <div class="p-col-12 p-md-6 p-lg-3 mb-2">
-                                <label for="suppCategory">Supplier Category</label>
-                                <p-dropdown [options]="suppCategory" [(ngModel)]="selectedsuppCategory"></p-dropdown>
-                            </div>
-
-                            <div class="p-col-12 p-md-6 p-lg-3 mb-2">
-                                <label for="legalEntity">Legal Entity ID</label>
-                                <input id="legalEntity" type="text" pInputText>
-                            </div>
-                            <div class="p-col-12 p-md-6 p-lg-3 mb-2">
-                                <label for="website">Website</label>
-                                <input id="website" type="text" pInputText>
-                            </div>
 
                         </div>
-                        <div class="separator separator--border-solid separator--space-sm separator--portlet-fit"></div>
-                        <div class="p-grid form-group">
-                            <div class="p-col-12 p-md-6 p-lg-3 mb-2">
-                                <label for="telNo1">Tel No. 1</label>
-                                <input id="telNo1" type="text" pInputText>
-                            </div>
-                            <div class="p-col-12 p-md-6 p-lg-3 mb-2">
-                                <label for="telNo2">Tel No. 2</label>
-                                <input id="telNo2" type="text" pInputText>
-                            </div>
-                            <div class="p-col-12 p-md-6 p-lg-3 mb-2">
-                                <label for="fax">Fax</label>
-                                <input id="fax" type="text" pInputText>
-                            </div> 
-                            <div class="p-col-12 p-md-6 p-lg-3 mb-2">
-                                <label for="shotCode">Short Code</label>
-                                <input id="shotCode" type="text" pInputText>
-                            </div>
-                        </div>
-                        
-                        <div class="separator separator--border-solid separator--space-sm separator--portlet-fit"></div>
-                        <div class="p-grid form-group">
-                            <div class="p-col-12 p-md-6 p-lg-3 mb-2">
-                                <label for="pincode">Pan No.</label>
-                                <input id="pincode" type="text" pInputText>
-                            </div>
-                            <div class="p-col-12 p-md-6 p-lg-3 mb-2">
-                                <label for="status">Status</label>
-                                <p-dropdown [options]="status" [(ngModel)]="selectedstatus"></p-dropdown>
-                            </div>
-                           
-                        </div>
-
-                        <div class="separator separator--border-solid separator--space-sm separator--portlet-fit mt-5"></div>
-                        <div class="p-grid form-group ui-fluid p-justify-end mt-3">
-                            <div class="p-col-12 p-md-2 p-lg-1">
-                                <button pButton type="button" label="Cancel" style="margin-bottom:10px" class="ui-button-light"></button>
-                            </div>
-                             <div class="p-col-12 p-md-2 p-lg-1">
-                                <button pButton type="button" label="Save" style="margin-bottom:10px" class="ui-button"></button>
-                            </div>
-                        </div>
-            
-                    </div>
-
-                              
-                  </div>  
+                    </form>
                 </p-tabPanel>
                 <!-- Supplier tab End here -->
 
                 <p-tabPanel header="Address">
                     <div class="p-grid ui-fluid p-justify-end">
                         <div class="p-col-1 text-center mt-1">
-                            <button (click)="openDialogForaddAddress()" pButton icon="pi pi-fw pi-plus" label="Add New"></button>
-                            
+                            <button (click)="openDialogForaddAddress()" pButton icon="pi pi-fw pi-plus"
+                                label="Add New"></button>
+
                         </div>
-                        <div class="p-col-12"> 
+                        <div class="p-col-12">
                             <p-table [value]="address">
                                 <ng-template pTemplate="caption">
-                               
+
                                     <div class="ui-table-globalfilter-container text-left">
-                                        <input type="text" pInputText size="50" placeholder="Search" (input)="dt.filterGlobal($event.target.value, 'contains')" style="width:250px;">
+                                        <input type="text" pInputText size="50" placeholder="Search"
+                                            (input)="dt.filterGlobal($event.target.value, 'contains')"
+                                            style="width:250px;">
                                     </div>
                                 </ng-template>
                                 <ng-template pTemplate="header">
@@ -114,28 +181,33 @@
                                         <td>{{address.city}}</td>
                                         <td>{{address.landmark}}</td>
                                         <td>{{address.status}}</td>
-                                        <td><button pButton type="button" class="ui-button-success" icon="pi pi-pencil" style="margin-right: .5em"></button></td>
-                                         <td><button pButton type="button" class="ui-button-danger" icon="pi pi-trash"></button></td>
+                                        <td><button pButton type="button" class="ui-button-success" icon="pi pi-pencil"
+                                                style="margin-right: .5em"></button></td>
+                                        <td><button pButton type="button" class="ui-button-danger"
+                                                icon="pi pi-trash"></button></td>
                                     </tr>
                                 </ng-template>
                             </p-table>
                         </div>
                     </div>
                 </p-tabPanel>
-            <!-- Address tab End here -->
+                <!-- Address tab End here -->
 
                 <p-tabPanel header="Contact">
                     <div class="p-grid ui-fluid p-justify-end">
                         <div class="p-col-1 text-center mt-1">
-                            <button (click)="openDialogForaddContact()" pButton icon="pi pi-fw pi-plus" label="Add / Edit"></button>
-                            
+                            <button (click)="openDialogForaddContact()" pButton icon="pi pi-fw pi-plus"
+                                label="Add / Edit"></button>
+
                         </div>
-                        <div class="p-col-12"> 
+                        <div class="p-col-12">
                             <p-table [value]="contact">
                                 <ng-template pTemplate="caption">
-                               
+
                                     <div class="ui-table-globalfilter-container text-left">
-                                        <input type="text" pInputText size="50" placeholder="Search" (input)="dt.filterGlobal($event.target.value, 'contains')" style="width:250px;">
+                                        <input type="text" pInputText size="50" placeholder="Search"
+                                            (input)="dt.filterGlobal($event.target.value, 'contains')"
+                                            style="width:250px;">
                                     </div>
                                 </ng-template>
                                 <ng-template pTemplate="header">
@@ -149,8 +221,8 @@
                                         <th>Direct No.</th>
                                         <th>Fax No.</th>
                                         <th>Status</th>
-                                        <th >Action</th>
-                                        
+                                        <th>Action</th>
+
                                     </tr>
                                 </ng-template>
                                 <ng-template pTemplate="body" let-contact>
@@ -165,8 +237,10 @@
                                         <td>{{contact.fax}}</td>
                                         <td>{{contact.status}}</td>
                                         <td>
-                                            <button pButton type="button" class="ui-button-success" icon="pi pi-pencil" style="margin-right: .5em"></button>
-                                            <button pButton type="button" class="ui-button-danger" icon="pi pi-trash"></button>
+                                            <button pButton type="button" class="ui-button-success" icon="pi pi-pencil"
+                                                style="margin-right: .5em"></button>
+                                            <button pButton type="button" class="ui-button-danger"
+                                                icon="pi pi-trash"></button>
                                         </td>
                                     </tr>
                                 </ng-template>
@@ -179,9 +253,10 @@
                 <p-tabPanel header="Bank">
                     <div class="p-grid ui-fluid p-justify-end">
                         <div class="p-col-1 text-center mt-1">
-                            <button (click)="openDialogForBank()" pButton icon="pi pi-fw pi-plus" label="Add New"></button>
+                            <button (click)="openDialogForBank()" pButton icon="pi pi-fw pi-plus"
+                                label="Add New"></button>
                         </div>
-                        <div class="p-col-12"> 
+                        <div class="p-col-12">
                             <p-table [value]="bank">
                                 <ng-template pTemplate="header">
                                     <tr>
@@ -196,16 +271,18 @@
                                 </ng-template>
                                 <ng-template pTemplate="body" let-bank>
                                     <tr>
-                                            <td>{{bank.bankName}}</td>
-                                            <td>{{bank.accounttype}}</td>
-                                            <td>{{bank.accountNo}}</td>
-                                            <td>{{bank.IFSC}}</td>
-                                            <td>{{bank.bankBranch}}</td>
-                                            <td>{{bank.status}}</td>
-                                            <td>
-                                                <button pButton type="button" class="ui-button-success" icon="pi pi-pencil" style="margin-right: .5em"></button>
-                                                <button pButton type="button" class="ui-button-danger" icon="pi pi-trash"></button>
-                                            </td>
+                                        <td>{{bank.bankName}}</td>
+                                        <td>{{bank.accounttype}}</td>
+                                        <td>{{bank.accountNo}}</td>
+                                        <td>{{bank.IFSC}}</td>
+                                        <td>{{bank.bankBranch}}</td>
+                                        <td>{{bank.status}}</td>
+                                        <td>
+                                            <button pButton type="button" class="ui-button-success" icon="pi pi-pencil"
+                                                style="margin-right: .5em"></button>
+                                            <button pButton type="button" class="ui-button-danger"
+                                                icon="pi pi-trash"></button>
+                                        </td>
                                     </tr>
                                 </ng-template>
                             </p-table>
@@ -218,27 +295,31 @@
                 <p-tabPanel header="GST">
                     <div class="p-grid ui-fluid p-justify-end">
                         <div class="p-col-1 text-center mt-1">
-                            <button (click)="openDialogForGST()" pButton icon="pi pi-fw pi-plus" label="Add New"></button>
+                            <button (click)="openDialogForGST()" pButton icon="pi pi-fw pi-plus"
+                                label="Add New"></button>
                         </div>
-                        <div class="p-col-12"> 
+                        <div class="p-col-12">
                             <p-table [value]="gst">
                                 <ng-template pTemplate="header">
                                     <tr>
                                         <th>State</th>
                                         <th>GST</th>
-                                        <th>Status</th>
+
                                         <th>Action</th>
                                     </tr>
                                 </ng-template>
                                 <ng-template pTemplate="body" let-gst>
                                     <tr>
-                                            <td>{{gst.state}}</td>
-                                            <td>{{gst.gst1}}</td>
-                                            <td>{{gst.status}}</td>
-                                            <td>
-                                                <button pButton type="button" class="ui-button-success" icon="pi pi-pencil" style="margin-right: .5em"></button>
-                                                <button pButton type="button" class="ui-button-danger" icon="pi pi-trash"></button>
-                                            </td>
+                                        <td style="text-align: center;">{{gst.sStateName}}</td>
+                                        <td style="text-align: center;">{{gst.sGST}}</td>
+
+                                        <td style="text-align: center;">
+                                            <button pButton type="button" (click)="editDialogForGST(gst)"
+                                                class="ui-button-success" icon="pi pi-pencil"
+                                                style="margin-right: .5em"></button>
+                                            <button pButton type="button" (click)="deletesupgst(gst)"
+                                                class="ui-button-danger" icon="pi pi-trash"></button>
+                                        </td>
                                     </tr>
                                 </ng-template>
                             </p-table>
@@ -249,93 +330,103 @@
 
                 <p-tabPanel header="Category Mapping">
                     <h2>Food Type</h2>
-                         <div class="p-grid p-justify-center mt-3">
-                             
-                             <div class="p-col-12 p-md-6 p-lg-4">
-                                 <div class="card bg-dark prcat-shdw border-light">
-                                     <p-checkbox name="VNS" value="Vitamin & Supplements" label="Vitamin & Supplements" [(ngModel)]="checkboxValues"></p-checkbox>
-                                 </div>
-                             </div>
- 
-                             <div class="p-col-12 p-md-6 p-lg-4">
-                                 <div class="card bg-success prcat-shdw border-light">
-                                 <p-checkbox name="GRN" value="Food - Supplements" label="Grains" [(ngModel)]="checkboxValues"></p-checkbox>
-                                 </div>
-                             </div>
- 
-                             <div class="p-col-12 p-md-6 p-lg-4">
-                                 <div class="card bg-dark prcat-shdw border-light">
-                                     <p-checkbox name="MND" value="Milk & Dairy" label="Milk & Dairy" [(ngModel)]="checkboxValues"></p-checkbox>
-                                 </div>
-                             </div>
- 
-                             <div class="p-col-12 p-md-6 p-lg-4">
-                             <div class="card bg-dark prcat-shdw border-light">
-                                     <p-checkbox name="VEG" value="Vegetables" label="Vegetables" [(ngModel)]="checkboxValues"></p-checkbox>
-                                 </div>
-                             </div>
- 
-                             <div class="p-col-12 p-md-6 p-lg-4">
-                                 <div class="card bg-dark prcat-shdw border-light">
-                                 <p-checkbox name="FRT" value="Fruits" label="Fruits" [(ngModel)]="checkboxValues"></p-checkbox>
-                                 </div>
-                             </div>
- 
-                             <div class="p-col-12 p-md-6 p-lg-4">
-                                 <div class="card bg-success prcat-shdw border-light">
-                                     <p-checkbox name="COL" value="Cooking Oil" label="Cooking Oil" [(ngModel)]="checkboxValues" selected></p-checkbox>
-                                 </div>
-                             </div>  
- 
-                         </div>
- 
-                         <div class="separator separator--border-solid separator--space-sm separator--portlet-fit mt-5"></div>
- 
-                     <h2>Health Condition</h2>
-                     <div class="p-grid p-justify-center mt-3">
-                             
-                         <div class="p-col-12 p-md-6 p-lg-4">
-                             <div class="card bg-dark prcat-shdw border-light">
-                                 <p-checkbox name="WTL" value="Weigth Loss" label="Weigth Loss" [(ngModel)]="checkboxValues"></p-checkbox>
-                             </div>
-                         </div>
- 
-                         <div class="p-col-12 p-md-6 p-lg-4">
-                             <div class="card bg-success prcat-shdw border-light">
-                             <p-checkbox name="IMU" value="Immunity" label="Immunity" [(ngModel)]="checkboxValues"></p-checkbox>
-                             </div>
-                         </div>
- 
-                         <div class="p-col-12 p-md-6 p-lg-4">
-                             <div class="card bg-dark prcat-shdw border-light">
-                                 <p-checkbox name="DIB" value="Diabetes" label="Diabetes" [(ngModel)]="checkboxValues"></p-checkbox>
-                             </div>
-                         </div>
- 
-                         <div class="p-col-12 p-md-6 p-lg-4">
-                         <div class="card bg-dark prcat-shdw border-light">
-                                 <p-checkbox name="THD" value="Thyroid" label="Thyroid" [(ngModel)]="checkboxValues"></p-checkbox>
-                             </div>
-                         </div>
- 
-                         <div class="p-col-12 p-md-6 p-lg-4">
-                             <div class="card bg-dark prcat-shdw border-light">
-                             <p-checkbox name="STR" value="Stress" label="Stress" [(ngModel)]="checkboxValues"></p-checkbox>
-                             </div>
-                         </div>
- 
-                         <div class="p-col-12 p-md-6 p-lg-4">
-                             <!-- <div class="card bg-success prcat-shdw">
+                    <div class="p-grid p-justify-center mt-3">
+
+                        <div class="p-col-12 p-md-6 p-lg-4">
+                            <div class="card bg-dark prcat-shdw border-light">
+                                <p-checkbox name="VNS" value="Vitamin & Supplements" label="Vitamin & Supplements"
+                                    [(ngModel)]="checkboxValues"></p-checkbox>
+                            </div>
+                        </div>
+
+                        <div class="p-col-12 p-md-6 p-lg-4">
+                            <div class="card bg-success prcat-shdw border-light">
+                                <p-checkbox name="GRN" value="Food - Supplements" label="Grains"
+                                    [(ngModel)]="checkboxValues"></p-checkbox>
+                            </div>
+                        </div>
+
+                        <div class="p-col-12 p-md-6 p-lg-4">
+                            <div class="card bg-dark prcat-shdw border-light">
+                                <p-checkbox name="MND" value="Milk & Dairy" label="Milk & Dairy"
+                                    [(ngModel)]="checkboxValues"></p-checkbox>
+                            </div>
+                        </div>
+
+                        <div class="p-col-12 p-md-6 p-lg-4">
+                            <div class="card bg-dark prcat-shdw border-light">
+                                <p-checkbox name="VEG" value="Vegetables" label="Vegetables"
+                                    [(ngModel)]="checkboxValues"></p-checkbox>
+                            </div>
+                        </div>
+
+                        <div class="p-col-12 p-md-6 p-lg-4">
+                            <div class="card bg-dark prcat-shdw border-light">
+                                <p-checkbox name="FRT" value="Fruits" label="Fruits" [(ngModel)]="checkboxValues">
+                                </p-checkbox>
+                            </div>
+                        </div>
+
+                        <div class="p-col-12 p-md-6 p-lg-4">
+                            <div class="card bg-success prcat-shdw border-light">
+                                <p-checkbox name="COL" value="Cooking Oil" label="Cooking Oil"
+                                    [(ngModel)]="checkboxValues" selected></p-checkbox>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="separator separator--border-solid separator--space-sm separator--portlet-fit mt-5">
+                    </div>
+
+                    <h2>Health Condition</h2>
+                    <div class="p-grid p-justify-center mt-3">
+
+                        <div class="p-col-12 p-md-6 p-lg-4">
+                            <div class="card bg-dark prcat-shdw border-light">
+                                <p-checkbox name="WTL" value="Weigth Loss" label="Weigth Loss"
+                                    [(ngModel)]="checkboxValues"></p-checkbox>
+                            </div>
+                        </div>
+
+                        <div class="p-col-12 p-md-6 p-lg-4">
+                            <div class="card bg-success prcat-shdw border-light">
+                                <p-checkbox name="IMU" value="Immunity" label="Immunity" [(ngModel)]="checkboxValues">
+                                </p-checkbox>
+                            </div>
+                        </div>
+
+                        <div class="p-col-12 p-md-6 p-lg-4">
+                            <div class="card bg-dark prcat-shdw border-light">
+                                <p-checkbox name="DIB" value="Diabetes" label="Diabetes" [(ngModel)]="checkboxValues">
+                                </p-checkbox>
+                            </div>
+                        </div>
+
+                        <div class="p-col-12 p-md-6 p-lg-4">
+                            <div class="card bg-dark prcat-shdw border-light">
+                                <p-checkbox name="THD" value="Thyroid" label="Thyroid" [(ngModel)]="checkboxValues">
+                                </p-checkbox>
+                            </div>
+                        </div>
+
+                        <div class="p-col-12 p-md-6 p-lg-4">
+                            <div class="card bg-dark prcat-shdw border-light">
+                                <p-checkbox name="STR" value="Stress" label="Stress" [(ngModel)]="checkboxValues">
+                                </p-checkbox>
+                            </div>
+                        </div>
+
+                        <div class="p-col-12 p-md-6 p-lg-4">
+                            <!-- <div class="card bg-success prcat-shdw">
                                  <p-checkbox name="HCWL" value="Health Concern - Weight Loss" label="Health Concern - Weight Loss" [(ngModel)]="checkboxValues" selected></p-checkbox>
                              </div> -->
-                         </div>  
- 
-                     </div>
-                 </p-tabPanel>
-               <!-- category mapping Info tab End here -->
+                        </div>
+
+                    </div>
+                </p-tabPanel>
+                <!-- category mapping Info tab End here -->
             </p-tabView>
         </div>
     </div>
 </div>
-
-
