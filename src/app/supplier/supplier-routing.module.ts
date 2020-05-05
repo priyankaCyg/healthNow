@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { SupplierComponent } from './supplier.component';
 import { AddNewSupplierComponent } from './add-new-supplier/add-new-supplier.component';
+import { ProductMappingComponent } from './product-mapping/product-mapping.component';
 import { from } from 'rxjs';
 
 const routes: Routes = [{
@@ -12,7 +13,7 @@ const routes: Routes = [{
   }
 },
 {
-  path: "add-new-supplier",
+  path: "new-supplier",
   component: AddNewSupplierComponent,
   data: {
     title: "New Supplier"
@@ -23,6 +24,13 @@ const routes: Routes = [{
   component: AddNewSupplierComponent,
   data: {
     title: "Edit Supplier"
+  }
+},
+{
+  path: "product-mapping",
+  component: ProductMappingComponent,
+  data: {
+    title: "Product Mapping"
   }
 }
 

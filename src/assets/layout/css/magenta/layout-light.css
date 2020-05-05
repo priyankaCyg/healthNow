@@ -7960,7 +7960,7 @@ body.hidden-overflow {
 .layout-dashboard .news-row-wrapper .link-points .points .point.active-point.point-3 {
   background-color: #88c0d0;
 }
-.layout-dashboard .timeline .timeline-row {
+ .timeline .timeline-row {
   -moz-border-radius: 4px;
   -webkit-border-radius: 4px;
   border-radius: 4px;
@@ -7970,14 +7970,14 @@ body.hidden-overflow {
   width: 100%;
   margin: 12px 0;
 }
-.layout-dashboard .timeline .timeline-row > .p-grid > .p-col-1 {
+ .timeline .timeline-row > .p-grid > .p-col-1 {
   width: 40px;
 }
-.layout-dashboard .timeline .timeline-row > .p-grid > .p-col-11 {
+ .timeline .timeline-row > .p-grid > .p-col-11 {
   width: calc(100% - 40px);
   padding-left: 1em;
 }
-.layout-dashboard .timeline .timeline-row .timeline-icon {
+ .timeline .timeline-row .timeline-icon {
   width: 36px;
   height: 36px;
   -moz-border-radius: 4px;
@@ -7992,7 +7992,7 @@ body.hidden-overflow {
   font-size: 16px;
   margin-bottom: 10px;
 }
-.layout-dashboard .timeline .timeline-row .timeline-icon.camera-icon {
+ .timeline .timeline-row .timeline-icon.camera-icon {
   background: -moz-linear-gradient(225deg, #65afc4 0%, #88c0d0 100%);
   /* ff3.6+ */
   background: -webkit-gradient(linear, left bottom, right top, color-stop(0%, #65afc4), color-stop(100%, #88c0d0));
@@ -8008,7 +8008,7 @@ body.hidden-overflow {
   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr="#65afc4", endColorstr="#88c0d0",GradientType=1 );
   /* ie6-9 */
 }
-.layout-dashboard .timeline .timeline-row .timeline-icon.comment-icon {
+ .timeline .timeline-row .timeline-icon.comment-icon {
   background: -moz-linear-gradient(225deg, #f2c260 0%, #ebcb8b 100%);
   /* ff3.6+ */
   background: -webkit-gradient(linear, left bottom, right top, color-stop(0%, #f2c260), color-stop(100%, #ebcb8b));
@@ -8024,7 +8024,7 @@ body.hidden-overflow {
   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr="#f2c260", endColorstr="#ebcb8b",GradientType=1 );
   /* ie6-9 */
 }
-.layout-dashboard .timeline .timeline-row .timeline-icon.chart-icon {
+ .timeline .timeline-row .timeline-icon.chart-icon {
   background: -moz-linear-gradient(225deg, #a4719b 0%, #b48ead 100%);
   /* ff3.6+ */
   background: -webkit-gradient(linear, left bottom, right top, color-stop(0%, #a4719b), color-stop(100%, #b48ead));
@@ -8040,25 +8040,25 @@ body.hidden-overflow {
   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr="#a4719b", endColorstr="#b48ead",GradientType=1 );
   /* ie6-9 */
 }
-.layout-dashboard .timeline .timeline-row h2 {
+ .timeline .timeline-row h2 {
   margin-top: 0;
   margin-bottom: 6px;
 }
-.layout-dashboard .timeline .timeline-row .timeline-time {
+ .timeline .timeline-row .timeline-time {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
   justify-content: flex-end;
   color: #9199a9;
 }
-.layout-dashboard .timeline .timeline-row .timeline-images {
+ .timeline .timeline-row .timeline-images {
   margin-top: 15px;
   position: relative;
 }
-.layout-dashboard .timeline .timeline-row .timeline-images img {
+ .timeline .timeline-row .timeline-images img {
   width: 100%;
 }
-.layout-dashboard .timeline .timeline-row .timeline-images .new {
+ .timeline .timeline-row .timeline-images .new {
   -moz-border-radius: 4px;
   -webkit-border-radius: 4px;
   border-radius: 4px;
@@ -8299,77 +8299,86 @@ body.hidden-overflow {
   -webkit-transition: background-color 0.15s;
   transition: background-color 0.15s;
 }
-.layout-dashboard .download-files {
+.download-files {
   padding: 0;
   padding-top: 18px;
   position: relative;
+  -moz-border-radius: 4px;
+  -webkit-border-radius: 4px;
+  border-radius: 4px;
+  border: solid 1px #e5e9f0;
+  background-color: #f9fafb;
+  margin-bottom: 6em;
 }
-.layout-dashboard .download-files .title {
-  padding-left: 18px;
+.download-files .title h2{
+   font-size: 1.5em;
+  font-weight: 600;
 }
-.layout-dashboard .download-files .files-info {
+
+
+.download-files .files-info {
   text-align: right;
   padding-right: 18px;
 }
-.layout-dashboard .download-files .files-info span {
+.download-files .files-info span {
   font-size: 12px;
   color: #9199a9;
   cursor: pointer;
 }
-.layout-dashboard .download-files .files-info span:hover {
+.download-files .files-info span:hover {
   color: #4c566a;
   -moz-transition: color 0.15s;
   -o-transition: color 0.15s;
   -webkit-transition: color 0.15s;
   transition: color 0.15s;
 }
-.layout-dashboard .download-files ul {
+ .download-files ul {
   list-style-type: none;
-  margin: 0;
-  padding: 0;
+  margin: 0px 0px 30px 0px;
+  padding: 0px;
   max-height: 500px;
   overflow: auto;
 }
-.layout-dashboard .download-files ul li {
+.download-files ul li {
   padding: 15px;
   border-top: 1px solid rgba(145, 153, 169, 0.3);
 }
-.layout-dashboard .download-files ul li:last-child {
+.download-files ul li:last-child {
   border-bottom: 1px solid rgba(145, 153, 169, 0.3);
 }
-.layout-dashboard .download-files ul li .list-item {
+.download-files ul li .list-item {
   align-items: center;
   cursor: pointer;
 }
-.layout-dashboard .download-files ul li .list-item:hover .file-name h2 {
+.download-files ul li .list-item:hover .file-name h2 {
   color: #9199a9;
   -moz-transition: color 0.15s;
   -o-transition: color 0.15s;
   -webkit-transition: color 0.15s;
   transition: color 0.15s;
 }
-.layout-dashboard .download-files ul li .list-item .file-name {
+.download-files ul li .list-item .file-name {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
   align-items: center;
 }
-.layout-dashboard .download-files ul li .list-item .file-name h2 {
+.download-files ul li .list-item .file-name h2 {
   font-size: 14px;
   font-weight: 500;
   margin: 0;
   color: #4c566a;
 }
-.layout-dashboard .download-files ul li .list-item .icon {
+.download-files ul li .list-item .icon {
   text-align: center;
 }
-.layout-dashboard .download-files ul li .list-item .new {
+.download-files ul li .list-item .new {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
   justify-content: flex-end;
 }
-.layout-dashboard .download-files ul li .list-item .new .new-tag {
+.download-files ul li .list-item .new .new-tag {
   -moz-border-radius: 4px;
   -webkit-border-radius: 4px;
   border-radius: 4px;
@@ -8396,11 +8405,6 @@ body.hidden-overflow {
   background-image: linear-gradient(to top, #ffffff, transparent);
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#ffffff", endColorstr="transparent");
   position: absolute;
-  bottom: 0;
-  left: 0;
-}
-.layout-dashboard .store-items {
-  position: relative;
 }
 .layout-dashboard .store-items .store-info {
   text-align: right;

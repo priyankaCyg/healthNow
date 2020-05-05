@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { BreadcrumbService } from '../breadcrumb.service';
-import { CountryService } from '../demo/service/countryservice';
-import { SelectItem, MenuItem } from 'primeng/api';
-import { GeneratedFile } from '@angular/compiler';
+import {MenuItem } from 'primeng/api';
 import { DialogService } from 'primeng';
 import { AddProductCategoryComponent } from './add-product-category/add-product-category.component';
+import { ProductCategory } from '../models/product-category.model';
+import { ApiService } from '../services/api.service';
+import { ConfirmationService } from 'primeng/api';
+import { ToastService } from "../services/toast.service";
 
 
 @Component({
@@ -15,9 +17,16 @@ import { AddProductCategoryComponent } from './add-product-category/add-product-
 export class ProductCategoryComponent implements OnInit {
   items: MenuItem[];
 
-  productCategory: any[];
+  productCategoryData: ProductCategory;
   
-    constructor(private breadcrumbService: BreadcrumbService, private dialogService:DialogService) {
+    constructor(
+       private breadcrumbService: BreadcrumbService,
+       private dialogService:DialogService,
+       private apiService : ApiService,
+       private toastService: ToastService,
+       private confirmationService: ConfirmationService
+      )
+        {
       this.breadcrumbService.setItems([
           { label: 'Dashboard' },
           { label: 'Product Category', routerLink: ['/app/product-category'] }
@@ -25,19 +34,10 @@ export class ProductCategoryComponent implements OnInit {
   }
 
   ngOnInit(): void {
-        
-    this.productCategory = [
-      {productCategoryName: 'Product', parentCategory: '',  status: 'Active'},
-      {productCategoryName: 'Health Concerns', parentCategory: '',  status: 'Active'},
-      {productCategoryName: 'Supplements', parentCategory: 'Product', status: 'Active'},
-      {productCategoryName: 'Oil', parentCategory: 'Product', status: 'Active'},
-      {productCategoryName: 'Grain', parentCategory: 'Product', status: 'Active'},
-      {productCategoryName: 'Nutrition', parentCategory: 'Health Concerns', status: 'Active'},
-      {productCategoryName: 'Immunity', parentCategory: 'Health Concerns', status: 'Active'},
-      {productCategoryName: 'Diabetes', parentCategory: 'Health Concerns', status: 'Active'}
-    ];
+    this.showProdCatList();
   }
 
+  // To add new category starts
   openDialogForProductCategory() {
     const ref = this.dialogService.open( AddProductCategoryComponent  , {
       data: {
@@ -48,8 +48,65 @@ export class ProductCategoryComponent implements OnInit {
 
     ref.onClose.subscribe((success: boolean) => {
       if (success) {
-        // this.toastService.addSingle("success", "Mail send successfully", "");
+        this.showProdCatList();
       }
     });
   }
+  // To add new category ends
+
+    //Open Dialog To Edit category
+    editProductCategory(categoryID) {
+      const ref = this.dialogService.open(AddProductCategoryComponent, {
+        data: {
+          "iPCID": categoryID
+        },
+        header: 'Edit Product Category',
+        width: '28%'
+      });
+  
+      ref.onClose.subscribe((success: any) => {
+        if(success)
+        {
+          this.showProdCatList();
+        }
+      });
+    }
+    
+// To Edit category ends
+
+  showProdCatList(){
+    const prodCatListApi = {
+      "iRequestID": 2114
+    }
+    this.apiService.callPostApi(prodCatListApi).subscribe(
+      data => { this.productCategoryData = data } ,
+      error => { console.log(error)}
+    )
+
+  }
+
+ // Open Dialog To Delete category
+  deleteCategory(categoryID) {
+    console.log(categoryID);
+    this.confirmationService.confirm({
+      message: 'Are you sure you want to Delete this Record?',
+      header: 'Confirmation',
+      icon: 'pi pi-exclamation-triangle',
+      accept: () => {
+        var deleteCategoryAPI = {
+          "iRequestID": 2113,
+          "iPCID":categoryID
+        }
+
+        this.apiService.callPostApi(deleteCategoryAPI).subscribe(
+          data => {
+            this.toastService.addSingle("info", "Successfully Deleted", "Successfully Deleted");
+            this.showProdCatList();
+          },
+          error => { console.log(error)}
+        );
+      }
+    });
+  }
+  
 }

@@ -8,6 +8,7 @@ import { AddressComponent } from './address/address.component';
 import { ContactComponent } from './contact/contact.component';
 import { BankComponent } from './bank/bank.component';
 import { GstComponent } from './gst/gst.component';
+import { ProductMappingComponent } from './product-mapping/product-mapping.component';
 
 //Prime Ng Service
 import { DialogService } from 'primeng';
@@ -26,6 +27,7 @@ import { DropdownModule } from 'primeng/dropdown';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { InputTextModule } from 'primeng/inputtext';
 import { TreeTableModule } from 'primeng/treetable';
+import { CheckboxModule } from 'primeng/checkbox';
 import { from } from 'rxjs';
 import { MessageModule } from 'primeng/message';
 import { MessagesModule } from 'primeng/messages';
@@ -33,11 +35,8 @@ import { MessagesModule } from 'primeng/messages';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 
 
-
-
-
 @NgModule({
-  declarations: [SupplierComponent, AddNewSupplierComponent, AddressComponent, ContactComponent, BankComponent, GstComponent],
+  declarations: [SupplierComponent, AddNewSupplierComponent, AddressComponent, ContactComponent, BankComponent, GstComponent, ProductMappingComponent, ProductMappingComponent],
   imports: [
     CommonModule,
     SupplierRoutingModule,
@@ -56,9 +55,10 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
     TreeTableModule,
     ConfirmDialogModule,
     MessageModule,
-    MessagesModule
+    MessagesModule,
+    CheckboxModule
   ],
   providers: [DialogService, ConfirmationService],
-  entryComponents: [SupplierComponent, AddNewSupplierComponent, AddressComponent, ContactComponent, BankComponent, GstComponent]
+  entryComponents: [SupplierComponent, AddNewSupplierComponent, AddressComponent, ContactComponent, BankComponent, GstComponent, ProductMappingComponent]
 })
 export class SupplierModule { }

@@ -1,0 +1,9 @@
+
+ .card {
+  padding:0px 18px;
+}
+ .card.card-w-title {
+  padding-bottom: 5px;
+  padding-top: 10px;
+}
+ 
