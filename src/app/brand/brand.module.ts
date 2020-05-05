@@ -9,11 +9,14 @@ import { NewBrandComponent } from './new-brand/new-brand.component';
 
 
 import {InputTextModule} from 'primeng/inputtext';
-import {FormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+
 
 //Prime Ng Service
 import { DialogService } from 'primeng';
 import {TreeTableModule} from 'primeng/treetable';
+import {ConfirmationService} from 'primeng/api';
+
 //Prime Ng Module
 import {ButtonModule} from 'primeng/button';
 import {PanelModule} from 'primeng/panel';
@@ -23,7 +26,15 @@ import {TabViewModule} from 'primeng/tabview';
  import {DialogModule} from 'primeng/dialog';
 import {DynamicDialogModule} from 'primeng/dynamicdialog';
 import {DropdownModule} from 'primeng/dropdown';
+import {MessagesModule} from 'primeng/messages';
+import {MessageModule} from 'primeng/message';
+import {ConfirmDialogModule} from 'primeng/confirmdialog';
+
 import { from } from 'rxjs';
+
+
+import {APIService} from '../services/apieservice';
+
 @NgModule({
   declarations: [BrandComponent, NewBrandComponent],
   imports: [
@@ -31,6 +42,7 @@ import { from } from 'rxjs';
     BrandRoutingModule,
     CommonModule,
     FormsModule,
+    ReactiveFormsModule,
     ButtonModule,
     PanelModule,
     TabMenuModule,
@@ -41,9 +53,12 @@ import { from } from 'rxjs';
     DropdownModule,
     InputTextModule,
     TreeTableModule,
-    TableModule
+    TableModule,
+    MessagesModule,
+    MessageModule,
+    ConfirmDialogModule
   ],
-  providers:[DialogService],
+  providers:[DialogService,APIService,ConfirmationService],
   entryComponents:[BrandComponent, NewBrandComponent]
 })
 export class BrandModule { }

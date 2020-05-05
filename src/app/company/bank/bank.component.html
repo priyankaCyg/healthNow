@@ -51,7 +51,10 @@
       <div class="p-grid form-group">
         <div class="p-col-12 p-md-6 p-lg-6">
           <label for="status">Status</label>
-          <p-dropdown id="status" [options]="statusData" optionLabel="sKVValue" formControlName="status"></p-dropdown>
+          <p-dropdown id="status" [options]="statusData" optionLabel="sKVValue" formControlName="status" [(ngModel)]="selectedstatus"></p-dropdown>
+        <span class="text-danger">
+          <span  *ngIf="bankForm.get('status').touched  && (selectedstatus.iKVID==0 || bankForm.get('status').hasError('required'))">This field is required</span>
+        </span>
         </div>
       </div>
 

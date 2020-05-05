@@ -1,3 +1,5 @@
+<p-confirmDialog header="Confirmation" icon="pi pi-info" [style]="{width: '425px'}" rejectButtonStyleClass="ui-button-secondary"></p-confirmDialog>
+
 <div class="p-grid">
         <div class="p-col-12">
             <div class="card card-w-title">
@@ -11,11 +13,15 @@
                         </div>
                         <div class="p-col-12"> 
                                 <div class="p-col-12"> 
-                                        <p-table [value]="brand">
-                                            <ng-template pTemplate="caption">
+                                        <!-- <p-table [value]="brand">
+                                            <ng-template pTemplate="caption"> -->
+
+                                                <p-table [value]="brand" #BrandSearch [paginator]="true" [rows]="10" [showCurrentPageReport]="true"
+                                [rowsPerPageOptions]="[10, 25, 50]" [filterDelay]="0" [globalFilterFields]="['sProducerName','sBrandName','sStatusName']" class="defaultDataTable">
+                                <ng-template pTemplate="caption">
                                         
                                                 <div class="ui-table-globalfilter-container text-left">
-                                                    <input type="text" pInputText size="50" placeholder="Search" (input)="dt.filterGlobal($event.target.value, 'contains')" style="width:250px;">
+                                                    <input type="text" pInputText size="50" placeholder="Search" (input)="BrandSearch.filterGlobal($event.target.value, 'contains')" style="width:250px;">
                                                 </div>
                                             </ng-template>
                                             <ng-template pTemplate="header">
@@ -28,12 +34,12 @@
                                             </ng-template>
                                             <ng-template pTemplate="body" let-brand>
                                                 <tr>
-                                                    <td>{{brand.producer}}</td>
-                                                    <td>{{brand.brandName}}</td>
-                                                    <td>{{brand.status}}</td>
+                                                    <td>{{brand.sProducerName}}</td>
+                                                    <td>{{brand.sBrandName}}</td>
+                                                    <td>{{brand.sStatusName}}</td>
                                                     <td>
-                                                        <button pButton type="button" class="ui-button-success" icon="pi pi-pencil" style="margin-right: .5em"></button>
-                                                        <button pButton type="button" class="ui-button-danger" icon="pi pi-trash"></button>
+                                                        <button pButton type="button" (click)="editBrand(brand.iBrandID)" class="ui-button-success" icon="pi pi-pencil" style="margin-right: .5em"></button>
+                                                        <button pButton type="button" (click)="deleteBrand(brand.iBrandID)" class="ui-button-danger" icon="pi pi-trash"></button>
                                                     </td>
                                                 </tr>
                                             </ng-template>
