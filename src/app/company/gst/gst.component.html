@@ -5,16 +5,15 @@
 
             <div class="p-grid form-group">
 
-                <div class="p-col-12" [ngClass]="{'has-error': GSTSubmit.get('state').errors &&
-                (GSTSubmit.get('state').touched || GSTSubmit.get('state').dirty)}">
+                <div class="p-col-12">
                     <label for="state">State</label>
                     <p-dropdown id="state" class="form-control" [options]="gstState" formControlName="state"
-                        optionLabel="sLocName" placeholder="Select" [showClear]="true" required="true"></p-dropdown>
-                    <span *ngIf="GSTSubmit.get('state').errors &&
-                        (GSTSubmit.get('state').touched || GSTSubmit.get('state').dirty)">
-                        <span class="text-danger" *ngIf="GSTSubmit.get('state').errors.required">
-                            This Field is Required
-                        </span>
+                        optionLabel="sLocName" placeholder="Select" required="true" [(ngModel)]="selectedstatus">
+                    </p-dropdown>
+                    <span class="text-danger">
+                        <span *ngIf="GSTSubmit.get('state').touched  && (selectedstatus.iLocationID == 0 ||
+                        GSTSubmit.get('state').hasError('required'))">This field is required</span>
+
                     </span>
                 </div>
 
@@ -29,18 +28,6 @@
                         </span>
                     </span>
                 </div>
-
-                <!-- <div class="p-col-12">
-                    <div class="separator separator--border-dashed separator--space-sm separator--portlet-fit"></div>
-                </div> -->
-
-
-                <!-- <div class="p-col-12">
-                    <label for="status">Status</label>
-                    <p-dropdown id="status" class="form-control" [options]="gstStatus" formControlName="gststatus"
-                        optionLabel="sKVValue" editable="true" placeholder="select">
-                    </p-dropdown>
-                </div> -->
 
             </div>
             <div class="separator separator--border-solid separator--space-sm separator--portlet-fit"></div>

@@ -27,12 +27,10 @@
         </div>
 
         <div class="p-col-12">
-          <label for="status">Status</label>
-          <p-dropdown [options]="statusData" optionLabel="sKVValue" formControlName="status"></p-dropdown>
-          <span class="text-danger" *ngIf="desigForm.get('status').errors 
-          && (desigForm.get('status').touched|| desigForm.get('status').dirty)">
-            <span *ngIf="desigForm.get('status').errors.required">This field is required</span>
-
+          <label for="iStatusID">Status</label>
+          <p-dropdown formControlName="status" optionLabel="sKVValue"  id="iStatusID" [options]="statusData" [(ngModel)]="selectedstatus"></p-dropdown>
+          <span class="text-danger">
+            <span  *ngIf="desigForm.get('status').touched  && (selectedstatus.iKVID==0 || desigForm.get('status').hasError('required'))">This field is required</span>
           </span>
         </div>
       </div>

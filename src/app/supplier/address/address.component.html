@@ -1,39 +1,61 @@
 
+    <div class="p-col-12"> 
     <div class="p-grid ui-fluid">
-        <div class="p-col-12"> 
+        <form [formGroup]="SupplierAddressForm" autocomplete="off" novalidate> 
             <div class="p-grid form-group">
                 <div class="p-col-12 p-md-6 p-lg-4">
-                    <label for="addressType">Address Type</label>
-                    <p-dropdown [options]="addressType" [(ngModel)]="selectedaddressType"></p-dropdown>
+                    <label for="iAddTypeID">Address Type</label>
+                    <p-dropdown id="iAddTypeID" formControlName="iAddTypeID" [options]="adressTypeData" optionLabel="sKVValue" [(ngModel)]="selectedAddressType"></p-dropdown>
+                    <div>
+                        <p-message severity="error" text="This Field is required" *ngIf="SupplierAddressForm.controls['iAddTypeID'].touched  && (selectedAddressType.iKVID =='' || SupplierAddressForm.controls['iAddTypeID'].hasError('required'))"></p-message>
+                    </div>
                 </div>
                 <div class="p-col-12 p-md-6 p-lg-4">
-                    <label for="address1">Address1</label>
-                    <input id="address1" type="text" pInputText>
-                    
+                    <label for="sAdd1">Address1</label>
+                    <input id="sAdd1" type="text" formControlName="sAdd1" pInputText>
+                    <div>
+                        <p-message severity="error" text="This Field is required" *ngIf="!SupplierAddressForm.controls['sAdd1'].valid && (SupplierAddressForm.controls['sAdd1'].dirty || SupplierAddressForm.controls['sAdd1'].touched)" ></p-message>
+                    </div>
                 </div>
                 <div class="p-col-12 p-md-6 p-lg-4">
-                    <label for="address2">Address2</label>
-                    <input id="address2" type="text" pInputText>
+                    <label for="sAdd2">Address2</label>
+                    <input id="sAdd2" type="text" formControlName="sAdd2" pInputText>
+                    <div>
+                        <p-message severity="error" text="This Field is required" *ngIf="!SupplierAddressForm.controls['sAdd2'].valid && (SupplierAddressForm.controls['sAdd2'].dirty || SupplierAddressForm.controls['sAdd2'].touched)" ></p-message>
+                    </div>
                 </div>
                 
             </div>
     
             <div class="p-grid form-group">
                 <div class="p-col-12 p-md-6 p-lg-4 mb-2">
-                    <label for="state">State</label>
-                    <p-dropdown id="state" [options]="sate" [(ngModel)]="selectedstate"></p-dropdown>
+                    <label for="sPostalCode">Pincode</label>
+                    <input id="sPostalCode" type="text" formControlName='sPostalCode' pInputText (change)="onChangePincode()">
+                    <div>
+                        <p-message severity="error" [text]="SupplierAddressForm.controls['sPostalCode'].errors['required'] ? 'This Field is required' : SupplierAddressForm.controls['sPostalCode'].errors['minlength'] ? 'Please enter 6 digits pincode':SupplierAddressForm.controls['sPostalCode'].errors['maxlength'] ? 'Please enter 6 digits pincode': ''" 
+                    *ngIf="!SupplierAddressForm.controls['sPostalCode'].valid&&(SupplierAddressForm.controls['sPostalCode'].dirty ||SupplierAddressForm.controls['sPostalCode'].touched)"></p-message>
+                    </div>
                 </div>
                 <div class="p-col-12 p-md-6 p-lg-4 mb-2">
-                    <label for="city">City</label>
-                    <p-dropdown [options]="city" [(ngModel)]="selectedcity"></p-dropdown>
+                    <label for="sStateName">State</label>
+                    <input id="sStateName" type="text" formControlName="sStateName" pInputText>
+                    <div>
+                        <p-message severity="error" text="This Field is required" *ngIf="!SupplierAddressForm.controls['sStateName'].valid && SupplierAddressForm.controls['sPostalCode'].touched && !SupplierAddressForm.controls['sPostalCode'].valid"></p-message>
+                    </div>
                 </div>
                 <div class="p-col-12 p-md-6 p-lg-4 mb-2">
-                    <label for="pincode">Pincode</label>
-                    <input id="pincode" type="text" pInputText>
+                    <label for="sCityName">City</label>
+                    <input id="sCityName" type="text" formControlName="sCityName" pInputText>
+                    <div>
+                        <p-message severity="error" text="This Field is required" *ngIf="!SupplierAddressForm.controls['sCityName'].valid && SupplierAddressForm.controls['sPostalCode'].touched && !SupplierAddressForm.controls['sPostalCode'].valid"></p-message>
+                    </div>
                 </div>
                 <div class="p-col-12 p-md-6 p-lg-4 mb-2">
-                    <label for="landmark">Landmark</label>
-                    <input id="landmark" type="text" pInputText>
+                    <label for="sLandmark">Landmark</label>
+                    <input id="sLandmark" type="text" formControlName="sLandmark" pInputText>
+                    <div>
+                        <p-message severity="error" text="This Field is required" *ngIf="!SupplierAddressForm.controls['sLandmark'].valid && (SupplierAddressForm.controls['sLandmark'].dirty || SupplierAddressForm.controls['sLandmark'].touched)"></p-message>
+                    </div>
                 </div>
     
             </div>
@@ -41,13 +63,17 @@
             <div class="separator separator--border-solid separator--space-sm separator--portlet-fit"></div>
             <div class="p-grid form-group ui-fluid p-justify-end">
                 <div class="p-col-12 p-md-2 p-lg-1">
-                    <button pButton type="button" label="Cancel" style="margin-bottom:10px" class="ui-button-light"></button>
+                    <button pButton type="button" label="Cancel" style="margin-bottom:10px" class="ui-button-light" (click)="closeDialog()"></button>
                 </div>
-                 <div class="p-col-12 p-md-2 p-lg-1">
-                    <button pButton type="button" label="Save" style="margin-bottom:10px" class="ui-button"></button>
+                 <div class="p-col-12 p-md-2 p-lg-1" *ngIf="!isEdit">
+                    <button pButton type="button" label="Save" [disabled]="!(!SupplierAddressForm.invalid && !dropDownValidityCheck())" style="margin-bottom:10px" class="ui-button" (click)="addSupplierAddress()"></button>
+                </div>
+                <div class="p-col-12 p-md-2 p-lg-1" *ngIf="isEdit">
+                    <button pButton type="button" label="Update" [disabled]="!(!SupplierAddressForm.invalid && !dropDownValidityCheck())" style="margin-bottom:10px" class="ui-button" (click)="editSupplierAddress()"></button>
                 </div>
             </div>
 
-        </div>
        
+    </form>  
     </div>
+     </div>

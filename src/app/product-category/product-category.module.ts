@@ -6,11 +6,12 @@ import { AddProductCategoryComponent } from './add-product-category/add-product-
 
 
 import {InputTextModule} from 'primeng/inputtext';
-import {FormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 
 //Prime Ng Service
 import { DialogService } from 'primeng';
-import {TreeTableModule} from 'primeng/treetable';
+import {ConfirmationService} from 'primeng/api';
+
 //Prime Ng Module
 import {ButtonModule} from 'primeng/button';
 import {PanelModule} from 'primeng/panel';
@@ -18,8 +19,12 @@ import {PanelModule} from 'primeng/panel';
 import {DynamicDialogModule} from 'primeng/dynamicdialog';
 import {DropdownModule} from 'primeng/dropdown';
 import {TableModule} from 'primeng/table';
+import {TreeTableModule} from 'primeng/treetable';
+import {MessageModule} from 'primeng/message';
+import {ConfirmDialogModule} from 'primeng/confirmdialog';
 
 import { from } from 'rxjs';
+import { ApiService } from '../services/api.service';
 
 @NgModule({
   declarations: [ProductCategoryComponent, AddProductCategoryComponent],
@@ -34,9 +39,12 @@ import { from } from 'rxjs';
     DropdownModule,
     InputTextModule,
     TreeTableModule,
-    TableModule
+    TableModule,
+    ReactiveFormsModule,
+    MessageModule,
+    ConfirmDialogModule
   ],
-  providers:[DialogService],
+  providers:[DialogService,ApiService,ConfirmationService],
   entryComponents:[AddProductCategoryComponent]
 })
 export class ProductCategoryModule { }

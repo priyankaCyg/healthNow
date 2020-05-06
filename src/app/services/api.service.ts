@@ -13,9 +13,7 @@ export class ApiService {
   constructor(private http: HttpClient) { }
 
   callPostApi(requestBody: Object): Observable<any> {
-    return this.http.post(this._baseUrl, requestBody, {
-      headers: this.headers,
-    });
+    return this.http.post(this._baseUrl, requestBody, {headers: this.headers});
   }
 
   getDropDownData(requestData): Promise<any> {

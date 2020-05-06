@@ -110,7 +110,7 @@ body .ajax-loader {
   color: #a4bb3a;
 }
 body .pi {
-  font-size: 1.25em;
+  font-size: 1.38em;
 }
 
 
@@ -766,7 +766,7 @@ body .ui-dropdown {
   -moz-box-sizing: border-box;
   box-sizing: border-box;
   border: 1px solid #cccccc;
-  min-width: 10em;
+  min-width: 20em;
 }
 body .ui-dropdown .ui-dropdown-label:focus,
 body .ui-dropdown .ui-dropdown-label:hover {

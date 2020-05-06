@@ -20,7 +20,6 @@ export class AddNewAddressComponent implements OnInit {
  setStatusData : Object;
  tempAddressTypeID;
  setAddressTypeData : object;
- HasError = true;
   constructor(private fb:FormBuilder , private httpService: ApiService , public configData: DynamicDialogConfig, public ref:DynamicDialogRef) { }
   get AddressType(){
     return this.AddressForm.get('addressType');

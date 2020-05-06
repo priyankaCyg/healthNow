@@ -263,37 +263,37 @@
                         <div class="p-grid p-justify-center mt-4">
                             
                             <div class="p-col-12 p-md-6 p-lg-4">
-                                <div class="card bg-dark prcat-shdw">
+                                <div class="card bg-dark prcat-shdw border-light">
                                     <p-checkbox name="FV" value="Food - Vitamin" label="Food - Vitamin" [(ngModel)]="checkboxValues"></p-checkbox>
                                 </div>
                             </div>
 
                             <div class="p-col-12 p-md-6 p-lg-4">
-                                <div class="card bg-success prcat-shdw">
+                                <div class="card bg-success prcat-shdw border-light">
                                 <p-checkbox name="FS" value="Food - Supplements" label="Food - Supplements" [(ngModel)]="checkboxValues"></p-checkbox>
                                 </div>
                             </div>
 
                             <div class="p-col-12 p-md-6 p-lg-4">
-                                <div class="card bg-dark prcat-shdw">
+                                <div class="card bg-dark prcat-shdw border-light">
                                     <p-checkbox name="FD" value="Food - Dairy" label="Food - Dairy" [(ngModel)]="checkboxValues"></p-checkbox>
                                 </div>
                             </div>
 
                             <div class="p-col-12 p-md-6 p-lg-4">
-                            <div class="card bg-dark prcat-shdw">
+                            <div class="card bg-dark prcat-shdw border-light">
                                     <p-checkbox name="FCO" value="Food - Cookinig Oil" label="Food - Cookinig Oil" [(ngModel)]="checkboxValues"></p-checkbox>
                                 </div>
                             </div>
 
                             <div class="p-col-12 p-md-6 p-lg-4">
-                                <div class="card bg-dark prcat-shdw">
+                                <div class="card bg-dark prcat-shdw border-light">
                                 <p-checkbox name="HCD" value="Health Concern - Diabetes" label="Health Concern - Diabetes" [(ngModel)]="checkboxValues"></p-checkbox>
                                 </div>
                             </div>
 
                             <div class="p-col-12 p-md-6 p-lg-4">
-                                <div class="card bg-success prcat-shdw">
+                                <div class="card bg-success prcat-shdw border-light">
                                     <p-checkbox name="HCWL" value="Health Concern - Weight Loss" label="Health Concern - Weight Loss" [(ngModel)]="checkboxValues" selected></p-checkbox>
                                 </div>
                             </div>  
@@ -313,27 +313,6 @@
                     </p-tabPanel>
 
 
-
-                    <!-- <p-tabPanel header="Product Category">
-                        <div class="p-grid ui-fluid p-justify-end">
-                            <div class="p-col-1 text-center mt-1">
-                                <button (click)="openDialogFormultiCategory()" pButton icon="pi pi-fw pi-plus" label="Add New"></button>
-                                
-                            </div>
-                            <div class="p-col-12"> 
-                                
-                                <p-pickList [source]="sourceCars" [target]="targetCars" filterBy="brand" filterPlaceholder="Search by Brand" sourceHeader="Available"
-                                    targetHeader="Selected" [responsive]="true" [sourceStyle]="{'height':'250px'}" [targetStyle]="{'height':'250px'}">
-                                    <ng-template let-car pTemplate="item">
-                                        <div class="ui-helper-clearfix">
-                                            <div style="font-size:16px;float:left;margin:15px 5px 0 0">{{car.brand}}</div>
-                                        </div>
-                                    </ng-template>
-                                </p-pickList>
-
-                            </div>
-                        </div>
-                    </p-tabPanel> -->
                 </p-tabView>
             </div>
         </div>

@@ -23,21 +23,19 @@
                 </div>
 
 
-                <div class="p-col-12" [ngClass]="{'has-error': DepartmentSubmit.get('depstatus').errors &&
-                (DepartmentSubmit.get('depstatus').touched || DepartmentSubmit.get('depstatus').dirty)}">
-                    <label for="status">Status</label>
+                <div class="p-col-12">
+                    <label for="iStatusID">Status</label>
                     <p-dropdown id="status" class="form-control" [options]="seldepartmentStatus"
-                        formControlName="depstatus" placeholder="Select" optionLabel="sKVValue" [showClear]="true"
-                        required="true">
+                        formControlName="depstatus" placeholder="Select" optionLabel="sKVValue"
+                        [(ngModel)]="selectedstatus" required="true">
 
                     </p-dropdown>
-                    <span *ngIf="DepartmentSubmit.get('depstatus').errors &&
-                    (DepartmentSubmit.get('depstatus').touched || DepartmentSubmit.get('depstatus').dirty)">
-                        <span class="text-danger" *ngIf="DepartmentSubmit.get('depstatus').errors.required">
-                            This Field is Required
-                        </span>
-                    </span>
 
+                    <span class="text-danger">
+                        <span *ngIf="DepartmentSubmit.get('depstatus').touched  && (selectedstatus.iKVID==0 ||
+                        DepartmentSubmit.get('depstatus').hasError('required'))">This field is required</span>
+
+                    </span>
                 </div>
 
             </div>
