@@ -10,8 +10,8 @@ import { BankComponent } from './bank/bank.component';
 import { GstComponent } from './gst/gst.component';
 
 //Prime Ng Service
-import { DialogService } from 'primeng';
-import {FormsModule} from '@angular/forms';
+import { DialogService, ConfirmationService } from 'primeng';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 
 //Prime Ng Module
 import {ButtonModule} from 'primeng/button';
@@ -25,7 +25,9 @@ import {DropdownModule} from 'primeng/dropdown';
 import {InputTextareaModule} from 'primeng/inputtextarea';
 import {InputTextModule} from 'primeng/inputtext';
 import {TreeTableModule} from 'primeng/treetable';
-import { from } from 'rxjs';
+import {MessageModule} from 'primeng/message';
+import {ConfirmDialogModule} from 'primeng/confirmdialog';
+
 
 
 
@@ -46,9 +48,12 @@ import { from } from 'rxjs';
     DropdownModule,
     InputTextModule,
     InputTextareaModule,
-    TreeTableModule
+    TreeTableModule,
+    ReactiveFormsModule,
+    MessageModule,
+    ConfirmDialogModule
   ],
-  providers:[DialogService],
+  providers:[DialogService,ConfirmationService],
   entryComponents:[SupplierComponent, AddNewSupplierComponent, AddressComponent, ContactComponent, BankComponent, GstComponent]
 })
 export class SupplierModule { }

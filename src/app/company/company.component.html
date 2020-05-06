@@ -101,7 +101,20 @@
                     <td>{{address.sTelNo1}}</td>
                     <td>{{address.sTelNo2}}</td>
                     <td>{{address.sFaxNo}}</td>
-                    <td>{{address.sStatusName}}</td>
+                    <td style="text-align: center;">
+                      <button *ngIf="address.iStatusID == 1" pButton type="button"
+                        class="ui-button-rounded ui-button-success" style="width: 100px; height: 25px;">
+                        Active
+                      </button>
+                      <button *ngIf="address.iStatusID == 2" pButton type="button"
+                        class="ui-button-rounded ui-button-warning" style="width: 100px; height: 25px;">
+                        Inactive
+                      </button>
+                      <button *ngIf="address.iStatusID == 3" pButton type="button"
+                        class="ui-button-rounded ui-button-danger" style="width: 100px; height: 25px;">
+                        Deleted
+                      </button>
+                    </td>
                     <td><button pButton type="button" class="ui-button-success" icon="pi pi-pencil"
                         style="margin-right: .5em" (click)="openDialogForeditAddress(address)"></button></td>
                     <td><button pButton type="button" class="ui-button-danger" icon="pi pi-trash"

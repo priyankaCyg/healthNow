@@ -10,6 +10,10 @@ import { AddressComponent } from '../address/address.component';
 import { ContactComponent } from '../contact/contact.component';
 import { BankComponent } from '../bank/bank.component';
 import { GstComponent } from '../gst/gst.component';
+import { SupplierAddress } from 'src/app/models/supplier-address.model';
+import { ApiService } from 'src/app/services/api.service';
+import { ConfirmationService } from 'primeng/api';
+import { ToastService } from 'src/app/services/toast.service';
 
 @Component({
   selector: 'app-add-new-supplier',
@@ -20,16 +24,14 @@ export class AddNewSupplierComponent implements OnInit {
 
   items: MenuItem[];
 
-  address: any[];
-
-  contact: any[];
-
-  bank: any[];
-
-  gst: any[];
+  supplierAdressData : SupplierAddress;
 
 
-  constructor(private breadcrumbService: BreadcrumbService, private dialogService:DialogService) {
+  constructor(private breadcrumbService: BreadcrumbService,
+              private dialogService:DialogService,
+              private apiService:ApiService,
+              private toastService: ToastService,
+              private confirmationService: ConfirmationService) {
     this.breadcrumbService.setItems([
         { label: 'Dashboard' },
         { label: 'Supplier', routerLink: ['/app/supplier'] }
@@ -37,27 +39,23 @@ export class AddNewSupplierComponent implements OnInit {
 }
 
   ngOnInit(): void {
+this.getSupplierAddressList();
 
-    this.address = [
-      { addresstype: 'Registered', address1: '13, Gandhi Bhuvan Chunam Lane', address2: 'Db Road, Lamington Road, Grant Road, East, Mumabi.', state: 'Maharashtra', city: 'Mumbai', landmark: 'Db Road', status:'Active'}
-    ];
-
-    this.contact = [
-      {fullName: 'Pankaj Bhatt', designation: 'Sales', emailId:'pankaj@test.com', supplierAdd: '41, Sarvodaya Ind. Est. Off Mahakali Caves Road, Andheri East', mobileNo: '987456123', contactNo:'789456123', directNo:'025647896', fax:'45645656', status: 'Active'},
-      {fullName: 'Santosh Yadav', designation: 'Sales', emailId:'santosh@demo.com', supplierAdd: '41, Sarvodaya Ind. Est. Off Mahakali Caves Road, Andheri East', mobileNo: '998877445', contactNo:'989898987', directNo:'066554422', fax:'78787878', status: 'Active'}
-    ];
-
-    this.bank = [
-      {bankName: 'GS MAHANAGAR CO-OP BANK LTD.', accounttype: 'GSMHA/Current account', accountNo: '007011200003797', IFSC: 'MCBL0960007', bankBranch: 'LALBAUG',  status: 'Active'},
-      {bankName: 'KOTAK MAHINDRA BANK', accounttype: 'KMBL/ CA', accountNo: '06402000000484', IFSC: 'KKBK0000640', bankBranch: 'PAREL',  status: 'Active'}
-    ];
-
-    this.gst = [
-      {state: 'Maharashtra', gst1: '27AACCC1130A1ZL', status: 'Active'},
-      {state: 'Haryana', gst1: '4243453STt06', status: 'Active'}
-    ];
 
   }
+//Address list starts
+  getSupplierAddressList(){
+    const supplierAddressAPI = {
+      "iRequestID": 2184
+    }
+    this.apiService.callPostApi(supplierAddressAPI).subscribe(
+      data => { this.supplierAdressData = data},
+      error => {console.log(error)}
+    )
+  }
+  // address list ends
+
+  // Daialogue to add address
     openDialogForaddAddress() {
       const ref = this.dialogService.open( AddressComponent , {
         data: {
@@ -68,10 +66,55 @@ export class AddNewSupplierComponent implements OnInit {
   
       ref.onClose.subscribe((success: boolean) => {
         if (success) {
+          this.getSupplierAddressList();
           // this.toastService.addSingle("success", "Mail send successfully", "");
         }
       });
     }
+
+    // Daialogue to edit address
+    editSupplierAddress(supplierID) {
+      const ref = this.dialogService.open(AddressComponent, {
+        data: {
+          "iSupAddID": supplierID
+        },
+        header: 'Edit Address',
+        width: '80%'
+      });
+  
+      ref.onClose.subscribe((success: any) => {
+        // alert(success)
+        if(success)
+        {
+          this.getSupplierAddressList();
+          this.toastService.addSingle("success", "Updated Successfully", "");
+        }
+      });
+    }
+
+     // Open Dialog To Delete address
+     deleteSupplierAddress(supplierID) {
+    console.log(supplierID);
+    this.confirmationService.confirm({
+      message: 'Are you sure you want to Delete this Record?',
+      header: 'Confirmation',
+      icon: 'pi pi-exclamation-triangle',
+      accept: () => {
+        var deleteAddressAPI = {
+          "iRequestID": 2183,
+          "iSupAddID":supplierID
+        }
+
+        this.apiService.callPostApi(deleteAddressAPI).subscribe(
+          data => {
+            this.toastService.addSingle("info", "Successfully Deleted", "Successfully Deleted");
+            this.getSupplierAddressList();
+          },
+          error => { console.log(error)}
+        );
+      }
+    });
+  }
     
     
     openDialogForaddContact() {
