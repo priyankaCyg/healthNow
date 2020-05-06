@@ -1,3 +1,5 @@
+<p-confirmDialog header="Confirmation" icon="pi pi-info" [style]="{width: '425px'}" rejectButtonStyleClass="ui-button-secondary"></p-confirmDialog>
+
 <div class="p-grid">
     <div class="p-col-12">
         <div class="card card-w-title">
@@ -127,7 +129,7 @@
                 <p-tabPanel header="Contact">
                     <div class="p-grid ui-fluid p-justify-end">
                         <div class="p-col-1 text-center mt-1">
-                            <button (click)="openDialogForaddContact()" pButton icon="pi pi-fw pi-plus" label="Add / Edit"></button>
+                            <button (click)="openDialogForaddContact()" pButton icon="pi pi-fw pi-plus" label="Add"></button>
                             
                         </div>
                         <div class="p-col-12"> 
@@ -155,18 +157,18 @@
                                 </ng-template>
                                 <ng-template pTemplate="body" let-contact>
                                     <tr>
-                                        <td>{{contact.fullName}}</td>
-                                        <td>{{contact.designation}}</td>
-                                        <td>{{contact.emailId}}</td>
-                                        <td>{{contact.supplierAdd}}</td>
-                                        <td>{{contact.mobileNo}}</td>
-                                        <td>{{contact.contactNo}}</td>
-                                        <td>{{contact.directNo}}</td>
-                                        <td>{{contact.fax}}</td>
-                                        <td>{{contact.status}}</td>
+                                        <td>{{contact.sFullName}}</td>
+                                        <td>{{contact.sDesignation}}</td>
+                                        <td>{{contact.sEmailID}}</td>
+                                        <td>{{contact.sAddress}}</td>
+                                        <td>{{contact.sMobileNo}}</td>
+                                        <td>{{contact.sContactNo}}</td>
+                                        <td>{{contact.sDirectNo}}</td>
+                                        <td>{{contact.sFaxNo}}</td>
+                                        <td>{{contact.sStatusName}}</td>
                                         <td>
-                                            <button pButton type="button" class="ui-button-success" icon="pi pi-pencil" style="margin-right: .5em"></button>
-                                            <button pButton type="button" class="ui-button-danger" icon="pi pi-trash"></button>
+                                            <button pButton type="button" (click)="editContact(contact.iSupContactID)" class="ui-button-success" icon="pi pi-pencil" style="margin-right: .5em"></button>
+                                            <button pButton type="button" (click)="deleteContact(contact.iSupContactID)" class="ui-button-danger" icon="pi pi-trash"></button>
                                         </td>
                                     </tr>
                                 </ng-template>
@@ -196,15 +198,15 @@
                                 </ng-template>
                                 <ng-template pTemplate="body" let-bank>
                                     <tr>
-                                            <td>{{bank.bankName}}</td>
-                                            <td>{{bank.accounttype}}</td>
-                                            <td>{{bank.accountNo}}</td>
-                                            <td>{{bank.IFSC}}</td>
-                                            <td>{{bank.bankBranch}}</td>
-                                            <td>{{bank.status}}</td>
+                                            <td>{{bank.sBankName}}</td>
+                                            <td>{{bank.sShortCode}}</td>
+                                            <td>{{bank.sAccountNo}}</td>
+                                            <td>{{bank.sIFSC}}</td>
+                                            <td>{{bank.sBankBranch}}</td>
+                                            <td>{{bank.sStatusName}}</td>
                                             <td>
-                                                <button pButton type="button" class="ui-button-success" icon="pi pi-pencil" style="margin-right: .5em"></button>
-                                                <button pButton type="button" class="ui-button-danger" icon="pi pi-trash"></button>
+                                                <button pButton type="button" (click)="editBank(bank.iBankID)" class="ui-button-success" icon="pi pi-pencil" style="margin-right: .5em"></button>
+                                                <button pButton type="button" (click)="deleteBank(bank.iBankID)" class="ui-button-danger" icon="pi pi-trash"></button>
                                             </td>
                                     </tr>
                                 </ng-template>

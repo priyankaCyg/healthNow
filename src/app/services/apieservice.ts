@@ -16,7 +16,7 @@ export class APIService {
 
     getDetails(dataToSend) {
         
-        return this.http.post<any>('http://13.126.132.149:8080/healthnow/DataAPI', dataToSend)
+        return this.http.post<any>('http://13.126.132.149/healthnow/DataAPI', dataToSend)
                     .toPromise()
                     .then(res =>{ 
                         
@@ -32,7 +32,7 @@ export class APIService {
         let headers = new HttpHeaders();
         headers = headers.set('Content-Type', 'application/json');
         headers = headers.set('Accept', 'text/html');
-        return this.http.post('http://13.126.132.149:8080/healthnow/DataAPI',dataToSend)
+        return this.http.post('http://13.126.132.149/healthnow/DataAPI',dataToSend)
         .subscribe(data => {
             console.log("IN API CALL",data);
         });
@@ -47,7 +47,7 @@ export class APIService {
 
 
                 return new Promise((resolve, reject) => {
-                    this.http.post('http://13.126.132.149:8080/healthnow/DataAPI',dataToSend,{ observe: 'response',headers:headers,responseType: 'text'})
+                    this.http.post('http://13.126.132.149/healthnow/DataAPI',dataToSend,{ observe: 'response',headers:headers,responseType: 'text'})
                         .subscribe((resp: any) => {
                             // alert(JSON.stringify(resp.status))
                             // alert(JSON.stringify(resp))
