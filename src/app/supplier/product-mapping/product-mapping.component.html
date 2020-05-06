@@ -1,0 +1,152 @@
+<div class="p-grid">
+    <div class="p-col-12">
+      <div class="card card-w-title">
+        <h1>Supplier Product Mapping</h1>
+            
+      </div>  
+
+      <div class="card card-body">
+          
+            <!-- <div class="p-grid">
+              <div class="p-col-12 p-md-8 p-lg-6">
+                  <div class="card timeline">
+                      <div class="timeline-row">
+                      <div class="p-grid">
+                          <div class="p-col-12">
+                              <div class="p-grid  p-justify-center timeline-content form-group">
+                                   <div class="p-col-12 p-md-6 p-lg-6 ">
+                                      <label for="producer">Producer</label>
+                                      <p-dropdown class="ml-2" [options]="producer" [(ngModel)]="selectedproducer"></p-dropdown>
+                                </div>
+                                  <div class="p-col-12 p-md-6 p-lg-3">
+                                    <button pButton type="button" label="Get" class="ui-button mt-4"></button>
+                                  </div>
+                                  
+                              </div>
+                          </div>
+                      </div>
+                      </div>
+                  </div>
+              </div>
+            </div> -->
+            <div class="p-grid">
+              <div class="p-col-12 p-md-8 p-lg-6">
+                  <div class="p-grid timeline-content form-group">
+                       <div class="p-col-12 p-md-6 p-lg-6 mb-3">
+                          <label for="producer">Producer</label>
+                          <p-dropdown class="ml-2" [options]="producer" [(ngModel)]="selectedproducer"></p-dropdown>
+                    </div>
+
+                      <div class="p-col-12 p-md-6 p-lg-3 mb-3">
+                        <button pButton type="button" label="Get" class="ui-button"></button>
+                      </div>
+                      
+                  </div>
+              </div>
+          </div>
+            <div class="p-grid">
+                  <div class="p-col-6 p-lg-6">
+
+                  <div class="p-grid form-group ui-fluid p-justify-end">
+                    <div class="p-col-12 p-lg-12">
+                        <p-table [value]="producer">
+                          <ng-template pTemplate="header">
+                              <tr>
+                                  <th>Product Category</th>
+                                  <th>Product</th>
+                                  <th style="width: 9em"><p-checkbox [(ngModel)]="value" [binary]="true"></p-checkbox></th>
+                              </tr>
+                          </ng-template>
+                          <ng-template pTemplate="body" let-producer>
+                              <tr>
+                                  <td>{{producer.prCategory}}</td>
+                                  <td>{{producer.product}}</td>
+                                  <td><p-checkbox [(ngModel)]="value" [binary]="true"></p-checkbox></td>
+                              </tr>
+                          </ng-template>
+                          <ng-template pTemplate="footer" >
+                            <tr>
+                                <td colspan="3">
+                                  <div class="p-grid p-justify-end">
+                                    <div class="p-col-12 p-md-2 p-lg-2"><button pButton type="button" label="Cancel" class="ui-button-light"></button></div>
+                                    <div class="p-col-12 p-md-2 p-lg-2"><button pButton type="button" label="Save" class="ui-button"></button></div>
+                                </div>
+                                </td>
+                            </tr>
+                        </ng-template>
+                      </p-table>
+                    </div>
+                </div>
+                  </div>
+                  <!-- Left Side End here -->
+                  
+                  <!-- Right Side Start here -->
+                  <div class="p-col-6 p-lg-6 p-0">
+                  
+                  <div class="card download-files">
+                    <div class="p-grid p-nogutter">
+                        <div class="p-col-12 title pt-1 text-center">
+                            <h2>Selected Product Category</h2>
+                        </div>
+                    </div>
+                    <ul>
+                        <li>
+                            <div class="p-grid list-item">
+                              <div class="p-col-2 icon">
+                                <i class="pi pi-circle-on" style="font-size: 0.5em"></i>
+                            </div>
+                            <div class="p-col-10 file-name">
+                                    <h2 class="name">Food Type - Vitamin & Supplements - Product 2</h2>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="p-grid list-item">
+                              <div class="p-col-2 icon">
+                               <i class="pi pi-circle-on" style="font-size: 0.5em"></i>
+                            </div>
+                            <div class="p-col-10 file-name">
+                                    <h2 class="name">Health Condition - Immunity - Product 3</h2>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="p-grid list-item">
+                              <div class="p-col-2 icon">
+                               <i class="pi pi-circle-on" style="font-size: 0.5em"></i>
+                            </div>
+                            <div class="p-col-10 file-name">
+                                    <h2 class="name">Health Condition - Weigth Loss - Product 4</h2>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="p-grid list-item">
+                              <div class="p-col-2 icon">
+                               <i class="pi pi-circle-on" style="font-size: 0.5em"></i>
+                            </div>
+                            <div class="p-col-10 file-name">
+                                    <h2 class="name">Health Condition - Diabetes - Product 5</h2>
+                                </div>
+                            </div>
+                        </li>
+                        
+                       
+                        
+                    </ul>
+                    
+                </div> 
+                
+                </div>
+                <!-- Right Side End here -->
+
+
+
+             </div> 
+            
+
+
+      </div>
+
+    </div>  
+</div>    

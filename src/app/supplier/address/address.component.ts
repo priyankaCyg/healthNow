@@ -17,6 +17,7 @@ export class AddressComponent implements OnInit {
   StatesCityData;
   addressID : number;
   isEdit : boolean = false;
+  sup_Id : number;
 
   constructor(
     private fb : FormBuilder,
@@ -27,12 +28,15 @@ export class AddressComponent implements OnInit {
   ngOnInit(): void {
     this.defaultDropDwnValue();
     this.addressID = this.config.data.iSupAddID;
+    this.sup_Id = +localStorage.getItem('iSupID');
+    console.log(this.sup_Id);
     this.supplierAddressData = new SupplierAddress();
     this.SupplierAddressForm = this.createControl(this.supplierAddressData);
     if (this.addressID != null) {
       this.isEdit = true
      var getaAddressDataApi = {
       "iRequestID": 2185,
+      "iSupID":this.sup_Id,
       "iSupAddID":this.addressID
       }
       this.httpService.callPostApi(getaAddressDataApi).subscribe(
@@ -153,7 +157,7 @@ DisableFields(){
     var formData = this.SupplierAddressForm.getRawValue();
     const addSupplieraddressAPI = {
       "iRequestID": 2181,
-      "iSupID" :1,
+      "iSupID" :this.sup_Id,
       "iAddTypeID":parseInt(formData.iAddTypeID.iKVID),
       "sAdd1": formData.sAdd1,
       "sAdd2":formData.sAdd2,
@@ -189,6 +193,7 @@ DisableFields(){
       "iLocID" : this.StatesCityData[0].iLocID,
       "sPostalCode":formData.sPostalCode,
       "iStatusID": formData.iStatusID,
+      "iSupID":this.sup_Id,
       "iSupAddID":this.addressID
     }
   this.httpService.callPostApi(editSupplieraddressAPI1).subscribe(
@@ -209,6 +214,7 @@ DisableFields(){
       "iLocID" : location_id,
       "sPostalCode":formData.sPostalCode,
       "iStatusID": formData.iStatusID,
+      "iSupID":this.sup_Id,
       "iSupAddID":this.addressID
     }
   this.httpService.callPostApi(editSupplieraddressAPI2).subscribe(

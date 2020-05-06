@@ -1,62 +1,82 @@
+<p-confirmDialog header="Confirmation" icon="pi pi-info" [style]="{width: '425px'}"
+    rejectButtonStyleClass="ui-button-secondary"></p-confirmDialog>
 <div class="p-grid">
     <div class="p-col-12">
         <div class="card card-w-title">
             <div class="p-grid ui-fluid vertical-container">
-                    <div class="p-col p-col-align-start"> 
-                        <h1 class="mt-2">Supplier</h1>
-                    </div>
-                    <div class="p-col-1 p-col-align-end text-center">
-                            <button routerLink="/app/supplier/add-new-supplier" pButton icon="pi pi-fw pi-plus" label="Add New"></button>
-                        
-                    </div>
-                    <div class="p-col-12"> 
-                            <p-table [value]="supplier" [resizableColumns]="true">
-                                <ng-template pTemplate="caption">
-                               
-                                    <div class="ui-table-globalfilter-container text-left">
-                                        <input type="text" pInputText size="50" placeholder="Search" (input)="dt.filterGlobal($event.target.value, 'contains')" style="width:250px;">
-                                    </div>
-                                </ng-template>
-                                <ng-template pTemplate="header">
-                                    <tr>
-                                        <th>Supplier Name</th>
-                                        <th>Supplier Category</th>
-                                        <th>Short Code</th>
-                                        <th>Legal Entity</th>
-                                        <th>Website</th>
-                                        <th>Tel 1</th>
-                                        <th>Tel 2</th>
-                                        <th>Fax</th>
-                                        <th>Pan</th>
-                                        <th>Status</th>
-                                        <th>Action</th>
-                                    </tr>
-                                </ng-template>
-                                <ng-template pTemplate="body" let-rowData let-columns="columns" let-supplier>
-                                    <tr>
-                                        <td class="ui-resizable-column">{{supplier.supplierName}}</td>
-                                        <td class="ui-resizable-column">{{supplier.supplierCat}}</td>
-                                        <td class="ui-resizable-column">{{supplier.shortCode}}</td>
-                                        <td class="ui-resizable-column">{{supplier.legalEntity}}</td>
-                                        <td class="ui-resizable-column">{{supplier.website}}</td>
-                                        <td class="ui-resizable-column">{{supplier.Tel1}}</td>
-                                        <td class="ui-resizable-column">{{supplier.Tel2}}</td>
-                                        <td class="ui-resizable-column">{{supplier.Tel2}}</td>
-                                        <td class="ui-resizable-column">{{supplier.fax}}</td>
-                                        <td class="ui-resizable-column">{{supplier.panNo}}</td>
-                                        <td class="ui-resizable-column">
-                                         <button pButton type="button" class="ui-button-success mr-2" icon="pi pi-pencil" title="Edit"></button>
-                                         <button pButton type="button" class="ui-button-danger mr-2" icon="pi pi-trash" title="Delete"></button>
-                                         <button pButton type="button" class="ui-button-success" icon="pi pi-arrow-circle-right" title="Send for approval"></button>
-                                        </td>
-                                    </tr>
-                                </ng-template>
-                            </p-table>
-                        </div> 
+                <div class="p-col p-col-align-start">
+                    <h1 class="mt-2">Supplier</h1>
+                </div>
+                <div class="p-col-1 p-col-align-end text-center">
+                    <button routerLink="/app/supplier/new-supplier" pButton icon="pi pi-fw pi-plus"
+                        label="Add New"></button>
+
+                </div>
+                <div class="p-col-12">
+                    <p-table #dt [value]="supplier" [resizableColumns]="true" [rowHover]="true" [paginator]="true"
+                        [rows]="10" [showCurrentPageReport]="true" [rowsPerPageOptions]="[10, 25, 50]" [filterDelay]="0"
+                        [globalFilterFields]="['sSupName','sPAN','sStatusName']">
+                        <ng-template pTemplate="caption">
+
+                            <div class="ui-table-globalfilter-container text-left">
+                                <input type="text" pInputText size="50" placeholder="Search"
+                                    (input)="dt.filterGlobal($event.target.value, 'contains')" style="width:250px;">
+                            </div>
+                        </ng-template>
+                        <ng-template pTemplate="header">
+                            <tr>
+                                <th>Supplier Name</th>
+                                <th>Supplier Category</th>
+                                <th>Short Code</th>
+                                <th>Legal Entity</th>
+                                <th>Website</th>
+                                <th>Tel 1</th>
+                                <th>Tel 2</th>
+                                <th>Fax</th>
+                                <th>Pan</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="body" let-rowData let-columns="columns" let-supplier>
+                            <tr>
+                                <td class="ui-resizable-column">{{supplier.sSupName}}</td>
+                                <td class="ui-resizable-column">{{supplier.supplierCat}}</td>
+                                <td class="ui-resizable-column">{{supplier.sShortCode}}</td>
+                                <td class="ui-resizable-column">{{supplier.iLegalEntityID}}</td>
+                                <td class="ui-resizable-column">{{supplier.sWebsite}}</td>
+                                <td class="ui-resizable-column">{{supplier.sTelNo1}}</td>
+                                <td class="ui-resizable-column">{{supplier.sTelNo2}}</td>
+                                <td class="ui-resizable-column">{{supplier.sFaxNo}}</td>
+                                <td class="ui-resizable-column">{{supplier.sPAN}}</td>
+                                <td class="ui-resizable-column">
+                                    <button *ngIf="supplier.iStatusID == 1" pButton type="button"
+                                        class="ui-button-rounded ui-button-success" style="width: 100px; height: 25px;">
+                                        {{supplier.sStatusName}}
+                                    </button>
+                                    <button *ngIf="supplier.iStatusID == 2" pButton type="button"
+                                        class="ui-button-rounded ui-button-warning" style="width: 100px; height: 25px;">
+                                        {{supplier.sStatusName}}
+                                    </button>
+                                    <button *ngIf="supplier.iStatusID == 3" pButton type="button"
+                                        class="ui-button-rounded ui-button-danger" style="width: 100px; height: 25px;">
+                                        {{supplier.sStatusName}}
+                                    </button>
+                                </td>
+                                <td class="ui-resizable-column">
+                                    <button pButton type="button" (click)="editSupplier(supplier.iSupID)"
+                                        class="ui-button-success mr-2" icon="pi pi-pencil" title="Edit"></button>
+                                    <button pButton type="button" (click)="deleteSupplier(supplier)"
+                                        class="ui-button-danger mr-2" icon="pi pi-trash" title="Delete"></button>
+                                    <button pButton type="button" class="ui-button-success"
+                                        icon="pi pi-arrow-circle-right" title="Send for approval"></button>
+                                </td>
+                            </tr>
+                        </ng-template>
+                    </p-table>
+                </div>
             </div>
 
+        </div>
     </div>
 </div>
-</div>    
-    
-

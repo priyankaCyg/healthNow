@@ -87,7 +87,7 @@
                     <th>Tel No.2</th>
                     <th>FAX</th>
                     <th>Status</th>
-                    <th colspan="2">Action</th>
+                    <th>Action</th>
                   </tr>
                 </ng-template>
                 <ng-template pTemplate="body" let-address>
@@ -102,22 +102,19 @@
                     <td>{{address.sTelNo2}}</td>
                     <td>{{address.sFaxNo}}</td>
                     <td style="text-align: center;">
-                      <button *ngIf="address.iStatusID == 1" pButton type="button"
-                        class="ui-button-rounded ui-button-success" style="width: 100px; height: 25px;">
+                      <span *ngIf="address.iStatusID == 1" class="badge badge--success badge--inline badge--pill">
                         Active
-                      </button>
-                      <button *ngIf="address.iStatusID == 2" pButton type="button"
-                        class="ui-button-rounded ui-button-warning" style="width: 100px; height: 25px;">
+                      </span>
+                      <span *ngIf="address.iStatusID == 2" class="badge badge--warning badge--inline badge--pill">
                         Inactive
-                      </button>
-                      <button *ngIf="address.iStatusID == 3" pButton type="button"
-                        class="ui-button-rounded ui-button-danger" style="width: 100px; height: 25px;">
+                      </span>
+                      <span *ngIf="address.iStatusID == 3" class="badge badge--danger badge--inline badge--pill">
                         Deleted
-                      </button>
+                      </span>
                     </td>
                     <td><button pButton type="button" class="ui-button-success" icon="pi pi-pencil"
-                        style="margin-right: .5em" (click)="openDialogForeditAddress(address)"></button></td>
-                    <td><button pButton type="button" class="ui-button-danger" icon="pi pi-trash"
+                        style="margin-right: .5em" (click)="openDialogForeditAddress(address)"></button>
+                    <button pButton type="button" class="ui-button-danger" icon="pi pi-trash"
                         (click)="onDeleteAddress(address.iAddID)"></button></td>
                   </tr>
                 </ng-template>
@@ -156,18 +153,15 @@
                   <tr>
                     <td style="text-align: center;">{{department.sDeptName}}</td>
                     <td style="text-align: center;">
-                      <button *ngIf="department.iStatusID == 1" pButton type="button"
-                        class="ui-button-rounded ui-button-success" style="width: 100px; height: 25px;">
+                      <span *ngIf="department.iStatusID == 1" class="badge badge--success badge--inline badge--pill">
                         Active
-                      </button>
-                      <button *ngIf="department.iStatusID == 2" pButton type="button"
-                        class="ui-button-rounded ui-button-warning" style="width: 100px; height: 25px;">
+                      </span>
+                      <span *ngIf="department.iStatusID == 2" class="badge badge--warning badge--inline badge--pill">
                         Inactive
-                      </button>
-                      <button *ngIf="department.iStatusID == 3" pButton type="button"
-                        class="ui-button-rounded ui-button-danger" style="width: 100px; height: 25px;">
+                      </span>
+                      <span *ngIf="department.iStatusID == 3" class="badge badge--danger badge--inline badge--pill">
                         Deleted
-                      </button>
+                      </span>
                     </td>
                     <td style="text-align: center;"><button pButton type="button" class="ui-button-success"
                         icon="pi pi-pencil" style="margin-right: .5em"
@@ -221,14 +215,9 @@
                     <td style="text-align: center;">{{ desig.sDesigName }}</td>
                     <td style="text-align: center;">{{ desig.iDesigLevel }}</td>
                     <td style="text-align: center;">
-                      <button *ngIf="desig.iStatusID == 1" pButton type="button"
-                        class="ui-button-rounded ui-button-success" style="width: 100px; height: 20px;">
-                        Active
-                      </button>
-                      <button *ngIf="desig.iStatusID == 2" pButton type="button"
-                        class="ui-button-rounded ui-button-warning" style="width: 100px; height: 20px;">
-                        Inactive
-                      </button>
+                      <span *ngIf="desig.iStatusID == 1" class="badge badge--success badge--inline badge--pill"> Active</span>
+                      <span *ngIf="desig.iStatusID == 2" pButton type="button"
+                        class="badge badge--warning badge--inline badge--pill"> Inactive </span>
                     </td>
                     <td style="text-align: center;">
                       <button pButton type="button" class="ui-button-success" icon="pi pi-pencil"
@@ -287,14 +276,12 @@
                     <td>{{employee.sReportingTo}}</td>
                     <!-- <td>{{employee.iStatusID}}</td> -->
                     <td style="text-align: center;">
-                      <button *ngIf="employee.iStatusID == 1" pButton type="button"
-                        class="ui-button-rounded ui-button-success" style="width: 100px; height: 20px;">
+                      <span *ngIf="employee.iStatusID == 1" class="badge badge--success badge--inline badge--pill" >
                         Active
-                      </button>
-                      <button *ngIf="employee.iStatusID == 2" pButton type="button"
-                        class="ui-button-rounded ui-button-warning" style="width: 100px; height: 20px;">
+                      </span>
+                      <span *ngIf="employee.iStatusID == 2" class="badge badge--warning badge--inline badge--pill" >
                         Inactive
-                      </button>
+                      </span>
                     </td>
                     <td>
                       <button pButton type="button" (click)="editEmployee(employee.iEmpID)" class="ui-button-success"
@@ -356,14 +343,12 @@
                     <td style="text-align: center;">{{ bank.sIFSC }}</td>
                     <td style="text-align: center;">{{ bank.sBankBranch }}</td>
                     <td style="text-align: center;">
-                      <button *ngIf="bank.iStatusID == 1" pButton type="button"
-                        class="ui-button-rounded ui-button-success" style="width: 100px; height: 20px;">
+                      <span *ngIf="bank.iStatusID == 1" class="badge badge--success badge--inline badge--pill">
                         Active
-                      </button>
-                      <button *ngIf="bank.iStatusID == 2" pButton type="button"
-                        class="ui-button-rounded ui-button-warning" style="width: 100px; height: 20px;">
+                      </span>
+                      <span *ngIf="bank.iStatusID == 2" class="badge badge--warning badge--inline badge--pill">
                         Inactive
-                      </button>
+                      </span>
                     </td>
                     <td style="text-align: center;">
                       <button pButton type="button" class="ui-button-success" icon="pi pi-pencil"
