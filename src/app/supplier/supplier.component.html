@@ -50,13 +50,16 @@
                                 <td class="ui-resizable-column">{{supplier.sFaxNo}}</td>
                                 <td class="ui-resizable-column">{{supplier.sPAN}}</td>
                                 <td class="ui-resizable-column">
-                                    <span *ngIf="supplier.iStatusID == 1" class="badge badge--success badge--inline badge--pill" >
+                                    <span *ngIf="supplier.iStatusID == 1"
+                                        class="badge badge--success badge--inline badge--pill">
                                         {{supplier.sStatusName}}
                                     </span>
-                                    <span *ngIf="supplier.iStatusID == 2" class="badge badge--warning badge--inline badge--pill" >
+                                    <span *ngIf="supplier.iStatusID == 2"
+                                        class="badge badge--warning badge--inline badge--pill">
                                         {{supplier.sStatusName}}
                                     </span>
-                                    <span *ngIf="supplier.iStatusID == 3" class="badge badge--danger badge--inline badge--pill">
+                                    <span *ngIf="supplier.iStatusID == 3"
+                                        class="badge badge--danger badge--inline badge--pill">
                                         {{supplier.sStatusName}}
                                     </span>
                                 </td>
@@ -65,6 +68,9 @@
                                         class="ui-button-success mr-2" icon="pi pi-pencil" title="Edit"></button>
                                     <button pButton type="button" (click)="deleteSupplier(supplier)"
                                         class="ui-button-danger mr-2" icon="pi pi-trash" title="Delete"></button>
+                                    <button pButton type="button" (click)="prdmapSupplier(supplier.iSupID)"
+                                        class="ui-button-success mr-2" icon="pi  pi-sitemap"
+                                        title="Product Map"></button>
                                     <button pButton type="button" class="ui-button-success"
                                         icon="pi pi-arrow-circle-right" title="Send for approval"></button>
                                 </td>
