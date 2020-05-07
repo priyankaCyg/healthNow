@@ -27,7 +27,7 @@ const routes: Routes = [{
   }
 },
 {
-  path: "product-mapping",
+  path: "product-mapping/:iSupID",
   component: ProductMappingComponent,
   data: {
     title: "Product Mapping"
