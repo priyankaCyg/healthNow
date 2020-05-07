@@ -50,24 +50,27 @@
                                 <td class="ui-resizable-column">{{supplier.sFaxNo}}</td>
                                 <td class="ui-resizable-column">{{supplier.sPAN}}</td>
                                 <td class="ui-resizable-column">
-                                    <button *ngIf="supplier.iStatusID == 1" pButton type="button"
-                                        class="ui-button-rounded ui-button-success" style="width: 100px; height: 25px;">
-                                        {{supplier.sStatusName}}
-                                    </button>
-                                    <button *ngIf="supplier.iStatusID == 2" pButton type="button"
-                                        class="ui-button-rounded ui-button-warning" style="width: 100px; height: 25px;">
-                                        {{supplier.sStatusName}}
-                                    </button>
-                                    <button *ngIf="supplier.iStatusID == 3" pButton type="button"
-                                        class="ui-button-rounded ui-button-danger" style="width: 100px; height: 25px;">
-                                        {{supplier.sStatusName}}
-                                    </button>
+                                    <span *ngIf="supplier.iStatusID == 1"
+                                        class="badge badge--success badge--inline badge--pill">
+                                        Active
+                                    </span>
+                                    <span *ngIf="supplier.iStatusID == 2"
+                                        class="badge badge--warning badge--inline badge--pill">
+                                        Inactive
+                                    </span>
+                                    <span *ngIf="supplier.iStatusID == 3"
+                                        class="badge badge--danger badge--inline badge--pill">
+                                        Deleted
+                                    </span>
                                 </td>
                                 <td class="ui-resizable-column">
                                     <button pButton type="button" (click)="editSupplier(supplier.iSupID)"
                                         class="ui-button-success mr-2" icon="pi pi-pencil" title="Edit"></button>
                                     <button pButton type="button" (click)="deleteSupplier(supplier)"
                                         class="ui-button-danger mr-2" icon="pi pi-trash" title="Delete"></button>
+                                    <button pButton type="button" (click)="prdmapSupplier(supplier.iSupID)"
+                                        class="ui-button-success mr-2" icon="pi  pi-sitemap"
+                                        title="Product Map"></button>
                                     <button pButton type="button" class="ui-button-success"
                                         icon="pi pi-arrow-circle-right" title="Send for approval"></button>
                                 </td>

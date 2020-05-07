@@ -85,5 +85,9 @@ export class SupplierComponent implements OnInit {
     this.router.navigate(['/app/supplier/edit-supplier', iSupID]);
 
   }
+  prdmapSupplier(iSupID: Number) {
+    this.router.navigate(['/app/supplier/product-mapping', iSupID]);
+
+  }
 
 }
