@@ -36,6 +36,9 @@ import {LightboxModule} from 'primeng/lightbox';
 import {CheckboxModule} from 'primeng/checkbox';
 
 
+import {APIService} from '../services/apieservice';
+
+
 @NgModule({
   declarations: [ProductComponent, NewProductComponent, ProductImageComponent, ProductVariantComponent, ProductInfoComponent, ProductDescriptionComponent, ProductQueriesComponent, NewProductComponent, PrcategoriesComponent],
   imports: [
@@ -61,7 +64,7 @@ import {CheckboxModule} from 'primeng/checkbox';
     CheckboxModule
 
   ],
-  providers:[DialogService],
+  providers:[DialogService,APIService],
   entryComponents:[ProductComponent, NewProductComponent, ProductImageComponent,  ProductVariantComponent, ProductInfoComponent, ProductDescriptionComponent, ProductQueriesComponent, PrcategoriesComponent]
 })
 export class ProductModule { }

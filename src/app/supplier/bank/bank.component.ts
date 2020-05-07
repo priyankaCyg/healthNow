@@ -35,7 +35,7 @@ export class BankComponent implements OnInit {
     this.bankForm = this.createControl(this.bankData);
 
     this.bankId = this.config.data.iBankID
-    alert(this.bankId)
+    // alert(this.bankId)
   if(this.bankId!=null)
   {
     this.isEdit = true
