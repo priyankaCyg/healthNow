@@ -1,3 +1,5 @@
+<p-confirmDialog header="Confirmation" icon="pi pi-info" [style]="{width: '425px'}" rejectButtonStyleClass="ui-button-secondary"></p-confirmDialog>
+
 <div class="p-grid">
     <div class="p-col-12">
         <div class="card card-w-title">
@@ -20,11 +22,11 @@
                         </ng-template>
                         <ng-template pTemplate="body" let-supplierCategory>
                             <tr>
-                                    <td>{{supplierCategory.supCategoryName}}</td>
-                                    <td>{{supplierCategory.status}}</td>
+                                    <td>{{supplierCategory.sSupCName}}</td>
+                                    <td>{{supplierCategory.sStatusName}}</td>
                                     <td>
-                                        <button pButton type="button" class="ui-button-success" icon="pi pi-pencil" style="margin-right: .5em"></button>
-                                        <button pButton type="button" class="ui-button-danger" icon="pi pi-trash"></button>
+                                        <button pButton type="button"  (click)="editSupplierCategory(supplierCategory.iSupCatID)"  class="ui-button-success" icon="pi pi-pencil" style="margin-right: .5em"></button>
+                                        <button pButton type="button"  (click)="deleteSupplierCategory(supplierCategory.iSupCatID)"  class="ui-button-danger" icon="pi pi-trash"></button>
                                     </td>
                             </tr>
                         </ng-template>

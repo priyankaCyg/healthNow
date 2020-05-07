@@ -139,6 +139,7 @@
                 </p-tabPanel>
                 <!-- Supplier tab End here -->
 
+                <!-- Address tab Starts here -->
                 <p-tabPanel header="Address">
                     <div class="p-grid ui-fluid p-justify-end">
                         <div class="p-col-1 text-center mt-1">
@@ -146,16 +147,18 @@
                                 label="Add New"></button>
 
                         </div>
-                        <div class="p-col-12">
-                            <p-table [value]="address">
-                                <ng-template pTemplate="caption">
-
-                                    <div class="ui-table-globalfilter-container text-left">
-                                        <input type="text" pInputText size="50" placeholder="Search"
-                                            (input)="dt.filterGlobal($event.target.value, 'contains')"
-                                            style="width:250px;">
-                                    </div>
-                                </ng-template>
+                        <div class="p-col-12"> 
+                            <p-table #AddressSerach [value]="supplierAdressData" [paginator]="true" [rows]="10"
+                            [showCurrentPageReport]="true" [rowsPerPageOptions]="[10, 25, 50]" [filterDelay]="0"
+                            [globalFilterFields]="[
+                              'sAddType','sAdd1','sAdd2','sStateName','sCityName','sLandmark','iStatusID'
+                            ]">
+                            <ng-template pTemplate="caption">
+                                <div class="ui-table-globalfilter-container text-left">
+                                <input type="text" pInputText size="50" placeholder="Search"
+                                  (input)="AddressSerach.filterGlobal($event.target.value, 'contains')" style="width:250px;">
+                              </div>
+                            </ng-template>
                                 <ng-template pTemplate="header">
                                     <tr>
                                         <th>Address Type</th>
@@ -165,22 +168,30 @@
                                         <th>City</th>
                                         <th>Landmark</th>
                                         <th>Status</th>
-                                        <th colspan="2">Action</th>
+                                        <th>Action</th>
                                     </tr>
                                 </ng-template>
                                 <ng-template pTemplate="body" let-address>
                                     <tr>
-                                        <td>{{address.addresstype}}</td>
-                                        <td>{{address.address1}}</td>
-                                        <td>{{address.address2}}</td>
-                                        <td>{{address.state}}</td>
-                                        <td>{{address.city}}</td>
-                                        <td>{{address.landmark}}</td>
-                                        <td>{{address.status}}</td>
-                                        <td><button pButton type="button" class="ui-button-success" icon="pi pi-pencil"
-                                                style="margin-right: .5em"></button></td>
-                                        <td><button pButton type="button" class="ui-button-danger"
-                                                icon="pi pi-trash"></button></td>
+                                        <td>{{address.sAddType}}</td>
+                                        <td>{{address.sAdd1}}</td>
+                                        <td>{{address.sAdd2}}</td>
+                                        <td>{{address.sStateName}}</td>
+                                        <td>{{address.sCityName}}</td>
+                                        <td>{{address.sLandmark}}</td>
+                                        <td style="text-align: center;">
+                                            <span *ngIf="address.iStatusID == 1" class="badge badge--success badge--inline badge--pill">
+                                              Active
+                                            </span>
+                                            <span *ngIf="address.iStatusID == 2" class="badge badge--warning badge--inline badge--pill">
+                                              Inactive
+                                            </span>
+                                            <span *ngIf="address.iStatusID == 3" class="badge badge--danger badge--inline badge--pill">
+                                              Deleted
+                                            </span>
+                                          </td>
+                                        <td><button pButton type="button" class="ui-button-success" (click)="editSupplierAddress(address.iSupAddID)" icon="pi pi-pencil" style="margin-right: .5em"></button>
+                                         <button pButton type="button" class="ui-button-danger" (click)="deleteSupplierAddress(address.iSupAddID)" icon="pi pi-trash"></button></td>
                                     </tr>
                                 </ng-template>
                             </p-table>
@@ -192,18 +203,15 @@
                 <p-tabPanel header="Contact">
                     <div class="p-grid ui-fluid p-justify-end">
                         <div class="p-col-1 text-center mt-1">
-                            <button (click)="openDialogForaddContact()" pButton icon="pi pi-fw pi-plus"
-                                label="Add / Edit"></button>
-
+                            <button (click)="openDialogForaddContact()" pButton icon="pi pi-fw pi-plus" label="Add"></button>
+                            
                         </div>
-                        <div class="p-col-12">
+                        <div class="p-col-12"> 
                             <p-table [value]="contact">
                                 <ng-template pTemplate="caption">
-
+                               
                                     <div class="ui-table-globalfilter-container text-left">
-                                        <input type="text" pInputText size="50" placeholder="Search"
-                                            (input)="dt.filterGlobal($event.target.value, 'contains')"
-                                            style="width:250px;">
+                                        <input type="text" pInputText size="50" placeholder="Search" (input)="dt.filterGlobal($event.target.value, 'contains')" style="width:250px;">
                                     </div>
                                 </ng-template>
                                 <ng-template pTemplate="header">
@@ -217,26 +225,24 @@
                                         <th>Direct No.</th>
                                         <th>Fax No.</th>
                                         <th>Status</th>
-                                        <th>Action</th>
-
+                                        <th >Action</th>
+                                        
                                     </tr>
                                 </ng-template>
                                 <ng-template pTemplate="body" let-contact>
                                     <tr>
-                                        <td>{{contact.fullName}}</td>
-                                        <td>{{contact.designation}}</td>
-                                        <td>{{contact.emailId}}</td>
-                                        <td>{{contact.supplierAdd}}</td>
-                                        <td>{{contact.mobileNo}}</td>
-                                        <td>{{contact.contactNo}}</td>
-                                        <td>{{contact.directNo}}</td>
-                                        <td>{{contact.fax}}</td>
-                                        <td>{{contact.status}}</td>
+                                        <td>{{contact.sFullName}}</td>
+                                        <td>{{contact.sDesignation}}</td>
+                                        <td>{{contact.sEmailID}}</td>
+                                        <td>{{contact.sAddress}}</td>
+                                        <td>{{contact.sMobileNo}}</td>
+                                        <td>{{contact.sContactNo}}</td>
+                                        <td>{{contact.sDirectNo}}</td>
+                                        <td>{{contact.sFaxNo}}</td>
+                                        <td>{{contact.sStatusName}}</td>
                                         <td>
-                                            <button pButton type="button" class="ui-button-success" icon="pi pi-pencil"
-                                                style="margin-right: .5em"></button>
-                                            <button pButton type="button" class="ui-button-danger"
-                                                icon="pi pi-trash"></button>
+                                            <button pButton type="button" (click)="editContact(contact.iSupContactID)" class="ui-button-success" icon="pi pi-pencil" style="margin-right: .5em"></button>
+                                            <button pButton type="button" (click)="deleteContact(contact.iSupContactID)" class="ui-button-danger" icon="pi pi-trash"></button>
                                         </td>
                                     </tr>
                                 </ng-template>
@@ -249,10 +255,9 @@
                 <p-tabPanel header="Bank">
                     <div class="p-grid ui-fluid p-justify-end">
                         <div class="p-col-1 text-center mt-1">
-                            <button (click)="openDialogForBank()" pButton icon="pi pi-fw pi-plus"
-                                label="Add New"></button>
+                            <button (click)="openDialogForBank()" pButton icon="pi pi-fw pi-plus" label="Add New"></button>
                         </div>
-                        <div class="p-col-12">
+                        <div class="p-col-12"> 
                             <p-table [value]="bank">
                                 <ng-template pTemplate="header">
                                     <tr>
@@ -267,18 +272,16 @@
                                 </ng-template>
                                 <ng-template pTemplate="body" let-bank>
                                     <tr>
-                                        <td>{{bank.bankName}}</td>
-                                        <td>{{bank.accounttype}}</td>
-                                        <td>{{bank.accountNo}}</td>
-                                        <td>{{bank.IFSC}}</td>
-                                        <td>{{bank.bankBranch}}</td>
-                                        <td>{{bank.status}}</td>
-                                        <td>
-                                            <button pButton type="button" class="ui-button-success" icon="pi pi-pencil"
-                                                style="margin-right: .5em"></button>
-                                            <button pButton type="button" class="ui-button-danger"
-                                                icon="pi pi-trash"></button>
-                                        </td>
+                                            <td>{{bank.sBankName}}</td>
+                                            <td>{{bank.sShortCode}}</td>
+                                            <td>{{bank.sAccountNo}}</td>
+                                            <td>{{bank.sIFSC}}</td>
+                                            <td>{{bank.sBankBranch}}</td>
+                                            <td>{{bank.sStatusName}}</td>
+                                            <td>
+                                                <button pButton type="button" (click)="editBank(bank.iBankID)" class="ui-button-success" icon="pi pi-pencil" style="margin-right: .5em"></button>
+                                                <button pButton type="button" (click)="deleteBank(bank.iBankID)" class="ui-button-danger" icon="pi pi-trash"></button>
+                                            </td>
                                     </tr>
                                 </ng-template>
                             </p-table>

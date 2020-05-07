@@ -14,7 +14,7 @@
                 </div>
     
                 <div class="p-col-12">
-                    <label for="iStatuiParentIDsID">Parent Category</label>
+                    <label for="iParentID">Parent Category</label>
                     <p-dropdown id="iParentID" formControlName="iParentID" [options]="parentCatData" optionLabel="sPCName" [(ngModel)]="selectedparentCategory"></p-dropdown>
                     <div>
                         <p-message severity="error" text="This Field is required" *ngIf="ProductCategoryForm.controls['iParentID'].touched  && (selectedparentCategory.iPCID =='' || ProductCategoryForm.controls['iParentID'].hasError('required'))" ></p-message>

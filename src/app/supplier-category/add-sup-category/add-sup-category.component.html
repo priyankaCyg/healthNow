@@ -1,17 +1,32 @@
 
     <div class="p-grid ui-fluid">
+    <form [formGroup]="supplierCategoryForm">
+
         <div class="p-col-12"> 
     
             <div class="p-grid form-group">
+
+
+
+                <div class="p-col-12">
+                    <label for="iParentId">Parent</label>
+                    <p-dropdown id="iStatusID" optionLabel="sSupCName" formControlName="iParentId" [options]="parentData" [(ngModel)]="selectedParent"></p-dropdown>
+                </div>
                
                 <div class="p-col-12">
-                    <label for="designationname">Supplier Category Name</label>
-                    <input id="designationname" type="text" pInputText>
+                    <label for="sSupCName">Supplier Category Name</label>
+                    <input id="sSupCName" type="text"  formControlName="sSupCName" pInputText>
+                    <p-message severity="error"  [text]="supplierCategoryForm.controls['sSupCName'].errors['required'] ? 'Brand Name is required' : supplierCategoryForm.controls['sSupCName'].errors['pattern'] ? 'Should be alpha numeric' : ''" 
+                    *ngIf="!supplierCategoryForm.controls['sSupCName'].valid&&supplierCategoryForm.controls['sSupCName'].dirty"></p-message>
                 </div>
 
                 <div class="p-col-12">
-                    <label for="status">Status</label>
-                    <p-dropdown id="status" [options]="status" [(ngModel)]="selectedstatus"></p-dropdown>
+                    <!-- <label for="status">Status</label> -->
+                    <!-- <p-dropdown id="status" [options]="status" [(ngModel)]="selectedstatus"></p-dropdown> -->
+                    <label for="iStatusID">Status</label>
+                    <p-dropdown id="iStatusID" optionLabel="sKVValue" formControlName="iStatusID" [options]="statusData" [(ngModel)]="selectedstatus"></p-dropdown>
+                    <p-message severity="error" text="Status is required" *ngIf="supplierCategoryForm.controls['iStatusID'].touched && (selectedstatus.iKVID=='' || supplierCategoryForm.controls['iStatusID'].hasError('required'))"></p-message>
+                
                 </div>
     
             </div>
@@ -20,13 +35,16 @@
             <div class="p-grid form-group ui-fluid">
                 <div class="p-md-6 p-lg-6"></div>
                 <div class="p-col-12 p-md-3 p-lg-3">
-                    <button pButton type="button" label="Cancel" style="margin-bottom:10px" class="ui-button-light"></button>
+                    <button pButton type="button" label="Cancel" (click)="closeDialog()" style="margin-bottom:10px" class="ui-button-light"></button>
                 </div>
-                 <div class="p-col-12 p-md-3 p-lg-3">
-                    <button pButton type="button" label="Save" style="margin-bottom:10px" class="ui-button"></button>
+                 <div class="p-col-12 p-md-3 p-lg-3" *ngIf="!isEdit">
+                    <button pButton type="button" label="Save" (click)="addSupplierCategory()" [disabled]="!(!supplierCategoryForm.invalid && !dropDownValidityCheck())" style="margin-bottom:10px" class="ui-button"></button>
+                </div>
+                <div class="p-col-12 p-md-3 p-lg-3" *ngIf="isEdit">
+                    <button pButton type="button" label="Update" (click)="updateSupplierCategory()" [disabled]="!(!supplierCategoryForm.invalid && !dropDownValidityCheck())" style="margin-bottom:10px" class="ui-button"></button>
                 </div>
             </div>
 
         </div>
-       
+       </form>
     </div>
