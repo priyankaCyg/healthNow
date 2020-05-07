@@ -211,13 +211,23 @@
                             
                         </div>
                         <div class="p-col-12"> 
-                            <p-table [value]="contact">
+                            <!-- <p-table [value]="contact">
                                 <ng-template pTemplate="caption">
                                
                                     <div class="ui-table-globalfilter-container text-left">
                                         <input type="text" pInputText size="50" placeholder="Search" (input)="dt.filterGlobal($event.target.value, 'contains')" style="width:250px;">
                                     </div>
-                                </ng-template>
+                                </ng-template> -->
+                                <p-table #dt [value]="contact" [resizableColumns]="true" [rowHover]="true" [paginator]="true"
+                                    [rows]="10" [showCurrentPageReport]="true" [rowsPerPageOptions]="[10, 25, 50]" [filterDelay]="0"
+                                    [globalFilterFields]="['sFullName','sDesignation','sEmailID','sMobileNo','sContactNo','sDirectNo','sFaxNo','sStatusName']">
+                                    <ng-template pTemplate="caption">
+            
+                                        <div class="ui-table-globalfilter-container text-left">
+                                            <input type="text" pInputText size="50" placeholder="Search"
+                                                (input)="dt.filterGlobal($event.target.value, 'contains')" style="width:250px;">
+                                        </div>
+                                    </ng-template>
                                 <ng-template pTemplate="header">
                                     <tr>
                                         <th>Full Name</th>
@@ -262,8 +272,19 @@
                             <button (click)="openDialogForBank()" pButton icon="pi pi-fw pi-plus" label="Add New"></button>
                         </div>
                         <div class="p-col-12"> 
-                            <p-table [value]="bank">
-                                <ng-template pTemplate="header">
+                            <!-- <p-table [value]="bank">
+                                <ng-template pTemplate="header"> -->
+                                    <p-table #dt [value]="bank" [resizableColumns]="true" [rowHover]="true" [paginator]="true"
+                                    [rows]="10" [showCurrentPageReport]="true" [rowsPerPageOptions]="[10, 25, 50]" [filterDelay]="0"
+                                    [globalFilterFields]="['sBankName','sShortCode','sAccountNo','sIFSC','sBankBranch','sStatusName']">
+                                    <ng-template pTemplate="caption">
+            
+                                        <div class="ui-table-globalfilter-container text-left">
+                                            <input type="text" pInputText size="50" placeholder="Search"
+                                                (input)="dt.filterGlobal($event.target.value, 'contains')" style="width:250px;">
+                                        </div>
+                                    </ng-template>
+                                    <ng-template pTemplate="header">
                                     <tr>
                                         <th>Bank Name</th>
                                         <th>Short Code/Account Type</th>

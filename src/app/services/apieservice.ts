@@ -1,5 +1,6 @@
 import {Injectable} from '@angular/core';
 import {HttpClient,HttpHeaders } from '@angular/common/http';
+import { Observable } from "rxjs";
 
 @Injectable()
 export class APIService {
@@ -63,4 +64,28 @@ export class APIService {
                     .then(res => res.data as any[])
                     .then(data => data);
     }
+
+
+    postFile(filesToUpload : any[]): Observable<any> {
+    
+        const formData: FormData = new FormData();
+    
+        // formData.append('json', "JSON.stringify(catalogacion)");
+    
+        for (let file of filesToUpload) {
+            alert(JSON.stringify(file.name))
+          formData.append('uploadFile', file);
+        }
+        formData.append('iRequestID',"1111");
+        formData.append('iProcessID',"2");
+        formData.append('iProcessTranID',"2");
+        formData.append('iDocTypeID',"1");
+
+    
+        console.log(formData);
+    
+        let headers = new HttpHeaders();
+    
+        return this.http.post("http://13.126.132.149/healthnow/file", formData, { headers: headers });
+      }
 }
