@@ -1,0 +1,70 @@
+<div class="p-grid ui-fluid p-justify-end">
+    <div class="p-col-12"> 
+        <div class="p-grid form-group">
+            
+            <div class="p-col-12 p-md-6 p-lg-3 mb-2">
+                <label for="fullName">Full Name</label>
+                <input id="fullName" type="text" pInputText>
+            </div>
+
+            <div class="p-col-12 p-md-6 p-lg-3 mb-2">
+                <label for="designation">Designation</label>
+                <input id="designation" type="text" pInputText>
+            </div>
+
+            <div class="p-col-12 p-md-6 p-lg-3 mb-2">
+                <label for="emailId">Email ID</label>
+                <input id="emailId" type="email" pInputText>
+            </div>
+        </div>
+
+        <div class="separator separator--border-solid separator--space-sm separator--portlet-fit"></div>
+        
+        <div class="p-grid form-group">
+            <div class="p-col-12 p-md-12 p-lg-6 mb-2">
+                <label for="partnerAdd">Partner Address</label>
+                <textarea pInputTextarea [(ngModel)]="partnerAdd"></textarea>
+            </div>
+            
+        </div>
+        
+        <div class="separator separator--border-solid separator--space-sm separator--portlet-fit"></div>
+        <div class="p-grid form-group">
+            <div class="p-col-12 p-md-6 p-lg-3 mb-2">
+                <label for="mobileNo">Mobile No.</label>
+                <input id="mobileNo" type="text" pInputText>
+            </div>
+            <div class="p-col-12 p-md-6 p-lg-3 mb-2">
+                <label for="contatNo">Contact No.</label>
+                <input id="contatNo" type="text" pInputText>
+            </div>
+            <div class="p-col-12 p-md-6 p-lg-3 mb-2">
+                <label for="directNo">Direct No.</label>
+                <input id="directNo" type="text" pInputText>
+            </div>
+            <div class="p-col-12 p-md-6 p-lg-3 mb-2">
+                <label for="fax">Fax No.</label>
+                <input id="Fax" type="text" pInputText>
+            </div>
+        
+        </div>
+        <div class="separator separator--border-solid separator--space-sm separator--portlet-fit"></div>
+        <div class="p-grid form-group">
+            <div class="p-col-12 p-md-6 p-lg-3 mb-2">
+                <label for="status">Status</label>
+                <p-dropdown [options]="status" [(ngModel)]="selectedstatus"></p-dropdown>
+            </div>
+        
+        </div>
+
+        <div class="separator separator--border-solid separator--space-sm separator--portlet-fit"></div>
+        <div class="p-grid form-group ui-fluid p-justify-end">
+            <div class="p-col-12 p-md-12 p-lg-12 text-right">
+                <button pButton type="button" label="Cancel" class="ui-button-light atbt mb-2 mr-2"></button>
+            
+                <button pButton type="button" label="Save" class="ui-button atbt mb-2"></button>
+            </div>
+        </div>
+
+    </div>
+</div>

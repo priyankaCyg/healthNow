@@ -13,7 +13,7 @@ const routes: Routes = [{
   }
 },
 {
-  path: "new-supplier",
+  path: "add-new-supplier",
   component: AddNewSupplierComponent,
   data: {
     title: "New Supplier"

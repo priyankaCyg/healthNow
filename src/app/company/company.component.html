@@ -87,7 +87,7 @@
                     <th>Tel No.2</th>
                     <th>FAX</th>
                     <th>Status</th>
-                    <th colspan="2">Action</th>
+                    <th>Action</th>
                   </tr>
                 </ng-template>
                 <ng-template pTemplate="body" let-address>
@@ -101,10 +101,20 @@
                     <td>{{address.sTelNo1}}</td>
                     <td>{{address.sTelNo2}}</td>
                     <td>{{address.sFaxNo}}</td>
-                    <td>{{address.sStatusName}}</td>
+                    <td style="text-align: center;">
+                      <span *ngIf="address.iStatusID == 1" class="badge badge--success badge--inline badge--pill">
+                        Active
+                      </span>
+                      <span *ngIf="address.iStatusID == 2" class="badge badge--warning badge--inline badge--pill">
+                        Inactive
+                      </span>
+                      <span *ngIf="address.iStatusID == 3" class="badge badge--danger badge--inline badge--pill">
+                        Deleted
+                      </span>
+                    </td>
                     <td><button pButton type="button" class="ui-button-success" icon="pi pi-pencil"
-                        style="margin-right: .5em" (click)="openDialogForeditAddress(address)"></button></td>
-                    <td><button pButton type="button" class="ui-button-danger" icon="pi pi-trash"
+                        style="margin-right: .5em" (click)="openDialogForeditAddress(address)"></button>
+                    <button pButton type="button" class="ui-button-danger" icon="pi pi-trash"
                         (click)="onDeleteAddress(address.iAddID)"></button></td>
                   </tr>
                 </ng-template>

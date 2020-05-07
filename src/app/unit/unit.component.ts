@@ -75,7 +75,7 @@ editUnit(unitId) {
     data: {
       unitId:unitId
     },
-    header: 'Edit Brand',
+    header: 'Edit Unit',
     width: '28%'
   });
 
@@ -95,16 +95,16 @@ editUnit(unitId) {
       header: 'Confirmation',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
-        var dataToSendDelete = {
-          "iRequestID":2143,
-          "iUnitID":unitId
-        }
+        // var dataToSendDelete = {
+        //   "iRequestID":2143,
+        //   "iBrandID":unitId
+        // }
 
-        this._apiService.getDetails(dataToSendDelete).then(response => {
-          console.log("Response for Brand Delete ",response)
-          this.toastService.addSingle("info", "Successfully Deleted", "Successfully Deleted");
-          this.showUnit();
-        });
+        // this._apiService.getDetails(dataToSendDelete).then(response => {
+        //   console.log("Response for Brand Delete ",response)
+        //   this.toastService.addSingle("info", "Successfully Deleted", "Successfully Deleted");
+        //   this.showUnit();
+        // });
       },
       reject: () => {
   this.toastService.addSingle("info", "Rejected", "Rejected");

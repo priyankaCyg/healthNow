@@ -10,6 +10,8 @@ import { AddressComponent } from '../address/address.component';
 import { ContactComponent } from '../contact/contact.component';
 import { BankComponent } from '../bank/bank.component';
 import { GstComponent } from '../gst/gst.component';
+import { SupplierAddress } from 'src/app/models/supplier-address.model';
+import { ConfirmationService } from 'primeng/api';
 import { ApiService } from 'src/app/services/api.service';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { seldepData } from 'src/app/model/selDepStatus';
@@ -18,8 +20,8 @@ import { supplierList } from 'src/app/model/supplierlist';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ThrowStmt } from '@angular/compiler';
 import { gstData } from 'src/app/model/gst';
-import { ConfirmationService } from 'primeng/api';
 import { SuppMaster } from 'src/app/model/supplier.model';
+import {APIService} from '../../services/apieservice';
 
 
 @Component({
@@ -38,19 +40,25 @@ export class AddNewSupplierComponent implements OnInit {
 
   items: MenuItem[];
 
-  address: any[];
+  supplierAdressData : SupplierAddress;
 
-  contact: any[];
 
   bank: any[];
+  contact : any[]
 
   gst: gstData[];
 
+  attachment: any[];
+
   supId;
 
-  constructor(private breadcrumbService: BreadcrumbService, private dialogService: DialogService,
-    private apiService: ApiService, private toastService: ToastService,
-    private fb: FormBuilder, private route: ActivatedRoute, private confirmationService: ConfirmationService) {
+  constructor(private breadcrumbService: BreadcrumbService,
+     private dialogService: DialogService,
+    private apiService: ApiService,
+     private toastService: ToastService,
+    private fb: FormBuilder,
+     private route: ActivatedRoute,
+      private confirmationService: ConfirmationService,private _apiService:APIService) {
     this.breadcrumbService.setItems([
       { label: 'Dashboard' },
       { label: 'Supplier', routerLink: ['/app/supplier'] }
@@ -59,50 +67,133 @@ export class AddNewSupplierComponent implements OnInit {
 
   ngOnInit(): void {
 
-    //new code added 
-    this.defaultDropDwnValue()
 
-    this.supData = new SuppMaster();
-    this.addSupplierForm = this.createControl(this.supData);
+this.gstList();
+ //new code added 
+ this.defaultDropDwnValue()
 
-    this.supId = this.route.snapshot.params['iSupID'];
-    if (this.supId != null) {
-      this.isEdit = true
-      let sup_by_id = +this.route.snapshot.params['iSupID'];
+ this.supData = new SuppMaster();
+ this.addSupplierForm = this.createControl(this.supData);
 
-      var dataToSendEdit = {
-        "iRequestID": 2175,
-        "iSupID": sup_by_id
+ this.supId = this.route.snapshot.params['iSupID'];
+ if (this.supId != null) {
+   this.isEdit = true
+   let sup_by_id = +this.route.snapshot.params['iSupID'];
+
+   var dataToSendEdit = {
+     "iRequestID": 2175,
+     "iSupID": sup_by_id
+   }
+
+   this.apiService.getDropDownData(dataToSendEdit).then(response => {
+
+     console.log("Response of Edit Brand ", response)
+
+     this.supData = new SuppMaster(response[0]);
+     this.addSupplierForm = this.createControl(this.supData);
+
+     Promise.all([this.getStatusDrpDwn()]).then(values => {
+       console.log(values);
+       this.setDropDownVal()
+     });
+     this.getSupplierAddressList();
+   });
+
+ }
+ else {
+   this.isEdit = false
+
+   Promise.all([this.getStatusDrpDwn()]).then(values => {
+     console.log(values);
+   });
+ }
+
+ this.gstList();
+ //end 
+
+
+ this.showContact();
+ this.showBank();
+
+  }
+//Address list starts
+  getSupplierAddressList(){
+    let sup_by_id = +this.route.snapshot.params['iSupID'];
+    const supplierAddressAPI = {
+      "iRequestID": 2184,
+      "iSupID":sup_by_id
+    }
+    this.apiService.callPostApi(supplierAddressAPI).subscribe(
+      data => { this.supplierAdressData = data},
+      error => {console.log(error)}
+    )
+  }
+  // address list ends
+
+  // Daialogue to add address
+    openDialogForaddAddress() {
+      const ref = this.dialogService.open( AddressComponent , {
+        data: {
+        },
+        header: 'Add New Address',
+        width: '80%'
+      });
+      localStorage.setItem('iSupID', this.route.snapshot.params['iSupID']);
+      ref.onClose.subscribe((success: boolean) => {
+        if (success) {
+          this.getSupplierAddressList();
+           this.toastService.addSingle("success", "Record Added successfully", "");
+        }
+      });
+
+    }
+
+    // Daialogue to edit address
+    editSupplierAddress(supplierID) {
+      const ref = this.dialogService.open(AddressComponent, {
+        data: {
+          "iSupAddID": supplierID
+        },
+        header: 'Edit Address',
+        width: '80%'
+      });
+      localStorage.setItem('iSupID', this.route.snapshot.params['iSupID']);
+      ref.onClose.subscribe((success: any) => {
+        // alert(success)
+        if(success)
+        {
+          this.getSupplierAddressList();
+          this.toastService.addSingle("success", "Updated Successfully", "");
+        }
+      });
+    }
+
+     // Open Dialog To Delete address
+     deleteSupplierAddress(supplierID) {
+    console.log(supplierID);
+    this.confirmationService.confirm({
+      message: 'Are you sure you want to Delete this Record?',
+      header: 'Confirmation',
+      icon: 'pi pi-exclamation-triangle',
+      accept: () => {
+        var deleteAddressAPI = {
+          "iRequestID": 2183,
+          "iSupAddID":supplierID
+        }
+
+        this.apiService.callPostApi(deleteAddressAPI).subscribe(
+          data => {
+            this.toastService.addSingle("info", "Successfully Deleted", "Successfully Deleted");
+            this.getSupplierAddressList();
+          },
+          error => { console.log(error)}
+        );
       }
-
-      this.apiService.getDropDownData(dataToSendEdit).then(response => {
-
-        console.log("Response of Edit Brand ", response)
-
-        this.supData = new SuppMaster(response[0]);
-        this.addSupplierForm = this.createControl(this.supData);
-
-        Promise.all([this.getStatusDrpDwn()]).then(values => {
-          console.log(values);
-          this.setDropDownVal()
-        });
-
-      });
-
-    }
-    else {
-      this.isEdit = false
-
-      Promise.all([this.getStatusDrpDwn()]).then(values => {
-        console.log(values);
-      });
-    }
-
-    this.gstList();
-    //end 
-
-
-  }//end ng oninit
+    });
+  }
+    
+    
+  
 
   //new coded added
 
@@ -266,52 +357,9 @@ export class AddNewSupplierComponent implements OnInit {
 
   }
 
-  openDialogForaddAddress() {
-    const ref = this.dialogService.open(AddressComponent, {
-      data: {
-      },
-      header: 'Add New Address',
-      width: '80%'
-    });
-
-    ref.onClose.subscribe((success: boolean) => {
-      if (success) {
-        // this.toastService.addSingle("success", "Mail send successfully", "");
-      }
-    });
-  }
 
 
-  openDialogForaddContact() {
-    const ref = this.dialogService.open(ContactComponent, {
-      data: {
-      },
-      header: 'Add New Contact',
-      width: '80%'
-    });
-
-    ref.onClose.subscribe((success: boolean) => {
-      if (success) {
-        // this.toastService.addSingle("success", "Mail send successfully", "");
-      }
-    });
-  }
-
-  openDialogForBank() {
-    const ref = this.dialogService.open(BankComponent, {
-      data: {
-      },
-      header: 'Add New Bank',
-      width: '50%'
-    });
-
-    ref.onClose.subscribe((success: boolean) => {
-      if (success) {
-        // this.toastService.addSingle("success", "Mail send successfully", "");
-      }
-    });
-  }
-
+ 
   openDialogForGST() {
     const ref = this.dialogService.open(GstComponent, {
       data: {}
@@ -374,6 +422,153 @@ export class AddNewSupplierComponent implements OnInit {
   }
 
 
+  showContact()
+  {
+    var dataToSend ={
+      "iRequestID": 2194
+  }
+    this._apiService.getDetails(dataToSend).then(response => {
+      console.log("Response for Contact ",response)
+      this.contact = response
+    });
+  }
+
+
+  editContact(iSupContactID) {
+    const ref = this.dialogService.open( ContactComponent , {
+      data: {
+        iSupContactID:iSupContactID
+      },
+      header: 'Edit Contact',
+      width: '70%'
+    });
+  
+    ref.onClose.subscribe((success: boolean) => {
+      if (success) {
+        this.toastService.addSingle("success", "Updated successfully", "");
+      this.showContact();
+  
+      }
+    });
+    }
+  
+    deleteContact(iSupContactID)
+    {
+      // alert("hi")
+      // return false;
+      this.confirmationService.confirm({
+        message: 'Are you sure that you want to proceed?',
+        header: 'Confirmation',
+        icon: 'pi pi-exclamation-triangle',
+        accept: () => {
+          var dataToSendDelete = {
+            "iRequestID":2193,
+            "iSupContactID":iSupContactID
+          }
+  
+          this._apiService.getDetails(dataToSendDelete).then(response => {
+            console.log("Response for Brand Delete ",response)
+            this.toastService.addSingle("info", "Successfully Deleted", "Successfully Deleted");
+            this.showContact();
+          });
+        },
+        reject: () => {
+    this.toastService.addSingle("info", "Rejected", "Rejected");
+  
+        }
+    });
+    }
+
+
+    showBank()
+  {
+    var dataToSend ={
+      "iRequestID": 2214,
+      "iSupID" :1
+  }
+    this._apiService.getDetails(dataToSend).then(response => {
+      console.log("Response for Bank ",response)
+      this.bank = response
+    });
+  }
+
+
+  editBank(iBankID) {
+    const ref = this.dialogService.open( BankComponent , {
+      data: {
+        iBankID:iBankID
+      },
+      header: 'Edit Contact',
+      width: '50%'
+    });
+  
+    ref.onClose.subscribe((success: boolean) => {
+      if (success) {
+        this.toastService.addSingle("success", "Updated successfully", "");
+        this.showBank();
+  
+      }
+    });
+    }
+  
+    deleteBank(iBankID)
+    {
+      this.confirmationService.confirm({
+        message: 'Are you sure that you want to proceed?',
+        header: 'Confirmation',
+        icon: 'pi pi-exclamation-triangle',
+        accept: () => {
+          var dataToSendDelete = {
+            "iRequestID": 2213,
+    "iSupID" :1,
+    "iBankID":iBankID
+          }
+  
+          this._apiService.getDetails(dataToSendDelete).then(response => {
+            console.log("Response for Brand Delete ",response)
+            this.toastService.addSingle("info", "Successfully Deleted", "Successfully Deleted");
+            this.showBank();
+          });
+        },
+        reject: () => {
+    this.toastService.addSingle("info", "Rejected", "Rejected");
+  
+        }
+    });
+    }
+
+
+    openDialogForaddContact() {
+      const ref = this.dialogService.open( ContactComponent , {
+        data: {
+        },
+        header: 'Add New Contact',
+        width: '70%'
+      });
+  
+      ref.onClose.subscribe((success: boolean) => {
+        if (success) {
+          this.toastService.addSingle("success", "Record added successfully", "");
+          this.showContact();
+
+        }
+      });
+    }
+    
+    openDialogForBank() {
+      const ref = this.dialogService.open( BankComponent , {
+        data: {
+        },
+        header: 'Add New Bank',
+        width: '50%'
+      });
+  
+      ref.onClose.subscribe((success: boolean) => {
+        if (success) {
+          this.toastService.addSingle("success", "RecordAdded Successfully", "");
+          this.showBank();
+        }
+      });
+    }
+
 }
-
-

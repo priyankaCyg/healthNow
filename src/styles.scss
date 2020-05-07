@@ -5,7 +5,13 @@
 .ui-fluid .ui-button {
   width: auto !important;
 }
+.atbt {
+  min-width: 130px !important;
+}
 
+body .ui-table .ui-table-thead > tr > th, body .ui-table .ui-table-tbody > tr > td {
+  text-align: center !important;
+}
 body .ui-button.ui-button-text-only .ui-button-text {
 
     padding: 6px 12px;

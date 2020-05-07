@@ -35,7 +35,7 @@
                                 <th>Fax</th>
                                 <th>Pan</th>
                                 <th>Status</th>
-                                <th>Action</th>
+                                <th style="width: 12em;">Action</th>
                             </tr>
                         </ng-template>
                         <ng-template pTemplate="body" let-rowData let-columns="columns" let-supplier>
@@ -52,15 +52,15 @@
                                 <td class="ui-resizable-column">
                                     <span *ngIf="supplier.iStatusID == 1"
                                         class="badge badge--success badge--inline badge--pill">
-                                        Active
+                                        {{supplier.sStatusName}}
                                     </span>
                                     <span *ngIf="supplier.iStatusID == 2"
                                         class="badge badge--warning badge--inline badge--pill">
-                                        Inactive
+                                        {{supplier.sStatusName}}
                                     </span>
                                     <span *ngIf="supplier.iStatusID == 3"
                                         class="badge badge--danger badge--inline badge--pill">
-                                        Deleted
+                                        {{supplier.sStatusName}}
                                     </span>
                                 </td>
                                 <td class="ui-resizable-column">
