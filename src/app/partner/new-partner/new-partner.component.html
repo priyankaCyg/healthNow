@@ -1,0 +1,264 @@
+<div class="p-grid">
+    <div class="p-col-12">
+        <div class="card card-w-title">
+            <h1>Partner</h1>
+            <p-tabView>
+                <p-tabPanel header="Partner">
+                        <div class="p-grid ui-fluid  p-justify-end mt-3">
+
+                            <div class="p-col-12">
+                                <div class="p-grid form-group">
+
+                                    <div class="p-col-12 p-md-6 p-lg-3 mb-2">
+                                        <label for="partnerName">Partner Name</label>
+                                        <input id="partnerName" class="form-control"  type="text" pInputText>
+                                    </div>
+
+
+                                    <div class="p-col-12 p-md-6 p-lg-3 mb-2">
+                                        <label for="shotCode">Short Code</label>
+                                        <input id="shotCode" class="form-control" type="text"  pInputText>
+                                    </div>
+
+                                    <div class="p-col-12 p-md-6 p-lg-3 mb-2">
+                                        <label for="legalEntity">Legal Entity ID</label>
+                                        <input id="legalEntity" class="form-control" type="text" pInputText>
+                                    </div>
+
+                                    <div class="p-col-12 p-md-6 p-lg-3 mb-2">
+                                        <label for="website">Website</label>
+                                        <input id="website" class="form-control" type="text" pInputText>
+                                    </div>
+
+                                </div>
+
+                                <div class="separator separator--border-solid separator--space-sm separator--portlet-fit"></div>
+
+                                <div class="p-grid form-group">
+                                    <div class="p-col-12 p-md-6 p-lg-3 mb-2">
+                                        <label for="telNo1">Tel No. 1</label>
+                                        <input id="telNo1" class="form-control" type="text" pInputText>
+                                    </div>
+                                    <div class="p-col-12 p-md-6 p-lg-3 mb-2">
+                                        <label for="telNo2">Tel No. 2</label>
+                                        <input id="telNo2" class="form-control" type="text" pInputText>
+                                    </div>
+                                    <div class="p-col-12 p-md-6 p-lg-3 mb-2">
+                                        <label for="fax">Fax</label>
+                                        <input id="fax" class="form-control" type="text" pInputText>
+                                    </div>
+                                    <div class="p-col-12 p-md-6 p-lg-3 mb-2">
+                                        <label for="pincode">Pan No.</label>
+                                        <input id="pincode" class="form-control" type="text" pInputText>
+                                    </div>
+                                </div>
+
+                                <div
+                                    class="separator separator--border-solid separator--space-sm separator--portlet-fit">
+                                </div>
+                                <div class="p-grid form-group">
+
+                                    <div class="p-col-12 p-md-6 p-lg-3 mb-2">
+                                        <label for="status">Status</label>
+                                        <p-dropdown id="status" class="form-control" placeholder="Select" required="true"></p-dropdown>
+                                    </div>
+
+                                </div>
+
+                                <div class="separator separator--border-solid separator--space-sm separator--portlet-fit mt-5"></div>
+
+                                <div class="p-grid form-group ui-fluid p-justify-end mt-3">
+                                    <div class="p-col-12 p-md-12 p-lg-12 text-right">
+                                        <button pButton type="button" label="Cancel" class="ui-button-light atbt mr-1 mb-2"></button>
+                                   
+                                        <button pButton type="button" label="Save" class="ui-button atbt mb-2"></button>
+                                    </div>
+                                </div>
+
+                            </div>
+
+
+                        </div>
+                </p-tabPanel>
+                <!-- Partner tab End here -->
+
+                <p-tabPanel header="Address">
+                    <div class="p-grid ui-fluid p-justify-end">
+                        <div class="p-col-1 text-center mt-1">
+                            <button (click)="openDialogForaddAddress()" pButton icon="pi pi-fw pi-plus" label="Add New"></button>
+
+                        </div>
+                        <div class="p-col-12">
+                            <p-table [value]="address">
+                                <ng-template pTemplate="caption">
+
+                                    <div class="ui-table-globalfilter-container text-left">
+                                        <input type="text" pInputText size="50" placeholder="Search" style="width:250px;">
+                                    </div>
+                                </ng-template>
+                                <ng-template pTemplate="header">
+                                    <tr>
+                                        <th>Address Type</th>
+                                        <th>Address 1</th>
+                                        <th>Address 2</th>
+                                        <th>State</th>
+                                        <th>City</th>
+                                        <th>Landmark</th>
+                                        <th>Status</th>
+                                        <th colspan="2">Action</th>
+                                    </tr>
+                                </ng-template>
+                                <ng-template pTemplate="body" let-address>
+                                    <tr>
+                                        <td>{{address.addressType}}</td>
+                                        <td>{{address.address1}}</td>
+                                        <td>{{address.address2}}</td>
+                                        <td>{{address.state}}</td>
+                                        <td>{{address.city}}</td>
+                                        <td>{{address.landmark}}</td>
+                                        <td><span class="badge badge--success badge--inline badge--pill"> Active</span></td>
+                                        <td><button pButton type="button" class="ui-button-success mr-1" icon="pi pi-pencil"></button></td>
+                                        <td><button pButton type="button" class="ui-button-danger" icon="pi pi-trash"></button></td>
+                                    </tr>
+                                </ng-template>
+                            </p-table>
+                        </div>
+                    </div>
+                </p-tabPanel>
+                <!-- Address tab End here -->
+
+                <p-tabPanel header="Contact">
+                    <div class="p-grid ui-fluid p-justify-end">
+                        <div class="p-col-1 text-center mt-1">
+                            <button (click)="openDialogForaddContact()" pButton icon="pi pi-fw pi-plus"
+                                label="Add / Edit"></button>
+
+                        </div>
+                        <div class="p-col-12">
+                            <p-table [value]="contact">
+                                <ng-template pTemplate="caption">
+
+                                    <div class="ui-table-globalfilter-container text-left" style="width:250px;">
+                                    </div>
+                                </ng-template>
+                                <ng-template pTemplate="header">
+                                    <tr>
+                                        <th>Full Name</th>
+                                        <th>Designation</th>
+                                        <th>Email ID</th>
+                                        <th>Partner Address</th>
+                                        <th>Mobile No.</th>
+                                        <th>Contact No.</th>
+                                        <th>Direct No.</th>
+                                        <th>Fax No.</th>
+                                        <th>Status</th>
+                                        <th>Action</th>
+
+                                    </tr>
+                                </ng-template>
+                                <ng-template pTemplate="body" let-contact>
+                                    <tr>
+                                        <td>{{contact.fullName}}</td>
+                                        <td>{{contact.designation}}</td>
+                                        <td>{{contact.emailId}}</td>
+                                        <td>{{contact.partnerAdd}}</td>
+                                        <td>{{contact.mobileNo}}</td>
+                                        <td>{{contact.contactNo}}</td>
+                                        <td>{{contact.directNo}}</td>
+                                        <td>{{contact.fax}}</td>
+                                        <td><span class="badge badge--success badge--inline badge--pill"> Active</span></td>
+                                        <td>
+                                            <button pButton type="button" class="ui-button-success" icon="pi pi-pencil"
+                                                style="margin-right: .5em"></button>
+                                            <button pButton type="button" class="ui-button-danger"
+                                                icon="pi pi-trash"></button>
+                                        </td>
+                                    </tr>
+                                </ng-template>
+                            </p-table>
+                        </div>
+                    </div>
+                </p-tabPanel>
+                <!-- Contact Info tab End here -->
+
+                <p-tabPanel header="Bank">
+                    <div class="p-grid ui-fluid p-justify-end">
+                        <div class="p-col-1 text-center mt-1">
+                            <button (click)="openDialogForBank()" pButton icon="pi pi-fw pi-plus" label="Add New"></button>
+                        </div>
+                        <div class="p-col-12">
+                            <p-table [value]="bank">
+                                <ng-template pTemplate="header">
+                                    <tr>
+                                        <th>Bank Name</th>
+                                        <th>Short Code/Account Type</th>
+                                        <th>Account No.</th>
+                                        <th>IFSC</th>
+                                        <th>Bank Branch</th>
+                                        <th>Status</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </ng-template>
+                                <ng-template pTemplate="body" let-bank>
+                                    <tr>
+                                        <td>{{bank.bankName}}</td>
+                                        <td>{{bank.accounttype}}</td>
+                                        <td>{{bank.accountNo}}</td>
+                                        <td>{{bank.IFSC}}</td>
+                                        <td>{{bank.branch}}</td>
+                                        <td>{{bank.status}}</td>
+                                        <td>
+                                            <button pButton type="button" class="ui-button-success" icon="pi pi-pencil"
+                                                style="margin-right: .5em"></button>
+                                            <button pButton type="button" class="ui-button-danger"
+                                                icon="pi pi-trash"></button>
+                                        </td>
+                                    </tr>
+                                </ng-template>
+                            </p-table>
+                        </div>
+                    </div>
+                </p-tabPanel>
+                <!-- Bank tab End here -->
+
+
+                <p-tabPanel header="GST">
+                    <div class="p-grid ui-fluid p-justify-end">
+                        <div class="p-col-1 text-center mt-1">
+                            <button (click)="openDialogForGST()" pButton icon="pi pi-fw pi-plus" label="Add New"></button>
+                        </div>
+                        <div class="p-col-12">
+                            <p-table [value]="gst">
+                                <ng-template pTemplate="header">
+                                    <tr>
+                                        <th>State</th>
+                                        <th>Short Code/Account Type</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </ng-template>
+                                <ng-template pTemplate="body" let-gst>
+                                    <tr>
+                                        <td>{{gst.state}}</td>
+                                        <td>{{gst.GST}}</td>
+                                        <td>
+                                            <button pButton type="button" class="ui-button-success" icon="pi pi-pencil"
+                                                style="margin-right: .5em"></button>
+                                            <button pButton type="button" class="ui-button-danger"
+                                                icon="pi pi-trash"></button>
+                                        </td>
+                                    </tr>
+                                </ng-template>
+                            </p-table>
+                        </div>
+                    </div>
+                </p-tabPanel>
+                <!-- GST Info tab End here -->
+
+                <p-tabPanel header="Area Mapping">
+                    
+                </p-tabPanel>
+                <!-- category mapping Info tab End here -->
+            </p-tabView>
+        </div>
+    </div>
+</div>

@@ -117,21 +117,17 @@
                                     class="separator separator--border-solid separator--space-sm separator--portlet-fit mt-5">
                                 </div>
                                 <div class="p-grid form-group ui-fluid p-justify-end mt-3">
-                                    <div class="p-col-12 p-md-2 p-lg-1">
+                                    <div class="p-col-12 p-md-2 p-lg-12 text-right">
                                         <button pButton type="button" label="Cancel" routerLink="/app/supplier"
-                                            style="margin-bottom:10px" class="ui-button-light"></button>
-                                    </div>
-                                    <div class="p-col-12 p-md-2 p-lg-1" *ngIf="!isEdit">
-                                        <button pButton type="submit"
+                                             class="ui-button-light atbt mr-2 mb-2"></button>
+                                   
+                                        <button pButton type="submit" *ngIf="!isEdit"
                                             [disabled]="!(!addSupplierForm.invalid && !dropDownValidityCheck())"
-                                            (click)="addSupplier()" label="Save" style="margin-bottom:10px"
-                                            class="ui-button"></button>
-                                    </div>
-                                    <div class="p-col-12 p-md-2 p-lg-1" *ngIf="isEdit">
-                                        <button pButton type="submit"
+                                            (click)="addSupplier()" label="Save" class="ui-button atbt mb-2"></button>
+                                    
+                                        <button pButton type="submit" *ngIf="isEdit"
                                             [disabled]="!(!addSupplierForm.invalid && !dropDownValidityCheck())"
-                                            (click)="editSupplier()" label="Update" style="margin-bottom:10px"
-                                            class="ui-button"></button>
+                                            (click)="editSupplier()" label="Update" class="ui-button atbt mb-2"></button>
                                     </div>
                                 </div>
 
@@ -310,15 +306,12 @@
                                 </ng-template>
                                 <ng-template pTemplate="body" let-gst>
                                     <tr>
-                                        <td style="text-align: center;">{{gst.sStateName}}</td>
-                                        <td style="text-align: center;">{{gst.sGST}}</td>
+                                        <td >{{gst.sStateName}}</td>
+                                        <td >{{gst.sGST}}</td>
 
-                                        <td style="text-align: center;">
-                                            <button pButton type="button" (click)="editDialogForGST(gst)"
-                                                class="ui-button-success" icon="pi pi-pencil"
-                                                style="margin-right: .5em"></button>
-                                            <button pButton type="button" (click)="deletesupgst(gst)"
-                                                class="ui-button-danger" icon="pi pi-trash"></button>
+                                        <td >
+                                            <button pButton type="button" (click)="editDialogForGST(gst)" class="ui-button-success mr-1" icon="pi pi-pencil"></button>
+                                            <button pButton type="button" (click)="deletesupgst(gst)" class="ui-button-danger" icon="pi pi-trash"></button>
                                         </td>
                                     </tr>
                                 </ng-template>
@@ -327,7 +320,46 @@
                     </div>
                 </p-tabPanel>
                 <!-- GST Info tab End here -->
+                
+                <p-tabPanel header="Attacment">
+                    <div class="p-grid ui-fluid">
+                        <div class="p-col-12 p-md-3 p-lg-3">
+                            <label for="sfileType">Select File Type</label>
+                            <p-dropdown id="sfileType" class="form-control" placeholder="Select" required="true"></p-dropdown>
+                        </div>
+                        <div class="p-col-12 p-md-2 p-lg-1">
+                            <div class="fileUpload p-0">
+                                <p-fileUpload #fubauto mode="basic" name="demo[]" url="./upload.php" accept="image/*" maxFileSize="1000000" (onUpload)="onBasicUploadAuto($event)" [auto]="true" chooseLabel="Browse"></p-fileUpload>                                
+                                
+                            </div>
+                         </div>
+                        <div class="p-col-12 p-md-3 p-lg-3 text-left"><button pButton type="button" label="Upload" class="ui-button atbt"></button></div> 
+                        
+                        <div class="p-col-12 p-md-12 p-lg-12 mt-3">
+                            <p-table [value]="attachment">
+                                <ng-template pTemplate="header">
+                                    <tr>
+                                        <th>File Type</th>
+                                        <th>File Name</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </ng-template>
+                                <ng-template pTemplate="body" let-attachment>
+                                    <tr>
+                                        <td>{{attachment.fileName}}</td>
+                                        <td>{{attachment.fileType}}</td>
+                                        <td>
+                                            <button pButton type="button" class="ui-button-success mr-1" icon="pi pi-pencil"></button>
+                                            <button pButton type="button" class="ui-button-danger" icon="pi pi-trash"></button>
+                                        </td>
+                                    </tr>
+                                </ng-template>
+                            </p-table>
+                         </div>
+                    </div>
+                </p-tabPanel>
 
+                <!-- Attachment tab End here -->
                 <p-tabPanel header="Category Mapping">
                     <h2>Food Type</h2>
                     <div class="p-grid p-justify-center mt-3">
@@ -424,6 +456,15 @@
                         </div>
 
                     </div>
+                    <div class="separator separator--border-solid separator--space-sm separator--portlet-fit mt-5"></div>
+
+                    <div class="p-grid form-group ui-fluid p-justify-end mt-3">
+                        <div class="p-col-12 p-md-2 p-lg-12 text-right">
+                            <button pButton type="button" label="Cancel" class="ui-button-light atbt mr-2 mb-2"></button>
+                            <button pButton type="submit" label="Save" class="ui-button atbt mb-2"></button>
+                        </div>
+                    </div>
+
                 </p-tabPanel>
                 <!-- category mapping Info tab End here -->
             </p-tabView>

@@ -46,7 +46,8 @@ export const routes: Routes = [
               { path: 'unit', loadChildren:"./unit/unit.module#UnitModule" },
               { path: 'product', loadChildren:"./product/product.module#ProductModule" },
               { path: 'supplier-category', loadChildren:"./supplier-category/supplier-category.module#SupplierCategoryModule"},
-              { path: 'supplier', loadChildren:"./supplier/supplier.module#SupplierModule" }
+              { path: 'supplier', loadChildren:"./supplier/supplier.module#SupplierModule" },
+              { path: 'partner', loadChildren:"./partner/partner.module#PartnerModule" }
               
         ]
     },

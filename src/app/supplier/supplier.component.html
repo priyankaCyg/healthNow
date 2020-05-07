@@ -35,7 +35,7 @@
                                 <th>Fax</th>
                                 <th>Pan</th>
                                 <th>Status</th>
-                                <th>Action</th>
+                                <th style="width: 12em;">Action</th>
                             </tr>
                         </ng-template>
                         <ng-template pTemplate="body" let-rowData let-columns="columns" let-supplier>
@@ -50,18 +50,15 @@
                                 <td class="ui-resizable-column">{{supplier.sFaxNo}}</td>
                                 <td class="ui-resizable-column">{{supplier.sPAN}}</td>
                                 <td class="ui-resizable-column">
-                                    <button *ngIf="supplier.iStatusID == 1" pButton type="button"
-                                        class="ui-button-rounded ui-button-success" style="width: 100px; height: 25px;">
+                                    <span *ngIf="supplier.iStatusID == 1" class="badge badge--success badge--inline badge--pill" >
                                         {{supplier.sStatusName}}
-                                    </button>
-                                    <button *ngIf="supplier.iStatusID == 2" pButton type="button"
-                                        class="ui-button-rounded ui-button-warning" style="width: 100px; height: 25px;">
+                                    </span>
+                                    <span *ngIf="supplier.iStatusID == 2" class="badge badge--warning badge--inline badge--pill" >
                                         {{supplier.sStatusName}}
-                                    </button>
-                                    <button *ngIf="supplier.iStatusID == 3" pButton type="button"
-                                        class="ui-button-rounded ui-button-danger" style="width: 100px; height: 25px;">
+                                    </span>
+                                    <span *ngIf="supplier.iStatusID == 3" class="badge badge--danger badge--inline badge--pill">
                                         {{supplier.sStatusName}}
-                                    </button>
+                                    </span>
                                 </td>
                                 <td class="ui-resizable-column">
                                     <button pButton type="button" (click)="editSupplier(supplier.iSupID)"

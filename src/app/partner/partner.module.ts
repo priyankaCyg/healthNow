@@ -1,20 +1,20 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { SupplierRoutingModule } from './supplier-routing.module';
-import { SupplierComponent } from './supplier.component';
-import { AddNewSupplierComponent } from './add-new-supplier/add-new-supplier.component';
+import { PartnerRoutingModule } from './partner-routing.module';
+import { PartnerComponent } from './partner.component';
+
+import { NewPartnerComponent } from './new-partner/new-partner.component';
 import { AddressComponent } from './address/address.component';
 import { ContactComponent } from './contact/contact.component';
 import { BankComponent } from './bank/bank.component';
 import { GstComponent } from './gst/gst.component';
-import { ProductMappingComponent } from './product-mapping/product-mapping.component';
+import { AreaMappingComponent } from './area-mapping/area-mapping.component';
 
 //Prime Ng Service
 import { DialogService } from 'primeng';
 import { ConfirmationService } from 'primeng/api';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-
+import { FormsModule} from '@angular/forms';
 
 //Prime Ng Module
 import { ButtonModule } from 'primeng/button';
@@ -32,19 +32,16 @@ import { CheckboxModule } from 'primeng/checkbox';
 import { from } from 'rxjs';
 import { MessageModule } from 'primeng/message';
 import { MessagesModule } from 'primeng/messages';
-import {FileUploadModule} from 'primeng/fileupload';
-
-
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 
 
+
 @NgModule({
-  declarations: [SupplierComponent, AddNewSupplierComponent, AddressComponent, ContactComponent, BankComponent, GstComponent, ProductMappingComponent, ProductMappingComponent],
+  declarations: [PartnerComponent,NewPartnerComponent, AddressComponent, ContactComponent, BankComponent, GstComponent, AreaMappingComponent],
   imports: [
     CommonModule,
-    SupplierRoutingModule,
+    PartnerRoutingModule,
     FormsModule,
-    ReactiveFormsModule,
     ButtonModule,
     PanelModule,
     TabMenuModule,
@@ -59,10 +56,9 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
     ConfirmDialogModule,
     MessageModule,
     MessagesModule,
-    CheckboxModule,
-    FileUploadModule
+    CheckboxModule
   ],
   providers: [DialogService, ConfirmationService],
-  entryComponents: [SupplierComponent, AddNewSupplierComponent, AddressComponent, ContactComponent, BankComponent, GstComponent, ProductMappingComponent]
+  entryComponents: [PartnerComponent,NewPartnerComponent, AddressComponent, ContactComponent, BankComponent, GstComponent, AreaMappingComponent]
 })
-export class SupplierModule { }
+export class PartnerModule { }
