@@ -1,8 +1,6 @@
+ <form [formGroup]="gstForm">
 <div class="p-grid ui-fluid">
-    <form [formGroup]="gstForm">
-
         <div class="p-col-12">
-
             <div class="p-grid form-group">
 
                 <div class="p-col-12">
@@ -38,23 +36,17 @@
             </div>
             <div class="separator separator--border-solid separator--space-sm separator--portlet-fit"></div>
             <div class="p-grid form-group ui-fluid">
-                <div class="p-md-6 p-lg-6"></div>
-                <div class="p-col-12 p-md-3 p-lg-3">
-                    <button pButton type="button" (click)="closeDialog()" label="Cancel" style="margin-bottom:10px"
-                        class="ui-button-light"></button>
-                </div>
-                <div class="p-col-12 p-md-3 p-lg-3" *ngIf="!isEdit">
-                    <button pButton type="button" label="Save"
-                        [disabled]="!(!gstForm.invalid && !dropDownValidityCheck())" (click)="addGst()"
-                        style="margin-bottom:10px" class="ui-button" style="margin-bottom:10px"></button>
-                </div>
-                <div class="p-col-12 p-md-3 p-lg-3" *ngIf="isEdit">
-                    <button pButton type="button" label="Update"
-                        [disabled]="!(!gstForm.invalid && !dropDownValidityCheck())" (click)="editGst()"
-                        style="margin-bottom:10px" class="ui-button" style="margin-bottom:10px"></button>
+                <div class="p-col-12 p-md-12 p-lg-12 text-right">
+                    <button pButton type="button" (click)="closeDialog()" label="Cancel" class="ui-button-light atbt mr-2"></button>
+                
+                    <button *ngIf="!isEdit" pButton type="button" label="Save"
+                        [disabled]="!(!gstForm.invalid && !dropDownValidityCheck())" (click)="addGst()" class="ui-button atbt"></button>
+                
+                    <button *ngIf="isEdit" pButton type="button" label="Update"
+                        [disabled]="!(!gstForm.invalid && !dropDownValidityCheck())" (click)="editGst()"class="ui-button atbt" ></button>
                 </div>
             </div>
 
         </div>
-    </form>
-</div>
+</div> 
+</form>

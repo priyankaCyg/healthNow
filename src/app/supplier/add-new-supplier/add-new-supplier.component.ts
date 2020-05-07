@@ -67,6 +67,15 @@ export class AddNewSupplierComponent implements OnInit {
 
   ngOnInit(): void {
 
+    this.attachment = [
+      {fileName:'Testing File', fileType:'testing.pdf'},
+      {fileName:'Demo File', fileType:'demo.xlsx' },
+      {fileName:'Detail Document', fileType:'details.pdf' },
+      {fileName:'Supplier Details', fileType:'supplier-details.pdf' }
+    ];
+
+    //new code added 
+    this.defaultDropDwnValue()
 
 this.gstList();
  //new code added 

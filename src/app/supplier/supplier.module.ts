@@ -31,7 +31,7 @@ import { TreeTableModule } from 'primeng/treetable';
 import { CheckboxModule } from 'primeng/checkbox';
 import { from } from 'rxjs';
 import { MessageModule } from 'primeng/message';
-
+import {FileUploadModule} from 'primeng/fileupload';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import {APIService} from '../services/apieservice';
 
@@ -56,7 +56,8 @@ import {APIService} from '../services/apieservice';
     TreeTableModule,
     ConfirmDialogModule,
     MessageModule,
-    CheckboxModule
+    CheckboxModule,
+    FileUploadModule
   ],
   providers: [DialogService, ConfirmationService,APIService],
   entryComponents: [SupplierComponent, AddNewSupplierComponent, AddressComponent, ContactComponent, BankComponent, GstComponent, ProductMappingComponent]
