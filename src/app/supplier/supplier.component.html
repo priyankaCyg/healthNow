@@ -35,21 +35,21 @@
                                 <th>Fax</th>
                                 <th>Pan</th>
                                 <th>Status</th>
-                                <th style="width: 12em;">Action</th>
+                                <th style="width: 15em;">Action</th>
                             </tr>
                         </ng-template>
                         <ng-template pTemplate="body" let-rowData let-columns="columns" let-supplier>
                             <tr>
-                                <td class="ui-resizable-column">{{supplier.sSupName}}</td>
-                                <td class="ui-resizable-column">{{supplier.supplierCat}}</td>
-                                <td class="ui-resizable-column">{{supplier.sShortCode}}</td>
-                                <td class="ui-resizable-column">{{supplier.iLegalEntityID}}</td>
-                                <td class="ui-resizable-column">{{supplier.sWebsite}}</td>
-                                <td class="ui-resizable-column">{{supplier.sTelNo1}}</td>
-                                <td class="ui-resizable-column">{{supplier.sTelNo2}}</td>
-                                <td class="ui-resizable-column">{{supplier.sFaxNo}}</td>
-                                <td class="ui-resizable-column">{{supplier.sPAN}}</td>
-                                <td class="ui-resizable-column">
+                                <td>{{supplier.sSupName}}</td>
+                                <td>{{supplier.supplierCat}}</td>
+                                <td>{{supplier.sShortCode}}</td>
+                                <td style="width: 2em;">{{supplier.iLegalEntityID}}</td>
+                                <td>{{supplier.sWebsite}}</td>
+                                <td>{{supplier.sTelNo1}}</td>
+                                <td>{{supplier.sTelNo2}}</td>
+                                <td>{{supplier.sFaxNo}}</td>
+                                <td>{{supplier.sPAN}}</td>
+                                <td>
                                     <span *ngIf="supplier.iStatusID == 1"
                                         class="badge badge--success badge--inline badge--pill">
                                         {{supplier.sStatusName}}
@@ -63,14 +63,14 @@
                                         {{supplier.sStatusName}}
                                     </span>
                                 </td>
-                                <td class="ui-resizable-column">
+                                <td>
+                                    <button pButton type="button" (click)="prdmapSupplier(supplier.iSupID)"
+                                        class="ui-button-success mr-2" icon="pi  pi-sitemap"
+                                        title="Product Map"></button>
                                     <button pButton type="button" (click)="editSupplier(supplier.iSupID)"
                                         class="ui-button-success mr-2" icon="pi pi-pencil" title="Edit"></button>
                                     <button pButton type="button" (click)="deleteSupplier(supplier)"
                                         class="ui-button-danger mr-2" icon="pi pi-trash" title="Delete"></button>
-                                    <button pButton type="button" (click)="prdmapSupplier(supplier.iSupID)"
-                                        class="ui-button-success mr-2" icon="pi  pi-sitemap"
-                                        title="Product Map"></button>
                                     <button pButton type="button" class="ui-button-success"
                                         icon="pi pi-arrow-circle-right" title="Send for approval"></button>
                                 </td>
