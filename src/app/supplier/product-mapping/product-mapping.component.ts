@@ -7,6 +7,7 @@ import { SupplierRoutingModule } from '../supplier-routing.module';
 import { ApiService } from 'src/app/services/api.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { suppmapData } from 'src/app/model/sup-producer-map.model';
+import { ToastService } from 'src/app/services/toast.service';
 
 @Component({
   selector: 'app-product-mapping',
@@ -20,7 +21,8 @@ export class ProductMappingComponent implements OnInit {
   selectedproducer: any;
   Selectedvalue: any[] = [];
   constructor(private breadcrumbService: BreadcrumbService,
-    private apiService: ApiService, private route: ActivatedRoute) {
+    private apiService: ApiService, private route: ActivatedRoute,
+    private toastService: ToastService) {
     this.breadcrumbService.setItems([
       { label: 'Dashboard' },
       { label: 'Supplier', routerLink: ['/app/supplier'] }
@@ -44,9 +46,14 @@ export class ProductMappingComponent implements OnInit {
       },
       (error) => console.log(error)
     );
+
+    this.producer = null;
+    this.Selectedvalue = [];
   }
 
   getProduct() {
+    this.Selectedvalue = [];
+
     let producer_id = +this.selectedproducer.iProducerID;
     let sup_id = +this.route.snapshot.params['iSupID'];
 
@@ -58,24 +65,17 @@ export class ProductMappingComponent implements OnInit {
     this.apiService.callPostApi(product_list_data).subscribe(
       (data) => {
         this.producer = data;
-
+        for (var i = 0; i < this.producer.length; i++) {
+          if (this.producer[i].iSelected == 1) {
+            this.Selectedvalue.push(this.producer[i]);
+          }
+        }
       },
       (error) => console.log(error)
     );
   }
 
-  // check() {
-  //   let id = this.producer.map(({ iSelected }) => iSelected);
-  //   console.log(id);
-  //   if (id[0] == 1) {
-  //     this.checkid = true
-  //   } else {
-  //     this.checkid = false
-  //   }
-  // }
   saveProduct() {
-    console.log(this.Selectedvalue);
-    //let prd_id = this.Selectedvalue;
     const prd_id = this.Selectedvalue.map(({ iPrdID }) => iPrdID);
     let prd_id_str = prd_id.toString();
     let producer_id = +this.selectedproducer.iProducerID;
@@ -87,13 +87,14 @@ export class ProductMappingComponent implements OnInit {
       "sSupPrdMap": prd_id_str
     }
     console.log(save_product_data)
-    // this.apiService.callPostApi(save_product_data).subscribe(
-    //   (data) => {
-    //     this.producer = data;
+    this.apiService.callPostApi(save_product_data).subscribe(
+      (data) => {
+        this.getProduct();
+        this.toastService.addSingle("success", "Record Added successfully", "");
 
-    //   },
-    //   (error) => console.log(error)
-    // );
+      },
+      (error) => console.log(error)
+    );
   }
 
 }
