@@ -49,14 +49,12 @@
         
         <div class="separator separator--border-solid separator--space-sm separator--portlet-fit"></div>
         <div class="p-grid form-group ui-fluid p-justify-end">
-            <div class="p-col-12 p-md-2 p-lg-1">
-                <button pButton type="button" label="Cancel" style="margin-bottom:10px" class="ui-button-light"></button>
-            </div>
-             <div class="p-col-12 p-md-2 p-lg-1" *ngIf="!isEdit">
-                <button pButton type="button" label="Save" (click)="addUnit()" style="margin-bottom:10px" class="ui-button"></button>
-            </div>
-            <div class="p-col-12 p-md-2 p-lg-1" *ngIf="isEdit">
-                <button pButton type="button" label="Update" (click)="updateUnit()" style="margin-bottom:10px" class="ui-button"></button>
+            <div class="p-col-12 p-md-12 p-lg-12 text-right">
+                <button pButton type="button" label="Cancel" class="ui-button-light atbt mr-2"></button>
+           
+                <button *ngIf="!isEdit" pButton type="button" label="Save" (click)="addUnit()" class="ui-button atbt"></button>
+            
+                <button *ngIf="isEdit" pButton type="button" label="Update" (click)="updateUnit()" class="ui-button atbt"></button>
             </div>
         </div>
 

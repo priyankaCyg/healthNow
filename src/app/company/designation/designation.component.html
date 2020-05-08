@@ -37,13 +37,9 @@
       <div class="separator separator--border-solid separator--space-sm separator--portlet-fit"></div>
       <div class="p-grid form-group ui-fluid">
         <div class="p-md-6 p-lg-6"></div>
-        <div class="p-col-12 p-md-3 p-lg-3">
-          <button pButton type="button" label="Cancel" style="margin-bottom: 10px;" class="ui-button-light"
-            (click)="onClose()"></button>
-        </div>
-        <div class="p-col-12 p-md-3 p-lg-3">
-          <button pButton type="submit" label="Save" style="margin-bottom: 10px;" class="ui-button"
-            [disabled]="!desigForm.valid"></button>
+        <div class="p-col-12 p-md-12 p-lg-12 text-right">
+          <button pButton type="button" label="Cancel" class="ui-button-light atbt mr-2" (click)="onClose()"></button>        
+          <button pButton type="submit" label="Save" class="ui-button atbt" [disabled]="!desigForm.valid"></button>
         </div>
       </div>
     </div>

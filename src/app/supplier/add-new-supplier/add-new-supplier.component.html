@@ -203,7 +203,7 @@
                 <p-tabPanel header="Contact">
                     <div class="p-grid ui-fluid p-justify-end">
                         <div class="p-col-1 text-center mt-1">
-                            <button (click)="openDialogForaddContact()" pButton icon="pi pi-fw pi-plus" label="Add"></button>
+                            <button (click)="openDialogForaddContact()" pButton icon="pi pi-fw pi-plus" label="Add" class="ui-button"></button>
                             
                         </div>
                         <div class="p-col-12"> 
@@ -249,7 +249,18 @@
                                         <td>{{contact.sContactNo}}</td>
                                         <td>{{contact.sDirectNo}}</td>
                                         <td>{{contact.sFaxNo}}</td>
-                                        <td>{{contact.sStatusName}}</td>
+                                        <!-- <td>{{contact.sStatusName}}</td> -->
+                                        <td>
+                                            <span *ngIf="contact.iStatusID == 1" class="badge badge--success badge--inline badge--pill">
+                                              Active
+                                            </span>
+                                            <span *ngIf="contact.iStatusID == 2" class="badge badge--warning badge--inline badge--pill">
+                                              Inactive
+                                            </span>
+                                            <span *ngIf="contact.iStatusID == 3" class="badge badge--danger badge--inline badge--pill">
+                                              Deleted
+                                            </span>
+                                          </td>
                                         <td>
                                             <button pButton type="button" (click)="editContact(contact.iSupContactID)" class="ui-button-success" icon="pi pi-pencil" style="margin-right: .5em"></button>
                                             <button pButton type="button" (click)="deleteContact(contact.iSupContactID)" class="ui-button-danger" icon="pi pi-trash"></button>
@@ -357,7 +368,7 @@
                                 
                             </div>
                          </div>
-                        <div class="p-col-12 p-md-3 p-lg-3 text-left"><button pButton type="button" label="Upload" class="ui-button atbt"></button></div> 
+                        <div class="p-col-12 p-md-3 p-lg-3 text-left"><button pButton type="button" icon="pi pi-upload" label="Upload" class="ui-button atbt"></button></div> 
                         
                         <div class="p-col-12 p-md-12 p-lg-12 mt-3">
                             <p-table [value]="attachment">
@@ -373,7 +384,7 @@
                                         <td>{{attachment.fileName}}</td>
                                         <td>{{attachment.fileType}}</td>
                                         <td>
-                                            <button pButton type="button" class="ui-button-success mr-1" icon="pi pi-pencil"></button>
+                                            <button pButton type="button" class="ui-button-success mr-1" icon="pi pi-download"></button>
                                             <button pButton type="button" class="ui-button-danger" icon="pi pi-trash"></button>
                                         </td>
                                     </tr>
