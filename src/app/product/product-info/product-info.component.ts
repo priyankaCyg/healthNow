@@ -77,11 +77,6 @@ export class ProductInfoComponent implements OnInit {
     
   onSubmit() {
 
-    // let desig_id = this.config.data.iDesigID;
-    // let desig_name = this.desigForm.controls["desig_name"].value;
-    // let desig_level = this.desigForm.controls["desig_level"].value;
-    // let status = this.desigForm.controls["status"].value;
-    // let status_id = status.iKVID;
     console.log(this.infoSubmitArray,"check")
     let seq: number=0;
     for(let i=0;i<12;i++){
