@@ -472,7 +472,6 @@ uploadFile()
 
   downloadFile(attachment:any)
   {
-    // alert(JSON.stringify(attachment))
     var dataToSend ={
       "iRequestID": "1112",
       "sActualFileName":attachment.sActualName,
