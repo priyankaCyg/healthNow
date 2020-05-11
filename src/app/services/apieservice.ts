@@ -103,8 +103,8 @@ export class APIService {
 
 
         formData.append('iRequestID','1112');
-        formData.append('sActualFileName','error1.png');
-        formData.append('sSystemFileName','7BH2TsqMRI1588838505541');
+        formData.append('sActualFileName',dataToSend.sActualFileName);
+        formData.append('sSystemFileName',dataToSend.sSystemFileName);
 
         this.http.post(`http://13.126.132.149/healthnow/file`,formData,{responseType: 'arraybuffer'})
         .subscribe(response => this.downLoadFile(response, "image/png"));

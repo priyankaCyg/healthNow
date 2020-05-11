@@ -21,9 +21,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { ThrowStmt } from '@angular/compiler';
 import { gstData } from 'src/app/model/gst';
 import { SuppMaster } from 'src/app/model/supplier.model';
-import {TreeNode} from 'primeng/api';
-import { $ } from 'protractor';
-import { SupplierCategoryMapping } from 'src/app/models/supplier-category-mapping.model';
+import {APIService} from '../../services/apieservice';
 
 
 @Component({
@@ -46,13 +44,18 @@ export class AddNewSupplierComponent implements OnInit {
 
 
   bank: any[];
+  contact : any[]
 
   gst: gstData[];
 
-  supId;
-  sourceCategory: SupplierCategoryMapping[];
+  attachment: any[];
 
-  targetCategory: Array<SupplierCategoryMapping>;
+  supId;
+
+  selectedFileType;
+  fileTypeData;
+
+  uploadedFiles: any[] = [];
 
   constructor(private breadcrumbService: BreadcrumbService,
      private dialogService: DialogService,
@@ -60,7 +63,7 @@ export class AddNewSupplierComponent implements OnInit {
      private toastService: ToastService,
     private fb: FormBuilder,
      private route: ActivatedRoute,
-      private confirmationService: ConfirmationService) {
+      private confirmationService: ConfirmationService,private _apiService:APIService) {
     this.breadcrumbService.setItems([
       { label: 'Dashboard' },
       { label: 'Supplier', routerLink: ['/app/supplier'] }
@@ -69,11 +72,11 @@ export class AddNewSupplierComponent implements OnInit {
 
   ngOnInit(): void {
 
-
+this.getFileType();
 this.gstList();
  //new code added 
  this.defaultDropDwnValue()
-//  this.getCategoryMappingTree();
+
  this.supData = new SuppMaster();
  this.addSupplierForm = this.createControl(this.supData);
 
@@ -110,37 +113,14 @@ this.gstList();
    });
  }
 
- this.gstList();
+//  this.gstList();
  //end 
 
- this.sourceCategory = [
-  {
-      "key": 10,
-      "data": "Test Supplier",
-      "label": "Test Supplier"
-  },
-  {
-      "key": 12,
-      "data": "test 56",
-      "label": "test 56"
-  },
-  {
-      "key": 3,
-      "data": "Supplier Category",
-      "label": "Supplier Category"
-  },
-  {
-      "key": 1,
-      "data": "Test Supplier Category",
-      "label": "Test Supplier Category"
-  },
-  {
-      "key": 11,
-      "data": "Test Supplier 22",
-      "label": "Test Supplier 22"
-  }
-]
- this.targetCategory = [];
+
+ this.showContact();
+ this.showBank();
+ this.showAttachment();
+
   }
 //Address list starts
   getSupplierAddressList(){
@@ -219,7 +199,30 @@ this.gstList();
   }
     
     
-  
+  onUpload(event) {
+    alert("hi")
+    for (const file of event.files) {
+        this.uploadedFiles.push(file);
+      }
+
+}
+
+uploadFile()
+{
+  alert(JSON.stringify(this.uploadedFiles))
+  var dataToSend ={
+    "iRequestID": 1111,
+    "iProcessTranID":this.supId,
+    "iProcessID":2,
+    "iDocTypeID":this.selectedFileType.iDocTypeID
+}
+  this._apiService.postFile(this.uploadedFiles,dataToSend).subscribe(data => {
+    alert('Success '+data);
+    this.showAttachment();
+  }, error => {
+    console.log(error);
+  });
+}
 
   //new coded added
 
@@ -253,6 +256,26 @@ this.gstList();
         this.selectedstatus = { iKVID: "", sKVValue: "Select Status" }
 
         resolve(this.statusData)
+
+      });
+    })
+  }
+
+
+
+  getFileType() {
+    return new Promise((resolve, reject) => {
+      var dataToSend = {
+        "iRequestID": 2261
+      }
+
+      this.apiService.getDropDownData(dataToSend).then(response => {
+        console.log("Response for File Type ", response)
+        this.fileTypeData = response
+        this.fileTypeData.splice(0, 0, { iDocTypeID: "", sDocTypeName: "Select File Type" })
+        this.selectedFileType = { iDocTypeID: "", sDocTypeName: "Select File Type" }
+
+        resolve(this.fileTypeData)
 
       });
     })
@@ -446,15 +469,181 @@ this.gstList();
     });
   }
 
+  downloadFile(attachment:any)
+  {
+    // alert(JSON.stringify(attachment))
+    var dataToSend ={
+      "iRequestID": "1112",
+      "sActualFileName":attachment.sActualName,
+      "sSystemFileName":attachment.sSystemName
+  }
+    this._apiService.downloadAPI(dataToSend)
+  }
+
+  
 
 
+  showAttachment()
+  {
+    var dataToSend ={
+      "iRequestID": 1112,
+      "iProcessTranID":parseInt(this.supId),
+      "iProcessID":2
+  }
+    this._apiService.getDetails(dataToSend).then(response => {
+      console.log("Response for attachment ",response)
+      this.attachment = response
+    });
+  }
 
 
-addCategoryMappingData(){
-  console.log(this.targetCategory); 
+  showContact()
+  {
+    var dataToSend ={
+      "iRequestID": 2194
+  }
+    this._apiService.getDetails(dataToSend).then(response => {
+      console.log("Response for Contact ",response)
+      this.contact = response
+    });
+  }
+
+
+  editContact(iSupContactID) {
+    const ref = this.dialogService.open( ContactComponent , {
+      data: {
+        iSupContactID:iSupContactID
+      },
+      header: 'Edit Contact',
+      width: '70%'
+    });
+  
+    ref.onClose.subscribe((success: boolean) => {
+      if (success) {
+        this.toastService.addSingle("success", "Updated successfully", "");
+      this.showContact();
+  
+      }
+    });
+    }
+  
+    deleteContact(iSupContactID)
+    {
+      // alert("hi")
+      // return false;
+      this.confirmationService.confirm({
+        message: 'Are you sure that you want to proceed?',
+        header: 'Confirmation',
+        icon: 'pi pi-exclamation-triangle',
+        accept: () => {
+          var dataToSendDelete = {
+            "iRequestID":2193,
+            "iSupContactID":iSupContactID
+          }
+  
+          this._apiService.getDetails(dataToSendDelete).then(response => {
+            console.log("Response for Brand Delete ",response)
+            this.toastService.addSingle("info", "Successfully Deleted", "Successfully Deleted");
+            this.showContact();
+          });
+        },
+        reject: () => {
+    this.toastService.addSingle("info", "Rejected", "Rejected");
+  
+        }
+    });
+    }
+
+
+    showBank()
+  {
+    var dataToSend ={
+      "iRequestID": 2214,
+      "iSupID" :1
+  }
+    this._apiService.getDetails(dataToSend).then(response => {
+      console.log("Response for Bank ",response)
+      this.bank = response
+    });
+  }
+
+
+  editBank(iBankID) {
+    const ref = this.dialogService.open( BankComponent , {
+      data: {
+        iBankID:iBankID
+      },
+      header: 'Edit Contact',
+      width: '50%'
+    });
+  
+    ref.onClose.subscribe((success: boolean) => {
+      if (success) {
+        this.toastService.addSingle("success", "Updated successfully", "");
+        this.showBank();
+  
+      }
+    });
+    }
+  
+    deleteBank(iBankID)
+    {
+      this.confirmationService.confirm({
+        message: 'Are you sure that you want to proceed?',
+        header: 'Confirmation',
+        icon: 'pi pi-exclamation-triangle',
+        accept: () => {
+          var dataToSendDelete = {
+            "iRequestID": 2213,
+    "iSupID" :1,
+    "iBankID":iBankID
+          }
+  
+          this._apiService.getDetails(dataToSendDelete).then(response => {
+            console.log("Response for Brand Delete ",response)
+            this.toastService.addSingle("info", "Successfully Deleted", "Successfully Deleted");
+            this.showBank();
+          });
+        },
+        reject: () => {
+    this.toastService.addSingle("info", "Rejected", "Rejected");
+  
+        }
+    });
+    }
+
+
+    openDialogForaddContact() {
+      const ref = this.dialogService.open( ContactComponent , {
+        data: {
+        },
+        header: 'Add New Contact',
+        width: '70%'
+      });
+  
+      ref.onClose.subscribe((success: boolean) => {
+        if (success) {
+          this.toastService.addSingle("success", "Record added successfully", "");
+          this.showContact();
+
+        }
+      });
+    }
+    
+    openDialogForBank() {
+      const ref = this.dialogService.open( BankComponent , {
+        data: {
+        },
+        header: 'Add New Bank',
+        width: '50%'
+      });
+  
+      ref.onClose.subscribe((success: boolean) => {
+        if (success) {
+          this.toastService.addSingle("success", "RecordAdded Successfully", "");
+          this.showBank();
+        }
+      });
+    }
+
 }
-
-
-}
-
-
