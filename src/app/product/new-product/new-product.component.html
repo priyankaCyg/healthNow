@@ -8,10 +8,6 @@
 
                       <div class="p-col-12"> 
                             <div class="p-grid form-group">
-                                <!-- <div class="p-col-12 p-md-6 p-lg-4">
-                                    <label for="productCategory">Product Category</label>
-                                    <p-dropdown [options]="addressType" [(ngModel)]="selectedproductCategory"></p-dropdown>
-                                </div> -->
                                 <div class="p-col-12 p-md-6 p-lg-4 mb-2">
                                     <label for="address2">Product Name</label>
                                     <input id="address2" type="text" pInputText>
@@ -44,11 +40,9 @@
                             
                             <div class="separator separator--border-solid separator--space-sm separator--portlet-fit mt-5"></div>
                             <div class="p-grid form-group ui-fluid p-justify-end mt-3">
-                                <div class="p-col-12 p-md-2 p-lg-1">
-                                    <button pButton type="button" label="Cancel" style="margin-bottom:10px" class="ui-button-light"></button>
-                                </div>
-                                 <div class="p-col-12 p-md-2 p-lg-1">
-                                    <button pButton type="button" label="Save" style="margin-bottom:10px" class="ui-button"></button>
+                                <div class="p-col-12 p-md-12 p-lg-12 text-right">
+                                    <button pButton type="button" label="Cancel" class="ui-button-light atbt mr-2"></button>                                
+                                    <button pButton type="button" label="Save" class="ui-button atbt"></button>
                                 </div>
                             </div>
                 
@@ -99,7 +93,7 @@
                                 
                             </div>
                             <div class="p-col-12"> 
-                                <p-table [value]="productVariant">
+                                <p-table #dt [value]="productVariant">
                                     <ng-template pTemplate="caption">
                                    
                                         <div class="ui-table-globalfilter-container text-left">
@@ -136,7 +130,7 @@
                                 
                             </div>
                             <div class="p-col-12"> 
-                                <p-table [value]="productInfo">
+                                <p-table #dt [value]="productInfo">
                                     <ng-template pTemplate="caption">
                                    
                                         <div class="ui-table-globalfilter-container text-left">
@@ -264,37 +258,37 @@
                             
                             <div class="p-col-12 p-md-6 p-lg-4">
                                 <div class="card bg-dark prcat-shdw border-light">
-                                    <p-checkbox name="FV" value="Food - Vitamin" label="Food - Vitamin" [(ngModel)]="checkboxValues"></p-checkbox>
+                                    <p-checkbox name="FV" value="Food - Vitamin" label="Food - Vitamin" ></p-checkbox>
                                 </div>
                             </div>
 
                             <div class="p-col-12 p-md-6 p-lg-4">
                                 <div class="card bg-success prcat-shdw border-light">
-                                <p-checkbox name="FS" value="Food - Supplements" label="Food - Supplements" [(ngModel)]="checkboxValues"></p-checkbox>
+                                <p-checkbox name="FS" value="Food - Supplements" label="Food - Supplements" ></p-checkbox>
                                 </div>
                             </div>
 
                             <div class="p-col-12 p-md-6 p-lg-4">
                                 <div class="card bg-dark prcat-shdw border-light">
-                                    <p-checkbox name="FD" value="Food - Dairy" label="Food - Dairy" [(ngModel)]="checkboxValues"></p-checkbox>
+                                    <p-checkbox name="FD" value="Food - Dairy" label="Food - Dairy" ></p-checkbox>
                                 </div>
                             </div>
 
                             <div class="p-col-12 p-md-6 p-lg-4">
                             <div class="card bg-dark prcat-shdw border-light">
-                                    <p-checkbox name="FCO" value="Food - Cookinig Oil" label="Food - Cookinig Oil" [(ngModel)]="checkboxValues"></p-checkbox>
+                                    <p-checkbox name="FCO" value="Food - Cookinig Oil" label="Food - Cookinig Oil" ></p-checkbox>
                                 </div>
                             </div>
 
                             <div class="p-col-12 p-md-6 p-lg-4">
                                 <div class="card bg-dark prcat-shdw border-light">
-                                <p-checkbox name="HCD" value="Health Concern - Diabetes" label="Health Concern - Diabetes" [(ngModel)]="checkboxValues"></p-checkbox>
+                                <p-checkbox name="HCD" value="Health Concern - Diabetes" label="Health Concern - Diabetes" ></p-checkbox>
                                 </div>
                             </div>
 
                             <div class="p-col-12 p-md-6 p-lg-4">
                                 <div class="card bg-success prcat-shdw border-light">
-                                    <p-checkbox name="HCWL" value="Health Concern - Weight Loss" label="Health Concern - Weight Loss" [(ngModel)]="checkboxValues" selected></p-checkbox>
+                                    <p-checkbox name="HCWL" value="Health Concern - Weight Loss" label="Health Concern - Weight Loss"  selected></p-checkbox>
                                 </div>
                             </div>  
 
@@ -303,11 +297,10 @@
                         <div class="separator separator--border-solid separator--space-sm separator--portlet-fit mt-5"></div>
                            
                             <div class="p-grid form-group ui-fluid p-justify-end mt-3">
-                                <div class="p-col-12 p-md-2 p-lg-1">
-                                    <button pButton type="button" label="Cancel" style="margin-bottom:10px" class="ui-button-light"></button>
-                                </div>
-                                 <div class="p-col-12 p-md-2 p-lg-1">
-                                    <button pButton type="button" label="Save" style="margin-bottom:10px" class="ui-button"></button>
+                                <div class="p-col-12 p-md-12 p-lg-12 text-right">
+                                    <button pButton type="button" label="Cancel" class="ui-button-light atbt mr-2"></button>
+                                
+                                    <button pButton type="button" label="Save" class="ui-button atbt"></button>
                                 </div>
                             </div>
                     </p-tabPanel>

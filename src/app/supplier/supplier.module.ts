@@ -15,6 +15,7 @@ import { DialogService } from 'primeng';
 import { ConfirmationService } from 'primeng/api';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
+
 //Prime Ng Module
 import { ButtonModule } from 'primeng/button';
 import { PanelModule } from 'primeng/panel';
@@ -30,11 +31,11 @@ import { TreeTableModule } from 'primeng/treetable';
 import { CheckboxModule } from 'primeng/checkbox';
 import { from } from 'rxjs';
 import { MessageModule } from 'primeng/message';
-import {TreeModule} from 'primeng/tree';
 import {PickListModule} from 'primeng/picklist';
-import {ListboxModule} from 'primeng/listbox';
 
+import {FileUploadModule} from 'primeng/fileupload';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import {APIService} from '../services/apieservice';
 
 
 @NgModule({
@@ -58,11 +59,10 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
     ConfirmDialogModule,
     MessageModule,
     CheckboxModule,
-    TreeModule,
     PickListModule,
-    ListboxModule
+    FileUploadModule
   ],
-  providers: [DialogService, ConfirmationService],
+  providers: [DialogService, ConfirmationService,APIService],
   entryComponents: [SupplierComponent, AddNewSupplierComponent, AddressComponent, ContactComponent, BankComponent, GstComponent, ProductMappingComponent]
 })
 export class SupplierModule { }

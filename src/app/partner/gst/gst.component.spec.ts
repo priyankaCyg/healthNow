@@ -1,19 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { GenrelEditComponent } from './generalEdit.component';
 
-describe('GenrelEditComponent', () => {
-  let component: GenrelEditComponent;
-  let fixture: ComponentFixture<GenrelEditComponent>;
+import { GstComponent } from './gst.component';
+
+describe('GstComponent', () => {
+  let component: GstComponent;
+  let fixture: ComponentFixture<GstComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ GenrelEditComponent ]
+      declarations: [ GstComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(GenrelEditComponent);
+    fixture = TestBed.createComponent(GstComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

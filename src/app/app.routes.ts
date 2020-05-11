@@ -34,19 +34,14 @@ export const routes: Routes = [
             { path: 'documentation', component: DocumentationComponent },
             // { path: 'company', component: CompanyComponent},
             { path: 'company', loadChildren:"./company/company.module#CompanyModule"},
-            {
-                path: "landingPage",
-                loadChildren: "./landing-page/landing-page.module#LandingPageModule",
-                canActivate: [AuthGuard]
-              },
-
               { path: 'product-category', loadChildren:"./product-category/product-category.module#ProductCategoryModule"},
               { path: 'producer', loadChildren:"./producer/producer.module#ProducerModule"},
               { path: 'brand', loadChildren:"./brand/brand.module#BrandModule" },
               { path: 'unit', loadChildren:"./unit/unit.module#UnitModule" },
               { path: 'product', loadChildren:"./product/product.module#ProductModule" },
               { path: 'supplier-category', loadChildren:"./supplier-category/supplier-category.module#SupplierCategoryModule"},
-              { path: 'supplier', loadChildren:"./supplier/supplier.module#SupplierModule" }
+              { path: 'supplier', loadChildren:"./supplier/supplier.module#SupplierModule" },
+              { path: 'partner', loadChildren:"./partner/partner.module#PartnerModule" }
               
         ]
     },

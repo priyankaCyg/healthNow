@@ -1,39 +1,39 @@
-<div class="p-grid ui-fluid">
-    <form [formGroup]="employeeForm">
+<form [formGroup]="employeeForm">
+    <div class="p-grid ui-fluid">
         <div class="p-col-12"> 
             <div class="p-grid form-group">
-             <div class="p-col-12 p-md-6 p-lg-3">
-                    <label for="sEmpCode">Employee Code</label>
-                    <input id="sEmpCode" type="text" formControlName="sEmpCode" pInputText required>
-                    <div>
-                        <p-message severity="error" [text]="employeeForm.controls['sEmpCode'].errors['required'] ? 'Employee Code is required' : employeeForm.controls['sEmpCode'].errors['pattern'] ? 'Should be alpha numeric' : ''" 
-                        *ngIf="!employeeForm.controls['sEmpCode'].valid&&employeeForm.controls['sEmpCode'].dirty"></p-message>
+                    <div class="p-col-12 p-md-6 p-lg-3">
+                            <label for="sEmpCode">Employee Code</label>
+                            <input id="sEmpCode" type="text" formControlName="sEmpCode" pInputText required>
+                            <div>
+                                <p-message severity="error" [text]="employeeForm.controls['sEmpCode'].errors['required'] ? 'Employee Code is required' : employeeForm.controls['sEmpCode'].errors['pattern'] ? 'Should be alpha numeric' : ''" 
+                                *ngIf="!employeeForm.controls['sEmpCode'].valid&&employeeForm.controls['sEmpCode'].dirty"></p-message>
+                            </div>
                     </div>
-             </div>
-            <div class="p-col-12 p-md-6 p-lg-3">
-                    <label for="sFirstName">First Name</label>
-                    <input id="sFirstName" type="text" formControlName="sFirstName" pInputText>
-                    <div>
-                        <p-message severity="error" [text]="employeeForm.controls['sFirstName'].errors['required'] ? 'Firstname is required' : employeeForm.controls['sFirstName'].errors['pattern'] ? 'Should be alpha numeric' : ''" 
-                        *ngIf="!employeeForm.controls['sFirstName'].valid&&employeeForm.controls['sFirstName'].dirty"></p-message>
+                    <div class="p-col-12 p-md-6 p-lg-3">
+                            <label for="sFirstName">First Name</label>
+                            <input id="sFirstName" type="text" formControlName="sFirstName" pInputText>
+                            <div>
+                                <p-message severity="error" [text]="employeeForm.controls['sFirstName'].errors['required'] ? 'Firstname is required' : employeeForm.controls['sFirstName'].errors['pattern'] ? 'Should be alpha numeric' : ''" 
+                                *ngIf="!employeeForm.controls['sFirstName'].valid&&employeeForm.controls['sFirstName'].dirty"></p-message>
+                            </div>
                     </div>
-             </div>
-             <div class="p-col-12 p-md-6 p-lg-3">
-                    <label for="sMiddleName">Middle Name</label>
-                    <input id="sMiddleName" type="text" formControlName="sMiddleName" pInputText>
-                    <div>
-                        <p-message severity="error" [text]="employeeForm.controls['sMiddleName'].errors['required'] ? 'Middle Name is required' : employeeForm.controls['sMiddleName'].errors['pattern'] ? 'Should be alpha numeric' : ''" 
-                        *ngIf="!employeeForm.controls['sMiddleName'].valid&&employeeForm.controls['sMiddleName'].dirty"></p-message>
+                    <div class="p-col-12 p-md-6 p-lg-3">
+                            <label for="sMiddleName">Middle Name</label>
+                            <input id="sMiddleName" type="text" formControlName="sMiddleName" pInputText>
+                            <div>
+                                <p-message severity="error" [text]="employeeForm.controls['sMiddleName'].errors['required'] ? 'Middle Name is required' : employeeForm.controls['sMiddleName'].errors['pattern'] ? 'Should be alpha numeric' : ''" 
+                                *ngIf="!employeeForm.controls['sMiddleName'].valid&&employeeForm.controls['sMiddleName'].dirty"></p-message>
+                            </div>
                     </div>
-             </div>
-              <div class="p-col-12 p-md-6 p-lg-3">
-                    <label for="sLastName">Last Name</label>
-                    <input id="sLastName" type="text" formControlName="sLastName" pInputText>
-                    <div>
-                        <p-message severity="error" [text]="employeeForm.controls['sLastName'].errors['required'] ? 'Last Name is required' : employeeForm.controls['sLastName'].errors['pattern'] ? 'Should be alpha numeric' : ''" 
-                        *ngIf="!employeeForm.controls['sLastName'].valid&&employeeForm.controls['sLastName'].dirty"></p-message>
+                    <div class="p-col-12 p-md-6 p-lg-3">
+                            <label for="sLastName">Last Name</label>
+                            <input id="sLastName" type="text" formControlName="sLastName" pInputText>
+                            <div>
+                                <p-message severity="error" [text]="employeeForm.controls['sLastName'].errors['required'] ? 'Last Name is required' : employeeForm.controls['sLastName'].errors['pattern'] ? 'Should be alpha numeric' : ''" 
+                                *ngIf="!employeeForm.controls['sLastName'].valid&&employeeForm.controls['sLastName'].dirty"></p-message>
+                            </div>
                     </div>
-             </div>
             </div>
             <div class="p-grid form-group">
                 <div class="p-col-12 p-md-6 p-lg-3">
@@ -89,14 +89,6 @@
                         *ngIf="!employeeForm.controls['sDirect'].valid&&employeeForm.controls['sDirect'].dirty"></p-message>
                     </div>
                 </div>
-                <!-- <div class="p-col-12 p-md-6 p-lg-3">
-                    <label for="landmark">Landmark</label>
-                    <input id="landmark" formControlName="iStatusID" type="text" pInputText>
-                    <div>
-                        <p-message severity="error" [text]="employeeForm.controls['iStatusID'].errors['required'] ? 'Landmark is required' : employeeForm.controls['iStatusID'].errors['pattern'] ? 'Should be alpha numeric' : ''" 
-                        *ngIf="!employeeForm.controls['iStatusID'].valid&&employeeForm.controls['iStatusID'].dirty"></p-message>
-                    </div>
-                </div> -->
                 <div class="p-col-12 p-md-6 p-lg-3">
                     <label for="iStatusID">Status</label>
                     <p-dropdown formControlName="iStatusID" optionLabel="sKVValue"  [filter]="true" id="iStatusID" [options]="statusData" [(ngModel)]="selectedstatus"></p-dropdown>
@@ -140,30 +132,17 @@
 
                     </div>
                 </div>
-                <!-- <div class="p-col-12 p-md-6 p-lg-3">
-                    <label for="iStatusID">Status</label>
-                    <p-dropdown formControlName="iStatusID" optionLabel="sKVValue"  [filter]="true" id="iStatusID" [options]="statusData" [(ngModel)]="selectedstatus"></p-dropdown>
-                    <div>
-                        <p-message severity="error" text="Status to is required" *ngIf="employeeForm.controls['iStatusID'].touched  && (selectedstatus.iKVID=='' || employeeForm.controls['iStatusID'].hasError('required'))"></p-message>
-
-                    </div>
-                </div>
-     -->
             </div>
             <div class="separator separator--border-solid separator--space-sm separator--portlet-fit"></div>
             <div class="p-grid form-group ui-fluid p-justify-end">
-                <div class="p-col-12 p-md-2 p-lg-1">
-                    <button pButton type="button" (click)="closeDialog()" label="Cancel" style="margin-bottom:10px" class="ui-button-light"></button>
-                </div>
-                 <div class="p-col-12 p-md-2 p-lg-1" *ngIf="!isEdit">
-                    <button pButton type="button" label="Save" [disabled]="!(!employeeForm.invalid && !dropDownValidityCheck())" (click)="addEmployee()" style="margin-bottom:10px" class="ui-button"></button>
-                </div>
-
-                <div class="p-col-12 p-md-2 p-lg-1" *ngIf="isEdit">
-                    <button pButton type="button" [disabled]="!(!employeeForm.invalid && !dropDownValidityCheck())"  label="Update" (click)="updateEmployee()" style="margin-bottom:10px" class="ui-button"></button>
+                <div class="p-col-12 p-md-12 p-lg-12 text-right">
+                    <button pButton type="button" (click)="closeDialog()" label="Cancel" style="margin-bottom:10px" class="ui-button-light atbt mr-2"></button>
+                
+                    <button *ngIf="!isEdit" pButton type="button" label="Save" [disabled]="!(!employeeForm.invalid && !dropDownValidityCheck())" (click)="addEmployee()" class="ui-button atbt"></button>
+                
+                    <button *ngIf="isEdit" pButton type="button" [disabled]="!(!employeeForm.invalid && !dropDownValidityCheck())"  label="Update" (click)="updateEmployee()" class="ui-button atbt"></button>
                 </div>
             </div>
-
         </div>
-    </form>
     </div>
+</form>

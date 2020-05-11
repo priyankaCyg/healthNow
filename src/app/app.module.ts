@@ -118,7 +118,6 @@ import { MessageService } from 'primeng/api';
 import { from } from 'rxjs';
 
 import { ApiService } from './services/api.service';
-import { dropdownValidatorDirective } from './model/dropdown.directive';
 
 
 @NgModule({
@@ -219,9 +218,7 @@ import { dropdownValidatorDirective } from './model/dropdown.directive';
         ChartsDemoComponent,
         EmptyDemoComponent,
         FileDemoComponent,
-        DocumentationComponent,
-        dropdownValidatorDirective
-       
+        DocumentationComponent
         //UnitComponent
         // CompanyComponent,
         // GeneralEditComponent,

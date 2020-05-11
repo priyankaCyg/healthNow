@@ -1,46 +1,63 @@
 <div class="p-grid ui-fluid">
+    <form [formGroup]="bankForm">
+
     <div class="p-col-12"> 
         <div class="p-grid form-group">
         <div class="p-col-12 p-md-6 p-lg-6">
-                <label for="bankName">Bank Name</label>
-                <input id="bankName" type="text" pInputText>
+                <label for="sBankName">Bank Name</label>
+                <input id="sBankName" formControlName="sBankName" type="text" pInputText>
+                <p-message severity="error" [text]="bankForm.controls['sBankName'].errors['required'] ? 'Brand Name is required' : bankForm.controls['sBankName'].errors['pattern'] ? 'Should be alpha numeric' : ''" 
+                    *ngIf="!bankForm.controls['sBankName'].valid&&bankForm.controls['sBankName'].dirty"></p-message>
          </div>
          <div class="p-col-12 p-md-6 p-lg-6">
-                <label for="middleName">Short Code/Account Type</label>
-                <input id="middleName" type="text" pInputText>
+                <label for="sShortCode">Short Code/Account Type</label>
+                <input id="sShortCode"  formControlName="sShortCode" type="text" pInputText>
+                <p-message severity="error" [text]="bankForm.controls['sShortCode'].errors['required'] ? 'Brand Name is required' : bankForm.controls['sShortCode'].errors['pattern'] ? 'Should be alpha numeric' : ''" 
+                    *ngIf="!bankForm.controls['sShortCode'].valid&&bankForm.controls['sShortCode'].dirty"></p-message>
          </div>
           <div class="p-col-12 p-md-6 p-lg-6">
-                <label for="lasteName">Account No</label>
-                <input id="lasteName" type="text" pInputText>
+                <label for="sAccountNo">Account No</label>
+                <input id="sAccountNo" type="text" formControlName="sAccountNo"  pInputText>
+                <p-message severity="error" [text]="bankForm.controls['sAccountNo'].errors['required'] ? 'Brand Name is required' : bankForm.controls['sAccountNo'].errors['pattern'] ? 'Should be alpha numeric' : ''" 
+                    *ngIf="!bankForm.controls['sAccountNo'].valid&&bankForm.controls['sAccountNo'].dirty"></p-message>
          </div>
          <div class="p-col-12 p-md-6 p-lg-6">
-                <label for="lasteName">IFSC</label>
-                <input id="lasteName" type="text" pInputText>
+                <label for="sIFSC">IFSC</label>
+                <input id="sIFSC" type="text"  formControlName="sIFSC"  pInputText>
+                <p-message severity="error" [text]="bankForm.controls['sIFSC'].errors['required'] ? 'Brand Name is required' : bankForm.controls['sIFSC'].errors['pattern'] ? 'Should be alpha numeric' : ''" 
+                    *ngIf="!bankForm.controls['sIFSC'].valid&&bankForm.controls['sIFSC'].dirty"></p-message>
          </div>
          <div class="p-col-12 p-md-12 p-lg-12">
-            <label for="bankBranch">Bank Branch</label>
-            <textarea rows="3" pInputTextarea autoResize="autoResize"></textarea>
+            <label for="sBankBranch">Bank Branch</label>
+            <textarea rows="3" pInputTextarea   formControlName="sBankBranch" autoResize="autoResize"></textarea>
+            <p-message severity="error" [text]="bankForm.controls['sBankBranch'].errors['required'] ? 'Brand Name is required' : bankForm.controls['sBankBranch'].errors['pattern'] ? 'Should be alpha numeric' : ''" 
+                    *ngIf="!bankForm.controls['sBankBranch'].valid&&bankForm.controls['sBankBranch'].dirty"></p-message>
         </div>
         </div>
         <div class="separator separator--border-dashed separator--space-sm separator--portlet-fit"></div>
         <div class="p-grid form-group">
             <div class="p-col-12 p-md-6 p-lg-6">
-                <label for="status">Status</label>
-                <p-dropdown id="status" [options]="status" [(ngModel)]="selectedstatus"></p-dropdown>
+                <label for="iStatusID">Status</label>
+                <!-- <p-dropdown id="status" [options]="status" [(ngModel)]="selectedstatus"></p-dropdown> -->
+                <!-- <label for="iStatusID">Status</label> -->
+                <p-dropdown id="iStatusID" optionLabel="sKVValue" formControlName="iStatusID" [options]="statusData" [(ngModel)]="selectedstatus"></p-dropdown>
+                <p-message severity="error" text="Status is required" *ngIf="bankForm.controls['iStatusID'].touched && (selectedstatus.iKVID=='' || bankForm.controls['iStatusID'].hasError('required'))"></p-message>
+            
             </div>
         </div>
 
         
         <div class="separator separator--border-solid separator--space-sm separator--portlet-fit"></div>
         <div class="p-grid form-group ui-fluid p-justify-end">
-            <div class="p-col-12 p-md-2 p-lg-1">
-                <button pButton type="button" label="Cancel" style="margin-bottom:10px" class="ui-button-light"></button>
-            </div>
-             <div class="p-col-12 p-md-2 p-lg-1">
-                <button pButton type="button" label="Save" style="margin-bottom:10px" class="ui-button"></button>
+            <div class="p-col-12 p-md-12 p-lg-12 text-right">
+                <button pButton type="button" label="Cancel" class="ui-button-light atbt mr-2"></button>
+           
+                <button *ngIf="!isEdit" pButton type="button" label="Save" (click)="addUnit()" class="ui-button atbt"></button>
+            
+                <button *ngIf="isEdit" pButton type="button" label="Update" (click)="updateUnit()" class="ui-button atbt"></button>
             </div>
         </div>
 
     </div>
-   
+   </form>
 </div>

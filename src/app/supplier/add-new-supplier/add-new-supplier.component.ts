@@ -52,7 +52,7 @@ export class AddNewSupplierComponent implements OnInit {
   supId;
   sourceCategory: SupplierCategoryMapping[];
 
-  targetCategory: SupplierCategoryMapping[];
+  targetCategory: Array<SupplierCategoryMapping>;
 
   constructor(private breadcrumbService: BreadcrumbService,
      private dialogService: DialogService,

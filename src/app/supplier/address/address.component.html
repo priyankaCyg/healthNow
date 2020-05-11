@@ -1,7 +1,7 @@
-
+<form [formGroup]="SupplierAddressForm" autocomplete="off" novalidate> 
+<div class="p-grid ui-fluid">
     <div class="p-col-12"> 
-    <div class="p-grid ui-fluid">
-        <form [formGroup]="SupplierAddressForm" autocomplete="off" novalidate> 
+       
             <div class="p-grid form-group">
                 <div class="p-col-12 p-md-6 p-lg-4">
                     <label for="iAddTypeID">Address Type</label>
@@ -62,18 +62,13 @@
             
             <div class="separator separator--border-solid separator--space-sm separator--portlet-fit"></div>
             <div class="p-grid form-group ui-fluid p-justify-end">
-                <div class="p-col-12 p-md-2 p-lg-1">
-                    <button pButton type="button" label="Cancel" style="margin-bottom:10px" class="ui-button-light" (click)="closeDialog()"></button>
+                <div class="p-col-12 p-md-12 p-lg-12 text-right">
+                    <button pButton type="button" label="Cancel" class="ui-button-light atbt mr-2" (click)="closeDialog()"></button>                
+                    <button *ngIf="!isEdit" pButton type="button" label="Save" [disabled]="!(!SupplierAddressForm.invalid && !dropDownValidityCheck())" class="ui-button atbt" (click)="addSupplierAddress()"></button>                
+                    <button *ngIf="isEdit" pButton type="button" label="Update" [disabled]="!(!SupplierAddressForm.invalid && !dropDownValidityCheck())" class="ui-button atbt" (click)="editSupplierAddress()"></button>
                 </div>
-                 <div class="p-col-12 p-md-2 p-lg-1" *ngIf="!isEdit">
-                    <button pButton type="button" label="Save" [disabled]="!(!SupplierAddressForm.invalid && !dropDownValidityCheck())" style="margin-bottom:10px" class="ui-button" (click)="addSupplierAddress()"></button>
-                </div>
-                <div class="p-col-12 p-md-2 p-lg-1" *ngIf="isEdit">
-                    <button pButton type="button" label="Update" [disabled]="!(!SupplierAddressForm.invalid && !dropDownValidityCheck())" style="margin-bottom:10px" class="ui-button" (click)="editSupplierAddress()"></button>
-                </div>
-            </div>
-
-       
-    </form>  
+            </div>   
+   
     </div>
      </div>
+    </form> 

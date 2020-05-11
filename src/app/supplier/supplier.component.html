@@ -35,35 +35,38 @@
                                 <th>Fax</th>
                                 <th>Pan</th>
                                 <th>Status</th>
-                                <th>Action</th>
+                                <th style="width: 15em;">Action</th>
                             </tr>
                         </ng-template>
                         <ng-template pTemplate="body" let-rowData let-columns="columns" let-supplier>
                             <tr>
-                                <td class="ui-resizable-column">{{supplier.sSupName}}</td>
-                                <td class="ui-resizable-column">{{supplier.supplierCat}}</td>
-                                <td class="ui-resizable-column">{{supplier.sShortCode}}</td>
-                                <td class="ui-resizable-column">{{supplier.iLegalEntityID}}</td>
-                                <td class="ui-resizable-column">{{supplier.sWebsite}}</td>
-                                <td class="ui-resizable-column">{{supplier.sTelNo1}}</td>
-                                <td class="ui-resizable-column">{{supplier.sTelNo2}}</td>
-                                <td class="ui-resizable-column">{{supplier.sFaxNo}}</td>
-                                <td class="ui-resizable-column">{{supplier.sPAN}}</td>
-                                <td class="ui-resizable-column">
-                                    <button *ngIf="supplier.iStatusID == 1" pButton type="button"
-                                        class="ui-button-rounded ui-button-success" style="width: 100px; height: 25px;">
+                                <td>{{supplier.sSupName}}</td>
+                                <td>{{supplier.supplierCat}}</td>
+                                <td>{{supplier.sShortCode}}</td>
+                                <td style="width: 2em;">{{supplier.iLegalEntityID}}</td>
+                                <td>{{supplier.sWebsite}}</td>
+                                <td>{{supplier.sTelNo1}}</td>
+                                <td>{{supplier.sTelNo2}}</td>
+                                <td>{{supplier.sFaxNo}}</td>
+                                <td>{{supplier.sPAN}}</td>
+                                <td>
+                                    <span *ngIf="supplier.iStatusID == 1"
+                                        class="badge badge--success badge--inline badge--pill">
                                         {{supplier.sStatusName}}
-                                    </button>
-                                    <button *ngIf="supplier.iStatusID == 2" pButton type="button"
-                                        class="ui-button-rounded ui-button-warning" style="width: 100px; height: 25px;">
+                                    </span>
+                                    <span *ngIf="supplier.iStatusID == 2"
+                                        class="badge badge--warning badge--inline badge--pill">
                                         {{supplier.sStatusName}}
-                                    </button>
-                                    <button *ngIf="supplier.iStatusID == 3" pButton type="button"
-                                        class="ui-button-rounded ui-button-danger" style="width: 100px; height: 25px;">
+                                    </span>
+                                    <span *ngIf="supplier.iStatusID == 3"
+                                        class="badge badge--danger badge--inline badge--pill">
                                         {{supplier.sStatusName}}
-                                    </button>
+                                    </span>
                                 </td>
-                                <td class="ui-resizable-column">
+                                <td>
+                                    <button pButton type="button" (click)="prdmapSupplier(supplier.iSupID)"
+                                        class="ui-button-success mr-2" icon="pi  pi-sitemap"
+                                        title="Product Map"></button>
                                     <button pButton type="button" (click)="editSupplier(supplier.iSupID)"
                                         class="ui-button-success mr-2" icon="pi pi-pencil" title="Edit"></button>
                                     <button pButton type="button" (click)="deleteSupplier(supplier)"

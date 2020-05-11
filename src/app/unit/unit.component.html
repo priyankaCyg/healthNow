@@ -1,3 +1,5 @@
+<p-confirmDialog header="Confirmation" icon="pi pi-info" [style]="{width: '425px'}" rejectButtonStyleClass="ui-button-secondary"></p-confirmDialog>
+
 <div class="p-grid">
     <div class="p-col-12">
         <div class="card card-w-title">
@@ -33,7 +35,18 @@
                         <tr>
                             <td>{{unit.srNo}}</td>
                             <td>{{unit.sUnitName}}</td>
-                            <td>{{unit.sStatusName}}</td>
+                            <!-- <td>{{unit.sStatusName}}</td> -->
+                            <td>
+                                <span *ngIf="unit.iStatusID == 1" class="badge badge--success badge--inline badge--pill">
+                                  Active
+                                </span>
+                                <span *ngIf="unit.iStatusID == 2" class="badge badge--warning badge--inline badge--pill">
+                                  Inactive
+                                </span>
+                                <span *ngIf="unit.iStatusID == 3" class="badge badge--danger badge--inline badge--pill">
+                                  Deleted
+                                </span>
+                              </td>
                             <td>
                                 <button pButton type="button" (click)="editUnit(unit.iUnitID)" class="ui-button-success" icon="pi pi-pencil" style="margin-right: .5em"></button>
                                 <button pButton type="button" (click)="deleteUnit(unit.iUnitID)" class="ui-button-danger" icon="pi pi-trash"></button>

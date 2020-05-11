@@ -1,20 +1,28 @@
 <div class="p-grid ui-fluid p-justify-end">
+    <form [formGroup]="supContactForm">
+
     <div class="p-col-12"> 
         <div class="p-grid form-group">
             
             <div class="p-col-12 p-md-6 p-lg-3 mb-2">
-                <label for="fullName">Full Name</label>
-                <input id="fullName" type="text" pInputText>
+                <label for="sFullName">Full Name</label>
+                <input id="sFullName" formControlName="sFullName" type="text" pInputText>
+                <p-message severity="error" [text]="supContactForm.controls['sFullName'].errors['required'] ? 'Brand Name is required' : supContactForm.controls['sFullName'].errors['pattern'] ? 'Should be alpha numeric' : ''" 
+                *ngIf="!supContactForm.controls['sFullName'].valid&&supContactForm.controls['sFullName'].dirty"></p-message>
             </div>
 
             <div class="p-col-12 p-md-6 p-lg-3 mb-2">
-                <label for="designation">Designation</label>
-                <input id="designation" type="text" pInputText>
+                <label for="sDesignation">Designation</label>
+                <input id="sDesignation" formControlName="sDesignation" type="text" pInputText>
+                <p-message severity="error" [text]="supContactForm.controls['sDesignation'].errors['required'] ? 'Brand Name is required' : supContactForm.controls['sDesignation'].errors['pattern'] ? 'Should be alpha numeric' : ''" 
+                *ngIf="!supContactForm.controls['sDesignation'].valid&&supContactForm.controls['sDesignation'].dirty"></p-message>
             </div>
 
             <div class="p-col-12 p-md-6 p-lg-3 mb-2">
-                <label for="emailId">Email ID</label>
-                <input id="emailId" type="email" pInputText>
+                <label for="sEmailID">Email ID</label>
+                <input id="sEmailID" formControlName="sEmailID" type="email" pInputText>
+                <p-message severity="error" [text]="supContactForm.controls['sEmailID'].errors['required'] ? 'Brand Name is required' : supContactForm.controls['sEmailID'].errors['pattern'] ? 'Should be alpha numeric' : ''" 
+                *ngIf="!supContactForm.controls['sEmailID'].valid&&supContactForm.controls['sEmailID'].dirty"></p-message>
             </div>
         </div>
 
@@ -22,8 +30,11 @@
         
         <div class="p-grid form-group">
             <div class="p-col-12 p-md-12 p-lg-6 mb-2">
-                <label for="suppAdd">Supplier Address</label>
-                <textarea pInputTextarea [(ngModel)]="suppAdd"></textarea>
+                <label for="sAddress">Supplier Address</label>
+                <!-- <textarea pInputTextarea [(ngModel)]="suppAdd"></textarea> -->
+                <p-dropdown id="sAddress" optionLabel="sAddress" formControlName="sAddress"  [options]="addressData" [(ngModel)]="selectedAddress"></p-dropdown>
+                <p-message severity="error" text="Address is required" *ngIf="supContactForm.controls['sAddress'].touched && (selectedAddress.iSupAddID=='' || supContactForm.controls['sAddress'].hasError('required'))"></p-message>
+
             </div>
             
         </div>
@@ -31,20 +42,28 @@
         <div class="separator separator--border-solid separator--space-sm separator--portlet-fit"></div>
         <div class="p-grid form-group">
             <div class="p-col-12 p-md-6 p-lg-3 mb-2">
-                <label for="mobileNo">Mobile No.</label>
-                <input id="mobileNo" type="text" pInputText>
+                <label for="sMobileNo">Mobile No.</label>
+                <input id="sMobileNo" type="text" formControlName="sMobileNo" pInputText>
+                <p-message severity="error" [text]="supContactForm.controls['sMobileNo'].errors['required'] ? 'Brand Name is required' : supContactForm.controls['sMobileNo'].errors['pattern'] ? 'Should be alpha numeric' : ''" 
+                *ngIf="!supContactForm.controls['sMobileNo'].valid&&supContactForm.controls['sMobileNo'].dirty"></p-message>
             </div>
             <div class="p-col-12 p-md-6 p-lg-3 mb-2">
                 <label for="contatNo">Contact No.</label>
-                <input id="contatNo" type="text" pInputText>
+                <input id="contatNo" type="text" formControlName="sContactNo" pInputText>
+                <p-message severity="error" [text]="supContactForm.controls['sContactNo'].errors['required'] ? 'Brand Name is required' : supContactForm.controls['sContactNo'].errors['pattern'] ? 'Should be alpha numeric' : ''" 
+                *ngIf="!supContactForm.controls['sContactNo'].valid&&supContactForm.controls['sContactNo'].dirty"></p-message>
             </div>
             <div class="p-col-12 p-md-6 p-lg-3 mb-2">
                 <label for="directNo">Direct No.</label>
-                <input id="directNo" type="text" pInputText>
+                <input id="directNo" type="text" formControlName="sDirectNo" pInputText>
+                <p-message severity="error" [text]="supContactForm.controls['sDirectNo'].errors['required'] ? 'Brand Name is required' : supContactForm.controls['sDirectNo'].errors['pattern'] ? 'Should be alpha numeric' : ''" 
+                *ngIf="!supContactForm.controls['sDirectNo'].valid&&supContactForm.controls['sDirectNo'].dirty"></p-message>
             </div>
             <div class="p-col-12 p-md-6 p-lg-3 mb-2">
                 <label for="fax">Fax No.</label>
-                <input id="Fax" type="text" pInputText>
+                <input id="Fax" type="text" formControlName="sFaxNo" pInputText>
+                <p-message severity="error" [text]="supContactForm.controls['sFaxNo'].errors['required'] ? 'Brand Name is required' : supContactForm.controls['sFaxNo'].errors['pattern'] ? 'Should be alpha numeric' : ''" 
+                *ngIf="!supContactForm.controls['sFaxNo'].valid&&supContactForm.controls['sFaxNo'].dirty"></p-message>
             </div>
         
         </div>
@@ -52,20 +71,25 @@
         <div class="p-grid form-group">
             <div class="p-col-12 p-md-6 p-lg-3 mb-2">
                 <label for="status">Status</label>
-                <p-dropdown [options]="status" [(ngModel)]="selectedstatus"></p-dropdown>
+                <!-- <p-dropdown [options]="status" [(ngModel)]="selectedstatus"></p-dropdown> -->
+                <p-dropdown id="iStatusID" optionLabel="sKVValue"  formControlName="iStatusID"  [options]="statusData" [(ngModel)]="selectedstatus"></p-dropdown>
+                <p-message severity="error" text="Status is required" *ngIf="supContactForm.controls['iStatusID'].touched && (selectedstatus.iKVID=='' || supContactForm.controls['iStatusID'].hasError('required'))"></p-message>
+
             </div>
         
         </div>
 
         <div class="separator separator--border-solid separator--space-sm separator--portlet-fit"></div>
         <div class="p-grid form-group ui-fluid p-justify-end mt-3">
-            <div class="p-col-12 p-md-2 p-lg-1">
-                <button pButton type="button" label="Cancel" style="margin-bottom:10px" class="ui-button-light"></button>
-            </div>
-            <div class="p-col-12 p-md-2 p-lg-1">
-                <button pButton type="button" label="Save" style="margin-bottom:10px" class="ui-button"></button>
+            <div class="p-col-12 p-md-12 p-lg-12 text-right">
+                <button pButton type="button" label="Cancel" (click)="closeDialog()" class="ui-button-light atbt mr-2"></button>            
+                <button *ngIf="!isEdit" pButton type="button" label="Save" [disabled]="!(!supContactForm.invalid && !dropDownValidityCheck())" (click)="addSupplierContact()" class="ui-button atbt"></button>           
+                <button *ngIf="isEdit" pButton type="button" label="Update" [disabled]="!(!supContactForm.invalid && !dropDownValidityCheck())" (click)="updateSupplierContact()" class="ui-button atbt"></button>
             </div>
         </div>
 
     </div>
+    </form>
+
 </div>
+

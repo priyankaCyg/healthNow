@@ -106,6 +106,17 @@ import {AppMainComponent} from './app.main.component';
 									</li>
 								</ul>
 							</li>
+							<li [ngClass]="{'active-topmenuitem': activeItem === 4}" (click)="mobileMegaMenuItemClick(3)">
+								<a href="#">Partner <i class="pi pi-angle-down"></i></a>
+								<ul>
+									<li routerLink="/app/partner">
+										<i class="pi pi-circle-on"></i>
+										<span>
+                                       		 <h3>Partner</h3>
+                                   		 </span>
+									</li>
+								</ul>
+							</li>
 						</ul>
 					</div>
                 </div>

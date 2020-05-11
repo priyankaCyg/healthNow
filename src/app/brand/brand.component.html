@@ -36,9 +36,20 @@
                                                 <tr>
                                                     <td>{{brand.sProducerName}}</td>
                                                     <td>{{brand.sBrandName}}</td>
-                                                    <td>{{brand.sStatusName}}</td>
+                                                    <!-- <td>{{brand.sStatusName}}</td> -->
                                                     <td>
-                                                        <button pButton type="button" (click)="editBrand(brand.iBrandID)" class="ui-button-success" icon="pi pi-pencil" style="margin-right: .5em"></button>
+                                                        <span *ngIf="brand.iStatusID == 1" class="badge badge--success badge--inline badge--pill">
+                                                          Active
+                                                        </span>
+                                                        <span *ngIf="brand.iStatusID == 2" class="badge badge--warning badge--inline badge--pill">
+                                                          Inactive
+                                                        </span>
+                                                        <span *ngIf="brand.iStatusID == 3" class="badge badge--danger badge--inline badge--pill">
+                                                          Deleted
+                                                        </span>
+                                                      </td>
+                                                    <td>
+                                                        <button pButton type="button" (click)="editBrand(brand.iBrandID)" class="ui-button-success mr-2" icon="pi pi-pencil"></button>
                                                         <button pButton type="button" (click)="deleteBrand(brand.iBrandID)" class="ui-button-danger" icon="pi pi-trash"></button>
                                                     </td>
                                                 </tr>

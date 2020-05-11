@@ -6338,7 +6338,7 @@ body.hidden-overflow {
   left: 0px;
 }
 .layout-topbar .layout-topbar-wrapper .layout-topbar-left .layout-megamenu > li {
-  min-width: 200px;
+  min-width: 180px;
 }
 .layout-topbar .layout-topbar-wrapper .layout-topbar-left .layout-megamenu > li > a {
   font-size: 12px;
