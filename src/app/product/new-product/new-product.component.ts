@@ -55,6 +55,15 @@ prImage: any[];
 
     brands: SelectItem[];
 
+    city;
+    selectedproducer;
+    unit;
+    selectedunit;
+    foodCulture;
+    selectedfoodCulture;
+    
+
+
   constructor(private carService: CarService,private breadcrumbService: BreadcrumbService, private dialogService:DialogService) {
     this.breadcrumbService.setItems([
         { label: 'Dashboard' },

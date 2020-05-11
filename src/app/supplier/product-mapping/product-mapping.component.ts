@@ -28,6 +28,7 @@ export class ProductMappingComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    alert(this.Selectedvalue)
     this.producerDropdown();
 
   }
@@ -57,7 +58,18 @@ export class ProductMappingComponent implements OnInit {
     }
     this.apiService.callPostApi(product_list_data).subscribe(
       (data) => {
+        console.log("data ",data)
         this.producer = data;
+
+        for(var i=0;i<this.producer.length;i++)
+        {
+          if(this.producer[i].iSelected==1)
+          {
+            this.Selectedvalue.push(this.producer[i]);
+
+          }
+        }
+
 
       },
       (error) => console.log(error)
@@ -74,7 +86,7 @@ export class ProductMappingComponent implements OnInit {
   //   }
   // }
   saveProduct() {
-    console.log(this.Selectedvalue);
+    console.log("Selectedvalue ",this.Selectedvalue);
     //let prd_id = this.Selectedvalue;
     const prd_id = this.Selectedvalue.map(({ iPrdID }) => iPrdID);
     let prd_id_str = prd_id.toString();
