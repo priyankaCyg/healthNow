@@ -14,7 +14,7 @@ import { PrcategoriesComponent } from './prcategories/prcategories.component';
 
 //Prime Ng Service
 import { DialogService } from 'primeng';
-import {FormsModule} from '@angular/forms';
+import {FormsModule,ReactiveFormsModule} from '@angular/forms';
 
 //Prime Ng Module
 import {ButtonModule} from 'primeng/button';
@@ -61,7 +61,8 @@ import {APIService} from '../services/apieservice';
     LightboxModule,
     // AccordionModule,
     // PickListModule,
-    CheckboxModule
+    CheckboxModule,
+    ReactiveFormsModule
 
   ],
   providers:[DialogService,APIService],

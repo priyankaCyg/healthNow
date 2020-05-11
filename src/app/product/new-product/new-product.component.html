@@ -130,13 +130,21 @@
                                 
                             </div>
                             <div class="p-col-12"> 
-                                <p-table [value]="productInfo">
-                                    <ng-template pTemplate="caption">
-                                   
-                                        <div class="ui-table-globalfilter-container text-left">
-                                            <input type="text" pInputText size="50" placeholder="Search" (input)="dt.filterGlobal($event.target.value, 'contains')" style="width:250px;">
-                                        </div>
-                                    </ng-template>
+                                <p-table #searchInfo [value]="productInfoData"
+                                 [filterDelay]="0"
+                                [globalFilterFields]="[
+                                  'sInfo'
+                                ]">
+                                <ng-template pTemplate="caption">
+                                    <div class="ui-table-globalfilter-container text-left">
+                                      <input type="text" pInputText size="50" placeholder="Search" (input)="
+                                          searchInfo.filterGlobal(
+                                            $event.target.value,
+                                            'contains'
+                                          )
+                                        " style="width: 250px;" />
+                                    </div>
+                                  </ng-template>
                                     <ng-template pTemplate="header">
                                         <tr>
                                             <th style="width: 3em">#</th>
@@ -146,8 +154,8 @@
                                     </ng-template>
                                     <ng-template pTemplate="body" let-productInfo>
                                         <tr>
-                                            <td>{{productInfo.srNo}}</td>
-                                            <td>{{productInfo.prInfo}}</td>
+                                            <td>{{productInfo.iSeq}}</td>
+                                            <td>{{productInfo.sInfo}}</td>
                                         </tr>
                                     </ng-template>
                                 </p-table>

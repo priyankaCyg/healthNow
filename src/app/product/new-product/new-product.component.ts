@@ -13,7 +13,11 @@ import { ProductVariantComponent } from '../product-variant/product-variant.comp
 import { ProductInfoComponent } from '../product-info/product-info.component';
 import { ProductDescriptionComponent } from '../product-description/product-description.component';
 import { ProductQueriesComponent } from '../product-queries/product-queries.component';
-
+import { Router, ActivatedRoute } from '@angular/router';
+import { ToastService } from 'src/app/services/toast.service';
+import { FormBuilder } from '@angular/forms';
+import { ApiService } from 'src/app/services/api.service';
+import { ProductInfoData } from 'src/app/model/productInfo';
 
 @Component({
   selector: 'app-new-product',
@@ -34,7 +38,7 @@ prImage: any[];
 
   productVariant: any[];
 
-  productInfo: any[];
+ 
 
   productDesc: any[];
 
@@ -55,7 +59,10 @@ prImage: any[];
 
     brands: SelectItem[];
 
-  constructor(private carService: CarService,private breadcrumbService: BreadcrumbService, private dialogService:DialogService) {
+    productInfoData: ProductInfoData[];
+  constructor(private carService: CarService,private breadcrumbService: BreadcrumbService, private dialogService:DialogService,  private route: ActivatedRoute, private apiService: ApiService,
+    private toastService: ToastService,
+   private fb: FormBuilder) {
     this.breadcrumbService.setItems([
         { label: 'Dashboard' },
         { label: 'Product', routerLink: ['/app/product'] }
@@ -102,13 +109,8 @@ prImage: any[];
       {Unit: 'Kg',  variant: '1'}
     ];
 
-    this.productInfo = [
-      { srNo:'#', prInfo: 'Extra protein helps build strength'},
-      { srNo:'#', prInfo: '100% Whole wheat chapati flour'},
-      { srNo:'#', prInfo: 'No Maida Added '},
-      { srNo:'#', prInfo: 'Atta is made from the choicest grains - heavy on the palm, golden amber in colour and hard in bite'},
-      { srNo:'#', prInfo: 'The dough made from Aashirvaad Atta absorbs more water, hence rotis remain softer for longer'}
-    ];
+    this.getProductInfo();
+      
 
     this.productDesc = [
       {prDesc: 'Handpicked from india’s finest wheat fields, fortune chakki fresh atta is made with 100 percent atta and 0 percent maida which complements your ghar ka khana perfectly. You can differentiate these fibre-rich rotis with your 5 senses - their superior quality taste, soft touch, mesmerizing aroma and a fluffy look, so words of appreciation are bound to come your way. '}
@@ -147,6 +149,25 @@ openDialogForProductVariant() {
     }
   });
 }
+
+
+getProductInfo(){
+  let prd_by_id = +this.route.snapshot.params['iProductID'];
+  const productInfoAPI = {
+    "iRequestID": 2161,
+    // "iProductID":prd_by_id
+    "iProductID":1
+  }
+  this.apiService.callPostApi(productInfoAPI).subscribe(
+    data => { console.log(data);
+
+      this.productInfoData = data[0];
+      console.log(this.productInfoData)
+    },
+    error => {console.log(error)}
+  )
+  
+}
 openDialogForProductInfo() {
   const ref = this.dialogService.open( ProductInfoComponent , {
     data: {
@@ -154,10 +175,14 @@ openDialogForProductInfo() {
     header: 'Add New Product Info',
     width: '40%'
   });
-  ref.onClose.subscribe((success: boolean) => {
+  localStorage.setItem('iProductID', this.route.snapshot.params['iProductID']);
+  ref.onClose.subscribe((success: any) => {
     if (success) {
+      this.getProductInfo();
+      this.toastService.addSingle("success", "Record Added Successfully", "");
       // this.toastService.addSingle("success", "Mail send successfully", "");
     }
+    
   });
 }
 openDialogForProductDesc() {
