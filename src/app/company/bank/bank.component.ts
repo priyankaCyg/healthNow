@@ -99,7 +99,8 @@ export class BankComponent implements OnInit {
           this.apiService.callPostApi(addBank_data).subscribe(
             (data) => {
               console.log(data);
-              this.toastService.addSingle("success", "Record Added Successfully", "");
+              this.ref.close(true);
+              
             },
             (error) => console.log(error)
           );
@@ -121,13 +122,13 @@ export class BankComponent implements OnInit {
           this.apiService.callPostApi(updateBank_data).subscribe(
             (data) => {
               console.log(data);
-              
-          this.toastService.addSingle("success", "Record Updated Successfully", "");
+              this.ref.close(true);
+         
             },
             (error) => console.log(error)
           );
         }
-        this.ref.close();
+       
         this.bankForm.reset();
       } else {
         console.log("Error");

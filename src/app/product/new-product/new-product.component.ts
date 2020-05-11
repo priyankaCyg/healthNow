@@ -180,7 +180,7 @@ openDialogForProductInfo() {
   const ref = this.dialogService.open( ProductInfoComponent , {
     data: {
     },
-    header: 'Add New Product Info',
+    header: 'Add Product Info',
     width: '40%'
   });
   localStorage.setItem('iProductID', this.route.snapshot.params['iProductID']);
@@ -188,7 +188,6 @@ openDialogForProductInfo() {
     if (success) {
       this.getProductInfo();
       this.toastService.addSingle("success", "Record Added Successfully", "");
-      // this.toastService.addSingle("success", "Mail send successfully", "");
     }
     
   });
