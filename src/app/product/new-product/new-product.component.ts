@@ -60,9 +60,17 @@ prImage: any[];
     brands: SelectItem[];
 
     productInfoData: ProductInfoData[];
+    city;
+    selectedproducer;
+    unit;
+    selectedunit;
+    foodCulture;
+    selectedfoodCulture;
+    
   constructor(private carService: CarService,private breadcrumbService: BreadcrumbService, private dialogService:DialogService,  private route: ActivatedRoute, private apiService: ApiService,
     private toastService: ToastService,
    private fb: FormBuilder) {
+  
     this.breadcrumbService.setItems([
         { label: 'Dashboard' },
         { label: 'Product', routerLink: ['/app/product'] }

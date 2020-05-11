@@ -7,6 +7,9 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ProductDescriptionComponent implements OnInit {
 
+  prName;
+  selectedprName;
+  
   constructor() { }
 
   ngOnInit(): void {

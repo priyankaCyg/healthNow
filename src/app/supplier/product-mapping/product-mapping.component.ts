@@ -30,6 +30,7 @@ export class ProductMappingComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    alert(this.Selectedvalue)
     this.producerDropdown();
 
   }
@@ -64,6 +65,7 @@ export class ProductMappingComponent implements OnInit {
     }
     this.apiService.callPostApi(product_list_data).subscribe(
       (data) => {
+        console.log("data ",data)
         this.producer = data;
         for (var i = 0; i < this.producer.length; i++) {
           if (this.producer[i].iSelected == 1) {

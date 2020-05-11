@@ -20,6 +20,7 @@ export class ContactComponent implements OnInit {
   statusData;
   addressData;
   iSupContactID;
+  sup_Id;
 
   public supContactForm: FormGroup;
   contactData : SupplierContactMaster;
@@ -30,7 +31,7 @@ export class ContactComponent implements OnInit {
 
   ngOnInit(): void {
 
-
+    this.sup_Id = +localStorage.getItem('iSupID');
     this.defaultDropDwnValue()
 
     this.contactData = new SupplierContactMaster();
@@ -152,7 +153,7 @@ export class ContactComponent implements OnInit {
 
     var dataToSendAdd ={
       "iRequestID": 2191,
-      "iSupID" :1,
+      "iSupID" :this.sup_Id,
       "iSupAddID":formData.sAddress.iSupAddID,
       "sFullName": formData.sFullName,
       "sDesignation":formData.sDesignation,
@@ -188,7 +189,7 @@ export class ContactComponent implements OnInit {
       "iStatusID": formData.iStatusID.iKVID,
       "iSupAddID":formData.sAddress.iSupAddID,
       "iSupContactID": this.iSupContactID,
-      "iSupID": 1,
+      "iSupID": this.sup_Id,
       "sContactNo": formData.sContactNo,
       "sDesignation": formData.sDesignation,
       "sDirectNo": formData.sDirectNo,

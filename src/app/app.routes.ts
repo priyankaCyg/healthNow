@@ -34,12 +34,6 @@ export const routes: Routes = [
             { path: 'documentation', component: DocumentationComponent },
             // { path: 'company', component: CompanyComponent},
             { path: 'company', loadChildren:"./company/company.module#CompanyModule"},
-            {
-                path: "landingPage",
-                loadChildren: "./landing-page/landing-page.module#LandingPageModule",
-                canActivate: [AuthGuard]
-              },
-
               { path: 'product-category', loadChildren:"./product-category/product-category.module#ProductCategoryModule"},
               { path: 'producer', loadChildren:"./producer/producer.module#ProducerModule"},
               { path: 'brand', loadChildren:"./brand/brand.module#BrandModule" },
