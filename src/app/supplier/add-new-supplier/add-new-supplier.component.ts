@@ -388,8 +388,7 @@ this.gstList();
  
   openDialogForGST() {
     const ref = this.dialogService.open(GstComponent, {
-      data: {}
-      ,
+      data: {},
       header: 'Add New GST',
       width: '28%'
     });
