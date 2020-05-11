@@ -21,6 +21,9 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { ThrowStmt } from '@angular/compiler';
 import { gstData } from 'src/app/model/gst';
 import { SuppMaster } from 'src/app/model/supplier.model';
+import {TreeNode} from 'primeng/api';
+import { $ } from 'protractor';
+import { SupplierCategoryMapping } from 'src/app/models/supplier-category-mapping.model';
 
 
 @Component({
@@ -47,6 +50,9 @@ export class AddNewSupplierComponent implements OnInit {
   gst: gstData[];
 
   supId;
+  sourceCategory: SupplierCategoryMapping[];
+
+  targetCategory: SupplierCategoryMapping[];
 
   constructor(private breadcrumbService: BreadcrumbService,
      private dialogService: DialogService,
@@ -67,7 +73,7 @@ export class AddNewSupplierComponent implements OnInit {
 this.gstList();
  //new code added 
  this.defaultDropDwnValue()
-
+//  this.getCategoryMappingTree();
  this.supData = new SuppMaster();
  this.addSupplierForm = this.createControl(this.supData);
 
@@ -107,6 +113,34 @@ this.gstList();
  this.gstList();
  //end 
 
+ this.sourceCategory = [
+  {
+      "key": 10,
+      "data": "Test Supplier",
+      "label": "Test Supplier"
+  },
+  {
+      "key": 12,
+      "data": "test 56",
+      "label": "test 56"
+  },
+  {
+      "key": 3,
+      "data": "Supplier Category",
+      "label": "Supplier Category"
+  },
+  {
+      "key": 1,
+      "data": "Test Supplier Category",
+      "label": "Test Supplier Category"
+  },
+  {
+      "key": 11,
+      "data": "Test Supplier 22",
+      "label": "Test Supplier 22"
+  }
+]
+ this.targetCategory = [];
   }
 //Address list starts
   getSupplierAddressList(){
@@ -412,6 +446,14 @@ this.gstList();
 
     });
   }
+
+
+
+
+
+addCategoryMappingData(){
+  console.log(this.targetCategory); 
+}
 
 
 }

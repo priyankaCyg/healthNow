@@ -30,6 +30,9 @@ import { TreeTableModule } from 'primeng/treetable';
 import { CheckboxModule } from 'primeng/checkbox';
 import { from } from 'rxjs';
 import { MessageModule } from 'primeng/message';
+import {TreeModule} from 'primeng/tree';
+import {PickListModule} from 'primeng/picklist';
+import {ListboxModule} from 'primeng/listbox';
 
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 
@@ -54,7 +57,10 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
     TreeTableModule,
     ConfirmDialogModule,
     MessageModule,
-    CheckboxModule
+    CheckboxModule,
+    TreeModule,
+    PickListModule,
+    ListboxModule
   ],
   providers: [DialogService, ConfirmationService],
   entryComponents: [SupplierComponent, AddNewSupplierComponent, AddressComponent, ContactComponent, BankComponent, GstComponent, ProductMappingComponent]
