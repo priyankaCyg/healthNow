@@ -72,7 +72,7 @@ export class DepartmentComponent implements OnInit {
         this.apiService.callPostApi(dep_submit_data).subscribe(
           data => {
             console.log(data);
-            this.toastService.addSingle("success", "Record Added Successfully", "");
+            this.ref.close(true);
 
           },
           error => console.log(error)
@@ -93,13 +93,12 @@ export class DepartmentComponent implements OnInit {
         this.apiService.callPostApi(dep_edit_data).subscribe(
           data => {
             console.log(data);
-            this.toastService.addSingle("success", "Record Updated Successfully", "");
+            this.ref.close(true);
 
           },
           error => console.log(error)
         );
       }
-      this.ref.close();
       this.DepartmentSubmit.reset();
     }
   }

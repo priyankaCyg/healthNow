@@ -182,9 +182,11 @@ export class CompanyComponent implements OnInit {
     ref.onClose.subscribe((success: boolean) => {
       if (success) {
         //this.toastService.addSingle("success", "Record Added successfully", "");
+        this.departmentList();
+
+        this.toastService.addSingle("success", "Record Added Successfully", "");
 
       }
-      this.departmentList();
 
     });
   }
@@ -198,8 +200,11 @@ export class CompanyComponent implements OnInit {
 
     ref.onClose.subscribe((success: boolean) => {
       if (success) {
+        this.departmentList();
+
+        this.toastService.addSingle("success", "Record Updated Successfully", "");
+
       }
-      this.departmentList();
 
     });
   }
@@ -255,9 +260,10 @@ export class CompanyComponent implements OnInit {
 
     ref.onClose.subscribe((success: boolean) => {
       if (success) {
-        // this.toastService.addSingle("success", "Mail send successfully", "");
+        this.gstList();
+
+        this.toastService.addSingle("success", "Record Added Successfully", "");
       }
-      this.gstList();
     });
   }
 
@@ -271,9 +277,10 @@ export class CompanyComponent implements OnInit {
 
     ref.onClose.subscribe((success: boolean) => {
       if (success) {
-        // this.toastService.addSingle("success", "Mail send successfully", "");
+        this.gstList();
+
+        this.toastService.addSingle("success", "Record Updated Successfully", "");
       }
-      this.gstList();
     });
   }
   // show all list of gst
@@ -347,7 +354,7 @@ export class CompanyComponent implements OnInit {
       width: "28%",
     });
     ref.onClose.subscribe((success: boolean) => {
-      if (success) {}
+      if (success) { }
       this.designationSelectData();
       this.toastService.addSingle("success", "Record Added Successfully", "");
     });
@@ -361,7 +368,7 @@ export class CompanyComponent implements OnInit {
       width: "28%",
     });
     ref.onClose.subscribe((success: boolean) => {
-      if (success) {}
+      if (success) { }
       this.designationSelectData();
       this.toastService.addSingle("success", "Record Updated Successfully", "");
     });
@@ -369,7 +376,7 @@ export class CompanyComponent implements OnInit {
 
   // Delete Function for Designation
   deleteDesig(desig) {
-    
+
     let desig_id = desig.iDesigID;
     this.confirmationService.confirm({
       message: 'Are you sure that you want to proceed?',
@@ -394,7 +401,7 @@ export class CompanyComponent implements OnInit {
       reject: () => {
         this.toastService.addSingle("info", "Rejected", "Rejected");
       }
-  });
+    });
   }
 
   // Function for Bank table data
@@ -421,7 +428,7 @@ export class CompanyComponent implements OnInit {
       width: "50%",
     });
     ref.onClose.subscribe((success: boolean) => {
-      if (success) {}
+      if (success) { }
       this.bankSelectData();
       this.toastService.addSingle("success", "Record Added Successfully", "");
     });
@@ -435,7 +442,7 @@ export class CompanyComponent implements OnInit {
       width: "50%",
     });
     ref.onClose.subscribe((success: boolean) => {
-      if (success) {}
+      if (success) { }
       this.bankSelectData();
       this.toastService.addSingle("success", "Record Updated Successfully", "");
     });
@@ -467,7 +474,7 @@ export class CompanyComponent implements OnInit {
       reject: () => {
         this.toastService.addSingle("info", "Rejected", "Rejected");
       }
-   });
+    });
   }
 
 
@@ -481,8 +488,7 @@ export class CompanyComponent implements OnInit {
     });
 
     ref.onClose.subscribe((success: boolean) => {
-      if(success)
-      {
+      if (success) {
         this.showEmployee();
         this.toastService.addSingle("success", "Employee Added Successfully", "");
       }
@@ -513,8 +519,7 @@ export class CompanyComponent implements OnInit {
 
     ref.onClose.subscribe((success: any) => {
       // alert(success)
-      if(success)
-      {
+      if (success) {
         this.showEmployee();
         this.toastService.addSingle("success", "Updated Successfully", "");
       }

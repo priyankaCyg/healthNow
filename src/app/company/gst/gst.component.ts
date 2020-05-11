@@ -82,8 +82,7 @@ export class GstComponent implements OnInit {
         this.apiService.callPostApi(gst_submit_data).subscribe(
           data => {
             console.log(data);
-            this.toastService.addSingle("success", "Record Added Successfully", "");
-
+            this.ref.close(true);
           },
           error => console.log(error)
         );
@@ -106,13 +105,11 @@ export class GstComponent implements OnInit {
         this.apiService.callPostApi(gst_edit_data).subscribe(
           data => {
             console.log(data);
-            this.toastService.addSingle("success", "Record Updated Successfully", "");
-
+            this.ref.close(true);
           },
           error => console.log(error)
         );
       }
-      this.ref.close();
       this.GSTSubmit.reset();
     }
   }
