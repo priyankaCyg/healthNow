@@ -34,8 +34,8 @@
           <div class="p-grid timeline-content form-group">
             <div class="p-col-12 p-md-6 p-lg-6 mb-3">
               <label for="producer">Producer</label>
-              <p-dropdown class="ml-2" [options]="producerValue" optionLabel="sProducerName"
-                [(ngModel)]="selectedproducer"></p-dropdown>
+              <p-dropdown class="ml-2" (onChange)="producerDropdown($event)" [options]="producerValue"
+                optionLabel="sProducerName" [(ngModel)]="selectedproducer"></p-dropdown>
             </div>
 
             <div class="p-col-12 p-md-6 p-lg-3 mb-3">
@@ -53,7 +53,7 @@
               <p-table *ngIf="producer" [value]="producer" [(selection)]="Selectedvalue">
                 <ng-template pTemplate="header">
                   <tr>
-                    <th>Product Category</th>
+                    <!-- <th>Product Category</th> -->
                     <th>Product</th>
                     <th style="width: 9em">
                       <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
@@ -63,13 +63,13 @@
                 </ng-template>
                 <ng-template pTemplate="body" let-producer>
                   <tr>
-                    <td>{{producer.prCategory}}</td>
+                    <!-- <td>{{producer.prCategory}}</td> -->
                     <td>{{producer.sPrdName}}</td>
                     <td>
-                      <p-tableCheckbox *ngIf="producer.iSelected == 0" [value]="producer"></p-tableCheckbox>
+                      <p-tableCheckbox [value]="producer"></p-tableCheckbox>
 
-                      <p-tableCheckbox *ngIf="producer.iSelected == 1" [value]="producer">
-                      </p-tableCheckbox>
+                      <!-- <p-tableCheckbox *ngIf="producer.iSelected == 1" [value]="producer">
+                      </p-tableCheckbox> -->
                       <!-- <p-checkbox [value]="producer" [(ngModel)]="Selectedvalue">
                       </p-checkbox> -->
                     </td>
@@ -77,7 +77,7 @@
                 </ng-template>
                 <ng-template pTemplate="footer">
                   <tr>
-                    <td colspan="3">
+                    <td colspan="2">
                       <div class="p-grid p-justify-end">
                         <div class="p-col-12 p-md-2 p-lg-2"><button pButton type="button" routerLink="/app/supplier"
                             label="Cancel" class="ui-button-light"></button>
@@ -114,39 +114,6 @@
                   </div>
                 </div>
               </li>
-              <!-- <li>
-                <div class="p-grid list-item">
-                  <div class="p-col-2 icon">
-                    <i class="pi pi-circle-on" style="font-size: 0.5em"></i>
-                  </div>
-                  <div class="p-col-10 file-name">
-                    <h2 class="name">Health Condition - Immunity - Product 3</h2>
-                  </div>
-                </div>
-              </li> -->
-              <!-- <li>
-                <div class="p-grid list-item">
-                  <div class="p-col-2 icon">
-                    <i class="pi pi-circle-on" style="font-size: 0.5em"></i>
-                  </div>
-                  <div class="p-col-10 file-name">
-                    <h2 class="name">Health Condition - Weigth Loss - Product 4</h2>
-                  </div>
-                </div>
-              </li>
-              <li> -->
-              <!-- <div class="p-grid list-item">
-                  <div class="p-col-2 icon">
-                    <i class="pi pi-circle-on" style="font-size: 0.5em"></i>
-                  </div>
-                  <div class="p-col-10 file-name">
-                    <h2 class="name">Health Condition - Diabetes - Product 5</h2>
-                  </div>
-                </div>
-              </li> -->
-
-
-
             </ul>
 
           </div>

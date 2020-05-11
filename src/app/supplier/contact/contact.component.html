@@ -81,14 +81,10 @@
 
         <div class="separator separator--border-solid separator--space-sm separator--portlet-fit"></div>
         <div class="p-grid form-group ui-fluid p-justify-end mt-3">
-            <div class="p-col-12 p-md-2 p-lg-1">
-                <button pButton type="button" label="Cancel" (click)="closeDialog()" style="margin-bottom:10px" class="ui-button-light"></button>
-            </div>
-            <div class="p-col-12 p-md-2 p-lg-1" *ngIf="!isEdit">
-                <button pButton type="button" label="Save" [disabled]="!(!supContactForm.invalid && !dropDownValidityCheck())" (click)="addSupplierContact()" style="margin-bottom:10px" class="ui-button"></button>
-            </div>
-            <div class="p-col-12 p-md-2 p-lg-1" *ngIf="isEdit">
-                <button pButton type="button" label="Update" [disabled]="!(!supContactForm.invalid && !dropDownValidityCheck())" (click)="updateSupplierContact()" style="margin-bottom:10px" class="ui-button"></button>
+            <div class="p-col-12 p-md-12 p-lg-12 text-right">
+                <button pButton type="button" label="Cancel" (click)="closeDialog()" class="ui-button-light atbt mr-2"></button>            
+                <button *ngIf="!isEdit" pButton type="button" label="Save" [disabled]="!(!supContactForm.invalid && !dropDownValidityCheck())" (click)="addSupplierContact()" class="ui-button atbt"></button>           
+                <button *ngIf="isEdit" pButton type="button" label="Update" [disabled]="!(!supContactForm.invalid && !dropDownValidityCheck())" (click)="updateSupplierContact()" class="ui-button atbt"></button>
             </div>
         </div>
 

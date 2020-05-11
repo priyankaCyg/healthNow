@@ -35,7 +35,18 @@
                                         <td>{{producer.sProducerName}}</td>
                                         <td>{{producer.sCountryName}}</td>
                                         <td>{{producer.sShortCode}}</td>
-                                        <td>{{producer.sStatusName}}</td>
+                                        <!-- <td>{{producer.sStatusName}}</td> -->
+                                        <td>
+                                            <span *ngIf="producer.iStatusID == 1" class="badge badge--success badge--inline badge--pill">
+                                              Active
+                                            </span>
+                                            <span *ngIf="producer.iStatusID == 2" class="badge badge--warning badge--inline badge--pill">
+                                              Inactive
+                                            </span>
+                                            <span *ngIf="producer.iStatusID == 3" class="badge badge--danger badge--inline badge--pill">
+                                              Deleted
+                                            </span>
+                                          </td>
                                         <td>
                                         <button pButton (click)="editProducer(producer.iProducerID)" type="button" class="ui-button-success" icon="pi pi-pencil" style="margin-right: .5em"></button>
                                         <button pButton (click)="deleteProducer(producer.iProducerID)" type="button" class="ui-button-danger" icon="pi pi-trash"></button></td>

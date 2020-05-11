@@ -36,14 +36,12 @@
                                     <td>{{productCategory.sPCName}}</td>
                                     <td>{{productCategory.sParentCategoryName}}</td>
                                     <td style="text-align: center;">
-                                        <button *ngIf="productCategory.iStatusID == 1" pButton type="button"
-                                          class="ui-button-rounded ui-button-success" style="width: 100px; height: 20px;">
+                                        <span *ngIf="productCategory.iStatusID == 1" pButton type="button" class="badge badge--success badge--inline badge--pill">
                                           Active
-                                        </button>
-                                        <button *ngIf="productCategory.iStatusID == 2" pButton type="button"
-                                          class="ui-button-rounded ui-button-warning" style="width: 100px; height: 20px;">
+                                        </span>
+                                        <span *ngIf="productCategory.iStatusID == 2" pButton type="button" class="badge badge--warning badge--inline badge--pill">
                                           Inactive
-                                        </button>
+                                        </span>
                                       </td>
                                     <td>
                                         <button pButton type="button" class="ui-button-success" icon="pi pi-pencil" (click)="editProductCategory(productCategory.iPCID)"style="margin-right: .5em"></button>
