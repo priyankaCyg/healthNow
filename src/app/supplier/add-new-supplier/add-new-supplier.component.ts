@@ -52,6 +52,11 @@ export class AddNewSupplierComponent implements OnInit {
 
   supId;
 
+  selectedFileType;
+  fileTypeData;
+
+  uploadedFiles: any[] = [];
+
   constructor(private breadcrumbService: BreadcrumbService,
      private dialogService: DialogService,
     private apiService: ApiService,
@@ -67,7 +72,7 @@ export class AddNewSupplierComponent implements OnInit {
 
   ngOnInit(): void {
 
-
+this.getFileType();
 this.gstList();
  //new code added 
  this.defaultDropDwnValue()
@@ -108,12 +113,13 @@ this.gstList();
    });
  }
 
- this.gstList();
+//  this.gstList();
  //end 
 
 
  this.showContact();
  this.showBank();
+ this.showAttachment();
 
   }
 //Address list starts
@@ -193,7 +199,30 @@ this.gstList();
   }
     
     
-  
+  onUpload(event) {
+    alert("hi")
+    for (const file of event.files) {
+        this.uploadedFiles.push(file);
+      }
+
+}
+
+uploadFile()
+{
+  alert(JSON.stringify(this.uploadedFiles))
+  var dataToSend ={
+    "iRequestID": 1111,
+    "iProcessTranID":this.supId,
+    "iProcessID":2,
+    "iDocTypeID":this.selectedFileType.iDocTypeID
+}
+  this._apiService.postFile(this.uploadedFiles,dataToSend).subscribe(data => {
+    alert('Success '+data);
+    this.showAttachment();
+  }, error => {
+    console.log(error);
+  });
+}
 
   //new coded added
 
@@ -227,6 +256,26 @@ this.gstList();
         this.selectedstatus = { iKVID: "", sKVValue: "Select Status" }
 
         resolve(this.statusData)
+
+      });
+    })
+  }
+
+
+
+  getFileType() {
+    return new Promise((resolve, reject) => {
+      var dataToSend = {
+        "iRequestID": 2261
+      }
+
+      this.apiService.getDropDownData(dataToSend).then(response => {
+        console.log("Response for File Type ", response)
+        this.fileTypeData = response
+        this.fileTypeData.splice(0, 0, { iDocTypeID: "", sDocTypeName: "Select File Type" })
+        this.selectedFileType = { iDocTypeID: "", sDocTypeName: "Select File Type" }
+
+        resolve(this.fileTypeData)
 
       });
     })
@@ -418,6 +467,37 @@ this.gstList();
         );
       }
 
+    });
+  }
+
+  downloadFile()
+  {
+    var dataToSend ={
+      "iRequestID": "1112",
+      "sActualFileName":"error1.png",
+      "sSystemFileName":"7BH2TsqMRI1588838505541"
+  }
+    // this._apiService.downloadAPI(dataToSend).then(response => {
+    //   console.log("Response for attachment ",response)
+    //   this.attachment = response
+    // });
+
+    this._apiService.downloadAPI(dataToSend)
+  }
+
+  
+
+
+  showAttachment()
+  {
+    var dataToSend ={
+      "iRequestID": 1112,
+      "iProcessTranID":parseInt(this.supId),
+      "iProcessID":2
+  }
+    this._apiService.getDetails(dataToSend).then(response => {
+      console.log("Response for attachment ",response)
+      this.attachment = response
     });
   }
 

@@ -349,31 +349,42 @@
                     <div class="p-grid ui-fluid">
                         <div class="p-col-12 p-md-3 p-lg-3">
                             <label for="sfileType">Select File Type</label>
-                            <p-dropdown id="sfileType" class="form-control" placeholder="Select" required="true"></p-dropdown>
+                            <!-- <p-dropdown id="sfileType" class="form-control" placeholder="Select" required="true"></p-dropdown> -->
+                            <p-dropdown id="sfileType" class="form-control" [options]="fileTypeData" placeholder="Select File Type" optionLabel="sDocTypeName"
+                                            [(ngModel)]="selectedFileType" required="true"></p-dropdown>
                         </div>
                         <div class="p-col-12 p-md-2 p-lg-1">
                             <div class="fileUpload p-0">
-                                <p-fileUpload #fubauto mode="basic" name="demo[]" url="./upload.php" accept="image/*" maxFileSize="1000000" (onUpload)="onBasicUploadAuto($event)" [auto]="true" chooseLabel="Browse"></p-fileUpload>                                
+                                <p-fileUpload mode="basic" [auto]="true" name="demo[]"  maxFileSize="1000000" customUpload="true" (uploadHandler)="onUpload($event)" multiple="multiple" chooseLabel="Browse"></p-fileUpload>                                
                                 
                             </div>
                          </div>
-                        <div class="p-col-12 p-md-3 p-lg-3 text-left"><button pButton type="button" label="Upload" class="ui-button atbt"></button></div> 
+                        <div class="p-col-12 p-md-3 p-lg-3 text-left"><button pButton type="button" (click)="uploadFile()" label="Upload" class="ui-button atbt"></button></div> 
                         
                         <div class="p-col-12 p-md-12 p-lg-12 mt-3">
-                            <p-table [value]="attachment">
-                                <ng-template pTemplate="header">
-                                    <tr>
-                                        <th>File Type</th>
-                                        <th>File Name</th>
-                                        <th>Action</th>
-                                    </tr>
-                                </ng-template>
+                                <p-table #attachmentHeader [value]="attachment" [resizableColumns]="true" [rowHover]="true" [paginator]="true"
+                                    [rows]="10" [showCurrentPageReport]="true" [rowsPerPageOptions]="[10, 25, 50]" [filterDelay]="0"
+                                    [globalFilterFields]="['sDocTypeName','sActualName']">
+                                    <ng-template pTemplate="caption">
+            
+                                        <div class="ui-table-globalfilter-container text-left">
+                                            <input type="text" pInputText size="50" placeholder="Search"
+                                                (input)="attachmentHeader.filterGlobal($event.target.value, 'contains')" style="width:250px;">
+                                        </div>
+                                    </ng-template>
+                                    <ng-template pTemplate="header">
+                                        <tr>
+                                            <th>File Type</th>
+                                            <th>File Name</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </ng-template>
                                 <ng-template pTemplate="body" let-attachment>
                                     <tr>
-                                        <td>{{attachment.fileName}}</td>
-                                        <td>{{attachment.fileType}}</td>
+                                        <td>{{attachment.sDocTypeName}}</td>
+                                        <td>{{attachment.sActualName}}</td>
                                         <td>
-                                            <button pButton type="button" class="ui-button-success mr-1" icon="pi pi-pencil"></button>
+                                            <button pButton type="button" class="ui-button-success mr-1" (click)="downloadFile()" icon="pi pi-arrow-down"></button>
                                             <button pButton type="button" class="ui-button-danger" icon="pi pi-trash"></button>
                                         </td>
                                     </tr>
@@ -391,34 +402,34 @@
                         <div class="p-col-12 p-md-6 p-lg-4">
                             <div class="card bg-dark prcat-shdw border-light">
                                 <p-checkbox name="VNS" value="Vitamin & Supplements" label="Vitamin & Supplements"
-                                    [(ngModel)]="checkboxValues"></p-checkbox>
+                                    ></p-checkbox>
                             </div>
                         </div>
 
                         <div class="p-col-12 p-md-6 p-lg-4">
                             <div class="card bg-success prcat-shdw border-light">
                                 <p-checkbox name="GRN" value="Food - Supplements" label="Grains"
-                                    [(ngModel)]="checkboxValues"></p-checkbox>
+                                    ></p-checkbox>
                             </div>
                         </div>
 
                         <div class="p-col-12 p-md-6 p-lg-4">
                             <div class="card bg-dark prcat-shdw border-light">
                                 <p-checkbox name="MND" value="Milk & Dairy" label="Milk & Dairy"
-                                    [(ngModel)]="checkboxValues"></p-checkbox>
+                                    ></p-checkbox>
                             </div>
                         </div>
 
                         <div class="p-col-12 p-md-6 p-lg-4">
                             <div class="card bg-dark prcat-shdw border-light">
                                 <p-checkbox name="VEG" value="Vegetables" label="Vegetables"
-                                    [(ngModel)]="checkboxValues"></p-checkbox>
+                                    ></p-checkbox>
                             </div>
                         </div>
 
                         <div class="p-col-12 p-md-6 p-lg-4">
                             <div class="card bg-dark prcat-shdw border-light">
-                                <p-checkbox name="FRT" value="Fruits" label="Fruits" [(ngModel)]="checkboxValues">
+                                <p-checkbox name="FRT" value="Fruits" label="Fruits" >
                                 </p-checkbox>
                             </div>
                         </div>
@@ -426,7 +437,7 @@
                         <div class="p-col-12 p-md-6 p-lg-4">
                             <div class="card bg-success prcat-shdw border-light">
                                 <p-checkbox name="COL" value="Cooking Oil" label="Cooking Oil"
-                                    [(ngModel)]="checkboxValues" selected></p-checkbox>
+                                     selected></p-checkbox>
                             </div>
                         </div>
 
@@ -441,41 +452,41 @@
                         <div class="p-col-12 p-md-6 p-lg-4">
                             <div class="card bg-dark prcat-shdw border-light">
                                 <p-checkbox name="WTL" value="Weigth Loss" label="Weigth Loss"
-                                    [(ngModel)]="checkboxValues"></p-checkbox>
+                                    ></p-checkbox>
                             </div>
                         </div>
 
                         <div class="p-col-12 p-md-6 p-lg-4">
                             <div class="card bg-success prcat-shdw border-light">
-                                <p-checkbox name="IMU" value="Immunity" label="Immunity" [(ngModel)]="checkboxValues">
+                                <p-checkbox name="IMU" value="Immunity" label="Immunity" >
                                 </p-checkbox>
                             </div>
                         </div>
 
                         <div class="p-col-12 p-md-6 p-lg-4">
                             <div class="card bg-dark prcat-shdw border-light">
-                                <p-checkbox name="DIB" value="Diabetes" label="Diabetes" [(ngModel)]="checkboxValues">
+                                <p-checkbox name="DIB" value="Diabetes" label="Diabetes" >
                                 </p-checkbox>
                             </div>
                         </div>
 
                         <div class="p-col-12 p-md-6 p-lg-4">
                             <div class="card bg-dark prcat-shdw border-light">
-                                <p-checkbox name="THD" value="Thyroid" label="Thyroid" [(ngModel)]="checkboxValues">
+                                <p-checkbox name="THD" value="Thyroid" label="Thyroid" >
                                 </p-checkbox>
                             </div>
                         </div>
 
                         <div class="p-col-12 p-md-6 p-lg-4">
                             <div class="card bg-dark prcat-shdw border-light">
-                                <p-checkbox name="STR" value="Stress" label="Stress" [(ngModel)]="checkboxValues">
+                                <p-checkbox name="STR" value="Stress" label="Stress" >
                                 </p-checkbox>
                             </div>
                         </div>
 
                         <div class="p-col-12 p-md-6 p-lg-4">
                             <!-- <div class="card bg-success prcat-shdw">
-                                 <p-checkbox name="HCWL" value="Health Concern - Weight Loss" label="Health Concern - Weight Loss" [(ngModel)]="checkboxValues" selected></p-checkbox>
+                                 <p-checkbox name="HCWL" value="Health Concern - Weight Loss" label="Health Concern - Weight Loss"  selected></p-checkbox>
                              </div> -->
                         </div>
 
