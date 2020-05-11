@@ -9,7 +9,7 @@
                     <button routerLink="/app/partner/new-partner" pButton icon="pi pi-fw pi-plus" label="Add New"></button>
                 </div>
                 <div class="p-col-12"> 
-                    <p-table [value]="partner">
+                    <p-table #dt [value]="partner">
                         <ng-template pTemplate="caption">
                        
                             <div class="ui-table-globalfilter-container text-left">

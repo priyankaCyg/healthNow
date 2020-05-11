@@ -356,6 +356,7 @@ export class CompanyComponent implements OnInit {
     ref.onClose.subscribe((success: boolean) => {
       if (success) { }
       this.designationSelectData();
+      this.toastService.addSingle("success", "Record Added Successfully", "");
     });
   }
 
@@ -369,6 +370,7 @@ export class CompanyComponent implements OnInit {
     ref.onClose.subscribe((success: boolean) => {
       if (success) { }
       this.designationSelectData();
+      this.toastService.addSingle("success", "Record Updated Successfully", "");
     });
   }
 
@@ -428,6 +430,7 @@ export class CompanyComponent implements OnInit {
     ref.onClose.subscribe((success: boolean) => {
       if (success) { }
       this.bankSelectData();
+      this.toastService.addSingle("success", "Record Added Successfully", "");
     });
   }
 
@@ -441,6 +444,7 @@ export class CompanyComponent implements OnInit {
     ref.onClose.subscribe((success: boolean) => {
       if (success) { }
       this.bankSelectData();
+      this.toastService.addSingle("success", "Record Updated Successfully", "");
     });
   }
 

@@ -91,7 +91,8 @@ export class DesignationComponent implements OnInit {
           this.apiService.callPostApi(addDesig_data).subscribe(
             (data) => {
               console.log(data);
-              this.toastService.addSingle("success", "Record Added Successfully", "");
+              this.ref.close(true);
+             
             },
             (error) => console.log(error)
           );
@@ -108,13 +109,14 @@ export class DesignationComponent implements OnInit {
           console.log(updateDesig_data, "update");
           this.apiService.callPostApi(updateDesig_data).subscribe(
             (data) => {
-              console.log(data);      
-              this.toastService.addSingle("success", "Record Updated Successfully", "");
+              console.log(data);   
+              this.ref.close(true);   
+              
             },
             (error) => console.log(error)
           );
         }
-        this.ref.close();
+        
         this.desigForm.reset();
       } else {
         console.log("Error");

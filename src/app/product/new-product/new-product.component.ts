@@ -18,7 +18,7 @@ import { ApiService } from 'src/app/services/api.service';
 import { ProductMaster } from '../../model/product.model';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ToastService } from 'src/app/services/toast.service';
-
+import { ProductInfoData } from 'src/app/model/productInfo';
 
 @Component({
   selector: 'app-new-product',
@@ -39,11 +39,12 @@ export class NewProductComponent implements OnInit {
 
   productVariant: any[];
 
-  productInfo: any[];
+
 
   productDesc: any[];
 
   productQueries: any[];
+  productInfoData: ProductInfoData[];
 
   // multiCategory: any[];
   isEdit: boolean = false
@@ -130,13 +131,8 @@ export class NewProductComponent implements OnInit {
       { Unit: 'Kg', variant: '1' }
     ];
 
-    this.productInfo = [
-      { srNo: '#', prInfo: 'Extra protein helps build strength' },
-      { srNo: '#', prInfo: '100% Whole wheat chapati flour' },
-      { srNo: '#', prInfo: 'No Maida Added ' },
-      { srNo: '#', prInfo: 'Atta is made from the choicest grains - heavy on the palm, golden amber in colour and hard in bite' },
-      { srNo: '#', prInfo: 'The dough made from Aashirvaad Atta absorbs more water, hence rotis remain softer for longer' }
-    ];
+    this.getProductInfo();
+
 
     this.productDesc = [
       { prDesc: 'Handpicked from india’s finest wheat fields, fortune chakki fresh atta is made with 100 percent atta and 0 percent maida which complements your ghar ka khana perfectly. You can differentiate these fibre-rich rotis with your 5 senses - their superior quality taste, soft touch, mesmerizing aroma and a fluffy look, so words of appreciation are bound to come your way. ' }
@@ -373,19 +369,7 @@ export class NewProductComponent implements OnInit {
       }
     });
   }
-  openDialogForProductInfo() {
-    const ref = this.dialogService.open(ProductInfoComponent, {
-      data: {
-      },
-      header: 'Add New Product Info',
-      width: '40%'
-    });
-    ref.onClose.subscribe((success: boolean) => {
-      if (success) {
-        // this.toastService.addSingle("success", "Mail send successfully", "");
-      }
-    });
-  }
+
   openDialogForProductDesc() {
     const ref = this.dialogService.open(ProductDescriptionComponent, {
       data: {
@@ -413,5 +397,39 @@ export class NewProductComponent implements OnInit {
     });
   }
 
+  getProductInfo() {
+    let prd_by_id = +this.route.snapshot.params['iProductID'];
+    const productInfoAPI = {
+      "iRequestID": 2161,
+      // "iProductID":prd_by_id
+      "iProductID": 1
+    }
+    this.apiService.callPostApi(productInfoAPI).subscribe(
+      data => {
+        console.log(data);
+
+        this.productInfoData = data[0];
+        console.log(this.productInfoData)
+      },
+      error => { console.log(error) }
+    )
+
+  }
+  openDialogForProductInfo() {
+    const ref = this.dialogService.open(ProductInfoComponent, {
+      data: {
+      },
+      header: 'Add Product Info',
+      width: '40%'
+    });
+    localStorage.setItem('iProductID', this.route.snapshot.params['iProductID']);
+    ref.onClose.subscribe((success: any) => {
+      if (success) {
+        this.getProductInfo();
+        this.toastService.addSingle("success", "Record Added Successfully", "");
+      }
+
+    });
+  }
 
 }

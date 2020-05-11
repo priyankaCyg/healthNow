@@ -175,13 +175,17 @@
 
                         </div>
                         <div class="p-col-12">
-                            <p-table [value]="productInfo">
+                            <p-table #searchInfo [value]="productInfoData" [filterDelay]="0" [globalFilterFields]="[
+                              'sInfo'
+                            ]">
                                 <ng-template pTemplate="caption">
-
                                     <div class="ui-table-globalfilter-container text-left">
-                                        <input type="text" pInputText size="50" placeholder="Search"
-                                            (input)="dt.filterGlobal($event.target.value, 'contains')"
-                                            style="width:250px;">
+                                        <input type="text" pInputText size="50" placeholder="Search" (input)="
+                                      searchInfo.filterGlobal(
+                                        $event.target.value,
+                                        'contains'
+                                      )
+                                    " style="width: 250px;" />
                                     </div>
                                 </ng-template>
                                 <ng-template pTemplate="header">
@@ -193,8 +197,8 @@
                                 </ng-template>
                                 <ng-template pTemplate="body" let-productInfo>
                                     <tr>
-                                        <td>{{productInfo.srNo}}</td>
-                                        <td>{{productInfo.prInfo}}</td>
+                                        <td>{{productInfo.iSeq}}</td>
+                                        <td>{{productInfo.sInfo}}</td>
                                     </tr>
                                 </ng-template>
                             </p-table>
@@ -313,59 +317,67 @@
                                     [(ngModel)]="checkboxValues"></p-checkbox>
                             </div>
                         </div>
-
-                        <div class="p-col-12 p-md-6 p-lg-4">
-                            <div class="card bg-success prcat-shdw border-light">
-                                <p-checkbox name="FS" value="Food - Supplements" label="Food - Supplements"
-                                    [(ngModel)]="checkboxValues"></p-checkbox>
-                            </div>
-                        </div>
-
-                        <div class="p-col-12 p-md-6 p-lg-4">
-                            <div class="card bg-dark prcat-shdw border-light">
-                                <p-checkbox name="FD" value="Food - Dairy" label="Food - Dairy"
-                                    [(ngModel)]="checkboxValues"></p-checkbox>
-                            </div>
-                        </div>
-
-                        <div class="p-col-12 p-md-6 p-lg-4">
-                            <div class="card bg-dark prcat-shdw border-light">
-                                <p-checkbox name="FCO" value="Food - Cookinig Oil" label="Food - Cookinig Oil"
-                                    [(ngModel)]="checkboxValues"></p-checkbox>
-                            </div>
-                        </div>
-
-                        <div class="p-col-12 p-md-6 p-lg-4">
-                            <div class="card bg-dark prcat-shdw border-light">
-                                <p-checkbox name="HCD" value="Health Concern - Diabetes"
-                                    label="Health Concern - Diabetes" [(ngModel)]="checkboxValues"></p-checkbox>
-                            </div>
-                        </div>
-
-                        <div class="p-col-12 p-md-6 p-lg-4">
-                            <div class="card bg-success prcat-shdw border-light">
-                                <p-checkbox name="HCWL" value="Health Concern - Weight Loss"
-                                    label="Health Concern - Weight Loss" [(ngModel)]="checkboxValues" selected>
-                                </p-checkbox>
-                            </div>
-                        </div>
-
-                    </div>
-
-                    <div class="separator separator--border-solid separator--space-sm separator--portlet-fit mt-5">
-                    </div>
-
-                    <div class="p-grid form-group ui-fluid p-justify-end mt-3">
-                        <div class="p-col-12 p-md-12 p-lg-12 text-right">
-                            <button pButton type="button" label="Cancel" class="ui-button-light atbt mr-2"></button>
-
-                            <button pButton type="button" label="Save" class="ui-button atbt"></button>
-                        </div>
-                    </div>
                 </p-tabPanel>
+                <!-- ProductQueries tab End here -->
+                <p-tabPanel header="Product Category">
+                    <div class="p-grid p-justify-center mt-4">
 
+                        <div class="p-col-12 p-md-6 p-lg-4">
+                            <div class="card bg-dark prcat-shdw border-light">
+                                <p-checkbox name="FV" value="Food - Vitamin" label="Food - Vitamin"></p-checkbox>
+                            </div>
+                        </div>
+                    </div>
 
-            </p-tabView>
+                    <div class="p-col-12 p-md-6 p-lg-4">
+                        <div class="card bg-success prcat-shdw border-light">
+                            <p-checkbox name="FS" value="Food - Supplements" label="Food - Supplements"></p-checkbox>
+                        </div>
+                    </div>
+        </div>
+
+        <div class="p-col-12 p-md-6 p-lg-4">
+            <div class="card bg-dark prcat-shdw border-light">
+                <p-checkbox name="FD" value="Food - Dairy" label="Food - Dairy"></p-checkbox>
+            </div>
         </div>
     </div>
+
+    <div class="p-col-12 p-md-6 p-lg-4">
+        <div class="card bg-dark prcat-shdw border-light">
+            <p-checkbox name="FCO" value="Food - Cookinig Oil" label="Food - Cookinig Oil"></p-checkbox>
+        </div>
+    </div>
+</div>
+
+<div class="p-col-12 p-md-6 p-lg-4">
+    <div class="card bg-dark prcat-shdw border-light">
+        <p-checkbox name="HCD" value="Health Concern - Diabetes" label="Health Concern - Diabetes"></p-checkbox>
+    </div>
+</div>
+</div>
+
+<div class="p-col-12 p-md-6 p-lg-4">
+    <div class="card bg-success prcat-shdw border-light">
+        <p-checkbox name="HCWL" value="Health Concern - Weight Loss" label="Health Concern - Weight Loss" selected>
+        </p-checkbox>
+    </div>
+</div>
+
+<div class="separator separator--border-solid separator--space-sm separator--portlet-fit mt-5">
+</div>
+
+<div class="p-grid form-group ui-fluid p-justify-end mt-3">
+    <div class="p-col-12 p-md-12 p-lg-12 text-right">
+        <button pButton type="button" label="Cancel" class="ui-button-light atbt mr-2"></button>
+
+        <button pButton type="button" label="Save" class="ui-button atbt"></button>
+    </div>
+</div>
+</p-tabPanel>
+
+
+</p-tabView>
+</div>
+</div>
 </div>

@@ -19,6 +19,7 @@ export class BankComponent implements OnInit {
 
   statusData;
   bankId;
+  sup_Id;
 
   public bankForm: FormGroup;
   bankData : SupplierBankMaster;
@@ -28,6 +29,8 @@ export class BankComponent implements OnInit {
     private apiService:APIService, private _formBuilder: FormBuilder) { }
 
   ngOnInit(): void {
+
+    this.sup_Id = +localStorage.getItem('iSupID');
 
     this.defaultDropDwnValue()
 
@@ -121,7 +124,7 @@ export class BankComponent implements OnInit {
 
     var dataToSendAdd ={
       "iRequestID": 2211,
-    "iSupID" :1,
+    "iSupID" :this.sup_Id,
     "sBankName": formData.sBankName,
     "sAccountNo":formData.sAccountNo,
     "sIFSC":formData.sIFSC,
@@ -147,7 +150,7 @@ export class BankComponent implements OnInit {
 
     var dataToSendEdit ={
       "iRequestID": 2212,
-      "iSupID" :1,
+      "iSupID" :this.sup_Id,
       "sBankName": formData.sBankName,
       "sAccountNo":formData.sAccountNo,
       "sIFSC":formData.sIFSC,

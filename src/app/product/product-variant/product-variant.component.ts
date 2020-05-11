@@ -7,6 +7,9 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ProductVariantComponent implements OnInit {
 
+  unit;
+  selectedunit;
+  
   constructor() { }
 
   ngOnInit(): void {

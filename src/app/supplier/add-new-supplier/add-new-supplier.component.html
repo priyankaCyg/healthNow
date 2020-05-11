@@ -360,31 +360,42 @@
                     <div class="p-grid ui-fluid">
                         <div class="p-col-12 p-md-3 p-lg-3">
                             <label for="sfileType">Select File Type</label>
-                            <p-dropdown id="sfileType" class="form-control" placeholder="Select" required="true"></p-dropdown>
+                            <!-- <p-dropdown id="sfileType" class="form-control" placeholder="Select" required="true"></p-dropdown> -->
+                            <p-dropdown id="sfileType" class="form-control" [options]="fileTypeData" placeholder="Select File Type" optionLabel="sDocTypeName"
+                                            [(ngModel)]="selectedFileType" required="true"></p-dropdown>
                         </div>
                         <div class="p-col-12 p-md-2 p-lg-1">
                             <div class="fileUpload p-0">
-                                <p-fileUpload #fubauto mode="basic" name="demo[]" url="./upload.php" accept="image/*" maxFileSize="1000000" (onUpload)="onBasicUploadAuto($event)" [auto]="true" chooseLabel="Browse"></p-fileUpload>                                
+                                <p-fileUpload mode="basic" [auto]="true" name="demo[]"  maxFileSize="1000000" customUpload="true" (uploadHandler)="onUpload($event)" multiple="multiple" chooseLabel="Browse"></p-fileUpload>                                
                                 
                             </div>
                          </div>
-                        <div class="p-col-12 p-md-3 p-lg-3 text-left"><button pButton type="button" icon="pi pi-upload" label="Upload" class="ui-button atbt"></button></div> 
+                        <div class="p-col-12 p-md-3 p-lg-3 text-left"><button pButton type="button" (click)="uploadFile()" label="Upload" class="ui-button atbt"></button></div> 
                         
                         <div class="p-col-12 p-md-12 p-lg-12 mt-3">
-                            <p-table [value]="attachment">
-                                <ng-template pTemplate="header">
-                                    <tr>
-                                        <th>File Type</th>
-                                        <th>File Name</th>
-                                        <th>Action</th>
-                                    </tr>
-                                </ng-template>
+                                <p-table #attachmentHeader [value]="attachment" [resizableColumns]="true" [rowHover]="true" [paginator]="true"
+                                    [rows]="10" [showCurrentPageReport]="true" [rowsPerPageOptions]="[10, 25, 50]" [filterDelay]="0"
+                                    [globalFilterFields]="['sDocTypeName','sActualName']">
+                                    <ng-template pTemplate="caption">
+            
+                                        <div class="ui-table-globalfilter-container text-left">
+                                            <input type="text" pInputText size="50" placeholder="Search"
+                                                (input)="attachmentHeader.filterGlobal($event.target.value, 'contains')" style="width:250px;">
+                                        </div>
+                                    </ng-template>
+                                    <ng-template pTemplate="header">
+                                        <tr>
+                                            <th>File Type</th>
+                                            <th>File Name</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </ng-template>
                                 <ng-template pTemplate="body" let-attachment>
                                     <tr>
-                                        <td>{{attachment.fileName}}</td>
-                                        <td>{{attachment.fileType}}</td>
+                                        <td>{{attachment.sDocTypeName}}</td>
+                                        <td>{{attachment.sActualName}}</td>
                                         <td>
-                                            <button pButton type="button" class="ui-button-success mr-1" icon="pi pi-download"></button>
+                                            <button pButton type="button" class="ui-button-success mr-1" (click)="downloadFile(attachment)" icon="pi pi-arrow-down"></button>
                                             <button pButton type="button" class="ui-button-danger" icon="pi pi-trash"></button>
                                         </td>
                                     </tr>
@@ -395,113 +406,27 @@
                 </p-tabPanel>
 
                 <!-- Attachment tab End here -->
-                <p-tabPanel header="Category Mapping">
-                    <h2>Food Type</h2>
-                    <div class="p-grid p-justify-center mt-3">
+                
 
-                        <div class="p-col-12 p-md-6 p-lg-4">
-                            <div class="card bg-dark prcat-shdw border-light">
-                                <p-checkbox name="VNS" value="Vitamin & Supplements" label="Vitamin & Supplements"
-                                    [(ngModel)]="checkboxValues"></p-checkbox>
-                            </div>
-                        </div>
-
-                        <div class="p-col-12 p-md-6 p-lg-4">
-                            <div class="card bg-success prcat-shdw border-light">
-                                <p-checkbox name="GRN" value="Food - Supplements" label="Grains"
-                                    [(ngModel)]="checkboxValues"></p-checkbox>
-                            </div>
-                        </div>
-
-                        <div class="p-col-12 p-md-6 p-lg-4">
-                            <div class="card bg-dark prcat-shdw border-light">
-                                <p-checkbox name="MND" value="Milk & Dairy" label="Milk & Dairy"
-                                    [(ngModel)]="checkboxValues"></p-checkbox>
-                            </div>
-                        </div>
-
-                        <div class="p-col-12 p-md-6 p-lg-4">
-                            <div class="card bg-dark prcat-shdw border-light">
-                                <p-checkbox name="VEG" value="Vegetables" label="Vegetables"
-                                    [(ngModel)]="checkboxValues"></p-checkbox>
-                            </div>
-                        </div>
-
-                        <div class="p-col-12 p-md-6 p-lg-4">
-                            <div class="card bg-dark prcat-shdw border-light">
-                                <p-checkbox name="FRT" value="Fruits" label="Fruits" [(ngModel)]="checkboxValues">
-                                </p-checkbox>
-                            </div>
-                        </div>
-
-                        <div class="p-col-12 p-md-6 p-lg-4">
-                            <div class="card bg-success prcat-shdw border-light">
-                                <p-checkbox name="COL" value="Cooking Oil" label="Cooking Oil"
-                                    [(ngModel)]="checkboxValues" selected></p-checkbox>
-                            </div>
-                        </div>
-
+                <!-- <p-tabPanel header="Category Mapping">
+                    <p-tree [value]="categoryMappingData" selectionMode="checkbox" [(selection)]="selectedCategoryIDS" ></p-tree>
+                    <div>Selected Nodes: <span *ngFor="let file of selectedCategoryIDS">{{file.key}} </span></div>
+                   
+                    <div class="p-col-12 p-md-2 p-lg-1">
+                        <button pButton type="button" label="Save"  style="margin-bottom:10px" class="ui-button" (click)="addCategoryMapping()"></button>
                     </div>
-
-                    <div class="separator separator--border-solid separator--space-sm separator--portlet-fit mt-5">
-                    </div>
-
-                    <h2>Health Condition</h2>
-                    <div class="p-grid p-justify-center mt-3">
-
-                        <div class="p-col-12 p-md-6 p-lg-4">
-                            <div class="card bg-dark prcat-shdw border-light">
-                                <p-checkbox name="WTL" value="Weigth Loss" label="Weigth Loss"
-                                    [(ngModel)]="checkboxValues"></p-checkbox>
-                            </div>
-                        </div>
-
-                        <div class="p-col-12 p-md-6 p-lg-4">
-                            <div class="card bg-success prcat-shdw border-light">
-                                <p-checkbox name="IMU" value="Immunity" label="Immunity" [(ngModel)]="checkboxValues">
-                                </p-checkbox>
-                            </div>
-                        </div>
-
-                        <div class="p-col-12 p-md-6 p-lg-4">
-                            <div class="card bg-dark prcat-shdw border-light">
-                                <p-checkbox name="DIB" value="Diabetes" label="Diabetes" [(ngModel)]="checkboxValues">
-                                </p-checkbox>
-                            </div>
-                        </div>
-
-                        <div class="p-col-12 p-md-6 p-lg-4">
-                            <div class="card bg-dark prcat-shdw border-light">
-                                <p-checkbox name="THD" value="Thyroid" label="Thyroid" [(ngModel)]="checkboxValues">
-                                </p-checkbox>
-                            </div>
-                        </div>
-
-                        <div class="p-col-12 p-md-6 p-lg-4">
-                            <div class="card bg-dark prcat-shdw border-light">
-                                <p-checkbox name="STR" value="Stress" label="Stress" [(ngModel)]="checkboxValues">
-                                </p-checkbox>
-                            </div>
-                        </div>
-
-                        <div class="p-col-12 p-md-6 p-lg-4">
-                            <!-- <div class="card bg-success prcat-shdw">
-                                 <p-checkbox name="HCWL" value="Health Concern - Weight Loss" label="Health Concern - Weight Loss" [(ngModel)]="checkboxValues" selected></p-checkbox>
-                             </div> -->
-                        </div>
-
-                    </div>
-                    <div class="separator separator--border-solid separator--space-sm separator--portlet-fit mt-5"></div>
-
-                    <div class="p-grid form-group ui-fluid p-justify-end mt-3">
-                        <div class="p-col-12 p-md-2 p-lg-12 text-right">
-                            <button pButton type="button" label="Cancel" class="ui-button-light atbt mr-2 mb-2"></button>
-                            <button pButton type="submit" label="Save" class="ui-button atbt mb-2"></button>
-                        </div>
-                    </div>
-
-                </p-tabPanel>
-                <!-- category mapping Info tab End here -->
+                </p-tabPanel> -->
+                <p-tabPanel header="Category Mapping" >
+                <p-pickList [source]="sourceCategory" [target]="targetCategory" sourceHeader="UnMapped" targetHeader="Mapped" [responsive]="true" filterBy="data"
+        dragdrop="true" sourceFilterPlaceholder="Search by category" targetFilterPlaceholder="Search by category" [sourceStyle]="{'height':'300px'}" [targetStyle]="{'height':'300px'}">
+    <ng-template let-category pTemplate="item">
+        <div class="ui-helper-clearfix"> <div style="font-size:14px;">{{category.data}} </div></div>
+    </ng-template>
+</p-pickList>
+<div class="p-col-12 p-md-2 p-lg-1">
+    <button pButton type="button" label="Save"  style="margin-bottom:10px" class="ui-button" (click)="addCategoryMappingData()"></button>
+</div>
+</p-tabPanel>
             </p-tabView>
         </div>
     </div>
