@@ -5,6 +5,10 @@ import { SelectItem, MenuItem } from 'primeng/api';
 import { DialogService } from 'primeng';
 import { from } from 'rxjs';
 import { Message } from 'primeng/api';
+import { ApiService } from '../services/api.service';
+import { ToastService } from '../services/toast.service';
+import { ConfirmationService } from 'primeng/api';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -19,32 +23,65 @@ export class ProductComponent implements OnInit {
   product: any[];
 
 
-  constructor(private breadcrumbService: BreadcrumbService, private dialogService:DialogService) {
+  constructor(private breadcrumbService: BreadcrumbService, private dialogService: DialogService,
+    private apiService: ApiService, private toastService: ToastService, private confirmationService: ConfirmationService
+    , private router: Router) {
     this.breadcrumbService.setItems([
-        { label: 'Dashboard' },
-        { label: 'Product', routerLink: ['/app/product'] }
+      { label: 'Dashboard' },
+      { label: 'Product', routerLink: ['/app/product'] }
     ]);
-}
+  }
 
   ngOnInit(): void {
-    
-    
-    this.product = [
-      { srNo: '1', prCategory: 'Diet & Nutrition', prCode: 'HHY_WHT', prName: 'Gluten Free Wheat', unit: 'kg', foodCulture: 'Veg', producer:'Nestle' },      
-      { srNo: '2', prCategory: 'Supplementsess', prCode: 'HHY_MGC', prName: 'Magnesuim', unit: 'mg', foodCulture: 'Vegan', producer:'HealthyHey' },
-      { srNo: '3', prCategory: 'Health & Personal Care', prCode: 'NOR_OM3D3', prName: 'Omega 3 Oil with D3', unit: 'mg', foodCulture: 'Non-Veg', producer:'Abbott'},
-      { srNo: '4', prCategory: 'Immunity', prCode: 'HRLK', prName: 'Horlicks', unit: 'kg', foodCulture: 'Veg', producer:'Nestle' },
-      { srNo: '5', prCategory: 'Oil', prCode: 'SFFL', prName: 'Saffola', unit: 'Liter', foodCulture: 'Veg', producer:'Saffola' },
-      { srNo: '6', prCategory: 'Health & Personal Care', prCode: 'NOR_OM3D3', prName: 'Omega 3 Oil with D3', unit: 'No', foodCulture: 'Vegan', producer:'Abbott'},
-      { srNo: '7', prCategory: 'Supplementsess', prCode: 'HHY_MGC', prName: 'Magnesuim', unit: 'mg', foodCulture: 'Veg', producer:'HealthyHey' },
-      { srNo: '8', prCategory: 'Diet & Nutrition', prCode: 'HHY_WHT', prName: 'Gluten Free Wheat', unit: 'Gm', foodCulture: 'Veg', producer:'Nestle' },      
-      { srNo: '10', prCategory: 'Oil', prCode: 'SFFL', prName: 'Saffola', unit: 'Liter', foodCulture: 'Veg', producer:'Saffola' },
-    ];
 
-    
-}
+    this.getAllProduct();
 
+  }
 
+  // get list of products
+  getAllProduct() {
+    const Product_list_api =
+    {
+      "iRequestID": 2254,
+    }
+    this.apiService.callPostApi(Product_list_api).subscribe(
+      data => {
+        console.log(data);
+        this.product = data;
+      },
+      error => console.log(error)
+    );
+  }
 
+  //delete product
+  deleteProduct(iPrdID: Number) {
+    this.confirmationService.confirm({
+      message: 'Are you sure that you want to proceed?',
+      header: 'Confirmation',
+      icon: 'pi pi-exclamation-triangle',
+      accept: () => {
+        let prd_id = iPrdID;
+        console.log(prd_id);
+        let delete_data_api = {
+          "iRequestID": 2253,
+          "iPrdID": prd_id
+        };
+        this.apiService.callPostApi(delete_data_api).subscribe(
+          (data) => {
+            console.log(data);
+            this.toastService.addSingle("info", "Successfully Deleted", "Successfully Deleted");
+            this.getAllProduct();
+          },
+          (error) => console.log(error)
+        );
+      }
 
+    });
+
+  }
+
+  //edit product
+  editProduct(iPrdID: Number) {
+    this.router.navigate(['/app/product/edit-product', iPrdID]);
+  }
 }
