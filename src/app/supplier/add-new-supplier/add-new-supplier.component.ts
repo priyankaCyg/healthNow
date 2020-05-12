@@ -22,6 +22,7 @@ import { ThrowStmt } from '@angular/compiler';
 import { gstData } from 'src/app/model/gst';
 import { SuppMaster } from 'src/app/model/supplier.model';
 import {APIService} from '../../services/apieservice';
+import { SupplierCategoryMapping } from 'src/app/models/supplier-category-mapping.model';
 
 
 @Component({
@@ -56,6 +57,8 @@ export class AddNewSupplierComponent implements OnInit {
   fileTypeData;
 
   uploadedFiles: any[] = [];
+  sourceCategory : SupplierCategoryMapping [];
+  targetCategory : SupplierCategoryMapping [];
 
   constructor(private breadcrumbService: BreadcrumbService,
      private dialogService: DialogService,
@@ -75,7 +78,10 @@ export class AddNewSupplierComponent implements OnInit {
 this.getFileType();
 this.gstList();
  //new code added 
- this.defaultDropDwnValue()
+ this.defaultDropDwnValue();
+ this.getCategoryMappingDataSource();
+ this.getCategoryMappingDataTarget();
+ this.targetCategory = [];
 
  this.supData = new SuppMaster();
  this.addSupplierForm = this.createControl(this.supData);
@@ -646,4 +652,59 @@ uploadFile()
       });
     }
 
+   
+//category mapping starts
+getCategoryMappingDataSource(){
+    let sup_by_id = +this.route.snapshot.params['iSupID'];
+    const supplierCategoryMappingAPI = {
+      "iRequestID": 2221,
+    "iSupID":sup_by_id
+    }
+    this.apiService.callPostApi(supplierCategoryMappingAPI).subscribe(
+      data => { this.sourceCategory = data;},
+      error => {console.log(error)}
+    )
+  }
+  // category mapping ends
+
+//category mapping starts
+getCategoryMappingDataTarget(){
+  let sup_by_id = +this.route.snapshot.params['iSupID'];
+  const supplierCategoryMappingAPI1 = {
+    "iRequestID": 2223,
+  "iSupID":sup_by_id
+  }
+  this.apiService.callPostApi(supplierCategoryMappingAPI1).subscribe(
+    data => { this.targetCategory = data;},
+    error => {console.log(error)}
+  )
+}
+// category mapping ends
+
+// add category mapping starts
+  addCategoryMappingData(){
+    let temp_ids_arr = [];
+  this.targetCategory.map(
+                    (val) => {
+                      temp_ids_arr.push(val.iSupCatID);
+                      }
+  )
+  let string_ids = temp_ids_arr.toString();
+  let sup_by_id = +this.route.snapshot.params['iSupID'];
+  const supplierCategoryMappingAddAPI = {
+    "iRequestID": 2222,
+     "iSupID":sup_by_id,
+    "sSupCatMap": string_ids
+  }
+  this.apiService.callPostApi(supplierCategoryMappingAddAPI).subscribe(
+    data => { 
+      if(this.targetCategory)
+      this.toastService.addSingle("success", "Categories mapped Successfully", "");
+      else
+      this.toastService.addSingle("warning", "Select atleast 1 Category", "");
+    },
+    error => {console.log(error)}
+  )
+  }
+  // add category mapping ends
 }
