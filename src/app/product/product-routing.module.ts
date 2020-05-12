@@ -4,7 +4,7 @@ import { ProductComponent } from './product.component';
 import { NewProductComponent } from './new-product/new-product.component';
 import { from } from 'rxjs';
 
-const routes: Routes = [ {
+const routes: Routes = [{
   path: "",
   component: ProductComponent,
   data: {
@@ -16,6 +16,13 @@ const routes: Routes = [ {
   component: NewProductComponent,
   data: {
     title: "New Product"
+  }
+},
+{
+  path: "edit-product/:iPrdID",
+  component: NewProductComponent,
+  data: {
+    title: "Edit Product"
   }
 }
 
