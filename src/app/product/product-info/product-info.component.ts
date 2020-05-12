@@ -22,12 +22,12 @@ export class ProductInfoComponent implements OnInit {
     public ref: DynamicDialogRef,) { }
 
   ngOnInit(): void {
-    this.prd_Id = +localStorage.getItem('iProductID');
+    this.prd_Id = +localStorage.getItem('iPrdID');
     
     var infoDataApi = {
       "iRequestID": 2161,
-    // "iProductID":prd_Id
-    "iProductID":1
+     "iProductID":this.prd_Id
+    //"iProductID":1
     }
 
       this.apiService.callPostApi(infoDataApi).subscribe(
@@ -100,8 +100,8 @@ export class ProductInfoComponent implements OnInit {
     console.log(this.infoForm.value)
     const addInfo_data = {
       "iRequestID": 2162,
-      // "iProductID":this.prd_Id,
-      "iProductID":1,
+      "iProductID":this.prd_Id,
+      //"iProductID":1,
       "sJson": this.infoSubmitArray
     };
     console.log(addInfo_data, "add");
