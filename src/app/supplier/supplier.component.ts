@@ -47,7 +47,7 @@ export class SupplierComponent implements OnInit {
     this.apiService.callPostApi(supplier_list_api).subscribe(
       data => {
         console.log(data);
-        this.supplier = data;
+        this.supplier = data.body;
       },
       error => console.log(error)
     );
@@ -68,7 +68,7 @@ export class SupplierComponent implements OnInit {
         this.apiService.callPostApi(delete_data_api).subscribe(
           (data) => {
             console.log(data);
-            this.toastService.addSingle("info", "Successfully Deleted", "Successfully Deleted");
+            this.toastService.addSingle("success", data.headers.get('StatusMessage'), "");
             this.getAllSupplier();
           },
           (error) => console.log(error)

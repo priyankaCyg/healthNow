@@ -21,12 +21,14 @@
 
                     <div class="login-input-wrapper">
                         <label for="password">Password</label>
-                        <input type="password" id="password" placeholder="Type your password" pPassword [feedback]="false"/>
+                        <input type="password" id="password" placeholder="Type your password" pPassword
+                            [feedback]="false" />
                         <i class="pi pi-lock"></i>
                     </div>
 
                     <div class="p-col-12">
-                        <p-checkbox [(ngModel)]="checked" label="Remember me" value="SaveInfo" binary="true"></p-checkbox>
+                        <p-checkbox [(ngModel)]="checked" label="Remember me" value="SaveInfo" binary="true">
+                        </p-checkbox>
                     </div>
 
 

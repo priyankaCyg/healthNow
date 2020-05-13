@@ -307,7 +307,7 @@ export class NewProductComponent implements OnInit {
     this.apiService.callPostApi(addProductData).subscribe(
       data => {
         console.log(data);
-        this.toastService.addSingle("success", "Record Added Successfully", "");
+        this.toastService.addSingle("success", data.headers.get('StatusMessage'), "");
 
       },
       error => console.log(error)
@@ -332,7 +332,7 @@ export class NewProductComponent implements OnInit {
     this.apiService.callPostApi(editProductData).subscribe(
       data => {
         console.log(data);
-        this.toastService.addSingle("success", "Record Updated Successfully", "");
+        this.toastService.addSingle("success", data.headers.get('StatusMessage'), "");
 
       },
       error => console.log(error)
@@ -398,11 +398,11 @@ export class NewProductComponent implements OnInit {
   }
 
   getProductInfo() {
-    let prd_by_id = +this.route.snapshot.params['iProductID'];
+    //let prd_by_id = +this.route.snapshot.params['iPrdID'];
     const productInfoAPI = {
       "iRequestID": 2161,
-      // "iProductID":prd_by_id
-      "iProductID": 1
+      "iProductID": +this.prdId
+      //"iProductID": 1
     }
     this.apiService.callPostApi(productInfoAPI).subscribe(
       data => {
@@ -422,7 +422,7 @@ export class NewProductComponent implements OnInit {
       header: 'Add Product Info',
       width: '40%'
     });
-    localStorage.setItem('iProductID', this.route.snapshot.params['iProductID']);
+    localStorage.setItem('iPrdID', this.route.snapshot.params['iPrdID']);
     ref.onClose.subscribe((success: any) => {
       if (success) {
         this.getProductInfo();
