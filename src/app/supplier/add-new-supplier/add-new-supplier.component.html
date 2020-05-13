@@ -407,15 +407,6 @@
 
                 <!-- Attachment tab End here -->
                 
-
-                <!-- <p-tabPanel header="Category Mapping">
-                    <p-tree [value]="categoryMappingData" selectionMode="checkbox" [(selection)]="selectedCategoryIDS" ></p-tree>
-                    <div>Selected Nodes: <span *ngFor="let file of selectedCategoryIDS">{{file.key}} </span></div>
-                   
-                    <div class="p-col-12 p-md-2 p-lg-1">
-                        <button pButton type="button" label="Save"  style="margin-bottom:10px" class="ui-button" (click)="addCategoryMapping()"></button>
-                    </div>
-                </p-tabPanel> -->
                 <p-tabPanel header="Category Mapping" >
                 <p-pickList [source]="sourceCategory" [target]="targetCategory" sourceHeader="UnMapped" targetHeader="Mapped" [responsive]="true" filterBy="sCategoryName"
         dragdrop="true" sourceFilterPlaceholder="Search by category" targetFilterPlaceholder="Search by category" [sourceStyle]="{'height':'300px'}" [targetStyle]="{'height':'300px'}">
@@ -425,7 +416,7 @@
 </p-pickList>
 <div class="p-grid form-group ui-fluid p-justify-end mt-3">
     <div class="p-col-12 p-md-2 p-lg-12 text-right">
-        <button pButton type="button" label="Save"  style="margin-bottom:10px" class="ui-button" (click)="addCategoryMappingData()"></button>
+        <button pButton type="button" label="Save"  style="margin-bottom:10px;margin-right:200px" class="ui-button" (click)="addCategoryMappingData()"></button>
     </div>
 </div>
 

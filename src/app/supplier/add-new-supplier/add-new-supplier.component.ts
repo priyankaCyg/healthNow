@@ -100,7 +100,7 @@ this.gstList();
 
      console.log("Response of Edit Brand ", response)
 
-     this.supData = new SuppMaster(response[0]);
+     this.supData = new SuppMaster(response[0].body);
      this.addSupplierForm = this.createControl(this.supData);
 
      Promise.all([this.getStatusDrpDwn()]).then(values => {
@@ -136,7 +136,7 @@ this.gstList();
       "iSupID":sup_by_id
     }
     this.apiService.callPostApi(supplierAddressAPI).subscribe(
-      data => { this.supplierAdressData = data},
+      data => { this.supplierAdressData = data.body},
       error => {console.log(error)}
     )
   }
@@ -661,7 +661,7 @@ getCategoryMappingDataSource(){
     "iSupID":sup_by_id
     }
     this.apiService.callPostApi(supplierCategoryMappingAPI).subscribe(
-      data => { this.sourceCategory = data;},
+      data => { this.sourceCategory = data.body;},
       error => {console.log(error)}
     )
   }
@@ -675,7 +675,7 @@ getCategoryMappingDataTarget(){
   "iSupID":sup_by_id
   }
   this.apiService.callPostApi(supplierCategoryMappingAPI1).subscribe(
-    data => { this.targetCategory = data;},
+    data => { this.targetCategory = data.body;},
     error => {console.log(error)}
   )
 }

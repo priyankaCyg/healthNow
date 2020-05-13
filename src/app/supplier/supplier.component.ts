@@ -47,7 +47,7 @@ export class SupplierComponent implements OnInit {
     this.apiService.callPostApi(supplier_list_api).subscribe(
       data => {
         console.log(data);
-        this.supplier = data;
+        this.supplier = data.body;
       },
       error => console.log(error)
     );
