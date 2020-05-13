@@ -79,7 +79,10 @@ export class ProductCategoryComponent implements OnInit {
       "iRequestID": 2114
     }
     this.apiService.callPostApi(prodCatListApi).subscribe(
-      data => { this.productCategoryData = data } ,
+      data => { this.productCategoryData = data.body,
+      console.log(this.apiService.headerMessage);
+      console.log(this.apiService.headerCode);
+      } ,
       error => { console.log(error)}
     )
 
