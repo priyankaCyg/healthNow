@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder} from '@angular/forms';
+import { FormBuilder } from '@angular/forms';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { ApiService } from 'src/app/services/api.service';
 import { ToastService } from '../../services/toast.service';
@@ -13,13 +13,13 @@ import { ProductInfoData } from 'src/app/model/productInfo';
 export class ProductInfoComponent implements OnInit {
 
   infoArray: ProductInfoData[];
-  infoSubmitArray =[];
-  prd_Id : number;
+  infoSubmitArray = [];
+  prd_Id: number;
   constructor(public config: DynamicDialogConfig,
     private apiService: ApiService,
     private fb: FormBuilder,
     private toastService: ToastService,
-    public ref: DynamicDialogRef,) { }
+    public ref: DynamicDialogRef, ) { }
 
   ngOnInit(): void {
     this.prd_Id = +localStorage.getItem('iPrdID');
@@ -38,12 +38,12 @@ export class ProductInfoComponent implements OnInit {
         console.log(this.infoArray,"test")
         this.setValue();
       },
-      error => {console.log(error)}
-    
-       );
-       
+      error => { console.log(error) }
+
+    );
+
   }
-  
+
   infoForm = this.fb.group({
     sInfo1: [""],
     sInfo2: [""],
@@ -57,24 +57,23 @@ export class ProductInfoComponent implements OnInit {
     sInfo10: [""],
     sInfo11: [""],
     sInfo12: [""],
-  
-      });
 
-    setValue(){
+  });
 
-      for(var i=0;i<this.infoArray.length;i++)
-      {
-        var infoVarName = "sInfo"+(i+1);
-        this.infoForm.patchValue({[infoVarName]:this.infoArray[i].sInfo})
-      }
+  setValue() {
+
+    for (var i = 0; i < this.infoArray.length; i++) {
+      var infoVarName = "sInfo" + (i + 1);
+      this.infoForm.patchValue({ [infoVarName]: this.infoArray[i].sInfo })
     }
+  }
 
-    onClose() {
-      this.ref.close();
-      this.infoForm.reset();
-    }
+  onClose() {
+    this.ref.close();
+    this.infoForm.reset();
+  }
 
-    
+
   onSubmit() {
 
     console.log(this.infoSubmitArray,"check")
@@ -83,20 +82,20 @@ export class ProductInfoComponent implements OnInit {
       
       var infoVarName = "sInfo"+(i+1);
       let info_data = this.infoForm.controls[infoVarName].value.toString();
-      if(info_data != "" && info_data != undefined){
-       
-       const info_obj = {
-        iSeq: seq + 1,
-        sInfo: info_data
-       }
-        
-       console.log(info_obj)
-       this.infoSubmitArray.push(info_obj);
-       seq++;
+      if (info_data != "" && info_data != undefined) {
+
+        const info_obj = {
+          iSeq: seq + 1,
+          sInfo: info_data
+        }
+
+        console.log(info_obj)
+        this.infoSubmitArray.push(info_obj);
+        seq++;
       }
-      
+
     }
-    console.log(this.infoSubmitArray,"check")
+    console.log(this.infoSubmitArray, "check")
     console.log(this.infoForm.value)
     const addInfo_data = {
       "iRequestID": 2162,

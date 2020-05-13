@@ -5,6 +5,10 @@ import { SelectItem, MenuItem } from 'primeng/api';
 import { DialogService } from 'primeng';
 import { from } from 'rxjs';
 import { Message } from 'primeng/api';
+import { ApiService } from '../services/api.service';
+import { ToastService } from '../services/toast.service';
+import { ConfirmationService } from 'primeng/api';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-partner',
@@ -18,22 +22,67 @@ export class PartnerComponent implements OnInit {
   partner: any[];
 
 
-  constructor(private breadcrumbService: BreadcrumbService, private dialogService:DialogService) {
+  constructor(private breadcrumbService: BreadcrumbService, private dialogService: DialogService,
+    private apiService: ApiService, private toastService: ToastService, private confirmationService: ConfirmationService,
+    private router: Router) {
     this.breadcrumbService.setItems([
-        { label: 'Dashboard' },
-        { label: 'Partner', routerLink: ['/app/partner'] }
+      { label: 'Dashboard' },
+      { label: 'Partner', routerLink: ['/app/partner'] }
     ]);
-}
+  }
 
 
   ngOnInit(): void {
-    this.partner = [
-      { partnerName:'Krishna Biyani', shortCode:'PRT1',legalEntity:'1',	website:'www.productNew.com',	telNo1:'7778899778',telNo2:'252525252',fax:'010101010', pan:'PKJP12312' },
-      { partnerName:'Rajanish Gaurav',shortCode:'PRT2',legalEntity:'3',	website:'www.newproduct.com',	telNo1:'9988779987',telNo2:'656565665',fax:'4141414141', pan:'BKSKM45456' },
-      { partnerName:'Shibin KP',shortCode:'PRT3',legalEntity:'7',	website:'www.allinone.com',	telNo1:'8877998787',telNo2:'4447744454',fax:'323232323', pan:'RTBG454545' },
-      { partnerName:'Neelam Majhgavkar',shortCode:'PRT4',legalEntity:'8',	website:'www.productbyHelth.com',	telNo1:'7474747474',telNo2:'2323223223',fax:'6565656556', pan:'MJKLF4455' },
-      { partnerName:'Priyanka Sahu',shortCode:'PRT5',legalEntity:'6',	website:'www.productwow.com',	telNo1:'9696969699',telNo2:'2125212512',fax:'2828288252', pan:'SKBK55698' }
-    ];
+    this.getAllPartner();
+
+  }
+
+  // get list of partner
+  getAllPartner() {
+    const Partner_list_api =
+    {
+      "iRequestID": 2287,
+    }
+    this.apiService.callPostApi(Partner_list_api).subscribe(
+      data => {
+        console.log(data);
+        this.partner = data.body;
+      },
+      error => console.log(error)
+    );
+  }
+
+  //delete partner
+  deletePartner(iPartnerID: Number) {
+    this.confirmationService.confirm({
+      message: 'Are you sure that you want to proceed?',
+      header: 'Confirmation',
+      icon: 'pi pi-exclamation-triangle',
+      accept: () => {
+        let partner_id = iPartnerID;
+        console.log(partner_id);
+        let delete_data_api = {
+          "iRequestID": 2283,
+          "iPartnerID": partner_id
+        };
+        console.log(delete_data_api);
+        this.apiService.callPostApi(delete_data_api).subscribe(
+          (data) => {
+            console.log(data);
+            this.toastService.addSingle("success", data.headers.get('StatusMessage'), "");
+            this.getAllPartner();
+          },
+          (error) => console.log(error)
+        );
+      }
+
+    });
+
+  }
+
+  //edit partner
+  editPartner(iPartnerID: Number) {
+    this.router.navigate(['/app/partner/edit-partner', iPartnerID]);
   }
 
 }

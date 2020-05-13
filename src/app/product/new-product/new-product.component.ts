@@ -307,7 +307,7 @@ export class NewProductComponent implements OnInit {
     this.apiService.callPostApi(addProductData).subscribe(
       data => {
         console.log(data);
-        this.toastService.addSingle("success", "Record Added Successfully", "");
+        this.toastService.addSingle("success", data.headers.get('StatusMessage'), "");
 
       },
       error => console.log(error)
@@ -332,7 +332,7 @@ export class NewProductComponent implements OnInit {
     this.apiService.callPostApi(editProductData).subscribe(
       data => {
         console.log(data);
-        this.toastService.addSingle("success", "Record Updated Successfully", "");
+        this.toastService.addSingle("success", data.headers.get('StatusMessage'), "");
 
       },
       error => console.log(error)

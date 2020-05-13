@@ -96,9 +96,8 @@ export class CompanyComponent implements OnInit {
 
     ref.onClose.subscribe((success: boolean) => {
       if (success) {
-        // this.toastService.addSingle("success", "Mail send successfully", "");
+        this.companyData();
       }
-      this.companyData();
     });
   }
   // Get address list start
@@ -188,11 +187,7 @@ export class CompanyComponent implements OnInit {
 
     ref.onClose.subscribe((success: boolean) => {
       if (success) {
-        //this.toastService.addSingle("success", "Record Added successfully", "");
         this.departmentList();
-
-        this.toastService.addSingle("success", "Record Added Successfully", "");
-
       }
 
     });
@@ -208,9 +203,6 @@ export class CompanyComponent implements OnInit {
     ref.onClose.subscribe((success: boolean) => {
       if (success) {
         this.departmentList();
-
-        this.toastService.addSingle("success", "Record Updated Successfully", "");
-
       }
 
     });
@@ -245,7 +237,7 @@ export class CompanyComponent implements OnInit {
         this.apiService.callPostApi(delete_data_api).subscribe(
           (data) => {
             console.log(data);
-            this.toastService.addSingle("info", "Successfully Deleted", "Successfully Deleted");
+            this.toastService.addSingle("success", data.headers.get('StatusMessage'), "");
             this.departmentList();
           },
           (error) => console.log(error)
@@ -268,8 +260,6 @@ export class CompanyComponent implements OnInit {
     ref.onClose.subscribe((success: boolean) => {
       if (success) {
         this.gstList();
-
-        this.toastService.addSingle("success", "Record Added Successfully", "");
       }
     });
   }
@@ -285,8 +275,6 @@ export class CompanyComponent implements OnInit {
     ref.onClose.subscribe((success: boolean) => {
       if (success) {
         this.gstList();
-
-        this.toastService.addSingle("success", "Record Updated Successfully", "");
       }
     });
   }
@@ -326,7 +314,7 @@ export class CompanyComponent implements OnInit {
         this.apiService.callPostApi(delete_gst_data_api).subscribe(
           data => {
             console.log(data);
-            this.toastService.addSingle("info", "Successfully Deleted", "Successfully Deleted");
+            this.toastService.addSingle("success", data.headers.get('StatusMessage'), "");
             this.gstList();
 
           },

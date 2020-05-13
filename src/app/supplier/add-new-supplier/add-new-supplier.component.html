@@ -35,12 +35,12 @@
                                     </div>
 
                                     <div class="p-col-12 p-md-6 p-lg-3 mb-2">
-                                        <label for="legalEntity">Legal Entity ID</label>
-                                        <input id="legalEntity" class="form-control" type="text"
-                                            formControlName="iLegalEntityID" pInputText>
-                                        <p-message severity="error"
-                                            [text]="addSupplierForm.controls['iLegalEntityID'].errors['required'] ? 'Entity Id is required' : addSupplierForm.controls['iLegalEntityID'].errors"
-                                            *ngIf="!addSupplierForm.controls['iLegalEntityID'].valid && addSupplierForm.controls['iLegalEntityID'].dirty">
+                                        <label for="legalEntity">Legal Entity</label>
+                                        <p-dropdown id="legalEntity" class="form-control" [options]="legalEntityData"
+                                            formControlName="iLegalEntityID" placeholder="Select" optionLabel="sKVValue"
+                                            [(ngModel)]="selectedlegalEntity" required="true"></p-dropdown>
+                                        <p-message severity="error" text="select legalEntity is required"
+                                            *ngIf="addSupplierForm.controls['iLegalEntityID'].touched && (selectedlegalEntity.iKVID=='' || addSupplierForm.controls['iLegalEntityID'].hasError('required'))">
                                         </p-message>
                                     </div>
                                     <div class="p-col-12 p-md-6 p-lg-3 mb-2">
@@ -119,15 +119,16 @@
                                 <div class="p-grid form-group ui-fluid p-justify-end mt-3">
                                     <div class="p-col-12 p-md-2 p-lg-12 text-right">
                                         <button pButton type="button" label="Cancel" routerLink="/app/supplier"
-                                             class="ui-button-light atbt mr-2 mb-2"></button>
-                                   
+                                            class="ui-button-light atbt mr-2 mb-2"></button>
+
                                         <button pButton type="submit" *ngIf="!isEdit"
                                             [disabled]="!(!addSupplierForm.invalid && !dropDownValidityCheck())"
                                             (click)="addSupplier()" label="Save" class="ui-button atbt mb-2"></button>
-                                    
+
                                         <button pButton type="submit" *ngIf="isEdit"
                                             [disabled]="!(!addSupplierForm.invalid && !dropDownValidityCheck())"
-                                            (click)="editSupplier()" label="Update" class="ui-button atbt mb-2"></button>
+                                            (click)="editSupplier()" label="Update"
+                                            class="ui-button atbt mb-2"></button>
                                     </div>
                                 </div>
 
@@ -147,18 +148,19 @@
                                 label="Add New"></button>
 
                         </div>
-                        <div class="p-col-12"> 
+                        <div class="p-col-12">
                             <p-table #AddressSerach [value]="supplierAdressData" [paginator]="true" [rows]="10"
-                            [showCurrentPageReport]="true" [rowsPerPageOptions]="[10, 25, 50]" [filterDelay]="0"
-                            [globalFilterFields]="[
+                                [showCurrentPageReport]="true" [rowsPerPageOptions]="[10, 25, 50]" [filterDelay]="0"
+                                [globalFilterFields]="[
                               'sAddType','sAdd1','sAdd2','sStateName','sCityName','sLandmark','iStatusID'
                             ]">
-                            <ng-template pTemplate="caption">
-                                <div class="ui-table-globalfilter-container text-left">
-                                <input type="text" pInputText size="50" placeholder="Search"
-                                  (input)="AddressSerach.filterGlobal($event.target.value, 'contains')" style="width:250px;">
-                              </div>
-                            </ng-template>
+                                <ng-template pTemplate="caption">
+                                    <div class="ui-table-globalfilter-container text-left">
+                                        <input type="text" pInputText size="50" placeholder="Search"
+                                            (input)="AddressSerach.filterGlobal($event.target.value, 'contains')"
+                                            style="width:250px;">
+                                    </div>
+                                </ng-template>
                                 <ng-template pTemplate="header">
                                     <tr>
                                         <th>Address Type</th>
@@ -180,18 +182,25 @@
                                         <td>{{address.sCityName}}</td>
                                         <td>{{address.sLandmark}}</td>
                                         <td style="text-align: center;">
-                                            <span *ngIf="address.iStatusID == 1" class="badge badge--success badge--inline badge--pill">
-                                              Active
+                                            <span *ngIf="address.iStatusID == 1"
+                                                class="badge badge--success badge--inline badge--pill">
+                                                Active
                                             </span>
-                                            <span *ngIf="address.iStatusID == 2" class="badge badge--warning badge--inline badge--pill">
-                                              Inactive
+                                            <span *ngIf="address.iStatusID == 2"
+                                                class="badge badge--warning badge--inline badge--pill">
+                                                Inactive
                                             </span>
-                                            <span *ngIf="address.iStatusID == 3" class="badge badge--danger badge--inline badge--pill">
-                                              Deleted
+                                            <span *ngIf="address.iStatusID == 3"
+                                                class="badge badge--danger badge--inline badge--pill">
+                                                Deleted
                                             </span>
-                                          </td>
-                                        <td><button pButton type="button" class="ui-button-success" (click)="editSupplierAddress(address.iSupAddID)" icon="pi pi-pencil" style="margin-right: .5em"></button>
-                                         <button pButton type="button" class="ui-button-danger" (click)="deleteSupplierAddress(address.iSupAddID)" icon="pi pi-trash"></button></td>
+                                        </td>
+                                        <td><button pButton type="button" class="ui-button-success"
+                                                (click)="editSupplierAddress(address.iSupAddID)" icon="pi pi-pencil"
+                                                style="margin-right: .5em"></button>
+                                            <button pButton type="button" class="ui-button-danger"
+                                                (click)="deleteSupplierAddress(address.iSupAddID)"
+                                                icon="pi pi-trash"></button></td>
                                     </tr>
                                 </ng-template>
                             </p-table>
@@ -203,10 +212,11 @@
                 <p-tabPanel header="Contact">
                     <div class="p-grid ui-fluid p-justify-end">
                         <div class="p-col-1 text-center mt-1">
-                            <button (click)="openDialogForaddContact()" pButton icon="pi pi-fw pi-plus" label="Add" class="ui-button"></button>
-                            
+                            <button (click)="openDialogForaddContact()" pButton icon="pi pi-fw pi-plus" label="Add"
+                                class="ui-button"></button>
+
                         </div>
-                        <div class="p-col-12"> 
+                        <div class="p-col-12">
                             <!-- <p-table [value]="contact">
                                 <ng-template pTemplate="caption">
                                
@@ -214,16 +224,18 @@
                                         <input type="text" pInputText size="50" placeholder="Search" (input)="dt.filterGlobal($event.target.value, 'contains')" style="width:250px;">
                                     </div>
                                 </ng-template> -->
-                                <p-table #dt [value]="contact" [resizableColumns]="true" [rowHover]="true" [paginator]="true"
-                                    [rows]="10" [showCurrentPageReport]="true" [rowsPerPageOptions]="[10, 25, 50]" [filterDelay]="0"
-                                    [globalFilterFields]="['sFullName','sDesignation','sEmailID','sMobileNo','sContactNo','sDirectNo','sFaxNo','sStatusName']">
-                                    <ng-template pTemplate="caption">
-            
-                                        <div class="ui-table-globalfilter-container text-left">
-                                            <input type="text" pInputText size="50" placeholder="Search"
-                                                (input)="dt.filterGlobal($event.target.value, 'contains')" style="width:250px;">
-                                        </div>
-                                    </ng-template>
+                            <p-table #dt [value]="contact" [resizableColumns]="true" [rowHover]="true"
+                                [paginator]="true" [rows]="10" [showCurrentPageReport]="true"
+                                [rowsPerPageOptions]="[10, 25, 50]" [filterDelay]="0"
+                                [globalFilterFields]="['sFullName','sDesignation','sEmailID','sMobileNo','sContactNo','sDirectNo','sFaxNo','sStatusName']">
+                                <ng-template pTemplate="caption">
+
+                                    <div class="ui-table-globalfilter-container text-left">
+                                        <input type="text" pInputText size="50" placeholder="Search"
+                                            (input)="dt.filterGlobal($event.target.value, 'contains')"
+                                            style="width:250px;">
+                                    </div>
+                                </ng-template>
                                 <ng-template pTemplate="header">
                                     <tr>
                                         <th>Full Name</th>
@@ -235,8 +247,8 @@
                                         <th>Direct No.</th>
                                         <th>Fax No.</th>
                                         <th>Status</th>
-                                        <th >Action</th>
-                                        
+                                        <th>Action</th>
+
                                     </tr>
                                 </ng-template>
                                 <ng-template pTemplate="body" let-contact>
@@ -251,19 +263,25 @@
                                         <td>{{contact.sFaxNo}}</td>
                                         <!-- <td>{{contact.sStatusName}}</td> -->
                                         <td>
-                                            <span *ngIf="contact.iStatusID == 1" class="badge badge--success badge--inline badge--pill">
-                                              Active
+                                            <span *ngIf="contact.iStatusID == 1"
+                                                class="badge badge--success badge--inline badge--pill">
+                                                Active
                                             </span>
-                                            <span *ngIf="contact.iStatusID == 2" class="badge badge--warning badge--inline badge--pill">
-                                              Inactive
+                                            <span *ngIf="contact.iStatusID == 2"
+                                                class="badge badge--warning badge--inline badge--pill">
+                                                Inactive
                                             </span>
-                                            <span *ngIf="contact.iStatusID == 3" class="badge badge--danger badge--inline badge--pill">
-                                              Deleted
+                                            <span *ngIf="contact.iStatusID == 3"
+                                                class="badge badge--danger badge--inline badge--pill">
+                                                Deleted
                                             </span>
-                                          </td>
+                                        </td>
                                         <td>
-                                            <button pButton type="button" (click)="editContact(contact.iSupContactID)" class="ui-button-success" icon="pi pi-pencil" style="margin-right: .5em"></button>
-                                            <button pButton type="button" (click)="deleteContact(contact.iSupContactID)" class="ui-button-danger" icon="pi pi-trash"></button>
+                                            <button pButton type="button" (click)="editContact(contact.iSupContactID)"
+                                                class="ui-button-success" icon="pi pi-pencil"
+                                                style="margin-right: .5em"></button>
+                                            <button pButton type="button" (click)="deleteContact(contact.iSupContactID)"
+                                                class="ui-button-danger" icon="pi pi-trash"></button>
                                         </td>
                                     </tr>
                                 </ng-template>
@@ -276,22 +294,25 @@
                 <p-tabPanel header="Bank">
                     <div class="p-grid ui-fluid p-justify-end">
                         <div class="p-col-1 text-center mt-1">
-                            <button (click)="openDialogForBank()" pButton icon="pi pi-fw pi-plus" label="Add New"></button>
+                            <button (click)="openDialogForBank()" pButton icon="pi pi-fw pi-plus"
+                                label="Add New"></button>
                         </div>
-                        <div class="p-col-12"> 
+                        <div class="p-col-12">
                             <!-- <p-table [value]="bank">
                                 <ng-template pTemplate="header"> -->
-                                    <p-table #dt [value]="bank" [resizableColumns]="true" [rowHover]="true" [paginator]="true"
-                                    [rows]="10" [showCurrentPageReport]="true" [rowsPerPageOptions]="[10, 25, 50]" [filterDelay]="0"
-                                    [globalFilterFields]="['sBankName','sShortCode','sAccountNo','sIFSC','sBankBranch','sStatusName']">
-                                    <ng-template pTemplate="caption">
-            
-                                        <div class="ui-table-globalfilter-container text-left">
-                                            <input type="text" pInputText size="50" placeholder="Search"
-                                                (input)="dt.filterGlobal($event.target.value, 'contains')" style="width:250px;">
-                                        </div>
-                                    </ng-template>
-                                    <ng-template pTemplate="header">
+                            <p-table #dt [value]="bank" [resizableColumns]="true" [rowHover]="true" [paginator]="true"
+                                [rows]="10" [showCurrentPageReport]="true" [rowsPerPageOptions]="[10, 25, 50]"
+                                [filterDelay]="0"
+                                [globalFilterFields]="['sBankName','sShortCode','sAccountNo','sIFSC','sBankBranch','sStatusName']">
+                                <ng-template pTemplate="caption">
+
+                                    <div class="ui-table-globalfilter-container text-left">
+                                        <input type="text" pInputText size="50" placeholder="Search"
+                                            (input)="dt.filterGlobal($event.target.value, 'contains')"
+                                            style="width:250px;">
+                                    </div>
+                                </ng-template>
+                                <ng-template pTemplate="header">
                                     <tr>
                                         <th>Bank Name</th>
                                         <th>Short Code/Account Type</th>
@@ -304,16 +325,19 @@
                                 </ng-template>
                                 <ng-template pTemplate="body" let-bank>
                                     <tr>
-                                            <td>{{bank.sBankName}}</td>
-                                            <td>{{bank.sShortCode}}</td>
-                                            <td>{{bank.sAccountNo}}</td>
-                                            <td>{{bank.sIFSC}}</td>
-                                            <td>{{bank.sBankBranch}}</td>
-                                            <td>{{bank.sStatusName}}</td>
-                                            <td>
-                                                <button pButton type="button" (click)="editBank(bank.iBankID)" class="ui-button-success" icon="pi pi-pencil" style="margin-right: .5em"></button>
-                                                <button pButton type="button" (click)="deleteBank(bank.iBankID)" class="ui-button-danger" icon="pi pi-trash"></button>
-                                            </td>
+                                        <td>{{bank.sBankName}}</td>
+                                        <td>{{bank.sShortCode}}</td>
+                                        <td>{{bank.sAccountNo}}</td>
+                                        <td>{{bank.sIFSC}}</td>
+                                        <td>{{bank.sBankBranch}}</td>
+                                        <td>{{bank.sStatusName}}</td>
+                                        <td>
+                                            <button pButton type="button" (click)="editBank(bank.iBankID)"
+                                                class="ui-button-success" icon="pi pi-pencil"
+                                                style="margin-right: .5em"></button>
+                                            <button pButton type="button" (click)="deleteBank(bank.iBankID)"
+                                                class="ui-button-danger" icon="pi pi-trash"></button>
+                                        </td>
                                     </tr>
                                 </ng-template>
                             </p-table>
@@ -341,12 +365,14 @@
                                 </ng-template>
                                 <ng-template pTemplate="body" let-gst>
                                     <tr>
-                                        <td >{{gst.sStateName}}</td>
-                                        <td >{{gst.sGST}}</td>
+                                        <td>{{gst.sStateName}}</td>
+                                        <td>{{gst.sGST}}</td>
 
-                                        <td >
-                                            <button pButton type="button" (click)="editDialogForGST(gst)" class="ui-button-success mr-1" icon="pi pi-pencil"></button>
-                                            <button pButton type="button" (click)="deletesupgst(gst)" class="ui-button-danger" icon="pi pi-trash"></button>
+                                        <td>
+                                            <button pButton type="button" (click)="editDialogForGST(gst)"
+                                                class="ui-button-success mr-1" icon="pi pi-pencil"></button>
+                                            <button pButton type="button" (click)="deletesupgst(gst)"
+                                                class="ui-button-danger" icon="pi pi-trash"></button>
                                         </td>
                                     </tr>
                                 </ng-template>
@@ -355,78 +381,85 @@
                     </div>
                 </p-tabPanel>
                 <!-- GST Info tab End here -->
-                
-                <p-tabPanel header="Attacment">
+
+                <p-tabPanel header="Attachment">
                     <div class="p-grid ui-fluid">
                         <div class="p-col-12 p-md-3 p-lg-3">
                             <label for="sfileType">Select File Type</label>
                             <!-- <p-dropdown id="sfileType" class="form-control" placeholder="Select" required="true"></p-dropdown> -->
-                            <p-dropdown id="sfileType" class="form-control" [options]="fileTypeData" placeholder="Select File Type" optionLabel="sDocTypeName"
-                                            [(ngModel)]="selectedFileType" required="true"></p-dropdown>
+                            <p-dropdown id="sfileType" class="form-control" [options]="fileTypeData"
+                                placeholder="Select File Type" optionLabel="sDocTypeName" [(ngModel)]="selectedFileType"
+                                required="true"></p-dropdown>
                         </div>
                         <div class="p-col-12 p-md-2 p-lg-1">
                             <div class="fileUpload p-0">
-                                <p-fileUpload mode="basic" [auto]="true" name="demo[]"  maxFileSize="1000000" customUpload="true" (uploadHandler)="onUpload($event)" multiple="multiple" chooseLabel="Browse"></p-fileUpload>                                
-                                
+                                <p-fileUpload mode="basic" [auto]="true" name="demo[]" maxFileSize="1000000"
+                                    customUpload="true" (uploadHandler)="onUpload($event)" multiple="multiple"
+                                    chooseLabel="Browse"></p-fileUpload>
+
                             </div>
-                         </div>
-                        <div class="p-col-12 p-md-3 p-lg-3 text-left"><button pButton type="button" (click)="uploadFile()" label="Upload" class="ui-button atbt"></button></div> 
-                        
+                        </div>
+                        <div class="p-col-12 p-md-3 p-lg-3 text-left"><button pButton type="button"
+                                (click)="uploadFile()" label="Upload" class="ui-button atbt"></button></div>
+
                         <div class="p-col-12 p-md-12 p-lg-12 mt-3">
-                                <p-table #attachmentHeader [value]="attachment" [resizableColumns]="true" [rowHover]="true" [paginator]="true"
-                                    [rows]="10" [showCurrentPageReport]="true" [rowsPerPageOptions]="[10, 25, 50]" [filterDelay]="0"
-                                    [globalFilterFields]="['sDocTypeName','sActualName']">
-                                    <ng-template pTemplate="caption">
-            
-                                        <div class="ui-table-globalfilter-container text-left">
-                                            <input type="text" pInputText size="50" placeholder="Search"
-                                                (input)="attachmentHeader.filterGlobal($event.target.value, 'contains')" style="width:250px;">
-                                        </div>
-                                    </ng-template>
-                                    <ng-template pTemplate="header">
-                                        <tr>
-                                            <th>File Type</th>
-                                            <th>File Name</th>
-                                            <th>Action</th>
-                                        </tr>
-                                    </ng-template>
+                            <p-table #attachmentHeader [value]="attachment" [resizableColumns]="true" [rowHover]="true"
+                                [paginator]="true" [rows]="10" [showCurrentPageReport]="true"
+                                [rowsPerPageOptions]="[10, 25, 50]" [filterDelay]="0"
+                                [globalFilterFields]="['sDocTypeName','sActualName']">
+                                <ng-template pTemplate="caption">
+
+                                    <div class="ui-table-globalfilter-container text-left">
+                                        <input type="text" pInputText size="50" placeholder="Search"
+                                            (input)="attachmentHeader.filterGlobal($event.target.value, 'contains')"
+                                            style="width:250px;">
+                                    </div>
+                                </ng-template>
+                                <ng-template pTemplate="header">
+                                    <tr>
+                                        <th>File Type</th>
+                                        <th>File Name</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </ng-template>
                                 <ng-template pTemplate="body" let-attachment>
                                     <tr>
                                         <td>{{attachment.sDocTypeName}}</td>
                                         <td>{{attachment.sActualName}}</td>
                                         <td>
-                                            <button pButton type="button" class="ui-button-success mr-1" (click)="downloadFile(attachment)" icon="pi pi-arrow-down"></button>
-                                            <button pButton type="button" class="ui-button-danger" icon="pi pi-trash"></button>
+                                            <button pButton type="button" class="ui-button-success mr-1"
+                                                (click)="downloadFile(attachment)" icon="pi pi-arrow-down"></button>
+                                            <button pButton type="button" class="ui-button-danger"
+                                                icon="pi pi-trash"></button>
                                         </td>
                                     </tr>
                                 </ng-template>
                             </p-table>
-                         </div>
+                        </div>
                     </div>
                 </p-tabPanel>
 
                 <!-- Attachment tab End here -->
-                
 
-                <!-- <p-tabPanel header="Category Mapping">
-                    <p-tree [value]="categoryMappingData" selectionMode="checkbox" [(selection)]="selectedCategoryIDS" ></p-tree>
-                    <div>Selected Nodes: <span *ngFor="let file of selectedCategoryIDS">{{file.key}} </span></div>
-                   
-                    <div class="p-col-12 p-md-2 p-lg-1">
-                        <button pButton type="button" label="Save"  style="margin-bottom:10px" class="ui-button" (click)="addCategoryMapping()"></button>
+                <p-tabPanel header="Category Mapping">
+                    <p-pickList [source]="sourceCategory" [target]="targetCategory" sourceHeader="UnMapped"
+                        targetHeader="Mapped" [responsive]="true" filterBy="sCategoryName" dragdrop="true"
+                        sourceFilterPlaceholder="Search by category" targetFilterPlaceholder="Search by category"
+                        [sourceStyle]="{'height':'300px'}" [targetStyle]="{'height':'300px'}">
+                        <ng-template let-category pTemplate="item">
+                            <div class="ui-helper-clearfix">
+                                <div style="font-size:14px;">{{category.sCategoryName}} </div>
+                            </div>
+                        </ng-template>
+                    </p-pickList>
+                    <div class="p-grid form-group ui-fluid p-justify-end mt-3">
+                        <div class="p-col-12 p-md-2 p-lg-12 text-right">
+                            <button pButton type="button" label="Save" style="margin-bottom:10px;margin-right:200px"
+                                class="ui-button" (click)="addCategoryMappingData()"></button>
+                        </div>
                     </div>
-                </p-tabPanel> -->
-                <p-tabPanel header="Category Mapping" >
-                <p-pickList [source]="sourceCategory" [target]="targetCategory" sourceHeader="UnMapped" targetHeader="Mapped" [responsive]="true" filterBy="data"
-        dragdrop="true" sourceFilterPlaceholder="Search by category" targetFilterPlaceholder="Search by category" [sourceStyle]="{'height':'300px'}" [targetStyle]="{'height':'300px'}">
-    <ng-template let-category pTemplate="item">
-        <div class="ui-helper-clearfix"> <div style="font-size:14px;">{{category.data}} </div></div>
-    </ng-template>
-</p-pickList>
-<div class="p-col-12 p-md-2 p-lg-1">
-    <button pButton type="button" label="Save"  style="margin-bottom:10px" class="ui-button" (click)="addCategoryMappingData()"></button>
-</div>
-</p-tabPanel>
+
+                </p-tabPanel>
             </p-tabView>
         </div>
     </div>

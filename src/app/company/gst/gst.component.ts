@@ -54,7 +54,7 @@ export class GstComponent implements OnInit {
 
   GSTSubmit = this.fb.group({
     state: ['', Validators.required],
-    gst: ['02', Validators.required],
+    gst: ['', Validators.required],
   });
 
   onSubmit() {
@@ -83,6 +83,8 @@ export class GstComponent implements OnInit {
           data => {
             console.log(data);
             this.ref.close(true);
+            this.toastService.addSingle("success", data.headers.get('StatusMessage'), "");
+
           },
           error => console.log(error)
         );
@@ -106,6 +108,8 @@ export class GstComponent implements OnInit {
           data => {
             console.log(data);
             this.ref.close(true);
+            this.toastService.addSingle("success", data.headers.get('StatusMessage'), "");
+
           },
           error => console.log(error)
         );

@@ -69,7 +69,7 @@ export class ProductComponent implements OnInit {
         this.apiService.callPostApi(delete_data_api).subscribe(
           (data) => {
             console.log(data);
-            this.toastService.addSingle("info", "Successfully Deleted", "Successfully Deleted");
+            this.toastService.addSingle("success", data.headers.get('StatusMessage'), "");
             this.getAllProduct();
           },
           (error) => console.log(error)
