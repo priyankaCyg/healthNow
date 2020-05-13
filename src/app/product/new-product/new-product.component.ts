@@ -406,9 +406,9 @@ export class NewProductComponent implements OnInit {
     }
     this.apiService.callPostApi(productInfoAPI).subscribe(
       data => {
-        console.log(data);
+        console.log(data.body);
 
-        this.productInfoData = data[0];
+        this.productInfoData = data.body[0];
         console.log(this.productInfoData)
       },
       error => { console.log(error) }
@@ -426,7 +426,7 @@ export class NewProductComponent implements OnInit {
     ref.onClose.subscribe((success: any) => {
       if (success) {
         this.getProductInfo();
-        this.toastService.addSingle("success", "Record Added Successfully", "");
+        //this.toastService.addSingle("success", "Record Added Successfully", "");
       }
 
     });

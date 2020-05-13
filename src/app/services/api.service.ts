@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
-import { HttpClient, HttpHeaders } from "@angular/common/http";
+import { HttpClient, HttpHeaders,HttpResponse } from "@angular/common/http";
 import { Observable } from "rxjs";
-
+import { tap, map } from 'rxjs/operators';
 @Injectable({
   providedIn: "root",
 })
@@ -13,7 +13,11 @@ export class ApiService {
   constructor(private http: HttpClient) { }
 
   callPostApi(requestBody: Object): Observable<any> {
-    return this.http.post(this._baseUrl, requestBody, {headers: this.headers});
+    //  return this.http.post(this._baseUrl, requestBody, {headers: this.headers});
+    return this.http.post<any>(this._baseUrl,requestBody, {observe: 'response'}).pipe(
+      tap(resp => console.log('response message', resp.headers.get('StatusMessage'),resp.body)
+      )
+ );
   }
 
   getDropDownData(requestData): Promise<any> {
@@ -24,4 +28,5 @@ export class ApiService {
       }, reject);
     });
   }
+
 }

@@ -4,31 +4,50 @@
             <h1>Partner</h1>
             <p-tabView>
                 <p-tabPanel header="Partner">
+                    <form [formGroup]="PartnerForm">
                         <div class="p-grid ui-fluid  p-justify-end mt-3">
 
                             <div class="p-col-12">
                                 <div class="p-grid form-group">
 
                                     <div class="p-col-12 p-md-6 p-lg-3 mb-2">
+                                       
                                         <label for="partnerName">Partner Name</label>
-                                        <input id="partnerName" class="form-control"  type="text" pInputText>
+                                        <input id="partnerName" type="text" formControlName="sPartnerName" class="form-control" pInputText>
+                                        <!-- <p-message severity="error"
+                                            [text]="ProductForm.controls['sPrdName'].errors['required'] ? 'Producer Name is required' : ProductForm.controls['sPrdName'].errors['required']"
+                                            *ngIf="!ProductForm.controls['sPrdName'].valid && ProductForm.controls['sPrdName'].dirty">
+                                        </p-message> -->
                                     </div>
 
 
                                     <div class="p-col-12 p-md-6 p-lg-3 mb-2">
+                                        
                                         <label for="shotCode">Short Code</label>
-                                        <input id="shotCode" class="form-control" type="text"  pInputText>
+                                        <input id="shotCode" type="text" formControlName="sShortCode" class="form-control" pInputText>
+                                        <!-- <p-message severity="error"
+                                            [text]="ProductForm.controls['sPrdName'].errors['required'] ? 'Producer Name is required' : ProductForm.controls['sPrdName'].errors['required']"
+                                            *ngIf="!ProductForm.controls['sPrdName'].valid && ProductForm.controls['sPrdName'].dirty">
+                                        </p-message> -->
                                     </div>
 
                                     <div class="p-col-12 p-md-6 p-lg-3 mb-2">
-                                        <label for="legalEntity">Legal Entity ID</label>
-                                        <input id="legalEntity" class="form-control" type="text" pInputText>
+                                        <label for="unit">Legal Entity ID</label>
+                                        <p-dropdown id="entityid" [options]="entityData" optionLabel="sKVValue"
+                                            formControlName="iLegalEntityID" [(ngModel)]="selectedEntity"></p-dropdown>
+                                        <p-message severity="error" text="legal Entity is required"
+                                            *ngIf="PartnerForm.controls['iLegalEntityID'].touched && (selectedEntity.iKVID=='' || PartnerForm.controls['iLegalEntityID'].hasError('required'))">
+                                        </p-message>
                                     </div>
 
-                                    <div class="p-col-12 p-md-6 p-lg-3 mb-2">
+                                    <!-- <div class="p-col-12 p-md-6 p-lg-3 mb-2">
                                         <label for="website">Website</label>
-                                        <input id="website" class="form-control" type="text" pInputText>
-                                    </div>
+                                        <input id="website" class="form-control" formControlName="" type="text" pInputText>
+                                         <p-message severity="error"
+                                            [text]="ProductForm.controls['sPrdName'].errors['required'] ? 'Producer Name is required' : ProductForm.controls['sPrdName'].errors['required']"
+                                            *ngIf="!ProductForm.controls['sPrdName'].valid && ProductForm.controls['sPrdName'].dirty">
+                                        </p-message> 
+                                    </div> -->
 
                                 </div>
 
@@ -37,19 +56,35 @@
                                 <div class="p-grid form-group">
                                     <div class="p-col-12 p-md-6 p-lg-3 mb-2">
                                         <label for="telNo1">Tel No. 1</label>
-                                        <input id="telNo1" class="form-control" type="text" pInputText>
+                                        <input id="telNo1" class="form-control" type="text" formControlName="sTelNo1" pInputText>
+                                        <!-- <p-message severity="error"
+                                            [text]="ProductForm.controls['sPrdName'].errors['required'] ? 'Producer Name is required' : ProductForm.controls['sPrdName'].errors['required']"
+                                            *ngIf="!ProductForm.controls['sPrdName'].valid && ProductForm.controls['sPrdName'].dirty">
+                                        </p-message> -->
                                     </div>
                                     <div class="p-col-12 p-md-6 p-lg-3 mb-2">
                                         <label for="telNo2">Tel No. 2</label>
-                                        <input id="telNo2" class="form-control" type="text" pInputText>
+                                        <input id="telNo2" class="form-control" type="text" formControlName="sTelNo2" pInputText>
+                                        <!-- <p-message severity="error"
+                                            [text]="ProductForm.controls['sPrdName'].errors['required'] ? 'Producer Name is required' : ProductForm.controls['sPrdName'].errors['required']"
+                                            *ngIf="!ProductForm.controls['sPrdName'].valid && ProductForm.controls['sPrdName'].dirty">
+                                        </p-message> -->
                                     </div>
                                     <div class="p-col-12 p-md-6 p-lg-3 mb-2">
                                         <label for="fax">Fax</label>
-                                        <input id="fax" class="form-control" type="text" pInputText>
+                                        <input id="fax" class="form-control" type="text" formControlName="sFaxNo" pInputText>
+                                        <!-- <p-message severity="error"
+                                            [text]="ProductForm.controls['sPrdName'].errors['required'] ? 'Producer Name is required' : ProductForm.controls['sPrdName'].errors['required']"
+                                            *ngIf="!ProductForm.controls['sPrdName'].valid && ProductForm.controls['sPrdName'].dirty">
+                                        </p-message> -->
                                     </div>
                                     <div class="p-col-12 p-md-6 p-lg-3 mb-2">
-                                        <label for="pincode">Pan No.</label>
-                                        <input id="pincode" class="form-control" type="text" pInputText>
+                                        <label for="panno">Pan No.</label>
+                                        <input id="panno" class="form-control" type="text" formControlName="sPAN" pInputText>
+                                        <!-- <p-message severity="error"
+                                            [text]="ProductForm.controls['sPrdName'].errors['required'] ? 'Producer Name is required' : ProductForm.controls['sPrdName'].errors['required']"
+                                            *ngIf="!ProductForm.controls['sPrdName'].valid && ProductForm.controls['sPrdName'].dirty">
+                                        </p-message> -->
                                     </div>
                                 </div>
 
@@ -59,8 +94,12 @@
                                 <div class="p-grid form-group">
 
                                     <div class="p-col-12 p-md-6 p-lg-3 mb-2">
-                                        <label for="status">Status</label>
-                                        <p-dropdown id="status" class="form-control" placeholder="Select" required="true"></p-dropdown>
+                                        <label for="unit">Status</label>
+                                        <p-dropdown id="unit" [options]="statusData" optionLabel="sStatusName"
+                                            formControlName="sStatusName" [(ngModel)]="selectedStatus"></p-dropdown>
+                                        <p-message severity="error" text="Status is required"
+                                            *ngIf="PartnerForm.controls['sStatusName'].touched && (selectedStatus.iStatusID=='' || PartnerForm.controls['sStatusName'].hasError('required'))">
+                                        </p-message>
                                     </div>
 
                                 </div>
@@ -69,9 +108,14 @@
 
                                 <div class="p-grid form-group ui-fluid p-justify-end mt-3">
                                     <div class="p-col-12 p-md-12 p-lg-12 text-right">
-                                        <button pButton type="button" label="Cancel" class="ui-button-light atbt mr-1 mb-2"></button>
-                                   
-                                        <button pButton type="button" label="Save" class="ui-button atbt mb-2"></button>
+                                        <button pButton type="button" routerLink="/app/partner" label="Cancel"
+                                        class="ui-button-light atbt mr-2"></button>
+                                    <button *ngIf="!isEdit" pButton type="button" label="Save"
+                                
+                                        (click)="addPartnerForm()" class="ui-button atbt"></button>
+                                    <button *ngIf="isEdit" pButton type="button" label="Update"
+                                
+                                        (click)="editPartnerForm()" class="ui-button atbt"></button>
                                     </div>
                                 </div>
 
@@ -79,6 +123,8 @@
 
 
                         </div>
+                        </form>
+                    
                 </p-tabPanel>
                 <!-- Partner tab End here -->
 

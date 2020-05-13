@@ -32,9 +32,9 @@ export class ProductInfoComponent implements OnInit {
 
       this.apiService.callPostApi(infoDataApi).subscribe(
      
-      data => { console.log(data);
+      data => { console.log(data.body);
 
-        this.infoArray = data[0];
+        this.infoArray = data.body[0];
         console.log(this.infoArray,"test")
         this.setValue();
       },
@@ -108,6 +108,8 @@ export class ProductInfoComponent implements OnInit {
           this.apiService.callPostApi(addInfo_data).subscribe(
             (data) => {
               console.log(data);
+             
+              this.toastService.addSingle("success", data.headers.get('StatusMessage'), "");
               this.ref.close(true);
               this.infoForm.reset();
             },

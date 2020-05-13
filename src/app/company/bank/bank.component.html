@@ -1,68 +1,65 @@
-<form [formGroup]="bankForm" (ngSubmit)="onSubmit()">
+<form [formGroup]="bankForm">
   <div class="p-grid ui-fluid">
     <div class="p-col-12">
       <div class="p-grid form-group">
         <div class="p-col-12 p-md-6 p-lg-6">
-          <label for="bankName">Bank Name</label>
-          <input id="bankName" type="text" pInputText formControlName="bank_name" />
-          <span class="text-danger" *ngIf="bankForm.get('bank_name').errors 
-              && (bankForm.get('bank_name').touched|| bankForm.get('bank_name').dirty)">
-            <span *ngIf="bankForm.get('bank_name').errors.pattern">Numeric values not allowed</span>
-            <span *ngIf="bankForm.get('bank_name').errors.required">This field is required</span>
-          </span>
+          <label for="sBankName">Bank Name</label>
+          <input id="sBankName" type="text" pInputText formControlName="sBankName" />
+          <p-message severity="error"
+          [text]="bankForm.controls['sBankName'].errors['required'] ? 'This field is required' : bankForm.controls['sBankName'].errors['pattern']? 'Please enter a valid Bank Name' : bankForm.controls['sBankName'].errors "
+          *ngIf="!bankForm.controls['sBankName'].valid && bankForm.controls['sBankName'].dirty">
+          </p-message>
         </div>
         <div class="p-col-12 p-md-6 p-lg-6">
-          <label for="middleName">Short Code/Account Type</label>
-          <input id="middleName" type="text" pInputText formControlName="short_code" />
-          <span class="text-danger" *ngIf="bankForm.get('short_code').errors 
-          && (bankForm.get('short_code').touched|| bankForm.get('short_code').dirty)">
-            <span *ngIf="bankForm.get('short_code').errors.required">This field is required</span>
-          </span>
+          <label for="sShortCode">Short Code/Account Type</label>
+          <input id="sShortCode" type="text" pInputText formControlName="sShortCode" />
+          <p-message severity="error"
+          [text]="bankForm.controls['sShortCode'].errors['required'] ? 'This field is required' : bankForm.controls['sShortCode'].errors "
+          *ngIf="!bankForm.controls['sShortCode'].valid && bankForm.controls['sShortCode'].dirty">
+          </p-message>
         </div>
         <div class="p-col-12 p-md-6 p-lg-6">
-          <label for="lasteName">Account No</label>
-          <input id="lasteName" type="text" pInputText formControlName="account_no" />
-          <span class="text-danger" *ngIf="bankForm.get('account_no').errors 
-              && (bankForm.get('account_no').touched|| bankForm.get('account_no').dirty)">
-            <span *ngIf="bankForm.get('account_no').errors.pattern">Please enter numeric values olny</span>
-            <span *ngIf="bankForm.get('account_no').errors.required">This field is required</span>
-          </span>
+          <label for="sAccountNo">Account No</label>
+          <input id="sAccountNo" type="text" pInputText formControlName="sAccountNo" />
+          <p-message severity="error"
+          [text]="bankForm.controls['sAccountNo'].errors['required'] ? 'This field is required' : bankForm.controls['sAccountNo'].errors['pattern']? 'Please enter a valid Account No.' : bankForm.controls['sAccountNo'].errors "
+          *ngIf="!bankForm.controls['sAccountNo'].valid && bankForm.controls['sAccountNo'].dirty">
+          </p-message>
         </div>
         <div class="p-col-12 p-md-6 p-lg-6">
-          <label for="lasteName">IFSC</label>
-          <input id="lasteName" type="text" pInputText formControlName="ifsc_code" />
-          <span class="text-danger" *ngIf="bankForm.get('ifsc_code').errors 
-          && (bankForm.get('ifsc_code').touched|| bankForm.get('ifsc_code').dirty)">
-            <span *ngIf="bankForm.get('ifsc_code').errors.pattern">Please enter valid IFSC code</span>
-            <span *ngIf="bankForm.get('ifsc_code').errors.required">This field is required</span>
-          </span>
+          <label for="sIFSC">IFSC</label>
+          <input id="sIFSC" type="text" pInputText formControlName="sIFSC" />
+          <p-message severity="error"
+          [text]="bankForm.controls['sIFSC'].errors['required'] ? 'This field is required' : bankForm.controls['sIFSC'].errors['pattern']? 'Please enter a valid IFSC Code' : bankForm.controls['sIFSC'].errors "
+          *ngIf="!bankForm.controls['sIFSC'].valid && bankForm.controls['sIFSC'].dirty">
+          </p-message>
         </div>
         <div class="p-col-12 p-md-12 p-lg-12">
-          <label for="bankBranch">Bank Branch</label>
-          <textarea rows="3" pInputTextarea autoResize="autoResize" formControlName="bank_branch"></textarea>
-          <span class="text-danger" *ngIf="bankForm.get('bank_branch').errors 
-          && (bankForm.get('bank_branch').touched|| bankForm.get('bank_branch').dirty)">
-            <span *ngIf="bankForm.get('bank_branch').errors.pattern">Numeric values not allowed</span>
-            <span *ngIf="bankForm.get('bank_branch').errors.required">This field is required</span>
-          </span>
+          <label for="sBankBranch">Bank Branch</label>
+          <textarea rows="3" pInputTextarea autoResize="autoResize" formControlName="sBankBranch"></textarea>
+          <p-message severity="error"
+                        [text]="bankForm.controls['sBankBranch'].errors['required'] ? 'This field is required' : bankForm.controls['sBankBranch'].errors['pattern']? 'Please enter a valid Branch' : bankForm.controls['sBankBranch'].errors"
+                        *ngIf="!bankForm.controls['sBankBranch'].valid && bankForm.controls['sBankBranch'].dirty">
+          </p-message>
         </div>
       </div>
       <div class="separator separator--border-dashed separator--space-sm separator--portlet-fit"></div>
       <div class="p-grid form-group">
         <div class="p-col-12 p-md-6 p-lg-6">
-          <label for="status">Status</label>
-          <p-dropdown id="status" [options]="statusData" optionLabel="sKVValue" formControlName="status" [(ngModel)]="selectedstatus"></p-dropdown>
-        <span class="text-danger">
-          <span  *ngIf="bankForm.get('status').touched  && (selectedstatus.iKVID==0 || bankForm.get('status').hasError('required'))">This field is required</span>
-        </span>
+          <label for="iStatusID">Status</label>
+          <p-dropdown id="iStatusID" [options]="statusData" optionLabel="sKVValue" formControlName="sStatusName" [(ngModel)]="selectedstatus"></p-dropdown>
+          <div>
+            <p-message severity="error" text="This field is required" *ngIf="bankForm.controls['sStatusName'].touched  && (selectedstatus.iKVID =='' || bankForm.controls['sStatusName'].hasError('required'))" ></p-message>
+        </div>
         </div>
       </div>
 
       <div class="separator separator--border-solid separator--space-sm separator--portlet-fit"></div>
       <div class="p-grid form-group ui-fluid p-justify-end">
         <div class="p-col-12 p-md-22 p-lg-12 text-right">
-          <button pButton type="button" label="Cancel" class="ui-button-light atbt mr-2" (click)="onClose()"></button>
-          <button pButton type="submit" label="Save" class="ui-button atbt" [disabled]="!bankForm.valid"></button>
+          <button pButton type="button" label="Cancel" class="ui-button-light atbt mr-2" (click)="closeDialog()"></button>            
+          <button *ngIf="!isEdit" pButton type="button" label="Save" [disabled]="!(!bankForm.invalid && !dropDownValidityCheck())" class="ui-button atbt" (click)="addBank()"></button>               
+          <button *ngIf="isEdit" pButton type="button" label="Update" [disabled]="!(!bankForm.invalid && !dropDownValidityCheck())" class="ui-button atbt" (click)="editBank()"></button>
         </div>
       </div>
     </div>

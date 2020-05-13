@@ -4,6 +4,7 @@ import { CompanyAddress } from 'src/app/models/company-address.model';
 import { ApiService } from 'src/app/services/api.service';
 import { DropdownData } from 'src/app/models/dropdown.model';
 import { DynamicDialogConfig , DynamicDialogRef } from 'primeng/dynamicdialog';
+import { ToastService } from 'src/app/services/toast.service';
 
 
 @Component({
@@ -20,7 +21,7 @@ export class AddNewAddressComponent implements OnInit {
  setStatusData : Object;
  tempAddressTypeID;
  setAddressTypeData : object;
-  constructor(private fb:FormBuilder , private httpService: ApiService , public configData: DynamicDialogConfig, public ref:DynamicDialogRef) { }
+  constructor(private fb:FormBuilder , private httpService: ApiService , public configData: DynamicDialogConfig, public ref:DynamicDialogRef, public toastService: ToastService,) { }
   get AddressType(){
     return this.AddressForm.get('addressType');
    }
@@ -144,8 +145,8 @@ export class AddNewAddressComponent implements OnInit {
      this.httpService.callPostApi(pincodeChangesApi).subscribe(
        data => {
          console.log(data);
-         if(data){
-        this.StatesCityData = data; 
+         if(data.body){
+        this.StatesCityData = data.body; 
         console.log( this.StatesCityData);
          this.AddressForm.patchValue({
            state: this.StatesCityData[0].sStateName,
@@ -192,7 +193,8 @@ export class AddNewAddressComponent implements OnInit {
 this.httpService.callPostApi(addressAddApi).subscribe(
   data => {
     console.log(this.AddressForm.value);
-    this.ref.close();
+    this.ref.close(true);
+    this.toastService.addSingle("success", data.headers.get('StatusMessage'), "");
 },
 error => {
   console.log(error)
@@ -231,7 +233,8 @@ else{
   this.httpService.callPostApi(addressEditApi1).subscribe(
     data => {
     console.log(this.AddressForm.value);
-    this.ref.close();
+    this.ref.close(true);
+    this.toastService.addSingle("success", data.headers.get('StatusMessage'), "");
   },
   error => {
     console.log(error)
@@ -263,7 +266,8 @@ else{
       this.httpService.callPostApi(addressEditApi2).subscribe(
         data => {
         console.log(this.AddressForm.value);
-        this.ref.close();
+        this.ref.close(true);
+        this.toastService.addSingle("success", data.headers.get('StatusMessage'), "");
       },
       error => {
         console.log(error)

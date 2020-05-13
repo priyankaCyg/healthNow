@@ -14,7 +14,7 @@ import { from } from 'rxjs';
 import { APIService } from '../services/apieservice';
 import { ConfirmationService } from 'primeng/api';
 import { CompanyAddress } from '../models/company-address.model';
-import { BankData } from "../model/slelectAllBank.model";
+import { companyBankMaster } from "../model/companyBank.model";
 import { ApiService } from "../services/api.service";
 import { ToastService } from "../services/toast.service";
 import { DesignationData } from "../model/selectAllDesignation";
@@ -35,7 +35,7 @@ export class CompanyComponent implements OnInit {
   addressData: CompanyAddress;
   department: departmentData[];
   gst: gstData[];
-  bankData: BankData[];
+  bankData: companyBankMaster[];
   designationData: DesignationData[];
   employee;
   constructor(
@@ -81,7 +81,7 @@ export class CompanyComponent implements OnInit {
     this.apiService.callPostApi(company_data).subscribe(
       data => {
         console.log(data);
-        this.compData = data;
+        this.compData = data.body;
       },
       error => console.log(error)
     );
@@ -111,7 +111,7 @@ export class CompanyComponent implements OnInit {
     this.apiService.callPostApi(all_address_api).subscribe(
       data => {
         console.log(data);
-        this.addressDataArray = data;
+        this.addressDataArray = data.body;
       },
       error => console.log(error)
     );
@@ -128,9 +128,8 @@ export class CompanyComponent implements OnInit {
     });
 
     ref.onClose.subscribe((success: boolean) => {
-      this.getAllAddressesList();
       if (success) {
-        // this.toastService.addSingle("success", "Mail send successfully", "");
+        this.getAllAddressesList();
       }
     });
   }
@@ -145,9 +144,8 @@ export class CompanyComponent implements OnInit {
     });
 
     ref.onClose.subscribe((success: boolean) => {
-      this.getAllAddressesList();
       if (success) {
-        // this.toastService.addSingle("success", "Mail send successfully", "");
+        this.getAllAddressesList(); 
       }
     });
   }
@@ -155,21 +153,30 @@ export class CompanyComponent implements OnInit {
 
   // open modal for delete address start
   onDeleteAddress(addressId: number) {
-    const deleteAddressApi = {
-      "iRequestID": 2014,
-      "iCID": 1,
-      "iAddID": addressId
-    }
-    if (confirm("Are you sure to delete this record?")) {
-      this.apiService.callPostApi(deleteAddressApi).subscribe(
-        data => {
-          this.getAllAddressesList();
-        },
-        error => {
-          console.log(error)
+    
+    this.confirmationService.confirm({
+      message: 'Are you sure that you want to proceed?',
+      header: 'Confirmation',
+      icon: 'pi pi-exclamation-triangle',
+      accept: () => {
+        const deleteAddressApi = {
+          "iRequestID": 2014,
+          "iCID": 1,
+          "iAddID": addressId
         }
-      )
-    }
+        console.log(deleteAddressApi);
+        this.apiService.callPostApi(deleteAddressApi).subscribe(
+          data => {
+            console.log(data);
+            this.toastService.addSingle("success", data.headers.get('StatusMessage'), "");
+            this.getAllAddressesList();
+
+          },
+          error => console.log(error)
+        );
+      }
+
+    });
   }
   // open modal for delete address end
   openDialogForaddDepartment() {
@@ -217,7 +224,7 @@ export class CompanyComponent implements OnInit {
     this.apiService.callPostApi(department_data).subscribe(
       (data) => {
         console.log(data);
-        this.department = data;
+        this.department = data.body;
       },
       (error) => console.log(error)
     );
@@ -295,7 +302,7 @@ export class CompanyComponent implements OnInit {
     this.apiService.callPostApi(gst_data).subscribe(
       data => {
         console.log(data);
-        this.gst = data;
+        this.gst = data.body;
 
       },
       error => console.log(error)
@@ -339,7 +346,7 @@ export class CompanyComponent implements OnInit {
     this.apiService.callPostApi(selectDesig_data).subscribe(
       (data) => {
         console.log(data);
-        this.designationData = data;
+        this.designationData = data.body;
         console.log(this.designationData);
       },
       (error) => console.log(error)
@@ -354,9 +361,10 @@ export class CompanyComponent implements OnInit {
       width: "28%",
     });
     ref.onClose.subscribe((success: boolean) => {
-      if (success) { }
-      this.designationSelectData();
-      this.toastService.addSingle("success", "Record Added Successfully", "");
+      if (success) { 
+        this.designationSelectData();
+      }
+      
     });
   }
 
@@ -368,9 +376,10 @@ export class CompanyComponent implements OnInit {
       width: "28%",
     });
     ref.onClose.subscribe((success: boolean) => {
-      if (success) { }
-      this.designationSelectData();
-      this.toastService.addSingle("success", "Record Updated Successfully", "");
+      if (success) {
+        this.designationSelectData();
+       }
+    
     });
   }
 
@@ -392,14 +401,16 @@ export class CompanyComponent implements OnInit {
         this.apiService.callPostApi(deleteDesig_data).subscribe(
           (data) => {
             console.log(data);
+            this.toastService.addSingle("success", data.headers.get('StatusMessage'), "");
+            this.designationSelectData();
           },
           (error) => console.log(error)
         );
-        this.toastService.addSingle("info", "Record Successfully Deleted", "Record Successfully Deleted");
-        this.designationSelectData();
+      
+      
       },
       reject: () => {
-        this.toastService.addSingle("info", "Rejected", "Rejected");
+       // this.toastService.addSingle("info", "Rejected", "Rejected");
       }
     });
   }
@@ -412,9 +423,8 @@ export class CompanyComponent implements OnInit {
     };
     this.apiService.callPostApi(selectBank_data).subscribe(
       (data) => {
-        console.log(data);
-        this.bankData = data;
-        console.log(this.bankData);
+        console.log(data.body);
+        this.bankData = data.body;
       },
       (error) => console.log(error)
     );
@@ -428,29 +438,30 @@ export class CompanyComponent implements OnInit {
       width: "50%",
     });
     ref.onClose.subscribe((success: boolean) => {
-      if (success) { }
-      this.bankSelectData();
-      this.toastService.addSingle("success", "Record Added Successfully", "");
+      if (success) {
+        this.bankSelectData();
+     
+       } 
     });
   }
 
   // Dialog box to update bank
-  updateBank(bank) {
+  updateBank(iBankID) {
     const ref = this.dialogService.open(BankComponent, {
-      data: bank,
+      data: iBankID,
       header: "Edit Bank",
       width: "50%",
     });
     ref.onClose.subscribe((success: boolean) => {
-      if (success) { }
-      this.bankSelectData();
-      this.toastService.addSingle("success", "Record Updated Successfully", "");
+      if (success) { 
+        this.bankSelectData();
+      } 
     });
   }
 
   // Delete function for bank
-  deleteBank(bank) {
-    let bank_id = bank.iBankID;
+  deleteBank(iBankID) {
+    let bank_id = iBankID;
     this.confirmationService.confirm({
       message: 'Are you sure that you want to proceed?',
       header: 'Confirmation',
@@ -465,14 +476,15 @@ export class CompanyComponent implements OnInit {
         this.apiService.callPostApi(deleteBank_data).subscribe(
           (data) => {
             console.log(data);
+            this.toastService.addSingle("success", data.headers.get('StatusMessage'), "");
+            this.bankSelectData();
           },
           (error) => console.log(error)
         );
-        this.toastService.addSingle("info", "Record Successfully Deleted", "Record Successfully Deleted");
-        this.bankSelectData();
+     
       },
       reject: () => {
-        this.toastService.addSingle("info", "Rejected", "Rejected");
+      //  this.toastService.addSingle("info", "Rejected", "Rejected");
       }
     });
   }

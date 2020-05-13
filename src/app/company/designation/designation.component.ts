@@ -92,6 +92,7 @@ export class DesignationComponent implements OnInit {
             (data) => {
               console.log(data);
               this.ref.close(true);
+              this.toastService.addSingle("success", data.headers.get('StatusMessage'), "");
              
             },
             (error) => console.log(error)
@@ -111,7 +112,7 @@ export class DesignationComponent implements OnInit {
             (data) => {
               console.log(data);   
               this.ref.close(true);   
-              
+              this.toastService.addSingle("success", data.headers.get('StatusMessage'), "");
             },
             (error) => console.log(error)
           );

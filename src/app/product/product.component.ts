@@ -47,7 +47,7 @@ export class ProductComponent implements OnInit {
     this.apiService.callPostApi(Product_list_api).subscribe(
       data => {
         console.log(data);
-        this.product = data;
+        this.product = data.body;
       },
       error => console.log(error)
     );

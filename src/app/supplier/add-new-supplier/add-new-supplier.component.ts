@@ -130,7 +130,7 @@ this.gstList();
       "iSupID":sup_by_id
     }
     this.apiService.callPostApi(supplierAddressAPI).subscribe(
-      data => { this.supplierAdressData = data},
+      data => { this.supplierAdressData = data.body},
       error => {console.log(error)}
     )
   }
@@ -148,7 +148,6 @@ this.gstList();
       ref.onClose.subscribe((success: boolean) => {
         if (success) {
           this.getSupplierAddressList();
-           this.toastService.addSingle("success", "Record Added successfully", "");
         }
       });
 
@@ -164,12 +163,11 @@ this.gstList();
         width: '80%'
       });
       localStorage.setItem('iSupID', this.route.snapshot.params['iSupID']);
-      ref.onClose.subscribe((success: any) => {
+      ref.onClose.subscribe((success: boolean) => {
         // alert(success)
         if(success)
         {
           this.getSupplierAddressList();
-          this.toastService.addSingle("success", "Updated Successfully", "");
         }
       });
     }
@@ -189,8 +187,9 @@ this.gstList();
 
         this.apiService.callPostApi(deleteAddressAPI).subscribe(
           data => {
-            this.toastService.addSingle("info", "Successfully Deleted", "Successfully Deleted");
+            
             this.getSupplierAddressList();
+            this.toastService.addSingle("success", data.headers.get('StatusMessage'), "");
           },
           error => { console.log(error)}
         );
@@ -316,7 +315,7 @@ uploadFile()
     }
     this.apiService.callPostApi(sup_gst_data).subscribe(
       (data) => {
-        this.gst = data;
+        this.gst = data.body;
       },
       (error) => console.log(error)
     );
@@ -356,7 +355,7 @@ uploadFile()
     this.apiService.callPostApi(add_supplier_data).subscribe(
       data => {
         console.log(data);
-        this.toastService.addSingle("success", "Record Added Successfully", "");
+        this.toastService.addSingle("success", data.headers.get('StatusMessage'), "");
 
       },
       error => console.log(error)
@@ -396,7 +395,7 @@ uploadFile()
     this.apiService.callPostApi(edit_supplier_data).subscribe(
       data => {
         console.log(data);
-        this.toastService.addSingle("success", "Record Updated Successfully", "");
+        this.toastService.addSingle("success", data.headers.get('StatusMessage'), "");
 
       },
       error => console.log(error)
@@ -419,9 +418,9 @@ uploadFile()
     localStorage.setItem('iSupID', this.route.snapshot.params['iSupID'])
     ref.onClose.subscribe((success: boolean) => {
       if (success) {
-        // this.toastService.addSingle("success", "Mail send successfully", "");
+        this.gstList();
       }
-      this.gstList();
+      
 
     });
   }
@@ -436,9 +435,9 @@ uploadFile()
 
     ref.onClose.subscribe((success: boolean) => {
       if (success) {
-        // this.toastService.addSingle("success", "Mail send successfully", "");
+        this.gstList();
       }
-      this.gstList();
+     
 
     });
   }
@@ -460,8 +459,9 @@ uploadFile()
         this.apiService.callPostApi(delete_data_api).subscribe(
           (data) => {
             console.log(data);
-            this.toastService.addSingle("info", "Successfully Deleted", "Successfully Deleted");
+          
             this.gstList();
+            this.toastService.addSingle("success", data.headers.get('StatusMessage'), "");
           },
           (error) => console.log(error)
         );

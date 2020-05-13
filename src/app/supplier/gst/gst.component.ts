@@ -142,12 +142,13 @@ export class GstComponent implements OnInit {
     this.apiService.callPostApi(add_gst_data).subscribe(
       data => {
         console.log(data);
-        this.toastService.addSingle("success", "Record Added Successfully", "");
+        this.ref.close(true);
+        this.toastService.addSingle("success", data.headers.get('StatusMessage'), "");
 
       },
       error => console.log(error)
     );
-    this.ref.close(true);
+   
   }
 
 
@@ -168,12 +169,13 @@ export class GstComponent implements OnInit {
     this.apiService.callPostApi(add_gst_data).subscribe(
       data => {
         console.log(data);
-        this.toastService.addSingle("success", "Record Updated Successfully", "");
+        this.ref.close(true);
+        this.toastService.addSingle("success", data.headers.get('StatusMessage'), "");
 
       },
       error => console.log(error)
     );
-    this.ref.close(true);
+   
   }
 
   closeDialog() {

@@ -9,6 +9,11 @@ import { AddressComponent } from '../address/address.component';
 import { ContactComponent } from '../contact/contact.component';
 import { BankComponent } from '../bank/bank.component';
 import { GstComponent } from '../gst/gst.component';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { ApiService } from 'src/app/services/api.service';
+import { ToastService } from 'src/app/services/toast.service';
+import { ActivatedRoute } from '@angular/router';
+import { PartnerMaster } from 'src/app/model/partner.model';
 @Component({
   selector: 'app-new-partner',
   templateUrl: './new-partner.component.html',
@@ -25,7 +30,19 @@ export class NewPartnerComponent implements OnInit {
 
   gst: any[];
 
-   constructor(private breadcrumbService: BreadcrumbService, private dialogService:DialogService) {
+  isEdit: boolean = false
+  public PartnerForm: FormGroup;
+  partnerData: PartnerMaster;
+  statusData;
+  entityData;
+  partner_id;
+  selectedStatus;
+  selectedEntity;
+
+   constructor(private breadcrumbService: BreadcrumbService, private dialogService:DialogService, private route: ActivatedRoute,
+    private apiService: ApiService,
+    private fb: FormBuilder,
+    private toastService: ToastService,) {
       this.breadcrumbService.setItems([
           { label: 'Dashboard' },
           { label: 'Partner', routerLink: ['/app/partner'] }
@@ -33,6 +50,47 @@ export class NewPartnerComponent implements OnInit {
   }
 
   ngOnInit(): void {
+
+    this.defaultDropDwnValue()
+    this.partnerData = new PartnerMaster();
+    this.PartnerForm = this.createControl(this.partnerData);
+    this.partner_id = this.route.snapshot.params['iPartnerID'];
+
+    if (this.partner_id != null) {
+      this.isEdit = true
+      let partner_id = +this.route.snapshot.params['iPartnerID'];
+      var dataToSendEdit = {
+        "iRequestID": 2288,
+        "iPartnerID":partner_id
+      }
+      // this.apiService.getDropDownData(dataToSendEdit).then(response => {
+      //   this.partnerData = new PartnerMaster(response[0]);
+      //   this.PartnerForm = this.createControl(this.partnerData);
+
+      //   Promise.all([this.getstatusDrpDwn(),this.getEntityDrpDwn()]).then(values => {
+      //     console.log(values);
+      //     this.setDropDownVal()
+      //   });
+
+      // });
+      this.apiService.callPostApi(dataToSendEdit).subscribe(
+        data => {console.log(data.body,"check")
+        this.partnerData = new PartnerMaster(data.body[0]);
+        this.PartnerForm = this.createControl(this.partnerData);
+
+        Promise.all([this.getstatusDrpDwn(),this.getEntityDrpDwn()]).then(values => {
+          console.log(values);
+          this.setDropDownVal()
+        });
+      });
+
+    }
+    else {
+      this.isEdit = false
+      Promise.all([this.getstatusDrpDwn(),this.getEntityDrpDwn()]).then(values => {
+        console.log(values);
+      });
+    }
         
     this.address = [
       {addressType:'Registered',	address1:'13, Gandhi Bhuvan Chunam Lane',	address2:'Db Road, Lamington Road, Grant Road, East, Mumabi.',	state:'Maharashtra',	city:'Mumbai',	landmark:'Db Road'},
@@ -63,6 +121,140 @@ export class NewPartnerComponent implements OnInit {
       {state:'Gujrat', GST:'45ADUPH5824G'}
     ];
     
+  }
+
+  
+  defaultDropDwnValue() {
+    this.selectedStatus = { iStatusID: "", sStatusName: "Select Status" }
+    this.selectedEntity = { iKVID: "", sKVValue: "Select Legal Entity" }
+  }
+
+  setDropDownVal() {
+    // Status Dropdown Selet
+    let selectedStatusObj = this.statusData.find(x => x.iStatusID == this.partnerData.iStatusID);
+    if (selectedStatusObj !== undefined) {
+      this.selectedStatus = selectedStatusObj;
+    }
+
+    // Legal ENtity Dropdown Select
+    let selectedEntityObj = this.entityData.find(x => x.iKVID == this.partnerData.iLegalEntityID);
+    if (selectedEntityObj !== undefined) {
+      this.selectedEntity = selectedEntityObj;
+    }
+  }
+
+  //Dropdown Validity
+  dropDownValidityCheck() {
+    if (this.selectedStatus.iStatusID == '') {
+      return true
+    }
+    if (this.selectedEntity.iKVID == '') {
+      return true
+    }
+    else {
+      return false
+    }
+  }
+
+  //Status dropdown
+  getstatusDrpDwn() {
+    return new Promise((resolve, reject) => {
+      var dataToSend4 = {
+        "iRequestID": 2271,
+        "sProcessName": "Partner"
+      }
+      this.apiService.getDropDownData(dataToSend4).then(response => {
+        this.statusData = response
+        this.statusData.splice(0, 0, { iStatusID: "", sStatusName: "Select Status" })
+        this.selectedStatus = { iStatusID: "", sStatusName: "Select Status" }
+        resolve(this.statusData)
+      });
+    })
+  }
+
+    //Legal Entity dropdown
+    getEntityDrpDwn() {
+      return new Promise((resolve, reject) => {
+        var dataToSend = {
+          "iRequestID": 2071,
+          "sKVName": "LegalEntity"
+        }
+        this.apiService.getDropDownData(dataToSend).then(response => {
+          this.entityData = response
+          this.entityData.splice(0, 0, { iKVID: "", sKVValue: "Select Legal Entity" })
+          this.selectedEntity = { iKVID: "", sKVValue: "Select Legal Entity" }
+          resolve(this.entityData)
+        });
+      })
+    }
+  
+
+  createControl(partnerData?: PartnerMaster): FormGroup {
+    this.PartnerForm = this.fb.group({
+      sPAN: [partnerData.sPAN,[Validators.required]],
+      sFaxNo: [partnerData.sFaxNo,[Validators.required]],
+      sTelNo1: [partnerData.sTelNo1, [Validators.required]],
+      sTelNo2: [partnerData.sTelNo2,[Validators.required]],
+      iStatusID: [partnerData.iStatusID,[Validators.required]],
+      iCreatedBy: [partnerData.iCreatedBy],
+      iPartnerID: [partnerData.iPartnerID],
+      sShortCode: [partnerData.sShortCode,[Validators.required]],
+      sStatusName: [partnerData.sStatusName,[Validators.required]],
+      sCreatedDate: [partnerData.sCreatedDate, [Validators.required]],
+      sPartnerName: [partnerData.sPartnerName],
+      iLegalEntityID: [partnerData.iLegalEntityID, [Validators.required]],
+    });
+    return this.PartnerForm;
+  }
+
+  // Add Partner form
+  addPartnerForm() {
+    var formData = this.PartnerForm.getRawValue();
+    const addPartnerData = {
+      "iRequestID": 2281,
+      "sPartnerName": formData.sPartnerName,
+      "iLegalEntityID": formData.iLegalEntityID.iKVID,
+      "sPAN": formData.sPAN,
+      "sShortCode": formData.sShortCode,
+      "sTelNo1": formData.sTelNo1,
+      "sTelNo2": formData.sTelNo2,
+      "sFaxNo": formData.sFaxNo,
+      "iStatusID": formData.sStatusName.iStatusID
+    }
+    console.log(addPartnerData)
+    this.apiService.callPostApi(addPartnerData).subscribe(
+      data => {
+        console.log(data);
+        this.toastService.addSingle("success", data.headers.get('StatusMessage'), "");
+      },
+      error => console.log(error)
+    );
+    this.PartnerForm.reset();
+  }
+
+  // Edit Partner Form
+  editPartnerForm() {
+    var formData = this.PartnerForm.getRawValue();
+    const editPartnerData = {
+      "iRequestID": 2282,
+      "sPartnerName": formData.sPartnerName,
+      "iLegalEntityID": formData.iLegalEntityID.iKVID,
+      "sPAN": formData.sPAN,
+      "sShortCode": formData.sShortCode,
+      "sTelNo1": formData.sTelNo1,
+      "sTelNo2": formData.sTelNo2,
+      "sFaxNo": formData.sFaxNo,
+      "iStatusID": formData.sStatusName.iStatusID,
+      "iPartnerID":+this.partner_id
+    }
+    console.log(editPartnerData)
+    this.apiService.callPostApi(editPartnerData).subscribe(
+      data => {
+        console.log(data);
+        this.toastService.addSingle("success", data.headers.get('StatusMessage'), "");
+      },
+      error => console.log(error)
+    );
   }
 
     openDialogForaddAddress() {
