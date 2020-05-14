@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { BreadcrumbService } from '../../breadcrumb.service';
 import { CountryService } from '../../demo/service/countryservice';
-import { SelectItem, MenuItem } from 'primeng/api';
+import { SelectItem, MenuItem, ConfirmationService } from 'primeng/api';
 import { GeneratedFile } from '@angular/compiler';
 import { DialogService } from 'primeng';
 import { PartnerRoutingModule } from '../partner-routing.module';
@@ -14,6 +14,7 @@ import { ApiService } from 'src/app/services/api.service';
 import { ToastService } from 'src/app/services/toast.service';
 import { ActivatedRoute } from '@angular/router';
 import { PartnerMaster } from 'src/app/model/partner.model';
+import { companyBankMaster } from 'src/app/model/companyBank.model';
 @Component({
   selector: 'app-new-partner',
   templateUrl: './new-partner.component.html',
@@ -26,13 +27,14 @@ export class NewPartnerComponent implements OnInit {
 
   contact: any[];
 
-  bank: any[];
+  //partner: any[];
 
   gst: any[];
 
   isEdit: boolean = false
   public PartnerForm: FormGroup;
   partnerData: PartnerMaster;
+  bankData: companyBankMaster[];
   statusData;
   entityData;
   partner_id;
@@ -42,7 +44,8 @@ export class NewPartnerComponent implements OnInit {
    constructor(private breadcrumbService: BreadcrumbService, private dialogService:DialogService, private route: ActivatedRoute,
     private apiService: ApiService,
     private fb: FormBuilder,
-    private toastService: ToastService,) {
+    private toastService: ToastService,
+    private confirmationService: ConfirmationService) {
       this.breadcrumbService.setItems([
           { label: 'Dashboard' },
           { label: 'Partner', routerLink: ['/app/partner'] }
@@ -55,7 +58,7 @@ export class NewPartnerComponent implements OnInit {
     this.partnerData = new PartnerMaster();
     this.PartnerForm = this.createControl(this.partnerData);
     this.partner_id = this.route.snapshot.params['iPartnerID'];
-
+    localStorage.setItem('iPartnerID', this.route.snapshot.params['iPartnerID']);
     if (this.partner_id != null) {
       this.isEdit = true
       let partner_id = +this.route.snapshot.params['iPartnerID'];
@@ -63,16 +66,6 @@ export class NewPartnerComponent implements OnInit {
         "iRequestID": 2288,
         "iPartnerID":partner_id
       }
-      // this.apiService.getDropDownData(dataToSendEdit).then(response => {
-      //   this.partnerData = new PartnerMaster(response[0]);
-      //   this.PartnerForm = this.createControl(this.partnerData);
-
-      //   Promise.all([this.getstatusDrpDwn(),this.getEntityDrpDwn()]).then(values => {
-      //     console.log(values);
-      //     this.setDropDownVal()
-      //   });
-
-      // });
       this.apiService.callPostApi(dataToSendEdit).subscribe(
         data => {console.log(data.body,"check")
         this.partnerData = new PartnerMaster(data.body[0]);
@@ -91,7 +84,7 @@ export class NewPartnerComponent implements OnInit {
         console.log(values);
       });
     }
-        
+     this.bankSelectData();
     this.address = [
       {addressType:'Registered',	address1:'13, Gandhi Bhuvan Chunam Lane',	address2:'Db Road, Lamington Road, Grant Road, East, Mumabi.',	state:'Maharashtra',	city:'Mumbai',	landmark:'Db Road'},
       {addressType:'Registered',	address1:'| 319, Hariom Plaza,',	address2:'M.g Road, Borivali East,',	state:'Maharashtra',	city:'Mumabi',	landmark:'M.g Road'},
@@ -107,13 +100,6 @@ export class NewPartnerComponent implements OnInit {
       {fullName: 'Ravi Varma',designation: 'Sales Executive',emailId: 'ravi@test.com',partnerAdd: 'Pune',mobileNo:'97979779797',contactNo:'9879879778',	directNo:'0226969696',fax:'855855855' }
     ];
 
-    this.bank = [
-      {bankName:'ICICI',	shortCode:'ICI',	accountNo:'12335568998',	ifsc:'ICICI00022', branch:'Borivali'},
-      {bankName:'Kotak Mahindra',	shortCode:'KKM',	accountNo:'45671471474122',	ifsc:'KKM45454', branch:'Thane'},
-      {bankName:'SBI',	shortCode:'SBI',	accountNo:'874411011477',	ifsc:'SBI000477', branch:'Pune'},
-      {bankName:'HDFC',	shortCode:'HDFC',	accountNo:'41214122445',	ifsc:'HDF000078', branch:'Kandivali'},
-      {bankName:'Axis',	shortCode:'AX',	accountNo:'658989878998',	ifsc:'AX7009987', branch:'Bhiwandi'}
-    ];
     
     this.gst= [
       {state:'Maharashtra', GST:'27ADUPH3114M'},
@@ -191,17 +177,17 @@ export class NewPartnerComponent implements OnInit {
 
   createControl(partnerData?: PartnerMaster): FormGroup {
     this.PartnerForm = this.fb.group({
-      sPAN: [partnerData.sPAN,[Validators.required]],
-      sFaxNo: [partnerData.sFaxNo,[Validators.required]],
-      sTelNo1: [partnerData.sTelNo1, [Validators.required]],
-      sTelNo2: [partnerData.sTelNo2,[Validators.required]],
-      iStatusID: [partnerData.iStatusID,[Validators.required]],
+      sPAN: [partnerData.sPAN,[Validators.required,Validators.pattern('^[0-9a-zA-Z]+$')]],
+      sFaxNo: [partnerData.sFaxNo,[Validators.required,Validators.pattern('^[0-9a-zA-Z]+$')]],
+      sTelNo1: [partnerData.sTelNo1, Validators.compose([Validators.required,Validators.minLength(10),Validators.maxLength(13),Validators.pattern('^[0-9]*$')])],
+      sTelNo2: [partnerData.sTelNo2,Validators.compose([Validators.required,Validators.minLength(10),Validators.maxLength(13),Validators.pattern('^[0-9]*$')])],
+      iStatusID: [partnerData.iStatusID],
       iCreatedBy: [partnerData.iCreatedBy],
       iPartnerID: [partnerData.iPartnerID],
       sShortCode: [partnerData.sShortCode,[Validators.required]],
       sStatusName: [partnerData.sStatusName,[Validators.required]],
-      sCreatedDate: [partnerData.sCreatedDate, [Validators.required]],
-      sPartnerName: [partnerData.sPartnerName],
+      sCreatedDate: [partnerData.sCreatedDate],
+      sPartnerName: [partnerData.sPartnerName,[Validators.required,Validators.pattern('^[a-zA-Z ]*$')]],
       iLegalEntityID: [partnerData.iLegalEntityID, [Validators.required]],
     });
     return this.PartnerForm;
@@ -222,10 +208,26 @@ export class NewPartnerComponent implements OnInit {
       "iStatusID": formData.sStatusName.iStatusID
     }
     console.log(addPartnerData)
+   // var temp = addPartnerData.sPAN;
     this.apiService.callPostApi(addPartnerData).subscribe(
       data => {
-        console.log(data);
+        console.log(data,"test");
         this.toastService.addSingle("success", data.headers.get('StatusMessage'), "");
+        // const Partner_list_api =
+        // {
+        //   "iRequestID": 2287,
+        // }
+        // this.apiService.callPostApi(Partner_list_api).subscribe(
+        //   data => {
+        //     console.log(data);
+           
+        //     this.partner = data.body;
+        //     var tempData = this.partner.filter(t => t.sPAN == temp);
+        //     this.partner_id= localStorage.setItem('iPartnerID', tempData[0].iPartnerID);
+        //     console.log(tempData,"new id")
+        //   },
+        //   error => console.log(error)
+        // );
       },
       error => console.log(error)
     );
@@ -285,20 +287,82 @@ export class NewPartnerComponent implements OnInit {
         }
       });
     }
-    openDialogForBank() {
-      const ref = this.dialogService.open( BankComponent  , {
-        data: {
-        },
-        header: 'Add Bank',
-        width: '80%'
-      });
-  
-      ref.onClose.subscribe((success: boolean) => {
-        if (success) {
-          // this.toastService.addSingle("success", "Mail send successfully", "");
-        }
-      });
-    }
+    
+  // Function for Bank table data
+  bankSelectData() {
+    const selectBank_data = {
+      "iRequestID": 2314,
+      "iPartnerID" :+this.partner_id
+    };
+    this.apiService.callPostApi(selectBank_data).subscribe(
+      (data) => {
+        console.log(data.body);
+        this.bankData = data.body;
+      },
+      (error) => console.log(error)
+    );
+  }
+
+  //Dialog box to add bank
+  openDialogForBank() {
+    const ref = this.dialogService.open(BankComponent, {
+      data: {},
+      header: "Add New Bank",
+      width: "80%",
+    });
+    ref.onClose.subscribe((success: boolean) => {
+      if (success) {
+        this.bankSelectData();
+       } 
+    });
+  }
+
+  // Dialog box to update bank
+  updateBank(bank) {
+    const ref = this.dialogService.open(BankComponent, {
+      data: bank,
+      header: "Edit Bank",
+      width: "80%",
+    });
+   
+    ref.onClose.subscribe((success: boolean) => {
+      if (success) { 
+        this.bankSelectData();
+      } 
+    });
+  }
+
+  // Delete function for bank
+  deleteBank(bank) {
+    let bank_id = bank.iBankID;
+    let partner_id = bank.iPartnerID;
+    console.log(bank,"test")
+    this.confirmationService.confirm({
+      message: 'Are you sure that you want to proceed?',
+      header: 'Confirmation',
+      icon: 'pi pi-exclamation-triangle',
+      accept: () => {
+        const deleteBank_data = {
+          "iRequestID": 2313,
+          "iPartnerID" :partner_id,
+          "iBankID":bank_id
+        };
+        console.log(deleteBank_data,"123");
+        this.apiService.callPostApi(deleteBank_data).subscribe(
+          (data) => {
+            console.log(data);
+            this.toastService.addSingle("success", data.headers.get('StatusMessage'), "");
+            this.bankSelectData();
+          },
+          (error) => console.log(error)
+        );
+     
+      },
+      reject: () => {
+      //  this.toastService.addSingle("info", "Rejected", "Rejected");
+      }
+    });
+  }
     openDialogForGST() {
       const ref = this.dialogService.open( GstComponent  , {
         data: {

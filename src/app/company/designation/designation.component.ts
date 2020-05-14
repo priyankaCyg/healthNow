@@ -15,6 +15,7 @@ export class DesignationComponent implements OnInit {
   setStatus: object;
   temp;
   selectedstatus;
+  isEdit: boolean = false;
   constructor(
     private apiService: ApiService,
     private fb: FormBuilder,
@@ -49,12 +50,14 @@ export class DesignationComponent implements OnInit {
     // }
 
     if (this.config.data.iDesigID != undefined) {
-   
+      this.isEdit = true;
       this.desigForm.patchValue({
         desig_name: this.config.data.sDesigName,
         desig_level: this.config.data.iDesigLevel,
         status: this.setStatus,
       });
+    }else{
+      this.isEdit = false;
     }
    
   }
