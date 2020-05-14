@@ -15,6 +15,8 @@ export class GstComponent implements OnInit {
   temp: string;
   selectedstatus;
   setStatus: Object;
+  isEdit: boolean = false
+
   constructor(private fb: FormBuilder, private apiService: ApiService, public config: DynamicDialogConfig,
     private ref: DynamicDialogRef, private toastService: ToastService) { }
 
@@ -45,10 +47,14 @@ export class GstComponent implements OnInit {
 
 
     if (this.config.data.iStateID != undefined) {
+      this.isEdit = true
+
       this.GSTSubmit.patchValue({
         state: this.setStatus,
         gst: this.config.data.sGST,
       });
+    } else {
+      this.isEdit = false;
     }
   }
 
