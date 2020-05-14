@@ -63,7 +63,7 @@
                                         <input id="telNo1" class="form-control" type="text" formControlName="sTelNo1"
                                             pInputText>
                                         <p-message severity="error"
-                                            [text]="addSupplierForm.controls['sTelNo1'].errors['required'] ? 'Telephone 1 is required' : addSupplierForm.controls['sTelNo1'].errors"
+                                            [text]="addSupplierForm.controls['sTelNo1'].errors['required'] ? 'Telephone 1 is required': addSupplierForm.controls['sTelNo1'].errors['pattern'] ? 'Please Enter Valid Telephone1 No.' : addSupplierForm.controls['sTelNo1'].errors['minlength'] ? 'Please enter at least 10 Digits' :  addSupplierForm.controls['sTelNo1'].errors['maxlength'] ? 'Please enter less than 13 Digits': ''"
                                             *ngIf="!addSupplierForm.controls['sTelNo1'].valid && addSupplierForm.controls['sTelNo1'].dirty">
                                         </p-message>
                                     </div>
@@ -72,7 +72,7 @@
                                         <input id="telNo2" class="form-control" type="text" formControlName="sTelNo2"
                                             pInputText>
                                         <p-message severity="error"
-                                            [text]="addSupplierForm.controls['sTelNo2'].errors['required'] ? 'Telephone 2 is required' : addSupplierForm.controls['sTelNo2'].errors"
+                                            [text]="addSupplierForm.controls['sTelNo2'].errors['required'] ? 'Telephone 2 is required' : addSupplierForm.controls['sTelNo2'].errors['pattern'] ? 'Please Enter Valid Telephone2 No.': addSupplierForm.controls['sTelNo2'].errors['minlength'] ? 'Please enter at least 10 Digits' :  addSupplierForm.controls['sTelNo2'].errors['maxlength'] ? 'Please enter less than 13 Digits': ''"
                                             *ngIf="!addSupplierForm.controls['sTelNo2'].valid && addSupplierForm.controls['sTelNo2'].dirty">
                                         </p-message>
                                     </div>

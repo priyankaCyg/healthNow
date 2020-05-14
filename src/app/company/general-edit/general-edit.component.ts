@@ -26,8 +26,8 @@ export class GeneralEditComponent implements OnInit {
 
   GeneralSubmit = this.fb.group({
     website: ['', Validators.required],
-    tele1: ['', Validators.required],
-    tele2: ['', Validators.required],
+    tele1: ['', [Validators.required, Validators.pattern('^[0-9]*$'), Validators.minLength(10), Validators.maxLength(13)]],
+    tele2: ['', [Validators.required, Validators.pattern('^[0-9]*$'), Validators.minLength(10), Validators.maxLength(13)]],
     fax: ['', Validators.required]
   });
 

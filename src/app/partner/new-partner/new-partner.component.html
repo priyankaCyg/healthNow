@@ -43,7 +43,9 @@
                                     </div>
                                 </div>
 
-                                <div class="separator separator--border-solid separator--space-sm separator--portlet-fit"></div>
+                                <div
+                                    class="separator separator--border-solid separator--space-sm separator--portlet-fit">
+                                </div>
 
                                 <div class="p-grid form-group">
                                     <div class="p-col-12 p-md-6 p-lg-3 mb-2">
@@ -96,7 +98,9 @@
 
                                 </div>
 
-                                <div class="separator separator--border-solid separator--space-sm separator--portlet-fit mt-5"></div>
+                                <div
+                                    class="separator separator--border-solid separator--space-sm separator--portlet-fit mt-5">
+                                </div>
 
                                 <div class="p-grid form-group ui-fluid p-justify-end mt-3">
                                     <div class="p-col-12 p-md-12 p-lg-12 text-right">
@@ -115,15 +119,16 @@
 
 
                         </div>
-                        </form>
-                    
+                    </form>
+
                 </p-tabPanel>
                 <!-- Partner tab End here -->
 
                 <p-tabPanel header="Address">
                     <div class="p-grid ui-fluid p-justify-end">
                         <div class="p-col-1 text-center mt-1">
-                            <button (click)="openDialogForaddAddress()" pButton icon="pi pi-fw pi-plus" label="Add New"></button>
+                            <button (click)="openDialogForaddAddress()" pButton icon="pi pi-fw pi-plus"
+                                label="Add New"></button>
 
                         </div>
                         <div class="p-col-12">
@@ -131,7 +136,8 @@
                                 <ng-template pTemplate="caption">
 
                                     <div class="ui-table-globalfilter-container text-left">
-                                        <input type="text" pInputText size="50" placeholder="Search" style="width:250px;">
+                                        <input type="text" pInputText size="50" placeholder="Search"
+                                            style="width:250px;">
                                     </div>
                                 </ng-template>
                                 <ng-template pTemplate="header">
@@ -154,9 +160,12 @@
                                         <td>{{address.state}}</td>
                                         <td>{{address.city}}</td>
                                         <td>{{address.landmark}}</td>
-                                        <td><span class="badge badge--success badge--inline badge--pill"> Active</span></td>
-                                        <td><button pButton type="button" class="ui-button-success mr-1" icon="pi pi-pencil"></button></td>
-                                        <td><button pButton type="button" class="ui-button-danger" icon="pi pi-trash"></button></td>
+                                        <td><span class="badge badge--success badge--inline badge--pill"> Active</span>
+                                        </td>
+                                        <td><button pButton type="button" class="ui-button-success mr-1"
+                                                icon="pi pi-pencil"></button></td>
+                                        <td><button pButton type="button" class="ui-button-danger"
+                                                icon="pi pi-trash"></button></td>
                                     </tr>
                                 </ng-template>
                             </p-table>
@@ -196,20 +205,34 @@
                                 </ng-template>
                                 <ng-template pTemplate="body" let-contact>
                                     <tr>
-                                        <td>{{contact.fullName}}</td>
-                                        <td>{{contact.designation}}</td>
-                                        <td>{{contact.emailId}}</td>
-                                        <td>{{contact.partnerAdd}}</td>
-                                        <td>{{contact.mobileNo}}</td>
-                                        <td>{{contact.contactNo}}</td>
-                                        <td>{{contact.directNo}}</td>
-                                        <td>{{contact.fax}}</td>
-                                        <td><span class="badge badge--success badge--inline badge--pill"> Active</span></td>
+                                        <td>{{contact.sFullName}}</td>
+                                        <td>{{contact.sDesignation}}</td>
+                                        <td>{{contact.sEmailID}}</td>
+                                        <td>{{contact.sPartnerName}}</td>
+                                        <td>{{contact.sMobileNo}}</td>
+                                        <td>{{contact.sContactNo}}</td>
+                                        <td>{{contact.sDirectNo}}</td>
+                                        <td>{{contact.sFaxNo}}</td>
+                                        <td> <span *ngIf="contact.iStatusID == 1"
+                                                class="badge badge--success badge--inline badge--pill">
+                                                {{contact.sStatusName}}
+                                            </span>
+                                            <span *ngIf="contact.iStatusID == 2"
+                                                class="badge badge--warning badge--inline badge--pill">
+                                                {{contact.sStatusName}}
+                                            </span>
+                                            <span *ngIf="contact.iStatusID == 3"
+                                                class="badge badge--danger badge--inline badge--pill">
+                                                {{contact.sStatusName}}
+                                            </span>
+                                        </td>
                                         <td>
-                                            <button pButton type="button" class="ui-button-success" icon="pi pi-pencil"
+                                            <button pButton type="button" class="ui-button-success"
+                                                (click)="openDialogForeditContact(contact)" icon="pi pi-pencil"
                                                 style="margin-right: .5em"></button>
-                                            <button pButton type="button" class="ui-button-danger"
-                                                icon="pi pi-trash"></button>
+                                            <button pButton type="button"
+                                                (click)="deletepartnerContact(contact.iPartnerContactID)"
+                                                class="ui-button-danger" icon="pi pi-trash"></button>
                                         </td>
                                     </tr>
                                 </ng-template>
@@ -223,7 +246,8 @@
                 <p-tabPanel header="Bank">
                     <div class="p-grid ui-fluid p-justify-end">
                         <div class="p-col-1 text-center mt-1">
-                            <button (click)="openDialogForBank()" pButton icon="pi pi-fw pi-plus" label="Add New"></button>
+                            <button (click)="openDialogForBank()" pButton icon="pi pi-fw pi-plus"
+                                label="Add New"></button>
                         </div>
                         <div class="p-col-12">
                             <p-table #searchBank [value]="bankData"  [rows]="10" [showCurrentPageReport]="true"
@@ -286,7 +310,8 @@
                 <p-tabPanel header="GST">
                     <div class="p-grid ui-fluid p-justify-end">
                         <div class="p-col-1 text-center mt-1">
-                            <button (click)="openDialogForGST()" pButton icon="pi pi-fw pi-plus" label="Add New"></button>
+                            <button (click)="openDialogForGST()" pButton icon="pi pi-fw pi-plus"
+                                label="Add New"></button>
                         </div>
                         <div class="p-col-12">
                             <p-table [value]="gst">
@@ -316,7 +341,7 @@
                 <!-- GST Info tab End here -->
 
                 <p-tabPanel header="Area Mapping">
-                    
+
                 </p-tabPanel>
                 <!-- category mapping Info tab End here -->
             </p-tabView>

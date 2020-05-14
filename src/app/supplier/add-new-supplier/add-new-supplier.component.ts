@@ -145,40 +145,39 @@ export class AddNewSupplierComponent implements OnInit {
   // address list ends
 
   // Daialogue to add address
-    openDialogForaddAddress() {
-      const ref = this.dialogService.open( AddressComponent , {
-        data: {
-        },
-        header: 'Add New Address',
-        width: '80%'
-      });
-      localStorage.setItem('iSupID', this.route.snapshot.params['iSupID']);
-      ref.onClose.subscribe((success: boolean) => {
-        if (success) {
-          this.getSupplierAddressList();
-        }
-      });
+  openDialogForaddAddress() {
+    const ref = this.dialogService.open(AddressComponent, {
+      data: {
+      },
+      header: 'Add New Address',
+      width: '80%'
+    });
+    localStorage.setItem('iSupID', this.route.snapshot.params['iSupID']);
+    ref.onClose.subscribe((success: boolean) => {
+      if (success) {
+        this.getSupplierAddressList();
+      }
+    });
 
   }
 
-    // Daialogue to edit address
-    editSupplierAddress(supplierID) {
-      const ref = this.dialogService.open(AddressComponent, {
-        data: {
-          "iSupAddID": supplierID
-        },
-        header: 'Edit Address',
-        width: '80%'
-      });
-      localStorage.setItem('iSupID', this.route.snapshot.params['iSupID']);
-      ref.onClose.subscribe((success: boolean) => {
-        // alert(success)
-        if(success)
-        {
-          this.getSupplierAddressList();
-        }
-      });
-    }
+  // Daialogue to edit address
+  editSupplierAddress(supplierID) {
+    const ref = this.dialogService.open(AddressComponent, {
+      data: {
+        "iSupAddID": supplierID
+      },
+      header: 'Edit Address',
+      width: '80%'
+    });
+    localStorage.setItem('iSupID', this.route.snapshot.params['iSupID']);
+    ref.onClose.subscribe((success: boolean) => {
+      // alert(success)
+      if (success) {
+        this.getSupplierAddressList();
+      }
+    });
+  }
 
   // Open Dialog To Delete address
   deleteSupplierAddress(supplierID) {
@@ -195,7 +194,7 @@ export class AddNewSupplierComponent implements OnInit {
 
         this.apiService.callPostApi(deleteAddressAPI).subscribe(
           data => {
-            
+
             this.getSupplierAddressList();
             this.toastService.addSingle("success", data.headers.get('StatusMessage'), "");
           },
@@ -319,8 +318,8 @@ export class AddNewSupplierComponent implements OnInit {
       iCreatedBy: [supData.iCreatedBy],
       iLegalEntityID: [supData.iLegalEntityID, [Validators.required]],
       sWebsite: [supData.sWebsite, [Validators.required]],
-      sTelNo1: [supData.sTelNo1, [Validators.required]],
-      sTelNo2: [supData.sTelNo2, [Validators.required]],
+      sTelNo1: [supData.sTelNo1, [Validators.required, Validators.pattern('^[0-9]*$'), Validators.minLength(10), Validators.maxLength(13)]],
+      sTelNo2: [supData.sTelNo2, [Validators.required, Validators.pattern('^[0-9]*$'), Validators.minLength(10), Validators.maxLength(13)]],
       iSupID: [supData.iSupID],
       sCreatedDate: [supData.sCreatedDate],
       sFaxNo: [supData.sFaxNo, [Validators.required]],
@@ -448,7 +447,7 @@ export class AddNewSupplierComponent implements OnInit {
       if (success) {
         this.gstList();
       }
-      
+
 
     });
   }
@@ -465,7 +464,7 @@ export class AddNewSupplierComponent implements OnInit {
       if (success) {
         this.gstList();
       }
-     
+
 
     });
   }
@@ -487,7 +486,7 @@ export class AddNewSupplierComponent implements OnInit {
         this.apiService.callPostApi(delete_data_api).subscribe(
           (data) => {
             console.log(data);
-          
+
             this.gstList();
             this.toastService.addSingle("success", data.headers.get('StatusMessage'), "");
           },
