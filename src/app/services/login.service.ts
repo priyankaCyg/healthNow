@@ -1,25 +1,23 @@
 import {Injectable, OnInit} from '@angular/core';
 
-import { HttpClient } from '@angular/common/http';
+import { HttpClient,HttpHeaders } from '@angular/common/http';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
+import { config } from '../../config';
+import { Router } from '@angular/router';
 
+const authUrl:string=config.authUrl
+const authAccess:string=config.authAccess
+const authStoreUrl:string=config.authStoreUrl
 
 
 
 @Injectable()
 export class LoginService {
 
-    loginData: any= {};
-    userData: any= {};
-
     token: string=null;
-    onMenuChange: BehaviorSubject<any>;
 
-    menuData:any=[];
-
-    constructor(private _httpClient: HttpClient)
+    constructor(private _httpClient: HttpClient, private router: Router)
     {
-      this.onMenuChange = new BehaviorSubject(null);
         
     }
 
@@ -28,56 +26,75 @@ export class LoginService {
 
   logout(): Promise<any> {
     return new Promise((resolve, reject) => {
-        this.loginData=undefined;
         this.setToken(undefined);
        
         resolve('DONE');
     });
   }
 
-  authenticate(data): any {
-    // alert(window.location.host);
-    // config.url = window.location.host;
-    var algorithm = 'aes256'; // or any other algorithm supported by OpenSSL
+  authenticate(dataToSend): any {
+    let headers = new HttpHeaders();
+    headers = headers.set('Content-Type', 'application/json');
+    headers = headers.set('Accept', 'text/html');
 
-      var username = data.username;
-      var password = data.password;
-      
-    return data;
+
+            return new Promise((resolve, reject) => {
+                this._httpClient.post(authUrl,dataToSend,{ observe: 'response',headers:headers,responseType: 'text', withCredentials: true})
+                    .subscribe((resp: any) => {
+                        //working code
+                        console.log('response message', resp.headers.get('Set-Cookie'));
+                        
+                        resolve(resp);
+                    }, reject);
+            });
   }
 
 
+  getAccess(): any {
+    var dataToSend ={}
+    let headers = new HttpHeaders();
+    headers = headers.set('Content-Type', 'application/json');
+    
+    return new Promise((resolve, reject) => {
+      this._httpClient.post(authAccess,dataToSend,{ observe: 'response',headers:headers, withCredentials: true})
+          .subscribe((resp: any) => {
 
-  getloginDetails():any {
- 
-    return this.loginData;
+            if(resp.body!=null || resp.body!='')
+            {
+              // alert("hi")
+              this.setToken(resp.body)
+    localStorage.setItem('isLogin', 'true');  
+    localStorage.setItem('isBrowserClosed', 'false');
+
+
+              return new Promise((resolve, reject) => {
+                this._httpClient.post(authStoreUrl,resp.body,{ observe: 'response',headers:headers, withCredentials: true})
+                    .subscribe((resp1: any) => {
+                        //working code
+                        console.log('response message authenticate and access ' , resp1);
+                        
+                        resolve(resp);
+                    }, (error:any) => {
+                      console.log('oops Error', error)
+    localStorage.setItem('isLogin', 'false');  
+    this.router.navigate(['/']);
+
+                    reject(error)}
+                    );
+            });
+            }
+          }, (error:any) => {
+            console.log('oops Error', error)
+    localStorage.setItem('isLogin', 'false');  
+    this.router.navigate(['/']);
+
+            this.setToken(null)
+          reject(error)}
+          );
+  });
   }
 
-  setloginDetails(loginDet: string) {
 
-    this.loginData=loginDet;
-}
-
-
-getMenuDetails():any {
- 
-  return this.menuData;
-}
-
-setMenuDetails(menuDet) {
-
-  this.menuData=menuDet;
-}
-
-getUserData():any {
- 
-  return this.userData;
-}
-
-setUserData(userData) {
-
-  this.userData=userData;
-}
 
   setToken(token: string) {
 

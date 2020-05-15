@@ -23,6 +23,7 @@ import { gstData } from 'src/app/model/gst';
 import { SuppMaster } from 'src/app/model/supplier.model';
 import {APIService} from '../../services/apieservice';
 
+import {LoginService} from '../../../app/services/login.service'
 
 @Component({
   selector: 'app-add-new-supplier',
@@ -57,13 +58,17 @@ export class AddNewSupplierComponent implements OnInit {
 
   uploadedFiles: any[] = [];
 
+  sourceCategory;
+  targetCategory;
+  addCategoryMappingData;
+
   constructor(private breadcrumbService: BreadcrumbService,
      private dialogService: DialogService,
     private apiService: ApiService,
      private toastService: ToastService,
     private fb: FormBuilder,
      private route: ActivatedRoute,
-      private confirmationService: ConfirmationService,private _apiService:APIService) {
+      private confirmationService: ConfirmationService,private _apiService:APIService,private loginService:LoginService) {
     this.breadcrumbService.setItems([
       { label: 'Dashboard' },
       { label: 'Supplier', routerLink: ['/app/supplier'] }
@@ -71,6 +76,19 @@ export class AddNewSupplierComponent implements OnInit {
   }
 
   ngOnInit(): void {
+
+    var isBrowserClosed = localStorage.getItem('isBrowserClosed')
+    if(isBrowserClosed || isBrowserClosed==null)
+    {
+      this.loginService.getAccess().then(response1 => {
+
+        console.log("Response of Access ",response1)
+    
+    
+      }).catch(error=>{
+        // console.log(JSON.stringify(error))
+      })
+    }
 
 this.getFileType();
 this.gstList();

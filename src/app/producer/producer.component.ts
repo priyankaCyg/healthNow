@@ -9,6 +9,7 @@ import { AddProducerComponent } from './add-producer/add-producer.component';
 import {APIService} from '../services/apieservice';
 import { ToastService } from "../services/toast.service";
 import {ConfirmationService} from 'primeng/api';
+import {LoginService} from '../../app/services/login.service'
 
 
 @Component({
@@ -26,7 +27,7 @@ export class ProducerComponent implements OnInit {
 
   constructor(private breadcrumbService: BreadcrumbService, private dialogService:DialogService,private _apiService:APIService,
     private toastService: ToastService,
-    private confirmationService: ConfirmationService) {
+    private confirmationService: ConfirmationService,private loginService:LoginService) {
     this.breadcrumbService.setItems([
         { label: 'Dashboard' },
         { label: 'Producer', routerLink: ['/app/producer'] }
@@ -36,6 +37,19 @@ export class ProducerComponent implements OnInit {
 
 ngOnInit() {
 
+
+  var isBrowserClosed = localStorage.getItem('isBrowserClosed')
+  if(isBrowserClosed || isBrowserClosed==null)
+  {
+    this.loginService.getAccess().then(response1 => {
+
+      console.log("Response of Access ",response1)
+  
+  
+    }).catch(error=>{
+      // console.log(JSON.stringify(error))
+    })
+  }
   this.showProducers();
 
 }

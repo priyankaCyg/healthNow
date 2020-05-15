@@ -1,7 +1,11 @@
 import {Injectable} from '@angular/core';
-import {HttpClient,HttpHeaders } from '@angular/common/http';
+import {HttpClient,HttpHeaders  } from '@angular/common/http';
 import { Observable } from "rxjs";
-import { map } from 'rxjs/operators';
+import { tap } from 'rxjs/operators';
+import { config } from '../../config';
+
+const baseUrl:string=config.url
+const fileUrl:string=config.fileUrl
 
 @Injectable()
 export class APIService {
@@ -20,7 +24,7 @@ export class APIService {
 
     getDetails(dataToSend) {
         
-        return this.http.post<any>('http://13.126.132.149/healthnow/DataAPI', dataToSend)
+        return this.http.post<any>(baseUrl, dataToSend)
                     .toPromise()
                     .then(res =>{ 
                         
@@ -36,7 +40,7 @@ export class APIService {
         let headers = new HttpHeaders();
         headers = headers.set('Content-Type', 'application/json');
         headers = headers.set('Accept', 'text/html');
-        return this.http.post('http://13.126.132.149/healthnow/DataAPI',dataToSend)
+        return this.http.post(baseUrl,dataToSend)
         .subscribe(data => {
             console.log("IN API CALL",data);
         });
@@ -44,29 +48,22 @@ export class APIService {
 
     getApiDetails(dataToSend): Promise<any> {
 
-
         let headers = new HttpHeaders();
         headers = headers.set('Content-Type', 'application/json');
         headers = headers.set('Accept', 'text/html');
 
 
                 return new Promise((resolve, reject) => {
-                    this.http.post('http://13.126.132.149/healthnow/DataAPI',dataToSend,{ observe: 'response',headers:headers,responseType: 'text'})
+                    this.http.post(baseUrl,dataToSend,{ observe: 'response',headers:headers,responseType: 'text'})
                         .subscribe((resp: any) => {
-                            // alert(JSON.stringify(resp.status))
-                            // alert(JSON.stringify(resp))
+                            //working code
+                            console.log('response message', resp.headers.get('StatusMessage'));
+                            
                             resolve(resp);
-        
                         }, reject);
                 });
             }
 
-    getFilesystem() {
-        return this.http.get<any>('assets/demo/data/filesystem.json')
-                    .toPromise()
-                    .then(res => res.data as any[])
-                    .then(data => data);
-    }
 
 
     postFile(filesToUpload : any[],dataToSend:any): Observable<any> {
@@ -76,7 +73,7 @@ export class APIService {
         // formData.append('json', "JSON.stringify(catalogacion)");
     
         for (let file of filesToUpload) {
-            alert(JSON.stringify(file.name))
+            // alert(JSON.stringify(file.name))
           formData.append('uploadFile', file);
         }
 
@@ -91,7 +88,7 @@ export class APIService {
     
         let headers = new HttpHeaders();
     
-        return this.http.post("http://13.126.132.149/healthnow/file", formData, { headers: headers });
+        return this.http.post(fileUrl, formData, { headers: headers });
       }
 
 
@@ -106,7 +103,7 @@ export class APIService {
         formData.append('sActualFileName',dataToSend.sActualFileName);
         formData.append('sSystemFileName',dataToSend.sSystemFileName);
 
-        this.http.post(`http://13.126.132.149/healthnow/file`,formData,{responseType: 'arraybuffer'})
+        this.http.post(fileUrl,formData,{responseType: 'arraybuffer'})
         .subscribe(response => this.downLoadFile(response, "image/png"));
     }
 
@@ -119,4 +116,5 @@ export class APIService {
             alert( 'Please disable your Pop-up blocker and try again.');
         }
     }
+
 }

@@ -116,7 +116,7 @@ export class BankComponent implements OnInit {
   }
 
 
-  addUnit()
+  addBank()
   {
     console.log(this.bankForm.getRawValue())
 
@@ -139,10 +139,11 @@ export class BankComponent implements OnInit {
     this.ref.close(true);
 
     });
+
   }
 
 
- updateUnit()
+  updateBank()
   {
     console.log(this.bankForm.getRawValue())
 

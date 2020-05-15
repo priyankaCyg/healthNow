@@ -15,13 +15,13 @@
                 <div class="forms">
                     <div class="login-input-wrapper">
                         <label for="username">Username</label>
-                        <input id="username" pInputText placeholder="Type your username..." />
+                        <input id="username" pInputText [(ngModel)]="username" placeholder="Type your username..." />
                         <i class="pi pi-user"></i>
                     </div>
 
                     <div class="login-input-wrapper">
                         <label for="password">Password</label>
-                        <input type="password" id="password" placeholder="Type your password" pPassword [feedback]="false"/>
+                        <input type="password" id="password" [(ngModel)]="password" placeholder="Type your password" pPassword [feedback]="false"/>
                         <i class="pi pi-lock"></i>
                     </div>
 
@@ -31,7 +31,7 @@
 
 
                     <div class="buttons">
-                        <button pButton type="button" [routerLink]="['app/']" label="Login"></button>
+                        <button pButton type="button" [routerLink]="['app/']" label="Login" (click)="login()"></button>
                         <a href="#" class="secondary-button">Forget Password?</a>
                     </div>
                 </div>

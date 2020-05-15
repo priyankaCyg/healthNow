@@ -21,6 +21,7 @@ import { DesignationData } from "../model/selectAllDesignation";
 import { departmentData } from "../model/department";
 import { gstData } from "../model/gst";
 import { companyData } from '../model/company';
+import {LoginService} from '../../app/services/login.service'
 
 @Component({
   selector: "app-company",
@@ -43,7 +44,7 @@ export class CompanyComponent implements OnInit {
     private dialogService: DialogService,
     private apiService: ApiService,
     private toastService: ToastService,
-    private confirmationService: ConfirmationService, private _apiService: APIService) {
+    private confirmationService: ConfirmationService, private _apiService: APIService,private loginService:LoginService) {
     this.breadcrumbService.setItems([
       { label: "Dashboard" },
       { label: "Company", routerLink: ["/app/company"] },
@@ -51,6 +52,20 @@ export class CompanyComponent implements OnInit {
   }
 
   ngOnInit() {
+
+    var isBrowserClosed = localStorage.getItem('isBrowserClosed')
+    if(isBrowserClosed || isBrowserClosed==null)
+    {
+      this.loginService.getAccess().then(response1 => {
+  
+        console.log("Response of Access ",response1)
+    
+    
+      }).catch(error=>{
+        // console.log(JSON.stringify(error))
+      })
+    }
+
     this.items = [
       {
         label: "Angular.io",

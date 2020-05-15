@@ -7,6 +7,7 @@ import { ProductCategory } from '../models/product-category.model';
 import { ApiService } from '../services/api.service';
 import { ConfirmationService } from 'primeng/api';
 import { ToastService } from "../services/toast.service";
+import {LoginService} from '../../app/services/login.service'
 
 
 @Component({
@@ -24,7 +25,7 @@ export class ProductCategoryComponent implements OnInit {
        private dialogService:DialogService,
        private apiService : ApiService,
        private toastService: ToastService,
-       private confirmationService: ConfirmationService
+       private confirmationService: ConfirmationService,private loginService:LoginService
       )
         {
       this.breadcrumbService.setItems([
@@ -34,6 +35,19 @@ export class ProductCategoryComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    
+    var isBrowserClosed = localStorage.getItem('isBrowserClosed')
+    if(isBrowserClosed || isBrowserClosed==null)
+    {
+      this.loginService.getAccess().then(response1 => {
+
+        console.log("Response of Access ",response1)
+    
+    
+      }).catch(error=>{
+        // console.log(JSON.stringify(error))
+      })
+    }
     this.showProdCatList();
   }
 

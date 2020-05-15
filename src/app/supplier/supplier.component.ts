@@ -10,6 +10,7 @@ import { supplierList } from '../model/supplierlist';
 import { ToastService } from '../services/toast.service';
 import { ConfirmationService } from 'primeng/api';
 import { Router } from '@angular/router';
+import {LoginService} from '../../app/services/login.service'
 
 @Component({
   selector: 'app-supplier',
@@ -25,7 +26,7 @@ export class SupplierComponent implements OnInit {
 
   constructor(private breadcrumbService: BreadcrumbService, private dialogService: DialogService,
     private apiService: ApiService, private toastService: ToastService,
-    private confirmationService: ConfirmationService, private router: Router
+    private confirmationService: ConfirmationService, private router: Router,private loginService:LoginService
   ) {
     this.breadcrumbService.setItems([
       { label: 'Dashboard' },
@@ -35,6 +36,20 @@ export class SupplierComponent implements OnInit {
 
 
   ngOnInit(): void {
+    // alert("http://localhost:4200/#/app/supplier "+localStorage.getItem('isBrowserClosed'))
+    var isBrowserClosed = localStorage.getItem('isBrowserClosed')
+    if(isBrowserClosed || isBrowserClosed==null)
+    {
+      this.loginService.getAccess().then(response1 => {
+
+        console.log("Response of Access ",response1)
+    
+    
+      }).catch(error=>{
+        // console.log(JSON.stringify(error))
+      })
+    }
+
     this.getAllSupplier();
 
   }

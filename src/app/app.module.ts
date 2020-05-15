@@ -118,6 +118,8 @@ import { MessageService } from 'primeng/api';
 import { from } from 'rxjs';
 
 import { ApiService } from './services/api.service';
+import { APIService } from './services/apieservice';
+
 
 
 @NgModule({
@@ -225,6 +227,7 @@ import { ApiService } from './services/api.service';
     ],
     providers: [
         AuthGuard,
+        APIService,
         // httpInterceptorProviders,
         MessageService,
         {provide: LocationStrategy, useClass: HashLocationStrategy},
