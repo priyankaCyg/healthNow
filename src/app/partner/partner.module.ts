@@ -14,7 +14,7 @@ import { AreaMappingComponent } from './area-mapping/area-mapping.component';
 //Prime Ng Service
 import { DialogService } from 'primeng';
 import { ConfirmationService } from 'primeng/api';
-import { FormsModule} from '@angular/forms';
+import { FormsModule, ReactiveFormsModule} from '@angular/forms';
 
 //Prime Ng Module
 import { ButtonModule } from 'primeng/button';
@@ -33,6 +33,7 @@ import { from } from 'rxjs';
 import { MessageModule } from 'primeng/message';
 import { MessagesModule } from 'primeng/messages';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { APIService } from '../services/apieservice';
 
 
 
@@ -56,9 +57,11 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
     ConfirmDialogModule,
     MessageModule,
     MessagesModule,
-    CheckboxModule
+    CheckboxModule,
+    ReactiveFormsModule,
+
   ],
-  providers: [DialogService, ConfirmationService],
+  providers: [DialogService, ConfirmationService,APIService],
   entryComponents: [PartnerComponent,NewPartnerComponent, AddressComponent, ContactComponent, BankComponent, GstComponent, AreaMappingComponent]
 })
 export class PartnerModule { }

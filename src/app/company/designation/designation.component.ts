@@ -15,6 +15,7 @@ export class DesignationComponent implements OnInit {
   setStatus: object;
   temp;
   selectedstatus;
+  isEdit: boolean = false;
   constructor(
     private apiService: ApiService,
     private fb: FormBuilder,
@@ -49,12 +50,14 @@ export class DesignationComponent implements OnInit {
     // }
 
     if (this.config.data.iDesigID != undefined) {
-   
+      this.isEdit = true;
       this.desigForm.patchValue({
         desig_name: this.config.data.sDesigName,
         desig_level: this.config.data.iDesigLevel,
         status: this.setStatus,
       });
+    }else{
+      this.isEdit = false;
     }
    
   }
@@ -91,7 +94,9 @@ export class DesignationComponent implements OnInit {
           this.apiService.callPostApi(addDesig_data).subscribe(
             (data) => {
               console.log(data);
-              this.toastService.addSingle("success", "Record Added Successfully", "");
+              this.ref.close(true);
+              this.toastService.addSingle("success", data.headers.get('StatusMessage'), "");
+             
             },
             (error) => console.log(error)
           );
@@ -108,13 +113,14 @@ export class DesignationComponent implements OnInit {
           console.log(updateDesig_data, "update");
           this.apiService.callPostApi(updateDesig_data).subscribe(
             (data) => {
-              console.log(data);      
-              this.toastService.addSingle("success", "Record Updated Successfully", "");
+              console.log(data);   
+              this.ref.close(true);   
+              this.toastService.addSingle("success", data.headers.get('StatusMessage'), "");
             },
             (error) => console.log(error)
           );
         }
-        this.ref.close();
+        
         this.desigForm.reset();
       } else {
         console.log("Error");

@@ -3,6 +3,7 @@ import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { SupplierAddress } from 'src/app/models/supplier-address.model';
 import { ApiService } from 'src/app/services/api.service';
+import { ToastService } from 'src/app/services/toast.service';
 
 @Component({
   selector: 'app-address',
@@ -24,6 +25,7 @@ export class AddressComponent implements OnInit {
     private httpService : ApiService,
     public config: DynamicDialogConfig,
      public ref: DynamicDialogRef,
+     private toastService: ToastService,
   ) { }
   ngOnInit(): void {
     this.defaultDropDwnValue();
@@ -41,7 +43,7 @@ export class AddressComponent implements OnInit {
       }
       this.httpService.callPostApi(getaAddressDataApi).subscribe(
         data => {console.log(data)
-        this.supplierAddressData = new SupplierAddress(data[0]);
+        this.supplierAddressData = new SupplierAddress(data.body[0]);
         this.SupplierAddressForm = this.createControl(this.supplierAddressData);
        });
       Promise.all([this.getAddressTypeData()]).then(values => {
@@ -97,7 +99,7 @@ export class AddressComponent implements OnInit {
     }
      this.httpService.callPostApi(address_type_api).subscribe(
        data => {console.log(data);
-        this.adressTypeData = data;
+        this.adressTypeData = data.body;
         this.adressTypeData.unshift({iKVID:"", sKVValue: "Select Address Type"});
         this.selectedAddressType = {iKVID:"", sKVValue: "Select Address Type"};
         resolve(this.adressTypeData);
@@ -132,8 +134,8 @@ DisableFields(){
      this.httpService.callPostApi(pincodeChangesApi).subscribe(
        data => {
          console.log(data);
-         if(data){
-        this.StatesCityData = data; 
+         if(data.body){
+        this.StatesCityData = data.body; 
         console.log( this.StatesCityData);
          this.SupplierAddressForm.patchValue({
           sStateName: this.StatesCityData[0].sStateName,
@@ -170,7 +172,7 @@ DisableFields(){
     this.httpService.callPostApi(addSupplieraddressAPI).subscribe(
       data => {
       this.ref.close(true);
-  
+      this.toastService.addSingle("success", data.headers.get('StatusMessage'), "");
     });
   }
 
@@ -199,6 +201,7 @@ DisableFields(){
   this.httpService.callPostApi(editSupplieraddressAPI1).subscribe(
     data => {
       this.ref.close(true);
+      this.toastService.addSingle("success", data.headers.get('StatusMessage'), "");
     }
   )
   }
@@ -220,6 +223,7 @@ DisableFields(){
   this.httpService.callPostApi(editSupplieraddressAPI2).subscribe(
     data => {
       this.ref.close(true);
+      this.toastService.addSingle("success", data.headers.get('StatusMessage'), "");
     }
   )
   }

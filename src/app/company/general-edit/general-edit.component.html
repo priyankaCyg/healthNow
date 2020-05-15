@@ -4,58 +4,48 @@
         <div class="p-col-12">
 
             <div class="p-grid form-group">
-                <div class="p-col-12" [ngClass]="{'has-error': GeneralSubmit.get('website').errors &&
-                (GeneralSubmit.get('website').touched || GeneralSubmit.get('website').dirty)}">
+                <div class="p-col-12">
                     <label for="website">Website</label>
                     <input id="website" type="text" class="form-control" pInputText formControlName="website">
-                    <span *ngIf="GeneralSubmit.get('website').errors &&
-                    (GeneralSubmit.get('website').touched || GeneralSubmit.get('website').dirty)">
-                        <span class="text-danger" *ngIf="GeneralSubmit.get('website').errors.required">
-                            This Field is Required
-                        </span>
-                    </span>
+                    <p-message severity="error"
+                        [text]="GeneralSubmit.controls['website'].errors['required'] ? 'This Field is required' : GeneralSubmit.controls['website'].errors"
+                        *ngIf="!GeneralSubmit.controls['website'].valid && GeneralSubmit.controls['website'].dirty">
+                    </p-message>
                 </div>
-                <div class="p-col-12" [ngClass]="{'has-error': GeneralSubmit.get('tele1').errors &&
-                (GeneralSubmit.get('tele1').touched || GeneralSubmit.get('tele1').dirty)}">
+                <div class="p-col-12">
                     <label for="telNo1">Tel No.1</label>
                     <input id="telNo1" type="text" class="form-control" pInputText formControlName="tele1">
-                    <span *ngIf="GeneralSubmit.get('tele1').errors &&
-                    (GeneralSubmit.get('tele1').touched || GeneralSubmit.get('tele1').dirty)">
-                        <span class="text-danger" *ngIf="GeneralSubmit.get('tele1').errors.required">
-                            This Field is Required
-                        </span>
-                    </span>
+                    <p-message severity="error"
+                        [text]="GeneralSubmit.controls['tele1'].errors['required'] ? 'This Field is required' :GeneralSubmit.controls['tele1'].errors['pattern'] ? 'Please Enter Valid Telephone1 No.' : GeneralSubmit.controls['tele1'].errors['minlength'] ? 'Please enter at least 10 Digits' :  GeneralSubmit.controls['tele1'].errors['maxlength'] ? 'Please enter less than 13 Digits': ''"
+                        *ngIf="!GeneralSubmit.controls['tele1'].valid && GeneralSubmit.controls['tele1'].dirty">
+                    </p-message>
                 </div>
-                <div class="p-col-12" [ngClass]="{'has-error': GeneralSubmit.get('tele2').errors &&
-                (GeneralSubmit.get('tele2').touched || GeneralSubmit.get('tele2').dirty)}">
+                <div class="p-col-12">
                     <label for="telNo2">Tel No.2</label>
                     <input id="telNo2" type="text" class="form-control" pInputText formControlName="tele2">
-                    <span *ngIf="GeneralSubmit.get('tele2').errors &&
-                    (GeneralSubmit.get('tele2').touched || GeneralSubmit.get('tele2').dirty)">
-                        <span class="text-danger" *ngIf="GeneralSubmit.get('tele2').errors.required">
-                            This Field is Required
-                        </span>
-                    </span>
+                    <p-message severity="error"
+                        [text]="GeneralSubmit.controls['tele2'].errors['required'] ? 'This Field is required': GeneralSubmit.controls['tele2'].errors['pattern'] ? 'Please Enter Valid Telephone2 No.' : GeneralSubmit.controls['tele2'].errors['minlength'] ? 'Please enter at least 10 Digits' :  GeneralSubmit.controls['tele2'].errors['maxlength'] ? 'Please enter less than 13 Digits': ''"
+                        *ngIf="!GeneralSubmit.controls['tele2'].valid && GeneralSubmit.controls['tele2'].dirty">
+                    </p-message>
                 </div>
-                <div class="p-col-12" [ngClass]="{'has-error': GeneralSubmit.get('fax').errors &&
-                (GeneralSubmit.get('fax').touched || GeneralSubmit.get('fax').dirty)}">
+                <div class="p-col-12">
                     <label for="fax">Fax</label>
                     <input id="fax" type="text" class="form-control" pInputText formControlName="fax">
-                    <span *ngIf="GeneralSubmit.get('fax').errors &&
-                    (GeneralSubmit.get('fax').touched || GeneralSubmit.get('fax').dirty)">
-                        <span class="text-danger" *ngIf="GeneralSubmit.get('fax').errors.required">
-                            This Field is Required
-                        </span>
-                    </span>
+                    <p-message severity="error"
+                        [text]="GeneralSubmit.controls['fax'].errors['required'] ? 'This Field is required' : GeneralSubmit.controls['fax'].errors"
+                        *ngIf="!GeneralSubmit.controls['fax'].valid && GeneralSubmit.controls['fax'].dirty">
+                    </p-message>
                 </div>
             </div>
 
             <div class="separator separator--border-solid separator--space-sm separator--portlet-fit"></div>
             <div class="p-grid form-group ui-fluid">
                 <div class="p-col-12 p-md-12 p-lg-12 text-right">
-                    <button pButton type="button" (click)="close()" label="Cancel" class="ui-button-light atbt mr-2"></button>
-                
-                    <button pButton type="submit" label="Save" [disabled]="!GeneralSubmit.valid" class="ui-button atbt"></button>
+                    <button pButton type="button" (click)="close()" label="Cancel"
+                        class="ui-button-light atbt mr-2"></button>
+
+                    <button pButton type="submit" label="Save" [disabled]="!GeneralSubmit.valid"
+                        class="ui-button atbt"></button>
                 </div>
             </div>
         </div>

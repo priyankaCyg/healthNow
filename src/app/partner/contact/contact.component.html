@@ -1,70 +1,121 @@
-<div class="p-grid ui-fluid p-justify-end">
-    <div class="p-col-12"> 
-        <div class="p-grid form-group">
-            
-            <div class="p-col-12 p-md-6 p-lg-3 mb-2">
-                <label for="fullName">Full Name</label>
-                <input id="fullName" type="text" pInputText>
+<form [formGroup]="partnerContactForm">
+
+    <div class="p-grid ui-fluid p-justify-end">
+
+        <div class="p-col-12">
+            <div class="p-grid form-group">
+
+                <div class="p-col-12 p-md-6 p-lg-3 mb-2">
+                    <label for="fullName">Full Name</label>
+                    <input id="fullName" type="text" formControlName="sFullName" pInputText>
+                    <p-message severity="error"
+                        [text]="partnerContactForm.controls['sFullName'].errors['required'] ? 'This Field is required' : partnerContactForm.controls['sFullName'].errors"
+                        *ngIf="!partnerContactForm.controls['sFullName'].valid&&partnerContactForm.controls['sFullName'].dirty">
+                    </p-message>
+                </div>
+
+                <div class="p-col-12 p-md-6 p-lg-3 mb-2">
+                    <label for="designation">Designation</label>
+                    <input id="designation" type="text" formControlName="sDesignation" pInputText>
+                    <p-message severity="error"
+                        [text]="partnerContactForm.controls['sDesignation'].errors['required'] ? 'This Field is required' : partnerContactForm.controls['sDesignation'].errors"
+                        *ngIf="!partnerContactForm.controls['sDesignation'].valid&&partnerContactForm.controls['sDesignation'].dirty">
+                    </p-message>
+                </div>
+
+                <div class="p-col-12 p-md-6 p-lg-3 mb-2">
+                    <label for="emailId">Email ID</label>
+                    <input id="emailId" type="email" formControlName="sEmailID" pInputText>
+                    <p-message severity="error"
+                        [text]="partnerContactForm.controls['sEmailID'].errors['required'] ? 'This Field is required' : partnerContactForm.controls['sEmailID'].errors['email']? 'Enter Valid Email': ''"
+                        *ngIf="!partnerContactForm.controls['sEmailID'].valid&&partnerContactForm.controls['sEmailID'].dirty">
+                    </p-message>
+                </div>
             </div>
 
-            <div class="p-col-12 p-md-6 p-lg-3 mb-2">
-                <label for="designation">Designation</label>
-                <input id="designation" type="text" pInputText>
+            <div class="separator separator--border-solid separator--space-sm separator--portlet-fit"></div>
+
+            <div class="p-grid form-group">
+                <div class="p-col-12 p-md-12 p-lg-6 mb-2">
+                    <label for="partnerAdd">Partner Address</label>
+                    <!-- <textarea pInputTextarea formControlName="sAddress" [(ngModel)]="partnerAdd"></textarea> -->
+                    <p-dropdown id="sAddress" optionLabel="sAddress" formControlName="sAddress" [options]="addressData"
+                        [(ngModel)]="selectedaddress"></p-dropdown>
+                    <p-message severity="error" text="Address is required"
+                        *ngIf="partnerContactForm.controls['sAddress'].touched && (selectedaddress.iPartnerAddID=='' || partnerContactForm.controls['sAddress'].hasError('required'))">
+                    </p-message>
+
+                </div>
+
             </div>
 
-            <div class="p-col-12 p-md-6 p-lg-3 mb-2">
-                <label for="emailId">Email ID</label>
-                <input id="emailId" type="email" pInputText>
-            </div>
-        </div>
+            <div class="separator separator--border-solid separator--space-sm separator--portlet-fit"></div>
+            <div class="p-grid form-group">
+                <div class="p-col-12 p-md-6 p-lg-3 mb-2">
+                    <label for="mobileNo">Mobile No.</label>
+                    <input id="mobileNo" type="text" formControlName="sMobileNo" pInputText>
+                    <p-message severity="error"
+                        [text]="partnerContactForm.controls['sMobileNo'].errors['required'] ? 'This Field is required' : partnerContactForm.controls['sMobileNo'].errors"
+                        *ngIf="!partnerContactForm.controls['sMobileNo'].valid&&partnerContactForm.controls['sMobileNo'].dirty">
+                    </p-message>
+                </div>
+                <div class="p-col-12 p-md-6 p-lg-3 mb-2">
+                    <label for="contatNo">Contact No.</label>
+                    <input id="contatNo" type="text" formControlName="sContactNo" pInputText>
+                    <p-message severity="error"
+                        [text]="partnerContactForm.controls['sContactNo'].errors['required'] ? 'This Field is required' : partnerContactForm.controls['sContactNo'].errors"
+                        *ngIf="!partnerContactForm.controls['sContactNo'].valid&&partnerContactForm.controls['sContactNo'].dirty">
+                    </p-message>
+                </div>
+                <div class="p-col-12 p-md-6 p-lg-3 mb-2">
+                    <label for="directNo">Direct No.</label>
+                    <input id="directNo" type="text" formControlName="sDirectNo" pInputText>
+                    <p-message severity="error"
+                        [text]="partnerContactForm.controls['sDirectNo'].errors['required'] ? 'This Field is required' : partnerContactForm.controls['sDirectNo'].errors"
+                        *ngIf="!partnerContactForm.controls['sDirectNo'].valid&&partnerContactForm.controls['sDirectNo'].dirty">
+                    </p-message>
+                </div>
+                <div class="p-col-12 p-md-6 p-lg-3 mb-2">
+                    <label for="fax">Fax No.</label>
+                    <input id="Fax" type="text" formControlName="sFaxNo" pInputText>
+                    <p-message severity="error"
+                        [text]="partnerContactForm.controls['sFaxNo'].errors['required'] ? 'This Field is required' : partnerContactForm.controls['sFaxNo'].errors"
+                        *ngIf="!partnerContactForm.controls['sFaxNo'].valid&&partnerContactForm.controls['sFaxNo'].dirty">
+                    </p-message>
+                </div>
 
-        <div class="separator separator--border-solid separator--space-sm separator--portlet-fit"></div>
-        
-        <div class="p-grid form-group">
-            <div class="p-col-12 p-md-12 p-lg-6 mb-2">
-                <label for="partnerAdd">Partner Address</label>
-                <textarea pInputTextarea [(ngModel)]="partnerAdd"></textarea>
             </div>
-            
-        </div>
-        
-        <div class="separator separator--border-solid separator--space-sm separator--portlet-fit"></div>
-        <div class="p-grid form-group">
-            <div class="p-col-12 p-md-6 p-lg-3 mb-2">
-                <label for="mobileNo">Mobile No.</label>
-                <input id="mobileNo" type="text" pInputText>
-            </div>
-            <div class="p-col-12 p-md-6 p-lg-3 mb-2">
-                <label for="contatNo">Contact No.</label>
-                <input id="contatNo" type="text" pInputText>
-            </div>
-            <div class="p-col-12 p-md-6 p-lg-3 mb-2">
-                <label for="directNo">Direct No.</label>
-                <input id="directNo" type="text" pInputText>
-            </div>
-            <div class="p-col-12 p-md-6 p-lg-3 mb-2">
-                <label for="fax">Fax No.</label>
-                <input id="Fax" type="text" pInputText>
-            </div>
-        
-        </div>
-        <div class="separator separator--border-solid separator--space-sm separator--portlet-fit"></div>
-        <div class="p-grid form-group">
-            <div class="p-col-12 p-md-6 p-lg-3 mb-2">
-                <label for="status">Status</label>
-                <p-dropdown [options]="status" [(ngModel)]="selectedstatus"></p-dropdown>
-            </div>
-        
-        </div>
+            <div class="separator separator--border-solid separator--space-sm separator--portlet-fit"></div>
+            <div class="p-grid form-group">
+                <div class="p-col-12 p-md-6 p-lg-3 mb-2">
+                    <label for="status">Status</label>
+                    <p-dropdown [options]="statusData" optionLabel="sKVValue" formControlName="iStatusID"
+                        [(ngModel)]="selectedstatus">
+                    </p-dropdown>
+                    <p-message severity="error" text="Status is required"
+                        *ngIf="partnerContactForm.controls['iStatusID'].touched && (selectedstatus.iKVID=='' || partnerContactForm.controls['iStatusID'].hasError('required'))">
+                    </p-message>
 
-        <div class="separator separator--border-solid separator--space-sm separator--portlet-fit"></div>
-        <div class="p-grid form-group ui-fluid p-justify-end">
-            <div class="p-col-12 p-md-12 p-lg-12 text-right">
-                <button pButton type="button" label="Cancel" class="ui-button-light atbt mb-2 mr-2"></button>
-            
-                <button pButton type="button" label="Save" class="ui-button atbt mb-2"></button>
-            </div>
-        </div>
+                </div>
 
+            </div>
+
+            <div class="separator separator--border-solid separator--space-sm separator--portlet-fit"></div>
+            <div class="p-grid form-group ui-fluid p-justify-end">
+                <div class="p-col-12 p-md-12 p-lg-12 text-right">
+                    <button pButton type="button" label="Cancel" (click)="closeDialog()"
+                        class="ui-button-light atbt mb-2 mr-2"></button>
+
+                    <button *ngIf="!isEdit" pButton type="button" label="Save"
+                        [disabled]="!(!partnerContactForm.invalid && !dropDownValidityCheck())"
+                        (click)="addPartnerContact()" class="ui-button atbt"></button>
+                    <button *ngIf="isEdit" pButton type="button" label="Update"
+                        [disabled]="!(!partnerContactForm.invalid && !dropDownValidityCheck())"
+                        (click)="editPartnerContact()" class="ui-button atbt"></button>
+
+                </div>
+            </div>
+
+        </div>
     </div>
-</div>
+</form>

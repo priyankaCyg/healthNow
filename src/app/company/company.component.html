@@ -216,8 +216,7 @@
                     <td>{{ desig.iDesigLevel }}</td>
                     <td>
                       <span *ngIf="desig.iStatusID == 1" class="badge badge--success badge--inline badge--pill"> Active</span>
-                      <span *ngIf="desig.iStatusID == 2" pButton type="button"
-                        class="badge badge--warning badge--inline badge--pill"> Inactive </span>
+                      <span *ngIf="desig.iStatusID == 2" class="badge badge--warning badge--inline badge--pill"> Inactive </span>
                     </td>
                     <td>
                       <button pButton type="button" class="ui-button-success" icon="pi pi-pencil"
@@ -308,7 +307,7 @@
               <button (click)="openDialogForBank()" pButton icon="pi pi-fw pi-plus" label="Add New" class="ui-button atbt"></button>
             </div>
             <div class="p-col-12">
-              <p-table #searchBank [value]="bankData" [paginator]="true" [rows]="10" [showCurrentPageReport]="true"
+              <p-table #searchBank [value]="bankData"  [rows]="10" [showCurrentPageReport]="true"
                 [rowsPerPageOptions]="[10, 25, 50]" [filterDelay]="0" [globalFilterFields]="[
                   'sIFSC',
                   'sBankName',
@@ -354,7 +353,7 @@
                       <button pButton type="button" class="ui-button-success" icon="pi pi-pencil"
                         style="margin-right: 0.5em;" (click)="updateBank(bank)"></button>
                       <button pButton type="button" class="ui-button-danger" icon="pi pi-trash"
-                        (click)="deleteBank(bank)"></button>
+                        (click)="deleteBank(bank.iBankID)"></button>
                     </td>
                   </tr>
                 </ng-template>

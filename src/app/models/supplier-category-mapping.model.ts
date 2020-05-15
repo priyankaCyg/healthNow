@@ -1,5 +1,4 @@
 export class SupplierCategoryMapping {
-    key: number;
-    data: string;
-    label: string
+    iSupCatID: number;
+    sCategoryName: string
 }

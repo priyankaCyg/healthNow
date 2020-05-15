@@ -14,29 +14,32 @@ import { PrcategoriesComponent } from './prcategories/prcategories.component';
 
 //Prime Ng Service
 import { DialogService } from 'primeng';
-import {FormsModule} from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ConfirmationService } from 'primeng/api';
 
 //Prime Ng Module
-import {ButtonModule} from 'primeng/button';
-import {PanelModule} from 'primeng/panel';
-import {TabMenuModule} from 'primeng/tabmenu';
-import {TableModule} from 'primeng/table';
-import {TabViewModule} from 'primeng/tabview';
- import {DialogModule} from 'primeng/dialog';
-import {DynamicDialogModule} from 'primeng/dynamicdialog';
-import {DropdownModule} from 'primeng/dropdown';
-import {InputTextareaModule} from 'primeng/inputtextarea';
-import {InputTextModule} from 'primeng/inputtext';
-import {TreeTableModule} from 'primeng/treetable';
-import {RadioButtonModule} from 'primeng/radiobutton';
-import {FileUploadModule} from 'primeng/fileupload';
-import {LightboxModule} from 'primeng/lightbox';
+import { ButtonModule } from 'primeng/button';
+import { PanelModule } from 'primeng/panel';
+import { TabMenuModule } from 'primeng/tabmenu';
+import { TableModule } from 'primeng/table';
+import { TabViewModule } from 'primeng/tabview';
+import { DialogModule } from 'primeng/dialog';
+import { DynamicDialogModule } from 'primeng/dynamicdialog';
+import { DropdownModule } from 'primeng/dropdown';
+import { InputTextareaModule } from 'primeng/inputtextarea';
+import { InputTextModule } from 'primeng/inputtext';
+import { TreeTableModule } from 'primeng/treetable';
+import { RadioButtonModule } from 'primeng/radiobutton';
+import { FileUploadModule } from 'primeng/fileupload';
+import { LightboxModule } from 'primeng/lightbox';
 // import {AccordionModule} from 'primeng/accordion';
 // import {PickListModule} from 'primeng/picklist';
-import {CheckboxModule} from 'primeng/checkbox';
+import { CheckboxModule } from 'primeng/checkbox';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { MessageModule } from 'primeng/message';
 
 
-import {APIService} from '../services/apieservice';
+import { APIService } from '../services/apieservice';
 
 
 @NgModule({
@@ -61,10 +64,13 @@ import {APIService} from '../services/apieservice';
     LightboxModule,
     // AccordionModule,
     // PickListModule,
-    CheckboxModule
+    CheckboxModule,
+    ConfirmDialogModule,
+    ReactiveFormsModule,
+    MessageModule
 
   ],
-  providers:[DialogService,APIService],
-  entryComponents:[ProductComponent, NewProductComponent, ProductImageComponent,  ProductVariantComponent, ProductInfoComponent, ProductDescriptionComponent, ProductQueriesComponent, PrcategoriesComponent]
+  providers: [ConfirmationService, DialogService, APIService],
+  entryComponents: [ProductComponent, NewProductComponent, ProductImageComponent, ProductVariantComponent, ProductInfoComponent, ProductDescriptionComponent, ProductQueriesComponent, PrcategoriesComponent]
 })
 export class ProductModule { }

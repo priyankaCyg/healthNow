@@ -30,7 +30,7 @@ export class ProductMappingComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    alert(this.Selectedvalue)
+    //alert(this.Selectedvalue)
     this.producerDropdown();
 
   }
@@ -41,7 +41,7 @@ export class ProductMappingComponent implements OnInit {
     }
     this.apiService.callPostApi(producer_dropdown_data).subscribe(
       (data) => {
-        this.producerValue = data;
+        this.producerValue = data.body;
         this.producerValue.unshift({ "iProducerID": 0, "sProducerName": "Select" });
 
       },
@@ -65,8 +65,8 @@ export class ProductMappingComponent implements OnInit {
     }
     this.apiService.callPostApi(product_list_data).subscribe(
       (data) => {
-        console.log("data ",data)
-        this.producer = data;
+        console.log("data ", data)
+        this.producer = data.body;
         for (var i = 0; i < this.producer.length; i++) {
           if (this.producer[i].iSelected == 1) {
             this.Selectedvalue.push(this.producer[i]);
@@ -92,7 +92,7 @@ export class ProductMappingComponent implements OnInit {
     this.apiService.callPostApi(save_product_data).subscribe(
       (data) => {
         this.getProduct();
-        this.toastService.addSingle("success", "Record Added successfully", "");
+        this.toastService.addSingle("success", data.headers.get('StatusMessage'), "");
 
       },
       (error) => console.log(error)

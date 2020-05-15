@@ -26,8 +26,8 @@ export class GeneralEditComponent implements OnInit {
 
   GeneralSubmit = this.fb.group({
     website: ['', Validators.required],
-    tele1: ['', Validators.required],
-    tele2: ['', Validators.required],
+    tele1: ['', [Validators.required, Validators.pattern('^[0-9]*$'), Validators.minLength(10), Validators.maxLength(13)]],
+    tele2: ['', [Validators.required, Validators.pattern('^[0-9]*$'), Validators.minLength(10), Validators.maxLength(13)]],
     fax: ['', Validators.required]
   });
 
@@ -52,12 +52,11 @@ export class GeneralEditComponent implements OnInit {
     this.apiService.callPostApi(general_submit_data).subscribe(
       data => {
         console.log(data);
-        this.toastService.addSingle("success", "Record Added Successfully", "");
-
+        this.ref.close(true);
+        this.toastService.addSingle("success", data.headers.get('StatusMessage'), "");
       },
       error => console.log(error)
     );
-    this.ref.close();
   }
 
   close() {

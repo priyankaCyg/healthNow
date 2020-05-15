@@ -93,7 +93,10 @@ export class ProductCategoryComponent implements OnInit {
       "iRequestID": 2114
     }
     this.apiService.callPostApi(prodCatListApi).subscribe(
-      data => { this.productCategoryData = data } ,
+      data => { this.productCategoryData = data.body,
+      console.log(this.apiService.headerMessage);
+      console.log(this.apiService.headerCode);
+      } ,
       error => { console.log(error)}
     )
 
@@ -114,7 +117,7 @@ export class ProductCategoryComponent implements OnInit {
 
         this.apiService.callPostApi(deleteCategoryAPI).subscribe(
           data => {
-            this.toastService.addSingle("info", "Successfully Deleted", "Successfully Deleted");
+            this.toastService.addSingle("success", data.headers.get('StatusMessage'), "");
             this.showProdCatList();
           },
           error => { console.log(error)}

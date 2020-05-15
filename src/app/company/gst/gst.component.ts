@@ -15,6 +15,8 @@ export class GstComponent implements OnInit {
   temp: string;
   selectedstatus;
   setStatus: Object;
+  isEdit: boolean = false
+
   constructor(private fb: FormBuilder, private apiService: ApiService, public config: DynamicDialogConfig,
     private ref: DynamicDialogRef, private toastService: ToastService) { }
 
@@ -45,16 +47,20 @@ export class GstComponent implements OnInit {
 
 
     if (this.config.data.iStateID != undefined) {
+      this.isEdit = true
+
       this.GSTSubmit.patchValue({
         state: this.setStatus,
         gst: this.config.data.sGST,
       });
+    } else {
+      this.isEdit = false;
     }
   }
 
   GSTSubmit = this.fb.group({
     state: ['', Validators.required],
-    gst: ['02', Validators.required],
+    gst: ['', Validators.required],
   });
 
   onSubmit() {
@@ -82,7 +88,8 @@ export class GstComponent implements OnInit {
         this.apiService.callPostApi(gst_submit_data).subscribe(
           data => {
             console.log(data);
-            this.toastService.addSingle("success", "Record Added Successfully", "");
+            this.ref.close(true);
+            this.toastService.addSingle("success", data.headers.get('StatusMessage'), "");
 
           },
           error => console.log(error)
@@ -106,13 +113,13 @@ export class GstComponent implements OnInit {
         this.apiService.callPostApi(gst_edit_data).subscribe(
           data => {
             console.log(data);
-            this.toastService.addSingle("success", "Record Updated Successfully", "");
+            this.ref.close(true);
+            this.toastService.addSingle("success", data.headers.get('StatusMessage'), "");
 
           },
           error => console.log(error)
         );
       }
-      this.ref.close();
       this.GSTSubmit.reset();
     }
   }
