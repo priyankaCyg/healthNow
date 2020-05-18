@@ -1,3 +1,10 @@
+/**
+Template Name: HealthNow
+Author: Priyanka, Neelam, Rajnish and Shibin
+Created Date: 
+File: add-new-supplier.component
+**/
+
 import { Component, OnInit, Input } from '@angular/core';
 import { BreadcrumbService } from '../../breadcrumb.service';
 import { CountryService } from '../../demo/service/countryservice';

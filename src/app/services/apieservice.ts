@@ -1,3 +1,10 @@
+/**
+Template Name: HealthNow
+Author: Priyanka
+Created Date: 
+File: apiservice.ts
+**/
+
 import {Injectable} from '@angular/core';
 import {HttpClient,HttpHeaders  } from '@angular/common/http';
 import { Observable } from "rxjs";
@@ -69,11 +76,7 @@ export class APIService {
     postFile(filesToUpload : any[],dataToSend:any): Observable<any> {
     
         const formData: FormData = new FormData();
-    
-        // formData.append('json', "JSON.stringify(catalogacion)");
-    
         for (let file of filesToUpload) {
-            // alert(JSON.stringify(file.name))
           formData.append('uploadFile', file);
         }
 
@@ -91,7 +94,7 @@ export class APIService {
         return this.http.post(fileUrl, formData, { headers: headers });
       }
 
-
+      //Download API Call
       public downloadAPI(dataToSend: any) {
 
         console.log("IN DOWNLOAD Image")
@@ -107,7 +110,7 @@ export class APIService {
         .subscribe(response => this.downLoadFile(response, "image/png"));
     }
 
-
+    //Download  file function 
     downLoadFile(data: any, type: string) {
         let blob = new Blob([data], { type: type});
         let url = window.URL.createObjectURL(blob);
@@ -117,10 +120,6 @@ export class APIService {
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
-        // let pwa = window.open(url);
-        // if (!pwa || pwa.closed || typeof pwa.closed == 'undefined') {
-        //     alert( 'Please disable your Pop-up blocker and try again.');
-        // }
     }
 
 }
