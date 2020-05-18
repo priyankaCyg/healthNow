@@ -9,15 +9,12 @@ import { AddressComponent } from '../address/address.component';
 import { ContactComponent } from '../contact/contact.component';
 import { BankComponent } from '../bank/bank.component';
 import { GstComponent } from '../gst/gst.component';
-<<<<<<< HEAD
-=======
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ApiService } from 'src/app/services/api.service';
 import { ToastService } from 'src/app/services/toast.service';
 import { ActivatedRoute } from '@angular/router';
 import { PartnerMaster } from 'src/app/model/partner.model';
 import { companyBankMaster } from 'src/app/model/companyBank.model';
->>>>>>> 523a4fd145c6cad02e7380c3e7df65ab5dd31d58
 
 @Component({
   selector: 'app-new-partner',
