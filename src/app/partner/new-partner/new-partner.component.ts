@@ -9,6 +9,7 @@ import { AddressComponent } from '../address/address.component';
 import { ContactComponent } from '../contact/contact.component';
 import { BankComponent } from '../bank/bank.component';
 import { GstComponent } from '../gst/gst.component';
+
 @Component({
   selector: 'app-new-partner',
   templateUrl: './new-partner.component.html',

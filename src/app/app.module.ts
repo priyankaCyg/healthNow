@@ -120,6 +120,7 @@ import { from } from 'rxjs';
 import { ApiService } from './services/api.service';
 
 
+
 @NgModule({
     imports: [
         BrowserModule,
@@ -219,9 +220,6 @@ import { ApiService } from './services/api.service';
         EmptyDemoComponent,
         FileDemoComponent,
         DocumentationComponent
-        //UnitComponent
-        // CompanyComponent,
-        // GeneralEditComponent,
     ],
     providers: [
         AuthGuard,

@@ -21,7 +21,7 @@
                                     </div>
 
                                     <div class="p-col-12 p-md-6 p-lg-3 mb-2">
-                                        <label for="legalEntity">Legal Entity ID</label>
+                                        <label for="legalEntity">Legal Entity</label>
                                         <input id="legalEntity" class="form-control" type="text" pInputText>
                                     </div>
 
@@ -105,7 +105,7 @@
                                         <th>City</th>
                                         <th>Landmark</th>
                                         <th>Status</th>
-                                        <th colspan="2">Action</th>
+                                        <th>Action</th>
                                     </tr>
                                 </ng-template>
                                 <ng-template pTemplate="body" let-address>
@@ -117,8 +117,10 @@
                                         <td>{{address.city}}</td>
                                         <td>{{address.landmark}}</td>
                                         <td><span class="badge badge--success badge--inline badge--pill"> Active</span></td>
-                                        <td><button pButton type="button" class="ui-button-success mr-1" icon="pi pi-pencil"></button></td>
-                                        <td><button pButton type="button" class="ui-button-danger" icon="pi pi-trash"></button></td>
+                                        <td>
+                                            <button pButton type="button" class="ui-button-success mr-1" icon="pi pi-pencil"></button>
+                                            <button pButton type="button" class="ui-button-danger" icon="pi pi-trash"></button>
+                                        </td>
                                     </tr>
                                 </ng-template>
                             </p-table>
@@ -191,7 +193,7 @@
                                 <ng-template pTemplate="header">
                                     <tr>
                                         <th>Bank Name</th>
-                                        <th>Short Code/Account Type</th>
+                                        <th>Short Code</th>
                                         <th>Account No.</th>
                                         <th>IFSC</th>
                                         <th>Bank Branch</th>
@@ -202,11 +204,11 @@
                                 <ng-template pTemplate="body" let-bank>
                                     <tr>
                                         <td>{{bank.bankName}}</td>
-                                        <td>{{bank.accounttype}}</td>
+                                        <td>{{bank.shortCode}}</td>
                                         <td>{{bank.accountNo}}</td>
-                                        <td>{{bank.IFSC}}</td>
+                                        <td>{{bank.ifsc}}</td>
                                         <td>{{bank.branch}}</td>
-                                        <td>{{bank.status}}</td>
+                                        <td><span class="badge badge--success badge--inline badge--pill"> Active</span></td>
                                         <td>
                                             <button pButton type="button" class="ui-button-success" icon="pi pi-pencil"
                                                 style="margin-right: .5em"></button>
@@ -232,7 +234,7 @@
                                 <ng-template pTemplate="header">
                                     <tr>
                                         <th>State</th>
-                                        <th>Short Code/Account Type</th>
+                                        <th>Short Code</th>
                                         <th>Action</th>
                                     </tr>
                                 </ng-template>

@@ -1,0 +1,417 @@
+<div class="p-grid">
+    <div class="p-col-12">
+        <div class="card card-w-title">
+            <h1>Requisition</h1>        
+            <p-tabView>
+                <p-tabPanel header="General">
+                    <div class="p-grid ui-fluid">
+                        <div class="p-col-12 mt-2">
+                            <div class="p-grid form-group">
+                                <div class="p-col-12 p-lg-3 mb-2">
+                                    <label for="supplierPO">Supplier PO No.</label>
+                                    <input id="supplierPO" type="text" pInputText [disabled]="disabled"  placeholder="PO/SS/20200514/4">
+                                </div>
+                                <div class="p-col-12 p-lg-3 mb-2">
+                                    <label for="suppAddress">Supplier PO Date</label>
+                                    <p-calendar [(ngModel)]="value"></p-calendar>
+                                </div>
+                                
+                                <div class="p-col-12 p-lg-3 mb-2">
+                                    <label for="supplier">Supplier</label>
+                                    <input id="disabled-input" type="text" pInputText [disabled]="disabled"  placeholder="SKK Supplier">
+                                </div>
+                                <div class="p-col-12 p-lg-3 mb-2">
+                                    <label for="contact">Supplier Contact</label>
+                                    <p-dropdown [options]="contact" [(ngModel)]="selectedContact1"></p-dropdown>
+                                </div>
+                                <div class="p-col-12 p-lg-6 mb-2">
+                                    <label for="suppAddress">Supplier Address</label>
+                                    <p-dropdown [options]="suppAddress" [(ngModel)]="selectedAddress1"></p-dropdown>
+                                </div>
+                                <div class="p-col-12 p-md-2 p-lg-12">
+                                    <div class="separator separator--border-dashed separator--space-sm separator--portlet-fit"></div>
+                                </div>
+
+                                <div class="p-col-12 p-lg-3 mb-2">
+                                    <label for="supplier">Partner</label>
+                                    <input id="disabled-input" type="text" pInputText [disabled]="disabled"  placeholder="Alpha">
+                                </div>
+
+                                <div class="p-col-12 p-lg-3 mb-2">
+                                    <label for="location">Location</label>
+                                    <input id="location" type="text" pInputText [disabled]="disabled"  placeholder="Mumbai">
+                                </div>
+                                <div class="p-col-12 p-md-2 p-lg-12">
+                                    <div class="separator separator--border-dashed separator--space-sm separator--portlet-fit m-1"></div>
+                                </div>
+                                <div class="p-col-12 p-lg-3 mb-2">
+                                    <label for="comPOcontact">Company PO Contact</label>
+                                    <p-dropdown [options]="comPOcontact" [(ngModel)]="selectedContact1"></p-dropdown>
+                                </div>
+                                <div class="p-col-12 p-lg-3 mb-2">
+                                    <label for="currency"> Currency</label>
+                                    <p-dropdown [options]="currency" [(ngModel)]="selectedCurrency1"></p-dropdown>
+                                </div>
+                                <div class="p-col-12 p-lg-3 mb-2">
+                                   <div class="mt-4"> <p-checkbox name="group1" value="Include Taxes" label="Include Taxes" [(ngModel)]="selectedCities" inputId="ny"></p-checkbox></div>
+                                </div>
+                               
+                            </div>
+                        </div>
+                    </div> 
+                    <div class="separator separator--border-solid separator--space-sm separator--portlet-fit">
+                </div>
+                <div class="p-grid form-group ui-fluid p-justify-end mt-3">
+                    <div class="p-col-12 p-md-2 p-lg-12 text-right">
+                        <button pButton type="button" label="Cancel" routerLink="/app/purchase-order/create-po-detail" class="ui-button-light atbt mr-2 mb-2"></button>
+                   
+                        <button pButton type="submit" label="Save" class="ui-button atbt mb-2"></button>
+                    </div>
+                </div>       
+                </p-tabPanel>
+                <!-- General Tab End -->
+                <p-tabPanel header="Product">
+                    <div class="p-grid ui-fluid p-justify-end mt-2">
+                        <div class="p-col-12">
+                            <div class="p-col-12">
+                                <p-table [value]="poDetail">
+                                    <ng-template pTemplate="header">
+                                        <tr>
+                                            <th>Product Category</th>
+                                            <th>Product</th>
+                                            <th style="width: 8em;">Qty</th>
+                                            <th style="width: 8em;">Rate</th>
+                                            <th style="width: 8em;">Discount %</th>
+                                            <th style="width: 8em;">Discount Amt</th>
+                                            <th>Total Amount</th>
+                                            <!-- <th>Created By</th>
+                                            <th>Created Date</th> -->
+                                            <th>Action</th>
+                                        </tr>
+                                    </ng-template>
+                                    <ng-template pTemplate="body" let-poDetail>
+                                        <tr>
+                                            <td>{{poDetail.prdCategory}}</td>
+                                            <td>{{poDetail.product}}</td>
+                                            <td>{{poDetail.qty}}</td>
+                                            <td>{{poDetail.rate}}</td>
+                                            <td>{{poDetail.discount}}</td>
+                                            <td>{{poDetail.discAmt}}</td>
+                                            <td>{{poDetail.totalAmt}}</td>
+                                            <!-- <td>{{poDetail.createdBy}}</td>
+                                            <td>{{poDetail.createdDate}}</td> -->
+                                            <td>
+                                                <button pButton type="button" class="ui-button-success mr-1" icon="pi pi-pencil"></button>
+                                                <button pButton type="button" class="ui-button-danger mr-1" icon="pi pi-trash"></button> 
+                                            </td>
+                                        </tr>
+                                    </ng-template>
+                                </p-table>
+                            </div>
+                        </div>
+                    </div>
+                </p-tabPanel>
+                <!-- Product Tab End -->
+                <p-tabPanel header="Terms &amp; Conditions">
+                    <div class="p-grid ui-fluid mt-2">
+                        <div class="p-col-12 p-lg-6 p-md-6">
+                            <div class="card download-files tasks mb-0">
+                                <div class="p-grid p-nogutter">
+                                    <div class="p-col-12 title">
+                                        <h1>General</h1>
+                                    </div>
+                                </div>
+                                <ul class="checkboxes">
+                                    <li class="checkbox-row">
+                                        <div class="p-grid">
+                                            <div class="p-col-12 checkbox">
+                                                <p-checkbox binary="true"></p-checkbox>
+                                                <p>Taxes As Applicable.</p>
+                                            </div>
+                                        </div>
+                                    </li>
+                    
+                                    <li class="checkbox-row even">
+                                        <div class="p-grid">
+                                            <div class="p-col-12 checkbox">
+                                                <p-checkbox binary="true"></p-checkbox>
+                                                <p>Inclusive All Taxes.</p>
+                                            </div>
+                                        </div>
+                                    </li>
+                    
+                                    <li class="checkbox-row">
+                                        <div class="p-grid">
+                                            <div class="p-col-12 checkbox">
+                                                <p-checkbox binary="true"></p-checkbox>
+                                                <p>All Bills Should Be Made In Favor Of Cygnus Technologies Private Limited</p>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="p-col-12 p-lg-6 p-md-6">
+                            <div class="card download-files tasks mb-0">
+                                <div class="p-grid p-nogutter">
+                                    <div class="p-col-12 title">
+                                        <h1>Payment</h1>
+                                    </div>
+                                </div>
+                                <ul class="checkboxes">
+                                    <li class="checkbox-row">
+                                        <div class="p-grid">
+                                            <div class="p-col-12 checkbox">
+                                                <p-checkbox binary="true"></p-checkbox>
+                                                <p>Payment Terms: 90 Days Pdc</p>
+                                            </div>
+                                        </div>
+                                    </li>
+                    
+                                    <li class="checkbox-row even">
+                                        <div class="p-grid">
+                                            <div class="p-col-12 checkbox">
+                                                <p-checkbox binary="true"></p-checkbox>
+                                                <p>Payment Terms: 60 Days Pdc</p>
+                                            </div>
+                                        </div>
+                                    </li>
+                    
+                                    <li class="checkbox-row">
+                                        <div class="p-grid">
+                                            <div class="p-col-12 checkbox">
+                                                <p-checkbox binary="true"></p-checkbox>
+                                                <p>Payment Terms: 45 Days Pdc</p>
+                                            </div>
+                                        </div>
+                                    </li>
+                    
+                                    <li class="checkbox-row even">
+                                        <div class="p-grid">
+                                            <div class="p-col-12 checkbox">
+                                                <p-checkbox binary="true"></p-checkbox>
+                                                <p>Payment Terms: 30 Days Pdc</p>
+                                            </div>
+                                        </div>
+                                    </li>
+                    
+                                    <li class="checkbox-row">
+                                        <div class="p-grid">
+                                            <div class="p-col-12 checkbox">
+                                                <p-checkbox binary="true"></p-checkbox>
+                                                <p>Payment Terms : 30 Days From The Invoice Date</p>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    
+                                    <li class="checkbox-row">
+                                        <div class="p-grid">
+                                            <div class="p-col-12 checkbox">
+                                                <p-checkbox binary="true"></p-checkbox>
+                                                <p>Payment Terms: 15 Days Pdc</p>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li class="checkbox-row">
+                                        <div class="p-grid">
+                                            <div class="p-col-12 checkbox">
+                                                <p-checkbox binary="true"></p-checkbox>
+                                                <p>Payment Terms: 100% Advance</p>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    
+                                    <li class="checkbox-row">
+                                        <div class="p-grid">
+                                            <div class="p-col-12 checkbox">
+                                                <p-checkbox binary="true"></p-checkbox>
+                                                <p>Payment Terms: Immediate</p>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        <div class="p-col-12 p-lg-6 p-md-6">
+                            <div class="card download-files tasks mb-0">
+                                <div class="p-grid p-nogutter">
+                                    <div class="p-col-12 title">
+                                        <h1>Warranty</h1>
+                                    </div>
+                                </div>
+                                <ul class="checkboxes">
+                                    <li class="checkbox-row">
+                                        <div class="p-grid">
+                                            <div class="p-col-12 checkbox">
+                                                <p-checkbox binary="true"></p-checkbox>
+                                                <p>5 Years Onsite Warranty.</p>
+                                            </div>
+                                        </div>
+                                    </li>
+                    
+                                    <li class="checkbox-row even">
+                                        <div class="p-grid">
+                                            <div class="p-col-12 checkbox">
+                                                <p-checkbox binary="true"></p-checkbox>
+                                                <p>4 Years Onsite Warranty.</p>
+                                            </div>
+                                        </div>
+                                    </li>
+                    
+                                    <li class="checkbox-row">
+                                        <div class="p-grid">
+                                            <div class="p-col-12 checkbox">
+                                                <p-checkbox binary="true"></p-checkbox>
+                                                <p>3 Years Onsite Warranty.</p>
+                                            </div>
+                                        </div>
+                                    </li>
+                    
+                                    <li class="checkbox-row even">
+                                        <div class="p-grid">
+                                            <div class="p-col-12 checkbox">
+                                                <p-checkbox binary="true"></p-checkbox>
+                                                <p>3 Years Carry-in Warranty.</p>
+                                            </div>
+                                        </div>
+                                    </li>
+                    
+                                    <li class="checkbox-row">
+                                        <div class="p-grid">
+                                            <div class="p-col-12 checkbox">
+                                                <p-checkbox binary="true"></p-checkbox>
+                                                <p>2 Years Carry-in Warranty.</p>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    
+                                    <li class="checkbox-row">
+                                        <div class="p-grid">
+                                            <div class="p-col-12 checkbox">
+                                                <p-checkbox binary="true"></p-checkbox>
+                                                <p>1 Year Onsite Warranty.</p>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li class="checkbox-row">
+                                        <div class="p-grid">
+                                            <div class="p-col-12 checkbox">
+                                                <p-checkbox binary="true"></p-checkbox>
+                                                <p>1 Year Carry-in Warranty.</p>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li class="checkbox-row">
+                                        <div class="p-grid">
+                                            <div class="p-col-12 checkbox">
+                                                <p-checkbox binary="true"></p-checkbox>
+                                                <p>90 Days Warranty.</p>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li class="checkbox-row">
+                                        <div class="p-grid">
+                                            <div class="p-col-12 checkbox">
+                                                <p-checkbox binary="true"></p-checkbox>
+                                                <p>Testing Warranty.</p>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="p-col-12 p-lg-6 p-md-6">
+                            <div class="card download-files tasks mb-0 p-3">
+                                <div class="p-grid p-nogutter">
+                                    <div class="p-col-12 title">
+                                        <h1>Custom</h1>
+                                    </div>
+                                </div>
+                                <div class="p-grid">
+                                    <div class="p-col-12 mb-1">
+                                        <input type="text" pInputText />
+                                    </div>
+                                    <div class="p-col-12 mb-1">
+                                        <input type="text" pInputText />
+                                    </div>
+                                    <div class="p-col-12 mb-1">
+                                        <input type="text" pInputText />
+                                    </div>
+                                    <div class="p-col-12 mb-1">
+                                        <input type="text" pInputText />
+                                    </div>
+                                    <div class="p-col-12 mb-1">
+                                        <input type="text" pInputText />
+                                    </div>
+                                    <div class="p-col-12 mb-1">
+                                        <input type="text" pInputText />
+                                    </div>
+                                    <div class="p-col-12 mb-1">
+                                        <input type="text" pInputText />
+                                    </div>
+                                    <div class="p-col-12 mb-1">
+                                        <input type="text" pInputText />
+                                    </div>
+                                    <div class="p-col-12 mb-1">
+                                        <input type="text" pInputText />
+                                    </div>
+                                    <div class="p-col-12 mb-1">
+                                        <input type="text" pInputText />
+                                    </div>
+                                    <div class="p-col-12 mb-1">
+                                        <input type="text" pInputText />
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </p-tabPanel>
+                <!-- Terms & Condition ENd here -->
+                <p-tabPanel header="Attacment">
+                    <div class="p-grid ui-fluid">
+                        <div class="p-col-12 p-md-3 p-lg-3">
+                            <label for="sfileType">Select File Type</label>
+                            <p-dropdown id="sfileType" class="form-control" placeholder="Select" required="true"></p-dropdown>
+                        </div>
+                        <div class="p-col-12 p-md-2 p-lg-1">
+                            <div class="fileUpload p-0">
+                                <p-fileUpload #fubauto mode="basic" name="demo[]" url="./upload.php" accept="image/*" maxFileSize="1000000" (onUpload)="onBasicUploadAuto($event)" [auto]="true" chooseLabel="Browse"></p-fileUpload>                                
+                                
+                            </div>
+                         </div>
+                        <div class="p-col-12 p-md-3 p-lg-3 text-left"><button pButton type="button" icon="pi pi-upload" label="Upload" class="ui-button atbt"></button></div> 
+                        
+                        <div class="p-col-12 p-md-12 p-lg-12 mt-3">
+                            <p-table [value]="attachment">
+                                <ng-template pTemplate="header">
+                                    <tr>
+                                        <th>File Type</th>
+                                        <th>File Name</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </ng-template>
+                                <ng-template pTemplate="body" let-attachment>
+                                    <tr>
+                                        <td>{{attachment.fileName}}</td>
+                                        <td>{{attachment.fileType}}</td>
+                                        <td>
+                                            <button pButton type="button" class="ui-button-success mr-1" icon="pi pi-download"></button>
+                                            <button pButton type="button" class="ui-button-danger" icon="pi pi-trash"></button>
+                                        </td>
+                                    </tr>
+                                </ng-template>
+                            </p-table>
+                         </div>
+                    </div>
+                </p-tabPanel>
+
+                <!-- Attachment tab End here -->
+            </p-tabView>
+        </div>
+    </div>        
+</div>
