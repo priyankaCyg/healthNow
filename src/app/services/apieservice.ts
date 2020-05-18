@@ -111,10 +111,16 @@ export class APIService {
     downLoadFile(data: any, type: string) {
         let blob = new Blob([data], { type: type});
         let url = window.URL.createObjectURL(blob);
-        let pwa = window.open(url);
-        if (!pwa || pwa.closed || typeof pwa.closed == 'undefined') {
-            alert( 'Please disable your Pop-up blocker and try again.');
-        }
+        var link = document.createElement("a");
+    link.download = name;
+    link.href = url;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+        // let pwa = window.open(url);
+        // if (!pwa || pwa.closed || typeof pwa.closed == 'undefined') {
+        //     alert( 'Please disable your Pop-up blocker and try again.');
+        // }
     }
 
 }
