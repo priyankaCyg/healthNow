@@ -122,6 +122,7 @@ import { APIService } from './services/apieservice';
 
 
 
+
 @NgModule({
     imports: [
         BrowserModule,
@@ -222,9 +223,6 @@ import { APIService } from './services/apieservice';
         EmptyDemoComponent,
         FileDemoComponent,
         DocumentationComponent
-        //UnitComponent
-        // CompanyComponent,
-        // GeneralEditComponent,
     ],
     providers: [
         AuthGuard,

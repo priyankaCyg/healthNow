@@ -27,17 +27,31 @@
                                 <th>Partner Name</th>
                                 <th>Short Code</th>
                                 <th>Legal Entity</th>
+<<<<<<< HEAD
+                                <th>Tel No.1</th>
+                                <th>Tel No.2</th>
+                                <th>Fax</th>
+=======
                                 <!-- <th>Website</th> -->
                                 <th>Tel No.1</th>
                                 <th>Tel No.2</th>
                                 <th>Fax</th>
                                 <!-- <th>Pan</th> -->
                                 <th>Status</th>
+>>>>>>> 523a4fd145c6cad02e7380c3e7df65ab5dd31d58
                                 <th>Action</th>
                             </tr>
                         </ng-template>
                         <ng-template pTemplate="body" let-partner>
                             <tr>
+<<<<<<< HEAD
+                                <td>{{partner.partnerName}}</td>
+                                <td>{{partner.shortCode}}</td>
+                                <td>{{partner.legalEntity}}</td>
+                                <td>{{partner.telNo1}}</td>
+                                <td>{{partner.telNo2}}</td>
+                                <td>{{partner.fax}}</td>
+=======
                                 <td>{{partner.sPartnerName}}</td>
                                 <td>{{partner.sShortCode}}</td>
                                 <td>{{partner.sLegalEntity}}</td>
@@ -70,6 +84,7 @@
                                         class="badge badge--danger badge--inline badge--pill">
                                         {{partner.sStatusName}}
                                     </span></td>
+>>>>>>> 523a4fd145c6cad02e7380c3e7df65ab5dd31d58
                                 <td>
                                     <button pButton type="button" class="ui-button-success"
                                         (click)="editPartner(partner.iPartnerID)" icon="pi pi-pencil"

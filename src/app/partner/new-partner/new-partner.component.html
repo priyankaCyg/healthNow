@@ -34,12 +34,17 @@
                                     </div>
 
                                     <div class="p-col-12 p-md-6 p-lg-3 mb-2">
+<<<<<<< HEAD
+                                        <label for="legalEntity">Legal Entity</label>
+                                        <input id="legalEntity" class="form-control" type="text" pInputText>
+=======
                                         <label for="iLegalEntityID">Legal Entity ID</label>
                                         <p-dropdown id="iLegalEntityID" [options]="entityData" optionLabel="sKVValue"
                                             formControlName="iLegalEntityID" [(ngModel)]="selectedEntity"></p-dropdown>
                                         <p-message severity="error" text="Legal Entity is required"
                                             *ngIf="PartnerForm.controls['iLegalEntityID'].touched && (selectedEntity.iKVID=='' || PartnerForm.controls['iLegalEntityID'].hasError('required'))">
                                         </p-message>
+>>>>>>> 523a4fd145c6cad02e7380c3e7df65ab5dd31d58
                                     </div>
                                 </div>
 
@@ -149,7 +154,7 @@
                                         <th>City</th>
                                         <th>Landmark</th>
                                         <th>Status</th>
-                                        <th colspan="2">Action</th>
+                                        <th>Action</th>
                                     </tr>
                                 </ng-template>
                                 <ng-template pTemplate="body" let-address>
@@ -160,12 +165,20 @@
                                         <td>{{address.state}}</td>
                                         <td>{{address.city}}</td>
                                         <td>{{address.landmark}}</td>
+<<<<<<< HEAD
+                                        <td><span class="badge badge--success badge--inline badge--pill"> Active</span></td>
+                                        <td>
+                                            <button pButton type="button" class="ui-button-success mr-1" icon="pi pi-pencil"></button>
+                                            <button pButton type="button" class="ui-button-danger" icon="pi pi-trash"></button>
+                                        </td>
+=======
                                         <td><span class="badge badge--success badge--inline badge--pill"> Active</span>
                                         </td>
                                         <td><button pButton type="button" class="ui-button-success mr-1"
                                                 icon="pi pi-pencil"></button></td>
                                         <td><button pButton type="button" class="ui-button-danger"
                                                 icon="pi pi-trash"></button></td>
+>>>>>>> 523a4fd145c6cad02e7380c3e7df65ab5dd31d58
                                     </tr>
                                 </ng-template>
                             </p-table>
@@ -269,7 +282,7 @@
                                 <ng-template pTemplate="header">
                                     <tr>
                                         <th>Bank Name</th>
-                                        <th>Short Code/Account Type</th>
+                                        <th>Short Code</th>
                                         <th>Account No.</th>
                                         <th>IFSC</th>
                                         <th>Bank Branch</th>
@@ -279,11 +292,20 @@
                                 </ng-template>
                                 <ng-template pTemplate="body" let-bank>
                                     <tr>
+<<<<<<< HEAD
+                                        <td>{{bank.bankName}}</td>
+                                        <td>{{bank.shortCode}}</td>
+                                        <td>{{bank.accountNo}}</td>
+                                        <td>{{bank.ifsc}}</td>
+                                        <td>{{bank.branch}}</td>
+                                        <td><span class="badge badge--success badge--inline badge--pill"> Active</span></td>
+=======
                                         <td>{{ bank.sBankName }}</td>
                                         <td>{{ bank.sShortCode }}</td>
                                         <td>{{ bank.sAccountNo }}</td>
                                         <td>{{ bank.sIFSC }}</td>
                                         <td>{{ bank.sBankBranch }}</td>
+>>>>>>> 523a4fd145c6cad02e7380c3e7df65ab5dd31d58
                                         <td>
                                             <span *ngIf="bank.iStatusID == 1" class="badge badge--success badge--inline badge--pill">
                                               Active
@@ -318,7 +340,7 @@
                                 <ng-template pTemplate="header">
                                     <tr>
                                         <th>State</th>
-                                        <th>Short Code/Account Type</th>
+                                        <th>Short Code</th>
                                         <th>Action</th>
                                     </tr>
                                 </ng-template>

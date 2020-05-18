@@ -60,7 +60,8 @@ export const routes: Routes = [
               { path: 'supplier', loadChildren:"./supplier/supplier.module#SupplierModule",
               canActivate: [AuthGuard] },
               { path: 'partner', loadChildren:"./partner/partner.module#PartnerModule" ,
-              canActivate: [AuthGuard]}
+              canActivate: [AuthGuard]},
+              { path:'purchase-order', loadChildren:"./purchase-order/purchase-order.module#PurchaseOrderModule" }
               
         ]
     },

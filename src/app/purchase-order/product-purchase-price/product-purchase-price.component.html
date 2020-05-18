@@ -1,0 +1,125 @@
+<div class="p-grid">
+    <div class="p-col-12">
+      <div class="card card-w-title">
+        <h1>Purchase Product Price</h1>
+  
+      </div>
+  
+      <div class="card card-body">
+        <div class="p-grid">
+            <div class="p-col-12 p-md-8 p-lg-6">
+              <div class="p-grid timeline-content form-group">
+                <div class="p-col-12 p-md-6 p-lg-6 mb-3">
+                  <label for="supplier">Supplier</label>
+                  <p-dropdown class="ml-2" [options]="supplierlist" optionLabel="sSupplierName"></p-dropdown>
+                </div>
+    
+                <div class="p-col-12 p-md-6 p-lg-3 mb-3">
+                  <button pButton type="button" label="Get" class="ui-button"></button>
+                </div>
+    
+              </div>
+            </div>
+          </div>
+          
+          <div class="p-grid">
+            <div class="p-col-12">
+                <div class="p-col-12"> 
+                    <p-table [value]="supplierProduct">
+                        <ng-template pTemplate="caption">
+                       
+                            <div class="ui-table-globalfilter-container text-left">
+                                <input type="text" pInputText size="50" placeholder="Search" (input)="dt.filterGlobal($event.target.value, 'contains')" style="width:250px;">
+                            </div>
+                        </ng-template>
+                        <ng-template pTemplate="header">
+                            <tr>
+                                <th style="width: 3em">#</th>
+                                <th>Product category</th>
+                                <th>Product</th>
+                                <th>Amount</th>
+                                <th>Start Date</th>
+                                <th>End Date</th>
+                                <th>Action</th>
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="body" let-supplierProduct>
+                            <tr>
+                                <td>{{supplierProduct.srNO}}</td>
+                                <td>{{supplierProduct.prdCategory}}</td>
+                                <td>{{supplierProduct.product}}</td>
+                                <td>{{supplierProduct.amount}}</td>
+                                <td>{{supplierProduct.startDate}}</td>
+                                <td>{{supplierProduct.endDate}}</td>
+                                <td>
+                                    <button pButton type="button" class="ui-button-success mr-1" (click)="openDialogForaddDetails()" icon="pi pi-plus-circle"></button>
+                                    <button pButton type="button" class="ui-button-success mr-1" icon="pi pi-pencil"></button>
+                                    <button pButton type="button" class="ui-button-danger" icon="pi pi-trash"></button>
+                                </td>
+                            </tr>
+                        </ng-template>
+                    </p-table>
+                
+                </div>
+            </div>
+           </div>                      
+  
+      </div>
+  
+    </div>
+  </div>
+
+
+
+
+
+<!-- <div class="p-grid">
+    <div class="p-col-12">
+        <div class="card card-w-title">
+            <div class="p-grid ui-fluid vertical-container">
+                <div class="p-col p-col-align-start">
+                    <h1 class="mt-2">Product Purchase Price</h1>
+                </div>
+                <div class="p-col-1 p-col-align-end text-center">
+                    <button routerLink="/app/purchase-order/add-product-purchase-price" pButton icon="pi pi-fw pi-plus" label="Add New"></button>
+                </div>
+                <div class="p-col-12"> 
+                    <p-table [value]="productPurchasePrice">
+                        <ng-template pTemplate="caption">
+                       
+                            <div class="ui-table-globalfilter-container text-left">
+                                <input type="text" pInputText size="50" placeholder="Search" (input)="dt.filterGlobal($event.target.value, 'contains')" style="width:250px;">
+                            </div>
+                        </ng-template>
+                        <ng-template pTemplate="header">
+                            <tr>
+                                <th style="width: 3em">#</th>
+                                <th>Product</th>
+                                <th>Supplier</th>
+                                <th>Action</th>
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="body" let-productPurchasePrice>
+                            <tr>
+                                <td>
+                                    <a href="#" >
+                                        <i Class="pi pi-chevron-right"></i>
+                                    </a>
+                                </td>
+                                <td>{{productPurchasePrice.product}}</td>
+                                <td>{{productPurchasePrice.supplier}}</td>
+                                <td>
+                                    <button pButton type="button" class="ui-button-success" icon="pi pi-pencil" style="margin-right: .5em"></button>
+                                    <button pButton type="button" class="ui-button-danger" icon="pi pi-trash"></button>
+                                </td>
+                            </tr>
+                        </ng-template>
+                    </p-table>
+                
+                </div>
+
+
+             </div>
+        </div>
+    </div>
+</div>                 -->
