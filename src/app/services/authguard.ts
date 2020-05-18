@@ -31,15 +31,16 @@ export class AuthGuard implements CanActivate,CanActivateChild {
    
     canActivate(childRoute: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
 
-      return true;
+    //   return true;
       
-
-        // if(this._loginService.isLoggednIn()){
-        //     return true;
-        // }else{
-        //     this.myRoute.navigate(["/"], { queryParams: { returnUrl: state.url } });
-        //     return false;
-        // }
+// alert(localStorage.getItem('isLogin'))
+    var isLogin = localStorage.getItem('isLogin')
+        if(isLogin){
+            return true;
+        }else{
+            this.myRoute.navigate(["/"], { queryParams: { returnUrl: state.url } });
+            return false;
+        }
     }
 
 

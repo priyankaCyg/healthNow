@@ -9,6 +9,7 @@ import { AddProducerComponent } from './add-producer/add-producer.component';
 import {APIService} from '../services/apieservice';
 import { ToastService } from "../services/toast.service";
 import {ConfirmationService} from 'primeng/api';
+import {LoginService} from '../../app/services/login.service'
 
 
 @Component({
@@ -26,7 +27,7 @@ export class ProducerComponent implements OnInit {
 
   constructor(private breadcrumbService: BreadcrumbService, private dialogService:DialogService,private _apiService:APIService,
     private toastService: ToastService,
-    private confirmationService: ConfirmationService) {
+    private confirmationService: ConfirmationService,private loginService:LoginService) {
     this.breadcrumbService.setItems([
         { label: 'Dashboard' },
         { label: 'Producer', routerLink: ['/app/producer'] }
@@ -35,6 +36,9 @@ export class ProducerComponent implements OnInit {
 
 
 ngOnInit() {
+
+
+  this.loginService.checkBrowserClosed();
 
   this.showProducers();
 
@@ -61,11 +65,15 @@ ngOnInit() {
       width: '28%'
     });
 
-    ref.onClose.subscribe((success: boolean) => {
-      if (success) {
-        this.toastService.addSingle("success", "Added successfully", "");
-        this.showProducers();
+    ref.onClose.subscribe((message: any) => {
+      if (message.StatusCode=="200") {
+        this.toastService.addSingle("success", message.StatusMessage, "");
       }
+      else
+      {
+        this.toastService.addSingle("error", message.StatusMessage, "");
+      }
+      this.showProducers()
     });
     }
 
@@ -79,12 +87,15 @@ ngOnInit() {
         width: '28%'
       });
   
-      ref.onClose.subscribe((success: boolean) => {
-        if (success) {
-          this.toastService.addSingle("success", "Updated successfully", "");
-        this.showProducers();
-
+      ref.onClose.subscribe((message: any) => {
+        if (message.StatusCode=="200") {
+          this.toastService.addSingle("success", message.StatusMessage, "");
         }
+        else
+        {
+          this.toastService.addSingle("error", message.StatusMessage, "");
+        }
+        this.showProducers()
       });
       }
 
@@ -102,7 +113,7 @@ ngOnInit() {
     
             this._apiService.getDetails(dataToSendDelete).then(response => {
               console.log("Response for Producer Delete ",response)
-              this.toastService.addSingle("info", "Successfully Deleted", "Successfully Deleted");
+              this.toastService.addSingle("info", response.headers.get('StatusMessage'), "");
               this.showProducers();
             });
           },

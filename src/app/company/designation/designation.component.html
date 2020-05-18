@@ -5,21 +5,21 @@
         <div class="p-col-12">
           <label for="designationname">Designation Name</label>
           <input id="designationname" type="text" pInputText formControlName="desig_name" />
-          <span class="text-danger" *ngIf="desigForm.get('desig_name').errors 
-          && (desigForm.get('desig_name').touched|| desigForm.get('desig_name').dirty)">
-            <span *ngIf="desigForm.get('desig_name').errors.pattern">Numeric values not allowed</span>
-
-            <span *ngIf="desigForm.get('desig_name').errors.required">This field is required</span>
-          </span>
+          
+          <p-message severity="error"
+          [text]="desigForm.controls['desig_name'].errors['required'] ? 'This field is required' : desigForm.controls['desig_name'].errors['pattern']? 'Please enter a valid Designation Name' : desigForm.controls['desig_name'].errors "
+          *ngIf="!desigForm.controls['desig_name'].valid && desigForm.controls['desig_name'].dirty">
+          </p-message>
         </div>
 
         <div class="p-col-12">
           <label for="designationlevel">Designation Level</label>
           <input id="designationlevel" type="number" pInputText formControlName="desig_level" />
-          <span class="text-danger" *ngIf="desigForm.get('desig_level').errors 
-          && (desigForm.get('desig_level').touched|| desigForm.get('desig_level').dirty)">
-            <span *ngIf="desigForm.get('desig_level').errors.required">This field is required</span>
-          </span>
+         
+          <p-message severity="error"
+          [text]="desigForm.controls['desig_level'].errors['required'] ? 'This field is required' :  desigForm.controls['desig_level'].errors "
+          *ngIf="!desigForm.controls['desig_level'].valid && desigForm.controls['desig_level'].dirty">
+          </p-message>
         </div>
 
         <div class="p-col-12">
@@ -29,9 +29,9 @@
         <div class="p-col-12">
           <label for="iStatusID">Status</label>
           <p-dropdown formControlName="status" optionLabel="sKVValue"  id="iStatusID" [options]="statusData" [(ngModel)]="selectedstatus"></p-dropdown>
-          <span class="text-danger">
-            <span  *ngIf="desigForm.get('status').touched  && (selectedstatus.iKVID==0 || desigForm.get('status').hasError('required'))">This field is required</span>
-          </span>
+          <div>
+            <p-message severity="error" text="This field is required" *ngIf="desigForm.controls['status'].touched  && (selectedstatus.iKVID =='' || desigForm.controls['status'].hasError('required'))" ></p-message>
+        </div>
         </div>
       </div>
       <div class="separator separator--border-solid separator--space-sm separator--portlet-fit"></div>
@@ -39,7 +39,8 @@
         <div class="p-md-6 p-lg-6"></div>
         <div class="p-col-12 p-md-12 p-lg-12 text-right">
           <button pButton type="button" label="Cancel" class="ui-button-light atbt mr-2" (click)="onClose()"></button>        
-          <button pButton type="submit" label="Save" class="ui-button atbt" [disabled]="!desigForm.valid"></button>
+          <button pButton *ngIf="!isEdit" type="submit" label="Save" class="ui-button atbt" [disabled]="!desigForm.valid"></button>
+          <button  pButton *ngIf="isEdit" type="submit" label="Update" [disabled]="!desigForm.valid" class="ui-button atbt"></button>
         </div>
       </div>
     </div>

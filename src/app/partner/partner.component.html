@@ -1,3 +1,5 @@
+<p-confirmDialog header="Confirmation" icon="pi pi-info" [style]="{width: '425px'}"
+    rejectButtonStyleClass="ui-button-secondary"></p-confirmDialog>
 <div class="p-grid">
     <div class="p-col-12">
         <div class="card card-w-title">
@@ -6,14 +8,18 @@
                     <h1 class="mt-2">Partner</h1>
                 </div>
                 <div class="p-col-1 p-col-align-end text-center">
-                    <button routerLink="/app/partner/new-partner" pButton icon="pi pi-fw pi-plus" label="Add New"></button>
+                    <button routerLink="/app/partner/new-partner" pButton icon="pi pi-fw pi-plus"
+                        label="Add New"></button>
                 </div>
-                <div class="p-col-12"> 
-                    <p-table [value]="partner">
+                <div class="p-col-12">
+                    <p-table #dt [value]="partner" [rowHover]="true" [paginator]="true" [rows]="10"
+                        [showCurrentPageReport]="true" [rowsPerPageOptions]="[10, 25, 50]" [filterDelay]="0"
+                        [globalFilterFields]="['sPartnerName','sShortCode','sStatusName','iLegalEntityID']">
                         <ng-template pTemplate="caption">
-                       
+
                             <div class="ui-table-globalfilter-container text-left">
-                                <input type="text" pInputText size="50" placeholder="Search" (input)="dt.filterGlobal($event.target.value, 'contains')" style="width:250px;">
+                                <input type="text" pInputText size="50" placeholder="Search"
+                                    (input)="dt.filterGlobal($event.target.value, 'contains')" style="width:250px;">
                             </div>
                         </ng-template>
                         <ng-template pTemplate="header">
@@ -21,23 +27,70 @@
                                 <th>Partner Name</th>
                                 <th>Short Code</th>
                                 <th>Legal Entity</th>
+<<<<<<< HEAD
                                 <th>Tel No.1</th>
                                 <th>Tel No.2</th>
                                 <th>Fax</th>
+=======
+                                <!-- <th>Website</th> -->
+                                <th>Tel No.1</th>
+                                <th>Tel No.2</th>
+                                <th>Fax</th>
+                                <!-- <th>Pan</th> -->
+                                <th>Status</th>
+>>>>>>> 523a4fd145c6cad02e7380c3e7df65ab5dd31d58
                                 <th>Action</th>
                             </tr>
                         </ng-template>
                         <ng-template pTemplate="body" let-partner>
                             <tr>
+<<<<<<< HEAD
                                 <td>{{partner.partnerName}}</td>
                                 <td>{{partner.shortCode}}</td>
                                 <td>{{partner.legalEntity}}</td>
                                 <td>{{partner.telNo1}}</td>
                                 <td>{{partner.telNo2}}</td>
                                 <td>{{partner.fax}}</td>
+=======
+                                <td>{{partner.sPartnerName}}</td>
+                                <td>{{partner.sShortCode}}</td>
+                                <td>{{partner.sLegalEntity}}</td>
+                                <!-- <td>{{partner.website}}</td> -->
+                                <td>{{partner.sTelNo1}}</td>
+                                <td>{{partner.sTelNo2}}</td>
+                                <td>{{partner.sFaxNo}}</td>
+                                <!-- <td>{{partner.sPAN}}</td> -->
+                                <td> <span *ngIf="partner.iStatusID == 1"
+                                        class="badge badge--success badge--inline badge--pill">
+                                        {{partner.sStatusName}}
+                                    </span>
+                                    <span *ngIf="partner.iStatusID == 2"
+                                        class="badge badge--warning badge--inline badge--pill">
+                                        {{partner.sStatusName}}
+                                    </span>
+                                    <span *ngIf="partner.iStatusID == 3"
+                                        class="badge badge--danger badge--inline badge--pill">
+                                        {{partner.sStatusName}}
+                                    </span>
+                                    <span *ngIf="partner.iStatusID == 4"
+                                        class="badge badge--success badge--inline badge--pill">
+                                        {{partner.sStatusName}}
+                                    </span>
+                                    <span *ngIf="partner.iStatusID == 5"
+                                        class="badge badge--warning badge--inline badge--pill">
+                                        {{partner.sStatusName}}
+                                    </span>
+                                    <span *ngIf="partner.iStatusID == 6"
+                                        class="badge badge--danger badge--inline badge--pill">
+                                        {{partner.sStatusName}}
+                                    </span></td>
+>>>>>>> 523a4fd145c6cad02e7380c3e7df65ab5dd31d58
                                 <td>
-                                    <button pButton type="button" class="ui-button-success" icon="pi pi-pencil" style="margin-right: .5em"></button>
-                                    <button pButton type="button" class="ui-button-danger" icon="pi pi-trash"></button>
+                                    <button pButton type="button" class="ui-button-success"
+                                        (click)="editPartner(partner.iPartnerID)" icon="pi pi-pencil"
+                                        style="margin-right: .5em"></button>
+                                    <button pButton type="button" class="ui-button-danger"
+                                        (click)="deletePartner(partner.iPartnerID)" icon="pi pi-trash"></button>
                                 </td>
                             </tr>
                         </ng-template>
@@ -45,7 +98,7 @@
                 </div>
 
 
-             </div>
+            </div>
         </div>
     </div>
-</div>                
+</div>

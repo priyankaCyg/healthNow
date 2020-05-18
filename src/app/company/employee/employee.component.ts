@@ -73,13 +73,14 @@ export class EmployeeComponent implements OnInit {
         this.employeeData = new EmployeeMaster(response[0]);
 
         this.employeeForm = this.createControl(this.employeeData);
-
+        
+        Promise.all([this.getRoleDrpDwn(), this.getAddressDrpDwn(), this.getGenderDrpDwn(), this.getDepartmentDrpDwn(), this.getStatusDrpDwn(), this.getDesignationDrpDwn()]).then(values => {
+          console.log(values);
+          this.setDropDownVal()
+        });
 
       });
-      Promise.all([this.getRoleDrpDwn(), this.getAddressDrpDwn(), this.getGenderDrpDwn(), this.getDepartmentDrpDwn(), this.getStatusDrpDwn(), this.getDesignationDrpDwn()]).then(values => {
-        console.log(values);
-        this.setDropDownVal()
-      });
+     
 
     }
     else {

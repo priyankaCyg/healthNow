@@ -7,7 +7,7 @@ import {HashLocationStrategy, LocationStrategy} from '@angular/common';
 import {AppRoutes} from './app.routes';
 import { AuthGuard } from './services/authguard';
 import { LoginService } from './services/login.service';
-// import { httpInterceptorProviders } from './interceptors/httpinterceptors';
+import { httpInterceptorProviders } from './interceptors/httpinterceptors';
 
 // PrimeNG Components for demos
 import { AccordionModule } from 'primeng/accordion';
@@ -118,6 +118,8 @@ import { MessageService } from 'primeng/api';
 import { from } from 'rxjs';
 
 import { ApiService } from './services/api.service';
+import { APIService } from './services/apieservice';
+
 
 
 
@@ -194,6 +196,7 @@ import { ApiService } from './services/api.service';
         TreeTableModule,
         VirtualScrollerModule,
         ReactiveFormsModule
+        
     ],
     declarations: [
         AppComponent,
@@ -223,7 +226,8 @@ import { ApiService } from './services/api.service';
     ],
     providers: [
         AuthGuard,
-        // httpInterceptorProviders,
+        APIService,
+        httpInterceptorProviders,
         MessageService,
         {provide: LocationStrategy, useClass: HashLocationStrategy},
         CarService, CountryService, EventService, NodeService, BreadcrumbService, MenuService,

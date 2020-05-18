@@ -21,8 +21,10 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { ThrowStmt } from '@angular/compiler';
 import { gstData } from 'src/app/model/gst';
 import { SuppMaster } from 'src/app/model/supplier.model';
-import {APIService} from '../../services/apieservice';
+import { APIService } from '../../services/apieservice';
+import { SupplierCategoryMapping } from 'src/app/models/supplier-category-mapping.model';
 
+import {LoginService} from '../../../app/services/login.service'
 
 @Component({
   selector: 'app-add-new-supplier',
@@ -32,19 +34,21 @@ import {APIService} from '../../services/apieservice';
 export class AddNewSupplierComponent implements OnInit {
 
   selectedstatus;
+  selectedlegalEntity;
   selSuppCategory: any[];
   statusData;
+  legalEntityData;
   isEdit: boolean = false
   public addSupplierForm: FormGroup;
   supData: SuppMaster;
 
   items: MenuItem[];
 
-  supplierAdressData : SupplierAddress;
+  supplierAdressData: SupplierAddress;
 
 
   bank: any[];
-  contact : any[]
+  contact: any[]
 
   gst: gstData[];
 
@@ -52,13 +56,21 @@ export class AddNewSupplierComponent implements OnInit {
 
   supId;
 
+  selectedFileType;
+  fileTypeData;
+
+  uploadedFiles: any[] = [];
+  sourceCategory: SupplierCategoryMapping[];
+  targetCategory: SupplierCategoryMapping[];
+
+
   constructor(private breadcrumbService: BreadcrumbService,
-     private dialogService: DialogService,
+    private dialogService: DialogService,
     private apiService: ApiService,
-     private toastService: ToastService,
+    private toastService: ToastService,
     private fb: FormBuilder,
      private route: ActivatedRoute,
-      private confirmationService: ConfirmationService,private _apiService:APIService) {
+      private confirmationService: ConfirmationService,private _apiService:APIService,private loginService:LoginService) {
     this.breadcrumbService.setItems([
       { label: 'Dashboard' },
       { label: 'Supplier', routerLink: ['/app/supplier'] }
@@ -67,16 +79,9 @@ export class AddNewSupplierComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.attachment = [
-      {fileName:'Testing File', fileType:'testing.pdf'},
-      {fileName:'Demo File', fileType:'demo.xlsx' },
-      {fileName:'Detail Document', fileType:'details.pdf' },
-      {fileName:'Supplier Details', fileType:'supplier-details.pdf' }
-    ];
+    this.loginService.checkBrowserClosed()
 
-    //new code added 
-    this.defaultDropDwnValue()
-
+this.getFileType();
 this.gstList();
  //new code added 
  this.defaultDropDwnValue()
@@ -94,91 +99,89 @@ this.gstList();
      "iSupID": sup_by_id
    }
 
-   this.apiService.getDropDownData(dataToSendEdit).then(response => {
+      this.apiService.getDropDownData(dataToSendEdit).then(response => {
 
-     console.log("Response of Edit Brand ", response)
+        console.log("Response of Edit Brand ", response)
 
-     this.supData = new SuppMaster(response[0]);
-     this.addSupplierForm = this.createControl(this.supData);
+        this.supData = new SuppMaster(response[0]);
+        this.addSupplierForm = this.createControl(this.supData);
 
-     Promise.all([this.getStatusDrpDwn()]).then(values => {
-       console.log(values);
-       this.setDropDownVal()
-     });
-     this.getSupplierAddressList();
-   });
+        Promise.all([this.getStatusDrpDwn(), this.getLegalEntityDrpDwn()]).then(values => {
+          console.log(values);
+          this.setDropDownVal()
+        });
+        this.getSupplierAddressList();
+      });
 
- }
- else {
-   this.isEdit = false
+    }
+    else {
+      this.isEdit = false
 
-   Promise.all([this.getStatusDrpDwn()]).then(values => {
-     console.log(values);
-   });
- }
+      Promise.all([this.getStatusDrpDwn(), this.getLegalEntityDrpDwn()]).then(values => {
+        console.log(values);
+      });
+    }
 
- this.gstList();
- //end 
+    //  this.gstList();
+    //end 
 
 
- this.showContact();
- this.showBank();
+    this.showContact();
+    this.showBank();
+    this.showAttachment();
 
   }
-//Address list starts
-  getSupplierAddressList(){
+  //Address list starts
+  getSupplierAddressList() {
     let sup_by_id = +this.route.snapshot.params['iSupID'];
     const supplierAddressAPI = {
       "iRequestID": 2184,
-      "iSupID":sup_by_id
+      "iSupID": sup_by_id
     }
     this.apiService.callPostApi(supplierAddressAPI).subscribe(
-      data => { this.supplierAdressData = data},
-      error => {console.log(error)}
+      data => { this.supplierAdressData = data.body },
+      error => { console.log(error) }
     )
   }
   // address list ends
 
   // Daialogue to add address
-    openDialogForaddAddress() {
-      const ref = this.dialogService.open( AddressComponent , {
-        data: {
-        },
-        header: 'Add New Address',
-        width: '80%'
-      });
-      localStorage.setItem('iSupID', this.route.snapshot.params['iSupID']);
-      ref.onClose.subscribe((success: boolean) => {
-        if (success) {
-          this.getSupplierAddressList();
-           this.toastService.addSingle("success", "Record Added successfully", "");
-        }
-      });
+  openDialogForaddAddress() {
+    const ref = this.dialogService.open(AddressComponent, {
+      data: {
+      },
+      header: 'Add New Address',
+      width: '80%'
+    });
+    localStorage.setItem('iSupID', this.route.snapshot.params['iSupID']);
+    ref.onClose.subscribe((success: boolean) => {
+      if (success) {
+        this.getSupplierAddressList();
+      }
+    });
 
-    }
+  }
 
-    // Daialogue to edit address
-    editSupplierAddress(supplierID) {
-      const ref = this.dialogService.open(AddressComponent, {
-        data: {
-          "iSupAddID": supplierID
-        },
-        header: 'Edit Address',
-        width: '80%'
-      });
-      localStorage.setItem('iSupID', this.route.snapshot.params['iSupID']);
-      ref.onClose.subscribe((success: any) => {
-        // alert(success)
-        if(success)
-        {
-          this.getSupplierAddressList();
-          this.toastService.addSingle("success", "Updated Successfully", "");
-        }
-      });
-    }
+  // Daialogue to edit address
+  editSupplierAddress(supplierID) {
+    const ref = this.dialogService.open(AddressComponent, {
+      data: {
+        "iSupAddID": supplierID
+      },
+      header: 'Edit Address',
+      width: '80%'
+    });
+    localStorage.setItem('iSupID', this.route.snapshot.params['iSupID']);
+    ref.onClose.subscribe((success: boolean) => {
+      // alert(success)
+      if (success) {
+        this.getSupplierAddressList();
+      }
+    });
+  }
 
-     // Open Dialog To Delete address
-     deleteSupplierAddress(supplierID) {
+  // Open Dialog To Delete address
+  deleteSupplierAddress(supplierID) {
     console.log(supplierID);
     this.confirmationService.confirm({
       message: 'Are you sure you want to Delete this Record?',
@@ -187,27 +190,52 @@ this.gstList();
       accept: () => {
         var deleteAddressAPI = {
           "iRequestID": 2183,
-          "iSupAddID":supplierID
+          "iSupAddID": supplierID
         }
 
         this.apiService.callPostApi(deleteAddressAPI).subscribe(
           data => {
-            this.toastService.addSingle("info", "Successfully Deleted", "Successfully Deleted");
+
             this.getSupplierAddressList();
+            this.toastService.addSingle("success", data.headers.get('StatusMessage'), "");
           },
-          error => { console.log(error)}
+          error => { console.log(error) }
         );
       }
     });
   }
-    
-    
-  
+
+
+  onUpload(event) {
+    // alert("hi")
+    for (const file of event.files) {
+      this.uploadedFiles.push(file);
+    }
+
+  }
+
+  uploadFile() {
+    // alert(JSON.stringify(this.uploadedFiles))
+    var dataToSend = {
+      "iRequestID": 1111,
+      "iProcessTranID": this.supId,
+      "iProcessID": 2,
+      "iDocTypeID": this.selectedFileType.iDocTypeID
+    }
+    this._apiService.postFile(this.uploadedFiles, dataToSend).subscribe(data => {
+      // alert('Success ' + data);
+      this.showAttachment();
+    }, error => {
+      console.log(error);
+    });
+  }
 
   //new coded added
 
   defaultDropDwnValue() {
     this.selectedstatus = { iKVID: "", sKVValue: "Select Status" }
+    this.selectedlegalEntity = { iKVID: "", sKVValue: "Select Legal Entity" }
+
   }
 
   // Status Dropdown Select
@@ -217,7 +245,11 @@ this.gstList();
     if (selectedStatusObj !== undefined) {
       this.selectedstatus = selectedStatusObj;
     }
+    let selectedlegalEntityObj = this.legalEntityData.find(x => x.iKVID == this.supData.iLegalEntityID);
 
+    if (selectedlegalEntityObj !== undefined) {
+      this.selectedlegalEntity = selectedlegalEntityObj;
+    }
 
   }
 
@@ -241,6 +273,45 @@ this.gstList();
     })
   }
 
+  getLegalEntityDrpDwn() {
+    return new Promise((resolve, reject) => {
+      var dataToSend4 = {
+        "iRequestID": 2071,
+        "sKVName": "LegalEntity"
+      }
+
+      this.apiService.getDropDownData(dataToSend4).then(response => {
+        console.log("Response for Status ", response)
+        this.legalEntityData = response
+        this.legalEntityData.splice(0, 0, { iKVID: "", sKVValue: "Select Legal Entity" })
+        this.selectedlegalEntity = { iKVID: "", sKVValue: "Select Legal Entity" }
+
+        resolve(this.legalEntityData)
+
+      });
+    })
+  }
+
+
+
+  getFileType() {
+    return new Promise((resolve, reject) => {
+      var dataToSend = {
+        "iRequestID": 2261
+      }
+
+      this.apiService.getDropDownData(dataToSend).then(response => {
+        console.log("Response for File Type ", response)
+        this.fileTypeData = response
+        this.fileTypeData.splice(0, 0, { iDocTypeID: "", sDocTypeName: "Select File Type" })
+        this.selectedFileType = { iDocTypeID: "", sDocTypeName: "Select File Type" }
+
+        resolve(this.fileTypeData)
+
+      });
+    })
+  }
+
   createControl(supData?: SuppMaster): FormGroup {
 
     this.addSupplierForm = this.fb.group({
@@ -248,8 +319,8 @@ this.gstList();
       iCreatedBy: [supData.iCreatedBy],
       iLegalEntityID: [supData.iLegalEntityID, [Validators.required]],
       sWebsite: [supData.sWebsite, [Validators.required]],
-      sTelNo1: [supData.sTelNo1, [Validators.required]],
-      sTelNo2: [supData.sTelNo2, [Validators.required]],
+      sTelNo1: [supData.sTelNo1, [Validators.required, Validators.pattern('^[0-9]*$'), Validators.minLength(10), Validators.maxLength(13)]],
+      sTelNo2: [supData.sTelNo2, [Validators.required, Validators.pattern('^[0-9]*$'), Validators.minLength(10), Validators.maxLength(13)]],
       iSupID: [supData.iSupID],
       sCreatedDate: [supData.sCreatedDate],
       sFaxNo: [supData.sFaxNo, [Validators.required]],
@@ -276,7 +347,7 @@ this.gstList();
     }
     this.apiService.callPostApi(sup_gst_data).subscribe(
       (data) => {
-        this.gst = data;
+        this.gst = data.body;
       },
       (error) => console.log(error)
     );
@@ -294,18 +365,18 @@ this.gstList();
   addSupplier() {
     let supp_name = this.addSupplierForm.controls["sSupName"].value;
     let website_name = this.addSupplierForm.controls["sWebsite"].value;
-    let entity_id = +this.addSupplierForm.controls["iLegalEntityID"].value;
     let pan_no = this.addSupplierForm.controls["sPAN"].value;
     let short_code = this.addSupplierForm.controls["sShortCode"].value;
     let telephoneno_1 = this.addSupplierForm.controls["sTelNo1"].value;
     let telephoneno_2 = this.addSupplierForm.controls["sTelNo2"].value;
     let fax_no = this.addSupplierForm.controls["sFaxNo"].value;
+    let legal_id = this.addSupplierForm.getRawValue();
 
     const add_supplier_data = {
       "iRequestID": 2171,
       "sSupName": supp_name,
       "sWebsite": website_name,
-      "iLegalEntityID": entity_id,
+      "iLegalEntityID": legal_id.iLegalEntityID.iKVID,
       "sPAN": pan_no,
       "sShortCode": short_code,
       "sTelNo1": telephoneno_1,
@@ -316,7 +387,7 @@ this.gstList();
     this.apiService.callPostApi(add_supplier_data).subscribe(
       data => {
         console.log(data);
-        this.toastService.addSingle("success", "Record Added Successfully", "");
+        this.toastService.addSingle("success", data.headers.get('StatusMessage'), "");
 
       },
       error => console.log(error)
@@ -329,7 +400,7 @@ this.gstList();
   editSupplier() {
     let supp_name_edit = this.addSupplierForm.controls["sSupName"].value;
     let website_name_edit = this.addSupplierForm.controls["sWebsite"].value;
-    let entity_id_edit = +this.addSupplierForm.controls["iLegalEntityID"].value;
+    let legal_id_edit = this.addSupplierForm.getRawValue();
     let pan_no_edit = this.addSupplierForm.controls["sPAN"].value;
     let short_code_edit = this.addSupplierForm.controls["sShortCode"].value;
     let telephoneno_1_edit = this.addSupplierForm.controls["sTelNo1"].value;
@@ -343,7 +414,7 @@ this.gstList();
       "iRequestID": 2172,
       "sSupName": supp_name_edit,
       "sWebsite": website_name_edit,
-      "iLegalEntityID": entity_id_edit,
+      "iLegalEntityID": legal_id_edit.iLegalEntityID.iKVID,
       "sPAN": pan_no_edit,
       "sShortCode": short_code_edit,
       "sTelNo1": telephoneno_1_edit,
@@ -356,32 +427,28 @@ this.gstList();
     this.apiService.callPostApi(edit_supplier_data).subscribe(
       data => {
         console.log(data);
-        this.toastService.addSingle("success", "Record Updated Successfully", "");
+        this.toastService.addSingle("success", data.headers.get('StatusMessage'), "");
 
       },
       error => console.log(error)
     );
-
-    this.addSupplierForm.reset();
-
   }
 
 
 
- 
+
   openDialogForGST() {
     const ref = this.dialogService.open(GstComponent, {
-      data: {}
-      ,
+      data: {},
       header: 'Add New GST',
       width: '28%'
     });
     localStorage.setItem('iSupID', this.route.snapshot.params['iSupID'])
     ref.onClose.subscribe((success: boolean) => {
       if (success) {
-        // this.toastService.addSingle("success", "Mail send successfully", "");
+        this.gstList();
       }
-      this.gstList();
+
 
     });
   }
@@ -396,9 +463,9 @@ this.gstList();
 
     ref.onClose.subscribe((success: boolean) => {
       if (success) {
-        // this.toastService.addSingle("success", "Mail send successfully", "");
+        this.gstList();
       }
-      this.gstList();
+
 
     });
   }
@@ -420,8 +487,9 @@ this.gstList();
         this.apiService.callPostApi(delete_data_api).subscribe(
           (data) => {
             console.log(data);
-            this.toastService.addSingle("info", "Successfully Deleted", "Successfully Deleted");
+
             this.gstList();
+            this.toastService.addSingle("success", data.headers.get('StatusMessage'), "");
           },
           (error) => console.log(error)
         );
@@ -431,153 +499,248 @@ this.gstList();
   }
 
 
-  showContact()
+
+  downloadFile(attachment:any)
   {
     var dataToSend ={
-      "iRequestID": 2194
+      "iRequestID": "1112",
+      "sActualFileName": attachment.sActualName,
+      "sSystemFileName": attachment.sSystemName
+    }
+    this._apiService.downloadAPI(dataToSend)
   }
+
+
+
+
+  showAttachment() {
+    var dataToSend = {
+      "iRequestID": 1112,
+      "iProcessTranID": parseInt(this.supId),
+      "iProcessID": 2
+    }
     this._apiService.getDetails(dataToSend).then(response => {
-      console.log("Response for Contact ",response)
+      console.log("Response for attachment ", response)
+      this.attachment = response
+    });
+  }
+
+
+  showContact() {
+    var dataToSend = {
+      "iRequestID": 2194
+    }
+    this._apiService.getDetails(dataToSend).then(response => {
+      console.log("Response for Contact ", response)
       this.contact = response
     });
   }
 
 
   editContact(iSupContactID) {
-    const ref = this.dialogService.open( ContactComponent , {
+    const ref = this.dialogService.open(ContactComponent, {
       data: {
-        iSupContactID:iSupContactID
+        iSupContactID: iSupContactID
       },
       header: 'Edit Contact',
       width: '70%'
     });
-  
-    ref.onClose.subscribe((success: boolean) => {
-      if (success) {
-        this.toastService.addSingle("success", "Updated successfully", "");
-      this.showContact();
-  
+
+    ref.onClose.subscribe((message: any) => {
+      if (message.StatusCode=="200") {
+        this.toastService.addSingle("success", message.StatusMessage, "");
+      }
+      else
+      {
+        this.toastService.addSingle("error", message.StatusMessage, "");
+      }
+      this.showContact()
+    });
+  }
+
+  deleteContact(iSupContactID) {
+    // alert("hi")
+    // return false;
+    this.confirmationService.confirm({
+      message: 'Are you sure that you want to proceed?',
+      header: 'Confirmation',
+      icon: 'pi pi-exclamation-triangle',
+      accept: () => {
+        var dataToSendDelete = {
+          "iRequestID": 2193,
+          "iSupContactID": iSupContactID
+        }
+
+        this._apiService.getDetails(dataToSendDelete).then(response => {
+          console.log("Response for Brand Delete ", response)
+          this.toastService.addSingle("info", response.headers.get('StatusMessage'), "");
+          this.showContact();
+        });
+      },
+      reject: () => {
+        this.toastService.addSingle("info", "Rejected", "Rejected");
+
       }
     });
-    }
-  
-    deleteContact(iSupContactID)
-    {
-      // alert("hi")
-      // return false;
-      this.confirmationService.confirm({
-        message: 'Are you sure that you want to proceed?',
-        header: 'Confirmation',
-        icon: 'pi pi-exclamation-triangle',
-        accept: () => {
-          var dataToSendDelete = {
-            "iRequestID":2193,
-            "iSupContactID":iSupContactID
-          }
-  
-          this._apiService.getDetails(dataToSendDelete).then(response => {
-            console.log("Response for Brand Delete ",response)
-            this.toastService.addSingle("info", "Successfully Deleted", "Successfully Deleted");
-            this.showContact();
-          });
-        },
-        reject: () => {
-    this.toastService.addSingle("info", "Rejected", "Rejected");
-  
-        }
-    });
-    }
-
-
-    showBank()
-  {
-    var dataToSend ={
-      "iRequestID": 2214,
-      "iSupID" :1
   }
+
+
+  showBank() {
+    var dataToSend = {
+      "iRequestID": 2214,
+      "iSupID": 1
+    }
     this._apiService.getDetails(dataToSend).then(response => {
-      console.log("Response for Bank ",response)
+      console.log("Response for Bank ", response)
       this.bank = response
     });
   }
 
 
   editBank(iBankID) {
-    const ref = this.dialogService.open( BankComponent , {
+    const ref = this.dialogService.open(BankComponent, {
       data: {
-        iBankID:iBankID
+        iBankID: iBankID
       },
       header: 'Edit Contact',
       width: '50%'
     });
-  
-    ref.onClose.subscribe((success: boolean) => {
-      if (success) {
-        this.toastService.addSingle("success", "Updated successfully", "");
-        this.showBank();
-  
+
+    ref.onClose.subscribe((message: any) => {
+     
+      if (message.StatusCode=="200") {
+        this.toastService.addSingle("success", message.StatusMessage, "");
+      }
+      else
+      {
+        this.toastService.addSingle("error", message.StatusMessage, "");
+      }
+      this.showBank()
+    });
+  }
+
+  deleteBank(iBankID) {
+    this.confirmationService.confirm({
+      message: 'Are you sure that you want to proceed?',
+      header: 'Confirmation',
+      icon: 'pi pi-exclamation-triangle',
+      accept: () => {
+        var dataToSendDelete = {
+          "iRequestID": 2213,
+          "iSupID": 1,
+          "iBankID": iBankID
+        }
+
+        this._apiService.getDetails(dataToSendDelete).then(response => {
+          console.log("Response for Brand Delete ", response)
+          this.toastService.addSingle("info", response.headers.get('StatusMessage'), "");
+          this.showBank();
+        });
+      },
+      reject: () => {
+        this.toastService.addSingle("info", "Rejected", "Rejected");
+
       }
     });
-    }
-  
-    deleteBank(iBankID)
-    {
-      this.confirmationService.confirm({
-        message: 'Are you sure that you want to proceed?',
-        header: 'Confirmation',
-        icon: 'pi pi-exclamation-triangle',
-        accept: () => {
-          var dataToSendDelete = {
-            "iRequestID": 2213,
-    "iSupID" :1,
-    "iBankID":iBankID
-          }
-  
-          this._apiService.getDetails(dataToSendDelete).then(response => {
-            console.log("Response for Brand Delete ",response)
-            this.toastService.addSingle("info", "Successfully Deleted", "Successfully Deleted");
-            this.showBank();
-          });
-        },
-        reject: () => {
-    this.toastService.addSingle("info", "Rejected", "Rejected");
-  
-        }
+  }
+
+
+  openDialogForaddContact() {
+    const ref = this.dialogService.open(ContactComponent, {
+      data: {
+      },
+      header: 'Add New Contact',
+      width: '70%'
     });
+
+    ref.onClose.subscribe((message: any) => {
+      if (message.StatusCode=="200") {
+        this.toastService.addSingle("success", message.StatusMessage, "");
+      }
+      else
+      {
+        this.toastService.addSingle("error", message.StatusMessage, "");
+      }
+      this.showContact()
+    });
+  }
+
+  openDialogForBank() {
+    const ref = this.dialogService.open(BankComponent, {
+      data: {
+      },
+      header: 'Add New Bank',
+      width: '50%'
+    });
+
+    ref.onClose.subscribe((message: any) => {
+      // alert(JSON.stringify(message))
+
+      if (message.StatusCode=="200") {
+        this.toastService.addSingle("success", message.StatusMessage, "");
+      }
+      else
+      {
+        this.toastService.addSingle("error", message.StatusMessage, "");
+      }
+      this.showBank();
+
+    });
+  }
+
+
+  //category mapping starts
+  getCategoryMappingDataSource() {
+    let sup_by_id = +this.route.snapshot.params['iSupID'];
+    const supplierCategoryMappingAPI = {
+      "iRequestID": 2221,
+      "iSupID": sup_by_id
     }
+    this.apiService.callPostApi(supplierCategoryMappingAPI).subscribe(
+      data => { this.sourceCategory = data.body; },
+      error => { console.log(error) }
+    )
+  }
+  // category mapping ends
 
-
-    openDialogForaddContact() {
-      const ref = this.dialogService.open( ContactComponent , {
-        data: {
-        },
-        header: 'Add New Contact',
-        width: '70%'
-      });
-  
-      ref.onClose.subscribe((success: boolean) => {
-        if (success) {
-          this.toastService.addSingle("success", "Record added successfully", "");
-          this.showContact();
-
-        }
-      });
+  //category mapping starts
+  getCategoryMappingDataTarget() {
+    let sup_by_id = +this.route.snapshot.params['iSupID'];
+    const supplierCategoryMappingAPI1 = {
+      "iRequestID": 2223,
+      "iSupID": sup_by_id
     }
-    
-    openDialogForBank() {
-      const ref = this.dialogService.open( BankComponent , {
-        data: {
-        },
-        header: 'Add New Bank',
-        width: '50%'
-      });
-  
-      ref.onClose.subscribe((success: boolean) => {
-        if (success) {
-          this.toastService.addSingle("success", "RecordAdded Successfully", "");
-          this.showBank();
-        }
-      });
-    }
+    this.apiService.callPostApi(supplierCategoryMappingAPI1).subscribe(
+      data => { this.targetCategory = data.body; },
+      error => { console.log(error) }
+    )
+  }
+  // category mapping ends
 
+  // add category mapping starts
+  addCategoryMappingData() {
+    let temp_ids_arr = [];
+    this.targetCategory.map(
+      (val) => {
+        temp_ids_arr.push(val.iSupCatID);
+      }
+    )
+    let string_ids = temp_ids_arr.toString();
+    let sup_by_id = +this.route.snapshot.params['iSupID'];
+    const supplierCategoryMappingAddAPI = {
+      "iRequestID": 2222,
+      "iSupID": sup_by_id,
+      "sSupCatMap": string_ids
+    }
+    this.apiService.callPostApi(supplierCategoryMappingAddAPI).subscribe(
+      data => {
+        if (this.targetCategory)
+          this.toastService.addSingle("success", "Categories mapped Successfully", "");
+        else
+          this.toastService.addSingle("warning", "Select atleast 1 Category", "");
+      },
+      error => { console.log(error) }
+    )
+  }
+  // add category mapping ends
 }

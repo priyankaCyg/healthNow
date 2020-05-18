@@ -19,6 +19,7 @@ export class BankComponent implements OnInit {
 
   statusData;
   bankId;
+  sup_Id;
 
   public bankForm: FormGroup;
   bankData : SupplierBankMaster;
@@ -28,6 +29,8 @@ export class BankComponent implements OnInit {
     private apiService:APIService, private _formBuilder: FormBuilder) { }
 
   ngOnInit(): void {
+
+    this.sup_Id = +localStorage.getItem('iSupID');
 
     this.defaultDropDwnValue()
 
@@ -113,7 +116,7 @@ export class BankComponent implements OnInit {
   }
 
 
-  addUnit()
+  addBank()
   {
     console.log(this.bankForm.getRawValue())
 
@@ -121,7 +124,7 @@ export class BankComponent implements OnInit {
 
     var dataToSendAdd ={
       "iRequestID": 2211,
-    "iSupID" :1,
+    "iSupID" :this.sup_Id,
     "sBankName": formData.sBankName,
     "sAccountNo":formData.sAccountNo,
     "sIFSC":formData.sIFSC,
@@ -131,15 +134,20 @@ export class BankComponent implements OnInit {
 
     // alert(JSON.stringify(dataToSendAdd))
     this.apiService.getApiDetails(dataToSendAdd).then(response => {
-      console.log("Response for Bank Add ",response)
-
-    this.ref.close(true);
+      console.log("Response for Bank Add ",response.headers.get('StatusMessage'))
+      
+      var  message = {
+        StatusCode:response.headers.get('StatusCode'),
+        StatusMessage:response.headers.get('StatusMessage')
+      }
+    this.ref.close(message);
 
     });
+
   }
 
 
- updateUnit()
+  updateBank()
   {
     console.log(this.bankForm.getRawValue())
 
@@ -147,7 +155,7 @@ export class BankComponent implements OnInit {
 
     var dataToSendEdit ={
       "iRequestID": 2212,
-      "iSupID" :1,
+      "iSupID" :this.sup_Id,
       "sBankName": formData.sBankName,
       "sAccountNo":formData.sAccountNo,
       "sIFSC":formData.sIFSC,
@@ -161,7 +169,11 @@ export class BankComponent implements OnInit {
     this.apiService.getApiDetails(dataToSendEdit).then(response => {
       console.log("Response for Bank Edit ",response)
 
-    this.ref.close(true);
+      var  message = {
+        StatusCode:response.headers.get('StatusCode'),
+        StatusMessage:response.headers.get('StatusMessage')
+      }
+    this.ref.close(message);
 
     });
   }

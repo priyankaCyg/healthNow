@@ -3,6 +3,7 @@ import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { ApiService } from 'src/app/services/api.service';
 import { ProductCategory } from 'src/app/models/product-category.model';
+import { ToastService } from 'src/app/services/toast.service';
 
 @Component({
   selector: 'app-add-product-category',
@@ -22,6 +23,7 @@ export class AddProductCategoryComponent implements OnInit {
   constructor(public config: DynamicDialogConfig,
      public ref: DynamicDialogRef,
      private httpService : ApiService,
+     private toastService: ToastService,
      private fb : FormBuilder) { }
      
     //  get PCName(){
@@ -47,7 +49,7 @@ export class AddProductCategoryComponent implements OnInit {
       }
       this.httpService.callPostApi(getCategoryDataApi).subscribe(
         data => {console.log(data)
-        this.productCategoryData = new ProductCategory(data[0]);
+        this.productCategoryData = new ProductCategory(data.body[0]);
         this.ProductCategoryForm = this.createControl(this.productCategoryData);
        });
       Promise.all([this.getParentCatData(), this.getStatusData()]).then(values => {
@@ -93,7 +95,7 @@ getParentCatData() {
    }
    this.httpService.callPostApi(parent_cat_api).subscribe(
      data => {console.log(data);
-      this.parentCatData = data;
+      this.parentCatData = data.body;
       this.parentCatData.unshift({iPCID:"", sPCName: "Select Product Category"});
       this.selectedparentCategory = {iPCID:"", sPCName: "Select Product Category"};
       resolve(this.parentCatData);
@@ -111,7 +113,7 @@ getStatusData() {
     }
     this.httpService.callPostApi(status_api).subscribe(
       data => {console.log(data);
-       this.statusData = data;
+       this.statusData = data.body;
        this.statusData.unshift({iKVID:"", sKVValue: "Select Status"});
        this.selectedstatus = { iKVID: "", sKVValue: "Select Status" };
        resolve(this.statusData);
@@ -131,7 +133,7 @@ addProductCategory() {
   this.httpService.callPostApi(addProductCategoryAPI).subscribe(
     data => {
     this.ref.close(true);
-
+    this.toastService.addSingle("success", data.headers.get('StatusMessage'), "");
   });
 }
 
@@ -148,6 +150,7 @@ editProductCategory() {
 this.httpService.callPostApi(editProductCategoryAPI).subscribe(
   data => {
     this.ref.close(true);
+    this.toastService.addSingle("success", data.headers.get('StatusMessage'), "");
   }
 )
 }

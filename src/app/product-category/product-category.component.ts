@@ -7,6 +7,7 @@ import { ProductCategory } from '../models/product-category.model';
 import { ApiService } from '../services/api.service';
 import { ConfirmationService } from 'primeng/api';
 import { ToastService } from "../services/toast.service";
+import {LoginService} from '../../app/services/login.service'
 
 
 @Component({
@@ -24,7 +25,7 @@ export class ProductCategoryComponent implements OnInit {
        private dialogService:DialogService,
        private apiService : ApiService,
        private toastService: ToastService,
-       private confirmationService: ConfirmationService
+       private confirmationService: ConfirmationService,private loginService:LoginService
       )
         {
       this.breadcrumbService.setItems([
@@ -34,6 +35,8 @@ export class ProductCategoryComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    
+    this.loginService.checkBrowserClosed();
     this.showProdCatList();
   }
 
@@ -79,7 +82,10 @@ export class ProductCategoryComponent implements OnInit {
       "iRequestID": 2114
     }
     this.apiService.callPostApi(prodCatListApi).subscribe(
-      data => { this.productCategoryData = data } ,
+      data => { this.productCategoryData = data.body,
+      console.log(this.apiService.headerMessage);
+      console.log(this.apiService.headerCode);
+      } ,
       error => { console.log(error)}
     )
 
@@ -100,7 +106,7 @@ export class ProductCategoryComponent implements OnInit {
 
         this.apiService.callPostApi(deleteCategoryAPI).subscribe(
           data => {
-            this.toastService.addSingle("info", "Successfully Deleted", "Successfully Deleted");
+            this.toastService.addSingle("success", data.headers.get('StatusMessage'), "");
             this.showProdCatList();
           },
           error => { console.log(error)}

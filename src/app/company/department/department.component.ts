@@ -1,111 +1,154 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { ApiService } from 'src/app/services/api.service';
 import { seldepData } from 'src/app/model/selDepStatus';
-import { FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ToastService } from "../../services/toast.service";
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
+import { DepartmentMaster } from 'src/app/model/company.department.model';
 @Component({
   selector: 'app-department',
   templateUrl: './department.component.html',
   styleUrls: ['./department.component.css']
 })
 export class DepartmentComponent implements OnInit {
-  seldepartmentStatus: seldepData[];
-  temp;
+  // seldepartmentStatus: seldepData[];
   selectedstatus;
-  setStatus: object;
-
+  statusData;
+  isEdit: boolean = false
+  Dep_id;
+  public DepartmentSubmit: FormGroup;
+  departmentData: DepartmentMaster;
   constructor(private apiService: ApiService, private fb: FormBuilder, public config: DynamicDialogConfig,
     private ref: DynamicDialogRef, private toastService: ToastService
   ) { }
 
-  async ngOnInit() {
+  ngOnInit(): void {
+    this.defaultDropDwnValue()
+    this.departmentData = new DepartmentMaster();
+    this.DepartmentSubmit = this.createControl(this.departmentData);
+    this.Dep_id = this.config.data.iDeptID;
+    if (this.Dep_id != null) {
+      this.isEdit = true
 
-    const status_data = {
-      iRequestID: 2071,
-      sKVName: "Status",
-    };
-
-    await this.apiService.getDropDownData(status_data).then(
-      data => {
-        this.seldepartmentStatus = data;
-        this.seldepartmentStatus.unshift({ "iKVID": 0, "sKVValue": "Select" });
-        this.selectedstatus = { iKVID: "0", sKVValue: "Select" }
-      },
-      error => console.log(error)
-    );
-    this.temp = this.config.data.iStatusID;
-    let tempData = this.seldepartmentStatus.filter(t => t.iKVID == this.temp);
-    this.setStatus = tempData[0];
-
-    if (this.config.data.iDeptID != undefined) {
-      this.DepartmentSubmit.patchValue({
-        departmentname: this.config.data.sDeptName,
-        depstatus: this.setStatus,
+      var dataToSendEdit = {
+        "iRequestID": 2056,
+        "iCID": 1,
+        "iDeptID": this.Dep_id
+      }
+      this.apiService.getDropDownData(dataToSendEdit).then(data => {
+        this.departmentData = new DepartmentMaster(data[0]);
+        this.DepartmentSubmit = this.createControl(this.departmentData);
+      });
+      Promise.all([this.getStatusDrpDwn()]).then(values => {
+        this.setDropDownVal()
+      });
+    }
+    else {
+      this.isEdit = false
+      this.departmentData = new DepartmentMaster();
+      this.DepartmentSubmit = this.createControl(this.departmentData);
+      Promise.all([this.getStatusDrpDwn()]).then(values => {
+        console.log(values);
       });
     }
 
-
   }
 
+  defaultDropDwnValue() {
+    this.selectedstatus = { iKVID: "", sKVValue: "Select Status" }
+  }
 
-  DepartmentSubmit = this.fb.group({
-    departmentname: ['', Validators.required],
-    depstatus: ['', Validators.required]
-  });
+  setDropDownVal() {
+    // Status Dropdown Select
+    let selectedStatusObj = this.statusData.find(x => x.iKVID == this.departmentData.iStatusID);
 
-  onSubmit() {
-    let status_id = this.DepartmentSubmit.controls["depstatus"].value;
-    let status = status_id.iKVID;
-    if (status == 0) {
-      this.DepartmentSubmit.setErrors({ 'invalid': true });
-    } else {
-      if (this.config.data.iDeptID == undefined) {
-        let dep_name = this.DepartmentSubmit.controls["departmentname"].value;
-        console.log(dep_name);
-        const dep_submit_data =
-        {
-          "iRequestID": 2051,
-          "iCID": 1,
-          "sDeptName": dep_name
-        };
-        this.apiService.callPostApi(dep_submit_data).subscribe(
-          data => {
-            console.log(data);
-            this.toastService.addSingle("success", "Record Added Successfully", "");
-
-          },
-          error => console.log(error)
-        );
-      } else {
-        let dep_id = this.config.data.iDeptID;
-        let status_id = this.DepartmentSubmit.controls["depstatus"].value;
-        let status = status_id.iKVID;
-        let dep_name_edit = this.DepartmentSubmit.controls["departmentname"].value;
-        const dep_edit_data =
-        {
-          "iRequestID": 2052,
-          "iCID": 1,
-          "sDeptName": dep_name_edit,
-          "iDeptID": dep_id,
-          "iStatusID": status
-        }
-        this.apiService.callPostApi(dep_edit_data).subscribe(
-          data => {
-            console.log(data);
-            this.toastService.addSingle("success", "Record Updated Successfully", "");
-
-          },
-          error => console.log(error)
-        );
-      }
-      this.ref.close();
-      this.DepartmentSubmit.reset();
+    if (selectedStatusObj !== undefined) {
+      this.selectedstatus = selectedStatusObj;
     }
+
+
+  }
+  getStatusDrpDwn() {
+    return new Promise((resolve, reject) => {
+      var dataToSend4 = {
+        "iRequestID": 2071,
+        "sKVName": "Status"
+      }
+
+      this.apiService.getDropDownData(dataToSend4).then(response => {
+        this.statusData = response
+        this.statusData.splice(0, 0, { iKVID: "", sKVValue: "Select Status" })
+        this.selectedstatus = { iKVID: "", sKVValue: "Select Status" }
+        resolve(this.statusData)
+      });
+    })
   }
 
+  createControl(departmentData?: DepartmentMaster): FormGroup {
 
+    this.DepartmentSubmit = this.fb.group({
+      iCID: [departmentData.iCID],
+      iDeptID: [departmentData.iDeptID],
+      iStatusID: [departmentData.iStatusID],
+      sDeptName: [departmentData.sDeptName, [Validators.required]],
+      iCreatedBy: [departmentData.iCreatedBy],
+      sCreatedDate: [departmentData.sCreatedDate]
+    });
+    return this.DepartmentSubmit;
+  }
+
+  addDepartment() {
+    var formData = this.DepartmentSubmit.getRawValue();
+
+    const dep_submit_data =
+    {
+      "iRequestID": 2051,
+      "iCID": 1,
+      "sDeptName": formData.sDeptName
+    };
+    this.apiService.callPostApi(dep_submit_data).subscribe(
+      data => {
+        console.log(data);
+        this.ref.close(true);
+        this.toastService.addSingle("success", data.headers.get('StatusMessage'), "");
+
+      },
+      error => console.log(error)
+    );
+    this.DepartmentSubmit.reset();
+  }
+
+  editDepartment() {
+    var formData = this.DepartmentSubmit.getRawValue();
+    const dep_edit_data =
+    {
+      "iRequestID": 2052,
+      "iCID": 1,
+      "sDeptName": formData.sDeptName,
+      "iDeptID": this.Dep_id,
+      "iStatusID": formData.iStatusID.iKVID
+    }
+    this.apiService.callPostApi(dep_edit_data).subscribe(
+      data => {
+        console.log(data);
+        this.ref.close(true);
+        this.toastService.addSingle("success", data.headers.get('StatusMessage'), "");
+
+      },
+      error => console.log(error)
+    );
+
+  }
   close() {
     this.ref.close();
+  }
+
+  dropDownValidityCheck() {
+    if (this.selectedstatus.iKVID == '') {
+      return true
+    }
+    else {
+      return false
+    }
   }
 }

@@ -10,6 +10,7 @@ import { supplierList } from '../model/supplierlist';
 import { ToastService } from '../services/toast.service';
 import { ConfirmationService } from 'primeng/api';
 import { Router } from '@angular/router';
+import {LoginService} from '../../app/services/login.service'
 
 @Component({
   selector: 'app-supplier',
@@ -25,7 +26,7 @@ export class SupplierComponent implements OnInit {
 
   constructor(private breadcrumbService: BreadcrumbService, private dialogService: DialogService,
     private apiService: ApiService, private toastService: ToastService,
-    private confirmationService: ConfirmationService, private router: Router
+    private confirmationService: ConfirmationService, private router: Router,private loginService:LoginService
   ) {
     this.breadcrumbService.setItems([
       { label: 'Dashboard' },
@@ -35,6 +36,10 @@ export class SupplierComponent implements OnInit {
 
 
   ngOnInit(): void {
+    // alert("http://localhost:4200/#/app/supplier "+localStorage.getItem('isBrowserClosed'))
+    
+    this.loginService.checkBrowserClosed();
+    
     this.getAllSupplier();
 
   }
@@ -47,7 +52,7 @@ export class SupplierComponent implements OnInit {
     this.apiService.callPostApi(supplier_list_api).subscribe(
       data => {
         console.log(data);
-        this.supplier = data;
+        this.supplier = data.body;
       },
       error => console.log(error)
     );
@@ -68,7 +73,7 @@ export class SupplierComponent implements OnInit {
         this.apiService.callPostApi(delete_data_api).subscribe(
           (data) => {
             console.log(data);
-            this.toastService.addSingle("info", "Successfully Deleted", "Successfully Deleted");
+            this.toastService.addSingle("success", data.headers.get('StatusMessage'), "");
             this.getAllSupplier();
           },
           (error) => console.log(error)

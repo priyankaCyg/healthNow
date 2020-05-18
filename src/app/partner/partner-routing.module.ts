@@ -8,14 +8,24 @@ const routes: Routes = [
     path: "",
     component: PartnerComponent,
     data: {
-      title: "Partner"}
+      title: "Partner"
+    }
   },
   {
-    path:"new-partner",
+    path: "new-partner",
     component: NewPartnerComponent,
     data: {
-      title: "New Partner"}
-  
+      title: "New Partner"
+    }
+
+  },
+  {
+    path: "edit-partner/:iPartnerID",
+    component: NewPartnerComponent,
+    data: {
+      title: "Edit Partner"
+    }
+
   }
 ];
 
