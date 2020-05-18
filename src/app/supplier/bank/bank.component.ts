@@ -134,9 +134,13 @@ export class BankComponent implements OnInit {
 
     // alert(JSON.stringify(dataToSendAdd))
     this.apiService.getApiDetails(dataToSendAdd).then(response => {
-      console.log("Response for Bank Add ",response)
-
-    this.ref.close(true);
+      console.log("Response for Bank Add ",response.headers.get('StatusMessage'))
+      
+      var  message = {
+        StatusCode:response.headers.get('StatusCode'),
+        StatusMessage:response.headers.get('StatusMessage')
+      }
+    this.ref.close(message);
 
     });
 
@@ -165,7 +169,11 @@ export class BankComponent implements OnInit {
     this.apiService.getApiDetails(dataToSendEdit).then(response => {
       console.log("Response for Bank Edit ",response)
 
-    this.ref.close(true);
+      var  message = {
+        StatusCode:response.headers.get('StatusCode'),
+        StatusMessage:response.headers.get('StatusMessage')
+      }
+    this.ref.close(message);
 
     });
   }

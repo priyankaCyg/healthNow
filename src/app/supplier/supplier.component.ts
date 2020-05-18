@@ -37,19 +37,9 @@ export class SupplierComponent implements OnInit {
 
   ngOnInit(): void {
     // alert("http://localhost:4200/#/app/supplier "+localStorage.getItem('isBrowserClosed'))
-    var isBrowserClosed = localStorage.getItem('isBrowserClosed')
-    if(isBrowserClosed || isBrowserClosed==null)
-    {
-      this.loginService.getAccess().then(response1 => {
-
-        console.log("Response of Access ",response1)
     
+    this.loginService.checkBrowserClosed();
     
-      }).catch(error=>{
-        // console.log(JSON.stringify(error))
-      })
-    }
-
     this.getAllSupplier();
 
   }

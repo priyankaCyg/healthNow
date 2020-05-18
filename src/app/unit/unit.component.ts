@@ -10,6 +10,7 @@ import { ToastService } from "../services/toast.service";
 import {ConfirmationService} from 'primeng/api';
 
 import { AddUnitComponent } from './add-unit/add-unit.component';
+import {LoginService} from '../../app/services/login.service'
 
 @Component({
   selector: 'app-unit',
@@ -24,7 +25,7 @@ export class UnitComponent implements OnInit {
 
   constructor(private breadcrumbService: BreadcrumbService, private dialogService:DialogService,private _apiService:APIService,
     private toastService: ToastService,
-    private confirmationService: ConfirmationService) {
+    private confirmationService: ConfirmationService,private loginService:LoginService) {
     this.breadcrumbService.setItems([
       { label: 'Dashboard' },
       { label: 'Unit', routerLink: ['/app/unit'] }
@@ -32,6 +33,7 @@ export class UnitComponent implements OnInit {
    }
 
   ngOnInit(): void {
+    this.loginService.checkBrowserClosed();
     
     this.showUnit();
 
@@ -58,12 +60,15 @@ export class UnitComponent implements OnInit {
     header: 'Add New Unit',
     width: '28%'
   });
-  ref.onClose.subscribe((success: boolean) => {
-    if (success) {
-      this.toastService.addSingle("success", "Record Added successfully", "");
-    this.showUnit();
-
+  ref.onClose.subscribe((message: any) => {
+    if (message.StatusCode=="200") {
+      this.toastService.addSingle("success", message.StatusMessage, "");
     }
+    else
+    {
+      this.toastService.addSingle("error", message.StatusMessage, "");
+    }
+    this.showUnit();
   });
 }
 
@@ -79,12 +84,15 @@ editUnit(unitId) {
     width: '28%'
   });
 
-  ref.onClose.subscribe((success: boolean) => {
-    if (success) {
-      this.toastService.addSingle("success", "Updated successfully", "");
-    this.showUnit();
-
+  ref.onClose.subscribe((message: any) => {
+    if (message.StatusCode=="200") {
+      this.toastService.addSingle("success", message.StatusMessage, "");
     }
+    else
+    {
+      this.toastService.addSingle("error", message.StatusMessage, "");
+    }
+    this.showUnit();
   });
   }
 
@@ -95,16 +103,16 @@ editUnit(unitId) {
       header: 'Confirmation',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
-        // var dataToSendDelete = {
-        //   "iRequestID":2143,
-        //   "iBrandID":unitId
-        // }
+        var dataToSendDelete = {
+          "iRequestID":2143,
+          "iBrandID":unitId
+        }
 
-        // this._apiService.getDetails(dataToSendDelete).then(response => {
-        //   console.log("Response for Brand Delete ",response)
-        //   this.toastService.addSingle("info", "Successfully Deleted", "Successfully Deleted");
-        //   this.showUnit();
-        // });
+        this._apiService.getDetails(dataToSendDelete).then(response => {
+          console.log("Response for Brand Delete ",response)
+          this.toastService.addSingle("info", response.headers.get('StatusMessage'), "");
+          this.showUnit();
+        });
       },
       reject: () => {
   this.toastService.addSingle("info", "Rejected", "Rejected");

@@ -17,7 +17,7 @@ export class ProductImageComponent implements OnInit {
   }
 
   onUpload(event) {
-    alert("hi")
+    // alert("hi")
     for (const file of event.files) {
         this.uploadedFiles.push(file);
         alert(JSON.stringify(this.uploadedFiles))

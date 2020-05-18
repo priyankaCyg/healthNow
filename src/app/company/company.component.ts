@@ -53,18 +53,7 @@ export class CompanyComponent implements OnInit {
 
   ngOnInit() {
 
-    var isBrowserClosed = localStorage.getItem('isBrowserClosed')
-    if(isBrowserClosed || isBrowserClosed==null)
-    {
-      this.loginService.getAccess().then(response1 => {
-  
-        console.log("Response of Access ",response1)
-    
-    
-      }).catch(error=>{
-        // console.log(JSON.stringify(error))
-      })
-    }
+    this.loginService.checkBrowserClosed();
 
     this.items = [
       {
@@ -502,11 +491,15 @@ export class CompanyComponent implements OnInit {
       width: '80%'
     });
 
-    ref.onClose.subscribe((success: boolean) => {
-      if (success) {
-        this.showEmployee();
-        this.toastService.addSingle("success", "Employee Added Successfully", "");
+    ref.onClose.subscribe((message: any) => {
+      if (message.StatusCode=="200") {
+        this.toastService.addSingle("success", message.StatusMessage, "");
       }
+      else
+      {
+        this.toastService.addSingle("error", message.StatusMessage, "");
+      }
+      this.showEmployee()
     });
   }
 
@@ -532,12 +525,15 @@ export class CompanyComponent implements OnInit {
       width: '80%'
     });
 
-    ref.onClose.subscribe((success: any) => {
-      // alert(success)
-      if (success) {
-        this.showEmployee();
-        this.toastService.addSingle("success", "Updated Successfully", "");
+    ref.onClose.subscribe((message: any) => {
+      if (message.StatusCode=="200") {
+        this.toastService.addSingle("success", message.StatusMessage, "");
       }
+      else
+      {
+        this.toastService.addSingle("error", message.StatusMessage, "");
+      }
+      this.showEmployee()
     });
   }
 
@@ -556,7 +552,7 @@ export class CompanyComponent implements OnInit {
 
         this._apiService.getDetails(dataToSendDelete).then(response => {
           console.log("Response for Employee Delete ", response)
-          this.toastService.addSingle("info", "Successfully Deleted", "Successfully Deleted");
+          this.toastService.addSingle("info", response.headers.get('StatusMessage'), "");
           this.showEmployee();
         });
       },

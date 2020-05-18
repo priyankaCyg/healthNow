@@ -9,6 +9,7 @@ import { ApiService } from '../services/api.service';
 import { ToastService } from '../services/toast.service';
 import { ConfirmationService } from 'primeng/api';
 import { Router } from '@angular/router';
+import {LoginService} from '../../app/services/login.service'
 
 
 @Component({
@@ -25,7 +26,7 @@ export class ProductComponent implements OnInit {
 
   constructor(private breadcrumbService: BreadcrumbService, private dialogService: DialogService,
     private apiService: ApiService, private toastService: ToastService, private confirmationService: ConfirmationService
-    , private router: Router) {
+    , private router: Router,private loginService:LoginService) {
     this.breadcrumbService.setItems([
       { label: 'Dashboard' },
       { label: 'Product', routerLink: ['/app/product'] }
@@ -34,6 +35,8 @@ export class ProductComponent implements OnInit {
 
   ngOnInit(): void {
 
+
+    this.loginService.checkBrowserClosed();
     this.getAllProduct();
 
   }

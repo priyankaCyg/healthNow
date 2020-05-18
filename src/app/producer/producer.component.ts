@@ -38,18 +38,8 @@ export class ProducerComponent implements OnInit {
 ngOnInit() {
 
 
-  var isBrowserClosed = localStorage.getItem('isBrowserClosed')
-  if(isBrowserClosed || isBrowserClosed==null)
-  {
-    this.loginService.getAccess().then(response1 => {
+  this.loginService.checkBrowserClosed();
 
-      console.log("Response of Access ",response1)
-  
-  
-    }).catch(error=>{
-      // console.log(JSON.stringify(error))
-    })
-  }
   this.showProducers();
 
 }
@@ -75,11 +65,15 @@ ngOnInit() {
       width: '28%'
     });
 
-    ref.onClose.subscribe((success: boolean) => {
-      if (success) {
-        this.toastService.addSingle("success", "Added successfully", "");
-        this.showProducers();
+    ref.onClose.subscribe((message: any) => {
+      if (message.StatusCode=="200") {
+        this.toastService.addSingle("success", message.StatusMessage, "");
       }
+      else
+      {
+        this.toastService.addSingle("error", message.StatusMessage, "");
+      }
+      this.showProducers()
     });
     }
 
@@ -93,12 +87,15 @@ ngOnInit() {
         width: '28%'
       });
   
-      ref.onClose.subscribe((success: boolean) => {
-        if (success) {
-          this.toastService.addSingle("success", "Updated successfully", "");
-        this.showProducers();
-
+      ref.onClose.subscribe((message: any) => {
+        if (message.StatusCode=="200") {
+          this.toastService.addSingle("success", message.StatusMessage, "");
         }
+        else
+        {
+          this.toastService.addSingle("error", message.StatusMessage, "");
+        }
+        this.showProducers()
       });
       }
 
@@ -116,7 +113,7 @@ ngOnInit() {
     
             this._apiService.getDetails(dataToSendDelete).then(response => {
               console.log("Response for Producer Delete ",response)
-              this.toastService.addSingle("info", "Successfully Deleted", "Successfully Deleted");
+              this.toastService.addSingle("info", response.headers.get('StatusMessage'), "");
               this.showProducers();
             });
           },

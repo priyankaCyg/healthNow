@@ -33,7 +33,7 @@ export class AppLoginComponent  implements OnInit {
 
     console.log("Response of Login ",response.body)
 
-    var bodyData = response.body;
+    var bodyData = response.body[0];
 
     localStorage.setItem('iCID', bodyData.iCID);
     localStorage.setItem('iRoleID', bodyData.iRoleID);
@@ -42,8 +42,6 @@ export class AppLoginComponent  implements OnInit {
     localStorage.setItem('sUserName', bodyData.sUserName);
     localStorage.setItem('sFirstName', bodyData.sFirstName);
     localStorage.setItem('sFirstInitial', bodyData.sFirstInitial);
-
-
 
     this.loginService.getAccess().then(response1 => {
 

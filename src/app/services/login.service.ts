@@ -39,7 +39,7 @@ export class LoginService {
 
 
             return new Promise((resolve, reject) => {
-                this._httpClient.post(authUrl,dataToSend,{ observe: 'response',headers:headers,responseType: 'text', withCredentials: true})
+                this._httpClient.post(authUrl,dataToSend,{ observe: 'response'})
                     .subscribe((resp: any) => {
                         //working code
                         console.log('response message', resp.headers.get('Set-Cookie'));
@@ -56,7 +56,7 @@ export class LoginService {
     headers = headers.set('Content-Type', 'application/json');
     
     return new Promise((resolve, reject) => {
-      this._httpClient.post(authAccess,dataToSend,{ observe: 'response',headers:headers, withCredentials: true})
+      this._httpClient.post(authAccess,dataToSend,{ observe: 'response'})
           .subscribe((resp: any) => {
 
             if(resp.body!=null || resp.body!='')
@@ -68,12 +68,12 @@ export class LoginService {
 
 
               return new Promise((resolve, reject) => {
-                this._httpClient.post(authStoreUrl,resp.body,{ observe: 'response',headers:headers, withCredentials: true})
+                this._httpClient.post(authStoreUrl,resp.body,{ observe: 'response'})
                     .subscribe((resp1: any) => {
                         //working code
                         console.log('response message authenticate and access ' , resp1);
-                        
-                        resolve(resp);
+                        // alert("hi")
+                        resolve(resp1);
                     }, (error:any) => {
                       console.log('oops Error', error)
     localStorage.setItem('isLogin', 'false');  
@@ -94,6 +94,24 @@ export class LoginService {
   });
   }
 
+
+  checkBrowserClosed()
+  {
+    var isBrowserClosed = localStorage.getItem('isBrowserClosed')
+    // alert(isBrowserClosed)
+    if(isBrowserClosed=="true" || isBrowserClosed==null)
+    {
+      this.getAccess().then(response1 => {
+
+        console.log("Response of Access ",response1)
+    
+    
+      }).catch(error=>{
+        // console.log(JSON.stringify(error))
+      })
+    }
+
+  }
 
 
   setToken(token: string) {

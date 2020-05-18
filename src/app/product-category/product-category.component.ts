@@ -36,18 +36,7 @@ export class ProductCategoryComponent implements OnInit {
 
   ngOnInit(): void {
     
-    var isBrowserClosed = localStorage.getItem('isBrowserClosed')
-    if(isBrowserClosed || isBrowserClosed==null)
-    {
-      this.loginService.getAccess().then(response1 => {
-
-        console.log("Response of Access ",response1)
-    
-    
-      }).catch(error=>{
-        // console.log(JSON.stringify(error))
-      })
-    }
+    this.loginService.checkBrowserClosed();
     this.showProdCatList();
   }
 

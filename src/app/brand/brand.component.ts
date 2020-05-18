@@ -6,6 +6,7 @@ import { NewBrandComponent } from './new-brand/new-brand.component';
 import {APIService} from '../services/apieservice';
 import { ToastService } from "../services/toast.service";
 import {ConfirmationService} from 'primeng/api';
+import {LoginService} from '../../app/services/login.service'
 
 @Component({
   selector: 'app-brand',
@@ -19,20 +20,23 @@ export class BrandComponent implements OnInit {
 
   constructor(private breadcrumbService: BreadcrumbService, private dialogService:DialogService,private _apiService:APIService,
     private toastService: ToastService,
-    private confirmationService: ConfirmationService) {
+    private confirmationService: ConfirmationService,private loginService:LoginService) {
     this.breadcrumbService.setItems([
         { label: 'Dashboard' },
         { label: 'Brand', routerLink: ['/app/brand'] }
     ]);
 }
 ngOnInit() {
+
+  this.loginService.checkBrowserClosed();
+
   
-  this.showProducers();
+  this.showBrand();
 
 
 }
 
-showProducers()
+showBrand()
 {
   var dataToSend ={
     "iRequestID": 2134
@@ -51,10 +55,15 @@ openDialogFornewBrand() {
     width: '28%'
   });
 
-  ref.onClose.subscribe((success: boolean) => {
-    if (success) {
-      // this.toastService.addSingle("success", "Mail send successfully", "");
+  ref.onClose.subscribe((message: any) => {
+    if (message.StatusCode=="200") {
+      this.toastService.addSingle("success", message.StatusMessage, "");
     }
+    else
+    {
+      this.toastService.addSingle("error", message.StatusMessage, "");
+    }
+    this.showBrand()
   });
 }
 
@@ -68,12 +77,15 @@ editBrand(brandId) {
     width: '28%'
   });
 
-  ref.onClose.subscribe((success: boolean) => {
-    if (success) {
-      this.toastService.addSingle("success", "Updated successfully", "");
-    this.showProducers();
-
+  ref.onClose.subscribe((message: any) => {
+    if (message.StatusCode=="200") {
+      this.toastService.addSingle("success", message.StatusMessage, "");
     }
+    else
+    {
+      this.toastService.addSingle("error", message.StatusMessage, "");
+    }
+    this.showBrand()
   });
   }
 
@@ -92,7 +104,7 @@ editBrand(brandId) {
         this._apiService.getDetails(dataToSendDelete).then(response => {
           console.log("Response for Brand Delete ",response)
           this.toastService.addSingle("info", "Successfully Deleted", "Successfully Deleted");
-          this.showProducers();
+          this.showBrand();
         });
       },
       reject: () => {

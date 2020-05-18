@@ -47,4 +47,3 @@ getDropDownData(requestData): Promise<any> {
   }
 
 }
-}

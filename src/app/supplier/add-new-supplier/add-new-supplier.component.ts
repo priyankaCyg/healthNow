@@ -79,18 +79,7 @@ export class AddNewSupplierComponent implements OnInit {
 
   ngOnInit(): void {
 
-    var isBrowserClosed = localStorage.getItem('isBrowserClosed')
-    if(isBrowserClosed || isBrowserClosed==null)
-    {
-      this.loginService.getAccess().then(response1 => {
-
-        console.log("Response of Access ",response1)
-    
-    
-      }).catch(error=>{
-        // console.log(JSON.stringify(error))
-      })
-    }
+    this.loginService.checkBrowserClosed()
 
 this.getFileType();
 this.gstList();
@@ -218,7 +207,7 @@ this.gstList();
 
 
   onUpload(event) {
-    alert("hi")
+    // alert("hi")
     for (const file of event.files) {
       this.uploadedFiles.push(file);
     }
@@ -226,7 +215,7 @@ this.gstList();
   }
 
   uploadFile() {
-    alert(JSON.stringify(this.uploadedFiles))
+    // alert(JSON.stringify(this.uploadedFiles))
     var dataToSend = {
       "iRequestID": 1111,
       "iProcessTranID": this.supId,
@@ -234,7 +223,7 @@ this.gstList();
       "iDocTypeID": this.selectedFileType.iDocTypeID
     }
     this._apiService.postFile(this.uploadedFiles, dataToSend).subscribe(data => {
-      alert('Success ' + data);
+      // alert('Success ' + data);
       this.showAttachment();
     }, error => {
       console.log(error);
@@ -509,6 +498,8 @@ this.gstList();
     });
   }
 
+
+
   downloadFile(attachment:any)
   {
     var dataToSend ={
@@ -555,12 +546,15 @@ this.gstList();
       width: '70%'
     });
 
-    ref.onClose.subscribe((success: boolean) => {
-      if (success) {
-        this.toastService.addSingle("success", "Updated successfully", "");
-        this.showContact();
-
+    ref.onClose.subscribe((message: any) => {
+      if (message.StatusCode=="200") {
+        this.toastService.addSingle("success", message.StatusMessage, "");
       }
+      else
+      {
+        this.toastService.addSingle("error", message.StatusMessage, "");
+      }
+      this.showContact()
     });
   }
 
@@ -579,7 +573,7 @@ this.gstList();
 
         this._apiService.getDetails(dataToSendDelete).then(response => {
           console.log("Response for Brand Delete ", response)
-          this.toastService.addSingle("info", "Successfully Deleted", "Successfully Deleted");
+          this.toastService.addSingle("info", response.headers.get('StatusMessage'), "");
           this.showContact();
         });
       },
@@ -612,12 +606,16 @@ this.gstList();
       width: '50%'
     });
 
-    ref.onClose.subscribe((success: boolean) => {
-      if (success) {
-        this.toastService.addSingle("success", "Updated successfully", "");
-        this.showBank();
-
+    ref.onClose.subscribe((message: any) => {
+     
+      if (message.StatusCode=="200") {
+        this.toastService.addSingle("success", message.StatusMessage, "");
       }
+      else
+      {
+        this.toastService.addSingle("error", message.StatusMessage, "");
+      }
+      this.showBank()
     });
   }
 
@@ -635,7 +633,7 @@ this.gstList();
 
         this._apiService.getDetails(dataToSendDelete).then(response => {
           console.log("Response for Brand Delete ", response)
-          this.toastService.addSingle("info", "Successfully Deleted", "Successfully Deleted");
+          this.toastService.addSingle("info", response.headers.get('StatusMessage'), "");
           this.showBank();
         });
       },
@@ -655,12 +653,15 @@ this.gstList();
       width: '70%'
     });
 
-    ref.onClose.subscribe((success: boolean) => {
-      if (success) {
-        this.toastService.addSingle("success", "Record added successfully", "");
-        this.showContact();
-
+    ref.onClose.subscribe((message: any) => {
+      if (message.StatusCode=="200") {
+        this.toastService.addSingle("success", message.StatusMessage, "");
       }
+      else
+      {
+        this.toastService.addSingle("error", message.StatusMessage, "");
+      }
+      this.showContact()
     });
   }
 
@@ -672,11 +673,18 @@ this.gstList();
       width: '50%'
     });
 
-    ref.onClose.subscribe((success: boolean) => {
-      if (success) {
-        this.toastService.addSingle("success", "RecordAdded Successfully", "");
-        this.showBank();
+    ref.onClose.subscribe((message: any) => {
+      // alert(JSON.stringify(message))
+
+      if (message.StatusCode=="200") {
+        this.toastService.addSingle("success", message.StatusMessage, "");
       }
+      else
+      {
+        this.toastService.addSingle("error", message.StatusMessage, "");
+      }
+      this.showBank();
+
     });
   }
 
