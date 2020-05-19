@@ -2004,10 +2004,7 @@ body .ui-button.ui-button-text-only .ui-button-text {
         margin: 0.5rem 0;
     }
 
-    .separator.separator--space-sm {
-        // margin: 1rem 0;
-    }
-
+  
     .separator.separator--space-md {
         margin: 2rem 0;
     }
@@ -2364,7 +2361,7 @@ button.bg-dark:focus {
 
   .badge.badge--dark {
       color: #ffffff;
-      background: #282a3c;
+      background: #8f8f8f;
   }
 
   .badge.badge--outline.badge--dark {
@@ -2449,18 +2446,18 @@ button.bg-dark:focus {
       }
 
   .badge.badge--danger {
-      color: #ffffff;
-      background: #fd27eb;
+      color: #222222;
+      background: #ec6a6a;
   }
 
   .badge.badge--outline.badge--danger {
       background: transparent;
-      color: #fd27eb;
-      border: 1px solid #fd27eb;
+      color: #ec6a6a;
+      border: 1px solid #ec6a6a;
   }
 
       .badge.badge--outline.badge--danger.badge--outline-2x {
-          border: 2px solid #fd27eb;
+          border: 2px solid #ec6a6a;
       }
 
   .badge.badge--unified-brand {
