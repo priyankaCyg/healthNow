@@ -1,7 +1,7 @@
 <div class="p-grid">
     <div class="p-col-12">
         <div class="card card-w-title">
-            <h1>Requisition</h1>        
+            <h1>Purchace Order Details</h1>        
             <p-tabView>
                 <p-tabPanel header="General">
                     <div class="p-grid ui-fluid">
@@ -45,7 +45,7 @@
                                     <div class="separator separator--border-dashed separator--space-sm separator--portlet-fit m-1"></div>
                                 </div>
                                 <div class="p-col-12 p-lg-3 mb-2">
-                                    <label for="comPOcontact">Company PO Contact</label>
+                                    <label for="comPOcontact">Partner PO Contact</label>
                                     <p-dropdown [options]="comPOcontact" [(ngModel)]="selectedContact1"></p-dropdown>
                                 </div>
                                 <div class="p-col-12 p-lg-3 mb-2">
@@ -98,10 +98,8 @@
                                             <td>{{poDetail.discount}}</td>
                                             <td>{{poDetail.discAmt}}</td>
                                             <td>{{poDetail.totalAmt}}</td>
-                                            <!-- <td>{{poDetail.createdBy}}</td>
-                                            <td>{{poDetail.createdDate}}</td> -->
                                             <td>
-                                                <button pButton type="button" class="ui-button-success mr-1" icon="pi pi-pencil"></button>
+                                                <!-- <button pButton type="button" class="ui-button-success mr-1" icon="pi pi-pencil"></button> -->
                                                 <button pButton type="button" class="ui-button-danger mr-1" icon="pi pi-trash"></button> 
                                             </td>
                                         </tr>

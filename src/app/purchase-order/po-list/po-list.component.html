@@ -5,10 +5,10 @@
                 <div class="p-col p-col-align-start">
                     <h1 class="mt-2">PO List</h1>
                 </div>
-                <div class="p-col-1 p-col-align-end text-center">
+                <!-- <div class="p-col-1 p-col-align-end text-center">
                     <button routerLink="/app/purchase-order/po-general-details" pButton icon="pi pi-fw pi-plus" label="Create PO"></button>
 
-                </div>
+                </div> -->
             <div class="p-col-12 mt-3"> 
                 <p-table [value]="poList">
                     <ng-template pTemplate="header">
@@ -42,7 +42,7 @@
                             <td>{{poList.createdDate}}</td>
                             <td>
                                 <button pButton type="button" class="ui-button-danger mr-1" icon="pi pi-file-pdf" title="View Details"></button>
-                                <button pButton type="button" class="ui-button-success mr-1" icon="pi pi-pencil"></button>
+                                <button  routerLink="/app/purchase-order/po-general-details" pButton type="button" class="ui-button-success mr-1" icon="pi pi-pencil"></button>
                                 <button pButton type="button" class="ui-button-danger mr-1" icon="pi pi-trash"></button> 
                                 <button pButton type="button" class="ui-button-success" icon="pi pi-arrow-circle-right" title="Send for approval"></button>
                             </td>
