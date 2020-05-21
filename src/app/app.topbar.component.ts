@@ -146,6 +146,29 @@ import {AppMainComponent} from './app.main.component';
 									</li>
 								</ul>
 							</li>
+							<li [ngClass]="{'active-topmenuitem': activeItem === 6}" (click)="mobileMegaMenuItemClick(3)">
+								<a href="#">GRN <i class="pi pi-angle-down"></i></a>
+								<ul>
+									<li routerLink="/app/grn/good-expected">
+										<i class="pi pi-circle-on"></i>
+										<span>
+                                       		 <h3>Good Expected</h3>
+                                   		 </span>
+									</li>
+									<li routerLink="/app/grn/grn-list">
+										<i class="pi pi-circle-on"></i>
+										<span>
+                                       		 <h3>GRN List</h3>
+                                   		 </span>
+									</li>
+									<li routerLink="/app/grn/grn-approver">
+										<i class="pi pi-circle-on"></i>
+										<span>
+                                       		 <h3>GRN Approve</h3>
+                                   		 </span>
+									</li>
+								</ul>
+							</li>
 						</ul>
 					</div>
                 </div>

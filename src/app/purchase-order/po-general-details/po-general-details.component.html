@@ -28,6 +28,10 @@
                                     <label for="suppAddress">Supplier Address</label>
                                     <p-dropdown [options]="suppAddress" [(ngModel)]="selectedAddress1"></p-dropdown>
                                 </div>
+                                <div class="p-col-12 p-lg-3 mb-2">
+                                    <label for="suppAddress">Scheduled Date</label>
+                                    <p-calendar [(ngModel)]="value"></p-calendar>
+                                </div>
                                 <div class="p-col-12 p-md-2 p-lg-12">
                                     <div class="separator separator--border-dashed separator--space-sm separator--portlet-fit"></div>
                                 </div>
@@ -41,11 +45,12 @@
                                     <label for="location">Location</label>
                                     <input id="location" type="text" pInputText [disabled]="disabled"  placeholder="Mumbai">
                                 </div>
+
                                 <div class="p-col-12 p-md-2 p-lg-12">
                                     <div class="separator separator--border-dashed separator--space-sm separator--portlet-fit m-1"></div>
                                 </div>
                                 <div class="p-col-12 p-lg-3 mb-2">
-                                    <label for="comPOcontact">Partner PO Contact</label>
+                                    <label for="comPOcontact">Partner Contact</label>
                                     <p-dropdown [options]="comPOcontact" [(ngModel)]="selectedContact1"></p-dropdown>
                                 </div>
                                 <div class="p-col-12 p-lg-3 mb-2">

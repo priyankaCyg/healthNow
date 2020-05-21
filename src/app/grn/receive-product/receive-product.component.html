@@ -1,0 +1,127 @@
+<div class="p-grid">
+    <div class="p-col-12">
+        <div class="card card-w-title">
+            <h1>Receive Product</h1> 
+        <div class="p-grid ui-fluid">
+            <div class="p-col-12 p-lg-12">
+                <div class="p-grid">  
+                    <div class="p-col-12 p-md-6 p-lg-4 mb-2">
+                        <div class="card bg-success p-2">Product : <strong>	Groundnut Oil</strong></div>
+                    </div>
+                    <div class="p-col-12 p-md-6 p-lg-4 mb-2">
+                        <div class="card bg-success p-2">Ordered Quantity : <strong>100</strong></div>
+                    </div>
+                    
+                </div>  
+            </div>
+            <div class="p-col-7"> 
+            <div class="p-grid">
+
+                <div class="p-grid">
+                    
+                        <div class="p-col-12">
+                            <div class="card download-files p-3 mb-2">
+                            <div class="p-grid form-group">
+                                <div class="p-col-12 p-md-6 p-lg-6 mb-1">
+                                    <label for="batcNo">Batch No./Lot No.</label>
+                                    <input id="batcNo"  type="text" pInputText placeholder="B1">
+                                </div>
+                                <div class="p-col-12 p-md-6 p-lg-6 mb-1">
+                                    <label for="recvqty">Received Qty</label>
+                                    <input id="recvqty"  type="text" pInputText placeholder="50">
+                                </div>
+
+                                <div class="p-col-12 p-md-6 p-lg-6 mb-1">
+                                    <label for="podNo">POD No.</label>
+                                    <input id="podNo"  type="text" pInputText placeholder="B0015">
+                                </div>
+                                <div class="p-col-12 p-md-6 p-lg-6 mb-1">
+                                    <label for="podDate">POD Date</label>
+                                    <p-calendar [(ngModel)]="date1"></p-calendar>
+                                </div>
+                                <div class="p-col-12 p-md-6 p-lg-6 mb-1">
+                                    <label for="podDate">Manufacturing Date</label>
+                                    <p-calendar [(ngModel)]="date2"></p-calendar>
+                                </div>
+                                <div class="p-col-12 p-md-6 p-lg-6 mb-1">
+                                    <label for="podDate">Expire Date</label>
+                                    <p-calendar [(ngModel)]="date3"></p-calendar>
+                                </div>
+                                
+                            </div>
+                            <div class="p-col-12 p-md-2 p-lg-12">
+                                <div class="separator separator--border-solid separator--space-sm separator--portlet-fit mt-0"></div>
+                            </div>
+                            <div class="p-col-12 p-md-2 p-lg-12 text-right mt-0">
+                                <button  routerLink="/app/grn/good-expected" pButton type="button" label="Cancel"  class="ui-button-light atbt mr-2 mb-2"></button>
+                            <button pButton type="button" label="Add" class="ui-button atbt mb-2"></button>
+                        </div>
+                                   
+                        </div>
+
+                        </div>
+                
+
+                       
+
+                </div>
+            </div>
+            </div>
+
+          <div class="p-col-5">
+                <div class="p-grid">
+                    <div class="p-col-12">
+                <div class="card download-files p-3 mb-2">
+                    <div class="p-grid p-nogutter">
+                        <div class="p-col-12 p-md-12 p-lg-12 mb-2">
+                                <p-table [value]="batch">
+                                    <ng-template pTemplate="header">
+                                        <tr>
+                                            <th>Batch Lot No</th>
+                                            <th>Qty</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </ng-template>
+                                    <ng-template pTemplate="body" let-batch>
+                                        <tr>
+                                            
+                                            <td>{{batch.batch}}</td>
+                                            <td>{{batch.qty}}</td>
+                                            <td>
+                                                <button pButton type="button" class="ui-button-danger mr-1" icon="pi pi-trash"></button> 
+                                            </td>
+                                        </tr>
+                                    </ng-template>
+                                </p-table>
+                            </div>
+                        
+                    
+                            <div class="p-col-12 p-md-2 p-lg-12">
+                                <div class="separator separator--border-solid separator--space-sm separator--portlet-fit mt-0"></div>
+                            </div>
+                    
+                                    <div class="p-col-12 p-md-2 p-lg-12 text-right mt-0">
+                                        <button  routerLink="/app/grn/good-expected" pButton type="button" label="Cancel"  class="ui-button-light atbt mr-2 mb-2"></button>
+                                    <button  routerLink="/app/grn/grn-list" pButton type="submit" label="Save" class="ui-button atbt mb-2"></button>
+                                </div>
+                         
+
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+        
+
+            </div> 
+
+
+
+                    
+        </div>                     
+  
+        </div>
+    </div>
+  </div>  
+    
+    

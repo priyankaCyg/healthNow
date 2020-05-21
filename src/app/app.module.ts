@@ -119,8 +119,7 @@ import { from } from 'rxjs';
 
 import { ApiService } from './services/api.service';
 import { APIService } from './services/apieservice';
-
-
+import { SalesOrderComponent } from './sales-order/sales-order.component';
 
 
 @NgModule({
@@ -222,7 +221,8 @@ import { APIService } from './services/apieservice';
         ChartsDemoComponent,
         EmptyDemoComponent,
         FileDemoComponent,
-        DocumentationComponent
+        DocumentationComponent,
+        SalesOrderComponent
     ],
     providers: [
         AuthGuard,
