@@ -1,0 +1,86 @@
+<div class="p-grid">
+    <div class="p-col-12">
+        <div class="card card-w-title">
+            <div class="p-grid ui-fluid vertical-container">
+                <div class="p-col p-col-align-start">
+                    <h1 class="mt-1">Product Order Allocation</h1>
+                </div>
+                <div class="p-col-12">
+                    <div class="card download-files p-2 mb-0">
+                        <div class="p-grid p-nogutter">
+                            <div class="p-col-12 p-md-12 p-lg-12 mb-1">
+                                    <p-table [value]="prdOrderDetail">
+                                        <ng-template pTemplate="header">
+                                            <tr>
+                                                <th>Product</th>
+                                                <th>No Of Orders</th>
+                                                <th>Qty</th>
+                                                <th>Instock</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </ng-template>
+                                        <ng-template pTemplate="body" let-prdOrderDetail>
+                                            <tr>
+                                                <td style="font-weight: 600;">{{prdOrderDetail.prdName}}</td>
+                                                <td>{{prdOrderDetail.order}}</td>
+                                                <td>{{prdOrderDetail.qty}}</td>
+                                                <td>{{prdOrderDetail.inStock}}</td>
+                                                <td>
+                                                    <button (click)="openDialogForOrderProductAllocate()" pButton type="button" class="ui-button-success mr-1" label="Allocate" ></button>
+                                                    <button pButton type="button" class="ui-button-danger" icon="pi pi-times" title="Cancel"></button>
+                                                 </td>
+                                            </tr>
+                                        </ng-template>
+                                    </p-table>
+                                </div>
+                        </div>
+                    </div>
+    
+                </div> 
+            <div class="p-col-12 mt-0"> 
+                <p-table [value]="ordersDetail">
+                    <ng-template pTemplate="header">
+                        <tr>
+                            <th>Order No</th>
+                            <th>Customer</th>
+                            <th>Qty</th>
+                            <th>Batch No</th>
+                            <th>Expiry Date</th>
+                            <th>Allocated Qty</th>
+                            <th>Action</th>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-ordersDetail>
+                        <tr>
+                            <td>{{ordersDetail.orderNo}}</td>
+                            <td>{{ordersDetail.custmName}}</td>
+                            <td>{{ordersDetail.qty}}</td>
+                            <td>{{ordersDetail.batchNo}}</td>
+                            <td>{{ordersDetail.expiryDate}}</td>
+                            <td>{{ordersDetail.allocatedQty}}</td>
+                            <td>
+                                <button  (click)="openDialogForOrderProductAllocate()" pButton type="button" class="ui-button-success mr-1" label="Allocate"></button>
+                                <button pButton type="button" class="ui-button-danger" icon="pi pi-times" title="Cancel"></button>
+                            </td>
+                        </tr>
+                    </ng-template>
+                </p-table>
+            
+            </div> 
+            
+            <div class="p-col-12 p-md-2 p-lg-12">
+                <div class="separator separator--border-solid separator--space-sm separator--portlet-fit mt-0"></div>
+            </div>
+
+            <div class="p-col-12 p-md-12 p-lg-12 text-right mt-0 p-0">
+                <button pButton type="button" label="Cancel"  class="ui-button-light atbt mr-2 mb-3"></button>
+                <button pButton type="submit" label="Save" class="ui-button atbt mb-3"></button>
+            </div>
+
+        </div> 
+
+                                
+        </div>
+    </div>
+</div>
+

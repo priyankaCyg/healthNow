@@ -1,0 +1,66 @@
+<div class="p-grid">
+    <div class="p-col-12">
+        <div class="card card-w-title">
+            <div class="p-grid ui-fluid vertical-container">
+                <div class="p-col p-col-align-start">
+                    <h1 class="mt-2">Customer Order Allocation</h1>
+                </div>
+                <div class="p-col-12 p-lg-12">
+                    <div class="p-grid">  
+                        <div class="p-col-12 p-md-6 p-lg-4 mb-2">
+                            <div class="card bg-success p-2">Customer : <strong> Amit Shah</strong></div>
+                        </div>
+                        <div class="p-col-12 p-md-6 p-lg-4 mb-2">
+                            <div class="card bg-success p-2"  (click)="openDialogForAddress()">Location : <strong> Mumbai</strong></div>
+                        </div>
+                        <div class="p-col-12 p-md-6 p-lg-4 mb-2">
+                            <div class="card bg-success p-2">Ordered No : <strong>1120-3739</strong></div>
+                        </div>
+                    </div>  
+                </div>
+            <div class="p-col-12 mt-3"> 
+                <p-table [value]="orderDetail">
+                    <ng-template pTemplate="header">
+                        <tr>
+                            <th>Product Name</th>
+                            <th>Qty</th>
+                            <th>Batch No</th>
+                            <th>Expiry Date</th>
+                            <th>Allocated Qty</th>
+                            <th>Action</th>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-orderDetail>
+                        <tr>
+                            <td>{{orderDetail.prdName}}</td>
+                            <td>{{orderDetail.qty}}</td>
+                            <td>{{orderDetail.batchNo}}</td>
+                            <td>{{orderDetail.expiryDate}}</td>
+                            <td>{{orderDetail.allocatedQty}}</td>
+                            <td>
+                                <button  (click)="openDialogForOrderAllocate()" pButton type="button" class="ui-button-success mr-1" label="Allocate"></button>
+                                <button pButton type="button" class="ui-button-danger" icon="pi pi-times" title="Reject"></button>
+                            </td>
+                        </tr>
+                    </ng-template>
+                </p-table>
+            
+            </div> 
+            
+            <div class="p-col-12 p-md-2 p-lg-12">
+                <div class="separator separator--border-solid separator--space-sm separator--portlet-fit mt-2"></div>
+            </div>
+
+            <div class="p-col-12 p-md-2 p-lg-12 text-right mt-0">
+                <button pButton type="button" label="Cancel"  class="ui-button-light atbt mr-2 mb-2"></button>
+                <button pButton type="submit" label="Save" class="ui-button atbt mb-2"></button>
+            </div> 
+
+
+        </div> 
+
+                                
+        </div>
+    </div>
+</div>
+

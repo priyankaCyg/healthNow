@@ -115,11 +115,9 @@ import {MenuService} from './app.menu.service';
 
 // Prime NG
 import { MessageService } from 'primeng/api';
-import { from } from 'rxjs';
 
 import { ApiService } from './services/api.service';
 import { APIService } from './services/apieservice';
-import { SalesOrderComponent } from './sales-order/sales-order.component';
 
 
 @NgModule({
@@ -221,8 +219,8 @@ import { SalesOrderComponent } from './sales-order/sales-order.component';
         ChartsDemoComponent,
         EmptyDemoComponent,
         FileDemoComponent,
-        DocumentationComponent,
-        SalesOrderComponent
+        DocumentationComponent
+        
     ],
     providers: [
         AuthGuard,

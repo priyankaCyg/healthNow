@@ -169,6 +169,30 @@ import {AppMainComponent} from './app.main.component';
 									</li>
 								</ul>
 							</li>
+							<li [ngClass]="{'active-topmenuitem': activeItem === 7}" (click)="mobileMegaMenuItemClick(3)">
+								<a href="#">Sales Order <i class="pi pi-angle-down"></i></a>
+								<ul>
+									<li routerLink="/app/sales-order/order-allocation">
+										<i class="pi pi-circle-on"></i>
+										<span>
+                                       		 <h3>Order Allocation</h3>
+                                   		 </span>
+									</li>
+									
+									<li routerLink="/app/sales-order/delivery-list">
+										<i class="pi pi-circle-on"></i>
+										<span>
+                                       		 <h3>Delivery List</h3>
+                                   		 </span>
+									</li>
+									<li routerLink="/app/sales-order/delivered">
+										<i class="pi pi-circle-on"></i>
+										<span>
+                                       		 <h3>Delivered</h3>
+                                   		 </span>
+									</li>
+								</ul>
+							</li>
 						</ul>
 					</div>
                 </div>

@@ -1,0 +1,25 @@
+
+    <div class="p-grid ui-fluid">
+        <div class="p-col-12"> 
+           
+            <p-table [value]="avblQty">
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th>Batch No</th>
+                        <th>Expiry Date</th>
+                        <th>Quantity</th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-avblQty>
+                    <tr>
+                        <td>{{avblQty.batchNo}}</td>
+                        <td>{{avblQty.expiryDate}}</td>
+                        <td>{{avblQty.qty}}</td>
+                        
+                    </tr>
+                </ng-template>
+            </p-table>
+            
+        </div>
+       
+    </div>

@@ -3,7 +3,7 @@
         <div class="card card-w-title">
             <div class="p-grid ui-fluid vertical-container">
                 <div class="p-col p-col-align-start">
-                    <h1 class="mt-2">GRN Approve</h1>
+                    <h1 class="mt-2">Delivery List</h1>
                 </div>
             <div class="p-col-12 mt-3"> 
 
@@ -35,8 +35,8 @@
                     {{rowData[col.field]}}
                 </td>
                 <td>
-                    <button pButton type="button" class="ui-button-success mr-1" icon="pi pi-check" title="Appprove"></button> 
-                    <button pButton type="button" class="ui-button-danger" icon="pi pi-times" title="Reject"></button>
+                    <button pButton type="button" class="ui-button-danger mr-1" icon="pi pi-file-pdf" title="View Invoice"></button> 
+                    <button pButton type="button" class="ui-button-danger mr-1" icon="pi pi-times" title="Cancel Invoice"></button>                    
                 </td>
             </tr>
         </ng-template>
@@ -45,26 +45,32 @@
                 <td [attr.colspan]="columns.length + 2">
                     <div class="ui-g ui-fluid" style="font-size:14px;padding:8px">
                         <div class="ui-g-12 ui-md-12">
-                            <p-table [value]="batch">
+                            <p-table [value]="orderDetail">
                                 <ng-template pTemplate="header">
                                     <tr>
-                                        <th>Batch/Lot No.</th>
-                                        <th>Receive Qty</th>
-                                        <th>POD No</th>
-                                        <th>POD Date</th>
-                                        <th>Manufacturing Date</th>
-                                        <th>Expire Date</th>
+                                        <th>Product Name</th>
+                                        <th>Invoice NO</th>
+                                        <th>Qty</th>
+                                        <th>Rate</th>
+                                        <th>Amount</th>
+                                        <th>Discount Amount</th>
+                                        <th>Total Amount</th>
+                                        <th>Action</th>
                                     </tr>
                                 </ng-template>
-                                <ng-template pTemplate="body" let-batch>
-                                    <tr>
-                                        
-                                        <td>{{batch.batchNo}}</td>
-                                        <td>{{batch.recvQty}}</td>
-                                        <td>{{batch.podNo}}</td>
-                                        <td>{{batch.podDate}}</td>
-                                        <td>{{batch.manfactDate}}</td>
-                                        <td>{{batch.expDate}}</td>
+                                <ng-template pTemplate="body" let-orderDetail>
+                                    <tr> 
+                                        <td>{{orderDetail.prdName}}</td>
+                                        <td>{{orderDetail.invoiceNo}}</td>
+                                        <td>{{orderDetail.qty}}</td>
+                                        <td>{{orderDetail.rate}}</td>
+                                        <td>{{orderDetail.amount}}</td>
+                                        <td>{{orderDetail.discAmt}}</td>
+                                        <td>{{orderDetail.totalAmt}}</td>
+                                        <td>
+                                            <button pButton type="button" class="ui-button-danger mr-1" icon="pi pi-times" title="Cancel Invoice"></button> 
+                                            <button  (click)="openDialogForUpdatePOD()" pButton type="button" class="ui-button-success" label="Update POD" ></button>
+                                        </td>
                                     </tr>
                                 </ng-template>
                             </p-table>

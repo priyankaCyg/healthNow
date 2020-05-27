@@ -62,7 +62,8 @@ export const routes: Routes = [
               { path: 'partner', loadChildren:"./partner/partner.module#PartnerModule" ,
               canActivate: [AuthGuard]},
               { path:'purchase-order', loadChildren:"./purchase-order/purchase-order.module#PurchaseOrderModule" },
-              { path: 'grn', loadChildren:"./grn/grn.module#GrnModule" }
+              { path: 'grn', loadChildren:"./grn/grn.module#GrnModule" },
+              { path: 'sales-order', loadChildren:"./sales-order/sales-order.module#SalesOrderModule" }
               
         ]
     },
