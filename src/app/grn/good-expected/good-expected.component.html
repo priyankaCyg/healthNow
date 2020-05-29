@@ -1,0 +1,41 @@
+<div class="p-grid">
+    <div class="p-col-12">
+        <div class="card card-w-title">
+            <div class="p-grid ui-fluid vertical-container">
+                <div class="p-col p-col-align-start">
+                    <h1 class="mt-2">Goods Expected</h1>
+                </div>
+            <div class="p-col-12 mt-3"> 
+                <p-table [value]="goodExp">
+                    <ng-template pTemplate="header">
+                        <tr>
+                            <th>Supplier Name</th>
+                            <th>Req. No</th>
+                            <th>PO No</th>
+                            <th>Product</th>
+                            <th>Qty</th>
+                            <th>Action</th>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-goodExp>
+                        <tr>
+                            <td>{{goodExp.supName}}</td>
+                            <td>{{goodExp.reqNo}}</td>
+                            <td>{{goodExp.PoNo}}</td>
+                            <td>{{goodExp.product}}</td>
+                            <td>{{goodExp.qty}}</td>
+                            <td>
+                                <button  routerLink="/app/grn/receive-product" pButton type="button" class="ui-button-success" label="GRN" ></button>
+                            </td>
+                            
+                        </tr>
+                    </ng-template>
+                </p-table>
+            
+            </div>              
+        </div> 
+
+                                
+        </div>
+    </div>
+</div>

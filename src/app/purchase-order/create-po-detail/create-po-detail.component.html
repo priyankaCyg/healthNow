@@ -1,0 +1,73 @@
+
+
+<div class="p-grid">
+    <div class="p-col-12">
+        <div class="card card-body">
+            <div class="p-grid ui-fluid vertical-container">
+                <div class="p-col p-col-align-start"> 
+                    <h1 class="mt-2">Purchase Order </h1>
+                </div>
+                <div class="p-col-12 p-lg-12">
+                    <div class="p-grid">  
+                        <div class="p-col-12 p-md-4 p-lg-4 mb-2">
+                            <div class="card bg-success p-2">Supplier : <strong>SKK Supplier</strong></div>
+                        </div>
+                        <div class="p-col-12 p-md-4 p-lg-4 mb-2">
+                            <div class="card bg-success p-2">Partner : <strong>Alpha</strong></div>
+                        </div>
+                        <div class="p-col-12 p-md-4 p-lg-4 mb-2">
+                            <div class="card bg-success p-2">Location : <strong>Mumbai</strong></div>
+                        </div>
+                    </div>  
+                </div>
+                <div class="p-col-12">
+                    <p-table [value]="poDetail">
+                        <ng-template pTemplate="header">
+                            <tr>
+                                <th style="width: 4em;">#</th>
+                                <th>Product Category</th>
+                                <th>Product</th>
+                                <th style="width: 8em;">Qty</th>
+                                <th style="width: 8em;">Rate</th>
+                                <th style="width: 8em;">Discount %</th>
+                                <th style="width: 8em;">Discount Amt</th>
+                                <th>Total Amount</th>
+                                <th>Created By</th>
+                                <th>Created Date</th>
+                                <th>Action</th>
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="body" let-poDetail>
+                            <tr>
+                                <td><p-checkbox name="groupname" value="val1" [(ngModel)]="selectedValues"></p-checkbox></td>
+                                <td>{{poDetail.prdCategory}}</td>
+                                <td>{{poDetail.product}}</td>
+                                <td>{{poDetail.qty}}</td>
+                                <td>{{poDetail.rate}}</td>
+                                <td>{{poDetail.discount}}</td>
+                                <td>{{poDetail.discAmt}}</td>
+                                <td>{{poDetail.totalAmt}}</td>
+                                <td>{{poDetail.createdBy}}</td>
+                                <td>{{poDetail.createdDate}}</td>
+                                <td>
+                                    <button pButton type="button" class="ui-button-success mr-1" icon="pi pi-pencil"></button>
+                                    <button pButton type="button" class="ui-button-danger mr-1" icon="pi pi-trash"></button> 
+                                </td>
+                            </tr>
+                        </ng-template>
+                    </p-table>
+                </div>
+
+            </div>    
+
+            <div class="separator separator--border-solid separator--space-sm separator--portlet-fit mt-5"></div>
+            <div class="p-grid form-group ui-fluid p-justify-end mt-3">
+                <div class="p-col-12 p-md-2 p-lg-12 text-right">
+                    <button pButton type="button" label="Cancel" routerLink="/app/purchase-order/create-po-list" class="ui-button-light atbt mr-2 mb-2"></button>               
+                    <button pButton type="submit" label="Create PO"  routerLink="/app/purchase-order/po-general-details"class="ui-button atbt mb-2"></button>
+                </div>
+            </div>
+                                
+        </div>
+    </div>
+</div>

@@ -1,0 +1,83 @@
+<div class="p-grid">
+    <div class="p-col-12">
+        <div class="card card-w-title">
+            <div class="p-grid ui-fluid vertical-container">
+                <div class="p-col p-col-align-start">
+                    <h1 class="mt-2">GRN List</h1>
+                </div>
+            <div class="p-col-12 mt-3"> 
+
+                <p-table [columns]="cols" [value]="cars" dataKey="vin" [paginator]="true"
+        [rows]="10" [totalRecords]="cars.length" pageLinkSize="3" (onPage)="onPage($event)"
+            (onRowExpand)="onRowExpand()" (onRowCollapse)="onRowCollapse()" 
+            [expandedRowKeys]="expandedRows">
+        <ng-template pTemplate="header" let-columns>
+            <tr>
+                <th style="width: 3em">
+                    <a style="cursor: pointer;font-size: 16px; color:teal;" (click)="expandAll()"><i
+                    *ngIf="!isExpanded" class="fa fa-plus-circle" aria-hidden="true"></i>
+                <i *ngIf="isExpanded" class="fa fa-minus-circle" aria-hidden="true"></i></a>
+                </th>
+                <th *ngFor="let col of columns">
+                    {{col.header}}
+                </th>
+                <th>Action</th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-rowData let-expanded="expanded" let-columns="columns">
+            <tr>
+                <td>
+                    <a href="#" [pRowToggler]="rowData">
+                        <i [ngClass]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></i>
+                    </a>
+                </td>
+                <td *ngFor="let col of columns">
+                    {{rowData[col.field]}}
+                </td>
+                <td>
+                    <button pButton type="button" class="ui-button-danger mr-1" icon="pi pi-trash"></button> 
+                    <button pButton type="button" class="ui-button-success" icon="pi pi-arrow-circle-right" title="Send For Approval"></button>
+                </td>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="rowexpansion" let-rowData let-columns="columns">
+            <tr>
+                <td [attr.colspan]="columns.length + 2">
+                    <div class="ui-g ui-fluid" style="font-size:14px;padding:8px">
+                        <div class="ui-g-12 ui-md-12">
+                            <p-table [value]="batch">
+                                <ng-template pTemplate="header">
+                                    <tr>
+                                        <th>Batch/Lot No.</th>
+                                        <th>Receive Qty</th>
+                                        <th>POD No</th>
+                                        <th>POD Date</th>
+                                        <th>Manufacturing Date</th>
+                                        <th>Expire Date</th>
+                                    </tr>
+                                </ng-template>
+                                <ng-template pTemplate="body" let-batch>
+                                    <tr>
+                                        
+                                        <td>{{batch.batchNo}}</td>
+                                        <td>{{batch.recvQty}}</td>
+                                        <td>{{batch.podNo}}</td>
+                                        <td>{{batch.podDate}}</td>
+                                        <td>{{batch.manfactDate}}</td>
+                                        <td>{{batch.expDate}}</td>
+                                    </tr>
+                                </ng-template>
+                            </p-table>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+        </ng-template>
+</p-table>
+            </div>              
+        </div> 
+
+                                
+        </div>
+    </div>
+</div>

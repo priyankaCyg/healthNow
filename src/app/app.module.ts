@@ -115,13 +115,11 @@ import { MenuService } from './app.menu.service';
 
 // Prime NG
 import { MessageService } from 'primeng/api';
-import { from } from 'rxjs';
 
 import { ApiService } from './services/api.service';
 import { APIService } from './services/apieservice';
 import { DialogService } from 'primeng';
 import { ConfirmationService } from 'primeng/api';
-
 
 
 @NgModule({
@@ -228,9 +226,7 @@ import { ConfirmationService } from 'primeng/api';
         EmptyDemoComponent,
         FileDemoComponent,
         DocumentationComponent
-        //UnitComponent
-        // CompanyComponent,
-        // GeneralEditComponent,
+        
     ],
     providers: [
         AuthGuard,

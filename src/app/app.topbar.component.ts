@@ -117,6 +117,82 @@ import { AppMainComponent } from './app.main.component';
 									</li>
 								</ul>
 							</li>
+							<li [ngClass]="{'active-topmenuitem': activeItem === 5}" (click)="mobileMegaMenuItemClick(3)">
+								<a href="#">Purchase Order <i class="pi pi-angle-down"></i></a>
+								<ul>
+									<li routerLink="/app/purchase-order/product-purchase-price">
+										<i class="pi pi-circle-on"></i>
+										<span>
+                                       		 <h3>Product Purchase Price</h3>
+                                   		 </span>
+									</li>
+									<li routerLink="/app/purchase-order/product-requisition">
+										<i class="pi pi-circle-on"></i>
+										<span>
+                                       		 <h3>Requisition</h3>
+                                   		 </span>
+									</li>
+									<li routerLink="/app/purchase-order/create-po-list">
+										<i class="pi pi-circle-on"></i>
+										<span>
+                                       		 <h3>Supplier Requisition List</h3>
+                                   		 </span>
+									</li>
+									<li routerLink="/app/purchase-order/po-list">
+										<i class="pi pi-circle-on"></i>
+										<span>
+                                       		 <h3>Purchase Order</h3>
+                                   		 </span>
+									</li>
+								</ul>
+							</li>
+							<li [ngClass]="{'active-topmenuitem': activeItem === 6}" (click)="mobileMegaMenuItemClick(3)">
+								<a href="#">GRN <i class="pi pi-angle-down"></i></a>
+								<ul>
+									<li routerLink="/app/grn/good-expected">
+										<i class="pi pi-circle-on"></i>
+										<span>
+                                       		 <h3>Good Expected</h3>
+                                   		 </span>
+									</li>
+									<li routerLink="/app/grn/grn-list">
+										<i class="pi pi-circle-on"></i>
+										<span>
+                                       		 <h3>GRN List</h3>
+                                   		 </span>
+									</li>
+									<li routerLink="/app/grn/grn-approver">
+										<i class="pi pi-circle-on"></i>
+										<span>
+                                       		 <h3>GRN Approve</h3>
+                                   		 </span>
+									</li>
+								</ul>
+							</li>
+							<li [ngClass]="{'active-topmenuitem': activeItem === 7}" (click)="mobileMegaMenuItemClick(3)">
+								<a href="#">Sales Order <i class="pi pi-angle-down"></i></a>
+								<ul>
+									<li routerLink="/app/sales-order/order-allocation">
+										<i class="pi pi-circle-on"></i>
+										<span>
+                                       		 <h3>Order Allocation</h3>
+                                   		 </span>
+									</li>
+									
+									<li routerLink="/app/sales-order/delivery-list">
+										<i class="pi pi-circle-on"></i>
+										<span>
+                                       		 <h3>Delivery List</h3>
+                                   		 </span>
+									</li>
+									<li routerLink="/app/sales-order/delivered">
+										<i class="pi pi-circle-on"></i>
+										<span>
+                                       		 <h3>Delivered</h3>
+                                   		 </span>
+									</li>
+								</ul>
+							</li>
 						</ul>
 					</div>
                 </div>

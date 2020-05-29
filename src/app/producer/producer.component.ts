@@ -1,3 +1,9 @@
+/**
+Template Name: HealthNow
+Author: Priyanka Sahu
+Created Date: 
+File: producer.component
+**/
 import { Component, OnInit } from '@angular/core';
 import { GeneratedFile } from '@angular/compiler';
 import { DialogService } from 'primeng';

@@ -1,0 +1,43 @@
+<div class="p-grid">
+    <div class="p-col-12">
+        <div class="card card-body">
+            <div class="p-grid ui-fluid vertical-container">
+                <div class="p-col p-col-align-start"> 
+                    <h1 class="mt-2">Supplier Requisition List </h1>
+                </div>
+
+                <div class="p-col-12">
+                    <p-table [value]="poList">
+                        <ng-template pTemplate="header">
+                            <tr>
+                                <th style="width: 3em">#</th>
+                                <th>Supplier</th>
+                                <th>Partner</th>
+                                <th>Location</th>
+                                <th>Requisitions</th>
+                                <th>Created Date</th>
+                                <th>Action</th>
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="body" let-poList>
+                            <tr>
+                                <td>{{poList.srNo}}</td>
+                                <td>{{poList.supplier}}</td>
+                                <td>{{poList.partner}}</td>
+                                <td>{{poList.location}}</td>
+                                <td>{{poList.requisitions}}</td>
+                                <td>{{poList.createdDate}}</td>
+                                <td>
+                                    <button pButton type="button" routerLink="/app/purchase-order/create-po-detail" label="Create PO" class="ui-button-success mb-2"></button>
+                                </td>
+                                
+                            </tr>
+                        </ng-template>
+                    </p-table>
+                </div>
+
+            </div>    
+                                
+        </div>
+    </div>
+</div>
