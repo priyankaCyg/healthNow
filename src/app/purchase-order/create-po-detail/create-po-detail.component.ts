@@ -18,7 +18,7 @@ export class CreatePoDetailComponent implements OnInit {
   constructor(private breadcrumbService: BreadcrumbService, private dialogService:DialogService) {
     this.breadcrumbService.setItems([
         { label: 'Dashboard' },
-        { label: 'Purchase Order', routerLink: ['/app/purchase-order'] }
+        { label: 'Purchase Order', routerLink: ['/purchase-order'] }
     ]);
 }
 
