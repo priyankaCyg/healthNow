@@ -9,7 +9,7 @@ import { ApiService } from '../services/api.service';
 import { ToastService } from '../services/toast.service';
 import { ConfirmationService } from 'primeng/api';
 import { Router } from '@angular/router';
-import {LoginService} from '../../app/services/login.service'
+import { LoginService } from '../../app/services/login.service'
 
 
 @Component({
@@ -25,38 +25,34 @@ export class ProductComponent implements OnInit {
 
 
   constructor(private breadcrumbService: BreadcrumbService, private dialogService: DialogService,
-    private apiService: ApiService, private toastService: ToastService, private confirmationService: ConfirmationService
-    , private router: Router,private loginService:LoginService) {
+    private httpService: ApiService, private toastService: ToastService, private confirmationService: ConfirmationService
+    , private router: Router, private loginService: LoginService) {
     this.breadcrumbService.setItems([
       { label: 'Dashboard' },
-      { label: 'Product', routerLink: ['/app/product'] }
+      { label: 'Product', routerLink: ['/product'] }
     ]);
   }
 
   ngOnInit(): void {
-
-
-    this.loginService.checkBrowserClosed();
+    //this.loginService.checkBrowserClosed();
     this.getAllProduct();
-
   }
 
-  // get list of products
+  // code for get list of products
   getAllProduct() {
     const Product_list_api =
     {
       "iRequestID": 2254,
     }
-    this.apiService.callPostApi(Product_list_api).subscribe(
+    this.httpService.callPostApi(Product_list_api).subscribe(
       data => {
-        console.log(data);
         this.product = data.body;
       },
       error => console.log(error)
     );
   }
 
-  //delete product
+  //code for delete product
   deleteProduct(iPrdID: Number) {
     this.confirmationService.confirm({
       message: 'Are you sure that you want to proceed?',
@@ -64,27 +60,23 @@ export class ProductComponent implements OnInit {
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
         let prd_id = iPrdID;
-        console.log(prd_id);
         let delete_data_api = {
           "iRequestID": 2253,
           "iPrdID": prd_id
         };
-        this.apiService.callPostApi(delete_data_api).subscribe(
+        this.httpService.callPostApi(delete_data_api).subscribe(
           (data) => {
-            console.log(data);
             this.toastService.addSingle("success", data.headers.get('StatusMessage'), "");
             this.getAllProduct();
           },
           (error) => console.log(error)
         );
       }
-
     });
-
   }
 
-  //edit product
+  //code for edit product
   editProduct(iPrdID: Number) {
-    this.router.navigate(['/app/product/edit-product', iPrdID]);
+    this.router.navigate(['/product/edit-product', iPrdID]);
   }
 }

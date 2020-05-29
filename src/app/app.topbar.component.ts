@@ -1,9 +1,9 @@
-import {Component} from '@angular/core';
-import {AppMainComponent} from './app.main.component';
+import { Component } from '@angular/core';
+import { AppMainComponent } from './app.main.component';
 
 @Component({
-    selector: 'app-topbar',
-    template: `
+	selector: 'app-topbar',
+	template: `
         <div class="layout-topbar">
 			<div class="layout-topbar-wrapper">
                 <div class="layout-topbar-left">
@@ -35,7 +35,7 @@ import {AppMainComponent} from './app.main.component';
                             (click)="app.onMegaMenuClick($event)">
 							<li [ngClass]="{'active-topmenuitem': activeItem === 1}" (click)="mobileMegaMenuItemClick(1)">
 								<a >Company <i class="pi pi-angle-down"></i></a>
-								<ul routerLink="/app/company">
+								<ul routerLink="/company">
 									<li>
 										<i class="pi pi-circle-on"></i>
 										<span>
@@ -48,32 +48,32 @@ import {AppMainComponent} from './app.main.component';
 							<li [ngClass]="{'active-topmenuitem': activeItem === 2}" (click)="mobileMegaMenuItemClick(2)">
 								<a href="#">Product <i class="pi pi-angle-down"></i></a>
 								<ul>
-									<li routerLink="/app/product-category">
+									<li routerLink="/product-category">
 										<i class="pi pi-circle-on"></i>
 										<span>
                                         <h3>Product Category</h3>
                                     </span>
 
 									</li>
-									<li routerLink="/app/producer">
+									<li routerLink="/producer">
 										<i class="pi pi-circle-on"></i>
 										<span>
                                         <h3>Producer</h3>
                                     </span>
 									</li>
-									<li routerLink="/app/brand">
+									<li routerLink="/brand">
 										<i class="pi pi-circle-on"></i>
 										<span>
                                         <h3>Brand</h3>
                                     </span>
 									</li>
-									<li routerLink="/app/unit">
+									<li routerLink="/unit">
 										<i class="pi pi-circle-on"></i>
 										<span>
                                         <h3>Unit</h3>
                                     </span>
 									</li>
-									<li routerLink="/app/product">
+									<li routerLink="/product">
 										<i class="pi pi-circle-on"></i>
 										<span>
                                         <h3>Product</h3>
@@ -92,13 +92,13 @@ import {AppMainComponent} from './app.main.component';
 							<li [ngClass]="{'active-topmenuitem': activeItem === 3}" (click)="mobileMegaMenuItemClick(3)">
 								<a href="#">Supplier <i class="pi pi-angle-down"></i></a>
 								<ul>
-									<li routerLink="/app/supplier-category">
+									<li routerLink="/supplier-category">
 										<i class="pi pi-circle-on"></i>
 										<span>
                                        		 <h3>Supplier Category</h3>
                                    		 </span>
 									</li>
-									<li class="active-row"  routerLink="/app/supplier">
+									<li class="active-row"  routerLink="/supplier">
 										<i class="pi pi-circle-on"></i>
 										<span>
                                        	 <h3>Supplier</h3>
@@ -109,7 +109,7 @@ import {AppMainComponent} from './app.main.component';
 							<li [ngClass]="{'active-topmenuitem': activeItem === 4}" (click)="mobileMegaMenuItemClick(3)">
 								<a href="#">Partner <i class="pi pi-angle-down"></i></a>
 								<ul>
-									<li routerLink="/app/partner">
+									<li routerLink="/partner">
 										<i class="pi pi-circle-on"></i>
 										<span>
                                        		 <h3>Partner</h3>
@@ -288,13 +288,13 @@ import {AppMainComponent} from './app.main.component';
 })
 export class AppTopBarComponent {
 
-    activeItem: number;
+	activeItem: number;
 
-    constructor(public app: AppMainComponent) {}
+	constructor(public app: AppMainComponent) { }
 
-    mobileMegaMenuItemClick(index) {
-        this.app.megaMenuMobileClick = true;
-        this.activeItem = this.activeItem === index ? null : index;
-    }
+	mobileMegaMenuItemClick(index) {
+		this.app.megaMenuMobileClick = true;
+		this.activeItem = this.activeItem === index ? null : index;
+	}
 
 }

@@ -11,13 +11,15 @@ import { ToastService } from 'src/app/services/toast.service';
   styleUrls: ["./designation.component.css"],
 })
 export class DesignationComponent implements OnInit {
+
   statusData: StatusData[];
   setStatus: object;
   temp;
   selectedstatus;
   isEdit: boolean = false;
+
   constructor(
-    private apiService: ApiService,
+    private httpService: ApiService,
     private fb: FormBuilder,
     private config: DynamicDialogConfig,
     private ref: DynamicDialogRef,
@@ -30,7 +32,7 @@ export class DesignationComponent implements OnInit {
       sKVName: "Status",
     };
 
-    await this.apiService.getDropDownData(status_data).then(
+    await this.httpService.getDropDownData(status_data).then(
       data => {
         this.statusData = data;
         this.statusData.unshift({ "iKVID": 0, "sKVValue": "Select" });
@@ -41,14 +43,6 @@ export class DesignationComponent implements OnInit {
     this.temp = this.config.data.iStatusID;
     let tempData = this.statusData.filter(t => t.iKVID == this.temp);
     this.setStatus = tempData[0];
-
-    // if(temp ==1){
-    //   this.setStatus = {sKVValue: 'Active', iKVID: 1}
-    // }
-    // else{
-    //   this.setStatus = {sKVValue: 'Inactive', iKVID: 2}
-    // }
-
     if (this.config.data.iDesigID != undefined) {
       this.isEdit = true;
       this.desigForm.patchValue({
@@ -56,10 +50,10 @@ export class DesignationComponent implements OnInit {
         desig_level: this.config.data.iDesigLevel,
         status: this.setStatus,
       });
-    }else{
+    } else {
       this.isEdit = false;
     }
-   
+
   }
 
   desigForm = this.fb.group({
@@ -68,21 +62,20 @@ export class DesignationComponent implements OnInit {
     status: ["", Validators.required],
   });
 
-
+  // Add and Update details function
   onSubmit() {
-
     let desig_id = this.config.data.iDesigID;
     let desig_name = this.desigForm.controls["desig_name"].value;
     let desig_level = this.desigForm.controls["desig_level"].value;
     let status = this.desigForm.controls["status"].value;
     let status_id = status.iKVID;
-
     if (status_id == 0) {
-       this.desigForm.setErrors({ 'invalid': true });
+      this.desigForm.setErrors({ 'invalid': true });
     }
     else {
       if (!this.desigForm.invalid) {
         if (desig_id == undefined) {
+          //Add designation details
           const addDesig_data = {
             iRequestID: 2081,
             iCID: 1,
@@ -90,17 +83,15 @@ export class DesignationComponent implements OnInit {
             iDesigLevel: desig_level,
             iUserID: 1,
           };
-          console.log(addDesig_data, "add");
-          this.apiService.callPostApi(addDesig_data).subscribe(
+          this.httpService.callPostApi(addDesig_data).subscribe(
             (data) => {
-              console.log(data);
               this.ref.close(true);
               this.toastService.addSingle("success", data.headers.get('StatusMessage'), "");
-             
             },
             (error) => console.log(error)
           );
         } else {
+          //update designation details
           const updateDesig_data = {
             iRequestID: 2082,
             iCID: 1,
@@ -110,23 +101,19 @@ export class DesignationComponent implements OnInit {
             iUserID: 2,
             iStatusID: status_id
           };
-          console.log(updateDesig_data, "update");
-          this.apiService.callPostApi(updateDesig_data).subscribe(
+          this.httpService.callPostApi(updateDesig_data).subscribe(
             (data) => {
-              console.log(data);   
-              this.ref.close(true);   
+              this.ref.close(true);
               this.toastService.addSingle("success", data.headers.get('StatusMessage'), "");
             },
             (error) => console.log(error)
           );
         }
-        
         this.desigForm.reset();
       } else {
         console.log("Error");
       }
     }
-
   }
 
   //Close Button Function
@@ -134,5 +121,5 @@ export class DesignationComponent implements OnInit {
     this.ref.close();
     this.desigForm.reset();
   }
-  
+
 }

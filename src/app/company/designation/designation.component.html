@@ -1,46 +1,46 @@
-<form [formGroup]="desigForm" (ngSubmit)="onSubmit()">
+<form [formGroup]="desigForm" (ngSubmit)="onSubmit()" autocomplete="off">
   <div class="p-grid ui-fluid">
     <div class="p-col-12">
       <div class="p-grid form-group">
         <div class="p-col-12">
           <label for="designationname">Designation Name</label>
           <input id="designationname" type="text" pInputText formControlName="desig_name" />
-          
           <p-message severity="error"
-          [text]="desigForm.controls['desig_name'].errors['required'] ? 'This field is required' : desigForm.controls['desig_name'].errors['pattern']? 'Please enter a valid Designation Name' : desigForm.controls['desig_name'].errors "
-          *ngIf="!desigForm.controls['desig_name'].valid && desigForm.controls['desig_name'].dirty">
+            [text]="desigForm.controls['desig_name'].errors['required'] ? 'This field is required' : desigForm.controls['desig_name'].errors['pattern']? 'Please enter a valid Designation Name' : desigForm.controls['desig_name'].errors "
+            *ngIf="!desigForm.controls['desig_name'].valid && desigForm.controls['desig_name'].dirty">
           </p-message>
         </div>
-
         <div class="p-col-12">
           <label for="designationlevel">Designation Level</label>
           <input id="designationlevel" type="number" pInputText formControlName="desig_level" />
-         
           <p-message severity="error"
-          [text]="desigForm.controls['desig_level'].errors['required'] ? 'This field is required' :  desigForm.controls['desig_level'].errors "
-          *ngIf="!desigForm.controls['desig_level'].valid && desigForm.controls['desig_level'].dirty">
+            [text]="desigForm.controls['desig_level'].errors['required'] ? 'This field is required' :  desigForm.controls['desig_level'].errors "
+            *ngIf="!desigForm.controls['desig_level'].valid && desigForm.controls['desig_level'].dirty">
           </p-message>
         </div>
-
         <div class="p-col-12">
           <div class="separator separator--border-dashed separator--space-sm separator--portlet-fit"></div>
         </div>
-
         <div class="p-col-12">
           <label for="iStatusID">Status</label>
-          <p-dropdown formControlName="status" optionLabel="sKVValue"  id="iStatusID" [options]="statusData" [(ngModel)]="selectedstatus"></p-dropdown>
+          <p-dropdown formControlName="status" optionLabel="sKVValue" id="iStatusID" [options]="statusData"
+            [(ngModel)]="selectedstatus"></p-dropdown>
           <div>
-            <p-message severity="error" text="This field is required" *ngIf="desigForm.controls['status'].touched  && (selectedstatus.iKVID =='' || desigForm.controls['status'].hasError('required'))" ></p-message>
-        </div>
+            <p-message severity="error" text="This field is required"
+              *ngIf="desigForm.controls['status'].touched  && (selectedstatus.iKVID =='' || desigForm.controls['status'].hasError('required'))">
+            </p-message>
+          </div>
         </div>
       </div>
       <div class="separator separator--border-solid separator--space-sm separator--portlet-fit"></div>
       <div class="p-grid form-group ui-fluid">
         <div class="p-md-6 p-lg-6"></div>
         <div class="p-col-12 p-md-12 p-lg-12 text-right">
-          <button pButton type="button" label="Cancel" class="ui-button-light atbt mr-2" (click)="onClose()"></button>        
-          <button pButton *ngIf="!isEdit" type="submit" label="Save" class="ui-button atbt" [disabled]="!desigForm.valid"></button>
-          <button  pButton *ngIf="isEdit" type="submit" label="Update" [disabled]="!desigForm.valid" class="ui-button atbt"></button>
+          <button pButton type="button" label="Cancel" class="ui-button-light atbt mr-2" (click)="onClose()"></button>
+          <button pButton *ngIf="!isEdit" type="submit" label="Save" class="ui-button atbt"
+            [disabled]="!desigForm.valid"></button>
+          <button pButton *ngIf="isEdit" type="submit" label="Update" [disabled]="!desigForm.valid"
+            class="ui-button atbt"></button>
         </div>
       </div>
     </div>

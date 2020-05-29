@@ -5,13 +5,13 @@
     <div class="card card-w-title">
       <h1>Company</h1>
       <p-tabView>
+        <!-- General tab start here -->
         <p-tabPanel header="General">
           <div class="p-grid ui-fluid  p-justify-end" *ngFor="let dt of compData">
-
             <div class="p-col-1 text-center mt-1">
-              <button (click)="openDialogForGeneraledit(dt)" pButton icon="pi pi-fw pi-pencil" label="Edit" class="ui-button atbt"></button>
+              <button (click)="openDialogForGeneraledit(dt)" pButton icon="pi pi-fw pi-pencil" label="Edit"
+                class="ui-button atbt"></button>
             </div>
-
             <div class="p-col-12">
               <div class="p-grid form-group">
                 <div class="p-col-12 p-md-6 p-lg-3">
@@ -60,8 +60,8 @@
         <p-tabPanel header="Address">
           <div class="p-grid ui-fluid p-justify-end">
             <div class="p-col-1 text-center mt-1">
-              <button (click)="openDialogForaddNewAddress()" pButton icon="pi pi-fw pi-plus" label="Add New"  class="ui-button atbt"></button>
-
+              <button (click)="openDialogForaddNewAddress()" pButton icon="pi pi-fw pi-plus" label="Add New"
+                class="ui-button atbt"></button>
             </div>
             <div class="p-col-12">
               <p-table [value]="addressDataArray" #AddressSearch [paginator]="true" [rows]="10"
@@ -69,7 +69,6 @@
                 [globalFilterFields]="['sAddType','sAdd1','sAdd2','sStateName','sCityName','sLandmark'
                     ,'sTelNo1','sTelNo2','sFaxNo','sStatusName']" class="defaultDataTable">
                 <ng-template pTemplate="caption">
-
                   <div class="ui-table-globalfilter-container text-left">
                     <input type="text" pInputText size="50" placeholder="Search"
                       (input)="AddressSearch.filterGlobal($event.target.value, 'contains')" style="width:250px;">
@@ -114,7 +113,7 @@
                     </td>
                     <td><button pButton type="button" class="ui-button-success" icon="pi pi-pencil"
                         style="margin-right: .5em" (click)="openDialogForeditAddress(address)"></button>
-                    <button pButton type="button" class="ui-button-danger" icon="pi pi-trash"
+                      <button pButton type="button" class="ui-button-danger" icon="pi pi-trash"
                         (click)="onDeleteAddress(address.iAddID)"></button></td>
                   </tr>
                 </ng-template>
@@ -122,21 +121,20 @@
             </div>
           </div>
         </p-tabPanel>
-
         <!-- Address tab End here -->
 
-        <!-- Department tab End here -->
+        <!-- Department tab start here -->
         <p-tabPanel header="Department">
           <div class="p-grid ui-fluid p-justify-end">
             <div class="p-col-1 text-center mt-1">
-              <button (click)="openDialogForaddDepartment()" pButton icon="pi pi-fw pi-plus" label="Add New" class="ui-button atbt"></button>
+              <button (click)="openDialogForaddDepartment()" pButton icon="pi pi-fw pi-plus" label="Add New"
+                class="ui-button atbt"></button>
             </div>
             <div class="p-col-12">
               <p-table #dt [value]="department" [rowHover]="true" [paginator]="true" [rows]="10"
                 [showCurrentPageReport]="true" [rowsPerPageOptions]="[10, 25, 50]" [filterDelay]="0"
                 [globalFilterFields]="['sDeptName','iStatusID']">
                 <ng-template pTemplate="caption">
-
                   <div class="ui-table-globalfilter-container text-left">
                     <input type="text" pInputText size="50" placeholder="Search"
                       (input)="dt.filterGlobal($event.target.value, 'contains')" style="width:250px;">
@@ -163,9 +161,8 @@
                         Deleted
                       </span>
                     </td>
-                    <td><button pButton type="button" class="ui-button-success"
-                        icon="pi pi-pencil" style="margin-right: .5em"
-                        (click)="openDialogForeditDepartment(department)"></button>
+                    <td><button pButton type="button" class="ui-button-success" icon="pi pi-pencil"
+                        style="margin-right: .5em" (click)="openDialogForeditDepartment(department)"></button>
                       <button pButton type="button" class="ui-button-danger" icon="pi pi-trash"
                         (click)="deleteDepartemnt(department)"></button></td>
                   </tr>
@@ -173,16 +170,15 @@
               </p-table>
             </div>
           </div>
-          
         </p-tabPanel>
-
         <!-- Department tab End here -->
 
-        <!---------Designation tab start here----->
+        <!-- Designation tab start here -->
         <p-tabPanel header="Designation">
           <div class="p-grid ui-fluid p-justify-end">
             <div class="p-col-1 text-center mt-1">
-              <button (click)="openDialogForDesignation()" pButton icon="pi pi-fw pi-plus" label="Add New" class="ui-button atbt"></button>
+              <button (click)="openDialogForDesignation()" pButton icon="pi pi-fw pi-plus" label="Add New"
+                class="ui-button atbt"></button>
             </div>
             <div class="p-col-12">
               <p-table #searchDesig [value]="designationData" [paginator]="true" [rows]="10"
@@ -215,8 +211,10 @@
                     <td>{{ desig.sDesigName }}</td>
                     <td>{{ desig.iDesigLevel }}</td>
                     <td>
-                      <span *ngIf="desig.iStatusID == 1" class="badge badge--success badge--inline badge--pill"> Active</span>
-                      <span *ngIf="desig.iStatusID == 2" class="badge badge--warning badge--inline badge--pill"> Inactive </span>
+                      <span *ngIf="desig.iStatusID == 1" class="badge badge--success badge--inline badge--pill">
+                        Active</span>
+                      <span *ngIf="desig.iStatusID == 2" class="badge badge--warning badge--inline badge--pill">
+                        Inactive </span>
                     </td>
                     <td>
                       <button pButton type="button" class="ui-button-success" icon="pi pi-pencil"
@@ -232,12 +230,12 @@
         </p-tabPanel>
         <!-- Designation tab End here -->
 
-        <!-------Employee tab start here---->
+        <!-- Employee tab start here -->
         <p-tabPanel header="Employee">
           <div class="p-grid ui-fluid p-justify-end">
             <div class="p-col-1 text-center mt-1">
-              <button (click)="openDialogForEmployee()" pButton icon="pi pi-fw pi-plus" label="Add New" class="ui-button atbt"></button>
-
+              <button (click)="openDialogForEmployee()" pButton icon="pi pi-fw pi-plus" label="Add New"
+                class="ui-button atbt"></button>
             </div>
             <div class="p-col-12">
               <!-- <p-table [value]="employee"> -->
@@ -275,10 +273,10 @@
                     <td>{{employee.sReportingTo}}</td>
                     <!-- <td>{{employee.iStatusID}}</td> -->
                     <td>
-                      <span *ngIf="employee.iStatusID == 1" class="badge badge--success badge--inline badge--pill" >
+                      <span *ngIf="employee.iStatusID == 1" class="badge badge--success badge--inline badge--pill">
                         Active
                       </span>
-                      <span *ngIf="employee.iStatusID == 2" class="badge badge--warning badge--inline badge--pill" >
+                      <span *ngIf="employee.iStatusID == 2" class="badge badge--warning badge--inline badge--pill">
                         Inactive
                       </span>
                     </td>
@@ -291,10 +289,6 @@
                   </tr>
                 </ng-template>
               </p-table>
-
-
-
-
             </div>
           </div>
         </p-tabPanel>
@@ -304,10 +298,11 @@
         <p-tabPanel header="Bank">
           <div class="p-grid ui-fluid p-justify-end">
             <div class="p-col-1 text-center mt-1">
-              <button (click)="openDialogForBank()" pButton icon="pi pi-fw pi-plus" label="Add New" class="ui-button atbt"></button>
+              <button (click)="openDialogForBank()" pButton icon="pi pi-fw pi-plus" label="Add New"
+                class="ui-button atbt"></button>
             </div>
             <div class="p-col-12">
-              <p-table #searchBank [value]="bankData"  [rows]="10" [showCurrentPageReport]="true"
+              <p-table #searchBank [value]="bankData" [rows]="10" [showCurrentPageReport]="true"
                 [rowsPerPageOptions]="[10, 25, 50]" [filterDelay]="0" [globalFilterFields]="[
                   'sIFSC',
                   'sBankName',
@@ -363,12 +358,12 @@
         </p-tabPanel>
         <!-- Bank tab End here -->
 
-        <!--------Gst tab Start here-->
+        <!-- Gst tab Start here -->
         <p-tabPanel header="GST">
-
           <div class="p-grid ui-fluid p-justify-end">
             <div class="p-col-1 text-center mt-1">
-              <button (click)="openDialogForGST()" pButton icon="pi pi-fw pi-plus" label="Add New" class="ui-button atbt"></button>
+              <button (click)="openDialogForGST()" pButton icon="pi pi-fw pi-plus" label="Add New"
+                class="ui-button atbt"></button>
             </div>
             <div class="p-col-12">
               <p-table [value]="gst">
@@ -400,4 +395,3 @@
     </div>
   </div>
 </div>
-<!-- </div> -->

@@ -1,38 +1,34 @@
 <p-confirmDialog header="Confirmation" icon="pi pi-info" [style]="{width: '425px'}"
-  rejectButtonStyleClass="ui-button-secondary"></p-confirmDialog>
+    rejectButtonStyleClass="ui-button-secondary"></p-confirmDialog>
 <div class="p-grid">
     <div class="p-col-12">
         <div class="card card-w-title">
             <h1>Partner</h1>
             <p-tabView>
+                <!--Partner Tab Start here-->
                 <p-tabPanel header="Partner">
                     <form [formGroup]="PartnerForm" autocomplete="off">
                         <div class="p-grid ui-fluid  p-justify-end mt-3">
-
                             <div class="p-col-12">
                                 <div class="p-grid form-group">
-
                                     <div class="p-col-12 p-md-6 p-lg-3 mb-2">
-                                       
                                         <label for="sPartnerName">Partner Name</label>
-                                        <input id="sPartnerName" type="text" formControlName="sPartnerName" class="form-control" pInputText>
+                                        <input id="sPartnerName" type="text" formControlName="sPartnerName"
+                                            class="form-control" pInputText>
                                         <p-message severity="error"
                                             [text]="PartnerForm.controls['sPartnerName'].errors['required'] ? 'This field is required' : PartnerForm.controls['sPartnerName'].errors['pattern']? 'Please enter a valid Name' : PartnerForm.controls['sPartnerName'].errors "
                                             *ngIf="!PartnerForm.controls['sPartnerName'].valid && PartnerForm.controls['sPartnerName'].dirty">
                                         </p-message>
                                     </div>
-
-
                                     <div class="p-col-12 p-md-6 p-lg-3 mb-2">
-                                        
                                         <label for="sShortCode">Short Code</label>
-                                        <input id="sShortCode" type="text" formControlName="sShortCode" class="form-control" pInputText>
+                                        <input id="sShortCode" type="text" formControlName="sShortCode"
+                                            class="form-control" pInputText>
                                         <p-message severity="error"
-                                        [text]="PartnerForm.controls['sShortCode'].errors['required'] ? 'This field is required' : PartnerForm.controls['sShortCode'].errors "
-                                        *ngIf="!PartnerForm.controls['sShortCode'].valid && PartnerForm.controls['sShortCode'].dirty">
-                                    </p-message>
+                                            [text]="PartnerForm.controls['sShortCode'].errors['required'] ? 'This field is required' : PartnerForm.controls['sShortCode'].errors "
+                                            *ngIf="!PartnerForm.controls['sShortCode'].valid && PartnerForm.controls['sShortCode'].dirty">
+                                        </p-message>
                                     </div>
-
                                     <div class="p-col-12 p-md-6 p-lg-3 mb-2">
                                         <label for="iLegalEntityID">Legal Entity ID</label>
                                         <p-dropdown id="iLegalEntityID" [options]="entityData" optionLabel="sKVValue"
@@ -42,51 +38,51 @@
                                         </p-message>
                                     </div>
                                 </div>
-
                                 <div
                                     class="separator separator--border-solid separator--space-sm separator--portlet-fit">
                                 </div>
-
                                 <div class="p-grid form-group">
                                     <div class="p-col-12 p-md-6 p-lg-3 mb-2">
                                         <label for="sTelNo1">Tel No. 1</label>
-                                        <input id="sTelNo1" class="form-control" type="text" formControlName="sTelNo1" pInputText>
+                                        <input id="sTelNo1" class="form-control" type="text" formControlName="sTelNo1"
+                                            pInputText>
                                         <p-message severity="error"
-                                        [text]="PartnerForm.controls['sTelNo1'].errors['required'] ? 'This field is required' : PartnerForm.controls['sTelNo1'].errors['pattern'] ? 'Please enter a valid Tel number' :  PartnerForm.controls['sTelNo1'].errors['minlength'] ? 'Please enter at least 10 Digits' : PartnerForm.controls['sTelNo1'].errors['maxlength'] ? 'Please enter less than 13 Digits' : PartnerForm.controls['sTelNo1'].errors"
-                                        *ngIf="!PartnerForm.controls['sTelNo1'].valid && PartnerForm.controls['sTelNo1'].dirty">
-                                    </p-message>
+                                            [text]="PartnerForm.controls['sTelNo1'].errors['required'] ? 'This field is required' : PartnerForm.controls['sTelNo1'].errors['pattern'] ? 'Please enter a valid Tel number' :  PartnerForm.controls['sTelNo1'].errors['minlength'] ? 'Please enter at least 10 Digits' : PartnerForm.controls['sTelNo1'].errors['maxlength'] ? 'Please enter less than 13 Digits' : PartnerForm.controls['sTelNo1'].errors"
+                                            *ngIf="!PartnerForm.controls['sTelNo1'].valid && PartnerForm.controls['sTelNo1'].dirty">
+                                        </p-message>
                                     </div>
                                     <div class="p-col-12 p-md-6 p-lg-3 mb-2">
                                         <label for="sTelNo2">Tel No. 2</label>
-                                        <input id="sTelNo2" class="form-control" type="text" formControlName="sTelNo2" pInputText>
+                                        <input id="sTelNo2" class="form-control" type="text" formControlName="sTelNo2"
+                                            pInputText>
                                         <p-message severity="error"
-                                        [text]="PartnerForm.controls['sTelNo2'].errors['required'] ? 'This field is required' : PartnerForm.controls['sTelNo2'].errors['pattern'] ? 'Please enter a valid Tel number' :  PartnerForm.controls['sTelNo2'].errors['minlength'] ? 'Please enter at least 10 Digits' : PartnerForm.controls['sTelNo2'].errors['maxlength'] ? 'Please enter less than 13 Digits' : PartnerForm.controls['sTelNo2'].errors"
-                                        *ngIf="!PartnerForm.controls['sTelNo2'].valid && PartnerForm.controls['sTelNo2'].dirty">
-                                    </p-message>
+                                            [text]="PartnerForm.controls['sTelNo2'].errors['required'] ? 'This field is required' : PartnerForm.controls['sTelNo2'].errors['pattern'] ? 'Please enter a valid Tel number' :  PartnerForm.controls['sTelNo2'].errors['minlength'] ? 'Please enter at least 10 Digits' : PartnerForm.controls['sTelNo2'].errors['maxlength'] ? 'Please enter less than 13 Digits' : PartnerForm.controls['sTelNo2'].errors"
+                                            *ngIf="!PartnerForm.controls['sTelNo2'].valid && PartnerForm.controls['sTelNo2'].dirty">
+                                        </p-message>
                                     </div>
                                     <div class="p-col-12 p-md-6 p-lg-3 mb-2">
                                         <label for="sFaxNo">Fax</label>
-                                        <input id="sFaxNo" class="form-control" type="text" formControlName="sFaxNo" pInputText>
+                                        <input id="sFaxNo" class="form-control" type="text" formControlName="sFaxNo"
+                                            pInputText>
                                         <p-message severity="error"
-                                        [text]="PartnerForm.controls['sFaxNo'].errors['required'] ? 'This field is required' : PartnerForm.controls['sFaxNo'].errors['pattern'] ? 'Please enter a valid Fax number' : PartnerForm.controls['sFaxNo'].errors "
-                                        *ngIf="!PartnerForm.controls['sFaxNo'].valid && PartnerForm.controls['sFaxNo'].dirty">
-                                    </p-message>
+                                            [text]="PartnerForm.controls['sFaxNo'].errors['required'] ? 'This field is required' : PartnerForm.controls['sFaxNo'].errors['pattern'] ? 'Please enter a valid Fax number' : PartnerForm.controls['sFaxNo'].errors "
+                                            *ngIf="!PartnerForm.controls['sFaxNo'].valid && PartnerForm.controls['sFaxNo'].dirty">
+                                        </p-message>
                                     </div>
                                     <div class="p-col-12 p-md-6 p-lg-3 mb-2">
                                         <label for="sPAN">Pan No.</label>
-                                        <input id="sPAN" class="form-control" type="text" formControlName="sPAN" pInputText>
+                                        <input id="sPAN" class="form-control" type="text" formControlName="sPAN"
+                                            pInputText>
                                         <p-message severity="error"
-                                        [text]="PartnerForm.controls['sPAN'].errors['required'] ? 'This field is required' : PartnerForm.controls['sPAN'].errors['pattern'] ? 'Please enter a valid PAN number' : PartnerForm.controls['sPAN'].errors "
-                                        *ngIf="!PartnerForm.controls['sPAN'].valid && PartnerForm.controls['sPAN'].dirty">
-                                    </p-message>
+                                            [text]="PartnerForm.controls['sPAN'].errors['required'] ? 'This field is required' : PartnerForm.controls['sPAN'].errors['pattern'] ? 'Please enter a valid PAN number' : PartnerForm.controls['sPAN'].errors "
+                                            *ngIf="!PartnerForm.controls['sPAN'].valid && PartnerForm.controls['sPAN'].dirty">
+                                        </p-message>
                                     </div>
                                 </div>
-
                                 <div
                                     class="separator separator--border-solid separator--space-sm separator--portlet-fit">
                                 </div>
                                 <div class="p-grid form-group">
-
                                     <div class="p-col-12 p-md-6 p-lg-3 mb-2">
                                         <label for="unit">Status</label>
                                         <p-dropdown id="unit" [options]="statusData" optionLabel="sStatusName"
@@ -95,46 +91,38 @@
                                             *ngIf="PartnerForm.controls['sStatusName'].touched && (selectedStatus.iStatusID=='' || PartnerForm.controls['sStatusName'].hasError('required'))">
                                         </p-message>
                                     </div>
-
                                 </div>
-
                                 <div
                                     class="separator separator--border-solid separator--space-sm separator--portlet-fit mt-5">
                                 </div>
-
                                 <div class="p-grid form-group ui-fluid p-justify-end mt-3">
                                     <div class="p-col-12 p-md-12 p-lg-12 text-right">
                                         <button pButton type="button" routerLink="/app/partner" label="Cancel"
-                                        class="ui-button-light atbt mr-2"></button>
-                                    <button *ngIf="!isEdit" pButton type="button" label="Save"
-                                    [disabled]="!(!PartnerForm.invalid && !dropDownValidityCheck())"
-                                        (click)="addPartnerForm()" class="ui-button atbt"></button>
-                                    <button *ngIf="isEdit" pButton type="button" label="Update"
-                                    [disabled]="!(!PartnerForm.invalid && !dropDownValidityCheck())"
-                                        (click)="editPartnerForm()" class="ui-button atbt"></button>
+                                            class="ui-button-light atbt mr-2"></button>
+                                        <button *ngIf="!isEdit" pButton type="button" label="Save"
+                                            [disabled]="!(!PartnerForm.invalid && !dropDownValidityCheck())"
+                                            (click)="addPartnerForm()" class="ui-button atbt"></button>
+                                        <button *ngIf="isEdit" pButton type="button" label="Update"
+                                            [disabled]="!(!PartnerForm.invalid && !dropDownValidityCheck())"
+                                            (click)="editPartnerForm()" class="ui-button atbt"></button>
                                     </div>
                                 </div>
-
                             </div>
-
-
                         </div>
                     </form>
-
                 </p-tabPanel>
                 <!-- Partner tab End here -->
 
-                <p-tabPanel header="Address">
+                <!--Address Tab Start here-->
+                <p-tabPanel header="Address" [disabled]="tabDisabled">
                     <div class="p-grid ui-fluid p-justify-end">
                         <div class="p-col-1 text-center mt-1">
                             <button (click)="openDialogForaddAddress()" pButton icon="pi pi-fw pi-plus"
                                 label="Add New"></button>
-
                         </div>
                         <div class="p-col-12">
                             <p-table [value]="address">
                                 <ng-template pTemplate="caption">
-
                                     <div class="ui-table-globalfilter-container text-left">
                                         <input type="text" pInputText size="50" placeholder="Search"
                                             style="width:250px;">
@@ -174,17 +162,16 @@
                 </p-tabPanel>
                 <!-- Address tab End here -->
 
-                <p-tabPanel header="Contact">
+                <!--Contact Tab Start here-->
+                <p-tabPanel header="Contact" [disabled]="tabDisabled">
                     <div class="p-grid ui-fluid p-justify-end">
                         <div class="p-col-1 text-center mt-1">
                             <button (click)="openDialogForaddContact()" pButton icon="pi pi-fw pi-plus"
                                 label="Add / Edit"></button>
-
                         </div>
                         <div class="p-col-12">
                             <p-table [value]="contact">
                                 <ng-template pTemplate="caption">
-
                                     <div class="ui-table-globalfilter-container text-left" style="width:250px;">
                                     </div>
                                 </ng-template>
@@ -200,7 +187,6 @@
                                         <th>Fax No.</th>
                                         <th>Status</th>
                                         <th>Action</th>
-
                                     </tr>
                                 </ng-template>
                                 <ng-template pTemplate="body" let-contact>
@@ -240,18 +226,18 @@
                         </div>
                     </div>
                 </p-tabPanel>
-                <!-- Contact Info tab End here -->
+                <!-- Contact tab End here -->
 
-                <!-- Bank tab Starts here -->
-                <p-tabPanel header="Bank">
+                <!-- Bank tab Start here -->
+                <p-tabPanel header="Bank" [disabled]="tabDisabled">
                     <div class="p-grid ui-fluid p-justify-end">
                         <div class="p-col-1 text-center mt-1">
                             <button (click)="openDialogForBank()" pButton icon="pi pi-fw pi-plus"
                                 label="Add New"></button>
                         </div>
                         <div class="p-col-12">
-                            <p-table #searchBank [value]="bankData"  [rows]="10" [showCurrentPageReport]="true"
-                            [rowsPerPageOptions]="[10, 25, 50]" [filterDelay]="0" [globalFilterFields]="[
+                            <p-table #searchBank [value]="bankData" [rows]="10" [showCurrentPageReport]="true"
+                                [rowsPerPageOptions]="[10, 25, 50]" [filterDelay]="0" [globalFilterFields]="[
                               'sIFSC',
                               'sBankName',
                               'sAccountNo',
@@ -259,13 +245,13 @@
                               'sBankBranch',
                               'sStatusName'
                             ]">
-                            <ng-template pTemplate="caption">
-                                <div class="ui-table-globalfilter-container text-left">
-                                  <input type="text" pInputText size="50" placeholder="Search" (input)="
+                                <ng-template pTemplate="caption">
+                                    <div class="ui-table-globalfilter-container text-left">
+                                        <input type="text" pInputText size="50" placeholder="Search" (input)="
                                       searchBank.filterGlobal($event.target.value, 'contains')
                                     " style="width: 250px;" />
-                                </div>
-                              </ng-template>
+                                    </div>
+                                </ng-template>
                                 <ng-template pTemplate="header">
                                     <tr>
                                         <th>Bank Name</th>
@@ -285,19 +271,21 @@
                                         <td>{{ bank.sIFSC }}</td>
                                         <td>{{ bank.sBankBranch }}</td>
                                         <td>
-                                            <span *ngIf="bank.iStatusID == 1" class="badge badge--success badge--inline badge--pill">
-                                              Active
+                                            <span *ngIf="bank.iStatusID == 1"
+                                                class="badge badge--success badge--inline badge--pill">
+                                                Active
                                             </span>
-                                            <span *ngIf="bank.iStatusID == 2" class="badge badge--warning badge--inline badge--pill">
-                                              Inactive
+                                            <span *ngIf="bank.iStatusID == 2"
+                                                class="badge badge--warning badge--inline badge--pill">
+                                                Inactive
                                             </span>
-                                          </td>
-                                          <td>
+                                        </td>
+                                        <td>
                                             <button pButton type="button" class="ui-button-success" icon="pi pi-pencil"
-                                              style="margin-right: 0.5em;" (click)="updateBank(bank)"></button>
+                                                style="margin-right: 0.5em;" (click)="updateBank(bank)"></button>
                                             <button pButton type="button" class="ui-button-danger" icon="pi pi-trash"
-                                              (click)="deleteBank(bank)"></button>
-                                          </td>
+                                                (click)="deleteBank(bank)"></button>
+                                        </td>
                                     </tr>
                                 </ng-template>
                             </p-table>
@@ -306,8 +294,8 @@
                 </p-tabPanel>
                 <!-- Bank tab End here -->
 
-
-                <p-tabPanel header="GST">
+                <!--GST Tab Start here-->
+                <p-tabPanel header="GST" [disabled]="tabDisabled">
                     <div class="p-grid ui-fluid p-justify-end">
                         <div class="p-col-1 text-center mt-1">
                             <button (click)="openDialogForGST()" pButton icon="pi pi-fw pi-plus"
@@ -338,12 +326,13 @@
                         </div>
                     </div>
                 </p-tabPanel>
-                <!-- GST Info tab End here -->
+                <!-- GST tab End here -->
 
-                <p-tabPanel header="Area Mapping">
+                <!--Area Mapping Tab Start here-->
+                <p-tabPanel header="Area Mapping" [disabled]="tabDisabled">
 
                 </p-tabPanel>
-                <!-- category mapping Info tab End here -->
+                <!--Area Mapping tab End here-->
             </p-tabView>
         </div>
     </div>

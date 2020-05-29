@@ -8,16 +8,14 @@
                     <h1 class="mt-2">Supplier</h1>
                 </div>
                 <div class="p-col-1 p-col-align-end text-center">
-                    <button routerLink="/app/supplier/new-supplier" pButton icon="pi pi-fw pi-plus"
+                    <button routerLink="/supplier/new-supplier" pButton icon="pi pi-fw pi-plus"
                         label="Add New"></button>
-
                 </div>
                 <div class="p-col-12">
                     <p-table #dt [value]="supplier" [resizableColumns]="true" [rowHover]="true" [paginator]="true"
                         [rows]="10" [showCurrentPageReport]="true" [rowsPerPageOptions]="[10, 25, 50]" [filterDelay]="0"
                         [globalFilterFields]="['sSupName','sPAN','sStatusName']">
                         <ng-template pTemplate="caption">
-
                             <div class="ui-table-globalfilter-container text-left">
                                 <input type="text" pInputText size="50" placeholder="Search"
                                     (input)="dt.filterGlobal($event.target.value, 'contains')" style="width:250px;">
@@ -79,7 +77,6 @@
                     </p-table>
                 </div>
             </div>
-
         </div>
     </div>
 </div>

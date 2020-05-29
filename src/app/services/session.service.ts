@@ -40,5 +40,4 @@ export class SessionService {
     clear() {
         sessionStorage.clear();
     }
-
 }

@@ -8,7 +8,7 @@ import { Message } from 'primeng/api';
 import { ApiService } from '../services/api.service';
 import { ToastService } from '../services/toast.service';
 import { ConfirmationService } from 'primeng/api';
-import {LoginService} from '../../app/services/login.service'
+import { LoginService } from '../../app/services/login.service'
 import { Router } from '@angular/router';
 
 @Component({
@@ -19,25 +19,19 @@ import { Router } from '@angular/router';
 export class PartnerComponent implements OnInit {
 
   items: MenuItem[];
-
   partner: any[];
 
-
   constructor(private breadcrumbService: BreadcrumbService, private dialogService: DialogService,
-    private apiService: ApiService, private toastService: ToastService, private confirmationService: ConfirmationService,
-    private router: Router,private loginService:LoginService) {
+    private httpService: ApiService, private toastService: ToastService, private confirmationService: ConfirmationService,
+    private router: Router, private loginService: LoginService) {
     this.breadcrumbService.setItems([
       { label: 'Dashboard' },
-      { label: 'Partner', routerLink: ['/app/partner'] }
+      { label: 'Partner', routerLink: ['/partner'] }
     ]);
   }
 
-
   ngOnInit(): void {
-    this.loginService.checkBrowserClosed();
-
     this.getAllPartner();
-
   }
 
   // get list of partner
@@ -46,9 +40,8 @@ export class PartnerComponent implements OnInit {
     {
       "iRequestID": 2287,
     }
-    this.apiService.callPostApi(Partner_list_api).subscribe(
+    this.httpService.callPostApi(Partner_list_api).subscribe(
       data => {
-        console.log(data);
         this.partner = data.body;
       },
       error => console.log(error)
@@ -68,24 +61,19 @@ export class PartnerComponent implements OnInit {
           "iRequestID": 2283,
           "iPartnerID": partner_id
         };
-        console.log(delete_data_api);
-        this.apiService.callPostApi(delete_data_api).subscribe(
+        this.httpService.callPostApi(delete_data_api).subscribe(
           (data) => {
-            console.log(data);
             this.toastService.addSingle("success", data.headers.get('StatusMessage'), "");
             this.getAllPartner();
           },
           (error) => console.log(error)
         );
       }
-
     });
-
   }
 
   //edit partner
   editPartner(iPartnerID: Number) {
-    this.router.navigate(['/app/partner/edit-partner', iPartnerID]);
+    this.router.navigate(['/partner/edit-partner', iPartnerID]);
   }
-
 }

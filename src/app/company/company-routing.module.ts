@@ -3,7 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { CompanyComponent } from './company.component';
 
 
-const routes: Routes = [ {
+const routes: Routes = [{
   path: "",
   component: CompanyComponent,
   data: {

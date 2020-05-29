@@ -1,4 +1,4 @@
-<form [formGroup]="GSTSubmit" (ngSubmit)="onSubmit()">
+<form [formGroup]="GSTSubmit" (ngSubmit)="onSubmit()" autocomplete="off">
 
     <div class="p-grid ui-fluid">
         <div class="p-col-12">
@@ -20,7 +20,7 @@
                     <label for="gst">GST</label>
                     <input id="gst" class="form-control" formControlName="gst" type="text" pInputText>
                     <p-message severity="error"
-                        [text]="GSTSubmit.controls['gst'].errors['required'] ? 'GST Number is required' : GSTSubmit.controls['gst'].errors"
+                        [text]="GSTSubmit.controls['gst'].errors['required'] ? 'This Field is required' : GSTSubmit.controls['gst'].errors"
                         *ngIf="!GSTSubmit.controls['gst'].valid && GSTSubmit.controls['gst'].dirty">
                     </p-message>
                 </div>

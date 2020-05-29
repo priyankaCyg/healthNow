@@ -1,16 +1,16 @@
 
 export class ProductMaster {
 
-    iPrdID: string;
-    iFoodCulture: string;
+    iPrdID: number;
+    iFoodCulture: number;
     sFoodCulture: string;
-    iUnitID: string;
+    iUnitID: number;
     sUnitName: string;
     sPrdName: string;
-    iStatusID: string;
-    iCreatedBy: string;
+    iStatusID: number;
+    iCreatedBy: number;
     sShortName: string;
-    iProducerID: string;
+    iProducerID: number;
     sStatusName: string;
     sCreatedDate: string;
     sProducerName: string;

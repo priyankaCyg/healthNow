@@ -1,7 +1,7 @@
 export class gstData {
-    iCID: string;
-    iLocID: string;
-    iStateID: string;
+    iCID: number;
+    iLocID: number;
+    iStateID: number;
     sCreatedDate: string;
     sGST: string;
     sLocCode: string;

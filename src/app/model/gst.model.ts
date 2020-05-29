@@ -1,8 +1,8 @@
 
 export class GstMaster {
 
-    iSupID: string;
-    iStateID: string;
+    iSupID: number;
+    iStateID: number;
     sCreatedDate: string;
     sGST: string;
     sLocCode: string;

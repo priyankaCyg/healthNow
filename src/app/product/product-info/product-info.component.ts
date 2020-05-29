@@ -15,33 +15,28 @@ export class ProductInfoComponent implements OnInit {
   infoArray: ProductInfoData[];
   infoSubmitArray = [];
   prd_Id: number;
+
   constructor(public config: DynamicDialogConfig,
-    private apiService: ApiService,
+    private httpService: ApiService,
     private fb: FormBuilder,
     private toastService: ToastService,
     public ref: DynamicDialogRef, ) { }
 
   ngOnInit(): void {
     this.prd_Id = +localStorage.getItem('iPrdID');
-    
     var infoDataApi = {
       "iRequestID": 2161,
-     "iProductID":this.prd_Id
-    //"iProductID":1
+      "iProductID": this.prd_Id
     }
-
-      this.apiService.callPostApi(infoDataApi).subscribe(
-     
-      data => { console.log(data.body);
-
+    this.httpService.callPostApi(infoDataApi).subscribe(
+      data => {
         this.infoArray = data.body[0];
-        console.log(this.infoArray,"test")
-        this.setValue();
+        if (this.infoArray != null) {
+          this.setValue();
+        }
       },
       error => { console.log(error) }
-
     );
-
   }
 
   infoForm = this.fb.group({
@@ -57,66 +52,49 @@ export class ProductInfoComponent implements OnInit {
     sInfo10: [""],
     sInfo11: [""],
     sInfo12: [""],
-
   });
 
+  //Function to Set values in info dialog box on Add/Edit 
   setValue() {
-
     for (var i = 0; i < this.infoArray.length; i++) {
       var infoVarName = "sInfo" + (i + 1);
       this.infoForm.patchValue({ [infoVarName]: this.infoArray[i].sInfo })
     }
   }
 
+  //Function to close popup
   onClose() {
     this.ref.close();
     this.infoForm.reset();
   }
 
-
+  //Function to save info data
   onSubmit() {
-
-    console.log(this.infoSubmitArray,"check")
-    let seq: number=0;
-    for(let i=0;i<12;i++){
-      
-      var infoVarName = "sInfo"+(i+1);
+    let seq: number = 0;
+    for (let i = 0; i < 12; i++) {
+      var infoVarName = "sInfo" + (i + 1);
       let info_data = this.infoForm.controls[infoVarName].value.toString();
       if (info_data != "" && info_data != undefined) {
-
         const info_obj = {
           iSeq: seq + 1,
           sInfo: info_data
         }
-
-        console.log(info_obj)
         this.infoSubmitArray.push(info_obj);
         seq++;
       }
-
     }
-    console.log(this.infoSubmitArray, "check")
-    console.log(this.infoForm.value)
     const addInfo_data = {
       "iRequestID": 2162,
-      "iProductID":this.prd_Id,
-      //"iProductID":1,
+      "iProductID": this.prd_Id,
       "sJson": this.infoSubmitArray
     };
-    console.log(addInfo_data, "add");
-          this.apiService.callPostApi(addInfo_data).subscribe(
-            (data) => {
-              console.log(data);
-             
-              this.toastService.addSingle("success", data.headers.get('StatusMessage'), "");
-              this.ref.close(true);
-              this.infoForm.reset();
-            },
-            (error) => console.log(error)
-          );
-      
-       
-      
+    this.httpService.callPostApi(addInfo_data).subscribe(
+      (data) => {
+        this.toastService.addSingle("success", data.headers.get('StatusMessage'), "");
+        this.ref.close(true);
+        this.infoForm.reset();
+      },
+      (error) => console.log(error)
+    );
   }
-
 }

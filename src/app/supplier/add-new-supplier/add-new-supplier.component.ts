@@ -24,7 +24,7 @@ import { SuppMaster } from 'src/app/model/supplier.model';
 import { APIService } from '../../services/apieservice';
 import { SupplierCategoryMapping } from 'src/app/models/supplier-category-mapping.model';
 
-import {LoginService} from '../../../app/services/login.service'
+import { LoginService } from '../../../app/services/login.service'
 
 @Component({
   selector: 'app-add-new-supplier',
@@ -41,96 +41,68 @@ export class AddNewSupplierComponent implements OnInit {
   isEdit: boolean = false
   public addSupplierForm: FormGroup;
   supData: SuppMaster;
-
   items: MenuItem[];
-
   supplierAdressData: SupplierAddress;
-
-
+  tabDisabled: boolean = true;
   bank: any[];
   contact: any[]
-
   gst: gstData[];
-
   attachment: any[];
-
   supId;
-
+  returnSupId;
   selectedFileType;
   fileTypeData;
-
   uploadedFiles: any[] = [];
   sourceCategory: SupplierCategoryMapping[];
   targetCategory: SupplierCategoryMapping[];
-
 
   constructor(private breadcrumbService: BreadcrumbService,
     private dialogService: DialogService,
     private apiService: ApiService,
     private toastService: ToastService,
     private fb: FormBuilder,
-     private route: ActivatedRoute,
-      private confirmationService: ConfirmationService,private _apiService:APIService,private loginService:LoginService) {
+    private route: ActivatedRoute,
+    private confirmationService: ConfirmationService, private _apiService: APIService, private loginService: LoginService) {
     this.breadcrumbService.setItems([
       { label: 'Dashboard' },
-      { label: 'Supplier', routerLink: ['/app/supplier'] }
+      { label: 'Supplier', routerLink: ['/supplier'] }
     ]);
   }
 
   ngOnInit(): void {
-
-    this.loginService.checkBrowserClosed()
-
-this.getFileType();
-this.gstList();
- //new code added 
- this.defaultDropDwnValue()
-
- this.supData = new SuppMaster();
- this.addSupplierForm = this.createControl(this.supData);
-
- this.supId = this.route.snapshot.params['iSupID'];
- if (this.supId != null) {
-   this.isEdit = true
-   let sup_by_id = +this.route.snapshot.params['iSupID'];
-
-   var dataToSendEdit = {
-     "iRequestID": 2175,
-     "iSupID": sup_by_id
-   }
-
+    this.defaultDropDwnValue()
+    this.supData = new SuppMaster();
+    this.addSupplierForm = this.createControl(this.supData);
+    this.supId = +this.route.snapshot.params['iSupID'];
+    localStorage.setItem('iSupID', this.supId)
+    if (!isNaN(this.supId)) {
+      this.isEdit = true
+      this.tabDisabled = false
+      var dataToSendEdit = {
+        "iRequestID": 2175,
+        "iSupID": this.supId
+      }
       this.apiService.getDropDownData(dataToSendEdit).then(response => {
-
-        console.log("Response of Edit Brand ", response)
-
         this.supData = new SuppMaster(response[0]);
         this.addSupplierForm = this.createControl(this.supData);
-
         Promise.all([this.getStatusDrpDwn(), this.getLegalEntityDrpDwn()]).then(values => {
-          console.log(values);
           this.setDropDownVal()
         });
         this.getSupplierAddressList();
       });
-
     }
     else {
       this.isEdit = false
-
       Promise.all([this.getStatusDrpDwn(), this.getLegalEntityDrpDwn()]).then(values => {
-        console.log(values);
       });
     }
-
-    //  this.gstList();
-    //end 
-
-
+    this.getFileType();
+    this.gstList();
     this.showContact();
     this.showBank();
     this.showAttachment();
-
   }
+
   //Address list starts
   getSupplierAddressList() {
     let sup_by_id = +this.route.snapshot.params['iSupID'];
@@ -159,7 +131,6 @@ this.gstList();
         this.getSupplierAddressList();
       }
     });
-
   }
 
   // Daialogue to edit address
@@ -192,10 +163,8 @@ this.gstList();
           "iRequestID": 2183,
           "iSupAddID": supplierID
         }
-
         this.apiService.callPostApi(deleteAddressAPI).subscribe(
           data => {
-
             this.getSupplierAddressList();
             this.toastService.addSingle("success", data.headers.get('StatusMessage'), "");
           },
@@ -207,11 +176,9 @@ this.gstList();
 
 
   onUpload(event) {
-    // alert("hi")
     for (const file of event.files) {
       this.uploadedFiles.push(file);
     }
-
   }
 
   uploadFile() {
@@ -223,22 +190,19 @@ this.gstList();
       "iDocTypeID": this.selectedFileType.iDocTypeID
     }
     this._apiService.postFile(this.uploadedFiles, dataToSend).subscribe(data => {
-      // alert('Success ' + data);
       this.showAttachment();
     }, error => {
       console.log(error);
     });
   }
 
-  //new coded added
-
+  //code for default dropdown data show
   defaultDropDwnValue() {
     this.selectedstatus = { iKVID: "", sKVValue: "Select Status" }
     this.selectedlegalEntity = { iKVID: "", sKVValue: "Select Legal Entity" }
-
   }
 
-  // Status Dropdown Select
+  // code for set dropdown data
   setDropDownVal() {
     let selectedStatusObj = this.statusData.find(x => x.iKVID == this.supData.iStatusID);
 
@@ -250,70 +214,57 @@ this.gstList();
     if (selectedlegalEntityObj !== undefined) {
       this.selectedlegalEntity = selectedlegalEntityObj;
     }
-
   }
 
-
+  //code for supplier status dropdown data
   getStatusDrpDwn() {
     return new Promise((resolve, reject) => {
       var dataToSend4 = {
         "iRequestID": 2071,
         "sKVName": "Status"
       }
-
       this.apiService.getDropDownData(dataToSend4).then(response => {
-        console.log("Response for Status ", response)
         this.statusData = response
         this.statusData.splice(0, 0, { iKVID: "", sKVValue: "Select Status" })
         this.selectedstatus = { iKVID: "", sKVValue: "Select Status" }
-
         resolve(this.statusData)
-
       });
     })
   }
 
+  //code for supplier legalEntity dropdown data
   getLegalEntityDrpDwn() {
     return new Promise((resolve, reject) => {
       var dataToSend4 = {
         "iRequestID": 2071,
         "sKVName": "LegalEntity"
       }
-
       this.apiService.getDropDownData(dataToSend4).then(response => {
-        console.log("Response for Status ", response)
         this.legalEntityData = response
         this.legalEntityData.splice(0, 0, { iKVID: "", sKVValue: "Select Legal Entity" })
         this.selectedlegalEntity = { iKVID: "", sKVValue: "Select Legal Entity" }
-
         resolve(this.legalEntityData)
-
       });
     })
   }
-
-
 
   getFileType() {
     return new Promise((resolve, reject) => {
       var dataToSend = {
         "iRequestID": 2261
       }
-
       this.apiService.getDropDownData(dataToSend).then(response => {
         console.log("Response for File Type ", response)
         this.fileTypeData = response
         this.fileTypeData.splice(0, 0, { iDocTypeID: "", sDocTypeName: "Select File Type" })
         this.selectedFileType = { iDocTypeID: "", sDocTypeName: "Select File Type" }
-
         resolve(this.fileTypeData)
-
       });
     })
   }
 
+  //code for implement formBuilder and validation
   createControl(supData?: SuppMaster): FormGroup {
-
     this.addSupplierForm = this.fb.group({
       sSupName: [supData.sSupName, [Validators.required]],
       iCreatedBy: [supData.iCreatedBy],
@@ -332,18 +283,11 @@ this.gstList();
     return this.addSupplierForm;
   }
 
-  //end 
-
-
-  //gst list 
+  //code for show all gst list 
   gstList() {
-    let sup_id_list = +this.route.snapshot.params['iSupID'];
-
     const sup_gst_data = {
-
       "iRequestID": 2203,
-      "iSupID": sup_id_list
-
+      "iSupID": this.supId
     }
     this.apiService.callPostApi(sup_gst_data).subscribe(
       (data) => {
@@ -353,8 +297,11 @@ this.gstList();
     );
   }
 
+  //code for dropdown validity check
   dropDownValidityCheck() {
     if (this.selectedstatus.iKVID == '') {
+      return true
+    } else if (this.selectedlegalEntity.iKVID == '') {
       return true
     }
     else {
@@ -362,6 +309,7 @@ this.gstList();
     }
   }
 
+  //code for add new supplier data
   addSupplier() {
     let supp_name = this.addSupplierForm.controls["sSupName"].value;
     let website_name = this.addSupplierForm.controls["sWebsite"].value;
@@ -371,7 +319,6 @@ this.gstList();
     let telephoneno_2 = this.addSupplierForm.controls["sTelNo2"].value;
     let fax_no = this.addSupplierForm.controls["sFaxNo"].value;
     let legal_id = this.addSupplierForm.getRawValue();
-
     const add_supplier_data = {
       "iRequestID": 2171,
       "sSupName": supp_name,
@@ -383,20 +330,19 @@ this.gstList();
       "sTelNo2": telephoneno_2,
       "sFaxNo": fax_no
     }
-    console.log(add_supplier_data);
     this.apiService.callPostApi(add_supplier_data).subscribe(
       data => {
-        console.log(data);
+        this.supId = data.body[0].isupId;
+        localStorage.setItem('iSupID', this.supId)
+        this.tabDisabled = false
         this.toastService.addSingle("success", data.headers.get('StatusMessage'), "");
-
       },
       error => console.log(error)
     );
-
     this.addSupplierForm.reset();
-
   }
 
+  //code for edit supplier data
   editSupplier() {
     let supp_name_edit = this.addSupplierForm.controls["sSupName"].value;
     let website_name_edit = this.addSupplierForm.controls["sWebsite"].value;
@@ -407,10 +353,7 @@ this.gstList();
     let telephoneno_2_edit = this.addSupplierForm.controls["sTelNo2"].value;
     let fax_no_edit = this.addSupplierForm.controls["sFaxNo"].value;
     let status_id = this.addSupplierForm.getRawValue();
-    let sup_edit_id = +this.route.snapshot.params['iSupID'];
-
     const edit_supplier_data = {
-
       "iRequestID": 2172,
       "sSupName": supp_name_edit,
       "sWebsite": website_name_edit,
@@ -420,98 +363,77 @@ this.gstList();
       "sTelNo1": telephoneno_1_edit,
       "sTelNo2": telephoneno_2_edit,
       "sFaxNo": fax_no_edit,
-      "iSupID": sup_edit_id,
+      "iSupID": this.supId,
       "iStatusID": status_id.iStatusID.iKVID,
     }
-    console.log(edit_supplier_data);
     this.apiService.callPostApi(edit_supplier_data).subscribe(
       data => {
-        console.log(data);
         this.toastService.addSingle("success", data.headers.get('StatusMessage'), "");
-
       },
       error => console.log(error)
     );
   }
 
-
-
-
+  // code for open dialog for add gst
   openDialogForGST() {
     const ref = this.dialogService.open(GstComponent, {
       data: {},
       header: 'Add New GST',
       width: '28%'
     });
-    localStorage.setItem('iSupID', this.route.snapshot.params['iSupID'])
     ref.onClose.subscribe((success: boolean) => {
       if (success) {
         this.gstList();
       }
-
-
     });
   }
 
+  // code for open dialog for edit gst
   editDialogForGST(gst) {
     const ref = this.dialogService.open(GstComponent, {
       data: gst,
       header: 'Add New GST',
       width: '28%'
     });
-    localStorage.setItem('iSupID', this.route.snapshot.params['iSupID'])
-
     ref.onClose.subscribe((success: boolean) => {
       if (success) {
         this.gstList();
       }
-
-
     });
   }
 
+  //code for delete gst data
   deletesupgst(gst) {
-    console.log(gst);
     this.confirmationService.confirm({
       message: 'Are you sure that you want to proceed?',
       header: 'Confirmation',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
         let loc_id = +gst.iLocID;
-        let sup_id = +gst.iSupID;
         let delete_data_api = {
           "iRequestID": 2205,
           "iLocID": loc_id,
-          "iSupID": sup_id
+          "iSupID": this.supId
         };
         this.apiService.callPostApi(delete_data_api).subscribe(
           (data) => {
-            console.log(data);
-
             this.gstList();
             this.toastService.addSingle("success", data.headers.get('StatusMessage'), "");
           },
           (error) => console.log(error)
         );
       }
-
     });
   }
 
-
-
-  downloadFile(attachment:any)
-  {
-    var dataToSend ={
+  downloadFile(attachment: any) {
+    var dataToSend = {
       "iRequestID": "1112",
       "sActualFileName": attachment.sActualName,
       "sSystemFileName": attachment.sSystemName
     }
     this._apiService.downloadAPI(dataToSend)
   }
-
-
-
 
   showAttachment() {
     var dataToSend = {
@@ -525,7 +447,6 @@ this.gstList();
     });
   }
 
-
   showContact() {
     var dataToSend = {
       "iRequestID": 2194
@@ -536,7 +457,6 @@ this.gstList();
     });
   }
 
-
   editContact(iSupContactID) {
     const ref = this.dialogService.open(ContactComponent, {
       data: {
@@ -545,13 +465,11 @@ this.gstList();
       header: 'Edit Contact',
       width: '70%'
     });
-
     ref.onClose.subscribe((message: any) => {
-      if (message.StatusCode=="200") {
+      if (message.StatusCode == "200") {
         this.toastService.addSingle("success", message.StatusMessage, "");
       }
-      else
-      {
+      else {
         this.toastService.addSingle("error", message.StatusMessage, "");
       }
       this.showContact()
@@ -570,32 +488,26 @@ this.gstList();
           "iRequestID": 2193,
           "iSupContactID": iSupContactID
         }
-
         this._apiService.getDetails(dataToSendDelete).then(response => {
           console.log("Response for Brand Delete ", response)
           this.toastService.addSingle("info", response.headers.get('StatusMessage'), "");
           this.showContact();
         });
       },
-      reject: () => {
-        this.toastService.addSingle("info", "Rejected", "Rejected");
-
-      }
+      reject: () => { }
     });
   }
-
 
   showBank() {
     var dataToSend = {
       "iRequestID": 2214,
-      "iSupID": 1
+      "iSupID": this.supId
     }
     this._apiService.getDetails(dataToSend).then(response => {
       console.log("Response for Bank ", response)
       this.bank = response
     });
   }
-
 
   editBank(iBankID) {
     const ref = this.dialogService.open(BankComponent, {
@@ -605,14 +517,11 @@ this.gstList();
       header: 'Edit Contact',
       width: '50%'
     });
-
     ref.onClose.subscribe((message: any) => {
-     
-      if (message.StatusCode=="200") {
+      if (message.StatusCode == "200") {
         this.toastService.addSingle("success", message.StatusMessage, "");
       }
-      else
-      {
+      else {
         this.toastService.addSingle("error", message.StatusMessage, "");
       }
       this.showBank()
@@ -627,20 +536,16 @@ this.gstList();
       accept: () => {
         var dataToSendDelete = {
           "iRequestID": 2213,
-          "iSupID": 1,
+          "iSupID": this.supId,
           "iBankID": iBankID
         }
-
         this._apiService.getDetails(dataToSendDelete).then(response => {
           console.log("Response for Brand Delete ", response)
           this.toastService.addSingle("info", response.headers.get('StatusMessage'), "");
           this.showBank();
         });
       },
-      reject: () => {
-        this.toastService.addSingle("info", "Rejected", "Rejected");
-
-      }
+      reject: () => { }
     });
   }
 
@@ -652,13 +557,11 @@ this.gstList();
       header: 'Add New Contact',
       width: '70%'
     });
-
     ref.onClose.subscribe((message: any) => {
-      if (message.StatusCode=="200") {
+      if (message.StatusCode == "200") {
         this.toastService.addSingle("success", message.StatusMessage, "");
       }
-      else
-      {
+      else {
         this.toastService.addSingle("error", message.StatusMessage, "");
       }
       this.showContact()
@@ -672,22 +575,17 @@ this.gstList();
       header: 'Add New Bank',
       width: '50%'
     });
-
     ref.onClose.subscribe((message: any) => {
       // alert(JSON.stringify(message))
-
-      if (message.StatusCode=="200") {
+      if (message.StatusCode == "200") {
         this.toastService.addSingle("success", message.StatusMessage, "");
       }
-      else
-      {
+      else {
         this.toastService.addSingle("error", message.StatusMessage, "");
       }
       this.showBank();
-
     });
   }
-
 
   //category mapping starts
   getCategoryMappingDataSource() {

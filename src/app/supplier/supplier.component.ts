@@ -10,7 +10,7 @@ import { supplierList } from '../model/supplierlist';
 import { ToastService } from '../services/toast.service';
 import { ConfirmationService } from 'primeng/api';
 import { Router } from '@angular/router';
-import {LoginService} from '../../app/services/login.service'
+import { LoginService } from '../../app/services/login.service'
 
 @Component({
   selector: 'app-supplier',
@@ -20,30 +20,24 @@ import {LoginService} from '../../app/services/login.service'
 export class SupplierComponent implements OnInit {
 
   items: MenuItem[];
-
   supplier: supplierList[];
-  editdata: any[];
 
   constructor(private breadcrumbService: BreadcrumbService, private dialogService: DialogService,
     private apiService: ApiService, private toastService: ToastService,
-    private confirmationService: ConfirmationService, private router: Router,private loginService:LoginService
+    private confirmationService: ConfirmationService, private router: Router, private loginService: LoginService
   ) {
     this.breadcrumbService.setItems([
       { label: 'Dashboard' },
-      { label: 'Supplier', routerLink: ['/app/supplier'] }
+      { label: 'Supplier', routerLink: ['/supplier'] }
     ]);
   }
 
 
   ngOnInit(): void {
-    // alert("http://localhost:4200/#/app/supplier "+localStorage.getItem('isBrowserClosed'))
-    
-    this.loginService.checkBrowserClosed();
-    
     this.getAllSupplier();
-
   }
-  // get list of supplier
+
+  //code for  get list of supplier
   getAllSupplier() {
     const supplier_list_api =
     {
@@ -51,7 +45,6 @@ export class SupplierComponent implements OnInit {
     }
     this.apiService.callPostApi(supplier_list_api).subscribe(
       data => {
-        console.log(data);
         this.supplier = data.body;
       },
       error => console.log(error)
@@ -72,27 +65,22 @@ export class SupplierComponent implements OnInit {
         };
         this.apiService.callPostApi(delete_data_api).subscribe(
           (data) => {
-            console.log(data);
             this.toastService.addSingle("success", data.headers.get('StatusMessage'), "");
             this.getAllSupplier();
           },
           (error) => console.log(error)
         );
       }
-
     });
-
   }
 
-  // edit supplier
+  // code for naviagte to edit supplier by id 
   editSupplier(iSupID: Number) {
-
-    this.router.navigate(['/app/supplier/edit-supplier', iSupID]);
-
+    this.router.navigate(['/supplier/edit-supplier', iSupID]);
   }
+
+  //code for navigate to product mapping page by id
   prdmapSupplier(iSupID: Number) {
-    this.router.navigate(['/app/supplier/product-mapping', iSupID]);
-
+    this.router.navigate(['/supplier/product-mapping', iSupID]);
   }
-
 }

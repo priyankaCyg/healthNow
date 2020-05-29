@@ -5,14 +5,12 @@
         <div class="card card-w-title">
             <h1>Supplier</h1>
             <p-tabView>
+                <!-- Supplier tab start here -->
                 <p-tabPanel header="Supplier">
-                    <form [formGroup]="addSupplierForm">
-
+                    <form [formGroup]="addSupplierForm" autocomplete="off">
                         <div class="p-grid ui-fluid  p-justify-end mt-3">
-
                             <div class="p-col-12">
                                 <div class="p-grid form-group">
-
                                     <div class="p-col-12 p-md-6 p-lg-3 mb-2">
                                         <label for="suppName">Supplier Name</label>
                                         <input id="suppName" class="form-control" formControlName="sSupName" type="text"
@@ -22,8 +20,6 @@
                                             *ngIf="!addSupplierForm.controls['sSupName'].valid && addSupplierForm.controls['sSupName'].dirty">
                                         </p-message>
                                     </div>
-
-
                                     <div class="p-col-12 p-md-6 p-lg-3 mb-2">
                                         <label for="shotCode">Short Code</label>
                                         <input id="shotCode" class="form-control" type="text"
@@ -33,7 +29,6 @@
                                             *ngIf="!addSupplierForm.controls['sShortCode'].valid && addSupplierForm.controls['sShortCode'].dirty">
                                         </p-message>
                                     </div>
-
                                     <div class="p-col-12 p-md-6 p-lg-3 mb-2">
                                         <label for="legalEntity">Legal Entity</label>
                                         <p-dropdown id="legalEntity" class="form-control" [options]="legalEntityData"
@@ -52,7 +47,6 @@
                                             *ngIf="!addSupplierForm.controls['sWebsite'].valid && addSupplierForm.controls['sWebsite'].dirty">
                                         </p-message>
                                     </div>
-
                                 </div>
                                 <div
                                     class="separator separator--border-solid separator--space-sm separator--portlet-fit">
@@ -95,12 +89,10 @@
                                         </p-message>
                                     </div>
                                 </div>
-
                                 <div
                                     class="separator separator--border-solid separator--space-sm separator--portlet-fit">
                                 </div>
                                 <div class="p-grid form-group">
-
                                     <div class="p-col-12 p-md-6 p-lg-3 mb-2">
                                         <label for="status">Status</label>
                                         <p-dropdown id="status" class="form-control" [options]="statusData"
@@ -110,43 +102,35 @@
                                             *ngIf="addSupplierForm.controls['iStatusID'].touched && (selectedstatus.iKVID=='' || addSupplierForm.controls['iStatusID'].hasError('required'))">
                                         </p-message>
                                     </div>
-
                                 </div>
-
                                 <div
                                     class="separator separator--border-solid separator--space-sm separator--portlet-fit mt-5">
                                 </div>
                                 <div class="p-grid form-group ui-fluid p-justify-end mt-3">
                                     <div class="p-col-12 p-md-2 p-lg-12 text-right">
-                                        <button pButton type="button" label="Cancel" routerLink="/app/supplier"
+                                        <button pButton type="button" label="Cancel" routerLink="/supplier"
                                             class="ui-button-light atbt mr-2 mb-2"></button>
-
                                         <button pButton type="submit" *ngIf="!isEdit"
                                             [disabled]="!(!addSupplierForm.invalid && !dropDownValidityCheck())"
                                             (click)="addSupplier()" label="Save" class="ui-button atbt mb-2"></button>
-
                                         <button pButton type="submit" *ngIf="isEdit"
                                             [disabled]="!(!addSupplierForm.invalid && !dropDownValidityCheck())"
                                             (click)="editSupplier()" label="Update"
                                             class="ui-button atbt mb-2"></button>
                                     </div>
                                 </div>
-
                             </div>
-
-
                         </div>
                     </form>
                 </p-tabPanel>
                 <!-- Supplier tab End here -->
 
-                <!-- Address tab Starts here -->
-                <p-tabPanel header="Address">
+                <!-- Address tab Start here -->
+                <p-tabPanel header="Address" [disabled]="tabDisabled">
                     <div class="p-grid ui-fluid p-justify-end">
                         <div class="p-col-1 text-center mt-1">
                             <button (click)="openDialogForaddAddress()" pButton icon="pi pi-fw pi-plus"
                                 label="Add New"></button>
-
                         </div>
                         <div class="p-col-12">
                             <p-table #AddressSerach [value]="supplierAdressData" [paginator]="true" [rows]="10"
@@ -209,12 +193,12 @@
                 </p-tabPanel>
                 <!-- Address tab End here -->
 
-                <p-tabPanel header="Contact">
+                <!-- Contact tab start here -->
+                <p-tabPanel header="Contact" [disabled]="tabDisabled">
                     <div class="p-grid ui-fluid p-justify-end">
                         <div class="p-col-1 text-center mt-1">
                             <button (click)="openDialogForaddContact()" pButton icon="pi pi-fw pi-plus" label="Add"
                                 class="ui-button"></button>
-
                         </div>
                         <div class="p-col-12">
                             <!-- <p-table [value]="contact">
@@ -229,7 +213,6 @@
                                 [rowsPerPageOptions]="[10, 25, 50]" [filterDelay]="0"
                                 [globalFilterFields]="['sFullName','sDesignation','sEmailID','sMobileNo','sContactNo','sDirectNo','sFaxNo','sStatusName']">
                                 <ng-template pTemplate="caption">
-
                                     <div class="ui-table-globalfilter-container text-left">
                                         <input type="text" pInputText size="50" placeholder="Search"
                                             (input)="dt.filterGlobal($event.target.value, 'contains')"
@@ -248,7 +231,6 @@
                                         <th>Fax No.</th>
                                         <th>Status</th>
                                         <th>Action</th>
-
                                     </tr>
                                 </ng-template>
                                 <ng-template pTemplate="body" let-contact>
@@ -289,9 +271,10 @@
                         </div>
                     </div>
                 </p-tabPanel>
-                <!-- Contact Info tab End here -->
+                <!-- Contact tab End here -->
 
-                <p-tabPanel header="Bank">
+                <!-- bank tab start here -->
+                <p-tabPanel header="Bank" [disabled]="tabDisabled">
                     <div class="p-grid ui-fluid p-justify-end">
                         <div class="p-col-1 text-center mt-1">
                             <button (click)="openDialogForBank()" pButton icon="pi pi-fw pi-plus"
@@ -305,7 +288,6 @@
                                 [filterDelay]="0"
                                 [globalFilterFields]="['sBankName','sShortCode','sAccountNo','sIFSC','sBankBranch','sStatusName']">
                                 <ng-template pTemplate="caption">
-
                                     <div class="ui-table-globalfilter-container text-left">
                                         <input type="text" pInputText size="50" placeholder="Search"
                                             (input)="dt.filterGlobal($event.target.value, 'contains')"
@@ -346,8 +328,8 @@
                 </p-tabPanel>
                 <!-- Bank tab End here -->
 
-
-                <p-tabPanel header="GST">
+                <!-- GST tab start here -->
+                <p-tabPanel header="GST" [disabled]="tabDisabled">
                     <div class="p-grid ui-fluid p-justify-end">
                         <div class="p-col-1 text-center mt-1">
                             <button (click)="openDialogForGST()" pButton icon="pi pi-fw pi-plus"
@@ -359,7 +341,6 @@
                                     <tr>
                                         <th>State</th>
                                         <th>GST</th>
-
                                         <th>Action</th>
                                     </tr>
                                 </ng-template>
@@ -367,7 +348,6 @@
                                     <tr>
                                         <td>{{gst.sStateName}}</td>
                                         <td>{{gst.sGST}}</td>
-
                                         <td>
                                             <button pButton type="button" (click)="editDialogForGST(gst)"
                                                 class="ui-button-success mr-1" icon="pi pi-pencil"></button>
@@ -380,9 +360,10 @@
                         </div>
                     </div>
                 </p-tabPanel>
-                <!-- GST Info tab End here -->
+                <!-- GST tab End here -->
 
-                <p-tabPanel header="Attachment">
+                <!-- Attachment tab start here -->
+                <p-tabPanel header="Attachment" [disabled]="tabDisabled">
                     <div class="p-grid ui-fluid">
                         <div class="p-col-12 p-md-3 p-lg-3">
                             <label for="sfileType">Select File Type</label>
@@ -396,19 +377,16 @@
                                 <p-fileUpload mode="basic" [auto]="true" name="demo[]" maxFileSize="1000000"
                                     customUpload="true" (uploadHandler)="onUpload($event)" multiple="multiple"
                                     chooseLabel="Browse"></p-fileUpload>
-
                             </div>
                         </div>
                         <div class="p-col-12 p-md-3 p-lg-3 text-left"><button pButton type="button"
                                 (click)="uploadFile()" label="Upload" class="ui-button atbt"></button></div>
-
                         <div class="p-col-12 p-md-12 p-lg-12 mt-3">
                             <p-table #attachmentHeader [value]="attachment" [resizableColumns]="true" [rowHover]="true"
                                 [paginator]="true" [rows]="10" [showCurrentPageReport]="true"
                                 [rowsPerPageOptions]="[10, 25, 50]" [filterDelay]="0"
                                 [globalFilterFields]="['sDocTypeName','sActualName']">
                                 <ng-template pTemplate="caption">
-
                                     <div class="ui-table-globalfilter-container text-left">
                                         <input type="text" pInputText size="50" placeholder="Search"
                                             (input)="attachmentHeader.filterGlobal($event.target.value, 'contains')"
@@ -438,10 +416,10 @@
                         </div>
                     </div>
                 </p-tabPanel>
-
                 <!-- Attachment tab End here -->
 
-                <p-tabPanel header="Category Mapping">
+                <!-- Category Mapping tab start here -->
+                <p-tabPanel header="Category Mapping" [disabled]="tabDisabled">
                     <p-pickList [source]="sourceCategory" [target]="targetCategory" sourceHeader="UnMapped"
                         targetHeader="Mapped" [responsive]="true" filterBy="sCategoryName" dragdrop="true"
                         sourceFilterPlaceholder="Search by category" targetFilterPlaceholder="Search by category"
@@ -458,8 +436,8 @@
                                 class="ui-button" (click)="addCategoryMappingData()"></button>
                         </div>
                     </div>
-
                 </p-tabPanel>
+                <!-- Category mapping tab end here -->
             </p-tabView>
         </div>
     </div>

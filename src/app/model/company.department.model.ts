@@ -1,9 +1,9 @@
 
 export class DepartmentMaster {
 
-    iCID: string;
-    iDeptID: string;
-    iStatusID: string;
+    iCID: Number;
+    iDeptID: Number;
+    iStatusID: Number;
     sDeptName: string;
     iCreatedBy: string;
     sCreatedDate: string;

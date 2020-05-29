@@ -20,54 +20,43 @@ export class GstComponent implements OnInit {
   public gstForm: FormGroup;
   gstData: GstMaster;
   constructor(public config: DynamicDialogConfig,
-    private apiService: ApiService,
-    private _formBuilder: FormBuilder,
+    private httpService: ApiService,
+    private fb: FormBuilder,
     private toastService: ToastService,
     public ref: DynamicDialogRef,
   ) { }
 
   ngOnInit(): void {
     this.defaultDropDwnValue()
-
     this.gstData = new GstMaster();
     this.gstForm = this.createControl(this.gstData);
-
     this.locId = this.config.data.iLocID;
     this.sup_Id = this.config.data.iSupID;
 
+    //code for select data by edit
     if (this.locId != null) {
       this.isEdit = true
-
       var dataToSendEdit = {
         "iRequestID": 2204,
         "iLocID": this.locId,
         "iSupID": this.sup_Id
       }
-
-      this.apiService.getDropDownData(dataToSendEdit).then(response => {
-
-        console.log("Response of Edit Brand ", response)
-
+      this.httpService.getDropDownData(dataToSendEdit).then(response => {
         this.gstData = new GstMaster(response[0]);
         this.gstForm = this.createControl(this.gstData);
-
         Promise.all([this.getStatusDrpDwn()]).then(values => {
-          console.log(values);
           this.setDropDownVal()
         });
-
       });
-
     }
     else {
       this.isEdit = false
-
       Promise.all([this.getStatusDrpDwn()]).then(values => {
-        console.log(values);
       });
     }
   }
 
+  // code for default dropdown data 
   defaultDropDwnValue() {
     this.selectedstatus = {
       "iLocationID": 0, "sLocName": "Select", "iStateCode": 0, "sLocCode": null,
@@ -75,6 +64,7 @@ export class GstComponent implements OnInit {
     }
   }
 
+  //code for set dropdown data 
   setDropDownVal() {
     // Status Dropdown Select
     let selectedStatusObj = this.supgstData.find(x => x.sLocCode == this.gstData.sLocCode);
@@ -82,20 +72,15 @@ export class GstComponent implements OnInit {
     if (selectedStatusObj !== undefined) {
       this.selectedstatus = selectedStatusObj;
     }
-
-
   }
 
-
+  //code for supplier status dropdown data 
   getStatusDrpDwn() {
     return new Promise((resolve, reject) => {
       var sup_gst_data = {
         "iRequestID": 2102,
-
       }
-
-      this.apiService.getDropDownData(sup_gst_data).then(response => {
-        console.log("Response for Status ", response)
+      this.httpService.getDropDownData(sup_gst_data).then(response => {
         this.supgstData = response
         this.supgstData.splice(0, 0, {
           "iLocationID": 0, "sLocName": "Select", "iStateCode": 0, "sLocCode": null,
@@ -105,16 +90,15 @@ export class GstComponent implements OnInit {
           "iLocationID": 0, "sLocName": "Select", "iStateCode": 0, "sLocCode": null,
           "sStateName": null
         }
-
         resolve(this.supgstData)
-
       });
     })
   }
 
+  //code for implement formBuilder and validation 
   createControl(gstData?: GstMaster): FormGroup {
 
-    this.gstForm = this._formBuilder.group({
+    this.gstForm = this.fb.group({
       iSupID: [gstData.iSupID],
       iStateID: [gstData.iStateID],
       sCreatedDate: [gstData.sCreatedDate],
@@ -125,6 +109,7 @@ export class GstComponent implements OnInit {
     return this.gstForm;
   }
 
+  //code for add supplier gst data
   addGst() {
     let gst_no = this.gstForm.controls["sGST"].value;
     let state_code = this.gstForm.controls["sStateName"].value;
@@ -138,20 +123,16 @@ export class GstComponent implements OnInit {
       "sGST": gst_no,
       "sLocCode": loc_code
     }
-    console.log(add_gst_data);
-    this.apiService.callPostApi(add_gst_data).subscribe(
+    this.httpService.callPostApi(add_gst_data).subscribe(
       data => {
-        console.log(data);
         this.ref.close(true);
         this.toastService.addSingle("success", data.headers.get('StatusMessage'), "");
-
       },
       error => console.log(error)
     );
-   
   }
 
-
+  //code for edit supplier gst data
   editGst() {
     let gst_no = this.gstForm.controls["sGST"].value;
     let state_code = this.gstForm.controls["sStateName"].value;
@@ -165,23 +146,21 @@ export class GstComponent implements OnInit {
       "sGST": gst_no,
       "sLocCode": loc_code
     }
-    console.log(add_gst_data);
-    this.apiService.callPostApi(add_gst_data).subscribe(
+    this.httpService.callPostApi(add_gst_data).subscribe(
       data => {
-        console.log(data);
         this.ref.close(true);
         this.toastService.addSingle("success", data.headers.get('StatusMessage'), "");
-
       },
       error => console.log(error)
     );
-   
   }
 
+  //code for close dialog box
   closeDialog() {
     this.ref.close()
   }
 
+  //code for dropdown validity check
   dropDownValidityCheck() {
     if (this.selectedstatus.iLocationID == '') {
       return true

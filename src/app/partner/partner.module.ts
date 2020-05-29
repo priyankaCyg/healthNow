@@ -14,7 +14,7 @@ import { AreaMappingComponent } from './area-mapping/area-mapping.component';
 //Prime Ng Service
 import { DialogService } from 'primeng';
 import { ConfirmationService } from 'primeng/api';
-import { FormsModule, ReactiveFormsModule} from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 //Prime Ng Module
 import { ButtonModule } from 'primeng/button';
@@ -38,7 +38,7 @@ import { APIService } from '../services/apieservice';
 
 
 @NgModule({
-  declarations: [PartnerComponent,NewPartnerComponent, AddressComponent, ContactComponent, BankComponent, GstComponent, AreaMappingComponent],
+  declarations: [PartnerComponent, NewPartnerComponent, AddressComponent, ContactComponent, BankComponent, GstComponent, AreaMappingComponent],
   imports: [
     CommonModule,
     PartnerRoutingModule,
@@ -61,7 +61,7 @@ import { APIService } from '../services/apieservice';
     ReactiveFormsModule,
 
   ],
-  providers: [DialogService, ConfirmationService,APIService],
-  entryComponents: [PartnerComponent,NewPartnerComponent, AddressComponent, ContactComponent, BankComponent, GstComponent, AreaMappingComponent]
+  providers: [DialogService, ConfirmationService, APIService],
+  entryComponents: [PartnerComponent, NewPartnerComponent, AddressComponent, ContactComponent, BankComponent, GstComponent, AreaMappingComponent]
 })
 export class PartnerModule { }
