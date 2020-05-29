@@ -97,7 +97,7 @@
                                 </div>
                                 <div class="p-grid form-group ui-fluid p-justify-end mt-3">
                                     <div class="p-col-12 p-md-12 p-lg-12 text-right">
-                                        <button pButton type="button" routerLink="/app/partner" label="Cancel"
+                                        <button pButton type="button" routerLink="/partner" label="Cancel"
                                             class="ui-button-light atbt mr-2"></button>
                                         <button *ngIf="!isEdit" pButton type="button" label="Save"
                                             [disabled]="!(!PartnerForm.invalid && !dropDownValidityCheck())"
@@ -137,7 +137,7 @@
                                         <th>City</th>
                                         <th>Landmark</th>
                                         <th>Status</th>
-                                        <th colspan="2">Action</th>
+                                        <th>Action</th>
                                     </tr>
                                 </ng-template>
                                 <ng-template pTemplate="body" let-address>
@@ -255,7 +255,7 @@
                                 <ng-template pTemplate="header">
                                     <tr>
                                         <th>Bank Name</th>
-                                        <th>Short Code/Account Type</th>
+                                        <th>Short Code</th>
                                         <th>Account No.</th>
                                         <th>IFSC</th>
                                         <th>Bank Branch</th>
@@ -306,7 +306,7 @@
                                 <ng-template pTemplate="header">
                                     <tr>
                                         <th>State</th>
-                                        <th>Short Code/Account Type</th>
+                                        <th>Short Code</th>
                                         <th>Action</th>
                                     </tr>
                                 </ng-template>

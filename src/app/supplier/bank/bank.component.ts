@@ -1,3 +1,9 @@
+/**
+Template Name: HealthNow
+Author: Priyanka
+Created Date: 
+File: bank.component
+**/
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators ,FormControl} from '@angular/forms';
 import {APIService} from '../../services/apieservice';

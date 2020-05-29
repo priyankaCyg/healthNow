@@ -8,7 +8,6 @@ import { Message } from 'primeng/api';
 import { ApiService } from '../services/api.service';
 import { ToastService } from '../services/toast.service';
 import { ConfirmationService } from 'primeng/api';
-import { LoginService } from '../../app/services/login.service'
 import { Router } from '@angular/router';
 
 @Component({
@@ -23,7 +22,7 @@ export class PartnerComponent implements OnInit {
 
   constructor(private breadcrumbService: BreadcrumbService, private dialogService: DialogService,
     private httpService: ApiService, private toastService: ToastService, private confirmationService: ConfirmationService,
-    private router: Router, private loginService: LoginService) {
+    private router: Router) {
     this.breadcrumbService.setItems([
       { label: 'Dashboard' },
       { label: 'Partner', routerLink: ['/partner'] }

@@ -1,3 +1,11 @@
+
+/**
+Template Name: HealthNow
+Author: Priyanka Sahu
+Created Date: 
+File: employee.component
+**/
+
 import { Component, OnInit, OnChanges, SimpleChanges } from '@angular/core';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { APIService } from '../../services/apieservice';

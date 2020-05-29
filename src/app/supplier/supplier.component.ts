@@ -1,16 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { BreadcrumbService } from '../breadcrumb.service';
 import { CountryService } from '../demo/service/countryservice';
 import { SelectItem, MenuItem } from 'primeng/api';
 import { DialogService } from 'primeng';
-import { from } from 'rxjs';
+import { from, Subscription } from 'rxjs';
 import { Message } from 'primeng/api';
 import { ApiService } from '../services/api.service';
 import { supplierList } from '../model/supplierlist';
 import { ToastService } from '../services/toast.service';
 import { ConfirmationService } from 'primeng/api';
 import { Router } from '@angular/router';
-import { LoginService } from '../../app/services/login.service'
 
 @Component({
   selector: 'app-supplier',
@@ -18,13 +17,13 @@ import { LoginService } from '../../app/services/login.service'
   styleUrls: ['./supplier.component.css']
 })
 export class SupplierComponent implements OnInit {
-
+  isAdmin: boolean;
+  private subscription: Subscription;
   items: MenuItem[];
   supplier: supplierList[];
-
   constructor(private breadcrumbService: BreadcrumbService, private dialogService: DialogService,
     private apiService: ApiService, private toastService: ToastService,
-    private confirmationService: ConfirmationService, private router: Router, private loginService: LoginService
+    private confirmationService: ConfirmationService, private router: Router,
   ) {
     this.breadcrumbService.setItems([
       { label: 'Dashboard' },
@@ -36,7 +35,6 @@ export class SupplierComponent implements OnInit {
   ngOnInit(): void {
     this.getAllSupplier();
   }
-
   //code for  get list of supplier
   getAllSupplier() {
     const supplier_list_api =
@@ -50,6 +48,7 @@ export class SupplierComponent implements OnInit {
       error => console.log(error)
     );
   }
+
 
   //delete supplier
   deleteSupplier(supplier: supplierList) {

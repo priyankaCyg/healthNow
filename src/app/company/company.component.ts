@@ -69,7 +69,7 @@ export class CompanyComponent implements OnInit {
     this.getAllAddressesList();
     this.showEmployee();
   }
-
+  
   // code for company field data 
   companyData() {
     const company_data =
@@ -99,7 +99,7 @@ export class CompanyComponent implements OnInit {
     });
   }
 
-  // Get address list 
+  // Get address list start
   getAllAddressesList() {
     const all_address_api =
     {

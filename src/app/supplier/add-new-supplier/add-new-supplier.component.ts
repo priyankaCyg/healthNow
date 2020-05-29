@@ -1,3 +1,10 @@
+/**
+Template Name: HealthNow
+Author: Priyanka, Neelam, Rajnish and Shibin
+Created Date: 
+File: add-new-supplier.component
+**/
+
 import { Component, OnInit, Input } from '@angular/core';
 import { BreadcrumbService } from '../../breadcrumb.service';
 import { CountryService } from '../../demo/service/countryservice';
@@ -23,8 +30,8 @@ import { gstData } from 'src/app/model/gst';
 import { SuppMaster } from 'src/app/model/supplier.model';
 import { APIService } from '../../services/apieservice';
 import { SupplierCategoryMapping } from 'src/app/models/supplier-category-mapping.model';
-
 import { LoginService } from '../../../app/services/login.service'
+import { resolve } from 'dns';
 
 @Component({
   selector: 'app-add-new-supplier',
@@ -62,7 +69,7 @@ export class AddNewSupplierComponent implements OnInit {
     private toastService: ToastService,
     private fb: FormBuilder,
     private route: ActivatedRoute,
-    private confirmationService: ConfirmationService, private _apiService: APIService, private loginService: LoginService) {
+    private confirmationService: ConfirmationService, private _apiService: APIService) {
     this.breadcrumbService.setItems([
       { label: 'Dashboard' },
       { label: 'Supplier', routerLink: ['/supplier'] }

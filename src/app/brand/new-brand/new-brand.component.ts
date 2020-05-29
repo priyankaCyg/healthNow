@@ -1,3 +1,11 @@
+
+/**
+Template Name: HealthNow
+Author: Priyanka Sahu
+Created Date: 
+File: new-brand.component
+**/
+
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators ,FormControl} from '@angular/forms';
 import {APIService} from '../../services/apieservice';
