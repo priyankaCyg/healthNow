@@ -14,7 +14,7 @@ export class ProductInfoComponent implements OnInit {
 
   infoArray: ProductInfoData[];
   infoSubmitArray = [];
-  prd_Id: number;
+  prd_Id;
   constructor(public config: DynamicDialogConfig,
     private apiService: ApiService,
     private fb: FormBuilder,
@@ -23,20 +23,22 @@ export class ProductInfoComponent implements OnInit {
 
   ngOnInit(): void {
     this.prd_Id = +localStorage.getItem('iPrdID');
-    
+    console.log(this.prd_Id)
     var infoDataApi = {
       "iRequestID": 2161,
-     "iProductID":this.prd_Id
-    //"iProductID":1
+      "iProductID": this.prd_Id
     }
 
-      this.apiService.callPostApi(infoDataApi).subscribe(
-     
-      data => { console.log(data.body);
+    this.apiService.callPostApi(infoDataApi).subscribe(
+
+      data => {
+        console.log(data.body);
 
         this.infoArray = data.body[0];
-        console.log(this.infoArray,"test")
-        this.setValue();
+        console.log(this.infoArray, "test")
+        if (this.infoArray != null) {
+          this.setValue();
+        }
       },
       error => { console.log(error) }
 
@@ -76,11 +78,11 @@ export class ProductInfoComponent implements OnInit {
 
   onSubmit() {
 
-    console.log(this.infoSubmitArray,"check")
-    let seq: number=0;
-    for(let i=0;i<12;i++){
-      
-      var infoVarName = "sInfo"+(i+1);
+    console.log(this.infoSubmitArray, "check")
+    let seq: number = 0;
+    for (let i = 0; i < 12; i++) {
+
+      var infoVarName = "sInfo" + (i + 1);
       let info_data = this.infoForm.controls[infoVarName].value.toString();
       if (info_data != "" && info_data != undefined) {
 
@@ -99,24 +101,23 @@ export class ProductInfoComponent implements OnInit {
     console.log(this.infoForm.value)
     const addInfo_data = {
       "iRequestID": 2162,
-      "iProductID":this.prd_Id,
-      //"iProductID":1,
+      "iProductID": this.prd_Id,
       "sJson": this.infoSubmitArray
     };
     console.log(addInfo_data, "add");
-          this.apiService.callPostApi(addInfo_data).subscribe(
-            (data) => {
-              console.log(data);
-             
-              this.toastService.addSingle("success", data.headers.get('StatusMessage'), "");
-              this.ref.close(true);
-              this.infoForm.reset();
-            },
-            (error) => console.log(error)
-          );
-      
-       
-      
+    this.apiService.callPostApi(addInfo_data).subscribe(
+      (data) => {
+        console.log(data);
+
+        this.toastService.addSingle("success", data.headers.get('StatusMessage'), "");
+        this.ref.close(true);
+        this.infoForm.reset();
+      },
+      (error) => console.log(error)
+    );
+
+
+
   }
 
 }

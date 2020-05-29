@@ -1,4 +1,4 @@
-<form #id [formGroup]="DepartmentSubmit">
+<form #id [formGroup]="DepartmentSubmit" autocomplete="off">
 
     <div class="p-grid ui-fluid">
         <div class="p-col-12">
@@ -9,7 +9,7 @@
                     <label for="departmentname">Department Name</label>
                     <input id="departmentname" type="text" formControlName="sDeptName" pInputText>
                     <p-message severity="error"
-                        [text]="DepartmentSubmit.controls['sDeptName'].errors['required'] ? 'Department Name is required' : DepartmentSubmit.controls['sDeptName'].errors"
+                        [text]="DepartmentSubmit.controls['sDeptName'].errors['required'] ? 'This Field is required' : DepartmentSubmit.controls['sDeptName'].errors"
                         *ngIf="!DepartmentSubmit.controls['sDeptName'].valid && DepartmentSubmit.controls['sDeptName'].dirty">
                     </p-message>
 

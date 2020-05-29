@@ -17,16 +17,14 @@ export class GstComponent implements OnInit {
   setStatus: Object;
   isEdit: boolean = false
 
-  constructor(private fb: FormBuilder, private apiService: ApiService, public config: DynamicDialogConfig,
+  constructor(private fb: FormBuilder, private httpService: ApiService, private config: DynamicDialogConfig,
     private ref: DynamicDialogRef, private toastService: ToastService) { }
 
   async ngOnInit(): Promise<void> {
-
     const status_data = {
       "iRequestID": 2102,
     };
-
-    await this.apiService.getDropDownData(status_data).then(
+    await this.httpService.getDropDownData(status_data).then(
       data => {
         this.gstState = data;
         this.gstState.unshift({
@@ -37,7 +35,6 @@ export class GstComponent implements OnInit {
           "iLocationID": 0, "sLocName": "Select", "iStateCode": 0, "sLocCode": null,
           "sStateName": null
         }
-
       },
       error => console.log(error)
     );
@@ -45,10 +42,9 @@ export class GstComponent implements OnInit {
     let tempData = this.gstState.filter(t => t.sLocCode == this.temp);
     this.setStatus = tempData[0];
 
-
+    //code for set value on edit gst form
     if (this.config.data.iStateID != undefined) {
       this.isEdit = true
-
       this.GSTSubmit.patchValue({
         state: this.setStatus,
         gst: this.config.data.sGST,
@@ -58,17 +54,18 @@ export class GstComponent implements OnInit {
     }
   }
 
+  //code for implememnt formBuilder 
   GSTSubmit = this.fb.group({
     state: ['', Validators.required],
     gst: ['', Validators.required],
   });
 
+  // code for submit gst data
   onSubmit() {
     let state_code = this.GSTSubmit.controls["state"].value;
     let loc_code = +state_code.sLocCode;
     if (loc_code == 0) {
       this.GSTSubmit.setErrors({ 'invalid': true });
-
     } else {
       if (this.config.data.iStateID == undefined) {
         let gst_no = this.GSTSubmit.controls["gst"].value;
@@ -83,14 +80,11 @@ export class GstComponent implements OnInit {
           "sGST": gst_no,
           "iUserID": 1,
           "sLocCode": loc_code,
-        };
-        console.log(gst_submit_data);
-        this.apiService.callPostApi(gst_submit_data).subscribe(
+        }
+        this.httpService.callPostApi(gst_submit_data).subscribe(
           data => {
-            console.log(data);
             this.ref.close(true);
             this.toastService.addSingle("success", data.headers.get('StatusMessage'), "");
-
           },
           error => console.log(error)
         );
@@ -107,15 +101,11 @@ export class GstComponent implements OnInit {
           "sGST": gst_edit_no,
           "iUserID": 1,
           "sLocCode": loc_code_edit
-
         }
-        console.log(gst_edit_data);
-        this.apiService.callPostApi(gst_edit_data).subscribe(
+        this.httpService.callPostApi(gst_edit_data).subscribe(
           data => {
-            console.log(data);
             this.ref.close(true);
             this.toastService.addSingle("success", data.headers.get('StatusMessage'), "");
-
           },
           error => console.log(error)
         );
@@ -123,6 +113,8 @@ export class GstComponent implements OnInit {
       this.GSTSubmit.reset();
     }
   }
+
+  //code for close Dialog box
   close() {
     this.ref.close();
   }

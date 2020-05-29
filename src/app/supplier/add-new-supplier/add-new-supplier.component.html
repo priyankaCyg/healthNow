@@ -6,7 +6,7 @@
             <h1>Supplier</h1>
             <p-tabView>
                 <p-tabPanel header="Supplier">
-                    <form [formGroup]="addSupplierForm">
+                    <form [formGroup]="addSupplierForm" autocomplete="off">
 
                         <div class="p-grid ui-fluid  p-justify-end mt-3">
 
@@ -118,7 +118,7 @@
                                 </div>
                                 <div class="p-grid form-group ui-fluid p-justify-end mt-3">
                                     <div class="p-col-12 p-md-2 p-lg-12 text-right">
-                                        <button pButton type="button" label="Cancel" routerLink="/app/supplier"
+                                        <button pButton type="button" label="Cancel" routerLink="/supplier"
                                             class="ui-button-light atbt mr-2 mb-2"></button>
 
                                         <button pButton type="submit" *ngIf="!isEdit"
@@ -141,7 +141,7 @@
                 <!-- Supplier tab End here -->
 
                 <!-- Address tab Starts here -->
-                <p-tabPanel header="Address">
+                <p-tabPanel header="Address" [disabled]="tabDisabled">
                     <div class="p-grid ui-fluid p-justify-end">
                         <div class="p-col-1 text-center mt-1">
                             <button (click)="openDialogForaddAddress()" pButton icon="pi pi-fw pi-plus"
@@ -209,7 +209,7 @@
                 </p-tabPanel>
                 <!-- Address tab End here -->
 
-                <p-tabPanel header="Contact">
+                <p-tabPanel header="Contact" [disabled]="tabDisabled">
                     <div class="p-grid ui-fluid p-justify-end">
                         <div class="p-col-1 text-center mt-1">
                             <button (click)="openDialogForaddContact()" pButton icon="pi pi-fw pi-plus" label="Add"
@@ -291,7 +291,7 @@
                 </p-tabPanel>
                 <!-- Contact Info tab End here -->
 
-                <p-tabPanel header="Bank">
+                <p-tabPanel header="Bank" [disabled]="tabDisabled">
                     <div class="p-grid ui-fluid p-justify-end">
                         <div class="p-col-1 text-center mt-1">
                             <button (click)="openDialogForBank()" pButton icon="pi pi-fw pi-plus"
@@ -347,7 +347,7 @@
                 <!-- Bank tab End here -->
 
 
-                <p-tabPanel header="GST">
+                <p-tabPanel header="GST" [disabled]="tabDisabled">
                     <div class="p-grid ui-fluid p-justify-end">
                         <div class="p-col-1 text-center mt-1">
                             <button (click)="openDialogForGST()" pButton icon="pi pi-fw pi-plus"
@@ -382,7 +382,7 @@
                 </p-tabPanel>
                 <!-- GST Info tab End here -->
 
-                <p-tabPanel header="Attachment">
+                <p-tabPanel header="Attachment" [disabled]="tabDisabled">
                     <div class="p-grid ui-fluid">
                         <div class="p-col-12 p-md-3 p-lg-3">
                             <label for="sfileType">Select File Type</label>
@@ -441,7 +441,7 @@
 
                 <!-- Attachment tab End here -->
 
-                <p-tabPanel header="Category Mapping">
+                <p-tabPanel header="Category Mapping" [disabled]="tabDisabled">
                     <p-pickList [source]="sourceCategory" [target]="targetCategory" sourceHeader="UnMapped"
                         targetHeader="Mapped" [responsive]="true" filterBy="sCategoryName" dragdrop="true"
                         sourceFilterPlaceholder="Search by category" targetFilterPlaceholder="Search by category"

@@ -49,7 +49,7 @@ export class NewPartnerComponent implements OnInit {
     private confirmationService: ConfirmationService) {
       this.breadcrumbService.setItems([
           { label: 'Dashboard' },
-          { label: 'Partner', routerLink: ['/app/partner'] }
+          { label: 'Partner', routerLink: ['/partner'] }
       ]);
   }
 

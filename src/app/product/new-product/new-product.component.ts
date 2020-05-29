@@ -59,17 +59,19 @@ export class NewProductComponent implements OnInit {
   foodcultureData;
   statusData;
   prdId;
+  tabDisabled: boolean = true;
+
   constructor(private carService: CarService, private breadcrumbService: BreadcrumbService,
     private dialogService: DialogService,
     private route: ActivatedRoute,
-    private apiService: ApiService,
+    private httpService: ApiService,
     private _formBuilder: FormBuilder,
     private toastService: ToastService,
 
   ) {
     this.breadcrumbService.setItems([
       { label: 'Dashboard' },
-      { label: 'Product', routerLink: ['/app/product'] }
+      { label: 'Product', routerLink: ['/product'] }
     ]);
   }
 
@@ -77,33 +79,28 @@ export class NewProductComponent implements OnInit {
     this.defaultDropDwnValue()
     this.productData = new ProductMaster();
     this.ProductForm = this.createControl(this.productData);
-    this.prdId = this.route.snapshot.params['iPrdID'];
-    if (this.prdId != null) {
-      this.isEdit = true
-      let prd_by_id = +this.route.snapshot.params['iPrdID'];
+    this.prdId = +this.route.snapshot.params['iPrdID'];
+    localStorage.setItem('iPrdID', this.prdId)
 
+    //code for select product  by id
+    if (!isNaN(this.prdId)) {
+      this.isEdit = true
+      this.tabDisabled = false
       var dataToSendEdit = {
         "iRequestID": 2255,
-        "iPrdID": prd_by_id
+        "iPrdID": this.prdId
       }
-
-      this.apiService.getDropDownData(dataToSendEdit).then(response => {
+      this.httpService.getDropDownData(dataToSendEdit).then(response => {
         this.productData = new ProductMaster(response[0]);
         this.ProductForm = this.createControl(this.productData);
-
         Promise.all([this.getProducerDrpDwn(), this.getUnitDrpDwn(), this.getFoodCultureDrpDwn(), this.getstatusDrpDwn()]).then(values => {
-          console.log(values);
           this.setDropDownVal()
         });
-
       });
-
     }
     else {
       this.isEdit = false
-
       Promise.all([this.getProducerDrpDwn(), this.getUnitDrpDwn(), this.getFoodCultureDrpDwn(), this.getstatusDrpDwn()]).then(values => {
-        console.log(values);
       });
     }
 
@@ -141,14 +138,15 @@ export class NewProductComponent implements OnInit {
 
   }
 
+  //code for product default dropdown data
   defaultDropDwnValue() {
     this.selectedproducer = { iProducerID: "", sProducerName: "Select Producer" }
     this.selectedunit = { iUnitID: "", sUnitName: "Select Unit" }
     this.selectedfoodculture = { iKVID: "", sKVValue: "Select Foodculture" }
     this.selectedStatus = { iStatusID: "", sStatusName: "Select Status" }
-
   }
 
+  //code for product set dropdown data
   setDropDownVal() {
     // Producer Dropdown Select
     let selectedProducerObj = this.producerData.find(x => x.iProducerID == this.productData.iProducerID);
@@ -178,7 +176,7 @@ export class NewProductComponent implements OnInit {
 
   }
 
-  //dropdown validity
+  //code for product form dropdown validity
   dropDownValidityCheck() {
     if (this.selectedproducer.iProducerID == '') {
       return true
@@ -197,80 +195,70 @@ export class NewProductComponent implements OnInit {
     }
   }
 
-  //producer dropdown
+  //code for producer dropdown
   getProducerDrpDwn() {
     return new Promise((resolve, reject) => {
       var dataToSend4 = {
         "iRequestID": 2126,
       }
-
-      this.apiService.getDropDownData(dataToSend4).then(response => {
+      this.httpService.getDropDownData(dataToSend4).then(response => {
         this.producerData = response
         this.producerData.splice(0, 0, { iProducerID: "", sProducerName: "Select Producer" })
         this.selectedproducer = { iProducerID: "", sProducerName: "Select Producer" }
-
         resolve(this.producerData)
-
       });
     })
   }
 
-  //unit dropdown
+  //code for product unit dropdown
   getUnitDrpDwn() {
     return new Promise((resolve, reject) => {
       var dataToSend4 = {
         "iRequestID": 2146,
       }
-
-      this.apiService.getDropDownData(dataToSend4).then(response => {
+      this.httpService.getDropDownData(dataToSend4).then(response => {
         this.unitData = response
         this.unitData.splice(0, 0, { iUnitID: "", sUnitName: "Select Unit" })
         this.selectedunit = { iUnitID: "", sUnitName: "Select Unit" }
-
         resolve(this.unitData)
-
       });
     })
   }
 
-  //foodculture dropdown
+  //code for product foodculture dropdown
   getFoodCultureDrpDwn() {
     return new Promise((resolve, reject) => {
       var dataToSend4 = {
         "iRequestID": 2071,
         "sKVName": "FoodType"
       }
-
-      this.apiService.getDropDownData(dataToSend4).then(response => {
+      this.httpService.getDropDownData(dataToSend4).then(response => {
         this.foodcultureData = response
         this.foodcultureData.splice(0, 0, { iKVID: "", sKVValue: "Select Foodculture" })
         this.selectedfoodculture = { iKVID: "", sKVValue: "Select Foodculture" }
-
         resolve(this.foodcultureData)
 
       });
     })
   }
 
-  //status dropdown
+  //code for product status dropdown
   getstatusDrpDwn() {
     return new Promise((resolve, reject) => {
       var dataToSend4 = {
         "iRequestID": 2271,
         "sProcessName": "Product"
       }
-
-      this.apiService.getDropDownData(dataToSend4).then(response => {
+      this.httpService.getDropDownData(dataToSend4).then(response => {
         this.statusData = response
         this.statusData.splice(0, 0, { iStatusID: "", sStatusName: "Select Status" })
         this.selectedStatus = { iStatusID: "", sStatusName: "Select Status" }
-
         resolve(this.statusData)
-
       });
     })
   }
 
+  //code for implement formBuilder and validation
   createControl(productData?: ProductMaster): FormGroup {
 
     this.ProductForm = this._formBuilder.group({
@@ -291,10 +279,9 @@ export class NewProductComponent implements OnInit {
     return this.ProductForm;
   }
 
-  //add product form
+  //code for add product data
   addProductForm() {
     var formData = this.ProductForm.getRawValue();
-
     const addProductData = {
       "iRequestID": 2251,
       "sPrdName": formData.sPrdName,
@@ -304,21 +291,21 @@ export class NewProductComponent implements OnInit {
       "iStatusID": formData.sStatusName.iStatusID,
       "iProducerID": formData.sProducerName.iProducerID
     }
-    this.apiService.callPostApi(addProductData).subscribe(
+    this.httpService.callPostApi(addProductData).subscribe(
       data => {
-        console.log(data);
+        this.prdId = data.body[0].iprdId;
+        localStorage.setItem('iPrdID', this.prdId);
+        this.tabDisabled = false
         this.toastService.addSingle("success", data.headers.get('StatusMessage'), "");
-
       },
       error => console.log(error)
     );
     this.ProductForm.reset();
   }
 
-  //edit product form
+  //code for edit product data
   editProductForm() {
     var formData = this.ProductForm.getRawValue();
-
     const editProductData = {
       "iRequestID": 2252,
       "sPrdName": formData.sPrdName,
@@ -327,13 +314,11 @@ export class NewProductComponent implements OnInit {
       "iFoodCulture": formData.sFoodCulture.iKVID,
       "iStatusID": formData.sStatusName.iStatusID,
       "iProducerID": formData.sProducerName.iProducerID,
-      "iPrdID": +this.prdId
+      "iPrdID": this.prdId
     }
-    this.apiService.callPostApi(editProductData).subscribe(
+    this.httpService.callPostApi(editProductData).subscribe(
       data => {
-        console.log(data);
         this.toastService.addSingle("success", data.headers.get('StatusMessage'), "");
-
       },
       error => console.log(error)
     );
@@ -401,10 +386,9 @@ export class NewProductComponent implements OnInit {
     //let prd_by_id = +this.route.snapshot.params['iPrdID'];
     const productInfoAPI = {
       "iRequestID": 2161,
-      "iProductID":+this.prdId
-     // "iProductID": 1
+      "iProductID": this.prdId
     }
-    this.apiService.callPostApi(productInfoAPI).subscribe(
+    this.httpService.callPostApi(productInfoAPI).subscribe(
       data => {
         console.log(data.body);
 
@@ -422,7 +406,6 @@ export class NewProductComponent implements OnInit {
       header: 'Add Product Info',
       width: '40%'
     });
-    localStorage.setItem('iPrdID', this.route.snapshot.params['iPrdID']);
     ref.onClose.subscribe((success: any) => {
       if (success) {
         this.getProductInfo();

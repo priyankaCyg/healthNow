@@ -25,16 +25,15 @@ export class ProductMappingComponent implements OnInit {
     private toastService: ToastService) {
     this.breadcrumbService.setItems([
       { label: 'Dashboard' },
-      { label: 'Supplier', routerLink: ['/app/supplier'] }
+      { label: 'Supplier', routerLink: ['/supplier'] }
     ]);
   }
 
   ngOnInit(): void {
-    //alert(this.Selectedvalue)
     this.producerDropdown();
-
   }
 
+  //code forproducer dropdown data
   producerDropdown() {
     const producer_dropdown_data = {
       "iRequestID": 2126,
@@ -43,21 +42,18 @@ export class ProductMappingComponent implements OnInit {
       (data) => {
         this.producerValue = data.body;
         this.producerValue.unshift({ "iProducerID": 0, "sProducerName": "Select" });
-
       },
       (error) => console.log(error)
     );
-
     this.producer = null;
     this.Selectedvalue = [];
   }
 
+  //code for show all list of product
   getProduct() {
     this.Selectedvalue = [];
-
     let producer_id = +this.selectedproducer.iProducerID;
     let sup_id = +this.route.snapshot.params['iSupID'];
-
     const product_list_data = {
       "iRequestID": 2231,
       "iSupID": sup_id,
@@ -65,7 +61,6 @@ export class ProductMappingComponent implements OnInit {
     }
     this.apiService.callPostApi(product_list_data).subscribe(
       (data) => {
-        console.log("data ", data)
         this.producer = data.body;
         for (var i = 0; i < this.producer.length; i++) {
           if (this.producer[i].iSelected == 1) {
@@ -77,6 +72,7 @@ export class ProductMappingComponent implements OnInit {
     );
   }
 
+  //code for save new product
   saveProduct() {
     const prd_id = this.Selectedvalue.map(({ iPrdID }) => iPrdID);
     let prd_id_str = prd_id.toString();
@@ -88,12 +84,10 @@ export class ProductMappingComponent implements OnInit {
       "iProducerID": producer_id,
       "sSupPrdMap": prd_id_str
     }
-    console.log(save_product_data)
     this.apiService.callPostApi(save_product_data).subscribe(
       (data) => {
         this.getProduct();
         this.toastService.addSingle("success", data.headers.get('StatusMessage'), "");
-
       },
       (error) => console.log(error)
     );

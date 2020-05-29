@@ -8,7 +8,7 @@ import { Message } from 'primeng/api';
 import { ApiService } from '../services/api.service';
 import { ToastService } from '../services/toast.service';
 import { ConfirmationService } from 'primeng/api';
-import {LoginService} from '../../app/services/login.service'
+import { LoginService } from '../../app/services/login.service'
 import { Router } from '@angular/router';
 
 @Component({
@@ -25,16 +25,16 @@ export class PartnerComponent implements OnInit {
 
   constructor(private breadcrumbService: BreadcrumbService, private dialogService: DialogService,
     private apiService: ApiService, private toastService: ToastService, private confirmationService: ConfirmationService,
-    private router: Router,private loginService:LoginService) {
+    private router: Router, private loginService: LoginService) {
     this.breadcrumbService.setItems([
       { label: 'Dashboard' },
-      { label: 'Partner', routerLink: ['/app/partner'] }
+      { label: 'Partner', routerLink: ['/partner'] }
     ]);
   }
 
 
   ngOnInit(): void {
-    this.loginService.checkBrowserClosed();
+    //this.loginService.checkBrowserClosed();
 
     this.getAllPartner();
 
@@ -85,7 +85,7 @@ export class PartnerComponent implements OnInit {
 
   //edit partner
   editPartner(iPartnerID: Number) {
-    this.router.navigate(['/app/partner/edit-partner', iPartnerID]);
+    this.router.navigate(['/partner/edit-partner', iPartnerID]);
   }
 
 }

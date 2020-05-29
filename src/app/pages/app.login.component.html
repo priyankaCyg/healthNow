@@ -21,7 +21,8 @@
 
                     <div class="login-input-wrapper">
                         <label for="password">Password</label>
-                        <input type="password" id="password" [(ngModel)]="password" placeholder="Type your password" pPassword [feedback]="false"/>
+                        <input type="password" id="password" [(ngModel)]="password" placeholder="Type your password"
+                            pPassword [feedback]="false" />
                         <i class="pi pi-lock"></i>
                     </div>
 
@@ -32,7 +33,7 @@
 
 
                     <div class="buttons">
-                        <button pButton type="button" [routerLink]="['app/']" label="Login" (click)="login()"></button>
+                        <button pButton type="button" label="Login" (click)="login()"></button>
                         <a href="#" class="secondary-button">Forget Password?</a>
                     </div>
                 </div>

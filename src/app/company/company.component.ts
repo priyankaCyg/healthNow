@@ -21,7 +21,7 @@ import { DesignationData } from "../model/selectAllDesignation";
 import { departmentData } from "../model/department";
 import { gstData } from "../model/gst";
 import { companyData } from '../model/company';
-import {LoginService} from '../../app/services/login.service'
+import { LoginService } from '../../app/services/login.service'
 
 @Component({
   selector: "app-company",
@@ -42,18 +42,18 @@ export class CompanyComponent implements OnInit {
   constructor(
     private breadcrumbService: BreadcrumbService,
     private dialogService: DialogService,
-    private apiService: ApiService,
+    private httpService: ApiService,
     private toastService: ToastService,
-    private confirmationService: ConfirmationService, private _apiService: APIService,private loginService:LoginService) {
+    private confirmationService: ConfirmationService, private _apiService: APIService, private loginService: LoginService) {
     this.breadcrumbService.setItems([
       { label: "Dashboard" },
-      { label: "Company", routerLink: ["/app/company"] },
+      { label: "Company", routerLink: ["company"] },
     ]);
   }
 
   ngOnInit() {
 
-    this.loginService.checkBrowserClosed();
+    //this.loginService.checkBrowserClosed();
 
     this.items = [
       {
@@ -74,15 +74,14 @@ export class CompanyComponent implements OnInit {
 
 
   }
-  // company field data 
+  // code for company field data 
   companyData() {
     const company_data =
     {
       "iRequestID": 2001,
       "iCID": 1
-
     };
-    this.apiService.callPostApi(company_data).subscribe(
+    this.httpService.callPostApi(company_data).subscribe(
       data => {
         console.log(data);
         this.compData = data.body;
@@ -90,20 +89,21 @@ export class CompanyComponent implements OnInit {
       error => console.log(error)
     );
   }
-  // dialog for general edit
+
+  // code for dialog  general edit
   openDialogForGeneraledit(dt) {
     const ref = this.dialogService.open(GeneralEditComponent, {
       data: dt,
       header: "Edit Details",
       width: "28%",
     });
-
     ref.onClose.subscribe((success: boolean) => {
       if (success) {
         this.companyData();
       }
     });
   }
+
   // Get address list start
   getAllAddressesList() {
     const all_address_api =
@@ -111,7 +111,7 @@ export class CompanyComponent implements OnInit {
       "iRequestID": 2015,
       "iCID": 1
     }
-    this.apiService.callPostApi(all_address_api).subscribe(
+    this.httpService.callPostApi(all_address_api).subscribe(
       data => {
         console.log(data);
         this.addressDataArray = data.body;
@@ -148,7 +148,7 @@ export class CompanyComponent implements OnInit {
 
     ref.onClose.subscribe((success: boolean) => {
       if (success) {
-        this.getAllAddressesList(); 
+        this.getAllAddressesList();
       }
     });
   }
@@ -156,7 +156,7 @@ export class CompanyComponent implements OnInit {
 
   // open modal for delete address start
   onDeleteAddress(addressId: number) {
-    
+
     this.confirmationService.confirm({
       message: 'Are you sure that you want to proceed?',
       header: 'Confirmation',
@@ -168,7 +168,7 @@ export class CompanyComponent implements OnInit {
           "iAddID": addressId
         }
         console.log(deleteAddressApi);
-        this.apiService.callPostApi(deleteAddressApi).subscribe(
+        this.httpService.callPostApi(deleteAddressApi).subscribe(
           data => {
             console.log(data);
             this.toastService.addSingle("success", data.headers.get('StatusMessage'), "");
@@ -182,6 +182,8 @@ export class CompanyComponent implements OnInit {
     });
   }
   // open modal for delete address end
+
+  // code for open dialog for add department
   openDialogForaddDepartment() {
     const ref = this.dialogService.open(DepartmentComponent, {
       data: {},
@@ -196,36 +198,36 @@ export class CompanyComponent implements OnInit {
 
     });
   }
-  //open dialog for edit department
+
+  //code for open dialog for edit department
   openDialogForeditDepartment(department) {
     const ref = this.dialogService.open(DepartmentComponent, {
       data: department,
       header: "Edit Department",
       width: "28%",
     });
-
     ref.onClose.subscribe((success: boolean) => {
       if (success) {
         this.departmentList();
       }
-
     });
   }
-  //show all list of department
+
+  //code for show all list of department
   departmentList() {
     const department_data = {
       iRequestID: 2055,
       iCID: 1,
     };
-    this.apiService.callPostApi(department_data).subscribe(
+    this.httpService.callPostApi(department_data).subscribe(
       (data) => {
-        console.log(data);
         this.department = data.body;
       },
       (error) => console.log(error)
     );
   }
-  // delete departemnt
+
+  // code for delete departemnt
   deleteDepartemnt(department: departmentData) {
     this.confirmationService.confirm({
       message: 'Are you sure that you want to proceed?',
@@ -238,29 +240,24 @@ export class CompanyComponent implements OnInit {
           iCID: 1,
           iDeptID: dep_id,
         };
-        this.apiService.callPostApi(delete_data_api).subscribe(
+        this.httpService.callPostApi(delete_data_api).subscribe(
           (data) => {
-            console.log(data);
             this.toastService.addSingle("success", data.headers.get('StatusMessage'), "");
             this.departmentList();
           },
           (error) => console.log(error)
         );
       }
-
     });
-
   }
 
-
-  //open dialog  for add gst
+  //code for open dialog  for add gst
   openDialogForGST() {
     const ref = this.dialogService.open(GstComponent, {
       data: {},
       header: "Add New GST",
       width: "28%",
     });
-
     ref.onClose.subscribe((success: boolean) => {
       if (success) {
         this.gstList();
@@ -268,39 +265,36 @@ export class CompanyComponent implements OnInit {
     });
   }
 
-  // open dialog for edit gst
+  // code for open dialog for edit gst
   openDialogForEditGST(gst) {
     const ref = this.dialogService.open(GstComponent, {
       data: gst,
       header: "Edit GST",
       width: "28%",
     });
-
     ref.onClose.subscribe((success: boolean) => {
       if (success) {
         this.gstList();
       }
     });
   }
-  // show all list of gst
+
+  // code for show all list of gst
   gstList() {
     const gst_data =
     {
-
       "iRequestID": 2063,
       "iCID": 1
-
     };
-    this.apiService.callPostApi(gst_data).subscribe(
+    this.httpService.callPostApi(gst_data).subscribe(
       data => {
-        console.log(data);
         this.gst = data.body;
-
       },
       error => console.log(error)
     );
   }
-  //delete for gst
+
+  //code for delete gst
   deleteGst(gst: gstData) {
     this.confirmationService.confirm({
       message: 'Are you sure that you want to proceed?',
@@ -309,23 +303,19 @@ export class CompanyComponent implements OnInit {
       accept: () => {
         let state_id = +gst.iStateID;
         let delete_gst_data_api = {
-
           "iRequestID": 2064,
           "iStateID": state_id,
           "iCID": 1
         };
-        console.log(delete_gst_data_api);
-        this.apiService.callPostApi(delete_gst_data_api).subscribe(
+        this.httpService.callPostApi(delete_gst_data_api).subscribe(
           data => {
             console.log(data);
             this.toastService.addSingle("success", data.headers.get('StatusMessage'), "");
             this.gstList();
-
           },
           error => console.log(error)
         );
       }
-
     });
   }
 
@@ -335,7 +325,7 @@ export class CompanyComponent implements OnInit {
       iRequestID: 2084,
       iCID: 1,
     };
-    this.apiService.callPostApi(selectDesig_data).subscribe(
+    this.httpService.callPostApi(selectDesig_data).subscribe(
       (data) => {
         console.log(data);
         this.designationData = data.body;
@@ -353,10 +343,10 @@ export class CompanyComponent implements OnInit {
       width: "28%",
     });
     ref.onClose.subscribe((success: boolean) => {
-      if (success) { 
+      if (success) {
         this.designationSelectData();
       }
-      
+
     });
   }
 
@@ -370,8 +360,8 @@ export class CompanyComponent implements OnInit {
     ref.onClose.subscribe((success: boolean) => {
       if (success) {
         this.designationSelectData();
-       }
-    
+      }
+
     });
   }
 
@@ -390,7 +380,7 @@ export class CompanyComponent implements OnInit {
           iDesigID: desig_id,
           iUserID: 2
         };
-        this.apiService.callPostApi(deleteDesig_data).subscribe(
+        this.httpService.callPostApi(deleteDesig_data).subscribe(
           (data) => {
             console.log(data);
             this.toastService.addSingle("success", data.headers.get('StatusMessage'), "");
@@ -398,11 +388,11 @@ export class CompanyComponent implements OnInit {
           },
           (error) => console.log(error)
         );
-      
-      
+
+
       },
       reject: () => {
-       // this.toastService.addSingle("info", "Rejected", "Rejected");
+        // this.toastService.addSingle("info", "Rejected", "Rejected");
       }
     });
   }
@@ -413,7 +403,7 @@ export class CompanyComponent implements OnInit {
       iRequestID: 2045,
       iCID: 1,
     };
-    this.apiService.callPostApi(selectBank_data).subscribe(
+    this.httpService.callPostApi(selectBank_data).subscribe(
       (data) => {
         console.log(data.body);
         this.bankData = data.body;
@@ -432,8 +422,8 @@ export class CompanyComponent implements OnInit {
     ref.onClose.subscribe((success: boolean) => {
       if (success) {
         this.bankSelectData();
-     
-       } 
+
+      }
     });
   }
 
@@ -445,9 +435,9 @@ export class CompanyComponent implements OnInit {
       width: "50%",
     });
     ref.onClose.subscribe((success: boolean) => {
-      if (success) { 
+      if (success) {
         this.bankSelectData();
-      } 
+      }
     });
   }
 
@@ -465,7 +455,7 @@ export class CompanyComponent implements OnInit {
           iBankID: bank_id,
         };
         console.log(deleteBank_data);
-        this.apiService.callPostApi(deleteBank_data).subscribe(
+        this.httpService.callPostApi(deleteBank_data).subscribe(
           (data) => {
             console.log(data);
             this.toastService.addSingle("success", data.headers.get('StatusMessage'), "");
@@ -473,10 +463,10 @@ export class CompanyComponent implements OnInit {
           },
           (error) => console.log(error)
         );
-     
+
       },
       reject: () => {
-      //  this.toastService.addSingle("info", "Rejected", "Rejected");
+        //  this.toastService.addSingle("info", "Rejected", "Rejected");
       }
     });
   }
@@ -492,11 +482,10 @@ export class CompanyComponent implements OnInit {
     });
 
     ref.onClose.subscribe((message: any) => {
-      if (message.StatusCode=="200") {
+      if (message.StatusCode == "200") {
         this.toastService.addSingle("success", message.StatusMessage, "");
       }
-      else
-      {
+      else {
         this.toastService.addSingle("error", message.StatusMessage, "");
       }
       this.showEmployee()
@@ -526,11 +515,10 @@ export class CompanyComponent implements OnInit {
     });
 
     ref.onClose.subscribe((message: any) => {
-      if (message.StatusCode=="200") {
+      if (message.StatusCode == "200") {
         this.toastService.addSingle("success", message.StatusMessage, "");
       }
-      else
-      {
+      else {
         this.toastService.addSingle("error", message.StatusMessage, "");
       }
       this.showEmployee()

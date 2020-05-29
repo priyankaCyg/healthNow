@@ -5,10 +5,10 @@ import { DialogService } from 'primeng';
 import { AddSupCategoryComponent } from './add-sup-category/add-sup-category.component';
 import { from } from 'rxjs';
 
-import {APIService} from '../services/apieservice';
+import { APIService } from '../services/apieservice';
 import { ToastService } from "../services/toast.service";
-import {ConfirmationService} from 'primeng/api';
-import {LoginService} from '../../app/services/login.service'
+import { ConfirmationService } from 'primeng/api';
+import { LoginService } from '../../app/services/login.service'
 
 @Component({
   selector: 'app-supplier-category',
@@ -20,93 +20,90 @@ export class SupplierCategoryComponent implements OnInit {
   items: MenuItem[];
 
   supplierCategory: any[];
-  
-    constructor(private breadcrumbService: BreadcrumbService, private dialogService:DialogService,private _apiService:APIService,
-      private toastService: ToastService,
-      private confirmationService: ConfirmationService,private loginService:LoginService) {
-      this.breadcrumbService.setItems([
-          { label: 'Dashboard' },
-          { label: 'Suplier Category', routerLink: ['/app/suplier-category'] }
-      ]);
+
+  constructor(private breadcrumbService: BreadcrumbService, private dialogService: DialogService, private _apiService: APIService,
+    private toastService: ToastService,
+    private confirmationService: ConfirmationService, private loginService: LoginService) {
+    this.breadcrumbService.setItems([
+      { label: 'Dashboard' },
+      { label: 'Suplier Category', routerLink: ['/suplier-category'] }
+    ]);
   }
 
   ngOnInit(): void {
-        
+
     // this.supplierCategory = [
     //   {supCategoryName: 'Courier',  status: 'Active'},
     //   {supCategoryName: 'Supplier',  status: 'Active'}
     // ];
-    this.loginService.checkBrowserClosed();
+    //this.loginService.checkBrowserClosed();
 
 
-  this.showSupplierCategory()
+    this.showSupplierCategory()
 
   }
 
 
-  
-  showSupplierCategory()
-  {
-    var dataToSend ={
+
+  showSupplierCategory() {
+    var dataToSend = {
       "iRequestID": 2154
-  }
+    }
     this._apiService.getDetails(dataToSend).then(response => {
-      console.log("Response for supplierCategory ",response)
+      console.log("Response for supplierCategory ", response)
       this.supplierCategory = response
     });
   }
 
 
 
-editSupplierCategory(iSupCatID) {
-  const ref = this.dialogService.open( AddSupCategoryComponent , {
-    data: {
-      iSupCatID:iSupCatID
-    },
-    header: 'Edit Supplier Category',
-    width: '28%'
-  });
+  editSupplierCategory(iSupCatID) {
+    const ref = this.dialogService.open(AddSupCategoryComponent, {
+      data: {
+        iSupCatID: iSupCatID
+      },
+      header: 'Edit Supplier Category',
+      width: '28%'
+    });
 
-  ref.onClose.subscribe((message: any) => {
-    if (message.StatusCode=="200") {
-      this.toastService.addSingle("success", message.StatusMessage, "");
-    }
-    else
-    {
-      this.toastService.addSingle("error", message.StatusMessage, "");
-    }
-    this.showSupplierCategory();
-  });
+    ref.onClose.subscribe((message: any) => {
+      if (message.StatusCode == "200") {
+        this.toastService.addSingle("success", message.StatusMessage, "");
+      }
+      else {
+        this.toastService.addSingle("error", message.StatusMessage, "");
+      }
+      this.showSupplierCategory();
+    });
   }
 
-  deleteSupplierCategory(iSupCatID)
-  {
+  deleteSupplierCategory(iSupCatID) {
     this.confirmationService.confirm({
       message: 'Are you sure that you want to proceed?',
       header: 'Confirmation',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
         var dataToSendDelete = {
-          "iRequestID":2153,
-          "iSupCID":iSupCatID
+          "iRequestID": 2153,
+          "iSupCID": iSupCatID
         }
 
         this._apiService.getDetails(dataToSendDelete).then(response => {
-          console.log("Response for Brand Delete ",response)
+          console.log("Response for Brand Delete ", response)
           this.toastService.addSingle("info", response.headers.get('StatusMessage'), "");
           this.showSupplierCategory();
         });
       },
       reject: () => {
-  this.toastService.addSingle("info", "Rejected", "Rejected");
+        this.toastService.addSingle("info", "Rejected", "Rejected");
 
       }
-  });
+    });
   }
 
 
   openDialogForProductCategory() {
-    const ref = this.dialogService.open( AddSupCategoryComponent  , {
+    const ref = this.dialogService.open(AddSupCategoryComponent, {
       data: {
       },
       header: 'Add Supplier Category',
@@ -114,11 +111,10 @@ editSupplierCategory(iSupCatID) {
     });
 
     ref.onClose.subscribe((message: any) => {
-      if (message.StatusCode=="200") {
+      if (message.StatusCode == "200") {
         this.toastService.addSingle("success", message.StatusMessage, "");
       }
-      else
-      {
+      else {
         this.toastService.addSingle("error", message.StatusMessage, "");
       }
       this.showSupplierCategory()

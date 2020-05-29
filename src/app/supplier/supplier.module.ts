@@ -31,11 +31,11 @@ import { TreeTableModule } from 'primeng/treetable';
 import { CheckboxModule } from 'primeng/checkbox';
 import { from } from 'rxjs';
 import { MessageModule } from 'primeng/message';
-import {PickListModule} from 'primeng/picklist';
+import { PickListModule } from 'primeng/picklist';
 
-import {FileUploadModule} from 'primeng/fileupload';
+import { FileUploadModule } from 'primeng/fileupload';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
-import {APIService} from '../services/apieservice';
+import { APIService } from '../services/apieservice';
 
 
 @NgModule({
@@ -62,7 +62,7 @@ import {APIService} from '../services/apieservice';
     PickListModule,
     FileUploadModule
   ],
-  providers: [DialogService, ConfirmationService,APIService],
+  providers: [DialogService, ConfirmationService, APIService],
   entryComponents: [SupplierComponent, AddNewSupplierComponent, AddressComponent, ContactComponent, BankComponent, GstComponent, ProductMappingComponent]
 })
 export class SupplierModule { }

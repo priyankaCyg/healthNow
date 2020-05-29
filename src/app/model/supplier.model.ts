@@ -1,10 +1,10 @@
 
 export class SuppMaster {
 
-    iCreatedBy: string;
-    iLegalEntityID: string;
-    iStatusID: string;
-    iSupID: string;
+    iCreatedBy: number;
+    iLegalEntityID: number;
+    iStatusID: number;
+    iSupID: number;
     sCreatedDate: string;
     sFaxNo: string;
     sPAN: string;

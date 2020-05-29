@@ -21,7 +21,7 @@ export class ContactComponent implements OnInit {
   public partnerContactForm: FormGroup;
   partnerData: PartnerContactMaster;
 
-  constructor(private apiService: ApiService, private fb: FormBuilder, public config: DynamicDialogConfig
+  constructor(private httpService: ApiService, private fb: FormBuilder, public config: DynamicDialogConfig
     , private toastService: ToastService, public ref: DynamicDialogRef
 
   ) { }
@@ -33,40 +33,34 @@ export class ContactComponent implements OnInit {
     this.partnerContactForm = this.createControl(this.partnerData);
 
     this.iPartnerContactID = this.config.data.iPartnerContactID
-    console.log(this.iPartnerContactID)
     if (this.iPartnerContactID != null) {
       this.isEdit = true
-
       var dataToSendEdit = {
         "iRequestID": 2305,
         "iPartnerContactID": this.iPartnerContactID
       }
-
-      this.apiService.getDropDownData(dataToSendEdit).then(response => {
+      this.httpService.getDropDownData(dataToSendEdit).then(response => {
         this.partnerData = new PartnerContactMaster(response[0]);
         this.partnerContactForm = this.createControl(this.partnerData);
-
         Promise.all([this.getStatusDrpDwn(), this.getAddressDrpDwn()]).then(values => {
-          console.log(values);
           this.setDropDownVal()
         });
-
       });
-
     }
     else {
       this.isEdit = false
-
       Promise.all([this.getStatusDrpDwn(), this.getAddressDrpDwn()]).then(values => {
-        console.log(values);
       });
     }
   }
 
+  //code for default dropdown value
   defaultDropDwnValue() {
     this.selectedstatus = { iKVID: "", sKVValue: "Select Status" }
     this.selectedaddress = { iPartnerAddID: "", sAddress: "Select Address" }
   }
+
+  //code for set dropdown data
   setDropDownVal() {
     // Status Dropdown Select
     let selectedStatusObj = this.statusData.find(x => x.iKVID == this.partnerData.iStatusID);
@@ -81,45 +75,40 @@ export class ContactComponent implements OnInit {
     if (selectedAddressObj !== undefined) {
       this.selectedaddress = selectedAddressObj;
     }
-
-
   }
+  //code for partner contact status dropdown data
   getStatusDrpDwn() {
     return new Promise((resolve, reject) => {
       var dataToSend4 = {
         "iRequestID": 2071,
         "sKVName": "Status"
       }
-
-      this.apiService.getDropDownData(dataToSend4).then(response => {
+      this.httpService.getDropDownData(dataToSend4).then(response => {
         this.statusData = response
         this.statusData.splice(0, 0, { iKVID: "", sKVValue: "Select Status" })
         this.selectedstatus = { iKVID: "", sKVValue: "Select Status" }
-
         resolve(this.statusData)
-
       });
     })
   }
 
+  //code for partner contact address dropdown data
   getAddressDrpDwn() {
     return new Promise((resolve, reject) => {
       var dataToSend4 = {
         "iRequestID": 2296,
         "iPartnerID": 1
       }
-
-      this.apiService.getDropDownData(dataToSend4).then(response => {
+      this.httpService.getDropDownData(dataToSend4).then(response => {
         this.addressData = response
         this.addressData.splice(0, 0, { iPartnerAddID: "", sAddress: "Select Address" })
         this.selectedaddress = { iPartnerAddID: "", sAddress: "Select Address" }
-
         resolve(this.addressData)
-
       });
     })
   }
 
+  //code for implement formBuilder and validation
   createControl(partnerData?: PartnerContactMaster): FormGroup {
 
     this.partnerContactForm = this.fb.group({
@@ -144,9 +133,9 @@ export class ContactComponent implements OnInit {
     return this.partnerContactForm;
   }
 
+  // code for add partner contact data
   addPartnerContact() {
     var formData = this.partnerContactForm.getRawValue();
-
     const add_partner_contact_data = {
       "iRequestID": 2301,
       "iPartnerID": this.parent_id,
@@ -160,22 +149,18 @@ export class ContactComponent implements OnInit {
       "sPOBox": "1111111111",
       "sEmailID": formData.sEmailID
     }
-    console.log(add_partner_contact_data);
-    this.apiService.callPostApi(add_partner_contact_data).subscribe(
+    this.httpService.callPostApi(add_partner_contact_data).subscribe(
       data => {
-        console.log(data);
         this.ref.close(true);
         this.toastService.addSingle("success", data.headers.get('StatusMessage'), "");
-
       },
       error => console.log(error)
     );
-
   }
 
+  // code for edit partner contact data
   editPartnerContact() {
     var formData = this.partnerContactForm.getRawValue();
-
     const edit_partner_contact_data = {
       "iRequestID": 2302,
       "iPartnerID": this.parent_id,
@@ -191,22 +176,21 @@ export class ContactComponent implements OnInit {
       "iStatusID": formData.iStatusID.iKVID,
       "iPartnerContactID": this.iPartnerContactID
     }
-    console.log(edit_partner_contact_data);
-    this.apiService.callPostApi(edit_partner_contact_data).subscribe(
+    this.httpService.callPostApi(edit_partner_contact_data).subscribe(
       data => {
-        console.log(data);
         this.ref.close(true);
         this.toastService.addSingle("success", data.headers.get('StatusMessage'), "");
-
       },
       error => console.log(error)
     );
-
   }
 
+  //code for close dialog box
   closeDialog() {
     this.ref.close()
   }
+
+  //code for partner contact dropdown validity check
   dropDownValidityCheck() {
     if (this.selectedstatus.iKVID == '') {
       return true

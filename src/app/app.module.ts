@@ -1,10 +1,10 @@
-import {NgModule} from '@angular/core';
-import {FormsModule,ReactiveFormsModule} from '@angular/forms';
-import {HttpClientModule} from '@angular/common/http';
-import {BrowserModule} from '@angular/platform-browser';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {HashLocationStrategy, LocationStrategy} from '@angular/common';
-import {AppRoutes} from './app.routes';
+import { NgModule } from '@angular/core';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule, HttpClientXsrfModule } from '@angular/common/http';
+import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { HashLocationStrategy, LocationStrategy } from '@angular/common';
+import { AppRoutes } from './app.routes';
 import { AuthGuard } from './services/authguard';
 import { LoginService } from './services/login.service';
 import { httpInterceptorProviders } from './interceptors/httpinterceptors';
@@ -92,16 +92,16 @@ import { AppTopBarComponent } from './app.topbar.component';
 import { AppFooterComponent } from './app.footer.component';
 
 // Demo pages
-import {DashboardDemoComponent} from './demo/view/dashboarddemo.component';
-import {FormsDemoComponent} from './demo/view/formsdemo.component';
-import {PanelsDemoComponent} from './demo/view/panelsdemo.component';
-import {MenusDemoComponent} from './demo/view/menusdemo.component';
-import {MessagesDemoComponent} from './demo/view/messagesdemo.component';
-import {MiscDemoComponent} from './demo/view/miscdemo.component';
-import {EmptyDemoComponent} from './demo/view/emptydemo.component';
-import {ChartsDemoComponent} from './demo/view/chartsdemo.component';
-import {FileDemoComponent} from './demo/view/filedemo.component';
-import {DocumentationComponent} from './demo/view/documentation.component';
+import { DashboardDemoComponent } from './demo/view/dashboarddemo.component';
+import { FormsDemoComponent } from './demo/view/formsdemo.component';
+import { PanelsDemoComponent } from './demo/view/panelsdemo.component';
+import { MenusDemoComponent } from './demo/view/menusdemo.component';
+import { MessagesDemoComponent } from './demo/view/messagesdemo.component';
+import { MiscDemoComponent } from './demo/view/miscdemo.component';
+import { EmptyDemoComponent } from './demo/view/emptydemo.component';
+import { ChartsDemoComponent } from './demo/view/chartsdemo.component';
+import { FileDemoComponent } from './demo/view/filedemo.component';
+import { DocumentationComponent } from './demo/view/documentation.component';
 
 // Demo services
 import { CarService } from './demo/service/carservice';
@@ -110,8 +110,8 @@ import { EventService } from './demo/service/eventservice';
 import { NodeService } from './demo/service/nodeservice';
 
 // Application services
-import {BreadcrumbService} from './breadcrumb.service';
-import {MenuService} from './app.menu.service';
+import { BreadcrumbService } from './breadcrumb.service';
+import { MenuService } from './app.menu.service';
 
 // Prime NG
 import { MessageService } from 'primeng/api';
@@ -119,6 +119,8 @@ import { from } from 'rxjs';
 
 import { ApiService } from './services/api.service';
 import { APIService } from './services/apieservice';
+import { DialogService } from 'primeng';
+import { ConfirmationService } from 'primeng/api';
 
 
 
@@ -194,8 +196,12 @@ import { APIService } from './services/apieservice';
         TreeModule,
         TreeTableModule,
         VirtualScrollerModule,
-        ReactiveFormsModule
-        
+        ReactiveFormsModule,
+        // HttpClientXsrfModule.withOptions({
+        //     cookieName: 'XSRF-TOKEN',
+        //     headerName: 'X-XSRF-TOKEN',
+        // }),
+
     ],
     declarations: [
         AppComponent,
@@ -231,7 +237,8 @@ import { APIService } from './services/apieservice';
         APIService,
         httpInterceptorProviders,
         MessageService,
-        {provide: LocationStrategy, useClass: HashLocationStrategy},
+        DialogService, ConfirmationService,
+        { provide: LocationStrategy, useClass: HashLocationStrategy },
         CarService, CountryService, EventService, NodeService, BreadcrumbService, MenuService,
         LoginService
     ],

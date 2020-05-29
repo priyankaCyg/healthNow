@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { BreadcrumbService } from '../breadcrumb.service';
-import {MenuItem } from 'primeng/api';
+import { MenuItem } from 'primeng/api';
 import { DialogService } from 'primeng';
 import { AddProductCategoryComponent } from './add-product-category/add-product-category.component';
 import { ProductCategory } from '../models/product-category.model';
 import { ApiService } from '../services/api.service';
 import { ConfirmationService } from 'primeng/api';
 import { ToastService } from "../services/toast.service";
-import {LoginService} from '../../app/services/login.service'
+import { LoginService } from '../../app/services/login.service'
 
 
 @Component({
@@ -19,30 +19,29 @@ export class ProductCategoryComponent implements OnInit {
   items: MenuItem[];
 
   productCategoryData: ProductCategory;
-  
-    constructor(
-       private breadcrumbService: BreadcrumbService,
-       private dialogService:DialogService,
-       private apiService : ApiService,
-       private toastService: ToastService,
-       private confirmationService: ConfirmationService,private loginService:LoginService
-      )
-        {
-      this.breadcrumbService.setItems([
-          { label: 'Dashboard' },
-          { label: 'Product Category', routerLink: ['/app/product-category'] }
-      ]);
+
+  constructor(
+    private breadcrumbService: BreadcrumbService,
+    private dialogService: DialogService,
+    private apiService: ApiService,
+    private toastService: ToastService,
+    private confirmationService: ConfirmationService, private loginService: LoginService
+  ) {
+    this.breadcrumbService.setItems([
+      { label: 'Dashboard' },
+      { label: 'Product Category', routerLink: ['/product-category'] }
+    ]);
   }
 
   ngOnInit(): void {
-    
-    this.loginService.checkBrowserClosed();
+
+    // this.loginService.checkBrowserClosed();
     this.showProdCatList();
   }
 
   // To add new category starts
   openDialogForProductCategory() {
-    const ref = this.dialogService.open( AddProductCategoryComponent  , {
+    const ref = this.dialogService.open(AddProductCategoryComponent, {
       data: {
       },
       header: 'Add Product Category',
@@ -57,41 +56,41 @@ export class ProductCategoryComponent implements OnInit {
   }
   // To add new category ends
 
-    //Open Dialog To Edit category
-    editProductCategory(categoryID) {
-      const ref = this.dialogService.open(AddProductCategoryComponent, {
-        data: {
-          "iPCID": categoryID
-        },
-        header: 'Edit Product Category',
-        width: '28%'
-      });
-  
-      ref.onClose.subscribe((success: any) => {
-        if(success)
-        {
-          this.showProdCatList();
-        }
-      });
-    }
-    
-// To Edit category ends
+  //Open Dialog To Edit category
+  editProductCategory(categoryID) {
+    const ref = this.dialogService.open(AddProductCategoryComponent, {
+      data: {
+        "iPCID": categoryID
+      },
+      header: 'Edit Product Category',
+      width: '28%'
+    });
 
-  showProdCatList(){
+    ref.onClose.subscribe((success: any) => {
+      if (success) {
+        this.showProdCatList();
+      }
+    });
+  }
+
+  // To Edit category ends
+
+  showProdCatList() {
     const prodCatListApi = {
       "iRequestID": 2114
     }
     this.apiService.callPostApi(prodCatListApi).subscribe(
-      data => { this.productCategoryData = data.body,
-      console.log(this.apiService.headerMessage);
-      console.log(this.apiService.headerCode);
-      } ,
-      error => { console.log(error)}
+      data => {
+        this.productCategoryData = data.body,
+          console.log(this.apiService.headerMessage);
+        console.log(this.apiService.headerCode);
+      },
+      error => { console.log(error) }
     )
 
   }
 
- // Open Dialog To Delete category
+  // Open Dialog To Delete category
   deleteCategory(categoryID) {
     console.log(categoryID);
     this.confirmationService.confirm({
@@ -101,7 +100,7 @@ export class ProductCategoryComponent implements OnInit {
       accept: () => {
         var deleteCategoryAPI = {
           "iRequestID": 2113,
-          "iPCID":categoryID
+          "iPCID": categoryID
         }
 
         this.apiService.callPostApi(deleteCategoryAPI).subscribe(
@@ -109,10 +108,10 @@ export class ProductCategoryComponent implements OnInit {
             this.toastService.addSingle("success", data.headers.get('StatusMessage'), "");
             this.showProdCatList();
           },
-          error => { console.log(error)}
+          error => { console.log(error) }
         );
       }
     });
   }
-  
+
 }
