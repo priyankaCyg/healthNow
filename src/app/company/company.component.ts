@@ -69,7 +69,7 @@ export class CompanyComponent implements OnInit {
     this.getAllAddressesList();
     this.showEmployee();
   }
-  
+
   // code for company field data 
   companyData() {
     const company_data =

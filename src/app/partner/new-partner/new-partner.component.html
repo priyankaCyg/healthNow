@@ -121,10 +121,15 @@
                                 label="Add New"></button>
                         </div>
                         <div class="p-col-12">
-                            <p-table [value]="address">
+                            <p-table #AddressSerach [value]="partnerAdressData" [paginator]="true" [rows]="10"
+                                [showCurrentPageReport]="true" [rowsPerPageOptions]="[10, 25, 50]" [filterDelay]="0"
+                                [globalFilterFields]="[
+                              'sAddType','sAdd1','sAdd2','sStateName','sCityName','sLandmark','iStatusID'
+                            ]">
                                 <ng-template pTemplate="caption">
                                     <div class="ui-table-globalfilter-container text-left">
                                         <input type="text" pInputText size="50" placeholder="Search"
+                                            (input)="AddressSerach.filterGlobal($event.target.value, 'contains')"
                                             style="width:250px;">
                                     </div>
                                 </ng-template>
@@ -142,17 +147,31 @@
                                 </ng-template>
                                 <ng-template pTemplate="body" let-address>
                                     <tr>
-                                        <td>{{address.addressType}}</td>
-                                        <td>{{address.address1}}</td>
-                                        <td>{{address.address2}}</td>
-                                        <td>{{address.state}}</td>
-                                        <td>{{address.city}}</td>
-                                        <td>{{address.landmark}}</td>
-                                        <td><span class="badge badge--success badge--inline badge--pill"> Active</span>
+                                        <td>{{address.sAddType}}</td>
+                                        <td>{{address.sAdd1}}</td>
+                                        <td>{{address.sAdd2}}</td>
+                                        <td>{{address.sStateName}}</td>
+                                        <td>{{address.sCityName}}</td>
+                                        <td>{{address.sLandmark}}</td>
+                                        <td style="text-align: center;">
+                                            <span *ngIf="address.iStatusID == 1"
+                                                class="badge badge--success badge--inline badge--pill">
+                                                Active
+                                            </span>
+                                            <span *ngIf="address.iStatusID == 2"
+                                                class="badge badge--warning badge--inline badge--pill">
+                                                Inactive
+                                            </span>
+                                            <span *ngIf="address.iStatusID == 3"
+                                                class="badge badge--danger badge--inline badge--pill">
+                                                Deleted
+                                            </span>
                                         </td>
-                                        <td><button pButton type="button" class="ui-button-success mr-1"
-                                                icon="pi pi-pencil"></button></td>
-                                        <td><button pButton type="button" class="ui-button-danger"
+                                        <td><button pButton type="button" class="ui-button-success"
+                                                (click)="editPartnerAddress(address.iPartnerAddID)" icon="pi pi-pencil"
+                                                style="margin-right: .5em"></button>
+                                            <button pButton type="button" class="ui-button-danger"
+                                                (click)="deletePartnerAddress(address.iPartnerAddID)"
                                                 icon="pi pi-trash"></button></td>
                                     </tr>
                                 </ng-template>
