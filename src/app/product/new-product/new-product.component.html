@@ -236,52 +236,10 @@
                                 label="Add / Edit"></button>
                         </div>
                         <div class="p-col-12"></div>
-                        <div class="p-col-6">
+                        <div class="p-col-6" *ngFor="let dt of productQueries; let i=index">
                             <div class="card prcat-shdw border">
-                                <p> <strong>1 Question:</strong> What will be delivery charge for Horlicks </p>
-                                <p><strong>Answer:</strong> It depends ..chk the site</p>
-                            </div>
-                        </div>
-                        <div class="p-col-6">
-                            <div class="card prcat-shdw border">
-                                <p> <strong>2 Question:</strong> My age 21 i can use it </p>
-                                <p><strong>Answer:</strong> Yes you can.</p>
-                            </div>
-                        </div>
-                        <div class="p-col-6">
-                            <div class="card prcat-shdw border">
-                                <p> <strong>3 Question:</strong> What will be delivery charge for Horlicks </p>
-                                <p><strong>Answer:</strong> It depends ..chk the site</p>
-                            </div>
-                        </div>
-                        <div class="p-col-6">
-                            <div class="card prcat-shdw border">
-                                <p> <strong>4 Question:</strong> My age 21 i can use it </p>
-                                <p><strong>Answer:</strong> Yes you can.</p>
-                            </div>
-                        </div>
-                        <div class="p-col-6">
-                            <div class="card prcat-shdw border">
-                                <p> <strong>5 Question:</strong> What will be delivery charge for Horlicks </p>
-                                <p><strong>Answer:</strong> It depends ..chk the site</p>
-                            </div>
-                        </div>
-                        <div class="p-col-6">
-                            <div class="card prcat-shdw border">
-                                <p> <strong>6 Question:</strong> My age 21 i can use it </p>
-                                <p><strong>Answer:</strong> Yes you can.</p>
-                            </div>
-                        </div>
-                        <div class="p-col-6">
-                            <div class="card prcat-shdw border">
-                                <p> <strong>7 Question:</strong> What will be delivery charge for Horlicks </p>
-                                <p><strong>Answer:</strong> It depends ..chk the site</p>
-                            </div>
-                        </div>
-                        <div class="p-col-6">
-                            <div class="card prcat-shdw border">
-                                <p> <strong>8 Question:</strong> My age 21 i can use it </p>
-                                <p><strong>Answer:</strong> Yes you can.</p>
+                                <p> <strong>{{i+1}} Question:</strong> {{dt.sQue}} </p>
+                                <p><strong>Answer:</strong> {{dt.sAns}}</p>
                             </div>
                         </div>
                     </div>
