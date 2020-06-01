@@ -346,7 +346,6 @@ export class AddNewSupplierComponent implements OnInit {
       },
       error => console.log(error)
     );
-    this.addSupplierForm.reset();
   }
 
   //code for edit supplier data
