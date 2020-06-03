@@ -5,6 +5,8 @@ import { SelectItem, MenuItem } from 'primeng/api';
 import { GeneratedFile } from '@angular/compiler';
 import { DialogService } from 'primeng';
 import { PurchaseOrderRoutingModule } from '../purchase-order-routing.module';
+import { ApiService } from 'src/app/services/api.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-map-supplier',
@@ -18,8 +20,8 @@ export class MapSupplierComponent implements OnInit {
   requisition: any[];
 
   addRequValue: any[];
-
-  constructor(private breadcrumbService: BreadcrumbService, private dialogService:DialogService) {
+  //data;
+  constructor(private breadcrumbService: BreadcrumbService, private dialogService:DialogService, private httpService: ApiService) {
     this.breadcrumbService.setItems([
         { label: 'Dashboard' },
         { label: 'Purchase Order', routerLink: ['/purchase-order'] }
@@ -27,7 +29,7 @@ export class MapSupplierComponent implements OnInit {
 }
 
   ngOnInit(): void {
-    
+    // this.httpService.captureData$.subscribe(data => this.data =data);
     this.requisition = [
       { reqNo:'RE/SS/20200514/5', prdCategory:'Food',product:'Gluten Free Wheat 5kg Pack',partner:'Shibin KP',location:'Mumbai', qty:'100',unit:'kg',	createdBy:'System',	createdDate:'1-05-2020' }
     ];
