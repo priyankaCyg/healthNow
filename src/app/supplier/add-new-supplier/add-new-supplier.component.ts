@@ -108,6 +108,8 @@ export class AddNewSupplierComponent implements OnInit {
     this.showContact();
     this.showBank();
     this.showAttachment();
+    this.getCategoryMappingDataSource();
+    this.getCategoryMappingDataTarget();
   }
 
   //Address list starts

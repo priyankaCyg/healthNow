@@ -19,6 +19,7 @@ import { ProductMaster } from '../../model/product.model';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ToastService } from 'src/app/services/toast.service';
 import { ProductInfoData } from 'src/app/model/productInfo';
+import { ProductCategoryMapping } from 'src/app/models/product-category-mapping.model';
 
 @Component({
   selector: 'app-new-product',
@@ -49,6 +50,8 @@ export class NewProductComponent implements OnInit {
   statusData;
   prdId;
   tabDisabled: boolean = true;
+  sourceCategory: ProductCategoryMapping[];
+  targetCategory: ProductCategoryMapping[];
 
   constructor(private carService: CarService, private breadcrumbService: BreadcrumbService,
     private dialogService: DialogService,
@@ -90,6 +93,8 @@ export class NewProductComponent implements OnInit {
       Promise.all([this.getProducerDrpDwn(), this.getUnitDrpDwn(), this.getFoodCultureDrpDwn(), this.getstatusDrpDwn()]).then(values => {
       });
     }
+    this.getCategoryMappingDataSource();
+    this.getCategoryMappingDataTarget();
     this.images = [];
     this.images.push({
       source: 'assets/demo/images/sopranos/sopranos1.jpg',
@@ -377,4 +382,58 @@ export class NewProductComponent implements OnInit {
       }
     });
   }
+   //category mapping starts
+   getCategoryMappingDataSource() {
+    const supplierCategoryMappingAPI = {
+      "iRequestID": 2241,
+      "iPrdID":this.prdId
+    }
+    this.httpService.callPostApi(supplierCategoryMappingAPI).subscribe(
+      data => { this.sourceCategory = data.body; },
+      error => { console.log(error) }
+    )
+  }
+  // category mapping ends
+
+  //category mapping starts
+  getCategoryMappingDataTarget() {
+    const supplierCategoryMappingAPI1 = {
+      "iRequestID": 2243,
+      "iPrdID":this.prdId
+    }
+    this.httpService.callPostApi(supplierCategoryMappingAPI1).subscribe(
+      data => { this.targetCategory = data.body; },
+      error => { console.log(error) }
+    )
+  }
+  // category mapping ends
+
+  // add category mapping starts
+  addCategoryMappingData() {
+    let temp_ids_arr = [];
+    this.targetCategory.map(
+      (val) => {
+        temp_ids_arr.push(val.iPCID);
+      }
+    )
+    let string_ids = temp_ids_arr.toString();
+    const supplierCategoryMappingAddAPI = {
+      "iRequestID": 2242,
+      "iPrdID":this.prdId,
+      "sPrdCatMap": string_ids
+    }
+    if (this.targetCategory.length){
+    this.httpService.callPostApi(supplierCategoryMappingAddAPI).subscribe(
+      data => {
+          this.toastService.addSingle("success", "Categories mapped Successfully", "");
+       },
+      error => { console.log(error) }
+    )
+  }
+  else
+    this.toastService.addSingle("warning", "Select atleast 1 Category", "");
 }
+  // add category mapping ends
+}
+
+

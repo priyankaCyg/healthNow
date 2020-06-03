@@ -306,19 +306,19 @@
                                 <ng-template pTemplate="header">
                                     <tr>
                                         <th>State</th>
-                                        <th>Short Code</th>
+                                        <th>GST</th>
                                         <th>Action</th>
                                     </tr>
                                 </ng-template>
                                 <ng-template pTemplate="body" let-gst>
                                     <tr>
-                                        <td>{{gst.state}}</td>
-                                        <td>{{gst.GST}}</td>
+                                        <td>{{gst.sStateName}}</td>
+                                        <td>{{gst.sGST}}</td>
                                         <td>
-                                            <button pButton type="button" class="ui-button-success" icon="pi pi-pencil"
-                                                style="margin-right: .5em"></button>
-                                            <button pButton type="button" class="ui-button-danger"
-                                                icon="pi pi-trash"></button>
+                                            <button pButton type="button" (click)="editDialogForGST(gst)"
+                                                class="ui-button-success mr-1" icon="pi pi-pencil"></button>
+                                            <button pButton type="button" (click)="deletesupgst(gst.iLocID)"
+                                                class="ui-button-danger" icon="pi pi-trash"></button>
                                         </td>
                                     </tr>
                                 </ng-template>

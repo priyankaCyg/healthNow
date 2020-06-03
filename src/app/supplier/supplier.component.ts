@@ -21,6 +21,11 @@ export class SupplierComponent implements OnInit {
   private subscription: Subscription;
   items: MenuItem[];
   supplier: supplierList[];
+  disableButtonsData : any ;
+  prdMapBtn : boolean = true;
+  editBtn : boolean = true;
+  deleteBtn : boolean = true;
+  sendForApprovalBtn : boolean = true;
   constructor(private breadcrumbService: BreadcrumbService, private dialogService: DialogService,
     private apiService: ApiService, private toastService: ToastService,
     private confirmationService: ConfirmationService, private router: Router,
@@ -34,6 +39,7 @@ export class SupplierComponent implements OnInit {
 
   ngOnInit(): void {
     this.getAllSupplier();
+    this.setButtonsVisibility();
   }
   //code for  get list of supplier
   getAllSupplier() {
@@ -82,4 +88,37 @@ export class SupplierComponent implements OnInit {
   prdmapSupplier(iSupID: Number) {
     this.router.navigate(['/supplier/product-mapping', iSupID]);
   }
+
+  setButtonsVisibility(){
+    const  disableButtonsApi = {
+      "iRequestID":1121,
+      "iRoleID":2,
+      "sComponentName":"SupplierList"
+    }
+    this.apiService.callPostApi(disableButtonsApi).subscribe(
+      (data) => {console.log(data.body),
+       this.disableButtonsData = data.body,
+      console.log(this.disableButtonsData),
+      this.disableButtonsData.map(
+        // (val) => {temp_btns_arr.push(val.sActionName)}
+        (val) => {
+          let actionname = val.sActionName;
+          let btnState = val.state;
+          if(actionname == "sSupplier_product_mapping_btn" && btnState == 1){
+            this.prdMapBtn = false;
+          }
+          else if(actionname == "sSupplier_edit_btn" && btnState == 1){
+            this.editBtn = false;
+          }
+          else if(actionname == "sSupplier_delete_btn" && btnState == 1){
+            this.deleteBtn = false;
+          }
+          else if(actionname == "sSupplier_send_for_approval_btn" && btnState == 1){
+            this.sendForApprovalBtn = false;
+          }
+      }
+      )},
+      (error) => {console.log(error)})
+    
+       }
 }
