@@ -47,8 +47,8 @@
                                                 (click)="deleteOrderReq(orderReq.iPReqID)" icon="pi pi-trash"
                                                 title="Delete"></button>
                                             <button routerLink="/purchase-order/map-supplier" pButton type="button"
-                                                class="ui-button-success" icon="pi pi-sitemap" (click)="mapSupplier(orderReq)"
-                                                title="Mapp Supplier"></button>
+                                                class="ui-button-success" icon="pi pi-sitemap"
+                                                (click)="mapSupplier(orderReq)" title="Mapp Supplier"></button>
                                         </td>
                                     </tr>
                                 </ng-template>
@@ -82,8 +82,8 @@
                                         <td>{{productReq.iQty}}</td>
                                         <td>
                                             <button routerLink="/purchase-order/map-supplier-multi-req" pButton
-                                                type="button" class="ui-button-success" icon="pi pi-sitemap" (click)="mapProduct(productReq)"
-                                                title="Map Product"></button>
+                                                type="button" class="ui-button-success" icon="pi pi-sitemap"
+                                                (click)="mapProduct(productReq)" title="Map Product"></button>
                                         </td>
                                     </tr>
                                 </ng-template>
