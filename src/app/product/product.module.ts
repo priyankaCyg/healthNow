@@ -37,7 +37,7 @@ import { LightboxModule } from 'primeng/lightbox';
 import { CheckboxModule } from 'primeng/checkbox';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { MessageModule } from 'primeng/message';
-
+import { PickListModule } from 'primeng/picklist';
 
 import { APIService } from '../services/apieservice';
 
@@ -63,7 +63,7 @@ import { APIService } from '../services/apieservice';
     FileUploadModule,
     LightboxModule,
     // AccordionModule,
-    // PickListModule,
+    PickListModule,
     CheckboxModule,
     ConfirmDialogModule,
     ReactiveFormsModule,

@@ -248,7 +248,7 @@
 
                 <!-- Product category tab start here -->
                 <p-tabPanel header="Product Category" [disabled]="tabDisabled">
-                    <div class="p-grid p-justify-center mt-4">
+                    <!-- <div class="p-grid p-justify-center mt-4">
                         <div class="p-col-12 p-md-6 p-lg-4">
                             <div class="card bg-dark prcat-shdw border-light">
                                 <p-checkbox name="FV" value="Food - Vitamin" label="Food - Vitamin"></p-checkbox>
@@ -283,14 +283,25 @@
                                     label="Health Concern - Weight Loss" selected></p-checkbox>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
+                    <!-- Category Mapping tab start here -->
+                    <p-pickList [source]="sourceCategory" [target]="targetCategory" sourceHeader="UnMapped"
+                        targetHeader="Mapped" [responsive]="true" filterBy="sCategoryName" dragdrop="true"
+                        sourceFilterPlaceholder="Search by category" targetFilterPlaceholder="Search by category"
+                        [sourceStyle]="{'height':'300px'}" [targetStyle]="{'height':'300px'}">
+                        <ng-template let-category pTemplate="item">
+                            <div class="ui-helper-clearfix">
+                                <div style="font-size:14px;">{{category.sCategoryName}} </div>
+                            </div>
+                        </ng-template>
+                    </p-pickList>
                     <div class="separator separator--border-solid separator--space-sm separator--portlet-fit mt-5">
                     </div>
                     <div class="p-grid form-group ui-fluid p-justify-end mt-3">
                         <div class="p-col-12 p-md-12 p-lg-12 text-right">
                             <button pButton type="button" label="Cancel" class="ui-button-light atbt mr-2"></button>
 
-                            <button pButton type="button" label="Save" class="ui-button atbt"></button>
+                            <button pButton type="button" label="Save" (click)="addCategoryMappingData()" class="ui-button atbt"></button>
                         </div>
                     </div>
                 </p-tabPanel>

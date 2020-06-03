@@ -1,27 +1,43 @@
-<div class="p-grid ui-fluid">
-
+<form [formGroup]="gstForm" autocomplete="off">
+    <div class="p-grid ui-fluid">
         <div class="p-col-12">
-
             <div class="p-grid form-group">
 
                 <div class="p-col-12">
                     <label for="state">State</label>
-                    <p-dropdown id="status" placeholder="Select" required="true"></p-dropdown>
+                    <p-dropdown id="state" [options]="supgstData" formControlName="sStateName" optionLabel="sLocName"
+                        [(ngModel)]="selectedstate" (click)="getStateCode()">
+                    </p-dropdown>
+                    <p-message severity="error" text="select State is required"
+                        *ngIf="gstForm.controls['sStateName'].touched && (selectedstate.iLocationID=='' || gstForm.controls['sStateName'].hasError('required'))">
+                    </p-message>
                 </div>
 
                 <div class="p-col-12">
                     <label for="gst">GST</label>
-                    <input id="gst" type="text" pInputText>
+                    <input id="gst" type="text" formControlName="sGST" pInputText >
+                    <p-message severity="error"
+                        [text]="gstForm.controls['sGST'].errors['required'] ? 'This Field is required' : gstForm.controls['sGST'].errors"
+                        *ngIf="!gstForm.controls['sGST'].valid && gstForm.controls['sGST'].dirty">
+                    </p-message>
                 </div>
-
             </div>
             <div class="separator separator--border-solid separator--space-sm separator--portlet-fit"></div>
-            <div class="p-grid form-group ui-fluid p-justify-end">
+            <div class="p-grid form-group ui-fluid">
                 <div class="p-col-12 p-md-12 p-lg-12 text-right">
-                    <button pButton type="button" label="Cancel" class="ui-button-light atbt mb-2 mr-2"></button>
-                    <button pButton type="button" label="Save" class="ui-button atbt mb-2"></button>
+                    <button pButton type="button" (click)="closeDialog()" label="Cancel"
+                        class="ui-button-light atbt mr-2"></button>
+
+                    <button *ngIf="!isEdit" pButton type="button" label="Save"
+                        [disabled]="!(!gstForm.invalid && !dropDownValidityCheck())" (click)="addGst()"
+                        class="ui-button atbt"></button>
+
+                    <button *ngIf="isEdit" pButton type="button" label="Update"
+                        [disabled]="!(!gstForm.invalid && !dropDownValidityCheck())" (click)="editGst()"
+                        class="ui-button atbt"></button>
                 </div>
             </div>
 
         </div>
-</div>
+    </div>
+</form>
