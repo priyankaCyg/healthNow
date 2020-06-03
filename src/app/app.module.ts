@@ -119,6 +119,7 @@ import { MessageService } from 'primeng/api';
 import { ApiService } from './services/api.service';
 import { APIService } from './services/apieservice';
 import { AuthInterceptor } from './interceptors/auth.interceptor';
+import { CommonService } from './services/common.service';
 
 @NgModule({
     imports: [
@@ -232,7 +233,8 @@ import { AuthInterceptor } from './interceptors/auth.interceptor';
         MessageService,
         { provide: LocationStrategy, useClass: HashLocationStrategy },
         CarService, CountryService, EventService, NodeService, BreadcrumbService, MenuService,
-        LoginService
+        LoginService,
+        CommonService
     ],
     bootstrap: [AppComponent]
 })
