@@ -20,6 +20,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ToastService } from 'src/app/services/toast.service';
 import { ProductInfoData } from 'src/app/model/productInfo';
 import { ProductCategoryMapping } from 'src/app/models/product-category-mapping.model';
+import { productQuerData } from 'src/app/model/productQueries';
 
 @Component({
   selector: 'app-new-product',
@@ -35,7 +36,7 @@ export class NewProductComponent implements OnInit {
   prImage: any[];
   productVariant: any[];
   productDesc: any[];
-  productQueries: any[];
+  productQueries: productQuerData[];
   productInfoData: ProductInfoData[];
   isEdit: boolean = false
   public ProductForm: FormGroup;
@@ -120,7 +121,7 @@ export class NewProductComponent implements OnInit {
     ];
 
     this.getProductInfo();
-
+    this.getProductQueries();
     this.productDesc = [
       { prDesc: 'Handpicked from india’s finest wheat fields, fortune chakki fresh atta is made with 100 percent atta and 0 percent maida which complements your ghar ka khana perfectly. You can differentiate these fibre-rich rotis with your 5 senses - their superior quality taste, soft touch, mesmerizing aroma and a fluffy look, so words of appreciation are bound to come your way. ' }
     ];
@@ -345,6 +346,21 @@ export class NewProductComponent implements OnInit {
     });
   }
 
+  //code for show all product Queries 
+  getProductQueries() {
+    const productQueAPI = {
+      "iRequestID": 2164,
+      "iProductID": this.prdId
+    }
+    this.httpService.callPostApi(productQueAPI).subscribe(
+      data => {
+        this.productQueries = data.body[0];
+      },
+      error => { console.log(error) }
+    )
+  }
+
+  //code for open dialog product Queries add and edit 
   openDialogForPrQueries() {
     const ref = this.dialogService.open(ProductQueriesComponent, {
       data: {
@@ -353,7 +369,9 @@ export class NewProductComponent implements OnInit {
       width: '82%'
     });
     ref.onClose.subscribe((success: boolean) => {
-      if (success) { }
+      if (success) {
+        this.getProductQueries();
+      }
     });
   }
 

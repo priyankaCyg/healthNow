@@ -112,29 +112,25 @@ export class AddNewSupplierComponent implements OnInit {
     this.getCategoryMappingDataTarget();
   }
 
-  //Address list starts
+  //Function for Address list 
   getSupplierAddressList() {
-    let sup_by_id = +this.route.snapshot.params['iSupID'];
     const supplierAddressAPI = {
       "iRequestID": 2184,
-      "iSupID": sup_by_id
+      "iSupID": this.supId
     }
     this.apiService.callPostApi(supplierAddressAPI).subscribe(
       data => { this.supplierAdressData = data.body },
       error => { console.log(error) }
     )
   }
-  // address list ends
 
-  // Daialogue to add address
+  // Daialogue box to add address
   openDialogForaddAddress() {
     const ref = this.dialogService.open(AddressComponent, {
-      data: {
-      },
+      data: {},
       header: 'Add New Address',
       width: '80%'
     });
-    localStorage.setItem('iSupID', this.route.snapshot.params['iSupID']);
     ref.onClose.subscribe((success: boolean) => {
       if (success) {
         this.getSupplierAddressList();
@@ -142,7 +138,7 @@ export class AddNewSupplierComponent implements OnInit {
     });
   }
 
-  // Daialogue to edit address
+  // Daialogue box to edit address
   editSupplierAddress(supplierID) {
     const ref = this.dialogService.open(AddressComponent, {
       data: {
@@ -151,9 +147,7 @@ export class AddNewSupplierComponent implements OnInit {
       header: 'Edit Address',
       width: '80%'
     });
-    localStorage.setItem('iSupID', this.route.snapshot.params['iSupID']);
     ref.onClose.subscribe((success: boolean) => {
-      // alert(success)
       if (success) {
         this.getSupplierAddressList();
       }
@@ -162,7 +156,6 @@ export class AddNewSupplierComponent implements OnInit {
 
   // Open Dialog To Delete address
   deleteSupplierAddress(supplierID) {
-    console.log(supplierID);
     this.confirmationService.confirm({
       message: 'Are you sure you want to Delete this Record?',
       header: 'Confirmation',
@@ -182,7 +175,6 @@ export class AddNewSupplierComponent implements OnInit {
       }
     });
   }
-
 
   onUpload(event) {
     for (const file of event.files) {
@@ -348,7 +340,6 @@ export class AddNewSupplierComponent implements OnInit {
       },
       error => console.log(error)
     );
-    this.addSupplierForm.reset();
   }
 
   //code for edit supplier data

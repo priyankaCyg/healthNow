@@ -1,60 +1,68 @@
+<p-confirmDialog header="Confirmation" icon="pi pi-info" [style]="{width: '425px'}"
+    rejectButtonStyleClass="ui-button-secondary"></p-confirmDialog>
 <div class="p-grid">
     <div class="p-col-12">
         <div class="card card-w-title">
-            <h1>Requisition</h1>        
+            <h1>Requisition</h1>
             <p-tabView>
+                <!-- Order Requisition starts here-->
                 <p-tabPanel header="Order Requisition">
                     <div class="p-grid ui-fluid vertical-container">
-                        
                         <div class="p-col-12 p-col-align-end text-right">
-                            <button pButton type="button" (click)="openDialogForCreateRequ()" label="Create Requisition" class="ui-button-raised ui-button atbt"></button>
-                            
+                            <button pButton type="button" (click)="openDialogForCreateReq()" label="Create Requisition"
+                                class="ui-button-raised ui-button atbt"></button>
                         </div>
-                    <div class="p-col-12 mt-3"> 
-                        <p-table [value]="orderRequ">
-                            <ng-template pTemplate="header">
-                                <tr>
-                                    <th style="width: 3em">#</th>
-                                    <th>Requisition No.</th>
-                                    <th>Product Category</th>
-                                    <th>Product</th>
-                                    <th>Partner</th>
-                                    <th>Location</th>
-                                    <th>Quantity</th>
-                                    <th>Created By</th>
-                                    <th>Created Date</th>
-                                    <th>Action</th>
-                                </tr>
-                            </ng-template>
-                            <ng-template pTemplate="body" let-orderRequ>
-                                <tr>
-                                    <td>{{orderRequ.srNo}}</td>
-                                    <td>{{orderRequ.requNo}}</td>
-                                    <td>{{orderRequ.prdCategory}}</td>
-                                    <td>{{orderRequ.product}}</td>
-                                    <td>{{orderRequ.partner}}</td>
-                                    <td>{{orderRequ.location}}</td>
-                                    <td>{{orderRequ.qty}}</td>
-                                    <td>{{orderRequ.createdBy}}</td>
-                                    <td>{{orderRequ.createdDate}}</td>
-                                    <td>
-                                        <button pButton type="button" class="ui-button-success mr-1" icon="pi pi-pencil"></button>
-                                        <button pButton type="button" class="ui-button-danger mr-1" icon="pi pi-trash"></button> 
-                                        <button routerLink="/purchase-order/map-supplier" pButton type="button" class="ui-button-success" icon="pi pi-sitemap" title="Mapp Supplier"></button>
-                                    </td>
-                                    
-                                </tr>
-                            </ng-template>
-                        </p-table>
-                    
-                    </div>              
-                </div>
+                        <div class="p-col-12 mt-3">
+                            <p-table [value]="orderReq">
+                                <ng-template pTemplate="header">
+                                    <tr>
+                                        <th style="width: 3em">#</th>
+                                        <th>Requisition No.</th>
+                                        <th>Product Category</th>
+                                        <th>Product</th>
+                                        <th>Partner</th>
+                                        <th>Location</th>
+                                        <th>Quantity</th>
+                                        <th>Created By</th>
+                                        <th>Created Date</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </ng-template>
+                                <ng-template pTemplate="body" let-orderReq let-rowIndex="rowIndex">
+                                    <tr>
+                                        <td>{{rowIndex + 1}}</td>
+                                        <td>{{orderReq.requNo}}</td>
+                                        <td>{{orderReq.sPCName}}</td>
+                                        <td>{{orderReq.sPrdName}}</td>
+                                        <td>{{orderReq.sPartnerName}}</td>
+                                        <td>{{orderReq.sLocName}}</td>
+                                        <td>{{orderReq.iQty}}</td>
+                                        <td>{{orderReq.createdBy}}</td>
+                                        <td>{{orderReq.sCreatedDate}}</td>
+                                        <td>
+                                            <button pButton type="button" class="ui-button-success mr-1"
+                                                (click)="openDialogForEditReq(orderReq)" icon="pi pi-pencil"
+                                                title="Edit"></button>
+                                            <button pButton type="button" class="ui-button-danger mr-1"
+                                                (click)="deleteOrderReq(orderReq.iPReqID)" icon="pi pi-trash"
+                                                title="Delete"></button>
+                                            <button routerLink="/purchase-order/map-supplier" pButton type="button"
+                                                class="ui-button-success" icon="pi pi-sitemap" (click)="mapSupplier(orderReq)"
+                                                title="Mapp Supplier"></button>
+                                        </td>
+                                    </tr>
+                                </ng-template>
+                            </p-table>
+                        </div>
+                    </div>
                 </p-tabPanel>
-                <p-tabPanel header="Product Requisition">
-                        <div class="p-grid ui-fluid vertical-container">
+                <!-- Order Requisition ends here-->
 
-                        <div class="p-col-12 mt-3"> 
-                            <p-table [value]="productRequ">
+                <!-- Product Requisition starts here-->
+                <p-tabPanel header="Product Requisition">
+                    <div class="p-grid ui-fluid vertical-container">
+                        <div class="p-col-12 mt-3">
+                            <p-table [value]="productReq">
                                 <ng-template pTemplate="header">
                                     <tr>
                                         <th style="width: 3em">#</th>
@@ -65,28 +73,26 @@
                                         <th>Action</th>
                                     </tr>
                                 </ng-template>
-                                <ng-template pTemplate="body" let-productRequ>
+                                <ng-template pTemplate="body" let-productReq let-rowIndex="rowIndex">
                                     <tr>
-                                        <td>{{productRequ.srNo}}</td>
-                                        <td>{{productRequ.prdCategory}}</td>
-                                        <td>{{productRequ.product}}</td>
-                                        <td>{{productRequ.RequCount}}</td>
-                                        <td>{{productRequ.qty}}</td>
+                                        <td>{{rowIndex + 1}}</td>
+                                        <td>{{productReq.sPCName}}</td>
+                                        <td>{{productReq.sPrdName}}</td>
+                                        <td>{{productReq.iReqCnt}}</td>
+                                        <td>{{productReq.iQty}}</td>
                                         <td>
-                                            <button pButton type="button" class="ui-button-success mr-1" icon="pi pi-pencil"></button>
-                                            <button pButton type="button" class="ui-button-danger mr-1" icon="pi pi-trash"></button> 
-                                            <button routerLink="/purchase-order/map-supplier-multi-req" pButton type="button" class="ui-button-success" icon="pi pi-sitemap" title="Mapp Product"></button>
+                                            <button routerLink="/purchase-order/map-supplier-multi-req" pButton
+                                                type="button" class="ui-button-success" icon="pi pi-sitemap" (click)="mapProduct(productReq)"
+                                                title="Mapp Product"></button>
                                         </td>
-                                        
                                     </tr>
                                 </ng-template>
                             </p-table>
-                        
-                        </div>              
+                        </div>
                     </div>
                 </p-tabPanel>
+                <!-- Product Requisition ends here-->
             </p-tabView>
         </div>
-
     </div>
 </div>

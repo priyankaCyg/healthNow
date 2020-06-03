@@ -16,6 +16,7 @@ import { ActivatedRoute } from '@angular/router';
 import { PartnerMaster } from 'src/app/model/partner.model';
 import { companyBankMaster } from 'src/app/model/companyBank.model';
 import { gstData } from 'src/app/model/gst';
+import { PartnerAddress } from 'src/app/model/partner_address.model';
 
 @Component({
   selector: 'app-new-partner',
@@ -25,7 +26,6 @@ import { gstData } from 'src/app/model/gst';
 export class NewPartnerComponent implements OnInit {
 
   items: MenuItem[];
-  address: any[];
   contact: any[];
   gst: gstData[];
   isEdit: boolean = false;
@@ -33,6 +33,7 @@ export class NewPartnerComponent implements OnInit {
   public PartnerForm: FormGroup;
   partnerData: PartnerMaster;
   bankData: companyBankMaster[];
+  partnerAdressData: PartnerAddress;
   statusData;
   entityData;
   partner_id;
@@ -80,12 +81,8 @@ export class NewPartnerComponent implements OnInit {
         console.log(values);
       });
     }
+    this.getPartnerAddressList();
     this.bankSelectData();
-    this.address = [
-      { addressType: 'Registered', address1: '13, Gandhi Bhuvan Chunam Lane', address2: 'Db Road, Lamington Road, Grant Road, East, Mumabi.', state: 'Maharashtra', city: 'Mumbai', landmark: 'Db Road' },
-      { addressType: 'Registered', address1: '| 319, Hariom Plaza,', address2: 'M.g Road, Borivali East,', state: 'Maharashtra', city: 'Mumabi', landmark: 'M.g Road' },
-      { addressType: 'Warehouse', address1: 'Trishul, 3rd Floor, Opposite Samartheshwar Temple,', address2: 'Near Law Garden, Ellisbridge,Opposite Samartheshwar Temple', state: 'Gujarat', city: 'AHMEDABAD', landmark: 'Samartheshwar Temple' }
-    ];
     this.getPartnerContactList();
     this.gstList();
   }
@@ -197,7 +194,6 @@ export class NewPartnerComponent implements OnInit {
       },
       error => console.log(error)
     );
-    this.PartnerForm.reset();
   }
 
   // Function to update partner details
@@ -222,15 +218,69 @@ export class NewPartnerComponent implements OnInit {
       error => console.log(error)
     );
   }
+
+  //Function to display Address list 
+  getPartnerAddressList() {
+    const partnerAddressAPI = {
+      "iRequestID": 2294,
+      "iPartnerID": this.partner_id
+    }
+    this.httpService.callPostApi(partnerAddressAPI).subscribe(
+      data => { this.partnerAdressData = data.body },
+      error => { console.log(error) }
+    )
+  }
+
+  // Dialog box to add address
   openDialogForaddAddress() {
     const ref = this.dialogService.open(AddressComponent, {
-      data: {
-      },
-      header: 'Add Address',
+      data: {},
+      header: 'Add New Address',
       width: '80%'
     });
     ref.onClose.subscribe((success: boolean) => {
-      if (success) { }
+      if (success) {
+        this.getPartnerAddressList();
+      }
+    });
+  }
+
+  // Dialog box to edit address
+  editPartnerAddress(partnerAddID) {
+    const ref = this.dialogService.open(AddressComponent, {
+      data: {
+        "iPartnerAddID": partnerAddID
+      },
+      header: 'Edit Address',
+      width: '80%'
+    });
+    ref.onClose.subscribe((success: boolean) => {
+      if (success) {
+        this.getPartnerAddressList();
+      }
+    });
+  }
+
+  // Dialog box to delete Address
+  deletePartnerAddress(partnerAddID) {
+    console.log(partnerAddID);
+    this.confirmationService.confirm({
+      message: 'Are you sure you want to Delete this Record?',
+      header: 'Confirmation',
+      icon: 'pi pi-exclamation-triangle',
+      accept: () => {
+        var deleteAddressAPI = {
+          "iRequestID": 2293,
+          "iPartnerAddID": partnerAddID
+        }
+        this.httpService.callPostApi(deleteAddressAPI).subscribe(
+          data => {
+            this.getPartnerAddressList();
+            this.toastService.addSingle("success", data.headers.get('StatusMessage'), "");
+          },
+          error => { console.log(error) }
+        );
+      }
     });
   }
 
@@ -238,7 +288,7 @@ export class NewPartnerComponent implements OnInit {
   bankSelectData() {
     const selectBank_data = {
       "iRequestID": 2314,
-      "iPartnerID": +this.partner_id
+      "iPartnerID": this.partner_id
     };
     this.httpService.callPostApi(selectBank_data).subscribe(
       (data) => {
@@ -315,6 +365,7 @@ export class NewPartnerComponent implements OnInit {
       }
     });
   }
+
   openDialogForeditContact(contact: any) {
     const ref = this.dialogService.open(ContactComponent, {
       data: contact,
