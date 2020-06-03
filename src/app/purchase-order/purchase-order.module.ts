@@ -18,7 +18,7 @@ import { PoListComponent } from './po-list/po-list.component';
 //Prime Ng Service
 import { DialogService } from 'primeng';
 import { ConfirmationService } from 'primeng/api';
-import { FormsModule} from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 //Prime Ng Module
 import { ButtonModule } from 'primeng/button';
@@ -36,12 +36,12 @@ import { CheckboxModule } from 'primeng/checkbox';
 import { MessageModule } from 'primeng/message';
 import { MessagesModule } from 'primeng/messages';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
-import {CalendarModule} from 'primeng/calendar';
-import {FileUploadModule} from 'primeng/fileupload';
+import { CalendarModule } from 'primeng/calendar';
+import { FileUploadModule } from 'primeng/fileupload';
 
 
 @NgModule({
-  declarations: [PurchaseOrderComponent,NewPoComponent,ProductPurchasePriceComponent,ProductRequisitionComponent, AddProductPurchasePriceComponent, MapSupplierComponent, CreateRequisitionComponent, CreatePoListComponent, CreatePoDetailComponent, MapSupplierMultiReqComponent, PoGeneralDetailsComponent, PoListComponent],
+  declarations: [PurchaseOrderComponent, NewPoComponent, ProductPurchasePriceComponent, ProductRequisitionComponent, AddProductPurchasePriceComponent, MapSupplierComponent, CreateRequisitionComponent, CreatePoListComponent, CreatePoDetailComponent, MapSupplierMultiReqComponent, PoGeneralDetailsComponent, PoListComponent],
   imports: [
     CommonModule,
     PurchaseOrderRoutingModule,
@@ -62,9 +62,10 @@ import {FileUploadModule} from 'primeng/fileupload';
     MessagesModule,
     CheckboxModule,
     CalendarModule,
-    FileUploadModule
+    FileUploadModule,
+    ReactiveFormsModule
   ],
   providers: [DialogService, ConfirmationService],
-  entryComponents: [PurchaseOrderComponent,NewPoComponent,ProductPurchasePriceComponent,ProductRequisitionComponent,AddProductPurchasePriceComponent,MapSupplierComponent, CreateRequisitionComponent,CreatePoListComponent,CreatePoDetailComponent, MapSupplierMultiReqComponent, PoGeneralDetailsComponent,PoListComponent]
+  entryComponents: [PurchaseOrderComponent, NewPoComponent, ProductPurchasePriceComponent, ProductRequisitionComponent, AddProductPurchasePriceComponent, MapSupplierComponent, CreateRequisitionComponent, CreatePoListComponent, CreatePoDetailComponent, MapSupplierMultiReqComponent, PoGeneralDetailsComponent, PoListComponent]
 })
 export class PurchaseOrderModule { }
