@@ -105,7 +105,6 @@ export class ProductRequisitionComponent implements OnInit {
   mapSupplier(orderReq) {
     localStorage.setItem('tabIndex', '0')
     localStorage.setItem('orderData', JSON.stringify({ orderReq }))
-    localStorage.setItem('tabIndex', '0')
     //this.commonService.getComponentData({orderData:orderReq});
   }
 
@@ -126,7 +125,6 @@ export class ProductRequisitionComponent implements OnInit {
   mapProduct(productReq) {
     localStorage.setItem('tabIndex', '1')
     this.commonService.getComponentData(productReq);
-    localStorage.setItem('tabIndex', '1')
     // localStorage.setItem('productData',JSON.stringify({ productReq }));
   }
 }
