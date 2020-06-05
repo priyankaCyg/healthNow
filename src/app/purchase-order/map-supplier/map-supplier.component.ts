@@ -26,7 +26,7 @@ export class MapSupplierComponent implements OnInit {
   selectedValues: supplierReqData[] = [];
   discount: number;
   discount_amnt: number;
-  purchase_amnt : number;
+  purchase_amnt: number;
   disc: number;
   isDisable: boolean;
 
@@ -81,7 +81,7 @@ export class MapSupplierComponent implements OnInit {
   //Function to calculate Discount amount and purchase price 
   changeDiscount(disc: number, index: number) {
     let obj = this.supplierData[index];
-    let discount_val:number = disc / 100;
+    let discount_val: number = disc / 100;
     this.discount_amnt = parseInt((discount_val * obj.iPurchaseAmt).toFixed(2));
     this.purchase_amnt = parseInt((obj.iPurchaseAmt - this.discount_amnt).toFixed(2));
     obj.discount_amnt = this.discount_amnt;
@@ -99,7 +99,7 @@ export class MapSupplierComponent implements OnInit {
     }
     this.httpService.callPostApi(supplierAPI).subscribe(
       data => {
-        this.toastService.addSingle("success", data.headers.get('StatusMessage'), "");
+        this.toastService.displayApiMessage(data.headers.get('StatusMessage'), data.headers.get('StatusCode'));
         this.router.navigate(['/purchase-order/product-requisition']);
       },
       error => { console.log(error) }
