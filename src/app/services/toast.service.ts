@@ -38,7 +38,7 @@ export class ToastService {
     }
 
     displayApiMessage(statusMessage: string, statusCode: number) {
-        if (statusCode == 200) {
+        if (statusCode == 200 || statusCode == 201 || statusCode == 202) {
             this.messageService.add({ severity: "success", summary: statusMessage, detail: "" });
         }
         else {

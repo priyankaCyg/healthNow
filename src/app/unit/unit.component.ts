@@ -12,12 +12,11 @@ import { SelectItem, MenuItem } from 'primeng/api';
 import { DialogService } from 'primeng';
 import { from } from 'rxjs';
 
-import { APIService } from '../services/apieservice';
 import { ToastService } from "../services/toast.service";
 import { ConfirmationService } from 'primeng/api';
-
 import { AddUnitComponent } from './add-unit/add-unit.component';
-import { LoginService } from '../../app/services/login.service'
+import { ApiService } from '../services/api.service';
+import { UnitMaster } from '../model/unit.model';
 
 @Component({
   selector: 'app-unit',
@@ -28,11 +27,11 @@ export class UnitComponent implements OnInit {
 
   items: MenuItem[];
 
-  unit: any[];
+  unit: UnitMaster[];
 
-  constructor(private breadcrumbService: BreadcrumbService, private dialogService: DialogService, private _apiService: APIService,
+  constructor(private breadcrumbService: BreadcrumbService, private dialogService: DialogService,
     private toastService: ToastService,
-    private confirmationService: ConfirmationService, private loginService: LoginService) {
+    private confirmationService: ConfirmationService, private httpService: ApiService) {
     this.breadcrumbService.setItems([
       { label: 'Dashboard' },
       { label: 'Unit', routerLink: ['/unit'] }
@@ -40,25 +39,23 @@ export class UnitComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // this.loginService.checkBrowserClosed();
-
     this.showUnit();
-
   }
 
-
-
+  // code for list of unit data
   showUnit() {
     var dataToSend = {
       "iRequestID": 2144
     }
-    this._apiService.getDetails(dataToSend).then(response => {
-      console.log("Response for Unit ", response)
-      this.unit = response
-    });
+    this.httpService.callPostApi(dataToSend).subscribe(
+      data => {
+        this.unit = data.body;
+      },
+      error => console.log(error)
+    );
   }
 
-
+  //code for open dialog box of unit
   openDialogForaddUnit() {
     const ref = this.dialogService.open(AddUnitComponent, {
       data: {
@@ -66,20 +63,14 @@ export class UnitComponent implements OnInit {
       header: 'Add New Unit',
       width: '28%'
     });
-    ref.onClose.subscribe((message: any) => {
-      if (message.StatusCode == "200") {
-        this.toastService.addSingle("success", message.StatusMessage, "");
+    ref.onClose.subscribe((success: any) => {
+      if (success) {
+        this.showUnit();
       }
-      else {
-        this.toastService.addSingle("error", message.StatusMessage, "");
-      }
-      this.showUnit();
     });
   }
 
-
-
-
+  //code for edit dialog box of unit  
   editUnit(unitId) {
     const ref = this.dialogService.open(AddUnitComponent, {
       data: {
@@ -88,18 +79,14 @@ export class UnitComponent implements OnInit {
       header: 'Edit Unit',
       width: '28%'
     });
-
-    ref.onClose.subscribe((message: any) => {
-      if (message.StatusCode == "200") {
-        this.toastService.addSingle("success", message.StatusMessage, "");
+    ref.onClose.subscribe((success: any) => {
+      if (success) {
+        this.showUnit();
       }
-      else {
-        this.toastService.addSingle("error", message.StatusMessage, "");
-      }
-      this.showUnit();
     });
   }
 
+  //code for delete data of unit 
   deleteUnit(unitId) {
     this.confirmationService.confirm({
       message: 'Are you sure that you want to proceed?',
@@ -108,19 +95,16 @@ export class UnitComponent implements OnInit {
       accept: () => {
         var dataToSendDelete = {
           "iRequestID": 2143,
-          "iBrandID": unitId
+          "iUnitID": unitId
         }
-
-        this._apiService.getDetails(dataToSendDelete).then(response => {
-          console.log("Response for Brand Delete ", response)
-          this.toastService.addSingle("info", response.headers.get('StatusMessage'), "");
-          this.showUnit();
-        });
+        this.httpService.callPostApi(dataToSendDelete).subscribe(
+          (data) => {
+            this.toastService.displayApiMessage(data.headers.get('StatusMessage'), data.headers.get('StatusCode'));
+            this.showUnit();
+          },
+          (error) => console.log(error)
+        );
       },
-      reject: () => {
-        this.toastService.addSingle("info", "Rejected", "Rejected");
-
-      }
     });
   }
 

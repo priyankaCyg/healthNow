@@ -192,7 +192,7 @@ export class AddNewAddressComponent implements OnInit {
         data => {
           console.log(this.AddressForm.value);
           this.ref.close(true);
-          this.toastService.addSingle("success", data.headers.get('StatusMessage'), "");
+          this.toastService.displayApiMessage(data.headers.get('StatusMessage'), data.headers.get('StatusCode'));
         },
         error => {
           console.log(error)
@@ -232,7 +232,7 @@ export class AddNewAddressComponent implements OnInit {
           data => {
             console.log(this.AddressForm.value);
             this.ref.close(true);
-            this.toastService.addSingle("success", data.headers.get('StatusMessage'), "");
+            this.toastService.displayApiMessage(data.headers.get('StatusMessage'), data.headers.get('StatusCode'));
           },
           error => {
             console.log(error)
@@ -265,7 +265,7 @@ export class AddNewAddressComponent implements OnInit {
           data => {
             console.log(this.AddressForm.value);
             this.ref.close(true);
-            this.toastService.addSingle("success", data.headers.get('StatusMessage'), "");
+            this.toastService.displayApiMessage(data.headers.get('StatusMessage'), data.headers.get('StatusCode'));
           },
           error => {
             console.log(error)

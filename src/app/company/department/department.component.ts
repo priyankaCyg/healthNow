@@ -108,7 +108,7 @@ export class DepartmentComponent implements OnInit {
       data => {
         console.log(data);
         this.ref.close(true);
-        this.toastService.addSingle("success", data.headers.get('StatusMessage'), "");
+        this.toastService.displayApiMessage(data.headers.get('StatusMessage'), data.headers.get('StatusCode'));
       },
       error => console.log(error)
     );
@@ -130,7 +130,7 @@ export class DepartmentComponent implements OnInit {
       data => {
         console.log(data);
         this.ref.close(true);
-        this.toastService.addSingle("success", data.headers.get('StatusMessage'), "");
+        this.toastService.displayApiMessage(data.headers.get('StatusMessage'), data.headers.get('StatusCode'));
       },
       error => console.log(error)
     );

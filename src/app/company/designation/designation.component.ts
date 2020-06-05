@@ -86,7 +86,7 @@ export class DesignationComponent implements OnInit {
           this.httpService.callPostApi(addDesig_data).subscribe(
             (data) => {
               this.ref.close(true);
-              this.toastService.addSingle("success", data.headers.get('StatusMessage'), "");
+              this.toastService.displayApiMessage(data.headers.get('StatusMessage'), data.headers.get('StatusCode'));
             },
             (error) => console.log(error)
           );
@@ -104,7 +104,7 @@ export class DesignationComponent implements OnInit {
           this.httpService.callPostApi(updateDesig_data).subscribe(
             (data) => {
               this.ref.close(true);
-              this.toastService.addSingle("success", data.headers.get('StatusMessage'), "");
+              this.toastService.displayApiMessage(data.headers.get('StatusMessage'), data.headers.get('StatusCode'));
             },
             (error) => console.log(error)
           );

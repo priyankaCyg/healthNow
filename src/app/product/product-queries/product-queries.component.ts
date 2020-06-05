@@ -85,7 +85,7 @@ export class ProductQueriesComponent implements OnInit {
     };
     this.httpService.callPostApi(addQuer_data).subscribe(
       (data) => {
-        this.toastService.addSingle("success", data.headers.get('StatusMessage'), "");
+        this.toastService.displayApiMessage(data.headers.get('StatusMessage'), data.headers.get('StatusCode'));
         this.ref.close(true);
         this.queriesForm.reset();
       },

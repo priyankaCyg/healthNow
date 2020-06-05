@@ -1,11 +1,11 @@
 
 export class ProducerMaster {
-   
-    iStatusID: string;
-    iCountryID: string;
-    iCreatedBy: string;
+
+    iStatusID: number;
+    iCountryID: number;
+    iCreatedBy: number;
     sShortCode: string;
-    iProducerID: string;
+    iProducerID: number;
     sStatusName: string;
     sCountryName: string;
     sCreatedDate: string;

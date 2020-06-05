@@ -1,9 +1,9 @@
 
 export class UnitMaster {
-   
-    iCreatedBy: string;
-    iStatusID: string;
-    iUnitID: string;
+
+    iCreatedBy: number;
+    iStatusID: number;
+    iUnitID: number;
     sCreatedDate: string;
     sStatusName: string;
     sUnitName: string;
