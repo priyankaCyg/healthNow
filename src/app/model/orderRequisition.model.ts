@@ -10,4 +10,5 @@ export class orderReqData {
     sPCName: string;
     sPartnerName: string;
     sPrdName: string;
+    iPReqID: number;
 }

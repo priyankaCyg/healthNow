@@ -13,7 +13,28 @@
                                 class="ui-button-raised ui-button atbt"></button>
                         </div>
                         <div class="p-col-12 mt-3">
-                            <p-table [value]="orderReq">
+                            <p-table [value]="orderReq" #search [paginator]="true" [rows]="10"
+                                [showCurrentPageReport]="true" [rowsPerPageOptions]="[10, 25, 50]" [filterDelay]="0"
+                                [globalFilterFields]="[
+                              'sRequisionNo',
+                              'sPCName',
+                              'sPrdName',
+                              'sPartnerName',
+                              'sLocName',
+                              'iQty',
+                              'sCreatedBy',
+                              'sCreatedDate'
+                            ]">
+                                <ng-template pTemplate="caption">
+                                    <div class="ui-table-globalfilter-container text-left">
+                                        <input type="text" pInputText size="50" placeholder="Search" (input)="
+                                      search.filterGlobal(
+                                        $event.target.value,
+                                        'contains'
+                                      )
+                                    " style="width: 250px;" />
+                                    </div>
+                                </ng-template>
                                 <ng-template pTemplate="header">
                                     <tr>
                                         <th style="width: 3em">#</th>
@@ -31,14 +52,14 @@
                                 <ng-template pTemplate="body" let-orderReq let-rowIndex="rowIndex">
                                     <tr>
                                         <td>{{rowIndex + 1}}</td>
-                                        <td>{{orderReq.requNo}}</td>
+                                        <td>{{orderReq.sRequisionNo}}</td>
                                         <td>{{orderReq.sPCName}}</td>
                                         <td>{{orderReq.sPrdName}}</td>
                                         <td>{{orderReq.sPartnerName}}</td>
                                         <td>{{orderReq.sLocName}}</td>
                                         <td>{{orderReq.iQty}}</td>
-                                        <td>{{orderReq.createdBy}}</td>
-                                        <td>{{orderReq.sCreatedDate}}</td>
+                                        <td>{{orderReq.sCreatedBy}}</td>
+                                        <td>{{orderReq.sCreatedDate | date:"dd-MM-yyyy"}}</td>
                                         <td>
                                             <button pButton type="button" class="ui-button-success mr-1"
                                                 (click)="openDialogForEditReq(orderReq)" icon="pi pi-pencil"
@@ -48,7 +69,7 @@
                                                 title="Delete"></button>
                                             <button routerLink="/purchase-order/map-supplier" pButton type="button"
                                                 class="ui-button-success" icon="pi pi-sitemap"
-                                                (click)="mapSupplier(orderReq)" title="Mapp Supplier"></button>
+                                                (click)="mapSupplier(orderReq)" title="Map Supplier"></button>
                                         </td>
                                     </tr>
                                 </ng-template>
@@ -68,7 +89,7 @@
                                         <th style="width: 3em">#</th>
                                         <th>Product Category</th>
                                         <th>Product</th>
-                                        <th>Requisition Conunt</th>
+                                        <th>Requisition Count</th>
                                         <th>Quantity</th>
                                         <th>Action</th>
                                     </tr>
@@ -83,7 +104,7 @@
                                         <td>
                                             <button routerLink="/purchase-order/map-supplier-multi-req" pButton
                                                 type="button" class="ui-button-success" icon="pi pi-sitemap"
-                                                (click)="mapProduct(productReq)" title="Mapp Product"></button>
+                                                (click)="mapProduct(productReq)" title="Map Product"></button>
                                         </td>
                                     </tr>
                                 </ng-template>

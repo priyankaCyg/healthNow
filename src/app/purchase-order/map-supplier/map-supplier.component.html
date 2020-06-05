@@ -2,41 +2,40 @@
     <div class="p-col-12">
         <div class="card card-body">
             <div class="p-grid ui-fluid vertical-container">
-                <div class="p-col p-col-align-start"> 
-                    <h1 class="mt-2">Purchase Requisition <button pButton type="button" label="20045" class="ui-button-raised ui-button-light"></button></h1>
+                <div class="p-col p-col-align-start">
+                    <h1 class="mt-2">Purchase Requisition <button pButton type="button" label="20045"
+                            class="ui-button-raised ui-button-light"></button></h1>
                 </div>
                 <div class="p-col-12">
                     <div class="card download-files p-4 mb-2">
-                      <div class="p-grid p-nogutter">
-                        <p-table [value]="requisitionData">
-                            <ng-template pTemplate="header">
-                                <tr>
-                                    <th>Requisition No.</th>
-                                    <th>Product Category</th>
-                                    <th>Product</th>
-                                    <th>Partner</th>
-                                    <th>Location</th>
-                                    <th>Quantity</th>
-                                    <th>Unit</th>
-                                    <th>Created By</th>
-                                    <th>Created Date</th>
-                                </tr>
-                            </ng-template>
-                            <ng-template pTemplate="body" let-requisition>
-                                <tr>
-                                    <td>{{requisition.reqNo}}</td>
-                                    <td>{{requisition.sPCName}}</td>
-                                    <td>{{requisition.sPrdName}}</td>
-                                    <td>{{requisition.sPartnerName}}</td>
-                                    <td>{{requisition.sLocName}}</td>
-                                    <td>{{requisition.iQty}}</td>
-                                    <td>{{requisition.unit}}</td>
-                                    <td>{{requisition.createdBy}}</td>
-                                    <td>{{requisition.sCreatedDate}}</td>
-                                </tr>
-                            </ng-template>
-                        </p-table>
-                      </div>
+                        <div class="p-grid p-nogutter">
+                            <p-table [value]="requisitionData">
+                                <ng-template pTemplate="header">
+                                    <tr>
+                                        <th>Requisition No.</th>
+                                        <th>Product Category</th>
+                                        <th>Product</th>
+                                        <th>Partner</th>
+                                        <th>Location</th>
+                                        <th>Quantity</th>
+                                        <th>Created By</th>
+                                        <th>Created Date</th>
+                                    </tr>
+                                </ng-template>
+                                <ng-template pTemplate="body" let-requisition>
+                                    <tr>
+                                        <td>{{requisition.sRequisionNo}}</td>
+                                        <td>{{requisition.sPCName}}</td>
+                                        <td>{{requisition.sPrdName}}</td>
+                                        <td>{{requisition.sPartnerName}}</td>
+                                        <td>{{requisition.sLocName}}</td>
+                                        <td>{{requisition.iQty}}</td>
+                                        <td>{{requisition.sCreatedBy}}</td>
+                                        <td>{{requisition.sCreatedDate | date:"dd-MM-yyyy"}}</td>
+                                    </tr>
+                                </ng-template>
+                            </p-table>
+                        </div>
                     </div>
                 </div>
                 <div class="p-col-12">
@@ -52,37 +51,49 @@
                                 <th>Purchase Price</th>
                             </tr>
                         </ng-template>
-                        <ng-template pTemplate="body" let-supplierData>
+                        <ng-template pTemplate="body" let-supplierData let-ri="rowIndex">
                             <tr>
-                                <td><p-checkbox name="groupname" [value]="supplierData" [(ngModel)]="selectedValues"(click)="checkBoxValue(supplierData)" ></p-checkbox></td>
+                                <td>
+                                    <p-checkbox name="groupname" [value]="supplierData" [(ngModel)]="selectedValues"
+                                        (click)="checkBoxValue()"></p-checkbox>
+                                </td>
                                 <td>{{supplierData.sSupName}}</td>
                                 <td>{{supplierData.iPurchaseAmt}}</td>
-                                <td>{{supplierData.iIsDefault}}</td>
-                                <!-- <td>{{supplierData.discount}}</td> -->
+                                <td>
+                                    <span *ngIf="supplierData.iIsDefault == 1">
+                                        Yes
+                                    </span>
+                                    <span *ngIf="supplierData.iIsDefault == 0">
+                                        No
+                                    </span>
+                                </td>
                                 <td pEditableColumn>
                                     <p-cellEditor>
                                         <ng-template pTemplate="input">
-                                            <input pInputText type="text">
+                                            <input pInputText type="number" [(ngModel)]="supplierData.discount"
+                                                (change)="changeDiscount(supplierData.discount,ri)">
                                         </ng-template>
                                         <ng-template pTemplate="output">
                                             {{supplierData.discount}}
                                         </ng-template>
                                     </p-cellEditor>
                                 </td>
-                                <td>{{supplierData.discAmt}}</td>
-                                <td>{{supplierData.purcPrice}}</td>
+                                <td>{{supplierData.discount_amnt}}</td>
+                                <td>{{supplierData.purchase_amnt}}</td>
                             </tr>
                         </ng-template>
                     </p-table>
                 </div>
-            </div>    
+            </div>
             <div class="separator separator--border-solid separator--space-sm separator--portlet-fit mt-5"></div>
             <div class="p-grid form-group ui-fluid p-justify-end mt-3">
                 <div class="p-col-12 p-md-2 p-lg-12 text-right">
-                    <button pButton type="button" label="Cancel" routerLink="/purchase-order/product-requisition" class="ui-button-light atbt mr-2 mb-2"></button>               
-                    <button pButton type="submit" label="Save" class="ui-button atbt mb-2"></button>
+                    <button pButton type="button" label="Cancel" routerLink="/purchase-order/product-requisition"
+                        class="ui-button-light atbt mr-2 mb-2"></button>
+                    <button [disabled]="isDisable" pButton type="submit" label="Save" class="ui-button atbt mb-2"
+                        (click)="saveReq()"></button>
                 </div>
-            </div>                     
+            </div>
         </div>
     </div>
 </div>
