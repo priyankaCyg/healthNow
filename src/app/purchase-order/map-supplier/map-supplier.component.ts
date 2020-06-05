@@ -56,6 +56,7 @@ export class MapSupplierComponent implements OnInit {
     this.httpService.callPostApi(supplierAPI).subscribe(
       data => {
         this.supplierData = data.body;
+        console.log(this.supplierData);
       },
       error => { console.log(error) }
     )
@@ -85,6 +86,7 @@ export class MapSupplierComponent implements OnInit {
     this.purchase_amnt = parseInt((obj.iPurchaseAmt - this.discount_amnt).toFixed(2));
     obj.discount_amnt = this.discount_amnt;
     obj.purchase_amnt = this.purchase_amnt;
+    console.log(this.supplierData);
   }
 
   //Function to save requisition

@@ -121,7 +121,7 @@ export class ProductRequisitionComponent implements OnInit {
 
   //Function to map Product
   mapProduct(productReq) {
-    this.commonService.getComponentData(productReq);
-    // localStorage.setItem('productData',JSON.stringify({ productReq }));
+    // this.commonService.getComponentData(productReq);
+    localStorage.setItem('productData',JSON.stringify({ productReq }));
   }
 }

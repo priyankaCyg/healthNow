@@ -38,7 +38,7 @@
                                 <td>{{requDetail.iQty}}</td>
                                 <!-- <td>{{requDetail.unit}}</td> -->
                                 <td>{{requDetail.sCreatedBy}}</td>
-                                <td>{{requDetail.sCreatedDate }}</td>
+                                <td>{{requDetail.sCreatedDate | date:"dd-MM-yyyy"}}</td>
                             </tr>
                         </ng-template>
                         <ng-template pTemplate="footer">
@@ -71,32 +71,37 @@
                                             
                                             <td>{{suppRate.sSupName}}</td>
                                             <td>{{suppRate.iPurchaseAmt}}</td>
-                                            <td><p-checkbox name="groupname" value={{suppRate.iSupID}} [(ngModel)]="selectedValues" (onChange)="checkBoxValidation()"></p-checkbox></td>
+                                            <td><p-checkbox name="groupname" value={{suppRate.iSupID}} [(ngModel)]="selectedValues" (onChange)="checkBoxValidation(suppRate)" (click)="productRequisitionForm.reset()"></p-checkbox></td>
                                         </tr>
                                     </ng-template>
                                 </p-table>
                             </div>
                         
                             <div class="p-col-12 p-md-12 p-lg-12">
+                                <form #productRequisitionForm="ngForm">
                                 <div class="p-grid form-group">
                                     <div class="p-col-12 p-md-12 p-lg-12 mb-1">
                                         <label for="partner">Discount %</label>
-                                        <input id="qty"  type="text" pInputText placeholder="5%">
+                                        <input id="discountPercentage" [disabled]="isDisableDiscount" name="discountPercentage" #discountPercentage="ngModel" [(ngModel)]="discountPer"
+                                         type="text" pInputText (change)="calculateTotalPrice()" required>
+                                        <p-message severity="error" text="This Field is required"
+                        *ngIf="!discountPercentage.valid && (discountPercentage.dirty || discountPercentage.touched)"></p-message>
                                     </div>
                                     
                                     <div class="p-col-12 p-md-12 p-lg-12 mb-1">
                                         <label for="location">Discount Amount</label>
-                                        <input id="qty"  type="text" pInputText placeholder="15" disabled>
+                                        <input id="discountAmount" name="discountAmount" [(ngModel)]="discountAmount" type="text" pInputText disabled>
                                     </div>
                                     <div class="p-col-12 p-md-12 p-lg-12 mb-1">
                                         <label for="qty">Amount / Each</label>
-                                        <input id="qty"  type="text" pInputText placeholder="235" disabled>
+                                        <input id="discountAmountEach" name="discountAmountEach" [(ngModel)]="discountAmountEach" type="text" pInputText  disabled>
                                     </div>
                                     <div class="p-col-12 p-md-12 p-lg-12 mb-1">
                                         <label for="qty">Total Amount </label>
-                                        <input id="qty"  type="text" pInputText placeholder="35250" disabled>
+                                        <input id="totalAmount" name="totalAmount" [(ngModel)]="totalAmount" type="text" pInputText  disabled>
                                     </div>
                                 </div>
+                                </form>
                             </div>
                     
 
@@ -106,7 +111,7 @@
                     
                                     <div class="p-col-12 p-md-2 p-lg-12 text-right mt-0">
                                         <button pButton type="button" label="Cancel" routerLink="/purchase-order/product-requisition" class="ui-button-light atbt mr-2 mb-2"></button>
-                                    <button pButton type="submit" label="Save" class="ui-button atbt mb-2"></button>
+                                    <button pButton type="submit" [disabled]="isDisable || productRequisitionForm.untouched || productRequisitionForm.invalid" label="Save" class="ui-button atbt mb-2" (click)="saveProductRequisition()"></button>
                                 </div>
 
                     </div>

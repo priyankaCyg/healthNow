@@ -7,6 +7,12 @@ import { DialogService } from 'primeng';
 import { PurchaseOrderRoutingModule } from '../purchase-order-routing.module';
 import { ApiService } from 'src/app/services/api.service';
 import { CommonService } from 'src/app/services/common.service';
+import { FormGroup, NgForm } from '@angular/forms';
+import { ToastService } from 'src/app/services/toast.service';
+import { Router } from '@angular/router';
+import { orderReqData } from 'src/app/model/orderRequisition.model';
+import { productReqData } from 'src/app/model/productRequisition.model';
+import { supplierReqData } from 'src/app/model/supplierRequisition.model';
 
 @Component({
   selector: 'app-map-supplier-multi-req',
@@ -15,18 +21,28 @@ import { CommonService } from 'src/app/services/common.service';
 })
 export class MapSupplierMultiReqComponent implements OnInit {
   
-  requisitionDatails: any[];
-  requisitionData: any[];
-  supplierRate: any[];
-  data;
+  requisitionDatails: orderReqData[];
+  requisitionData: productReqData[];
+  supplierRate: supplierReqData[];
+  data : [];
   productCategory:string;
   productName : string;
   totalquantity : number;
   productId:number;
   selectedValues : string[] = [];
+  completeSupplierData : any;
+  discountAmount:number;
+  discountAmountEach:number;
+  totalAmount:number;
+  discountPer : number;
+  isDisable: boolean = true;
+  isDisableDiscount:boolean = true;
+
+  
 
   constructor(private breadcrumbService: BreadcrumbService, private dialogService:DialogService,
-    private httpService: ApiService, private commonService: CommonService) {
+    private httpService: ApiService, private commonService: CommonService,private toastService: ToastService,
+    private router: Router) {
     this.breadcrumbService.setItems([
         { label: 'Dashboard' },
         { label: 'Purchase Order', routerLink: ['/purchase-order'] }
@@ -34,31 +50,34 @@ export class MapSupplierMultiReqComponent implements OnInit {
 }
 
   ngOnInit(): void {
-    this.commonService.captureData$.subscribe(data => this.data = data);
-    console.log(this.data)
-    this.requisitionData = Object.values(this.data)
+    // this.commonService.captureData$.subscribe(data => this.data = data);
+    // console.log(this.data);
+    this.data = JSON.parse(localStorage.getItem('productData'));
+    this.requisitionData = Object.values(this.data);
     console.log(this.requisitionData);
-    sessionStorage.setItem('Product Category', this.data.sPCName);
-    sessionStorage.setItem('Product Name', this.data.sPrdName);
-    sessionStorage.setItem('Product id', this.data.iPrdID);
-    this.productCategory = sessionStorage.getItem('Product Category');
-    this.productName = sessionStorage.getItem('Product Name');
-    this.productId = +sessionStorage.getItem('Product id');
+    this.productCategory = this.requisitionData[0].sPCName;
+    this.productName = this.requisitionData[0].sPrdName;
+    this.productId = +this.requisitionData[0].iPrdID;
     this.getProductReq();
     this.getSupplierRate();
-
   }
 
   //get requisition detail data 
   getProductReq() {
     const productReqAPI = {
       "iRequestID": 2338,
-      "iPrdID":this.productId
+      "iPrdID":this.requisitionData[0].iPrdID
     }
     this.httpService.callPostApi(productReqAPI).subscribe(
       data => {
         this.requisitionDatails = data.body;
         this.getTotalCount();
+        if(this.requisitionDatails.length){
+          this.isDisable = false;
+        }
+        else{
+          this.isDisable = true;
+        }
       },
       error => { console.log(error) }
     )
@@ -86,16 +105,70 @@ export class MapSupplierMultiReqComponent implements OnInit {
     this.httpService.callPostApi(suppRateAPI).subscribe(
       data => {
         this.supplierRate = data.body;
+        if(this.supplierRate.length){
+          this.isDisable = false;
+        }
+        else{
+          this.isDisable = true;
+        }
       },
       error => { console.log(error) }
     )
   }
 
   // select single checkbox
-  checkBoxValidation(){
+  checkBoxValidation(suppRate){
+    this.completeSupplierData = suppRate;
     const latestSupplier= this.selectedValues[this.selectedValues.length - 1];
     this.selectedValues.length = 0;
     this.selectedValues.push(latestSupplier);
+    console.log(this.selectedValues)
+    if(this.selectedValues[0]){
+      this.isDisableDiscount = false;
+      this.isDisable = false;
+    }
+    else if(this.selectedValues[0] == undefined){
+      this.isDisableDiscount = true;
+      this.isDisable = true;
+    }
+  }
+
+  // calculate price
+  calculateTotalPrice(){
+    if(this.discountPer){
+    let supplierRate = this.completeSupplierData.iPurchaseAmt;
+    let discountAmount = parseFloat((supplierRate * this.discountPer).toFixed(2));
+    let discountPerAmount = parseFloat((discountAmount / 100).toFixed(2));
+    this.discountAmount = discountPerAmount;
+    let amountEach = parseFloat((supplierRate - discountPerAmount).toFixed(2)) ;
+    this.discountAmountEach = amountEach ;
+    let totalAmount = parseFloat((this.totalquantity * amountEach).toFixed(2)) ;
+    this.totalAmount = totalAmount;
+    console.log(totalAmount);
+    }
+    else{
+      this.discountAmount = 0;
+      this.discountAmountEach = 0;
+      this.totalAmount=0
+    }
+  }
+
+  // save form 
+  saveProductRequisition(){
+    let discountPercentage = +this.discountPer;
+    const productReqAPI = {
+      "iRequestID": 2339,
+      "iPrdID":this.productId,
+      "iSupID":this.completeSupplierData.iSupID,
+      "iDisPer":discountPercentage
+    }
+    this.httpService.callPostApi(productReqAPI).subscribe(
+      data => {
+        this.toastService.addSingle("success", data.headers.get('StatusMessage'), "");
+        this.router.navigate(['/purchase-order/product-requisition']);
+      },
+      error => { console.log(error) }
+    )
   }
 
 }
