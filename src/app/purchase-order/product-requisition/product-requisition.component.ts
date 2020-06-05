@@ -11,6 +11,7 @@ import { Router } from '@angular/router';
 import { ToastService } from 'src/app/services/toast.service';
 import { orderReqData } from 'src/app/model/orderRequisition.model';
 import { productReqData } from 'src/app/model/productRequisition.model';
+import { CommonService } from 'src/app/services/common.service';
 
 @Component({
   selector: 'app-product-requisition',
@@ -22,7 +23,7 @@ export class ProductRequisitionComponent implements OnInit {
   items: MenuItem[];
   orderReq: orderReqData[];
   productReq: productReqData[];
-  constructor(private breadcrumbService: BreadcrumbService, private dialogService: DialogService, private httpService: ApiService,
+  constructor(private breadcrumbService: BreadcrumbService, private dialogService: DialogService, private httpService: ApiService, private commonService: CommonService,
     private router: Router, private toastService: ToastService, private confirmationService: ConfirmationService) {
     this.breadcrumbService.setItems([
       { label: 'Dashboard' },
@@ -113,7 +114,7 @@ export class ProductRequisitionComponent implements OnInit {
 
   //Function to map Supplier
   mapSupplier(orderReq) {
-    this.httpService.getComponentData(orderReq);
+    this.commonService.getComponentData({ orderData: orderReq });
   }
 
   //Function to list all Product Requisition
@@ -131,6 +132,6 @@ export class ProductRequisitionComponent implements OnInit {
 
   //Function to map Product
   mapProduct(productReq) {
-    this.httpService.getComponentData(productReq);
+    this.commonService.getComponentData(productReq);
   }
 }

@@ -62,15 +62,15 @@
                                     </span>
                                 </td>
                                 <td>
-                                    <button pButton type="button" (click)="prdmapSupplier(supplier.iSupID)"
+                                    <button pButton type="button" id="sSupplier_product_mapping_btn" (click)="prdmapSupplier(supplier.iSupID)"
                                         class="ui-button-success mr-2" icon="pi  pi-sitemap"
-                                        title="Product Map"></button>
-                                    <button pButton type="button" (click)="editSupplier(supplier.iSupID)"
-                                        class="ui-button-success mr-2" icon="pi pi-pencil" title="Edit"></button>
-                                    <button pButton type="button" (click)="deleteSupplier(supplier)"
-                                        class="ui-button-danger mr-2" icon="pi pi-trash" title="Delete"></button>
-                                    <button pButton type="button" class="ui-button-success"
-                                        icon="pi pi-arrow-circle-right" title="Send for approval"></button>
+                                        title="Product Map" *ngIf = "prdMapBtn"></button>
+                                    <button pButton type="button" id="sSupplier_edit_btn" (click)="editSupplier(supplier.iSupID)"
+                                        class="ui-button-success mr-2" icon="pi pi-pencil" title="Edit" *ngIf = "editBtn"></button>
+                                    <button pButton type="button" id="sSupplier_delete_btn" (click)="deleteSupplier(supplier)"
+                                        class="ui-button-danger mr-2" icon="pi pi-trash" title="Delete" *ngIf = "deleteBtn"></button>
+                                    <button pButton type="button" id="sSupplier_send_for_approval_btn" class="ui-button-success"
+                                        icon="pi pi-arrow-circle-right" title="Send for approval" *ngIf = "sendForApprovalBtn"></button>
                                 </td>
                             </tr>
                         </ng-template>

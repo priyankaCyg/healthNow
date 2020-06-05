@@ -3,22 +3,19 @@ import { ConfirmationService } from 'primeng/api';
 import { ApiService } from '../services/api.service';
 import { ToastService } from '../services/toast.service';
 import { BehaviorSubject } from 'rxjs/internal/BehaviorSubject';
-import { Subscription } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 
 export class CommonService {
+
   statusData;
   selectedstatus;
-  public isAdmin = new BehaviorSubject<boolean>(false);
-  cast = this.isAdmin.asObservable();
+  private sendData = new BehaviorSubject<any>("null");
+  captureData$ =  this.sendData.asObservable();
 
-  constructor(private apiService: ApiService, private confirmationService: ConfirmationService,
-    private toastService: ToastService) { }
-
-
+  constructor(private apiService: ApiService, private toastService: ToastService) { }
 
   stringToDate(_date, _format, _delimiter) {
     var formatLowerCase = _format.toLowerCase();
@@ -69,6 +66,10 @@ export class CommonService {
     return formatedDate;
   }
 
+  //Function to pass data from one component to other comopnent using behaviour subject
+  getComponentData(data){
+    this.sendData.next(data);
+  }
 
   // common delete function
   // deleteData(delete_data_api): any {

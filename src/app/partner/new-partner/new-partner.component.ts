@@ -15,6 +15,7 @@ import { ToastService } from 'src/app/services/toast.service';
 import { ActivatedRoute } from '@angular/router';
 import { PartnerMaster } from 'src/app/model/partner.model';
 import { companyBankMaster } from 'src/app/model/companyBank.model';
+import { gstData } from 'src/app/model/gst';
 import { PartnerAddress } from 'src/app/model/partner_address.model';
 
 @Component({
@@ -26,7 +27,7 @@ export class NewPartnerComponent implements OnInit {
 
   items: MenuItem[];
   contact: any[];
-  gst: any[];
+  gst: gstData[];
   isEdit: boolean = false;
   tabDisabled: boolean = true;
   public PartnerForm: FormGroup;
@@ -83,11 +84,7 @@ export class NewPartnerComponent implements OnInit {
     this.getPartnerAddressList();
     this.bankSelectData();
     this.getPartnerContactList();
-    this.gst = [
-      { state: 'Maharashtra', GST: '27ADUPH3114M' },
-      { state: 'Goa', GST: '66ADUPH37411G' },
-      { state: 'Gujrat', GST: '45ADUPH5824G' }
-    ];
+    this.gstList();
   }
 
   // Function to Set Default dropdown value
@@ -417,15 +414,68 @@ export class NewPartnerComponent implements OnInit {
     );
   }
 
+  // code for open dialog for add gst
   openDialogForGST() {
     const ref = this.dialogService.open(GstComponent, {
-      data: {
-      },
-      header: 'Add GST',
+      data: {},
+      header: 'Add New GST',
       width: '28%'
     });
     ref.onClose.subscribe((success: boolean) => {
-      if (success) { }
+      if (success) {
+        this.gstList();
+      }
     });
+  }
+
+   // code for open dialog for edit gst
+   editDialogForGST(gst) {
+    const ref = this.dialogService.open(GstComponent, {
+      data: gst,
+      header: 'Edit GST',
+      width: '28%'
+    });
+    ref.onClose.subscribe((success: boolean) => {
+      if (success) {
+        this.gstList();
+      }
+    });
+  }
+
+  //code for delete gst data
+  deletesupgst(gst_id) {
+    this.confirmationService.confirm({
+      message: 'Are you sure that you want to proceed?',
+      header: 'Confirmation',
+      icon: 'pi pi-exclamation-triangle',
+      accept: () => {
+        let delete_data_api = {
+          "iRequestID":2325,
+          "iLocID":gst_id,
+          "iPartnerID" :this.partner_id
+        };
+        this.httpService.callPostApi(delete_data_api).subscribe(
+          (data) => {
+            this.gstList();
+            this.toastService.addSingle("success", data.headers.get('StatusMessage'), "");
+          },
+          (error) => console.log(error)
+        );
+      }
+    });
+  }
+
+  //code for show all gst list 
+  gstList() {
+    const sup_gst_data = {
+      "iRequestID":2323,
+	    "iPartnerID":this.partner_id
+    }
+    this.httpService.callPostApi(sup_gst_data).subscribe(
+      (data) => {
+        this.gst = data.body;
+      },
+      (error) => console.log(error)
+    );
   }
 }

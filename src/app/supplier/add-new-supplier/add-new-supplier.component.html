@@ -430,10 +430,13 @@
                             </div>
                         </ng-template>
                     </p-pickList>
+                    <div class="separator separator--border-solid separator--space-sm separator--portlet-fit mt-5">
+                    </div>
                     <div class="p-grid form-group ui-fluid p-justify-end mt-3">
-                        <div class="p-col-12 p-md-2 p-lg-12 text-right">
-                            <button pButton type="button" label="Save" style="margin-bottom:10px;margin-right:200px"
-                                class="ui-button" (click)="addCategoryMappingData()"></button>
+                        <div class="p-col-12 p-md-12 p-lg-12 text-right">
+                            <button pButton type="button" label="Cancel" class="ui-button-light atbt mr-2"></button>
+
+                            <button pButton type="button" label="Save" (click)="addCategoryMappingData()" class="ui-button atbt"></button>
                         </div>
                     </div>
                 </p-tabPanel>
