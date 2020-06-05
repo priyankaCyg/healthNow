@@ -112,7 +112,7 @@ export class ProductRequisitionComponent implements OnInit {
   //Function to list all Product Requisition
   getProductReq() {
     const productReqAPI = {
-      "iRequestID": 2335,
+      "iRequestID": 2335
     }
     this.httpService.callPostApi(productReqAPI).subscribe(
       data => {
@@ -125,7 +125,7 @@ export class ProductRequisitionComponent implements OnInit {
   //Function to map Product
   mapProduct(productReq) {
     localStorage.setItem('tabIndex', '1')
-    this.commonService.getComponentData(productReq);
-    // localStorage.setItem('productData',JSON.stringify({ productReq }));
+    // this.commonService.getComponentData(productReq);
+     localStorage.setItem('productData',JSON.stringify({ productReq }));
   }
 }
