@@ -5,8 +5,8 @@
                 <div class="p-grid form-group">
                     <div class="p-col-12 p-md-6 p-lg-4 mb-2">
                         <label for="prdCategory">Product Category</label>
-                        <p-dropdown [options]="productCategValue" (onChange)="productCategDropdown()"
-                            optionLabel="sPCName" [(ngModel)]="selectedCategory1">
+                        <p-dropdown [options]="productCategValue" (onChange)="setpcId($event)" optionLabel="sPCName"
+                            [(ngModel)]="selectedproductCategory">
                         </p-dropdown>
                     </div>
 
@@ -55,18 +55,34 @@
                             <div class="p-col-12 p-md-12 p-lg-12 mb-2">
                                 <label for="partner">Partner</label>
                                 <p-dropdown [options]="partner" optionLabel="sPartnerName"
-                                    (onChange)="partnerDropdown()" formControlName="partner"
-                                    [(ngModel)]="selectedPartner1"></p-dropdown>
+                                    (onChange)="setPartnerId($event)" formControlName="sPartnerName"
+                                    [(ngModel)]="selectedPartner"></p-dropdown>
+                                <div>
+                                    <p-message severity="error" text="Select partner is required"
+                                        *ngIf="createReqForm.controls['sPartnerName'].touched  && (selectedPartner.iPartnerID=='' || createReqForm.controls['sPartnerName'].hasError('required'))">
+                                    </p-message>
+
+                                </div>
                             </div>
 
                             <div class="p-col-12 p-md-12 p-lg-12 mb-2">
                                 <label for="location">Location</label>
-                                <p-dropdown [options]="location" optionLabel="sLocName" formControlName="location"
-                                    [(ngModel)]="selectedLocation1"></p-dropdown>
+                                <p-dropdown [options]="location" optionLabel="sLocName" formControlName="iPartLocID"
+                                    [(ngModel)]="selectedpartnerLocation"></p-dropdown>
+                                <div>
+                                    <p-message severity="error" text="Select location is required"
+                                        *ngIf="createReqForm.controls['iPartLocID'].touched  && (selectedpartnerLocation.iLocationID=='' || createReqForm.controls['iPartLocID'].hasError('required'))">
+                                    </p-message>
+
+                                </div>
                             </div>
                             <div class="p-col-12 p-md-12 p-lg-12 mb-2">
                                 <label for="qty">Quantity</label>
-                                <input id="qty" type="text" formControlName="quantity" pInputText>
+                                <input id="qty" type="text" formControlName="iQty" pInputText>
+                                <p-message severity="error"
+                                    [text]="createReqForm.controls['iQty'].errors['required'] ? 'This Field is required' : createReqForm.controls['iQty'].errors['pattern'] ? 'Please Enter Valid Quantity.' : ''"
+                                    *ngIf="!createReqForm.controls['iQty'].valid && createReqForm.controls['iQty'].dirty">
+                                </p-message>
                             </div>
 
 
@@ -90,7 +106,10 @@
     <div class="p-col-12 p-md-2 p-lg-12 text-right mt-1">
         <button pButton type="button" (click)="closeDialog()" label="Cancel"
             class="ui-button-light atbt mr-2 mb-2"></button>
-        <button pButton type="submit" (click)="addnewRequisition()" label="Save" class="ui-button atbt mb-2"></button>
+        <button *ngIf="!isEdit" pButton type="submit" [disabled]="!(!createReqForm.invalid && !dropDownValidityCheck())"
+            (click)="addnewRequisition()" label="Save" class="ui-button atbt mb-2"></button>
+        <button *ngIf="isEdit" pButton type="submit" [disabled]="!(!createReqForm.invalid && !dropDownValidityCheck())"
+            (click)="editRequisition()" label="Update" class="ui-button atbt mb-2"></button>
     </div>
 
 

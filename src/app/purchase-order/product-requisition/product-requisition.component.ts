@@ -23,7 +23,6 @@ export class ProductRequisitionComponent implements OnInit {
   items: MenuItem[];
   orderReq: orderReqData[];
   productReq: productReqData[];
-
   constructor(private breadcrumbService: BreadcrumbService, private dialogService: DialogService, private httpService: ApiService, private commonService: CommonService,
     private router: Router, private toastService: ToastService, private confirmationService: ConfirmationService) {
     this.breadcrumbService.setItems([
@@ -59,12 +58,14 @@ export class ProductRequisitionComponent implements OnInit {
       width: '90%'
     });
     ref.onClose.subscribe((success: boolean) => {
-      if (success) { }
+      if (success) {
+        this.getOrderReq();
+      }
     });
   }
 
   //Function to edit order requisition
-  openDialogForEditReq(orderReq: object) {
+  openDialogForEditReq(orderReq) {
     const ref = this.dialogService.open(CreateRequisitionComponent, {
       data: orderReq,
       header: 'Edit Requisition',
