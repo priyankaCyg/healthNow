@@ -5,6 +5,6 @@ export class supplierReqData {
     "iIsDefault": number;
     "iPurchaseAmt": number;
     "purchase_amnt": number;
-    "discount_amnt":number;
+    "discount_amnt": number;
     "discount": number;
 }

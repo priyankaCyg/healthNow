@@ -238,7 +238,7 @@ export class CreateRequisitionComponent implements OnInit {
     this.httpService.callPostApi(requisition_add_data).subscribe(
       (data) => {
         this.ref.close(true);
-        this.toastService.addSingle("success", data.headers.get('StatusMessage'), "");
+        this.toastService.displayApiMessage(data.headers.get('StatusMessage'), data.headers.get('StatusCode'));
       },
       (error) => console.log(error)
     );
@@ -261,7 +261,7 @@ export class CreateRequisitionComponent implements OnInit {
     this.httpService.callPostApi(requisition_edit_data).subscribe(
       (data) => {
         this.ref.close(true);
-        this.toastService.addSingle("success", data.headers.get('StatusMessage'), "");
+        this.toastService.displayApiMessage(data.headers.get('StatusMessage'), data.headers.get('StatusCode'));
       },
       (error) => console.log(error)
     );
