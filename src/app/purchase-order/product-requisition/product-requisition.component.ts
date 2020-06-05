@@ -118,7 +118,7 @@ export class ProductRequisitionComponent implements OnInit {
   //Function to list all Product Requisition
   getProductReq() {
     const productReqAPI = {
-      "iRequestID": 2335,
+      "iRequestID": 2335
     }
     this.httpService.callPostApi(productReqAPI).subscribe(
       data => {

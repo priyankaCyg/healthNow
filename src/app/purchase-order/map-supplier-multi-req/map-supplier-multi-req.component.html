@@ -8,17 +8,17 @@
                 <div class="p-col-12 p-lg-12">
                     <div class="p-grid">  
                         <div class="p-col-12 p-md-6 p-lg-4 mb-2">
-                            <div class="card bg-success p-2">Product Category : <strong>Food</strong></div>
+                            <div class="card bg-success p-2">Product Category : <strong>{{productCategory}}</strong></div>
                         </div>
                         <div class="p-col-12 p-md-6 p-lg-4 mb-2">
-                            <div class="card bg-success p-2">Product : <strong>Gluten Free Wheat 5kg Pack</strong></div>
+                            <div class="card bg-success p-2">Product : <strong>{{productName}}</strong></div>
                         </div>
                         
                     </div>  
                 </div>
 
                 <div class="p-col-12">
-                    <p-table [value]="requDetail">
+                    <p-table [value]="requisitionDatails">
                         <ng-template pTemplate="header">
                             <tr>
                                 <th>Requisition No.</th>
@@ -32,19 +32,19 @@
                         </ng-template>
                         <ng-template pTemplate="body" let-requDetail>
                             <tr>
-                                <td>{{requDetail.reuNo}}</td>
-                                <td>{{requDetail.partner}}</td>
-                                <td>{{requDetail.location}}</td>
-                                <td>{{requDetail.qty}}</td>
+                                <td>{{requDetail.sRequisionNo}}</td>
+                                <td>{{requDetail.sPartnerName}}</td>
+                                <td>{{requDetail.sLocName}}</td>
+                                <td>{{requDetail.iQty}}</td>
                                 <!-- <td>{{requDetail.unit}}</td> -->
-                                <td>{{requDetail.createdBy}}</td>
-                                <td>{{requDetail.createdDate}}</td>
+                                <td>{{requDetail.sCreatedBy}}</td>
+                                <td>{{requDetail.sCreatedDate }}</td>
                             </tr>
                         </ng-template>
                         <ng-template pTemplate="footer">
                             <tr>
-                                <td colspan="3"><b>Totals</b></td>
-                                <td colspan="3"><b>150</b></td>
+                                <td colspan="3"><b>Total</b></td>
+                                <td colspan="3"><b>{{totalquantity}}</b></td>
                             </tr>
                         </ng-template>
                     </p-table>
@@ -58,7 +58,7 @@
                 <div class="card download-files p-3 mb-2">
                     <div class="p-grid p-nogutter">
                         <div class="p-col-12 p-md-12 p-lg-12 mb-2">
-                                <p-table [value]="suppRate">
+                                <p-table [value]="supplierRate">
                                     <ng-template pTemplate="header">
                                         <tr>
                                             <th>Supplier</th>
@@ -69,9 +69,9 @@
                                     <ng-template pTemplate="body" let-suppRate>
                                         <tr>
                                             
-                                            <td>{{suppRate.supplier}}</td>
-                                            <td>{{suppRate.rate}}</td>
-                                            <td><p-checkbox name="groupname" value="val1" [(ngModel)]="selectedValues"></p-checkbox></td>
+                                            <td>{{suppRate.sSupName}}</td>
+                                            <td>{{suppRate.iPurchaseAmt}}</td>
+                                            <td><p-checkbox name="groupname" value={{suppRate.iSupID}} [(ngModel)]="selectedValues" (onChange)="checkBoxValidation()"></p-checkbox></td>
                                         </tr>
                                     </ng-template>
                                 </p-table>
@@ -105,7 +105,7 @@
                             </div>
                     
                                     <div class="p-col-12 p-md-2 p-lg-12 text-right mt-0">
-                                        <button pButton type="button" label="Cancel"  class="ui-button-light atbt mr-2 mb-2"></button>
+                                        <button pButton type="button" label="Cancel" routerLink="/purchase-order/product-requisition" class="ui-button-light atbt mr-2 mb-2"></button>
                                     <button pButton type="submit" label="Save" class="ui-button atbt mb-2"></button>
                                 </div>
 
