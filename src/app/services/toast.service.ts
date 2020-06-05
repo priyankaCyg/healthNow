@@ -36,4 +36,13 @@ export class ToastService {
     clear() {
         this.messageService.clear();
     }
+
+    displayApiMessage(statusMessage: string, statusCode: number) {
+        if (statusCode == 200) {
+            this.messageService.add({ severity: "success", summary: statusMessage, detail: "" });
+        }
+        else {
+            this.messageService.add({ severity: "error", summary: statusMessage, detail: "" });
+        }
+    }
 }

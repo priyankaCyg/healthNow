@@ -23,7 +23,7 @@ export class ProductRequisitionComponent implements OnInit {
   items: MenuItem[];
   orderReq: orderReqData[];
   productReq: productReqData[];
-  index = 0;
+  index: number = 0;
   constructor(private breadcrumbService: BreadcrumbService, private dialogService: DialogService, private httpService: ApiService, private commonService: CommonService,
     private router: Router, private toastService: ToastService, private confirmationService: ConfirmationService) {
     this.breadcrumbService.setItems([
@@ -92,7 +92,7 @@ export class ProductRequisitionComponent implements OnInit {
         };
         this.httpService.callPostApi(delete_data_api).subscribe(
           (data) => {
-            this.toastService.addSingle("success", data.headers.get('StatusMessage'), "");
+            this.toastService.displayApiMessage(data.headers.get('StatusMessage'), data.headers.get('StatusCode'));
             this.getOrderReq();
           },
           (error) => console.log(error)
@@ -105,6 +105,7 @@ export class ProductRequisitionComponent implements OnInit {
   mapSupplier(orderReq) {
     localStorage.setItem('tabIndex', '0')
     localStorage.setItem('orderData', JSON.stringify({ orderReq }))
+    localStorage.setItem('tabIndex', '0')
     //this.commonService.getComponentData({orderData:orderReq});
   }
 
@@ -125,6 +126,7 @@ export class ProductRequisitionComponent implements OnInit {
   mapProduct(productReq) {
     localStorage.setItem('tabIndex', '1')
     this.commonService.getComponentData(productReq);
+    localStorage.setItem('tabIndex', '1')
     // localStorage.setItem('productData',JSON.stringify({ productReq }));
   }
 }
