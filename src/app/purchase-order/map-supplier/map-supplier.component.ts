@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, SimpleChanges } from '@angular/core';
 import { BreadcrumbService } from '../../breadcrumb.service';
 import { CountryService } from '../../demo/service/countryservice';
 import { SelectItem, MenuItem } from 'primeng/api';
@@ -7,6 +7,10 @@ import { DialogService } from 'primeng';
 import { PurchaseOrderRoutingModule } from '../purchase-order-routing.module';
 import { ApiService } from 'src/app/services/api.service';
 import { CommonService } from 'src/app/services/common.service';
+import { ToastService } from 'src/app/services/toast.service';
+import { Router } from '@angular/router';
+import { orderReqData } from 'src/app/model/orderRequisition.model';
+import { supplierReqData } from 'src/app/model/supplierRequisition.model';
 
 @Component({
   selector: 'app-map-supplier',
@@ -16,10 +20,18 @@ import { CommonService } from 'src/app/services/common.service';
 export class MapSupplierComponent implements OnInit {
 
   items: MenuItem[];
-  requisitionData: any[];
-  data;
-  supplierData: any[];
-  constructor(private breadcrumbService: BreadcrumbService, private dialogService: DialogService, private httpService: ApiService, private commonService: CommonService) {
+  requisitionData: orderReqData[];
+  data: object;
+  supplierData: supplierReqData[];
+  selectedValues: supplierReqData[] = [];
+  discount: number;
+  discount_amnt: number;
+  purchase_amnt : number;
+  disc: number;
+  isDisable: boolean;
+
+  constructor(private breadcrumbService: BreadcrumbService, private dialogService: DialogService, private httpService: ApiService,
+    private commonService: CommonService, private toastService: ToastService, private router: Router) {
     this.breadcrumbService.setItems([
       { label: 'Dashboard' },
       { label: 'Purchase Order', routerLink: ['/purchase-order'] }
@@ -27,28 +39,19 @@ export class MapSupplierComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
-    this.commonService.captureData$.subscribe(data => this.data = data);
-    console.log(this.data)
-    this.requisitionData = Object.values(this.data)
-    console.log(this.requisitionData);
+    // this.commonService.captureData$.subscribe(data => this.data = data);
+    // this.requisitionData = Object.values(this.data)
+    this.isDisable = true;
+    this.data = JSON.parse(localStorage.getItem('orderData'));
+    this.requisitionData = Object.values(this.data);
     this.getSupplierList();
-    // this.requisition = [
-    //   { reqNo:'RE/SS/20200514/5', prdCategory:'Food',product:'Gluten Free Wheat 5kg Pack',partner:'Shibin KP',location:'Mumbai', qty:'100',unit:'kg',	createdBy:'System',	createdDate:'1-05-2020' }
-    // ];
-
-    // this.addRequValue = [
-    //   { supplier:'SKK Supplier',rate:'250',default:'Yes',discount:'5%',discAmt:'15', purcPrice:'235' },
-    //   { supplier:'KKB Supplier',rate:'275',default:'No',discount:'0%',discAmt:'0', purcPrice:'275' }
-    // ];
-
   }
-  
+
   //Function to get Supplier list
   getSupplierList() {
     const supplierAPI = {
       "iRequestID": 2336,
-      "iPReqID": 1
+      "iPReqID": this.requisitionData[0].iPReqID
     }
     this.httpService.callPostApi(supplierAPI).subscribe(
       data => {
@@ -57,8 +60,49 @@ export class MapSupplierComponent implements OnInit {
       error => { console.log(error) }
     )
   }
-   checkBoxValue(data){
-     console.log(data,"1")
-   }
+
+  //Function to check validation of Checkbox
+  checkBoxValue() {
+    if (this.selectedValues.length > 1) {
+      this.isDisable = true;
+      this.toastService.addSingle("warn", "Please Select only one Supplier", "");
+    } else if (this.selectedValues.length == 1) {
+      if (this.selectedValues[0].discount) {
+        this.isDisable = false;
+      }
+      else {
+        this.toastService.addSingle("warn", "Please Enter Discount", "");
+        this.isDisable = true;
+      }
+    }
+  }
+
+  //Function to calculate Discount amount and purchase price 
+  changeDiscount(disc: number, index: number) {
+    let obj = this.supplierData[index];
+    let discount_val:number = disc / 100;
+    this.discount_amnt = parseInt((discount_val * obj.iPurchaseAmt).toFixed(2));
+    this.purchase_amnt = parseInt((obj.iPurchaseAmt - this.discount_amnt).toFixed(2));
+    obj.discount_amnt = this.discount_amnt;
+    obj.purchase_amnt = this.purchase_amnt;
+  }
+
+  //Function to save requisition
+  saveReq() {
+    const supplierAPI = {
+      "iRequestID": 2337,
+      "iPReqID": this.requisitionData[0].iPReqID,
+      "iSupID": this.selectedValues[0].iSupID,
+      "iDisPer": this.selectedValues[0].discount
+    }
+    this.httpService.callPostApi(supplierAPI).subscribe(
+      data => {
+        this.toastService.addSingle("success", data.headers.get('StatusMessage'), "");
+        this.router.navigate(['/purchase-order/product-requisition']);
+      },
+      error => { console.log(error) }
+    )
+  }
 }
+
 

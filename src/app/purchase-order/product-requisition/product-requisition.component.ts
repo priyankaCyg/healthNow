@@ -23,29 +23,18 @@ export class ProductRequisitionComponent implements OnInit {
   items: MenuItem[];
   orderReq: orderReqData[];
   productReq: productReqData[];
-  constructor(private breadcrumbService: BreadcrumbService, private dialogService:DialogService, private httpService: ApiService, private commonService: CommonService,
+  constructor(private breadcrumbService: BreadcrumbService, private dialogService: DialogService, private httpService: ApiService, private commonService: CommonService,
     private router: Router, private toastService: ToastService, private confirmationService: ConfirmationService) {
     this.breadcrumbService.setItems([
-        { label: 'Dashboard' },
-        { label: 'Purchase Order', routerLink: ['/purchase-order'] }
+      { label: 'Dashboard' },
+      { label: 'Purchase Order', routerLink: ['/purchase-order'] }
     ]);
-}
+  }
 
   ngOnInit(): void {
+
     this.getOrderReq();
     this.getProductReq();
-    // this.orderRequ = [
-    //   { srNo:'1',requNo:'RE/SS/20200514/5', prdCategory:'Food',product:'Gluten Free Wheat 5kg Pack',partner:'Shibin KP',location:'Mumbai', qty:'50', createdBy:'System',	createdDate:'1-05-2020' },
-    //   { srNo:'2',requNo:'RE/SS/20200514/7', prdCategory:'Food', product:'Horlicks 750 gm Refill Pack',partner:'Celina Nadar',location:'Pune',qty:'100', createdBy:'Rohit',	createdDate:'3-05-2020'},
-    //   { srNo:'3',requNo:'RE/SS/20200514/9', prdCategory:'Food', product:'Horlicks Refill Pack, 500 gm',partner:'Shweta More',location:'Thane',qty:'150', createdBy:'Rajesh',	createdDate:'11-05-2020'}
-    // ];
-   
-    //   this.productRequ = [
-    //     { srNo:'1', prdCategory:'Food',product:'Gluten Free Wheat 5kg Pack', RequCount:'5', qty:'100',	unit:'kg'},
-    //     { srNo:'2', prdCategory:'Food', product:'Horlicks 750 gm Refill Pack', RequCount:'7', qty:'500',	unit:'gm'},
-    //     { srNo:'3', prdCategory:'Food', product:'Horlicks Refill Pack, 500 gm', RequCount:'3', qty:'200',	unit:'gm'}
-    //   ];
-
   }
 
   //Function to list all Order Requisition
@@ -60,23 +49,24 @@ export class ProductRequisitionComponent implements OnInit {
       error => { console.log(error) }
     )
   }
-  
+
   //Open dialog box to create order requisition 
   openDialogForCreateReq() {
-    const ref = this.dialogService.open( CreateRequisitionComponent , {
-      data: {
-      },
+    const ref = this.dialogService.open(CreateRequisitionComponent, {
+      data: {},
       header: 'Create Requisition',
       width: '90%'
     });
     ref.onClose.subscribe((success: boolean) => {
-      if (success) {}
+      if (success) {
+        this.getOrderReq();
+      }
     });
   }
 
   //Function to edit order requisition
   openDialogForEditReq(orderReq) {
-    const ref = this.dialogService.open( CreateRequisitionComponent , {
+    const ref = this.dialogService.open(CreateRequisitionComponent, {
       data: orderReq,
       header: 'Edit Requisition',
       width: '90%'
@@ -87,7 +77,7 @@ export class ProductRequisitionComponent implements OnInit {
       }
     });
   }
-  
+
   //Function to delete Order Requisition
   deleteOrderReq(iPReqID: Number) {
     this.confirmationService.confirm({
@@ -111,8 +101,9 @@ export class ProductRequisitionComponent implements OnInit {
   }
 
   //Function to map Supplier
-  mapSupplier(orderReq){
-    this.commonService.getComponentData({orderData:orderReq});
+  mapSupplier(orderReq) {
+    localStorage.setItem('orderData', JSON.stringify({ orderReq }))
+    //this.commonService.getComponentData({orderData:orderReq});
   }
 
   //Function to list all Product Requisition
@@ -129,7 +120,8 @@ export class ProductRequisitionComponent implements OnInit {
   }
 
   //Function to map Product
-  mapProduct(productReq){
+  mapProduct(productReq) {
     this.commonService.getComponentData(productReq);
+    // localStorage.setItem('productData',JSON.stringify({ productReq }));
   }
 }
