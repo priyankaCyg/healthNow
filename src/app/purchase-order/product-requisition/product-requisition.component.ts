@@ -23,6 +23,7 @@ export class ProductRequisitionComponent implements OnInit {
   items: MenuItem[];
   orderReq: orderReqData[];
   productReq: productReqData[];
+  index = 0;
   constructor(private breadcrumbService: BreadcrumbService, private dialogService: DialogService, private httpService: ApiService, private commonService: CommonService,
     private router: Router, private toastService: ToastService, private confirmationService: ConfirmationService) {
     this.breadcrumbService.setItems([
@@ -32,7 +33,7 @@ export class ProductRequisitionComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
+    this.index = +localStorage.getItem('tabIndex')
     this.getOrderReq();
     this.getProductReq();
   }
@@ -102,6 +103,7 @@ export class ProductRequisitionComponent implements OnInit {
 
   //Function to map Supplier
   mapSupplier(orderReq) {
+    localStorage.setItem('tabIndex', '0')
     localStorage.setItem('orderData', JSON.stringify({ orderReq }))
     //this.commonService.getComponentData({orderData:orderReq});
   }
@@ -121,6 +123,7 @@ export class ProductRequisitionComponent implements OnInit {
 
   //Function to map Product
   mapProduct(productReq) {
+    localStorage.setItem('tabIndex', '1')
     this.commonService.getComponentData(productReq);
     // localStorage.setItem('productData',JSON.stringify({ productReq }));
   }
