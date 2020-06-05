@@ -31,14 +31,14 @@
                                 <ng-template pTemplate="body" let-orderReq let-rowIndex="rowIndex">
                                     <tr>
                                         <td>{{rowIndex + 1}}</td>
-                                        <td>{{orderReq.requNo}}</td>
+                                        <td>{{orderReq.sRequisionNo}}</td>
                                         <td>{{orderReq.sPCName}}</td>
                                         <td>{{orderReq.sPrdName}}</td>
                                         <td>{{orderReq.sPartnerName}}</td>
                                         <td>{{orderReq.sLocName}}</td>
                                         <td>{{orderReq.iQty}}</td>
-                                        <td>{{orderReq.createdBy}}</td>
-                                        <td>{{orderReq.sCreatedDate}}</td>
+                                        <td>{{orderReq.sCreatedBy}}</td>
+                                        <td>{{orderReq.sCreatedDate | date:"dd-MM-yyyy"}}</td>
                                         <td>
                                             <button pButton type="button" class="ui-button-success mr-1"
                                                 (click)="openDialogForEditReq(orderReq)" icon="pi pi-pencil"
@@ -47,8 +47,8 @@
                                                 (click)="deleteOrderReq(orderReq.iPReqID)" icon="pi pi-trash"
                                                 title="Delete"></button>
                                             <button routerLink="/purchase-order/map-supplier" pButton type="button"
-                                                class="ui-button-success" icon="pi pi-sitemap" (click)="mapSupplier(orderReq)"
-                                                title="Mapp Supplier"></button>
+                                                class="ui-button-success" icon="pi pi-sitemap"
+                                                (click)="mapSupplier(orderReq)" title="Mapp Supplier"></button>
                                         </td>
                                     </tr>
                                 </ng-template>
@@ -82,8 +82,8 @@
                                         <td>{{productReq.iQty}}</td>
                                         <td>
                                             <button routerLink="/purchase-order/map-supplier-multi-req" pButton
-                                                type="button" class="ui-button-success" icon="pi pi-sitemap" (click)="mapProduct(productReq)"
-                                                title="Mapp Product"></button>
+                                                type="button" class="ui-button-success" icon="pi pi-sitemap"
+                                                (click)="mapProduct(productReq)" title="Mapp Product"></button>
                                         </td>
                                     </tr>
                                 </ng-template>

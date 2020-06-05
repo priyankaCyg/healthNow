@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiService } from 'src/app/services/api.service';
-import { FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { ToastService } from 'src/app/services/toast.service';
+import { createRequisitionMaster } from 'src/app/model/createRequisition.model';
+import { ProductData } from 'src/app/model/productList-Requisition';
 
 @Component({
   selector: 'app-create-requisition',
@@ -10,84 +12,182 @@ import { ToastService } from 'src/app/services/toast.service';
   styleUrls: ['./create-requisition.component.css']
 })
 export class CreateRequisitionComponent implements OnInit {
-  products: any[];
+  products: ProductData[];
   productCategValue;
-  selectedCategory1: any;
-  selectedPartner1: any;
-  pc_id;
-  productCateName;
-  productName;
-  prodshortName;
+  selectedproductCategory;
+  selectedPartner;
+  selectedpartnerLocation;
+  pc_Id: number;
+  productCateName: string;
+  productName: string;
+  prodshortName: string;
   partner;
+  partner_Id: number;
   location;
-  prd_id;
+  prd_Id: number;
+  preq_Id: number;
+  createrequisitionData: createRequisitionMaster;
+  public createReqForm: FormGroup;
+  isEdit: boolean = false;
 
-  constructor(private apiService: ApiService, private fb: FormBuilder, private ref: DynamicDialogRef,
-    private toastService: ToastService) { }
+  constructor(private httpService: ApiService, private fb: FormBuilder, private ref: DynamicDialogRef,
+    private toastService: ToastService, private config: DynamicDialogConfig) { }
 
   ngOnInit(): void {
-    this.productCategDropdown();
-    this.partnerDropdown();
+    this.defaultDropDwnValue();
+    this.preq_Id = this.config.data.iPReqID;
+    if (this.preq_Id != null) {
+      this.isEdit = true;
+      this.createrequisitionData = new createRequisitionMaster(this.config.data);
+      this.createReqForm = this.createControl(this.createrequisitionData);
+      Promise.all([this.productCategDropdown(), this.partnerDropdown()]).then(values => {
+        this.setDropDownVal()
+      });
+    } else {
+      this.isEdit = false;
+      this.createrequisitionData = new createRequisitionMaster();
+      this.createReqForm = this.createControl(this.createrequisitionData);
+      Promise.all([this.productCategDropdown(), this.partnerDropdown()]).then(values => {
+        this.setDropDownVal()
+      });
+    }
+
   }
 
+  //code for default dropdown data
+  defaultDropDwnValue() {
+    this.selectedproductCategory = { "iPCID": 0, "sPCName": "Select" };
+    this.selectedPartner = { "iPartnerID": 0, "sPartnerName": "Select" };
+    this.selectedpartnerLocation = { "iLocationID": 0, "sLocName": "Select" };
+  }
+
+  //code for set dropdown data 
+  setDropDownVal() {
+    // product Category Dropdown Select
+    let selectedProductCateObj = this.productCategValue.find(x => x.iPCID == this.config.data.iPCID);
+
+    if (selectedProductCateObj !== undefined) {
+      this.selectedproductCategory = selectedProductCateObj;
+    }
+
+    if (this.selectedproductCategory.iPCID) {
+      const product_list_data = {
+        "iRequestID": 2244,
+        "iPCID": this.selectedproductCategory.iPCID
+      }
+      this.httpService.callPostApi(product_list_data).subscribe(
+        (data) => {
+          this.products = data.body;
+        },
+        (error) => console.log(error)
+      );
+    }
+
+    // partner Dropdown select
+    let selectedPartnerObj = this.partner.find(x => x.iPartnerID == this.config.data.iPartnerID);
+
+    if (selectedPartnerObj !== undefined) {
+      this.selectedPartner = selectedPartnerObj;
+    }
+
+    //partner location Dropdown select
+    if (this.selectedPartner.iPartnerID) {
+      const productCateg_dropdown_data = {
+        "iRequestID": 22810,
+        "iPartnerID": this.selectedPartner.iPartnerID
+      }
+      this.httpService.getDropDownData(productCateg_dropdown_data).then(
+        (data) => {
+          this.location = data;
+          this.location.splice(0, 0, { "iLocationID": 0, "sLocName": "Select" });
+          this.selectedpartnerLocation = { "iLocationID": 0, "sLocName": "Select" };
+          let selectedPartnerLocObj = this.location.find(x => x.iLocationID == this.config.data.iPartLocID);
+
+          if (selectedPartnerLocObj !== undefined) {
+            this.selectedpartnerLocation = selectedPartnerLocObj;
+          }
+        },
+        (error) => console.log(error)
+      );
+    }
+    this.productCateName = this.config.data.sPCName;
+    this.productName = this.config.data.sPrdName;
+    this.prodshortName = this.config.data.sShortName;
+    this.prd_Id = this.config.data.iPrdID;
+    this.pc_Id = this.config.data.iPCID;
+  }
+
+  //code for product category dropdown data
   productCategDropdown() {
-    const productCateg_dropdown_data = {
-      "iRequestID": 2116,
-    }
-    this.apiService.getDropDownData(productCateg_dropdown_data).then(
-      (data) => {
-        this.productCategValue = data;
-        this.productCategValue.unshift({ "iPCID": 0, "sPCName": "Select" });
-        if (this.selectedCategory1 != undefined) {
-          this.productList();
-        }
-      },
-      (error) => console.log(error)
-    );
-    // this.producer = null;
-    //this.Selectedvalue = [];
+    return new Promise((resolve, reject) => {
+      const productCateg_dropdown_data = {
+        "iRequestID": 2116,
+      }
+      this.httpService.getDropDownData(productCateg_dropdown_data).then(
+        (data) => {
+          this.productCategValue = data;
+          this.productCategValue.splice(0, 0, { "iPCID": 0, "sPCName": "Select" });
+          this.selectedproductCategory = { "iPCID": 0, "sPCName": "Select" };
+          resolve(this.productCategValue)
+        },
+        (error) => console.log(error)
+      );
+    });
   }
 
+  //code for onchange to get partner id 
+  setPartnerId(event) {
+    this.partner_Id = event.value.iPartnerID
+    this.partnerlocationDropdown();
+  }
+
+  // code for partner dropdown data
   partnerDropdown() {
-    const partner_dropdown_data = {
-      "iRequestID": 2289,
-    }
-    this.apiService.getDropDownData(partner_dropdown_data).then(
-      (data) => {
-        this.partner = data;
-        this.partner.unshift({ "iPartnerID": 0, "sPartnerName": "Select" });
-        if (this.selectedPartner1 != undefined) {
-          this.partnerlocationDropdown();
-        }
-      },
-      (error) => console.log(error)
-    );
-    // this.producer = null;
-    //this.Selectedvalue = [];
+    return new Promise((resolve, reject) => {
+      const partner_dropdown_data = {
+        "iRequestID": 2289,
+      }
+      this.httpService.getDropDownData(partner_dropdown_data).then(
+        (data) => {
+          this.partner = data;
+          this.partner.splice(0, 0, { "iPartnerID": 0, "sPartnerName": "Select" });
+          this.selectedPartner = { "iPartnerID": 0, "sPartnerName": "Select" };
+          resolve(this.partner);
+        },
+        (error) => console.log(error)
+      );
+    });
   }
 
+  // code for partner location dropdown data
   partnerlocationDropdown() {
     const productCateg_dropdown_data = {
       "iRequestID": 22810,
-      "iPartnerID": this.selectedPartner1.iPartnerID
+      "iPartnerID": this.partner_Id
     }
-    this.apiService.getDropDownData(productCateg_dropdown_data).then(
+    this.httpService.getDropDownData(productCateg_dropdown_data).then(
       (data) => {
         this.location = data;
-        this.location.unshift({ "iLocationID": 0, "sLocName": "Select" });
+        this.location.splice(0, 0, { "iLocationID": 0, "sLocName": "Select" });
+        this.selectedpartnerLocation = { "iLocationID": 0, "sLocName": "Select" };
       },
       (error) => console.log(error)
     );
-    // this.producer = null;
-    //this.Selectedvalue = [];
   }
 
+  // code for onchange to get pc id 
+  setpcId(event) {
+    this.pc_Id = event.value.iPCID;
+    this.productList();
+  }
+
+  // code for  list of product data
   productList() {
     const product_list_data = {
       "iRequestID": 2244,
-      "iPCID": this.selectedCategory1.iPCID
+      "iPCID": this.pc_Id
     }
-    this.apiService.callPostApi(product_list_data).subscribe(
+    this.httpService.callPostApi(product_list_data).subscribe(
       (data) => {
         this.products = data.body;
       },
@@ -95,33 +195,47 @@ export class CreateRequisitionComponent implements OnInit {
     );
   }
 
+  // code for fetch data onclick arrow of product list 
   fetchProductData(products) {
     this.productCateName = products.sPCName;
     this.productName = products.sPrdName;
     this.prodshortName = products.sShortName;
-    this.prd_id = products.iPrdID;
-    this.pc_id = products.iPCID;
+    this.prd_Id = products.iPrdID;
+    this.pc_Id = products.iPCID;
   }
 
-  createReqForm = this.fb.group({
-    partner: ["", Validators.required],
-    location: ["", Validators.required],
-    quantity: ["", Validators.required]
-  });
+  //code for implements form builder 
+  createControl(createrequisitionData?: createRequisitionMaster): FormGroup {
 
+    this.createReqForm = this.fb.group({
+      iQty: [createrequisitionData.iQty, [Validators.required, Validators.pattern('^[0-9]*$')]],
+      iPCID: [createrequisitionData.iPCID],
+      iPrdID: [createrequisitionData.iPrdID],
+      sPCName: [createrequisitionData.sPCName],
+      sLocCode: [createrequisitionData.sLocCode],
+      sLocName: [createrequisitionData.sLocName],
+      sPrdName: [createrequisitionData.sPrdName],
+      iPartLocID: [createrequisitionData.iPartLocID, [Validators.required]],
+      iPartnerID: [createrequisitionData.iPartnerID],
+      sCreatedDate: [createrequisitionData.sCreatedDate],
+      sPartnerName: [createrequisitionData.sPartnerName, [Validators.required]]
+    });
+    return this.createReqForm;
+  }
+
+  //code for add new requisition data
   addnewRequisition() {
-    var form = this.createReqForm.getRawValue();
+    let form = this.createReqForm.getRawValue();
 
-    const requisition_data = {
+    const requisition_add_data = {
       "iRequestID": 2331,
-      "iPCID": this.pc_id,
-      "iPartnerID": form.partner.iPartnerID,
-      "iPartLocID": form.location.iLocationID,
-      "iPrdID": this.prd_id,
-      "iQty": +form.quantity
+      "iPCID": this.pc_Id,
+      "iPartnerID": form.sPartnerName.iPartnerID,
+      "iPartLocID": form.iPartLocID.iLocationID,
+      "iPrdID": this.prd_Id,
+      "iQty": +form.iQty
     }
-    console.log(requisition_data);
-    this.apiService.callPostApi(requisition_data).subscribe(
+    this.httpService.callPostApi(requisition_add_data).subscribe(
       (data) => {
         this.ref.close(true);
         this.toastService.addSingle("success", data.headers.get('StatusMessage'), "");
@@ -131,7 +245,54 @@ export class CreateRequisitionComponent implements OnInit {
     this.createReqForm.reset();
   }
 
+  //code for edit requisition data 
+  editRequisition() {
+    let form = this.createReqForm.getRawValue();
+
+    const requisition_edit_data = {
+      "iRequestID": 2332,
+      "iPCID": this.pc_Id,
+      "iPartnerID": form.sPartnerName.iPartnerID,
+      "iPartLocID": form.iPartLocID.iLocationID,
+      "iPrdID": this.prd_Id,
+      "iQty": +form.iQty,
+      "iPReqID": this.preq_Id
+    }
+    this.httpService.callPostApi(requisition_edit_data).subscribe(
+      (data) => {
+        this.ref.close(true);
+        this.toastService.addSingle("success", data.headers.get('StatusMessage'), "");
+      },
+      (error) => console.log(error)
+    );
+    this.createReqForm.reset();
+  }
+
+  //code for close dialog box
   closeDialog() {
     this.ref.close();
   }
+
+  //code for form validation check
+  dropDownValidityCheck() {
+    if (this.selectedPartner.iPartnerID == '') {
+      return true;
+    }
+    else if (this.selectedpartnerLocation.iLocationID == '') {
+      return true
+    }
+    else if (this.productCateName == null) {
+      return true
+    }
+    else if (this.productName == null) {
+      return true
+    }
+    // else if (this.prodshortName == null) {
+    //   return true
+    // }
+    else {
+      return false
+    }
+  }
+
 }
