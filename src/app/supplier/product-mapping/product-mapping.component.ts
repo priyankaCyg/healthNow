@@ -87,7 +87,7 @@ export class ProductMappingComponent implements OnInit {
     this.apiService.callPostApi(save_product_data).subscribe(
       (data) => {
         this.getProduct();
-        this.toastService.addSingle("success", data.headers.get('StatusMessage'), "");
+        this.toastService.displayApiMessage(data.headers.get('StatusMessage'), data.headers.get('StatusCode'));
       },
       (error) => console.log(error)
     );

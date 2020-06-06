@@ -62,7 +62,7 @@ export class PartnerComponent implements OnInit {
         };
         this.httpService.callPostApi(delete_data_api).subscribe(
           (data) => {
-            this.toastService.addSingle("success", data.headers.get('StatusMessage'), "");
+            this.toastService.displayApiMessage(data.headers.get('StatusMessage'), data.headers.get('StatusCode'));
             this.getAllPartner();
           },
           (error) => console.log(error)

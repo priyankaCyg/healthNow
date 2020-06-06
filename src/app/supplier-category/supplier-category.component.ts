@@ -3,12 +3,10 @@ import { BreadcrumbService } from '../breadcrumb.service';
 import { MenuItem } from 'primeng/api';
 import { DialogService } from 'primeng';
 import { AddSupCategoryComponent } from './add-sup-category/add-sup-category.component';
-import { from } from 'rxjs';
-
-import { APIService } from '../services/apieservice';
 import { ToastService } from "../services/toast.service";
 import { ConfirmationService } from 'primeng/api';
-import { LoginService } from '../../app/services/login.service'
+import { SupplierCategoryMaster } from '../model/supplierCategory.model';
+import { ApiService } from '../services/api.service';
 
 @Component({
   selector: 'app-supplier-category',
@@ -18,12 +16,10 @@ import { LoginService } from '../../app/services/login.service'
 export class SupplierCategoryComponent implements OnInit {
 
   items: MenuItem[];
+  supplierCategory: SupplierCategoryMaster[];
 
-  supplierCategory: any[];
-
-  constructor(private breadcrumbService: BreadcrumbService, private dialogService: DialogService, private _apiService: APIService,
-    private toastService: ToastService,
-    private confirmationService: ConfirmationService, private loginService: LoginService) {
+  constructor(private breadcrumbService: BreadcrumbService, private dialogService: DialogService,
+    private httpService: ApiService, private toastService: ToastService, private confirmationService: ConfirmationService) {
     this.breadcrumbService.setItems([
       { label: 'Dashboard' },
       { label: 'Suplier Category', routerLink: ['/suplier-category'] }
@@ -31,33 +27,38 @@ export class SupplierCategoryComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
-    // this.supplierCategory = [
-    //   {supCategoryName: 'Courier',  status: 'Active'},
-    //   {supCategoryName: 'Supplier',  status: 'Active'}
-    // ];
-    //this.loginService.checkBrowserClosed();
-
-
-    this.showSupplierCategory()
-
+    this.getSupplierCategoryList()
   }
 
-
-
-  showSupplierCategory() {
+  //Function to fetch supplier category list
+  getSupplierCategoryList() {
     var dataToSend = {
       "iRequestID": 2154
     }
-    this._apiService.getDetails(dataToSend).then(response => {
-      console.log("Response for supplierCategory ", response)
-      this.supplierCategory = response
+    this.httpService.callPostApi(dataToSend).subscribe(
+      data => {
+        this.supplierCategory = data.body;
+      },
+      error => console.log(error)
+    );
+  }
+
+  //Open dialog box for supplier category
+  openDialogForProductCategory() {
+    const ref = this.dialogService.open(AddSupCategoryComponent, {
+      data: {},
+      header: 'Add Supplier Category',
+      width: '28%'
+    });
+    ref.onClose.subscribe((success: boolean) => {
+      if (success) {
+        this.getSupplierCategoryList();
+      }
     });
   }
 
-
-
-  editSupplierCategory(iSupCatID) {
+  //Dialog box to edit Supplier category
+  editSupplierCategory(iSupCatID: number) {
     const ref = this.dialogService.open(AddSupCategoryComponent, {
       data: {
         iSupCatID: iSupCatID
@@ -65,19 +66,15 @@ export class SupplierCategoryComponent implements OnInit {
       header: 'Edit Supplier Category',
       width: '28%'
     });
-
-    ref.onClose.subscribe((message: any) => {
-      if (message.StatusCode == "200") {
-        this.toastService.addSingle("success", message.StatusMessage, "");
+    ref.onClose.subscribe((success: boolean) => {
+      if (success) {
+        this.getSupplierCategoryList();
       }
-      else {
-        this.toastService.addSingle("error", message.StatusMessage, "");
-      }
-      this.showSupplierCategory();
     });
   }
 
-  deleteSupplierCategory(iSupCatID) {
+  //Function to delete Supplier category
+  deleteSupplierCategory(iSupCatID: number) {
     this.confirmationService.confirm({
       message: 'Are you sure that you want to proceed?',
       header: 'Confirmation',
@@ -85,39 +82,19 @@ export class SupplierCategoryComponent implements OnInit {
       accept: () => {
         var dataToSendDelete = {
           "iRequestID": 2153,
-          "iSupCID": iSupCatID
+          "iSupCatID": iSupCatID
         }
-
-        this._apiService.getDetails(dataToSendDelete).then(response => {
-          console.log("Response for Brand Delete ", response)
-          this.toastService.addSingle("info", response.headers.get('StatusMessage'), "");
-          this.showSupplierCategory();
-        });
+        this.httpService.callPostApi(dataToSendDelete).subscribe(
+          data => {
+            this.getSupplierCategoryList();
+            this.toastService.displayApiMessage(data.headers.get('StatusMessage'), data.headers.get('StatusCode'));
+          },
+          error => { console.log(error) }
+        );
       },
-      reject: () => {
-        this.toastService.addSingle("info", "Rejected", "Rejected");
-
-      }
+      reject: () => {}
     });
   }
 
-
-  openDialogForProductCategory() {
-    const ref = this.dialogService.open(AddSupCategoryComponent, {
-      data: {
-      },
-      header: 'Add Supplier Category',
-      width: '28%'
-    });
-
-    ref.onClose.subscribe((message: any) => {
-      if (message.StatusCode == "200") {
-        this.toastService.addSingle("success", message.StatusMessage, "");
-      }
-      else {
-        this.toastService.addSingle("error", message.StatusMessage, "");
-      }
-      this.showSupplierCategory()
-    });
-  }
 }
+

@@ -338,10 +338,10 @@
                     <td>{{ bank.sBankBranch }}</td>
                     <td>
                       <span *ngIf="bank.iStatusID == 1" class="badge badge--success badge--inline badge--pill">
-                        Active
+                        {{bank.sStatusName}}
                       </span>
                       <span *ngIf="bank.iStatusID == 2" class="badge badge--warning badge--inline badge--pill">
-                        Inactive
+                        {{bank.sStatusName}}
                       </span>
                     </td>
                     <td>

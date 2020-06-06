@@ -171,7 +171,7 @@ export class AddressComponent implements OnInit {
     this.httpService.callPostApi(addpartneraddressAPI).subscribe(
       data => {
         this.ref.close(true);
-        this.toastService.addSingle("success", data.headers.get('StatusMessage'), "");
+        this.toastService.displayApiMessage(data.headers.get('StatusMessage'), data.headers.get('StatusCode'));
       });
   }
 
@@ -202,7 +202,7 @@ export class AddressComponent implements OnInit {
       this.httpService.callPostApi(editPartneraddressAPI1).subscribe(
         data => {
           this.ref.close(true);
-          this.toastService.addSingle("success", data.headers.get('StatusMessage'), "");
+          this.toastService.displayApiMessage(data.headers.get('StatusMessage'), data.headers.get('StatusCode'));
         }
       )
     }
@@ -224,7 +224,7 @@ export class AddressComponent implements OnInit {
       this.httpService.callPostApi(editPartneraddressAPI2).subscribe(
         data => {
           this.ref.close(true);
-          this.toastService.addSingle("success", data.headers.get('StatusMessage'), "");
+          this.toastService.displayApiMessage(data.headers.get('StatusMessage'), data.headers.get('StatusCode'));
         }
       )
     }

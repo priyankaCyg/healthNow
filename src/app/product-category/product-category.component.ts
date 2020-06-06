@@ -3,7 +3,7 @@ import { BreadcrumbService } from '../breadcrumb.service';
 import { MenuItem } from 'primeng/api';
 import { DialogService } from 'primeng';
 import { AddProductCategoryComponent } from './add-product-category/add-product-category.component';
-import { ProductCategory } from '../models/product-category.model';
+import { ProductCategory } from '../model/product-category.model';
 import { ApiService } from '../services/api.service';
 import { ConfirmationService } from 'primeng/api';
 import { ToastService } from "../services/toast.service";

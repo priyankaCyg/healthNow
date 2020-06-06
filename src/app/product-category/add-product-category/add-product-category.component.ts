@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { ApiService } from 'src/app/services/api.service';
-import { ProductCategory } from 'src/app/models/product-category.model';
+import { ProductCategory } from 'src/app/model/product-category.model';
 import { ToastService } from 'src/app/services/toast.service';
 
 @Component({

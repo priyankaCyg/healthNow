@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
-import { SupplierAddress } from 'src/app/models/supplier-address.model';
+import { SupplierAddress } from 'src/app/model/supplier-address.model';
 import { ApiService } from 'src/app/services/api.service';
 import { ToastService } from 'src/app/services/toast.service';
 
@@ -174,7 +174,7 @@ export class AddressComponent implements OnInit {
     this.httpService.callPostApi(addSupplieraddressAPI).subscribe(
       data => {
         this.ref.close(true);
-        this.toastService.addSingle("success", data.headers.get('StatusMessage'), "");
+        this.toastService.displayApiMessage(data.headers.get('StatusMessage'), data.headers.get('StatusCode'));
       });
   }
 
@@ -204,7 +204,7 @@ export class AddressComponent implements OnInit {
       this.httpService.callPostApi(editSupplieraddressAPI1).subscribe(
         data => {
           this.ref.close(true);
-          this.toastService.addSingle("success", data.headers.get('StatusMessage'), "");
+          this.toastService.displayApiMessage(data.headers.get('StatusMessage'), data.headers.get('StatusCode'));
         }
       )
     }
@@ -226,7 +226,7 @@ export class AddressComponent implements OnInit {
       this.httpService.callPostApi(editSupplieraddressAPI2).subscribe(
         data => {
           this.ref.close(true);
-          this.toastService.addSingle("success", data.headers.get('StatusMessage'), "");
+          this.toastService.displayApiMessage(data.headers.get('StatusMessage'), data.headers.get('StatusCode'));
         }
       )
     }

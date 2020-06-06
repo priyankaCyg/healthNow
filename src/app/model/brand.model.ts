@@ -1,10 +1,9 @@
-
 export class BrandMaster {
-   
-    iBrandID: string;
+
+    iBrandID: number;
     iCreatedBy: string;
-    iProducerID: string;
-    iStatusID: string;
+    iProducerID: number;
+    iStatusID: number;
     sBrandName: string;
     sCreatedDate: string;
     sProducerName: string;
@@ -17,7 +16,6 @@ export class BrandMaster {
      */
     constructor(BrandMaster?) {
         BrandMaster = BrandMaster || {};
-
         this.iBrandID = BrandMaster.iBrandID || '';
         this.iCreatedBy = BrandMaster.iCreatedBy || '';
         this.iProducerID = BrandMaster.iProducerID || '';
@@ -26,8 +24,5 @@ export class BrandMaster {
         this.sCreatedDate = BrandMaster.sCreatedDate || '';
         this.sProducerName = BrandMaster.sProducerName || '';
         this.sStatusName = BrandMaster.sStatusName || '';
-
-
-
     }
 }

@@ -1,47 +1,46 @@
-
-    <div class="p-grid ui-fluid">
-    <form [formGroup]="brandForm">
-
-            <div class="p-col-12"> 
-        
-                <div class="p-grid form-group">
-
-                        <div class="p-col-12">
-                                <label for="sProducerName">Producer</label>
-                        <p-dropdown id="sProducerName" optionLabel="sProducerName" formControlName="sProducerName" [options]="producerData" [(ngModel)]="selectedProducer"></p-dropdown>
-                        <p-message severity="error" text="Producer is required" *ngIf="brandForm.controls['sProducerName'].touched && (selectedProducer.iProducerID=='' || brandForm.controls['sProducerName'].hasError('required'))"></p-message>
-                            
-                            </div>
-                   
-                    <div class="p-col-12">
-                        <label for="sBrandName">Brand Name</label>
-                        <input id="sBrandName" formControlName="sBrandName" type="text" pInputText>
-                        <p-message severity="error" [text]="brandForm.controls['sBrandName'].errors['required'] ? 'Brand Name is required' : brandForm.controls['sBrandName'].errors['pattern'] ? 'Should be alpha numeric' : ''" 
-                        *ngIf="!brandForm.controls['sBrandName'].valid&&brandForm.controls['sBrandName'].dirty"></p-message>
-                    </div>
-    
-                    <div class="p-col-12">
-                        <label for="iStatusID">Status</label>
-                        <p-dropdown id="iStatusID" optionLabel="sKVValue" formControlName="iStatusID" [options]="statusData" [(ngModel)]="selectedstatus"></p-dropdown>
-                        <p-message severity="error" text="Status is required" *ngIf="brandForm.controls['iStatusID'].touched && (selectedstatus.iKVID=='' || brandForm.controls['iStatusID'].hasError('required'))"></p-message>
-                    
-                    </div>
-        
+<div class="p-grid ui-fluid">
+    <form [formGroup]="brandForm" autocomplete="off">
+        <div class="p-col-12">
+            <div class="p-grid form-group">
+                <div class="p-col-12">
+                    <label for="sProducerName">Producer</label>
+                    <p-dropdown id="sProducerName" optionLabel="sProducerName" formControlName="sProducerName"
+                        [options]="producerData" [(ngModel)]="selectedProducer"></p-dropdown>
+                    <p-message severity="error" text="this field is required"
+                        *ngIf="brandForm.controls['sProducerName'].touched && (selectedProducer.iProducerID=='' || brandForm.controls['sProducerName'].hasError('required'))">
+                    </p-message>
                 </div>
-                <div class="separator separator--border-solid separator--space-sm separator--portlet-fit"></div>
-                
-                <div class="p-grid form-group ui-fluid">
-                    <div class="p-md-6 p-lg-6"></div>
-                    <div class="p-col-12 p-md-12 p-lg-12 text-right">
-                        <button pButton type="button" label="Cancel" (click)="closeDialog()" style="margin-bottom:10px" class="ui-button-light atbt mr-2"></button>
-                  
-                     
-                        <button *ngIf="!isEdit" pButton type="button" label="Save" [disabled]="!(!brandForm.invalid && !dropDownValidityCheck())" (click)="addBrand()" class="ui-button atbt"></button>
-                    
-                        <button  *ngIf="isEdit" pButton type="button" label="Update" [disabled]="!(!brandForm.invalid && !dropDownValidityCheck())" (click)="updateBrand()"  class="ui-button atbt"></button>
-                    </div>
+                <div class="p-col-12">
+                    <label for="sBrandName">Brand Name</label>
+                    <input id="sBrandName" formControlName="sBrandName" type="text" pInputText>
+                    <p-message severity="error"
+                        [text]="brandForm.controls['sBrandName'].errors['required'] ? 'This field is required' : brandForm.controls['sBrandName'].errors['pattern'] ? 'Should be alpha numeric' : ''"
+                        *ngIf="!brandForm.controls['sBrandName'].valid&&brandForm.controls['sBrandName'].dirty">
+                    </p-message>
                 </div>
-    
+                <div class="p-col-12">
+                    <label for="iStatusID">Status</label>
+                    <p-dropdown id="iStatusID" optionLabel="sKVValue" formControlName="iStatusID" [options]="statusData"
+                        [(ngModel)]="selectedstatus"></p-dropdown>
+                    <p-message severity="error" text="This field is required"
+                        *ngIf="brandForm.controls['iStatusID'].touched && (selectedstatus.iKVID=='' || brandForm.controls['iStatusID'].hasError('required'))">
+                    </p-message>
+                </div>
             </div>
-           </form>
+            <div class="separator separator--border-solid separator--space-sm separator--portlet-fit"></div>
+            <div class="p-grid form-group ui-fluid">
+                <div class="p-md-6 p-lg-6"></div>
+                <div class="p-col-12 p-md-12 p-lg-12 text-right">
+                    <button pButton type="button" label="Cancel" (click)="closeDialog()" style="margin-bottom:10px"
+                        class="ui-button-light atbt mr-2"></button>
+                    <button *ngIf="!isEdit" pButton type="button" label="Save"
+                        [disabled]="!(!brandForm.invalid && !dropDownValidityCheck())" (click)="addBrand()"
+                        class="ui-button atbt"></button>
+                    <button *ngIf="isEdit" pButton type="button" label="Update"
+                        [disabled]="!(!brandForm.invalid && !dropDownValidityCheck())" (click)="updateBrand()"
+                        class="ui-button atbt"></button>
+                </div>
+            </div>
         </div>
+    </form>
+</div>

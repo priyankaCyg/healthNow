@@ -1,224 +1,170 @@
-/**
-Template Name: HealthNow
-Author: Priyanka
-Created Date: 
-File: bank.component
-**/
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators ,FormControl} from '@angular/forms';
-import {APIService} from '../../services/apieservice';
-import {DynamicDialogConfig,DynamicDialogRef} from 'primeng/dynamicdialog';
-import {SupplierBankMaster} from '../../model/supplierBank.model'
-
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
+import { companyBankMaster } from 'src/app/model/companyBank.model';
+import { ToastService } from 'src/app/services/toast.service';
+import { ApiService } from 'src/app/services/api.service';
 
 @Component({
   selector: 'app-bank',
   templateUrl: './bank.component.html',
   styleUrls: ['./bank.component.css']
 })
+
 export class BankComponent implements OnInit {
 
-
-  isEdit :boolean = false
-
-  selectedstatus;
-
   statusData;
-  bankId;
-  sup_Id;
-
+  selectedstatus;
+  isEdit: boolean = false
   public bankForm: FormGroup;
-  bankData : SupplierBankMaster;
+  bankData: companyBankMaster;
+  bankID: number;
+  sup_Id: number;
 
-
-  constructor(public config: DynamicDialogConfig,public ref: DynamicDialogRef,
-    private apiService:APIService, private _formBuilder: FormBuilder) { }
+  constructor(
+    private httpService: ApiService,
+    private fb: FormBuilder,
+    private config: DynamicDialogConfig,
+    private ref: DynamicDialogRef,
+    private toastService: ToastService,
+  ) { }
 
   ngOnInit(): void {
-
-    this.sup_Id = +localStorage.getItem('iSupID');
-
     this.defaultDropDwnValue()
-
-    this.bankData = new SupplierBankMaster();
+    this.bankData = new companyBankMaster();
     this.bankForm = this.createControl(this.bankData);
-
-    this.bankId = this.config.data.iBankID
-    // alert(this.bankId)
-  if(this.bankId!=null)
-  {
-    this.isEdit = true
-
-   var dataToSendEdit =  {
-      "iRequestID": 2215,
-      "iSupID" :1,
-    "iBankID": this.bankId
-  }
-
-  this.apiService.getDetails(dataToSendEdit).then(response => {
-
-    console.log("Response of Edit Bank ",response)
-
-    this.bankData = new SupplierBankMaster(response[0]);
-    this.bankForm = this.createControl(this.bankData);
-
-    Promise.all([ this.getStatusDrpDwn()]).then(values=> {
-      console.log(values);
-      this.setDropDownVal()
-    });
-
-  });
-
-  }
-  else{
-    this.isEdit = false
-
-    Promise.all([this.getStatusDrpDwn()]).then(values=> {
-      console.log(values);
-    });
-  }
-
-
-  }
-
-
-  defaultDropDwnValue()
-  {
-    this.selectedstatus={iKVID: "", sKVValue: "Select Status"}
-  }
-
-
-  setDropDownVal()
-  {
-     // Status Dropdown Select
-     let selectedStatusObj = this.statusData.find(x => x.iKVID==this.bankData.iStatusID);
-
-     if (selectedStatusObj !== undefined) {
-         this.selectedstatus = selectedStatusObj;
-       }
-
-
-  }
-
-
-  getStatusDrpDwn()
-  {
-  return new Promise((resolve, reject) =>{
-    var dataToSend4 = {
-      "iRequestID":2071,
-      "sKVName" :"Status"
-    }
-
-    this.apiService.getDetails(dataToSend4).then(response => {
-      console.log("Response for Status ",response)
-      this.statusData = response
-      this.statusData.splice(0, 0, {iKVID: "", sKVValue: "Select Status"})
-      this.selectedstatus={iKVID: "", sKVValue: "Select Status"}
-
-    resolve(this.statusData)
-
-    });
-  })
-  }
-
-
-  addBank()
-  {
-    console.log(this.bankForm.getRawValue())
-
-    var formData = this.bankForm.getRawValue();
-
-    var dataToSendAdd ={
-      "iRequestID": 2211,
-    "iSupID" :this.sup_Id,
-    "sBankName": formData.sBankName,
-    "sAccountNo":formData.sAccountNo,
-    "sIFSC":formData.sIFSC,
-    "sBankBranch": formData.sBankBranch,
-    "sShortCode" :formData.sShortCode
-    }
-
-    // alert(JSON.stringify(dataToSendAdd))
-    this.apiService.getApiDetails(dataToSendAdd).then(response => {
-      console.log("Response for Bank Add ",response.headers.get('StatusMessage'))
-      
-      var  message = {
-        StatusCode:response.headers.get('StatusCode'),
-        StatusMessage:response.headers.get('StatusMessage')
+    this.bankID = this.config.data.iBankID;
+    this.sup_Id = +localStorage.getItem('iSupID');
+    if (this.bankID != null || this.bankID != undefined) {
+      this.isEdit = true
+      var dataToSendEdit = {
+        "iRequestID": 2215,
+        "iSupID": this.sup_Id,
+        "iBankID": this.bankID
       }
-    this.ref.close(message);
-
-    });
-
-  }
-
-
-  updateBank()
-  {
-    console.log(this.bankForm.getRawValue())
-
-    var formData = this.bankForm.getRawValue();
-
-    var dataToSendEdit ={
-      "iRequestID": 2212,
-      "iSupID" :this.sup_Id,
-      "sBankName": formData.sBankName,
-      "sAccountNo":formData.sAccountNo,
-      "sIFSC":formData.sIFSC,
-      "sBankBranch": formData.sBankBranch,
-      "sShortCode" :formData.sShortCode,
-      "iStatusID":formData.iStatusID.iKVID,
-      "iBankID":this.bankId
+      this.httpService.callPostApi(dataToSendEdit).subscribe(
+        data => {
+          this.bankData = new companyBankMaster(data.body[0]);
+          this.bankForm = this.createControl(this.bankData);
+          Promise.all([this.getStatusData()]).then(values => {
+            console.log(values);
+            this.setDropDownVal();
+          });
+        });
     }
-
-    
-    this.apiService.getApiDetails(dataToSendEdit).then(response => {
-      console.log("Response for Bank Edit ",response)
-
-      var  message = {
-        StatusCode:response.headers.get('StatusCode'),
-        StatusMessage:response.headers.get('StatusMessage')
-      }
-    this.ref.close(message);
-
+    else {
+      this.isEdit = false;
+      this.bankData = new companyBankMaster();
+      this.bankForm = this.createControl(this.bankData);
+      Promise.all([this.getStatusData()]).then(values => {
+        console.log(values);
+      });
+    }
+    this.bankForm.valueChanges.subscribe((changedObj: any) => {
+      this.dropDownValidityCheck()
     });
   }
 
-
-
-  closeDialog()
-  {
-    this.ref.close()
+  // Set Dropdown value on Edit
+  setDropDownVal() {
+    // Status Dropdown 
+    let selectedStatus = this.statusData.find(data => data.iKVID == +this.bankData.iStatusID);
+    if (selectedStatus !== undefined) {
+      this.selectedstatus = selectedStatus;
+    }
   }
 
+  // Set Defalut  Dropdown value
+  defaultDropDwnValue() {
+    this.selectedstatus = { iKVID: "", sKVValue: "Select Status" }
+  }
 
-  createControl(bankData?: SupplierBankMaster): FormGroup {
+  // Validity Check for Dropdown
+  dropDownValidityCheck() {
+    if (this.selectedstatus.iKVID == '') {
+      return true;
+    }
+    else {
+      return false
+    }
+  }
 
-    this.bankForm = this._formBuilder.group({
-      iBankID: [bankData.iBankID],
-      iCreatedBy: [bankData.iCreatedBy],
-      iStatusID: [bankData.iStatusID],
-      sAccountNo: [bankData.sAccountNo],
-      sCreatedDate: [bankData.sCreatedDate],
-      sBankBranch: [bankData.sBankBranch],
-      sBankName: [bankData.sBankName],
-      sIFSC: [bankData.sIFSC],
-      sShortCode: [bankData.sShortCode]
+  // Select Status Dropdown Function
+  getStatusData() {
+    return new Promise((resolve, reject) => {
+      var status_api = {
+        "iRequestID": 2071,
+        "sKVName": "Status"
+      }
+      this.httpService.getDropDownData(status_api).then(
+        data => {
+          this.statusData = data;
+          this.statusData.unshift({ iKVID: "", sKVValue: "Select Status" });
+          this.selectedstatus = { iKVID: "", sKVValue: "Select Status" };
+          resolve(this.statusData);
+        },
+        error => console.log(error)
+      );
+    });
+  }
 
+  createControl(bankdata?: companyBankMaster): FormGroup {
+    this.bankForm = this.fb.group({
+      sBankName: [bankdata.sBankName, [Validators.required, Validators.pattern('^[a-zA-Z ]*$')]],
+      sShortCode: [bankdata.sShortCode, Validators.required],
+      sAccountNo: [bankdata.sAccountNo, [Validators.required, Validators.pattern('^[0-9]*$')]],
+      sIFSC: [bankdata.sIFSC, [Validators.required, Validators.pattern('^[0-9a-zA-Z]+$')]],
+      sBankBranch: [bankdata.sBankBranch, [Validators.required, Validators.pattern('^[a-zA-Z ]*$')]],
+      sStatusName: [bankdata.iStatusID, Validators.required]
     });
     return this.bankForm;
   }
 
+  //Add Bank Function
+  addBank() {
+    var formData = this.bankForm.getRawValue();
+    const addBankAPI = {
+      "iRequestID": 2211,
+      "iSupID": this.sup_Id,
+      "sBankName": formData.sBankName,
+      "sAccountNo": formData.sAccountNo,
+      "sIFSC": formData.sIFSC,
+      "sBankBranch": formData.sBankBranch,
+      "sShortCode": formData.sShortCode,
+    }
+    this.httpService.callPostApi(addBankAPI).subscribe(
+      data => {
+        this.ref.close(true);
+        this.toastService.displayApiMessage(data.headers.get('StatusMessage'), data.headers.get('StatusCode'));
+      });
+  }
 
-  dropDownValidityCheck()
-  {
-    if(this.selectedstatus.iKVID=='')
-    {
-      return true
+  // Edit Bank Function
+  editBank() {
+    var formData = this.bankForm.getRawValue();
+    var editBankAPI = {
+      "iRequestID": 2212,
+      "iSupID": this.sup_Id,
+      "sBankName": formData.sBankName,
+      "sAccountNo": formData.sAccountNo,
+      "sIFSC": formData.sIFSC,
+      "sBankBranch": formData.sBankBranch,
+      "sShortCode": formData.sShortCode,
+      "iStatusID": formData.sStatusName.iKVID,
+      "iBankID": this.bankID,
     }
-    else{
-      return false
-    }
+    this.httpService.callPostApi(editBankAPI).subscribe(
+      data => {
+        this.ref.close(true);
+        this.toastService.displayApiMessage(data.headers.get('StatusMessage'), data.headers.get('StatusCode'));
+      }
+    );
+  }
+
+  // Close Bank Popup
+  closeDialog() {
+    this.ref.close();
+    this.bankForm.reset();
   }
 
 }

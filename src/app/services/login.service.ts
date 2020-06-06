@@ -1,9 +1,7 @@
 import { Injectable } from '@angular/core';
-
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { config } from '../../config';
 import { Router } from '@angular/router';
-import { BehaviorSubject } from 'rxjs';
 
 const authUrl: string = config.authUrl
 const authAccess: string = config.authAccess
@@ -14,8 +12,6 @@ export class LoginService {
 
   token: string = null;
   constructor(private _httpClient: HttpClient, private router: Router) { }
-  // private responseToken = new BehaviorSubject<string>("null");
-  //currentMessage = this.responseToken.asObservable();
   public _test: any;
 
   //logout function
@@ -58,8 +54,6 @@ export class LoginService {
             return new Promise((resolve, reject) => {
               this._httpClient.post(authStoreUrl, resp.body, { observe: 'response' })
                 .subscribe((resp1: any) => {
-                  // let token = resp1.headers.get("XSRF-TOKEN");
-                  // this.responseToken.next(token)
                   sessionStorage.setItem('isSessionValid', 'true');
                   this.router.navigate([navigate_url]);
                   resolve(resp1);
@@ -81,15 +75,6 @@ export class LoginService {
     });
   }
 
-  // checkBrowserClosed() {
-  //   var isBrowserClosed = localStorage.getItem('isBrowserClosed');
-  //   // var isLoggedIn = localStorage.getItem('isSessionValid');
-  //   if (isBrowserClosed == "true" || isBrowserClosed == null) {
-  //     this.getAccess().then(response1 => {
-  //     }).catch(error => { })
-  //   }
-  // }
-
   setToken(token: string) {
     this.token = token;
   }
@@ -101,4 +86,13 @@ export class LoginService {
   isLoggednIn() {
     return this.getToken() !== null;
   }
+
+  // checkBrowserClosed() {
+  //   var isBrowserClosed = localStorage.getItem('isBrowserClosed');
+  //   // var isLoggedIn = localStorage.getItem('isSessionValid');
+  //   if (isBrowserClosed == "true" || isBrowserClosed == null) {
+  //     this.getAccess().then(response1 => {
+  //     }).catch(error => { })
+  //   }
+  // }
 }

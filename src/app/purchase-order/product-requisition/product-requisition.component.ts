@@ -34,6 +34,7 @@ export class ProductRequisitionComponent implements OnInit {
 
   ngOnInit(): void {
     this.index = +localStorage.getItem('tabIndex')
+    localStorage.removeItem('tabIndex');
     this.getOrderReq();
     this.getProductReq();
   }

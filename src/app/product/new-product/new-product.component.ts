@@ -19,7 +19,7 @@ import { ProductMaster } from '../../model/product.model';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ToastService } from 'src/app/services/toast.service';
 import { ProductInfoData } from 'src/app/model/productInfo';
-import { ProductCategoryMapping } from 'src/app/models/product-category-mapping.model';
+import { ProductCategoryMapping } from 'src/app/model/product-category-mapping.model';
 import { productQuerData } from 'src/app/model/productQueries';
 
 @Component({

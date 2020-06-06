@@ -1,66 +1,62 @@
-<p-confirmDialog header="Confirmation" icon="pi pi-info" [style]="{width: '425px'}" rejectButtonStyleClass="ui-button-secondary"></p-confirmDialog>
-
+<p-confirmDialog header="Confirmation" icon="pi pi-info" [style]="{width: '425px'}"
+    rejectButtonStyleClass="ui-button-secondary"></p-confirmDialog>
 <div class="p-grid">
-        <div class="p-col-12">
-            <div class="card card-w-title">
-                <div class="p-grid ui-fluid vertical-container">
-                        <div class="p-col p-col-align-start"> 
-                            <h1 class="mt-2">Brand</h1>
-                        </div>
-                        <div class="p-col-1 p-col-align-end text-center">
-                                <button (click)="openDialogFornewBrand()" pButton icon="pi pi-fw pi-plus" label="Add New"></button>
-                            
-                        </div>
-                        <div class="p-col-12"> 
-                                <div class="p-col-12"> 
-                                        <!-- <p-table [value]="brand">
-                                            <ng-template pTemplate="caption"> -->
-
-                                                <p-table [value]="brand" #BrandSearch [paginator]="true" [rows]="10" [showCurrentPageReport]="true"
-                                [rowsPerPageOptions]="[10, 25, 50]" [filterDelay]="0" [globalFilterFields]="['sProducerName','sBrandName','sStatusName']" class="defaultDataTable">
-                                <ng-template pTemplate="caption">
-                                        
-                                                <div class="ui-table-globalfilter-container text-left">
-                                                    <input type="text" pInputText size="50" placeholder="Search" (input)="BrandSearch.filterGlobal($event.target.value, 'contains')" style="width:250px;">
-                                                </div>
-                                            </ng-template>
-                                            <ng-template pTemplate="header">
-                                                <tr>
-                                                    <th>Producer</th>
-                                                    <th>Brand Name</th>
-                                                    <th>Status</th>
-                                                    <th>Action</th>
-                                                </tr>
-                                            </ng-template>
-                                            <ng-template pTemplate="body" let-brand>
-                                                <tr>
-                                                    <td>{{brand.sProducerName}}</td>
-                                                    <td>{{brand.sBrandName}}</td>
-                                                    <!-- <td>{{brand.sStatusName}}</td> -->
-                                                    <td>
-                                                        <span *ngIf="brand.iStatusID == 1" class="badge badge--success badge--inline badge--pill">
-                                                          Active
-                                                        </span>
-                                                        <span *ngIf="brand.iStatusID == 2" class="badge badge--warning badge--inline badge--pill">
-                                                          Inactive
-                                                        </span>
-                                                        <span *ngIf="brand.iStatusID == 3" class="badge badge--danger badge--inline badge--pill">
-                                                          Deleted
-                                                        </span>
-                                                      </td>
-                                                    <td>
-                                                        <button pButton type="button" (click)="editBrand(brand.iBrandID)" class="ui-button-success mr-2" icon="pi pi-pencil"></button>
-                                                        <button pButton type="button" (click)="deleteBrand(brand.iBrandID)" class="ui-button-danger" icon="pi pi-trash"></button>
-                                                    </td>
-                                                </tr>
-                                            </ng-template>
-                                        </p-table>
-                                    </div>
-                        </div>
+    <div class="p-col-12">
+        <div class="card card-w-title">
+            <div class="p-grid ui-fluid vertical-container">
+                <div class="p-col p-col-align-start">
+                    <h1 class="mt-2">Brand</h1>
                 </div>
-
+                <div class="p-col-1 p-col-align-end text-center">
+                    <button (click)="openDialogFornewBrand()" pButton icon="pi pi-fw pi-plus" label="Add New"></button>
+                </div>
+                <div class="p-col-12">
+                    <div class="p-col-12">
+                        <p-table [value]="brand" #BrandSearch [paginator]="true" [rows]="10"
+                            [showCurrentPageReport]="true" [rowsPerPageOptions]="[10, 25, 50]" [filterDelay]="0"
+                            [globalFilterFields]="['sProducerName','sBrandName','sStatusName']"
+                            class="defaultDataTable">
+                            <ng-template pTemplate="caption">
+                                <div class="ui-table-globalfilter-container text-left">
+                                    <input type="text" pInputText size="50" placeholder="Search"
+                                        (input)="BrandSearch.filterGlobal($event.target.value, 'contains')"
+                                        style="width:250px;">
+                                </div>
+                            </ng-template>
+                            <ng-template pTemplate="header">
+                                <tr>
+                                    <th>Producer</th>
+                                    <th>Brand Name</th>
+                                    <th>Status</th>
+                                    <th>Action</th>
+                                </tr>
+                            </ng-template>
+                            <ng-template pTemplate="body" let-brand>
+                                <tr>
+                                    <td>{{brand.sProducerName}}</td>
+                                    <td>{{brand.sBrandName}}</td>
+                                    <td>
+                                        <span *ngIf="brand.iStatusID == 1"
+                                            class="badge badge--success badge--inline badge--pill">
+                                            {{brand.sStatusName}}
+                                        </span>
+                                        <span *ngIf="brand.iStatusID == 2"
+                                            class="badge badge--warning badge--inline badge--pill">
+                                            {{brand.sStatusName}}
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <button pButton type="button" (click)="editBrand(brand.iBrandID)"
+                                            class="ui-button-success mr-2" icon="pi pi-pencil"></button>
+                                        <button pButton type="button" (click)="deleteBrand(brand.iBrandID)"
+                                            class="ui-button-danger" icon="pi pi-trash"></button>
+                                    </td>
+                                </tr>
+                            </ng-template>
+                        </p-table>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
-</div>    
-        
-
+</div>

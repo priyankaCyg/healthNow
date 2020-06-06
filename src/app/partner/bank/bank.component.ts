@@ -134,7 +134,7 @@ export class BankComponent implements OnInit {
     this.httpService.callPostApi(addBankAPI).subscribe(
       data => {
         this.ref.close(true);
-        this.toastService.addSingle("success", data.headers.get('StatusMessage'), "");
+        this.toastService.displayApiMessage(data.headers.get('StatusMessage'), data.headers.get('StatusCode'));
       });
   }
 
@@ -155,7 +155,7 @@ export class BankComponent implements OnInit {
     this.httpService.callPostApi(editBankAPI).subscribe(
       data => {
         this.ref.close(true);
-        this.toastService.addSingle("success", data.headers.get('StatusMessage'), "");
+        this.toastService.displayApiMessage(data.headers.get('StatusMessage'), data.headers.get('StatusCode'));
       }
     );
   }

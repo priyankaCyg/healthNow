@@ -15,24 +15,12 @@
                         <div class="p-col-12 mt-3">
                             <p-table [value]="orderReq" #search [paginator]="true" [rows]="10"
                                 [showCurrentPageReport]="true" [rowsPerPageOptions]="[10, 25, 50]" [filterDelay]="0"
-                                [globalFilterFields]="[
-                              'sRequisionNo',
-                              'sPCName',
-                              'sPrdName',
-                              'sPartnerName',
-                              'sLocName',
-                              'iQty',
-                              'sCreatedBy',
-                              'sCreatedDate'
-                            ]">
+                                [globalFilterFields]="['sRequisionNo','sPCName','sPrdName','sPartnerName','sLocName','iQty','sCreatedBy','sCreatedDate']">
                                 <ng-template pTemplate="caption">
                                     <div class="ui-table-globalfilter-container text-left">
-                                        <input type="text" pInputText size="50" placeholder="Search" (input)="
-                                      search.filterGlobal(
-                                        $event.target.value,
-                                        'contains'
-                                      )
-                                    " style="width: 250px;" />
+                                        <input type="text" pInputText size="50" placeholder="Search"
+                                            (input)="search.filterGlobal($event.target.value,'contains')"
+                                            style="width: 250px;" />
                                     </div>
                                 </ng-template>
                                 <ng-template pTemplate="header">
@@ -83,7 +71,16 @@
                 <p-tabPanel header="Product Requisition">
                     <div class="p-grid ui-fluid vertical-container">
                         <div class="p-col-12 mt-3">
-                            <p-table [value]="productReq">
+                            <p-table [value]="productReq" #searchprdReq [paginator]="true" [rows]="10"
+                                [showCurrentPageReport]="true" [rowsPerPageOptions]="[10, 25, 50]" [filterDelay]="0"
+                                [globalFilterFields]="['sPCName','sPrdName','iReqCnt','iQty']">
+                                <ng-template pTemplate="caption">
+                                    <div class="ui-table-globalfilter-container text-left">
+                                        <input type="text" pInputText size="50" placeholder="Search"
+                                            (input)="searchprdReq.filterGlobal($event.target.value,'contains')"
+                                            style="width: 250px;" />
+                                    </div>
+                                </ng-template>
                                 <ng-template pTemplate="header">
                                     <tr>
                                         <th style="width: 3em">#</th>

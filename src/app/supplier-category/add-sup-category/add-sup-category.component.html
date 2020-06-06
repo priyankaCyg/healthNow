@@ -1,44 +1,44 @@
-
-    <div class="p-grid ui-fluid">
-    <form [formGroup]="supplierCategoryForm">
-
-        <div class="p-col-12"> 
-    
+<div class="p-grid ui-fluid">
+    <form [formGroup]="supplierCategoryForm" autocomplete="off">
+        <div class="p-col-12">
             <div class="p-grid form-group">
                 <div class="p-col-12">
                     <label for="iParentId">Parent</label>
-                    <p-dropdown id="iStatusID" optionLabel="sSupCName" formControlName="iParentId" [options]="parentData" [(ngModel)]="selectedParent"></p-dropdown>
+                    <p-dropdown id="iParentId" optionLabel="sSupCName" formControlName="iParentId"
+                        [options]="parentData" [(ngModel)]="selectedParent"></p-dropdown>
+                    <div>
+                    </div>
                 </div>
-               
                 <div class="p-col-12">
                     <label for="sSupCName">Supplier Category Name</label>
-                    <input id="sSupCName" type="text"  formControlName="sSupCName" pInputText>
-                    <p-message severity="error"  [text]="supplierCategoryForm.controls['sSupCName'].errors['required'] ? 'Brand Name is required' : supplierCategoryForm.controls['sSupCName'].errors['pattern'] ? 'Should be alpha numeric' : ''" 
-                    *ngIf="!supplierCategoryForm.controls['sSupCName'].valid&&supplierCategoryForm.controls['sSupCName'].dirty"></p-message>
+                    <input id="sSupCName" type="text" formControlName="sSupCName" pInputText>
+                    <p-message severity="error"
+                        [text]="supplierCategoryForm.controls['sSupCName'].errors['required'] ? 'This field is required' : supplierCategoryForm.controls['sSupCName'].errors"
+                        *ngIf="!supplierCategoryForm.controls['sSupCName'].valid && supplierCategoryForm.controls['sSupCName'].dirty">
+                    </p-message>
                 </div>
-
                 <div class="p-col-12">
-                    <!-- <label for="status">Status</label> -->
-                    <!-- <p-dropdown id="status" [options]="status" [(ngModel)]="selectedstatus"></p-dropdown> -->
                     <label for="iStatusID">Status</label>
-                    <p-dropdown id="iStatusID" optionLabel="sKVValue" formControlName="iStatusID" [options]="statusData" [(ngModel)]="selectedstatus"></p-dropdown>
-                    <p-message severity="error" text="Status is required" *ngIf="supplierCategoryForm.controls['iStatusID'].touched && (selectedstatus.iKVID=='' || supplierCategoryForm.controls['iStatusID'].hasError('required'))"></p-message>
-                
+                    <p-dropdown id="iStatusID" optionLabel="sKVValue" formControlName="iStatusID" [options]="statusData"
+                        [(ngModel)]="selectedstatus"></p-dropdown>
+                    <p-message severity="error" text="This field is required"
+                        *ngIf="supplierCategoryForm.controls['iStatusID'].touched  && (selectedstatus.iKVID =='' || supplierCategoryForm.controls['iStatusID'].hasError('required'))">
+                    </p-message>
                 </div>
-    
             </div>
             <div class="separator separator--border-solid separator--space-sm separator--portlet-fit"></div>
-            
             <div class="p-grid form-group ui-fluid">
                 <div class="p-col-12 p-md-12 p-lg-12 text-right">
-                    <button pButton type="button" label="Cancel" (click)="closeDialog()" class="ui-button-light atbt mr-2"></button>
-                
-                    <button *ngIf="!isEdit" pButton type="button" label="Save" (click)="addSupplierCategory()" [disabled]="!(!supplierCategoryForm.invalid && !dropDownValidityCheck())" class="ui-button atbt"></button>
-               
-                    <button *ngIf="isEdit" pButton type="button" label="Update" (click)="updateSupplierCategory()" [disabled]="!(!supplierCategoryForm.invalid && !dropDownValidityCheck())" class="ui-button atbt"></button>
+                    <button pButton type="button" label="Cancel" (click)="closeDialog()"
+                        class="ui-button-light atbt mr-2"></button>
+                    <button *ngIf="!isEdit" pButton type="button" label="Save" (click)="addSupplierCategory()"
+                        [disabled]="!(!supplierCategoryForm.invalid && !dropDownValidityCheck())"
+                        class="ui-button atbt"></button>
+                    <button *ngIf="isEdit" pButton type="button" label="Update" (click)="updateSupplierCategory()"
+                        [disabled]="!(!supplierCategoryForm.invalid && !dropDownValidityCheck())"
+                        class="ui-button atbt"></button>
                 </div>
             </div>
-
         </div>
-       </form>
-    </div>
+    </form>
+</div>

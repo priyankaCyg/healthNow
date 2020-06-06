@@ -193,11 +193,7 @@ import { CommonService } from './services/common.service';
         TreeModule,
         TreeTableModule,
         VirtualScrollerModule,
-        ReactiveFormsModule,
-        // HttpClientXsrfModule.withOptions({
-        //     cookieName: 'XSRF-TOKEN',
-        //     headerName: 'X-XSRF-TOKEN',
-        // }),
+        ReactiveFormsModule
     ],
     declarations: [
         AppComponent,

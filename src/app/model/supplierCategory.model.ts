@@ -1,22 +1,22 @@
-
 export class SupplierCategoryMaster {
-   
-    iCreatedBy: string;
-    iStatusID: string;
-    iSupCatID: string;
+
+    iCreatedBy: number;
+    iStatusID: number;
+    iSupCatID: number;
     sCreatedDate: string;
     sStatusName: string;
     sSupCName: string;
-    iParentId:string;
+    iParentId: number;
+    sParentCategoryName: string;
 
     /**
      * Constructor
      *
      * @param SupplierCategoryMaster
      */
+
     constructor(SupplierCategoryMaster?) {
         SupplierCategoryMaster = SupplierCategoryMaster || {};
-
         this.iCreatedBy = SupplierCategoryMaster.iCreatedBy || '';
         this.iStatusID = SupplierCategoryMaster.iStatusID || '';
         this.iSupCatID = SupplierCategoryMaster.iSupCatID || '';
@@ -24,6 +24,5 @@ export class SupplierCategoryMaster {
         this.sSupCName = SupplierCategoryMaster.sSupCName || '';
         this.sStatusName = SupplierCategoryMaster.sStatusName || '';
         this.iParentId = SupplierCategoryMaster.iParentId || '';
-
     }
 }

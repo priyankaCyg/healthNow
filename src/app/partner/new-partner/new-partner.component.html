@@ -156,15 +156,11 @@
                                         <td style="text-align: center;">
                                             <span *ngIf="address.iStatusID == 1"
                                                 class="badge badge--success badge--inline badge--pill">
-                                                Active
+                                                {{address.sStatusName}}
                                             </span>
                                             <span *ngIf="address.iStatusID == 2"
                                                 class="badge badge--warning badge--inline badge--pill">
-                                                Inactive
-                                            </span>
-                                            <span *ngIf="address.iStatusID == 3"
-                                                class="badge badge--danger badge--inline badge--pill">
-                                                Deleted
+                                                {{address.sStatusName}}
                                             </span>
                                         </td>
                                         <td><button pButton type="button" class="ui-button-success"
@@ -292,11 +288,11 @@
                                         <td>
                                             <span *ngIf="bank.iStatusID == 1"
                                                 class="badge badge--success badge--inline badge--pill">
-                                                Active
+                                                {{bank.sStatusName}}
                                             </span>
                                             <span *ngIf="bank.iStatusID == 2"
                                                 class="badge badge--warning badge--inline badge--pill">
-                                                Inactive
+                                                {{bank.sStatusName}}
                                             </span>
                                         </td>
                                         <td>

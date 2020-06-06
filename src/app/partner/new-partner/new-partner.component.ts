@@ -73,6 +73,10 @@ export class NewPartnerComponent implements OnInit {
             console.log(values);
             this.setDropDownVal()
           });
+          this.getPartnerAddressList();
+          this.bankSelectData();
+          this.getPartnerContactList();
+          this.gstList();
         });
     }
     else {
@@ -81,10 +85,6 @@ export class NewPartnerComponent implements OnInit {
         console.log(values);
       });
     }
-    this.getPartnerAddressList();
-    this.bankSelectData();
-    this.getPartnerContactList();
-    this.gstList();
   }
 
   // Function to Set Default dropdown value
@@ -189,8 +189,12 @@ export class NewPartnerComponent implements OnInit {
       data => {
         this.partner_id = data.body[0].iPartnerID;
         localStorage.setItem('iPartnerID', this.partner_id);
+        this.getPartnerAddressList();
+        this.bankSelectData();
+        this.getPartnerContactList();
+        this.gstList();
         this.tabDisabled = false;
-        this.toastService.addSingle("success", data.headers.get('StatusMessage'), "");
+        this.toastService.displayApiMessage(data.headers.get('StatusMessage'), data.headers.get('StatusCode'));
       },
       error => console.log(error)
     );
@@ -213,7 +217,7 @@ export class NewPartnerComponent implements OnInit {
     }
     this.httpService.callPostApi(editPartnerData).subscribe(
       data => {
-        this.toastService.addSingle("success", data.headers.get('StatusMessage'), "");
+        this.toastService.displayApiMessage(data.headers.get('StatusMessage'), data.headers.get('StatusCode'));
       },
       error => console.log(error)
     );
@@ -276,7 +280,7 @@ export class NewPartnerComponent implements OnInit {
         this.httpService.callPostApi(deleteAddressAPI).subscribe(
           data => {
             this.getPartnerAddressList();
-            this.toastService.addSingle("success", data.headers.get('StatusMessage'), "");
+            this.toastService.displayApiMessage(data.headers.get('StatusMessage'), data.headers.get('StatusCode'));
           },
           error => { console.log(error) }
         );
@@ -342,7 +346,7 @@ export class NewPartnerComponent implements OnInit {
         };
         this.httpService.callPostApi(deleteBank_data).subscribe(
           (data) => {
-            this.toastService.addSingle("success", data.headers.get('StatusMessage'), "");
+            this.toastService.displayApiMessage(data.headers.get('StatusMessage'), data.headers.get('StatusCode'));
             this.bankSelectData();
           },
           (error) => console.log(error)
@@ -393,7 +397,7 @@ export class NewPartnerComponent implements OnInit {
           (data) => {
             console.log(data);
             this.getPartnerContactList();
-            this.toastService.addSingle("success", data.headers.get('StatusMessage'), "");
+            this.toastService.displayApiMessage(data.headers.get('StatusMessage'), data.headers.get('StatusCode'));
           },
           (error) => console.log(error)
         );
@@ -428,8 +432,8 @@ export class NewPartnerComponent implements OnInit {
     });
   }
 
-   // code for open dialog for edit gst
-   editDialogForGST(gst) {
+  // code for open dialog for edit gst
+  editDialogForGST(gst) {
     const ref = this.dialogService.open(GstComponent, {
       data: gst,
       header: 'Edit GST',
@@ -450,14 +454,14 @@ export class NewPartnerComponent implements OnInit {
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
         let delete_data_api = {
-          "iRequestID":2325,
-          "iLocID":gst_id,
-          "iPartnerID" :this.partner_id
+          "iRequestID": 2325,
+          "iLocID": gst_id,
+          "iPartnerID": this.partner_id
         };
         this.httpService.callPostApi(delete_data_api).subscribe(
           (data) => {
             this.gstList();
-            this.toastService.addSingle("success", data.headers.get('StatusMessage'), "");
+            this.toastService.displayApiMessage(data.headers.get('StatusMessage'), data.headers.get('StatusCode'));
           },
           (error) => console.log(error)
         );
@@ -468,8 +472,8 @@ export class NewPartnerComponent implements OnInit {
   //code for show all gst list 
   gstList() {
     const sup_gst_data = {
-      "iRequestID":2323,
-	    "iPartnerID":this.partner_id
+      "iRequestID": 2323,
+      "iPartnerID": this.partner_id
     }
     this.httpService.callPostApi(sup_gst_data).subscribe(
       (data) => {

@@ -152,7 +152,7 @@ export class ContactComponent implements OnInit {
     this.httpService.callPostApi(add_partner_contact_data).subscribe(
       data => {
         this.ref.close(true);
-        this.toastService.addSingle("success", data.headers.get('StatusMessage'), "");
+        this.toastService.displayApiMessage(data.headers.get('StatusMessage'), data.headers.get('StatusCode'));
       },
       error => console.log(error)
     );
@@ -179,7 +179,7 @@ export class ContactComponent implements OnInit {
     this.httpService.callPostApi(edit_partner_contact_data).subscribe(
       data => {
         this.ref.close(true);
-        this.toastService.addSingle("success", data.headers.get('StatusMessage'), "");
+        this.toastService.displayApiMessage(data.headers.get('StatusMessage'), data.headers.get('StatusCode'));
       },
       error => console.log(error)
     );

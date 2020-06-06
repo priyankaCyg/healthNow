@@ -1,19 +1,11 @@
-/**
-Template Name: HealthNow
-Author: Priyanka Sahu
-Created Date: 
-File: brand.component
-**/
-
 import { Component, OnInit } from '@angular/core';
 import { DialogService } from 'primeng';
-import { from } from 'rxjs';
 import { BreadcrumbService } from '../breadcrumb.service';
 import { NewBrandComponent } from './new-brand/new-brand.component';
-import { APIService } from '../services/apieservice';
 import { ToastService } from "../services/toast.service";
 import { ConfirmationService } from 'primeng/api';
-import { LoginService } from '../../app/services/login.service'
+import { ApiService } from '../services/api.service';
+import { BrandMaster } from '../model/brand.model';
 
 @Component({
   selector: 'app-brand',
@@ -22,12 +14,11 @@ import { LoginService } from '../../app/services/login.service'
 })
 export class BrandComponent implements OnInit {
 
+  brand: BrandMaster[];
 
-  brand: any[];
-
-  constructor(private breadcrumbService: BreadcrumbService, private dialogService: DialogService, private _apiService: APIService,
+  constructor(private breadcrumbService: BreadcrumbService, private dialogService: DialogService, private httpService: ApiService,
     private toastService: ToastService,
-    private confirmationService: ConfirmationService, private loginService: LoginService) {
+    private confirmationService: ConfirmationService) {
     this.breadcrumbService.setItems([
       { label: 'Dashboard' },
       { label: 'Brand', routerLink: ['/brand'] }
@@ -35,45 +26,38 @@ export class BrandComponent implements OnInit {
   }
   ngOnInit() {
 
-    //this.loginService.checkBrowserClosed();
-
-
-    this.showBrand();
-
-
+    this.getBrandList();
   }
 
-  showBrand() {
+  //Function to get brand list
+  getBrandList() {
     var dataToSend = {
       "iRequestID": 2134
     }
-    this._apiService.getDetails(dataToSend).then(response => {
-      console.log("Response for Brand ", response)
-      this.brand = response
-    });
+    this.httpService.callPostApi(dataToSend).subscribe(
+      data => {
+        this.brand = data.body;
+      },
+      error => console.log(error)
+    );
   }
 
+  //Dialog box to add brand
   openDialogFornewBrand() {
     const ref = this.dialogService.open(NewBrandComponent, {
-      data: {
-      },
+      data: {},
       header: 'Add New Brand',
       width: '28%'
     });
-
-    ref.onClose.subscribe((message: any) => {
-      if (message.StatusCode == "200") {
-        this.toastService.addSingle("success", message.StatusMessage, "");
+    ref.onClose.subscribe((success: boolean) => {
+      if (success) {
+        this.getBrandList();
       }
-      else {
-        this.toastService.addSingle("error", message.StatusMessage, "");
-      }
-      this.showBrand()
     });
   }
 
-
-  editBrand(brandId) {
+  //Dialog box to edit brand
+  editBrand(brandId: number) {
     const ref = this.dialogService.open(NewBrandComponent, {
       data: {
         brandId: brandId
@@ -81,19 +65,15 @@ export class BrandComponent implements OnInit {
       header: 'Edit Brand',
       width: '28%'
     });
-
-    ref.onClose.subscribe((message: any) => {
-      if (message.StatusCode == "200") {
-        this.toastService.addSingle("success", message.StatusMessage, "");
+    ref.onClose.subscribe((success: boolean) => {
+      if (success) {
+        this.getBrandList();
       }
-      else {
-        this.toastService.addSingle("error", message.StatusMessage, "");
-      }
-      this.showBrand()
     });
   }
 
-  deleteBrand(brandId) {
+  //Function to delete brand
+  deleteBrand(brandId: number) {
     this.confirmationService.confirm({
       message: 'Are you sure that you want to proceed?',
       header: 'Confirmation',
@@ -103,17 +83,15 @@ export class BrandComponent implements OnInit {
           "iRequestID": 2133,
           "iBrandID": brandId
         }
-
-        this._apiService.getDetails(dataToSendDelete).then(response => {
-          console.log("Response for Brand Delete ", response)
-          this.toastService.addSingle("info", "Successfully Deleted", "Successfully Deleted");
-          this.showBrand();
-        });
+        this.httpService.callPostApi(dataToSendDelete).subscribe(
+          data => {
+            this.getBrandList();
+            this.toastService.displayApiMessage(data.headers.get('StatusMessage'), data.headers.get('StatusCode'));
+          },
+          error => { console.log(error) }
+        );
       },
-      reject: () => {
-        this.toastService.addSingle("info", "Rejected", "Rejected");
-
-      }
+      reject: () => { }
     });
   }
 

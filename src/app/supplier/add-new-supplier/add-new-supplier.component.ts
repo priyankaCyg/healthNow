@@ -17,7 +17,7 @@ import { AddressComponent } from '../address/address.component';
 import { ContactComponent } from '../contact/contact.component';
 import { BankComponent } from '../bank/bank.component';
 import { GstComponent } from '../gst/gst.component';
-import { SupplierAddress } from 'src/app/models/supplier-address.model';
+import { SupplierAddress } from 'src/app/model/supplier-address.model';
 import { ConfirmationService } from 'primeng/api';
 import { ApiService } from 'src/app/services/api.service';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
@@ -29,9 +29,8 @@ import { ThrowStmt } from '@angular/compiler';
 import { gstData } from 'src/app/model/gst';
 import { SuppMaster } from 'src/app/model/supplier.model';
 import { APIService } from '../../services/apieservice';
-import { SupplierCategoryMapping } from 'src/app/models/supplier-category-mapping.model';
-import { LoginService } from '../../../app/services/login.service'
-import { resolve } from 'dns';
+import { SupplierCategoryMapping } from 'src/app/model/supplier-category-mapping.model';
+import { companyBankMaster } from 'src/app/model/companyBank.model';
 
 @Component({
   selector: 'app-add-new-supplier',
@@ -62,10 +61,11 @@ export class AddNewSupplierComponent implements OnInit {
   uploadedFiles: any[] = [];
   sourceCategory: SupplierCategoryMapping[];
   targetCategory: SupplierCategoryMapping[];
+  bankData: companyBankMaster[];
 
   constructor(private breadcrumbService: BreadcrumbService,
     private dialogService: DialogService,
-    private apiService: ApiService,
+    private httpService: ApiService,
     private toastService: ToastService,
     private fb: FormBuilder,
     private route: ActivatedRoute,
@@ -89,13 +89,20 @@ export class AddNewSupplierComponent implements OnInit {
         "iRequestID": 2175,
         "iSupID": this.supId
       }
-      this.apiService.getDropDownData(dataToSendEdit).then(response => {
+      this.httpService.getDropDownData(dataToSendEdit).then(response => {
         this.supData = new SuppMaster(response[0]);
         this.addSupplierForm = this.createControl(this.supData);
         Promise.all([this.getStatusDrpDwn(), this.getLegalEntityDrpDwn()]).then(values => {
           this.setDropDownVal()
         });
         this.getSupplierAddressList();
+        this.getFileType();
+        this.gstList();
+        this.showContact();
+        this.bankSelectData();
+        this.showAttachment();
+        this.getCategoryMappingDataSource();
+        this.getCategoryMappingDataTarget();
       });
     }
     else {
@@ -103,13 +110,6 @@ export class AddNewSupplierComponent implements OnInit {
       Promise.all([this.getStatusDrpDwn(), this.getLegalEntityDrpDwn()]).then(values => {
       });
     }
-    this.getFileType();
-    this.gstList();
-    this.showContact();
-    this.showBank();
-    this.showAttachment();
-    this.getCategoryMappingDataSource();
-    this.getCategoryMappingDataTarget();
   }
 
   //Function for Address list 
@@ -118,7 +118,7 @@ export class AddNewSupplierComponent implements OnInit {
       "iRequestID": 2184,
       "iSupID": this.supId
     }
-    this.apiService.callPostApi(supplierAddressAPI).subscribe(
+    this.httpService.callPostApi(supplierAddressAPI).subscribe(
       data => { this.supplierAdressData = data.body },
       error => { console.log(error) }
     )
@@ -165,10 +165,10 @@ export class AddNewSupplierComponent implements OnInit {
           "iRequestID": 2183,
           "iSupAddID": supplierID
         }
-        this.apiService.callPostApi(deleteAddressAPI).subscribe(
+        this.httpService.callPostApi(deleteAddressAPI).subscribe(
           data => {
             this.getSupplierAddressList();
-            this.toastService.addSingle("success", data.headers.get('StatusMessage'), "");
+            this.toastService.displayApiMessage(data.headers.get('StatusMessage'), data.headers.get('StatusCode'));
           },
           error => { console.log(error) }
         );
@@ -224,7 +224,7 @@ export class AddNewSupplierComponent implements OnInit {
         "iRequestID": 2071,
         "sKVName": "Status"
       }
-      this.apiService.getDropDownData(dataToSend4).then(response => {
+      this.httpService.getDropDownData(dataToSend4).then(response => {
         this.statusData = response
         this.statusData.splice(0, 0, { iKVID: "", sKVValue: "Select Status" })
         this.selectedstatus = { iKVID: "", sKVValue: "Select Status" }
@@ -240,7 +240,7 @@ export class AddNewSupplierComponent implements OnInit {
         "iRequestID": 2071,
         "sKVName": "LegalEntity"
       }
-      this.apiService.getDropDownData(dataToSend4).then(response => {
+      this.httpService.getDropDownData(dataToSend4).then(response => {
         this.legalEntityData = response
         this.legalEntityData.splice(0, 0, { iKVID: "", sKVValue: "Select Legal Entity" })
         this.selectedlegalEntity = { iKVID: "", sKVValue: "Select Legal Entity" }
@@ -254,7 +254,7 @@ export class AddNewSupplierComponent implements OnInit {
       var dataToSend = {
         "iRequestID": 2261
       }
-      this.apiService.getDropDownData(dataToSend).then(response => {
+      this.httpService.getDropDownData(dataToSend).then(response => {
         console.log("Response for File Type ", response)
         this.fileTypeData = response
         this.fileTypeData.splice(0, 0, { iDocTypeID: "", sDocTypeName: "Select File Type" })
@@ -290,7 +290,7 @@ export class AddNewSupplierComponent implements OnInit {
       "iRequestID": 2203,
       "iSupID": this.supId
     }
-    this.apiService.callPostApi(sup_gst_data).subscribe(
+    this.httpService.callPostApi(sup_gst_data).subscribe(
       (data) => {
         this.gst = data.body;
       },
@@ -331,12 +331,20 @@ export class AddNewSupplierComponent implements OnInit {
       "sTelNo2": telephoneno_2,
       "sFaxNo": fax_no
     }
-    this.apiService.callPostApi(add_supplier_data).subscribe(
+    this.httpService.callPostApi(add_supplier_data).subscribe(
       data => {
         this.supId = data.body[0].isupId;
-        localStorage.setItem('iSupID', this.supId)
+        localStorage.setItem('iSupID', this.supId);
+        this.getSupplierAddressList();
+        this.getFileType();
+        this.gstList();
+        this.showContact();
+        this.bankSelectData();
+        this.showAttachment();
+        this.getCategoryMappingDataSource();
+        this.getCategoryMappingDataTarget();
         this.tabDisabled = false
-        this.toastService.addSingle("success", data.headers.get('StatusMessage'), "");
+        this.toastService.displayApiMessage(data.headers.get('StatusMessage'), data.headers.get('StatusCode'));
       },
       error => console.log(error)
     );
@@ -366,9 +374,9 @@ export class AddNewSupplierComponent implements OnInit {
       "iSupID": this.supId,
       "iStatusID": status_id.iStatusID.iKVID,
     }
-    this.apiService.callPostApi(edit_supplier_data).subscribe(
+    this.httpService.callPostApi(edit_supplier_data).subscribe(
       data => {
-        this.toastService.addSingle("success", data.headers.get('StatusMessage'), "");
+        this.toastService.displayApiMessage(data.headers.get('StatusMessage'), data.headers.get('StatusCode'));
       },
       error => console.log(error)
     );
@@ -415,10 +423,10 @@ export class AddNewSupplierComponent implements OnInit {
           "iLocID": loc_id,
           "iSupID": this.supId
         };
-        this.apiService.callPostApi(delete_data_api).subscribe(
+        this.httpService.callPostApi(delete_data_api).subscribe(
           (data) => {
             this.gstList();
-            this.toastService.addSingle("success", data.headers.get('StatusMessage'), "");
+            this.toastService.displayApiMessage(data.headers.get('StatusMessage'), data.headers.get('StatusCode'));
           },
           (error) => console.log(error)
         );
@@ -498,57 +506,72 @@ export class AddNewSupplierComponent implements OnInit {
     });
   }
 
-  showBank() {
-    var dataToSend = {
+  // Function for Bank table data
+  bankSelectData() {
+    const selectBank_data = {
       "iRequestID": 2214,
       "iSupID": this.supId
-    }
-    this._apiService.getDetails(dataToSend).then(response => {
-      console.log("Response for Bank ", response)
-      this.bank = response
-    });
-  }
-
-  editBank(iBankID) {
-    const ref = this.dialogService.open(BankComponent, {
-      data: {
-        iBankID: iBankID
+    };
+    this.httpService.callPostApi(selectBank_data).subscribe(
+      (data) => {
+        this.bankData = data.body;
       },
-      header: 'Edit Contact',
-      width: '50%'
+      (error) => console.log(error)
+    );
+  }
+
+  //Function to open dialog box to Add bank details
+  openDialogForBank() {
+    const ref = this.dialogService.open(BankComponent, {
+      data: {},
+      header: "Add New Bank",
+      width: "50%",
     });
-    ref.onClose.subscribe((message: any) => {
-      if (message.StatusCode == "200") {
-        this.toastService.addSingle("success", message.StatusMessage, "");
+    ref.onClose.subscribe((success: boolean) => {
+      if (success) {
+        this.bankSelectData();
       }
-      else {
-        this.toastService.addSingle("error", message.StatusMessage, "");
-      }
-      this.showBank()
     });
   }
 
-  deleteBank(iBankID) {
+  // Function to open dialog box to Update bank details
+  updateBank(bank) {
+    const ref = this.dialogService.open(BankComponent, {
+      data: bank,
+      header: "Edit Bank",
+      width: "50%",
+    });
+    ref.onClose.subscribe((success: boolean) => {
+      if (success) {
+        this.bankSelectData();
+      }
+    });
+  }
+
+  // Function to delete Bank details
+  deleteBank(bank) {
+    let bank_id = bank.iBankID;
     this.confirmationService.confirm({
       message: 'Are you sure that you want to proceed?',
       header: 'Confirmation',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
-        var dataToSendDelete = {
+        const deleteBank_data = {
           "iRequestID": 2213,
           "iSupID": this.supId,
-          "iBankID": iBankID
-        }
-        this._apiService.getDetails(dataToSendDelete).then(response => {
-          console.log("Response for Brand Delete ", response)
-          this.toastService.addSingle("info", response.headers.get('StatusMessage'), "");
-          this.showBank();
-        });
+          "iBankID": bank_id
+        };
+        this.httpService.callPostApi(deleteBank_data).subscribe(
+          (data) => {
+            this.toastService.displayApiMessage(data.headers.get('StatusMessage'), data.headers.get('StatusCode'));
+            this.bankSelectData();
+          },
+          (error) => console.log(error)
+        );
       },
       reject: () => { }
     });
   }
-
 
   openDialogForaddContact() {
     const ref = this.dialogService.open(ContactComponent, {
@@ -568,25 +591,6 @@ export class AddNewSupplierComponent implements OnInit {
     });
   }
 
-  openDialogForBank() {
-    const ref = this.dialogService.open(BankComponent, {
-      data: {
-      },
-      header: 'Add New Bank',
-      width: '50%'
-    });
-    ref.onClose.subscribe((message: any) => {
-      // alert(JSON.stringify(message))
-      if (message.StatusCode == "200") {
-        this.toastService.addSingle("success", message.StatusMessage, "");
-      }
-      else {
-        this.toastService.addSingle("error", message.StatusMessage, "");
-      }
-      this.showBank();
-    });
-  }
-
   //category mapping starts
   getCategoryMappingDataSource() {
     let sup_by_id = +this.route.snapshot.params['iSupID'];
@@ -594,7 +598,7 @@ export class AddNewSupplierComponent implements OnInit {
       "iRequestID": 2221,
       "iSupID": sup_by_id
     }
-    this.apiService.callPostApi(supplierCategoryMappingAPI).subscribe(
+    this.httpService.callPostApi(supplierCategoryMappingAPI).subscribe(
       data => { this.sourceCategory = data.body; },
       error => { console.log(error) }
     )
@@ -608,7 +612,7 @@ export class AddNewSupplierComponent implements OnInit {
       "iRequestID": 2223,
       "iSupID": sup_by_id
     }
-    this.apiService.callPostApi(supplierCategoryMappingAPI1).subscribe(
+    this.httpService.callPostApi(supplierCategoryMappingAPI1).subscribe(
       data => { this.targetCategory = data.body; },
       error => { console.log(error) }
     )
@@ -630,7 +634,7 @@ export class AddNewSupplierComponent implements OnInit {
       "iSupID": sup_by_id,
       "sSupCatMap": string_ids
     }
-    this.apiService.callPostApi(supplierCategoryMappingAddAPI).subscribe(
+    this.httpService.callPostApi(supplierCategoryMappingAddAPI).subscribe(
       data => {
         if (this.targetCategory)
           this.toastService.addSingle("success", "Categories mapped Successfully", "");

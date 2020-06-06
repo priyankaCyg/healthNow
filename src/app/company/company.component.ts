@@ -12,7 +12,7 @@ import { GeneratedFile } from '@angular/compiler';
 import { DialogService } from 'primeng';
 import { APIService } from '../services/apieservice';
 import { ConfirmationService } from 'primeng/api';
-import { CompanyAddress } from '../models/company-address.model';
+import { CompanyAddress } from '../model/company-address.model';
 import { companyBankMaster } from "../model/companyBank.model";
 import { ApiService } from "../services/api.service";
 import { ToastService } from "../services/toast.service";

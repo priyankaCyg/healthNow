@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Validators, FormBuilder, FormGroup } from '@angular/forms';
-import { CompanyAddress } from 'src/app/models/company-address.model';
+import { CompanyAddress } from 'src/app/model/company-address.model';
 import { ApiService } from 'src/app/services/api.service';
-import { DropdownData } from 'src/app/models/dropdown.model';
+import { DropdownData } from 'src/app/model/dropdown.model';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { ToastService } from 'src/app/services/toast.service';
 
