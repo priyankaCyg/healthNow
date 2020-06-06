@@ -1,10 +1,3 @@
-/**
-Template Name: HealthNow
-Author: Priyanka, Neelam, Rajnish and Shibin
-Created Date: 
-File: add-new-supplier.component
-**/
-
 import { Component, OnInit, Input } from '@angular/core';
 import { BreadcrumbService } from '../../breadcrumb.service';
 import { CountryService } from '../../demo/service/countryservice';
@@ -334,7 +327,7 @@ export class AddNewSupplierComponent implements OnInit {
     this.httpService.callPostApi(add_supplier_data).subscribe(
       data => {
         this.supId = data.body[0].isupId;
-        localStorage.setItem('iSupID', this.supId);
+        localStorage.setItem('iSupID', this.supId)
         this.getSupplierAddressList();
         this.getFileType();
         this.gstList();
@@ -457,12 +450,15 @@ export class AddNewSupplierComponent implements OnInit {
 
   showContact() {
     var dataToSend = {
-      "iRequestID": 2194
+      "iRequestID": 2194,
+      "iSupID": this.supId
     }
-    this._apiService.getDetails(dataToSend).then(response => {
-      console.log("Response for Contact ", response)
-      this.contact = response
-    });
+    this.httpService.callPostApi(dataToSend).subscribe(
+      (data) => {
+        this.contact = data.body;
+      },
+      (error) => console.log(error)
+    );
   }
 
   editContact(iSupContactID) {
@@ -473,20 +469,14 @@ export class AddNewSupplierComponent implements OnInit {
       header: 'Edit Contact',
       width: '70%'
     });
-    ref.onClose.subscribe((message: any) => {
-      if (message.StatusCode == "200") {
-        this.toastService.addSingle("success", message.StatusMessage, "");
+    ref.onClose.subscribe((success: any) => {
+      if (success) {
+        this.showContact();
       }
-      else {
-        this.toastService.addSingle("error", message.StatusMessage, "");
-      }
-      this.showContact()
     });
   }
 
   deleteContact(iSupContactID) {
-    // alert("hi")
-    // return false;
     this.confirmationService.confirm({
       message: 'Are you sure that you want to proceed?',
       header: 'Confirmation',
@@ -496,13 +486,14 @@ export class AddNewSupplierComponent implements OnInit {
           "iRequestID": 2193,
           "iSupContactID": iSupContactID
         }
-        this._apiService.getDetails(dataToSendDelete).then(response => {
-          console.log("Response for Brand Delete ", response)
-          this.toastService.addSingle("info", response.headers.get('StatusMessage'), "");
-          this.showContact();
-        });
+        this.httpService.callPostApi(dataToSendDelete).subscribe(
+          (data) => {
+            this.showContact();
+            this.toastService.addSingle("success", data.headers.get('StatusMessage'), "");
+          },
+          (error) => console.log(error)
+        );
       },
-      reject: () => { }
     });
   }
 
@@ -580,14 +571,10 @@ export class AddNewSupplierComponent implements OnInit {
       header: 'Add New Contact',
       width: '70%'
     });
-    ref.onClose.subscribe((message: any) => {
-      if (message.StatusCode == "200") {
-        this.toastService.addSingle("success", message.StatusMessage, "");
+    ref.onClose.subscribe((success: any) => {
+      if (success) {
+        this.showContact();
       }
-      else {
-        this.toastService.addSingle("error", message.StatusMessage, "");
-      }
-      this.showContact()
     });
   }
 

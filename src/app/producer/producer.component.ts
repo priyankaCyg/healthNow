@@ -12,10 +12,10 @@ import { BreadcrumbService } from '../breadcrumb.service';
 import { CountryService } from '../demo/service/countryservice';
 import { SelectItem, MenuItem } from 'primeng/api';
 import { AddProducerComponent } from './add-producer/add-producer.component';
-import { APIService } from '../services/apieservice';
 import { ToastService } from "../services/toast.service";
 import { ConfirmationService } from 'primeng/api';
-import { LoginService } from '../../app/services/login.service'
+import { ApiService } from '../services/api.service';
+import { ProducerMaster } from '../model/producer.model';
 
 
 @Component({
@@ -26,42 +26,35 @@ import { LoginService } from '../../app/services/login.service'
 export class ProducerComponent implements OnInit {
 
   items: MenuItem[];
+  producer: ProducerMaster[];
 
-  // producer: any[];
-  producer;
-
-
-  constructor(private breadcrumbService: BreadcrumbService, private dialogService: DialogService, private _apiService: APIService,
-    private toastService: ToastService,
-    private confirmationService: ConfirmationService, private loginService: LoginService) {
+  constructor(private breadcrumbService: BreadcrumbService, private dialogService: DialogService,
+    private toastService: ToastService, private httpService: ApiService,
+    private confirmationService: ConfirmationService) {
     this.breadcrumbService.setItems([
       { label: 'Dashboard' },
       { label: 'Producer', routerLink: ['/producer'] }
     ]);
   }
 
-
   ngOnInit() {
-
-
-    //this.loginService.checkBrowserClosed();
-
     this.showProducers();
-
   }
 
-
-  //List Producer Details
+  //code for List of Producer data
   showProducers() {
     var dataToSend = {
       "iRequestID": 2124
     }
-    this._apiService.getDetails(dataToSend).then(response => {
-      console.log("Response for Producers ", response)
-      this.producer = response
-    });
+    this.httpService.callPostApi(dataToSend).subscribe(
+      data => {
+        this.producer = data.body;
+      },
+      error => console.log(error)
+    );
   }
 
+  //code for add new producer dialog box
   openDialogForaddProducer() {
     const ref = this.dialogService.open(AddProducerComponent, {
       data: {
@@ -69,19 +62,14 @@ export class ProducerComponent implements OnInit {
       header: 'Add New Producer',
       width: '28%'
     });
-
-    ref.onClose.subscribe((message: any) => {
-      if (message.StatusCode == "200") {
-        this.toastService.addSingle("success", message.StatusMessage, "");
+    ref.onClose.subscribe((success: any) => {
+      if (success) {
+        this.showProducers()
       }
-      else {
-        this.toastService.addSingle("error", message.StatusMessage, "");
-      }
-      this.showProducers()
     });
   }
 
-
+  //code for edit producer dialog box
   editProducer(producerId) {
     const ref = this.dialogService.open(AddProducerComponent, {
       data: {
@@ -90,18 +78,14 @@ export class ProducerComponent implements OnInit {
       header: 'Edit Producer',
       width: '28%'
     });
-
-    ref.onClose.subscribe((message: any) => {
-      if (message.StatusCode == "200") {
-        this.toastService.addSingle("success", message.StatusMessage, "");
+    ref.onClose.subscribe((success: any) => {
+      if (success) {
+        this.showProducers()
       }
-      else {
-        this.toastService.addSingle("error", message.StatusMessage, "");
-      }
-      this.showProducers()
     });
   }
 
+  //code for delete producer data
   deleteProducer(producerId) {
     this.confirmationService.confirm({
       message: 'Are you sure that you want to proceed?',
@@ -112,17 +96,14 @@ export class ProducerComponent implements OnInit {
           "iRequestID": 2123,
           "iProducerID": producerId
         }
-
-        this._apiService.getDetails(dataToSendDelete).then(response => {
-          console.log("Response for Producer Delete ", response)
-          this.toastService.addSingle("info", response.headers.get('StatusMessage'), "");
-          this.showProducers();
-        });
+        this.httpService.callPostApi(dataToSendDelete).subscribe(
+          (data) => {
+            this.toastService.displayApiMessage(data.headers.get('StatusMessage'), data.headers.get('StatusCode'));
+            this.showProducers();
+          },
+          (error) => console.log(error)
+        );
       },
-      reject: () => {
-        this.toastService.addSingle("info", "Rejected", "Rejected");
-
-      }
     });
   }
 

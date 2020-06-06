@@ -1,6 +1,8 @@
 export class productReqData {
     "iQty": number;
+    "iPCID": number;
     "iPrdID": number;
     "iReqCnt": number;
-    "sPrdName": string;
+    "sPCName": string
+    "sPrdName": string
 }

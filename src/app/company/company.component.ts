@@ -158,7 +158,7 @@ export class CompanyComponent implements OnInit {
         }
         this.httpService.callPostApi(deleteAddressApi).subscribe(
           data => {
-            this.toastService.addSingle("success", data.headers.get('StatusMessage'), "");
+            this.toastService.displayApiMessage(data.headers.get('StatusMessage'), data.headers.get('StatusCode'));
             this.getAllAddressesList();
           },
           error => console.log(error)
@@ -224,7 +224,7 @@ export class CompanyComponent implements OnInit {
         };
         this.httpService.callPostApi(delete_data_api).subscribe(
           (data) => {
-            this.toastService.addSingle("success", data.headers.get('StatusMessage'), "");
+            this.toastService.displayApiMessage(data.headers.get('StatusMessage'), data.headers.get('StatusCode'));
             this.departmentList();
           },
           (error) => console.log(error)
@@ -291,7 +291,7 @@ export class CompanyComponent implements OnInit {
         };
         this.httpService.callPostApi(delete_gst_data_api).subscribe(
           data => {
-            this.toastService.addSingle("success", data.headers.get('StatusMessage'), "");
+            this.toastService.displayApiMessage(data.headers.get('StatusMessage'), data.headers.get('StatusCode'));
             this.gstList();
           },
           error => console.log(error)
@@ -358,7 +358,7 @@ export class CompanyComponent implements OnInit {
         };
         this.httpService.callPostApi(deleteDesig_data).subscribe(
           (data) => {
-            this.toastService.addSingle("success", data.headers.get('StatusMessage'), "");
+            this.toastService.displayApiMessage(data.headers.get('StatusMessage'), data.headers.get('StatusCode'));
             this.designationSelectData();
           },
           (error) => console.log(error)
@@ -425,7 +425,7 @@ export class CompanyComponent implements OnInit {
         };
         this.httpService.callPostApi(deleteBank_data).subscribe(
           (data) => {
-            this.toastService.addSingle("success", data.headers.get('StatusMessage'), "");
+            this.toastService.displayApiMessage(data.headers.get('StatusMessage'), data.headers.get('StatusCode'));
             this.bankSelectData();
           },
           (error) => console.log(error)

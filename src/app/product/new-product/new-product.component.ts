@@ -87,6 +87,10 @@ export class NewProductComponent implements OnInit {
         Promise.all([this.getProducerDrpDwn(), this.getUnitDrpDwn(), this.getFoodCultureDrpDwn(), this.getstatusDrpDwn()]).then(values => {
           this.setDropDownVal()
         });
+        this.getProductInfo();
+        this.getProductQueries();
+        this.getCategoryMappingDataSource();
+        this.getCategoryMappingDataTarget();
       });
     }
     else {
@@ -94,8 +98,7 @@ export class NewProductComponent implements OnInit {
       Promise.all([this.getProducerDrpDwn(), this.getUnitDrpDwn(), this.getFoodCultureDrpDwn(), this.getstatusDrpDwn()]).then(values => {
       });
     }
-    this.getCategoryMappingDataSource();
-    this.getCategoryMappingDataTarget();
+
     this.images = [];
     this.images.push({
       source: 'assets/demo/images/sopranos/sopranos1.jpg',
@@ -120,8 +123,7 @@ export class NewProductComponent implements OnInit {
       { Unit: 'Kg', variant: '1' }
     ];
 
-    this.getProductInfo();
-    this.getProductQueries();
+
     this.productDesc = [
       { prDesc: 'Handpicked from india’s finest wheat fields, fortune chakki fresh atta is made with 100 percent atta and 0 percent maida which complements your ghar ka khana perfectly. You can differentiate these fibre-rich rotis with your 5 senses - their superior quality taste, soft touch, mesmerizing aroma and a fluffy look, so words of appreciation are bound to come your way. ' }
     ];
@@ -280,8 +282,12 @@ export class NewProductComponent implements OnInit {
       data => {
         this.prdId = data.body[0].iprdId;
         localStorage.setItem('iPrdID', this.prdId);
+        this.getProductInfo();
+        this.getProductQueries();
+        this.getCategoryMappingDataSource();
+        this.getCategoryMappingDataTarget();
         this.tabDisabled = false
-        this.toastService.addSingle("success", data.headers.get('StatusMessage'), "");
+        this.toastService.displayApiMessage(data.headers.get('StatusMessage'), data.headers.get('StatusCode'));
       },
       error => console.log(error)
     );
@@ -303,7 +309,7 @@ export class NewProductComponent implements OnInit {
     }
     this.httpService.callPostApi(editProductData).subscribe(
       data => {
-        this.toastService.addSingle("success", data.headers.get('StatusMessage'), "");
+        this.toastService.displayApiMessage(data.headers.get('StatusMessage'), data.headers.get('StatusCode'));
       },
       error => console.log(error)
     );
@@ -400,11 +406,11 @@ export class NewProductComponent implements OnInit {
       }
     });
   }
-   //category mapping starts
-   getCategoryMappingDataSource() {
+  //category mapping starts
+  getCategoryMappingDataSource() {
     const supplierCategoryMappingAPI = {
       "iRequestID": 2241,
-      "iPrdID":this.prdId
+      "iPrdID": this.prdId
     }
     this.httpService.callPostApi(supplierCategoryMappingAPI).subscribe(
       data => { this.sourceCategory = data.body; },
@@ -417,7 +423,7 @@ export class NewProductComponent implements OnInit {
   getCategoryMappingDataTarget() {
     const supplierCategoryMappingAPI1 = {
       "iRequestID": 2243,
-      "iPrdID":this.prdId
+      "iPrdID": this.prdId
     }
     this.httpService.callPostApi(supplierCategoryMappingAPI1).subscribe(
       data => { this.targetCategory = data.body; },
@@ -437,20 +443,20 @@ export class NewProductComponent implements OnInit {
     let string_ids = temp_ids_arr.toString();
     const supplierCategoryMappingAddAPI = {
       "iRequestID": 2242,
-      "iPrdID":this.prdId,
+      "iPrdID": this.prdId,
       "sPrdCatMap": string_ids
     }
-    if (this.targetCategory.length){
-    this.httpService.callPostApi(supplierCategoryMappingAddAPI).subscribe(
-      data => {
-          this.toastService.addSingle("success", "Categories mapped Successfully", "");
-       },
-      error => { console.log(error) }
-    )
+    if (this.targetCategory.length) {
+      this.httpService.callPostApi(supplierCategoryMappingAddAPI).subscribe(
+        data => {
+          this.toastService.displayApiMessage(data.headers.get('StatusMessage'), data.headers.get('StatusCode'));
+        },
+        error => { console.log(error) }
+      )
+    }
+    else
+      this.toastService.addSingle("warning", "Select atleast 1 Category", "");
   }
-  else
-    this.toastService.addSingle("warning", "Select atleast 1 Category", "");
-}
   // add category mapping ends
 }
 

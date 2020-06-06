@@ -84,7 +84,7 @@ export class GstComponent implements OnInit {
         this.httpService.callPostApi(gst_submit_data).subscribe(
           data => {
             this.ref.close(true);
-            this.toastService.addSingle("success", data.headers.get('StatusMessage'), "");
+            this.toastService.displayApiMessage(data.headers.get('StatusMessage'), data.headers.get('StatusCode'));
           },
           error => console.log(error)
         );
@@ -105,7 +105,7 @@ export class GstComponent implements OnInit {
         this.httpService.callPostApi(gst_edit_data).subscribe(
           data => {
             this.ref.close(true);
-            this.toastService.addSingle("success", data.headers.get('StatusMessage'), "");
+            this.toastService.displayApiMessage(data.headers.get('StatusMessage'), data.headers.get('StatusCode'));
           },
           error => console.log(error)
         );

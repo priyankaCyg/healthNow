@@ -13,7 +13,7 @@ export class CommonService {
   statusData;
   selectedstatus;
   private sendData = new BehaviorSubject<any>("null");
-  captureData$ =  this.sendData.asObservable();
+  captureData$ = this.sendData.asObservable();
 
   constructor(private apiService: ApiService, private toastService: ToastService) { }
 
@@ -67,7 +67,7 @@ export class CommonService {
   }
 
   //Function to pass data from one component to other comopnent using behaviour subject
-  getComponentData(data){
+  getComponentData(data) {
     this.sendData.next(data);
   }
 

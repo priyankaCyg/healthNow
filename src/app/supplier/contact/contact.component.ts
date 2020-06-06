@@ -6,10 +6,12 @@ File: contact.component
 **/
 
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators ,FormControl} from '@angular/forms';
-import {APIService} from '../../services/apieservice';
-import {DynamicDialogConfig,DynamicDialogRef} from 'primeng/dynamicdialog';
-import {SupplierContactMaster} from '../../model/supplierContact.model'
+import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
+import { APIService } from '../../services/apieservice';
+import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
+import { SupplierContactMaster } from '../../model/supplierContact.model'
+import { ApiService } from 'src/app/services/api.service';
+import { ToastService } from 'src/app/services/toast.service';
 
 @Component({
   selector: 'app-contact',
@@ -19,22 +21,22 @@ import {SupplierContactMaster} from '../../model/supplierContact.model'
 export class ContactComponent implements OnInit {
 
 
-  isEdit :boolean = false
+  isEdit: boolean = false
 
   selectedstatus;
   selectedAddress;
 
   statusData;
   addressData;
-  iSupContactID;
-  sup_Id;
+  iSupContactID: number;
+  sup_Id: number;
 
   public supContactForm: FormGroup;
-  contactData : SupplierContactMaster;
+  contactData: SupplierContactMaster;
 
- 
-  constructor(public config: DynamicDialogConfig,public ref: DynamicDialogRef,
-    private apiService:APIService, private _formBuilder: FormBuilder) { }
+
+  constructor(public config: DynamicDialogConfig, public ref: DynamicDialogRef,
+    private toastService: ToastService, private httpService: ApiService, private fb: FormBuilder) { }
 
   ngOnInit(): void {
 
@@ -44,157 +46,117 @@ export class ContactComponent implements OnInit {
     this.contactData = new SupplierContactMaster();
     this.supContactForm = this.createControl(this.contactData);
 
-    this.iSupContactID = this.config.data.iSupContactID
-  if(this.iSupContactID!=null)
-  {
-    this.isEdit = true
-
-   var dataToSendEdit =  {
-      "iRequestID": 2195,
-      "iSupContactID":this.iSupContactID
-  }
-
-  this.apiService.getDetails(dataToSendEdit).then(response => {
-
-    console.log("Response of Edit Supplier Contact ",response)
-
-    this.contactData = new SupplierContactMaster(response[0]);
-    this.supContactForm = this.createControl(this.contactData);
-
-    Promise.all([ this.getStatusDrpDwn(),this.getAddressDrpDwn()]).then(values=> {
-      console.log(values);
-      this.setDropDownVal()
-    });
-
-  });
-
-  }
-  else{
-    this.isEdit = false
-
-    Promise.all([this.getStatusDrpDwn(),this.getAddressDrpDwn()]).then(values=> {
-      console.log(values);
-    });
-  }
-
-
-  }
-
-
-
-
-  defaultDropDwnValue()
-  {
-    this.selectedstatus={iKVID: "", sKVValue: "Select Status"}
-    this.selectedAddress={iSupAddID: "", sAddress: "Select Address"}
-  }
-
-  setDropDownVal()
-  {
-     // Status Dropdown Select
-     let selectedStatusObj = this.statusData.find(x => x.iKVID==this.contactData.iStatusID);
-
-     if (selectedStatusObj !== undefined) {
-         this.selectedstatus = selectedStatusObj;
-       }
-
-        // Address Dropdown Select
-     let selectedAddressObj = this.addressData.find(x => x.iSupAddID==this.contactData.iSupAddID);
-
-     if (selectedAddressObj !== undefined) {
-         this.selectedAddress = selectedAddressObj;
-       }
-
-
-  }
-
-
-  getStatusDrpDwn()
-  {
-  return new Promise((resolve, reject) =>{
-    var dataToSend4 = {
-      "iRequestID":2071,
-      "sKVName" :"Status"
+    this.iSupContactID = this.config.data.iSupContactID;
+    if (this.iSupContactID != null) {
+      this.isEdit = true
+      var dataToSendEdit = {
+        "iRequestID": 2195,
+        "iSupContactID": this.iSupContactID
+      }
+      this.httpService.getDropDownData(dataToSendEdit).then(response => {
+        this.contactData = new SupplierContactMaster(response[0]);
+        this.supContactForm = this.createControl(this.contactData);
+        Promise.all([this.getStatusDrpDwn(), this.getAddressDrpDwn()]).then(values => {
+          this.setDropDownVal()
+        });
+      });
+    }
+    else {
+      this.isEdit = false
+      Promise.all([this.getStatusDrpDwn(), this.getAddressDrpDwn()]).then(values => {
+        console.log(values);
+      });
     }
 
-    this.apiService.getDetails(dataToSend4).then(response => {
-      console.log("Response for Status ",response)
-      this.statusData = response
-      this.statusData.splice(0, 0, {iKVID: "", sKVValue: "Select Status"})
-      this.selectedstatus={iKVID: "", sKVValue: "Select Status"}
 
-    resolve(this.statusData)
-
-    });
-  })
   }
 
+  defaultDropDwnValue() {
+    this.selectedstatus = { iKVID: "", sKVValue: "Select Status" }
+    this.selectedAddress = { iSupAddID: "", sAddress: "Select Address" }
+  }
 
+  setDropDownVal() {
+    // Status Dropdown Select
+    let selectedStatusObj = this.statusData.find(x => x.iKVID == this.contactData.iStatusID);
 
-  getAddressDrpDwn()
-  {
-  return new Promise((resolve, reject) =>{
-    var dataToSend4 = {
-      "iRequestID":2186
+    if (selectedStatusObj !== undefined) {
+      this.selectedstatus = selectedStatusObj;
     }
 
-    this.apiService.getDetails(dataToSend4).then(response => {
-      console.log("Response for Address ",response)
-      this.addressData = response
-      this.addressData.splice(0, 0, {iSupAddID: "", sAddress: "Select Address"})
-      this.selectedAddress={iSupAddID: "", sAddress: "Select Address"}
+    // Address Dropdown Select
+    let selectedAddressObj = this.addressData.find(x => x.iSupAddID == this.contactData.iSupAddID);
 
-    resolve(this.statusData)
-
-    });
-  })
+    if (selectedAddressObj !== undefined) {
+      this.selectedAddress = selectedAddressObj;
+    }
   }
 
 
+  getStatusDrpDwn() {
+    return new Promise((resolve, reject) => {
+      var dataToSend4 = {
+        "iRequestID": 2071,
+        "sKVName": "Status"
+      }
+      this.httpService.getDropDownData(dataToSend4).then(response => {
+        this.statusData = response
+        this.statusData.splice(0, 0, { iKVID: "", sKVValue: "Select Status" })
+        this.selectedstatus = { iKVID: "", sKVValue: "Select Status" }
+        resolve(this.statusData)
+      });
+    })
+  }
 
-  addSupplierContact()
-  {
-    console.log(this.supContactForm.getRawValue())
 
+  getAddressDrpDwn() {
+    return new Promise((resolve, reject) => {
+      var dataToSend4 = {
+        "iRequestID": 2186
+      }
+      this.httpService.getDropDownData(dataToSend4).then(response => {
+        this.addressData = response
+        this.addressData.splice(0, 0, { iSupAddID: "", sAddress: "Select Address" })
+        this.selectedAddress = { iSupAddID: "", sAddress: "Select Address" }
+        resolve(this.statusData)
+      });
+    })
+  }
+
+
+  addSupplierContact() {
     var formData = this.supContactForm.getRawValue();
 
-    var dataToSendAdd ={
+    var dataToSendAdd = {
       "iRequestID": 2191,
-      "iSupID" :this.sup_Id,
-      "iSupAddID":formData.sAddress.iSupAddID,
+      "iSupID": this.sup_Id,
+      "iSupAddID": formData.sAddress.iSupAddID,
       "sFullName": formData.sFullName,
-      "sDesignation":formData.sDesignation,
+      "sDesignation": formData.sDesignation,
       "sMobileNo": formData.sMobileNo,
-      "sContactNo":formData.sContactNo,
-      "sDirectNo" :formData.sDirectNo,
-      "sFaxNo" : formData.sFaxNo,
-      "sPOBox":"7418529636",
-      "sEmailID":formData.sEmailID
+      "sContactNo": formData.sContactNo,
+      "sDirectNo": formData.sDirectNo,
+      "sFaxNo": formData.sFaxNo,
+      "sPOBox": "7418529636",
+      "sEmailID": formData.sEmailID
     }
-
-    // alert(JSON.stringify(dataToSendAdd))
-    this.apiService.getApiDetails(dataToSendAdd).then(response => {
-      console.log("Response for Producer Add ",response)
-
-    this.ref.close(true);
-
-    });
+    this.httpService.callPostApi(dataToSendAdd).subscribe(
+      data => {
+        this.ref.close(true);
+        this.toastService.displayApiMessage(data.headers.get('StatusMessage'), data.headers.get('StatusCode'));
+      },
+      error => console.log(error)
+    );
   }
 
 
- updateSupplierContact()
-  {
-    console.log("Form Data",this.supContactForm.getRawValue())
-
+  updateSupplierContact() {
     var formData = this.supContactForm.getRawValue();
 
-
-    // alert("Update Data "+formData.sAddress.iSupAddID)
-
-    var dataToSendEdit ={
+    var dataToSendEdit = {
       "iRequestID": 2192,
       "iStatusID": formData.iStatusID.iKVID,
-      "iSupAddID":formData.sAddress.iSupAddID,
+      "iSupAddID": formData.sAddress.iSupAddID,
       "iSupContactID": this.iSupContactID,
       "iSupID": this.sup_Id,
       "sContactNo": formData.sContactNo,
@@ -206,43 +168,39 @@ export class ContactComponent implements OnInit {
       "sMobileNo": formData.sMobileNo,
       "sPOBox": "1111111111"
     }
-
-    
-
-    
-    this.apiService.getApiDetails(dataToSendEdit).then(response => {
-      console.log("Response for Producer Edit ",response)
-
-    this.ref.close(true);
-
-    });
+    this.httpService.callPostApi(dataToSendEdit).subscribe(
+      data => {
+        this.ref.close(true);
+        this.toastService.displayApiMessage(data.headers.get('StatusMessage'), data.headers.get('StatusCode'));
+      },
+      error => console.log(error)
+    );
   }
 
 
 
-  closeDialog()
-  {
+  closeDialog() {
     this.ref.close()
   }
 
 
   createControl(contactData?: SupplierContactMaster): FormGroup {
 
-    this.supContactForm = this._formBuilder.group({
+    this.supContactForm = this.fb.group({
       iCreatedBy: [contactData.iCreatedBy],
-      iStatusID: [contactData.iStatusID],
+      iStatusID: [contactData.iStatusID, [Validators.required]],
       iSupAddID: [contactData.iSupAddID],
       iSupContactID: [contactData.iSupContactID],
       iSupID: [contactData.iSupID],
-      sAddress: [contactData.sAddress],
-      sContactNo: [contactData.sContactNo],
+      sAddress: [contactData.sAddress, [Validators.required]],
+      sContactNo: [contactData.sContactNo, [Validators.required, Validators.pattern('^[0-9]*$')]],
       sCreatedDate: [contactData.sCreatedDate],
-      sDesignation: [contactData.sDesignation],
-      sDirectNo: [contactData.sDirectNo],
-      sEmailID: [contactData.sEmailID],
-      sFaxNo: [contactData.sFaxNo],
-      sFullName: [contactData.sFullName],
-      sMobileNo: [contactData.sMobileNo],
+      sDesignation: [contactData.sDesignation, [Validators.required]],
+      sDirectNo: [contactData.sDirectNo, [Validators.required, Validators.pattern('^[0-9]*$')]],
+      sEmailID: [contactData.sEmailID, [Validators.required, Validators.email]],
+      sFaxNo: [contactData.sFaxNo, [Validators.required]],
+      sFullName: [contactData.sFullName, [Validators.required]],
+      sMobileNo: [contactData.sMobileNo, [Validators.required, Validators.pattern('^[0-9]*$')]],
       sPOBox: [contactData.sPOBox],
       sStatusName: [contactData.sStatusName],
       sSupName: [contactData.sSupName]
@@ -251,17 +209,14 @@ export class ContactComponent implements OnInit {
   }
 
 
-  dropDownValidityCheck()
-  {
-    if(this.selectedstatus.iKVID=='')
-    {
+  dropDownValidityCheck() {
+    if (this.selectedstatus.iKVID == '') {
       return true
     }
-    else if(this.selectedAddress.iSupAddID=='')
-    {
+    else if (this.selectedAddress.iSupAddID == '') {
       return true
     }
-    else{
+    else {
       return false
     }
   }
