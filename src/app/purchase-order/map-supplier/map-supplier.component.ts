@@ -76,17 +76,21 @@ export class MapSupplierComponent implements OnInit {
         this.isDisable = true;
       }
     }
+    else {
+      this.isDisable = true;
+    }
   }
 
   //Function to calculate Discount amount and purchase price 
   changeDiscount(disc: number, index: number) {
     let obj = this.supplierData[index];
     let discount_val: number = disc / 100;
-    this.discount_amnt = parseInt((discount_val * obj.iPurchaseAmt).toFixed(2));
-    this.purchase_amnt = parseInt((obj.iPurchaseAmt - this.discount_amnt).toFixed(2));
+    this.discount_amnt = parseFloat((discount_val * obj.iPurchaseAmt).toFixed(2));
+    this.purchase_amnt = parseFloat((obj.iPurchaseAmt - this.discount_amnt).toFixed(2));
     obj.discount_amnt = this.discount_amnt;
     obj.purchase_amnt = this.purchase_amnt;
     console.log(this.supplierData);
+    this.isDisable = false;
   }
 
   //Function to save requisition
@@ -105,6 +109,13 @@ export class MapSupplierComponent implements OnInit {
       error => { console.log(error) }
     )
   }
+   // select single checkbox
+  //  checkBoxValidation(suppRate){
+  //   const latestSupplier= this.selectedValues[this.selectedValues.length - 1];
+  //   this.selectedValues.length = 0;
+  //   this.selectedValues.push(latestSupplier);
+  //   console.log(this.selectedValues)
+  // }
 }
 
 
