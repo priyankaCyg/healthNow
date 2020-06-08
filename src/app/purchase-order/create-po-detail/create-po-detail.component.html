@@ -40,7 +40,8 @@
                         <ng-template pTemplate="body" let-poDetail>
                             <tr>
                                 <td>
-                                    <p-checkbox name="groupname" value="val1" [(ngModel)]="selectedValues"></p-checkbox>
+                                    <p-checkbox name="groupname" [value]=poDetail [(ngModel)]="selectedValues">
+                                    </p-checkbox>
                                 </td>
                                 <td>{{poDetail.sPCName}}</td>
                                 <td>{{poDetail.sPrdName}}</td>
@@ -67,8 +68,8 @@
                 <div class="p-col-12 p-md-2 p-lg-12 text-right">
                     <button pButton type="button" label="Cancel" routerLink="/purchase-order/create-po-list"
                         class="ui-button-light atbt mr-2 mb-2"></button>
-                    <button pButton type="submit" label="Create PO" routerLink="/purchase-order/po-general-details"
-                        class="ui-button atbt mb-2" (click)="createPO()"></button>
+                    <button pButton type="submit" label="Create PO" class="ui-button atbt mb-2"
+                        (click)="createPO()"></button>
                 </div>
             </div>
         </div>

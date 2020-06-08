@@ -5,9 +5,17 @@
                 <div class="p-col p-col-align-start">
                     <h1 class="mt-2">Supplier Requisition List </h1>
                 </div>
-
                 <div class="p-col-12">
-                    <p-table [value]="poList">
+                    <p-table [value]="poList" #search [paginator]="true" [rows]="10" [showCurrentPageReport]="true"
+                        [rowsPerPageOptions]="[10, 25, 50]" [filterDelay]="0"
+                        [globalFilterFields]="['sSupName','sPartnerName','sLocName','iReqCnt','sCreatedDate']">
+                        <ng-template pTemplate="caption">
+                            <div class="ui-table-globalfilter-container text-left">
+                                <input type="text" pInputText size="50" placeholder="Search"
+                                    (input)="search.filterGlobal($event.target.value,'contains')"
+                                    style="width: 250px;" />
+                            </div>
+                        </ng-template>
                         <ng-template pTemplate="header">
                             <tr>
                                 <th style="width: 3em">#</th>
@@ -32,14 +40,11 @@
                                         routerLink="/purchase-order/create-po-detail" label="Create PO"
                                         class="ui-button-success mb-2"></button>
                                 </td>
-
                             </tr>
                         </ng-template>
                     </p-table>
                 </div>
-
             </div>
-
         </div>
     </div>
 </div>

@@ -3,7 +3,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HttpClientXsrfModule } from '@angular/common/http';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { HashLocationStrategy, LocationStrategy } from '@angular/common';
+import { HashLocationStrategy, LocationStrategy, DatePipe } from '@angular/common';
 import { AppRoutes } from './app.routes';
 import { AuthGuard } from './services/authguard';
 import { LoginService } from './services/login.service';
@@ -230,7 +230,7 @@ import { CommonService } from './services/common.service';
         { provide: LocationStrategy, useClass: HashLocationStrategy },
         CarService, CountryService, EventService, NodeService, BreadcrumbService, MenuService,
         LoginService,
-        CommonService
+        CommonService,DatePipe
     ],
     bootstrap: [AppComponent]
 })

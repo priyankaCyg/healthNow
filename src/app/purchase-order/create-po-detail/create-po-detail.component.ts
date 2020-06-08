@@ -7,40 +7,51 @@ import { DialogService } from 'primeng';
 import { PurchaseOrderRoutingModule } from '../purchase-order-routing.module';
 import { poDetailMaster } from 'src/app/model/poDetail.model';
 import { ApiService } from 'src/app/services/api.service';
+import { supplierReqListData } from 'src/app/model/supplier-requisitionList';
+import { Router } from '@angular/router';
+import { ToastService } from 'src/app/services/toast.service';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-create-po-detail',
   templateUrl: './create-po-detail.component.html',
   styleUrls: ['./create-po-detail.component.css']
 })
+
 export class CreatePoDetailComponent implements OnInit {
 
   poDetail: poDetailMaster[];
-
-  constructor(private breadcrumbService: BreadcrumbService, private dialogService:DialogService, private httpService: ApiService) {
+  data: [];
+  poData: supplierReqListData[];
+  supplierName: string;
+  partnerName: string;
+  location: string;
+  selectedValues = [];
+  myDate = new Date();
+  constructor(private breadcrumbService: BreadcrumbService, private dialogService: DialogService, private httpService: ApiService,
+    private router: Router, private toastService: ToastService, private datePipe: DatePipe) {
     this.breadcrumbService.setItems([
-        { label: 'Dashboard' },
-        { label: 'Purchase Order', routerLink: ['/purchase-order'] }
+      { label: 'Dashboard' },
+      { label: 'Purchase Order', routerLink: ['/purchase-order'] }
     ]);
-}
+  }
 
   ngOnInit(): void {
-    
-    // this.poDetail = [
-    //   { supplier:'SKK Supplier', prdCategory:'Food',product:'Gluten Free Wheat 5kg Pack',qty:'100',	unit:'kg',rate:'250',discount:'5%',discAmt:'15', totalAmt:'23,500', createdBy:'System', createdDate:'1-05-2020' },
-    //   { supplier:'KKB Supplier', prdCategory:'Food', product:'Horlicks 750 gm Refill Pack',qty:'50',	unit:'gm',rate:'150',discount:'5%',discAmt:'15', totalAmt:'20,250', createdBy:'Rohit',	createdDate:'3-05-2020'},
-    //   { supplier:'NOM Supplier', prdCategory:'Food', product:'Horlicks Refill Pack, 500 gm',qty:'200',	unit:'gm', rate:'120',discount:'5%',discAmt:'15', totalAmt:'21,000',createdBy:'Rajesh', createdDate:'11-05-2020'}
-    // ];
+    this.data = JSON.parse(localStorage.getItem('supplierReqData'));
+    this.poData = Object.values(this.data);
+    this.supplierName = this.poData[0].sSupName;
+    this.partnerName = this.poData[0].sPartnerName;
+    this.location = this.poData[0].sLocName;
     this.getPoDetailList();
   }
 
   //Function to fetch po details list
-  getPoDetailList(){
+  getPoDetailList() {
     const getDetails = {
       "iRequestID": 23311,
-      "iSupID":2,
-      "iPartnerID":2,
-      "iPartLocID":202
+      "iSupID": this.poData[0].iSupID,
+      "iPartnerID": this.poData[0].iPartnerID,
+      "iPartLocID": this.poData[0].iPartLocID
     }
     this.httpService.callPostApi(getDetails).subscribe(
       data => {
@@ -49,4 +60,44 @@ export class CreatePoDetailComponent implements OnInit {
       error => { console.log(error) }
     )
   }
+
+  //Function to create PO
+  createPO() {
+    let todayDate = this.datePipe.transform(this.myDate, 'dd/MM/yyyy');
+    if (this.selectedValues.length >= 1) {
+      let reqId = this.selectedValues.map(({ iPReqID }) => iPReqID);
+      let reqIds = reqId.toString();
+      const sendPoDetails = {
+        "iRequestID": 2351,
+        "iSupID": this.poData[0].iSupID,
+        "iPartnerID": this.poData[0].iPartnerID,
+        "iPartLocID": this.poData[0].iPartLocID,
+        "sPODate": todayDate
+      }
+      this.httpService.callPostApi(sendPoDetails).subscribe(
+        data => {
+          let resData = data.body;
+          const sendProductDetails = {
+            "iRequestID": 2361,
+            "iPOID": resData[0].iPOID,
+            "sPrdReqIds": reqIds
+          }
+          this.httpService.callPostApi(sendProductDetails).subscribe(
+            data => {
+              let responseData = data.body[0];
+              localStorage.setItem('poDetails', JSON.stringify({ responseData }));
+              this.toastService.displayApiMessage(data.headers.get('StatusMessage'), data.headers.get('StatusCode'));
+              this.router.navigate(['/purchase-order/po-general-details'])
+            },
+            error => { console.log(error) }
+          )
+        },
+        error => { console.log(error) }
+      )
+    }
+    else {
+      this.toastService.addSingle("warn", "Please select at least one Product", " ")
+    }
+  }
+
 }
