@@ -5,6 +5,8 @@ import { SelectItem, MenuItem } from 'primeng/api';
 import { GeneratedFile } from '@angular/compiler';
 import { DialogService } from 'primeng';
 import { PurchaseOrderRoutingModule } from '../purchase-order-routing.module';
+import { ApiService } from 'src/app/services/api.service';
+import { supplierReqListData } from 'src/app/model/supplier-requisitionList';
 
 @Component({
   selector: 'app-create-po-list',
@@ -14,22 +16,34 @@ import { PurchaseOrderRoutingModule } from '../purchase-order-routing.module';
 export class CreatePoListComponent implements OnInit {
 
   items: MenuItem[];
-  poList:any[];
+  poList: supplierReqListData[];
 
-  constructor(private breadcrumbService: BreadcrumbService, private dialogService:DialogService) {
+  constructor(private breadcrumbService: BreadcrumbService, private dialogService: DialogService,
+    private httpService: ApiService) {
     this.breadcrumbService.setItems([
-        { label: 'Dashboard' },
-        { label: 'Purchase Order', routerLink: ['/purchase-order'] }
+      { label: 'Dashboard' },
+      { label: 'Purchase Order', routerLink: ['/purchase-order'] }
     ]);
-}
-
-  ngOnInit(): void {
-    this.poList = [
-      { srNo:'1', supplier:'SKK Supplier', partner:'Alpha',location:'Mumbai', requisitions:'5', createdBy:'System', createdDate:'1-05-2020' },
-      { srNo:'2', supplier:'KKB Supplier', partner:'Beta',location:'Pune', requisitions:'7', createdBy:'Rohit',	createdDate:'3-05-2020'},
-      { srNo:'3', supplier:'NOM Supplier', partner:'Gamma',location:'Thane', requisitions:'6', createdBy:'Rajesh', createdDate:'11-05-2020'}
-    ];
-
   }
 
+  ngOnInit(): void {
+    this.getAllSuppplierReqList();
+  }
+
+  getAllSuppplierReqList() {
+    const supplierReq_list_api =
+    {
+      "iRequestID": 23310,
+    }
+    this.httpService.callPostApi(supplierReq_list_api).subscribe(
+      data => {
+        this.poList = data.body;
+      },
+      error => console.log(error)
+    );
+  }
+
+  createPO(poList) {
+    localStorage.setItem('supplierReqData', JSON.stringify({ poList }));
+  }
 }

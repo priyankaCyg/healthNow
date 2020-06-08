@@ -2,7 +2,7 @@
     <div class="p-col-12">
         <div class="card card-body">
             <div class="p-grid ui-fluid vertical-container">
-                <div class="p-col p-col-align-start"> 
+                <div class="p-col p-col-align-start">
                     <h1 class="mt-2">Supplier Requisition List </h1>
                 </div>
 
@@ -19,25 +19,27 @@
                                 <th>Action</th>
                             </tr>
                         </ng-template>
-                        <ng-template pTemplate="body" let-poList>
+                        <ng-template pTemplate="body" let-i="rowIndex" let-poList>
                             <tr>
-                                <td>{{poList.srNo}}</td>
-                                <td>{{poList.supplier}}</td>
-                                <td>{{poList.partner}}</td>
-                                <td>{{poList.location}}</td>
-                                <td>{{poList.requisitions}}</td>
-                                <td>{{poList.createdDate}}</td>
+                                <td>{{i+1}}</td>
+                                <td>{{poList.sSupName}}</td>
+                                <td>{{poList.sPartnerName}}</td>
+                                <td>{{poList.sLocName}}</td>
+                                <td>{{poList.iReqCnt}}</td>
+                                <td>{{poList.sCreatedDate | date:"dd-MM-yyyy"}}</td>
                                 <td>
-                                    <button pButton type="button" routerLink="/purchase-order/create-po-detail" label="Create PO" class="ui-button-success mb-2"></button>
+                                    <button pButton type="button" (click)="createPO(poList)"
+                                        routerLink="/purchase-order/create-po-detail" label="Create PO"
+                                        class="ui-button-success mb-2"></button>
                                 </td>
-                                
+
                             </tr>
                         </ng-template>
                     </p-table>
                 </div>
 
-            </div>    
-                                
+            </div>
+
         </div>
     </div>
 </div>

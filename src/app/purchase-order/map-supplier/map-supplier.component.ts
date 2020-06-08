@@ -83,6 +83,7 @@ export class MapSupplierComponent implements OnInit {
 
   //Function to calculate Discount amount and purchase price 
   changeDiscount(disc: number, index: number) {
+
     let obj = this.supplierData[index];
     let discount_val: number = disc / 100;
     this.discount_amnt = parseFloat((discount_val * obj.iPurchaseAmt).toFixed(2));
