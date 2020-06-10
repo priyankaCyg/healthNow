@@ -83,7 +83,6 @@ export class MapSupplierComponent implements OnInit {
 
   //Function to calculate Discount amount and purchase price 
   changeDiscount(disc: number, index: number) {
-
     let obj = this.supplierData[index];
     let discount_val: number = disc / 100;
     this.discount_amnt = parseFloat((discount_val * obj.iPurchaseAmt).toFixed(2));
@@ -110,13 +109,7 @@ export class MapSupplierComponent implements OnInit {
       error => { console.log(error) }
     )
   }
-   // select single checkbox
-  //  checkBoxValidation(suppRate){
-  //   const latestSupplier= this.selectedValues[this.selectedValues.length - 1];
-  //   this.selectedValues.length = 0;
-  //   this.selectedValues.push(latestSupplier);
-  //   console.log(this.selectedValues)
-  // }
+
 }
 
 

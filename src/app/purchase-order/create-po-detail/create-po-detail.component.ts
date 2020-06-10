@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { BreadcrumbService } from '../../breadcrumb.service';
 import { CountryService } from '../../demo/service/countryservice';
-import { SelectItem, MenuItem } from 'primeng/api';
+import { SelectItem, MenuItem, ConfirmationService } from 'primeng/api';
 import { GeneratedFile } from '@angular/compiler';
 import { DialogService } from 'primeng';
 import { PurchaseOrderRoutingModule } from '../purchase-order-routing.module';
@@ -29,7 +29,7 @@ export class CreatePoDetailComponent implements OnInit {
   selectedValues = [];
   myDate = new Date();
   constructor(private breadcrumbService: BreadcrumbService, private dialogService: DialogService, private httpService: ApiService,
-    private router: Router, private toastService: ToastService, private datePipe: DatePipe) {
+    private router: Router, private toastService: ToastService, private datePipe: DatePipe, private confirmationService: ConfirmationService) {
     this.breadcrumbService.setItems([
       { label: 'Dashboard' },
       { label: 'Purchase Order', routerLink: ['/purchase-order'] }
@@ -85,6 +85,7 @@ export class CreatePoDetailComponent implements OnInit {
           this.httpService.callPostApi(sendProductDetails).subscribe(
             data => {
               let responseData = data.body[0];
+              localStorage.setItem('isPoEdit', 'false');
               localStorage.setItem('poDetails', JSON.stringify({ responseData }));
               this.toastService.displayApiMessage(data.headers.get('StatusMessage'), data.headers.get('StatusCode'));
               this.router.navigate(['/purchase-order/po-general-details'])
@@ -100,4 +101,25 @@ export class CreatePoDetailComponent implements OnInit {
     }
   }
 
+  // Dialog box to delete product list
+  deletePoDetail(iPReqID: number) {
+    this.confirmationService.confirm({
+      message: 'Are you sure you want to Delete this Record?',
+      header: 'Confirmation',
+      icon: 'pi pi-exclamation-triangle',
+      accept: () => {
+        var deleteAddressAPI = {
+          "iRequestID": 23313,
+          "iPReqID": iPReqID
+        }
+        this.httpService.callPostApi(deleteAddressAPI).subscribe(
+          data => {
+            this.getPoDetailList();
+            this.toastService.displayApiMessage(data.headers.get('StatusMessage'), data.headers.get('StatusCode'));
+          },
+          error => { console.log(error) }
+        );
+      }
+    });
+  }
 }

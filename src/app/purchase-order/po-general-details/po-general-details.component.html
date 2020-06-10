@@ -1,85 +1,130 @@
 <div class="p-grid">
     <div class="p-col-12">
         <div class="card card-w-title">
-            <h1>Purchace Order Details</h1>        
+            <h1>Purchace Order Details</h1>
             <p-tabView>
+                <!-- General tab start -->
                 <p-tabPanel header="General">
-                    <div class="p-grid ui-fluid">
-                        <div class="p-col-12 mt-2">
-                            <div class="p-grid form-group">
-                                <div class="p-col-12 p-lg-3 mb-2">
-                                    <label for="supplierPO">Supplier PO No.</label>
-                                    <input id="supplierPO" type="text" pInputText [disabled]="disabled"  placeholder="PO/SS/20200514/4">
+                    <form [formGroup]="POForm" autocomplete="off">
+                        <div class="p-grid ui-fluid">
+                            <div class="p-col-12 mt-2">
+                                <div class="p-grid form-group">
+                                    <div class="p-col-12 p-lg-3 mb-2">
+                                        <label for="sPONo">Supplier PO No.</label>
+                                        <input id="sPONo" type="text" pInputText disabled placeholder="PO No."
+                                            formControlName="sPONo">
+                                    </div>
+                                    <div class="p-col-12 p-lg-3 mb-2">
+                                        <label for="sPODate">Supplier PO Date</label>
+                                        <p-calendar [(ngModel)]="value" formControlName="sPODate"></p-calendar>
+                                        <div>
+                                            <p-message severity="error" text="This field is required"
+                                                *ngIf="POForm.controls['sPODate'].touched  && POForm.controls['sPODate'].hasError('required')">
+                                            </p-message>
+                                        </div>
+                                    </div>
+                                    <div class="p-col-12 p-lg-3 mb-2">
+                                        <label for="sSupName">Supplier</label>
+                                        <input id="sSupName" type="text" pInputText disabled placeholder="Supplier Name"
+                                            formControlName="sSupName">
+                                    </div>
+                                    <div class="p-col-12 p-lg-3 mb-2">
+                                        <label for="iSuppContactName">Supplier Contact</label>
+                                        <p-dropdown [options]="supplierContact" [(ngModel)]="selectedSuppContact"
+                                            optionLabel="sFullName" formControlName="iSuppContactName"></p-dropdown>
+                                        <div>
+                                            <p-message severity="error" text="This field is required"
+                                                *ngIf="POForm.controls['iSuppContactName'].touched  && (selectedSuppContact.iSupContactID =='' || POForm.controls['iSuppContactName'].hasError('required'))">
+                                            </p-message>
+                                        </div>
+                                    </div>
+                                    <div class="p-col-12 p-lg-6 mb-2">
+                                        <label for="sSuppAddress">Supplier Address</label>
+                                        <p-dropdown [options]="addressData" [(ngModel)]="selectedAddress"
+                                            optionLabel="sAddress" formControlName="sSuppAddress"></p-dropdown>
+                                        <div>
+                                            <p-message severity="error" text="This field is required"
+                                                *ngIf="POForm.controls['sSuppAddress'].touched  && (selectedAddress.iSupAddID =='' || POForm.controls['sSuppAddress'].hasError('required'))">
+                                            </p-message>
+                                        </div>
+                                    </div>
+                                    <!-- <div class="p-col-12 p-lg-3 mb-2">
+                                        <label for="suppAddress">Scheduled Date</label>
+                                        <p-calendar [(ngModel)]="value" formControlName=""></p-calendar>
+                                    </div> -->
+                                    <div class="p-col-12 p-md-2 p-lg-12">
+                                        <div
+                                            class="separator separator--border-dashed separator--space-sm separator--portlet-fit">
+                                        </div>
+                                    </div>
+                                    <div class="p-col-12 p-lg-3 mb-2">
+                                        <label for="sPartnerName">Partner</label>
+                                        <input id="sPartnerName" type="text" pInputText disabled
+                                            placeholder=" Partner Name" formControlName="sPartnerName">
+                                    </div>
+                                    <div class="p-col-12 p-lg-3 mb-2">
+                                        <label for="sLocName">Location</label>
+                                        <input id="sLocName" type="text" pInputText disabled placeholder="Location"
+                                            formControlName="sLocName">
+                                    </div>
+                                    <div class="p-col-12 p-md-2 p-lg-12">
+                                        <div
+                                            class="separator separator--border-dashed separator--space-sm separator--portlet-fit m-1">
+                                        </div>
+                                    </div>
+                                    <div class="p-col-12 p-lg-3 mb-2">
+                                        <label for="iPartnerContactName">Partner Contact</label>
+                                        <p-dropdown [options]="partnerContact" [(ngModel)]="selectedPartnerContact"
+                                            optionLabel="sFullName" formControlName="iPartnerContactName">
+                                        </p-dropdown>
+                                        <div>
+                                            <p-message severity="error" text="This field is required"
+                                                *ngIf="POForm.controls['iPartnerContactName'].touched  && (selectedPartnerContact.iPartnerContactID =='' || POForm.controls['iPartnerContactName'].hasError('required'))">
+                                            </p-message>
+                                        </div>
+                                    </div>
+                                    <div class="p-col-12 p-lg-3 mb-2">
+                                        <label for="iCurrencyName"> Currency</label>
+                                        <p-dropdown [options]="currencyData" [(ngModel)]="selectedCurrency"
+                                            optionLabel="sKVValue" formControlName="iCurrencyName"></p-dropdown>
+                                        <div>
+                                            <p-message severity="error" text="This field is required"
+                                                *ngIf="POForm.controls['iCurrencyName'].touched  && (selectedCurrency.iKVID =='' || POForm.controls['iCurrencyName'].hasError('required'))">
+                                            </p-message>
+                                        </div>
+                                    </div>
+                                    <div class="p-col-12 p-lg-3 mb-2">
+                                        <div class="mt-4">
+                                            <p-checkbox name="group1" value="tax" label="Include Taxes"
+                                                [(ngModel)]="selectedTax" inputId="ny" formControlName="iIncludeTaxes">
+                                            </p-checkbox>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="p-col-12 p-lg-3 mb-2">
-                                    <label for="suppAddress">Supplier PO Date</label>
-                                    <p-calendar [(ngModel)]="value"></p-calendar>
-                                </div>
-                                
-                                <div class="p-col-12 p-lg-3 mb-2">
-                                    <label for="supplier">Supplier</label>
-                                    <input id="disabled-input" type="text" pInputText [disabled]="disabled"  placeholder="SKK Supplier">
-                                </div>
-                                <div class="p-col-12 p-lg-3 mb-2">
-                                    <label for="contact">Supplier Contact</label>
-                                    <p-dropdown [options]="contact" [(ngModel)]="selectedContact1"></p-dropdown>
-                                </div>
-                                <div class="p-col-12 p-lg-6 mb-2">
-                                    <label for="suppAddress">Supplier Address</label>
-                                    <p-dropdown [options]="suppAddress" [(ngModel)]="selectedAddress1"></p-dropdown>
-                                </div>
-                                <div class="p-col-12 p-lg-3 mb-2">
-                                    <label for="suppAddress">Scheduled Date</label>
-                                    <p-calendar [(ngModel)]="value"></p-calendar>
-                                </div>
-                                <div class="p-col-12 p-md-2 p-lg-12">
-                                    <div class="separator separator--border-dashed separator--space-sm separator--portlet-fit"></div>
-                                </div>
-
-                                <div class="p-col-12 p-lg-3 mb-2">
-                                    <label for="supplier">Partner</label>
-                                    <input id="disabled-input" type="text" pInputText [disabled]="disabled"  placeholder="Alpha">
-                                </div>
-
-                                <div class="p-col-12 p-lg-3 mb-2">
-                                    <label for="location">Location</label>
-                                    <input id="location" type="text" pInputText [disabled]="disabled"  placeholder="Mumbai">
-                                </div>
-
-                                <div class="p-col-12 p-md-2 p-lg-12">
-                                    <div class="separator separator--border-dashed separator--space-sm separator--portlet-fit m-1"></div>
-                                </div>
-                                <div class="p-col-12 p-lg-3 mb-2">
-                                    <label for="comPOcontact">Partner Contact</label>
-                                    <p-dropdown [options]="comPOcontact" [(ngModel)]="selectedContact1"></p-dropdown>
-                                </div>
-                                <div class="p-col-12 p-lg-3 mb-2">
-                                    <label for="currency"> Currency</label>
-                                    <p-dropdown [options]="currency" [(ngModel)]="selectedCurrency1"></p-dropdown>
-                                </div>
-                                <div class="p-col-12 p-lg-3 mb-2">
-                                   <div class="mt-4"> <p-checkbox name="group1" value="Include Taxes" label="Include Taxes" [(ngModel)]="selectedCities" inputId="ny"></p-checkbox></div>
-                                </div>
-                               
                             </div>
                         </div>
-                    </div> 
-                    <div class="separator separator--border-solid separator--space-sm separator--portlet-fit">
-                </div>
-                <div class="p-grid form-group ui-fluid p-justify-end mt-3">
-                    <div class="p-col-12 p-md-2 p-lg-12 text-right">
-                        <button pButton type="button" label="Cancel" routerLink="/purchase-order/create-po-detail" class="ui-button-light atbt mr-2 mb-2"></button>
-                   
-                        <button pButton type="submit" label="Save" class="ui-button atbt mb-2"></button>
-                    </div>
-                </div>       
+                        <div class="separator separator--border-solid separator--space-sm separator--portlet-fit">
+                        </div>
+                        <div class="p-grid form-group ui-fluid p-justify-end mt-3">
+                            <div class="p-col-12 p-md-2 p-lg-12 text-right">
+                                <button pButton type="button" label="Cancel"
+                                    routerLink="/purchase-order/create-po-detail"
+                                    class="ui-button-light atbt mr-2 mb-2"></button>
+                                <button pButton type="button" label="Save"
+                                    [disabled]="!(!POForm.invalid && !dropDownValidityCheck())"
+                                    class="ui-button atbt mb-2" (click)="savePODetail()"></button>
+                            </div>
+                        </div>
+                    </form>
                 </p-tabPanel>
                 <!-- General Tab End -->
+
+                <!-- Product tab start -->
                 <p-tabPanel header="Product">
                     <div class="p-grid ui-fluid p-justify-end mt-2">
                         <div class="p-col-12">
                             <div class="p-col-12">
-                                <p-table [value]="poDetail">
+                                <p-table [value]="productDetails">
                                     <ng-template pTemplate="header">
                                         <tr>
                                             <th>Product Category</th>
@@ -89,23 +134,22 @@
                                             <th style="width: 8em;">Discount %</th>
                                             <th style="width: 8em;">Discount Amt</th>
                                             <th>Total Amount</th>
-                                            <!-- <th>Created By</th>
-                                            <th>Created Date</th> -->
                                             <th>Action</th>
                                         </tr>
                                     </ng-template>
                                     <ng-template pTemplate="body" let-poDetail>
                                         <tr>
-                                            <td>{{poDetail.prdCategory}}</td>
-                                            <td>{{poDetail.product}}</td>
-                                            <td>{{poDetail.qty}}</td>
-                                            <td>{{poDetail.rate}}</td>
-                                            <td>{{poDetail.discount}}</td>
-                                            <td>{{poDetail.discAmt}}</td>
+                                            <td>{{poDetail.sPCName}}</td>
+                                            <td>{{poDetail.sPrdName}}</td>
+                                            <td>{{poDetail.iQty}}</td>
+                                            <td>{{poDetail.iRate}}</td>
+                                            <td>{{poDetail.iDiscountPercentage}}</td>
+                                            <td>{{poDetail.iDiscountAmt}}</td>
                                             <td>{{poDetail.totalAmt}}</td>
                                             <td>
                                                 <!-- <button pButton type="button" class="ui-button-success mr-1" icon="pi pi-pencil"></button> -->
-                                                <button pButton type="button" class="ui-button-danger mr-1" icon="pi pi-trash"></button> 
+                                                <button pButton type="button" class="ui-button-danger mr-1"
+                                                    icon="pi pi-trash"></button>
                                             </td>
                                         </tr>
                                     </ng-template>
@@ -115,6 +159,8 @@
                     </div>
                 </p-tabPanel>
                 <!-- Product Tab End -->
+
+                <!-- Terms & conditions tab start -->
                 <p-tabPanel header="Terms &amp; Conditions">
                     <div class="p-grid ui-fluid mt-2">
                         <div class="p-col-12 p-lg-6 p-md-6">
@@ -133,7 +179,6 @@
                                             </div>
                                         </div>
                                     </li>
-                    
                                     <li class="checkbox-row even">
                                         <div class="p-grid">
                                             <div class="p-col-12 checkbox">
@@ -142,19 +187,18 @@
                                             </div>
                                         </div>
                                     </li>
-                    
                                     <li class="checkbox-row">
                                         <div class="p-grid">
                                             <div class="p-col-12 checkbox">
                                                 <p-checkbox binary="true"></p-checkbox>
-                                                <p>All Bills Should Be Made In Favor Of Cygnus Technologies Private Limited</p>
+                                                <p>All Bills Should Be Made In Favor Of Cygnus Technologies Private
+                                                    Limited</p>
                                             </div>
                                         </div>
                                     </li>
                                 </ul>
                             </div>
                         </div>
-
                         <div class="p-col-12 p-lg-6 p-md-6">
                             <div class="card download-files tasks mb-0">
                                 <div class="p-grid p-nogutter">
@@ -171,7 +215,6 @@
                                             </div>
                                         </div>
                                     </li>
-                    
                                     <li class="checkbox-row even">
                                         <div class="p-grid">
                                             <div class="p-col-12 checkbox">
@@ -180,7 +223,6 @@
                                             </div>
                                         </div>
                                     </li>
-                    
                                     <li class="checkbox-row">
                                         <div class="p-grid">
                                             <div class="p-col-12 checkbox">
@@ -189,7 +231,6 @@
                                             </div>
                                         </div>
                                     </li>
-                    
                                     <li class="checkbox-row even">
                                         <div class="p-grid">
                                             <div class="p-col-12 checkbox">
@@ -198,7 +239,6 @@
                                             </div>
                                         </div>
                                     </li>
-                    
                                     <li class="checkbox-row">
                                         <div class="p-grid">
                                             <div class="p-col-12 checkbox">
@@ -207,7 +247,6 @@
                                             </div>
                                         </div>
                                     </li>
-                                    
                                     <li class="checkbox-row">
                                         <div class="p-grid">
                                             <div class="p-col-12 checkbox">
@@ -224,7 +263,6 @@
                                             </div>
                                         </div>
                                     </li>
-                                    
                                     <li class="checkbox-row">
                                         <div class="p-grid">
                                             <div class="p-col-12 checkbox">
@@ -233,11 +271,9 @@
                                             </div>
                                         </div>
                                     </li>
-                                    
                                 </ul>
                             </div>
                         </div>
-                        
                         <div class="p-col-12 p-lg-6 p-md-6">
                             <div class="card download-files tasks mb-0">
                                 <div class="p-grid p-nogutter">
@@ -254,7 +290,6 @@
                                             </div>
                                         </div>
                                     </li>
-                    
                                     <li class="checkbox-row even">
                                         <div class="p-grid">
                                             <div class="p-col-12 checkbox">
@@ -263,7 +298,6 @@
                                             </div>
                                         </div>
                                     </li>
-                    
                                     <li class="checkbox-row">
                                         <div class="p-grid">
                                             <div class="p-col-12 checkbox">
@@ -272,7 +306,6 @@
                                             </div>
                                         </div>
                                     </li>
-                    
                                     <li class="checkbox-row even">
                                         <div class="p-grid">
                                             <div class="p-col-12 checkbox">
@@ -281,7 +314,6 @@
                                             </div>
                                         </div>
                                     </li>
-                    
                                     <li class="checkbox-row">
                                         <div class="p-grid">
                                             <div class="p-col-12 checkbox">
@@ -290,7 +322,6 @@
                                             </div>
                                         </div>
                                     </li>
-                                    
                                     <li class="checkbox-row">
                                         <div class="p-grid">
                                             <div class="p-col-12 checkbox">
@@ -326,7 +357,6 @@
                                 </ul>
                             </div>
                         </div>
-
                         <div class="p-col-12 p-lg-6 p-md-6">
                             <div class="card download-files tasks mb-0 p-3">
                                 <div class="p-grid p-nogutter">
@@ -368,27 +398,30 @@
                                     <div class="p-col-12 mb-1">
                                         <input type="text" pInputText />
                                     </div>
-
                                 </div>
                             </div>
                         </div>
                     </div>
                 </p-tabPanel>
-                <!-- Terms & Condition ENd here -->
-                <p-tabPanel header="Attacment">
+                <!-- Terms & Condition End -->
+
+                <!-- Attachment tab start -->
+                <p-tabPanel header="Attachment">
                     <div class="p-grid ui-fluid">
                         <div class="p-col-12 p-md-3 p-lg-3">
                             <label for="sfileType">Select File Type</label>
-                            <p-dropdown id="sfileType" class="form-control" placeholder="Select" required="true"></p-dropdown>
+                            <p-dropdown id="sfileType" class="form-control" placeholder="Select" required="true">
+                            </p-dropdown>
                         </div>
                         <div class="p-col-12 p-md-2 p-lg-1">
                             <div class="fileUpload p-0">
-                                <p-fileUpload #fubauto mode="basic" name="demo[]" url="./upload.php" accept="image/*" maxFileSize="1000000" (onUpload)="onBasicUploadAuto($event)" [auto]="true" chooseLabel="Browse"></p-fileUpload>                                
-                                
+                                <p-fileUpload #fubauto mode="basic" name="demo[]" url="./upload.php" accept="image/*"
+                                    maxFileSize="1000000" (onUpload)="onBasicUploadAuto($event)" [auto]="true"
+                                    chooseLabel="Browse"></p-fileUpload>
                             </div>
-                         </div>
-                        <div class="p-col-12 p-md-3 p-lg-3 text-left"><button pButton type="button" icon="pi pi-upload" label="Upload" class="ui-button atbt"></button></div> 
-                        
+                        </div>
+                        <div class="p-col-12 p-md-3 p-lg-3 text-left"><button pButton type="button" icon="pi pi-upload"
+                                label="Upload" class="ui-button atbt"></button></div>
                         <div class="p-col-12 p-md-12 p-lg-12 mt-3">
                             <p-table [value]="attachment">
                                 <ng-template pTemplate="header">
@@ -403,18 +436,19 @@
                                         <td>{{attachment.fileName}}</td>
                                         <td>{{attachment.fileType}}</td>
                                         <td>
-                                            <button pButton type="button" class="ui-button-success mr-1" icon="pi pi-download"></button>
-                                            <button pButton type="button" class="ui-button-danger" icon="pi pi-trash"></button>
+                                            <button pButton type="button" class="ui-button-success mr-1"
+                                                icon="pi pi-download"></button>
+                                            <button pButton type="button" class="ui-button-danger"
+                                                icon="pi pi-trash"></button>
                                         </td>
                                     </tr>
                                 </ng-template>
                             </p-table>
-                         </div>
+                        </div>
                     </div>
                 </p-tabPanel>
-
-                <!-- Attachment tab End here -->
+                <!-- Attachment tab End  -->
             </p-tabView>
         </div>
-    </div>        
+    </div>
 </div>
