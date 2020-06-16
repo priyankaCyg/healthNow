@@ -38,10 +38,11 @@ import { MessagesModule } from 'primeng/messages';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { CalendarModule } from 'primeng/calendar';
 import { FileUploadModule } from 'primeng/fileupload';
+import { CreatePoDetailEditComponent } from './create-po-detail-edit/create-po-detail-edit.component';
 
 
 @NgModule({
-  declarations: [PurchaseOrderComponent, NewPoComponent, ProductPurchasePriceComponent, ProductRequisitionComponent, AddProductPurchasePriceComponent, MapSupplierComponent, CreateRequisitionComponent, CreatePoListComponent, CreatePoDetailComponent, MapSupplierMultiReqComponent, PoGeneralDetailsComponent, PoListComponent],
+  declarations: [PurchaseOrderComponent, NewPoComponent, ProductPurchasePriceComponent, ProductRequisitionComponent, AddProductPurchasePriceComponent, MapSupplierComponent, CreateRequisitionComponent, CreatePoListComponent, CreatePoDetailComponent, MapSupplierMultiReqComponent, PoGeneralDetailsComponent, PoListComponent, CreatePoDetailEditComponent],
   imports: [
     CommonModule,
     PurchaseOrderRoutingModule,
@@ -66,6 +67,6 @@ import { FileUploadModule } from 'primeng/fileupload';
     ReactiveFormsModule
   ],
   providers: [DialogService, ConfirmationService],
-  entryComponents: [PurchaseOrderComponent, NewPoComponent, ProductPurchasePriceComponent, ProductRequisitionComponent, AddProductPurchasePriceComponent, MapSupplierComponent, CreateRequisitionComponent, CreatePoListComponent, CreatePoDetailComponent, MapSupplierMultiReqComponent, PoGeneralDetailsComponent, PoListComponent]
+  entryComponents: [PurchaseOrderComponent, NewPoComponent, ProductPurchasePriceComponent, ProductRequisitionComponent, AddProductPurchasePriceComponent, MapSupplierComponent, CreateRequisitionComponent, CreatePoListComponent, CreatePoDetailComponent, MapSupplierMultiReqComponent, PoGeneralDetailsComponent, PoListComponent,CreatePoDetailEditComponent]
 })
 export class PurchaseOrderModule { }
