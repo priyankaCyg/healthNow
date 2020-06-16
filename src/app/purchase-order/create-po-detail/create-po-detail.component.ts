@@ -61,6 +61,7 @@ export class CreatePoDetailComponent implements OnInit {
     )
   }
 
+
   //Function to create PO
   createPO() {
     let todayDate = this.datePipe.transform(this.myDate, 'dd/MM/yyyy');

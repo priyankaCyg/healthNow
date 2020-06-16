@@ -11,6 +11,7 @@ import { ApiService } from 'src/app/services/api.service';
 import { supplierReqListData } from 'src/app/model/supplier-requisitionList';
 import { ToastService } from 'src/app/services/toast.service';
 import { DatePipe } from '@angular/common';
+import { APIService } from 'src/app/services/apieservice';
 
 @Component({
   selector: 'app-po-general-details',
@@ -37,8 +38,13 @@ export class PoGeneralDetailsComponent implements OnInit {
   currencyData;
   selectedCurrency;
   selectedTax: string[] = [];
+  uploadedFiles: any[] = [];
+  fileTypeData;
+  selectedFileType;
+
   constructor(private breadcrumbService: BreadcrumbService, private dialogService: DialogService, private fb: FormBuilder,
-    private httpService: ApiService, private toastService: ToastService, private datePipe: DatePipe) {
+    private httpService: ApiService, private toastService: ToastService, private datePipe: DatePipe,
+    private _apiService: APIService) {
     this.breadcrumbService.setItems([
       { label: 'Dashboard' },
       { label: 'Purchase Order', routerLink: ['/purchase-order'] }
@@ -47,12 +53,12 @@ export class PoGeneralDetailsComponent implements OnInit {
 
   ngOnInit(): void {
     this.defaultDropDwnValue();
-    this.attachment = [
-      { fileName: 'Testing File', fileType: 'testing.pdf' },
-      { fileName: 'Demo File', fileType: 'demo.xlsx' },
-      { fileName: 'Detail Document', fileType: 'details.pdf' },
-      { fileName: 'Supplier Details', fileType: 'supplier-details.pdf' }
-    ];
+    // this.attachment = [
+    //   { fileName: 'Testing File', fileType: 'testing.pdf' },
+    //   { fileName: 'Demo File', fileType: 'demo.xlsx' },
+    //   { fileName: 'Detail Document', fileType: 'details.pdf' },
+    //   { fileName: 'Supplier Details', fileType: 'supplier-details.pdf' }
+    // ];
     let editPo: string = localStorage.getItem('isPoEdit');
     if (editPo == 'true') {
       var dataToSendEdit = {
@@ -64,7 +70,7 @@ export class PoGeneralDetailsComponent implements OnInit {
           this.purchaseOrderData = new POGeneralMaster(data.body[0]);
           this.POForm = this.createControl(this.purchaseOrderData);
           this.poId = this.purchaseOrderData.iPOID;
-          Promise.all([this.getSuppContact(), this.getSuppAddress(), this.getPartnerContact(), this.getCurrency()]).then(values => {
+          Promise.all([this.getSuppContact(), this.getSuppAddress(), this.getPartnerContact(), this.getCurrency(), this.getFileType()]).then(values => {
             console.log(values);
             this.setDropDownVal()
           });
@@ -76,7 +82,7 @@ export class PoGeneralDetailsComponent implements OnInit {
       this.purchaseOrderData = new POGeneralMaster(this.poRespData[0]);
       this.POForm = this.createControl(this.purchaseOrderData);
       this.poId = this.purchaseOrderData.iPOID;
-      Promise.all([this.getSuppContact(), this.getSuppAddress(), this.getPartnerContact(), this.getCurrency()]).then(values => {
+      Promise.all([this.getSuppContact(), this.getSuppAddress(), this.getPartnerContact(), this.getCurrency(), this.getFileType()]).then(values => {
         console.log(values);
       });
     }
@@ -84,6 +90,7 @@ export class PoGeneralDetailsComponent implements OnInit {
       this.dropDownValidityCheck()
     });
     this.getProductList();
+    this.showAttachment();
 
   }
 
@@ -255,6 +262,65 @@ export class PoGeneralDetailsComponent implements OnInit {
       data => {
         this.productDetails = data.body;
       });
+  }
+
+  // code for select files 
+  onUpload(event) {
+    for (const file of event.files) {
+      this.uploadedFiles.push(file);
+    }
+  }
+
+  //code for upload files 
+  uploadFile() {
+    var dataToSend = {
+      "iRequestID": 1111,
+      "iProcessTranID": this.poId,
+      "iProcessID": 2,
+      "iDocTypeID": this.selectedFileType.iDocTypeID
+    }
+    this._apiService.postFile(this.uploadedFiles, dataToSend).subscribe(data => {
+      this.showAttachment();
+    }, error => {
+      console.log(error);
+    });
+  }
+
+  //code for filetype dropdown data
+  getFileType() {
+    return new Promise((resolve, reject) => {
+      var dataToSend = {
+        "iRequestID": 2261
+      }
+      this.httpService.getDropDownData(dataToSend).then(response => {
+        this.fileTypeData = response
+        this.fileTypeData.splice(0, 0, { iDocTypeID: "", sDocTypeName: "Select File Type" })
+        this.selectedFileType = { iDocTypeID: "", sDocTypeName: "Select File Type" }
+        resolve(this.fileTypeData)
+      });
+    })
+  }
+
+  //code for list of attachments
+  showAttachment() {
+    var dataToSend = {
+      "iRequestID": 1112,
+      "iProcessTranID": this.poId,
+      "iProcessID": 2
+    }
+    this._apiService.getDetails(dataToSend).then(response => {
+      this.attachment = response
+    });
+  }
+
+  //code for download attachments
+  downloadFile(attachment: any) {
+    var dataToSend = {
+      "iRequestID": "1112",
+      "sActualFileName": attachment.sActualName,
+      "sSystemFileName": attachment.sSystemName
+    }
+    this._apiService.downloadAPI(dataToSend)
   }
 
 }
