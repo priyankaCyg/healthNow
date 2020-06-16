@@ -1,3 +1,5 @@
+<p-confirmDialog header="Confirmation" icon="pi pi-info" [style]="{width: '425px'}"
+    rejectButtonStyleClass="ui-button-secondary"></p-confirmDialog>
 <div class="p-grid">
     <div class="p-col-12">
         <div class="card card-w-title">
@@ -148,7 +150,7 @@
                                             <td>{{poDetail.totalAmt}}</td>
                                             <td>
                                                 <!-- <button pButton type="button" class="ui-button-success mr-1" icon="pi pi-pencil"></button> -->
-                                                <button pButton type="button" class="ui-button-danger mr-1"
+                                                <button pButton type="button" class="ui-button-danger mr-1" (click)="deleteProduct(poDetail.iPrdID)"
                                                     icon="pi pi-trash"></button>
                                             </td>
                                         </tr>

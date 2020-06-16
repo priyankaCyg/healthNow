@@ -1,0 +1,54 @@
+<div class="p-grid ui-fluid">
+    <form [formGroup]="editPOForm" autocomplete="off">
+        <div class="p-col-12">
+            <div class="p-grid form-group">
+                <div class="p-col-12">
+                    <label for="sPCName">Product Category</label>
+                    <input id="sPCName" type="text" formControlName="sPCName" pInputText disabled>
+                </div>
+                <div class="p-col-12">
+                    <label for="sPrdName">Product </label>
+                    <input id="sPrdName" type="text" formControlName="sPrdName" pInputText disabled>
+                </div>
+                <div class="p-col-12">
+                    <label for="iQty">Qty </label>
+                    <input id="iQty" type="text" formControlName="iQty" pInputText (change)="qtyChange()">
+                    <p-message severity="error"
+                        [text]="editPOForm.controls['iQty'].errors['required'] ? 'This field is required' : editPOForm.controls['iQty'].errors['pattern']? 'Please enter a valid Qty.' : editPOForm.controls['iQty'].errors "
+                        *ngIf="!editPOForm.controls['iQty'].valid && editPOForm.controls['iQty'].dirty">
+                    </p-message>
+                </div>
+                <div class="p-col-12">
+                    <label for="iSupRate">Rate </label>
+                    <input id="iSupRate" type="text" formControlName="iSupRate" pInputText disabled>
+                </div>
+                <div class="p-col-12">
+                    <label for="iDisPer">Discount%</label>
+                    <input id="iDisPer" type="text" formControlName="iDisPer" pInputText (change)="disPerChange()">
+                    <p-message severity="error"
+                        [text]="editPOForm.controls['iDisPer'].errors['required'] ? 'This field is required' : editPOForm.controls['iDisPer'].errors['pattern']? 'Please enter a valid Discount %' : editPOForm.controls['iDisPer'].errors "
+                        *ngIf="!editPOForm.controls['iDisPer'].valid && editPOForm.controls['iDisPer'].dirty">
+                    </p-message>
+                </div>
+                <div class="p-col-12">
+                    <label for="iDisAmt">Discount Amount </label>
+                    <input id="iDisAmt" type="text" formControlName="iDisAmt" pInputText disabled>
+                </div>
+                <div class="p-col-12">
+                    <label for="iTotalAmount">Total Amount </label>
+                    <input id="iTotalAmount" type="text" formControlName="iTotalAmount" pInputText disabled>
+                </div>
+            </div>
+            <div class="separator separator--border-solid separator--space-sm separator--portlet-fit"></div>
+            <div class="p-grid form-group ui-fluid">
+                <div class="p-md-6 p-lg-6"></div>
+                <div class="p-col-12 p-md-12 p-lg-12 text-right">
+                    <button pButton type="button" label="Cancel" (click)="closeDialog()" style="margin-bottom:10px"
+                        class="ui-button-light atbt mr-2"></button>
+                    <button pButton type="button" label="Update" (click)="updatePOdetail()"
+                    [disabled]="!(!editPOForm.invalid)" class="ui-button atbt"></button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

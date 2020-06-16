@@ -11,6 +11,7 @@ import { supplierReqListData } from 'src/app/model/supplier-requisitionList';
 import { Router } from '@angular/router';
 import { ToastService } from 'src/app/services/toast.service';
 import { DatePipe } from '@angular/common';
+import { CreatePoDetailEditComponent } from '../create-po-detail-edit/create-po-detail-edit.component';
 
 @Component({
   selector: 'app-create-po-detail',
@@ -64,7 +65,7 @@ export class CreatePoDetailComponent implements OnInit {
 
   //Function to create PO
   createPO() {
-    let todayDate = this.datePipe.transform(this.myDate, 'dd/MM/yyyy');
+      let todayDate = this.datePipe.transform(this.myDate, 'dd/MM/yyyy');
     if (this.selectedValues.length >= 1) {
       let reqId = this.selectedValues.map(({ iPReqID }) => iPReqID);
       let reqIds = reqId.toString();
@@ -102,6 +103,19 @@ export class CreatePoDetailComponent implements OnInit {
     }
   }
 
+  // Function to open dialog box to edit product details
+  openDialogForEdit(poDetail) {
+    const ref = this.dialogService.open(CreatePoDetailEditComponent, {
+      data: poDetail,
+      header: "Edit Product Detail",
+      width: "27%",
+    });
+    ref.onClose.subscribe((success: boolean) => {
+      if (success) {
+        this.getPoDetailList();
+      }
+    });
+  }
   // Dialog box to delete product list
   deletePoDetail(iPReqID: number) {
     this.confirmationService.confirm({
@@ -109,11 +123,11 @@ export class CreatePoDetailComponent implements OnInit {
       header: 'Confirmation',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
-        var deleteAddressAPI = {
+        var deleteAPI = {
           "iRequestID": 23313,
           "iPReqID": iPReqID
         }
-        this.httpService.callPostApi(deleteAddressAPI).subscribe(
+        this.httpService.callPostApi(deleteAPI).subscribe(
           data => {
             this.getPoDetailList();
             this.toastService.displayApiMessage(data.headers.get('StatusMessage'), data.headers.get('StatusCode'));

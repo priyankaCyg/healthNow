@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { BreadcrumbService } from '../../breadcrumb.service';
 import { CountryService } from '../../demo/service/countryservice';
-import { SelectItem, MenuItem } from 'primeng/api';
+import { SelectItem, MenuItem, ConfirmationService } from 'primeng/api';
 import { GeneratedFile } from '@angular/compiler';
 import { DialogService } from 'primeng';
 import { PurchaseOrderRoutingModule } from '../purchase-order-routing.module';
@@ -43,7 +43,7 @@ export class PoGeneralDetailsComponent implements OnInit {
   selectedFileType;
 
   constructor(private breadcrumbService: BreadcrumbService, private dialogService: DialogService, private fb: FormBuilder,
-    private httpService: ApiService, private toastService: ToastService, private datePipe: DatePipe,
+    private httpService: ApiService, private toastService: ToastService, private datePipe: DatePipe, private confirmationService: ConfirmationService,
     private _apiService: APIService) {
     this.breadcrumbService.setItems([
       { label: 'Dashboard' },
@@ -321,6 +321,29 @@ export class PoGeneralDetailsComponent implements OnInit {
       "sSystemFileName": attachment.sSystemName
     }
     this._apiService.downloadAPI(dataToSend)
+  }
+
+  // Dialog box to delete product 
+  deleteProduct(iPrdID: number) {
+    this.confirmationService.confirm({
+      message: 'Are you sure you want to Delete this Record?',
+      header: 'Confirmation',
+      icon: 'pi pi-exclamation-triangle',
+      accept: () => {
+        var deleteAPI = {
+          "iRequestID": 2363,
+          "iPOID": this.poId,
+          "iPrdID": iPrdID
+        }
+        this.httpService.callPostApi(deleteAPI).subscribe(
+          data => {
+            this.getProductList();
+            this.toastService.displayApiMessage(data.headers.get('StatusMessage'), data.headers.get('StatusCode'));
+          },
+          error => { console.log(error) }
+        );
+      }
+    });
   }
 
 }
