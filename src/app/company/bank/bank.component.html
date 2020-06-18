@@ -6,7 +6,7 @@
           <label for="sBankName">Bank Name</label>
           <input id="sBankName" type="text" pInputText formControlName="sBankName" />
           <p-message severity="error"
-            [text]="bankForm.controls['sBankName'].errors['required'] ? 'This field is required' : bankForm.controls['sBankName'].errors['pattern']? 'Please enter a valid Bank Name' : bankForm.controls['sBankName'].errors "
+            [text]="bankForm.controls['sBankName'].errors['required'] ? requiredMsg : bankForm.controls['sBankName'].errors['invalidEntry']? nameMsg : bankForm.controls['sBankName'].errors "
             *ngIf="!bankForm.controls['sBankName'].valid && bankForm.controls['sBankName'].dirty">
           </p-message>
         </div>
@@ -14,7 +14,7 @@
           <label for="sShortCode">Short Code/Account Type</label>
           <input id="sShortCode" type="text" pInputText formControlName="sShortCode" />
           <p-message severity="error"
-            [text]="bankForm.controls['sShortCode'].errors['required'] ? 'This field is required' : bankForm.controls['sShortCode'].errors "
+            [text]="bankForm.controls['sShortCode'].errors['required'] ? 'This field is required' : bankForm.controls['sShortCode'].errors['invalidEntry']? 'Please enter a valid Short Code' : bankForm.controls['sShortCode'].errors "
             *ngIf="!bankForm.controls['sShortCode'].valid && bankForm.controls['sShortCode'].dirty">
           </p-message>
         </div>
@@ -22,7 +22,7 @@
           <label for="sAccountNo">Account No</label>
           <input id="sAccountNo" type="text" pInputText formControlName="sAccountNo" />
           <p-message severity="error"
-            [text]="bankForm.controls['sAccountNo'].errors['required'] ? 'This field is required' : bankForm.controls['sAccountNo'].errors['pattern']? 'Please enter a valid Account No.' : bankForm.controls['sAccountNo'].errors "
+            [text]="bankForm.controls['sAccountNo'].errors['required'] ? 'This field is required' : bankForm.controls['sAccountNo'].errors['invalidEntry']? 'Please enter a valid Account No.' : bankForm.controls['sAccountNo'].errors "
             *ngIf="!bankForm.controls['sAccountNo'].valid && bankForm.controls['sAccountNo'].dirty">
           </p-message>
         </div>
@@ -30,7 +30,7 @@
           <label for="sIFSC">IFSC</label>
           <input id="sIFSC" type="text" pInputText formControlName="sIFSC" />
           <p-message severity="error"
-            [text]="bankForm.controls['sIFSC'].errors['required'] ? 'This field is required' : bankForm.controls['sIFSC'].errors['pattern']? 'Please enter a valid IFSC Code' : bankForm.controls['sIFSC'].errors "
+            [text]="bankForm.controls['sIFSC'].errors['required'] ? 'This field is required' : bankForm.controls['sIFSC'].errors['invalidEntry']? 'Please enter a valid IFSC Code' : bankForm.controls['sIFSC'].errors "
             *ngIf="!bankForm.controls['sIFSC'].valid && bankForm.controls['sIFSC'].dirty">
           </p-message>
         </div>
@@ -38,7 +38,7 @@
           <label for="sBankBranch">Bank Branch</label>
           <textarea rows="3" pInputTextarea autoResize="autoResize" formControlName="sBankBranch"></textarea>
           <p-message severity="error"
-            [text]="bankForm.controls['sBankBranch'].errors['required'] ? 'This field is required' : bankForm.controls['sBankBranch'].errors['pattern']? 'Please enter a valid Branch' : bankForm.controls['sBankBranch'].errors"
+            [text]="bankForm.controls['sBankBranch'].errors['required'] ? 'This field is required' : bankForm.controls['sBankBranch'].errors['invalidEntry']? 'Please enter a valid Branch' : bankForm.controls['sBankBranch'].errors"
             *ngIf="!bankForm.controls['sBankBranch'].valid && bankForm.controls['sBankBranch'].dirty">
           </p-message>
         </div>
