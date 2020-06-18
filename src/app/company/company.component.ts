@@ -43,7 +43,7 @@ export class CompanyComponent implements OnInit {
     private dialogService: DialogService,
     private httpService: ApiService,
     private toastService: ToastService,
-    private confirmationService: ConfirmationService, private _apiService: APIService) {
+    private confirmationService: ConfirmationService) {
     this.breadcrumbService.setItems([
       { label: "Dashboard" },
       { label: "Company", routerLink: ["company"] },
@@ -443,14 +443,10 @@ export class CompanyComponent implements OnInit {
       header: 'Add New Employee',
       width: '80%'
     });
-    ref.onClose.subscribe((message: any) => {
-      if (message.StatusCode == "200") {
-        this.toastService.addSingle("success", message.StatusMessage, "");
+    ref.onClose.subscribe((success: boolean) => {
+      if (success) {
+        this.showEmployee();
       }
-      else {
-        this.toastService.addSingle("error", message.StatusMessage, "");
-      }
-      this.showEmployee()
     });
   }
 
@@ -460,9 +456,12 @@ export class CompanyComponent implements OnInit {
       "iRequestID": 2031,
       "iCID": 1
     }
-    this._apiService.getDetails(dataToSend).then(response => {
-      this.employee = response
-    });
+    this.httpService.callPostApi(dataToSend).subscribe(
+      (data) => {
+        this.employee = data.body;
+      },
+      (error) => console.log(error)
+    );
   }
 
   //Open Dialog To Edit Employee
@@ -474,14 +473,10 @@ export class CompanyComponent implements OnInit {
       header: 'Edit Employee',
       width: '80%'
     });
-    ref.onClose.subscribe((message: any) => {
-      if (message.StatusCode == "200") {
-        this.toastService.addSingle("success", message.StatusMessage, "");
+    ref.onClose.subscribe((success: boolean) => {
+      if (success) {
+        this.showEmployee();
       }
-      else {
-        this.toastService.addSingle("error", message.StatusMessage, "");
-      }
-      this.showEmployee()
     });
   }
 
@@ -497,15 +492,15 @@ export class CompanyComponent implements OnInit {
           "iEmpID": employeeId,
           "iCID": 1
         }
-        this._apiService.getDetails(dataToSendDelete).then(response => {
-
-          this.toastService.addSingle("info", response.headers.get('StatusMessage'), "");
-          this.showEmployee();
-        });
+        this.httpService.callPostApi(dataToSendDelete).subscribe(
+          (data) => {
+            this.toastService.displayApiMessage(data.headers.get('StatusMessage'), data.headers.get('StatusCode'));
+            this.showEmployee();
+          },
+          (error) => console.log(error)
+        );
       },
-      reject: () => {
-        this.toastService.addSingle("info", "Rejected", "Rejected");
-      }
+      reject: () => { }
     });
   }
 }
