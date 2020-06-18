@@ -41,6 +41,7 @@ export class PoGeneralDetailsComponent implements OnInit {
   uploadedFiles: any[] = [];
   fileTypeData;
   selectedFileType;
+  tncData:any;
 
   constructor(private breadcrumbService: BreadcrumbService, private dialogService: DialogService, private fb: FormBuilder,
     private httpService: ApiService, private toastService: ToastService, private datePipe: DatePipe, private confirmationService: ConfirmationService,
@@ -91,6 +92,7 @@ export class PoGeneralDetailsComponent implements OnInit {
     });
     this.getProductList();
     this.showAttachment();
+    this.getTncData();
 
   }
 
@@ -344,6 +346,17 @@ export class PoGeneralDetailsComponent implements OnInit {
         );
       }
     });
+  }
+
+  getTncData(){
+      const gettncDataAPI = {
+        "iRequestID": 2362,
+        "iPOID": this.poId
+      }
+      this.httpService.callPostApi(gettncDataAPI).subscribe(
+        data => {
+          this.tncData = data.body;
+        });
   }
 
 }
