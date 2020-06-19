@@ -6,7 +6,7 @@
           <label for="sBankName">Bank Name</label>
           <input id="sBankName" type="text" pInputText formControlName="sBankName" />
           <p-message severity="error"
-            [text]="bankForm.controls['sBankName'].errors['Msg']"
+          [text]="bankForm.controls['sBankName'].errors['required'] ? 'This field is required' : bankForm.controls['sBankName'].errors['pattern']? 'Please enter a valid Bank Name' : bankForm.controls['sBankName'].errors "
             *ngIf="!bankForm.controls['sBankName'].valid && bankForm.controls['sBankName'].dirty">
           </p-message>
         </div>
