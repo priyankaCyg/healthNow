@@ -7,13 +7,18 @@ import { Injectable } from '@angular/core';
 export class ValidationService {
 
   constructor() { }
-
-  static alphabetValidator(control) {
+  
+  static bankNameValidator(control) {
     // Validates upper case and lower case alphabets
-    if (control.value.match(/^[A-Za-z\s]+$/)) {
-      return null;
-    } else {
-      return { invalidEntry: true };
+    if(control.value == ""){
+      return { Msg:  "This field is required"};
+    }
+    else if(control.value.length <3 || control.value.length >10){
+      return { Msg:  "name should be between 4 to 9 characters"};
+    }
+    else if (!control.value.match(/^[A-Za-z\s]+$/)) {
+     // return null;
+     return { Msg:  "Enter a valid name"};
     }
   }
 
@@ -53,7 +58,6 @@ export class ValidationService {
     }
   }
 
-
   static pincodeValidator(control) {
     //Validates indian pincode
     if (control.value.match(/^[1-9]{1}[0-9]{2}\\s{0, 1}[0-9]{3}$/)) {
@@ -81,6 +85,14 @@ export class ValidationService {
     }
   }
 
+  static numberLengthValidator(control) {
+    //Validates only integer numbers
+    if (control.value.length >= 10 && control.value.length <= 12) {
+      return null;
+    } else {
+      return { invalidEntry: true };
+    }
+  }
   // static emailValidator(control) {
   //   //Email validator
   //   if (
