@@ -1,0 +1,352 @@
+<p-confirmDialog header="Confirmation" icon="pi pi-info" [style]="{width: '425px'}"
+    rejectButtonStyleClass="ui-button-secondary"></p-confirmDialog>
+<div class="p-grid">
+    <div class="p-col-12">
+        <div class="card card-w-title">
+            <h1>Purchace Order Details</h1>
+            <p-tabView>
+                <!-- General tab start -->
+                <p-tabPanel header="General">
+                    <form [formGroup]="POForm" autocomplete="off">
+                        <div class="p-grid ui-fluid">
+                            <div class="p-col-12 mt-2">
+                                <div class="p-grid form-group">
+                                    <div class="p-col-12 p-lg-3 mb-2">
+                                        <label for="sPONo">Supplier PO No.</label>
+                                        <input id="sPONo" type="text" pInputText disabled placeholder="PO No."
+                                            formControlName="sPONo">
+                                    </div>
+                                    <div class="p-col-12 p-lg-3 mb-2">
+                                        <label for="sPODate">Supplier PO Date</label>
+                                        <p-calendar [(ngModel)]="value" formControlName="sPODate"></p-calendar>
+                                        <div>
+                                            <p-message severity="error" text="This field is required"
+                                                *ngIf="POForm.controls['sPODate'].touched  && POForm.controls['sPODate'].hasError('required')">
+                                            </p-message>
+                                        </div>
+                                    </div>
+                                    <div class="p-col-12 p-lg-3 mb-2">
+                                        <label for="sSupName">Supplier</label>
+                                        <input id="sSupName" type="text" pInputText disabled placeholder="Supplier Name"
+                                            formControlName="sSupName">
+                                    </div>
+                                    <div class="p-col-12 p-lg-3 mb-2">
+                                        <label for="iSuppContactName">Supplier Contact</label>
+                                        <p-dropdown [options]="supplierContact" [(ngModel)]="selectedSuppContact"
+                                            optionLabel="sFullName" formControlName="iSuppContactName"></p-dropdown>
+                                        <div>
+                                            <p-message severity="error" text="This field is required"
+                                                *ngIf="POForm.controls['iSuppContactName'].touched  && (selectedSuppContact.iSupContactID =='' || POForm.controls['iSuppContactName'].hasError('required'))">
+                                            </p-message>
+                                        </div>
+                                    </div>
+                                    <div class="p-col-12 p-lg-6 mb-2">
+                                        <label for="sSuppAddress">Supplier Address</label>
+                                        <p-dropdown [options]="addressData" [(ngModel)]="selectedAddress"
+                                            optionLabel="sAddress" formControlName="sSuppAddress"></p-dropdown>
+                                        <div>
+                                            <p-message severity="error" text="This field is required"
+                                                *ngIf="POForm.controls['sSuppAddress'].touched  && (selectedAddress.iSupAddID =='' || POForm.controls['sSuppAddress'].hasError('required'))">
+                                            </p-message>
+                                        </div>
+                                    </div>
+                                    <!-- <div class="p-col-12 p-lg-3 mb-2">
+                                        <label for="suppAddress">Scheduled Date</label>
+                                        <p-calendar [(ngModel)]="value" formControlName=""></p-calendar>
+                                    </div> -->
+                                    <div class="p-col-12 p-md-2 p-lg-12">
+                                        <div
+                                            class="separator separator--border-dashed separator--space-sm separator--portlet-fit">
+                                        </div>
+                                    </div>
+                                    <div class="p-col-12 p-lg-3 mb-2">
+                                        <label for="sPartnerName">Partner</label>
+                                        <input id="sPartnerName" type="text" pInputText disabled
+                                            placeholder=" Partner Name" formControlName="sPartnerName">
+                                    </div>
+                                    <div class="p-col-12 p-lg-3 mb-2">
+                                        <label for="sLocName">Location</label>
+                                        <input id="sLocName" type="text" pInputText disabled placeholder="Location"
+                                            formControlName="sLocName">
+                                    </div>
+                                    <div class="p-col-12 p-md-2 p-lg-12">
+                                        <div
+                                            class="separator separator--border-dashed separator--space-sm separator--portlet-fit m-1">
+                                        </div>
+                                    </div>
+                                    <div class="p-col-12 p-lg-3 mb-2">
+                                        <label for="iPartnerContactName">Partner Contact</label>
+                                        <p-dropdown [options]="partnerContact" [(ngModel)]="selectedPartnerContact"
+                                            optionLabel="sFullName" formControlName="iPartnerContactName">
+                                        </p-dropdown>
+                                        <div>
+                                            <p-message severity="error" text="This field is required"
+                                                *ngIf="POForm.controls['iPartnerContactName'].touched  && (selectedPartnerContact.iPartnerContactID =='' || POForm.controls['iPartnerContactName'].hasError('required'))">
+                                            </p-message>
+                                        </div>
+                                    </div>
+                                    <div class="p-col-12 p-lg-3 mb-2">
+                                        <label for="iCurrencyName"> Currency</label>
+                                        <p-dropdown [options]="currencyData" [(ngModel)]="selectedCurrency"
+                                            optionLabel="sKVValue" formControlName="iCurrencyName"></p-dropdown>
+                                        <div>
+                                            <p-message severity="error" text="This field is required"
+                                                *ngIf="POForm.controls['iCurrencyName'].touched  && (selectedCurrency.iKVID =='' || POForm.controls['iCurrencyName'].hasError('required'))">
+                                            </p-message>
+                                        </div>
+                                    </div>
+                                    <div class="p-col-12 p-lg-3 mb-2">
+                                        <div class="mt-4">
+                                            <p-checkbox name="group1" value="tax" label="Include Taxes"
+                                                [(ngModel)]="selectedTax" inputId="ny" formControlName="iIncludeTaxes">
+                                            </p-checkbox>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="separator separator--border-solid separator--space-sm separator--portlet-fit">
+                        </div>
+                        <div class="p-grid form-group ui-fluid p-justify-end mt-3">
+                            <div class="p-col-12 p-md-2 p-lg-12 text-right">
+                                <button pButton type="button" label="Cancel"
+                                    routerLink="/purchase-order/create-po-detail"
+                                    class="ui-button-light atbt mr-2 mb-2"></button>
+                                <button pButton type="button" label="Save"
+                                    [disabled]="!(!POForm.invalid && !dropDownValidityCheck())"
+                                    class="ui-button atbt mb-2" (click)="savePODetail()"></button>
+                            </div>
+                        </div>
+                    </form>
+                </p-tabPanel>
+                <!-- General Tab End -->
+
+                <!-- Product tab start -->
+                <p-tabPanel header="Product">
+                    <div class="p-grid ui-fluid p-justify-end mt-2">
+                        <div class="p-col-12">
+                            <div class="p-col-12">
+                                <p-table [value]="productDetails">
+                                    <ng-template pTemplate="header">
+                                        <tr>
+                                            <th>Product Category</th>
+                                            <th>Product</th>
+                                            <th style="width: 8em;">Qty</th>
+                                            <th style="width: 8em;">Rate</th>
+                                            <th style="width: 8em;">Discount %</th>
+                                            <th style="width: 8em;">Discount Amt</th>
+                                            <th>Total Amount</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </ng-template>
+                                    <ng-template pTemplate="body" let-poDetail>
+                                        <tr>
+                                            <td>{{poDetail.sPCName}}</td>
+                                            <td>{{poDetail.sPrdName}}</td>
+                                            <td>{{poDetail.iQty}}</td>
+                                            <td>{{poDetail.iRate}}</td>
+                                            <td>{{poDetail.iDiscountPercentage}}</td>
+                                            <td>{{poDetail.iDiscountAmt}}</td>
+                                            <td>{{poDetail.totalAmt}}</td>
+                                            <td>
+                                                <!-- <button pButton type="button" class="ui-button-success mr-1" icon="pi pi-pencil"></button> -->
+                                                <button pButton type="button" class="ui-button-danger mr-1"
+                                                    (click)="deleteProduct(poDetail.iPrdID)"
+                                                    icon="pi pi-trash"></button>
+                                            </td>
+                                        </tr>
+                                    </ng-template>
+                                </p-table>
+                            </div>
+                        </div>
+                    </div>
+                </p-tabPanel>
+                <!-- Product Tab End -->
+
+                <!-- Terms & conditions tab start -->
+                <p-tabPanel header="Terms &amp; Conditions">
+                    <div class="p-grid ui-fluid mt-2">
+                        <div class="p-col-12 p-lg-6 p-md-6">
+                            <div class="card download-files tasks mb-0">
+                                <div class="p-grid p-nogutter">
+                                    <div class="p-col-12 title">
+                                        <h1>General</h1>
+                                    </div>
+                                </div>
+                                <!-- <p-table [value]="General" [(selection)]="Selectedvalue">
+
+                                        <ng-template pTemplate="body" let-general>
+                                            <tr>
+                                                <td>
+                                                    <p-tableCheckbox [value]="General"></p-tableCheckbox>
+                                                </td>
+                                                <td>{{general.sTnCDesc}}</td>
+
+                                            </tr>
+                                        </ng-template>
+                                    </p-table> -->
+                                <ul class="checkboxes" *ngFor="let general of General">
+                                    <li class="checkbox-row">
+                                        <div class="p-grid">
+                                            <div class="p-col-12 checkbox">
+                                                <p-checkbox [value]="general" [(ngModel)]="Selectedvalue">
+                                                </p-checkbox>
+                                                <p>{{general.sTnCDesc}}</p>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="p-col-12 p-lg-6 p-md-6">
+                            <div class="card download-files tasks mb-0">
+                                <div class="p-grid p-nogutter">
+                                    <div class="p-col-12 title">
+                                        <h1>Payment</h1>
+                                    </div>
+                                </div>
+                                <ul class="checkboxes" *ngFor="let payment of Payment">
+                                    <li class="checkbox-row">
+                                        <div class="p-grid">
+                                            <div class="p-col-12 checkbox">
+                                                <p-checkbox [value]="payment" [(ngModel)]="SelectedPayment">
+                                                </p-checkbox>
+                                                <p>{{payment.sTnCDesc}}</p>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="p-col-12 p-lg-6 p-md-6">
+                            <div class="card download-files tasks mb-0">
+                                <div class="p-grid p-nogutter">
+                                    <div class="p-col-12 title">
+                                        <h1>Warranty</h1>
+                                    </div>
+                                </div>
+                                <ul class="checkboxes" *ngFor="let warranty of Warranty">
+                                    <li class="checkbox-row">
+                                        <div class="p-grid">
+                                            <div class="p-col-12 checkbox">
+                                                <p-checkbox [value]="warranty" [(ngModel)]="SelectedWarranty">
+                                                </p-checkbox>
+                                                <p>{{warranty.sTnCDesc}}</p>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="p-col-12 p-lg-6 p-md-6">
+                            <div class="card download-files tasks mb-0 p-3">
+                                <form [formGroup]="termsCondForm" autocomplete="off" (ngSubmit)="onSubmit()">
+
+                                    <div class="p-grid p-nogutter">
+                                        <div class="p-col-12 title">
+                                            <h1>Custom</h1>
+                                        </div>
+                                    </div>
+                                    <div class="p-grid">
+                                        <div class="p-col-12 mb-1" formArrayName="customTnc"
+                                            *ngFor="let item of termsCondForm.get('customTnc').controls; let i = index;">
+
+                                            <div class="p-grid" [formGroupName]="i">
+                                                <input type="text" formControlName="custom" pInputText />
+                                            </div>
+                                        </div>
+                                        <!-- <div class="p-col-12 mb-1">
+                                            <input type="text" formControlName="custom2" pInputText />
+                                        </div>
+                                        <div class="p-col-12 mb-1">
+                                            <input type="text" formControlName="custom3" pInputText />
+                                        </div>
+                                        <div class="p-col-12 mb-1">
+                                            <input type="text" formControlName="custom4" pInputText />
+                                        </div>
+                                        <div class="p-col-12 mb-1">
+                                            <input type="text" formControlName="custom5" pInputText />
+                                        </div>
+                                        <div class="p-col-12 mb-1">
+                                            <input type="text" formControlName="custom6" pInputText />
+                                        </div>
+                                        <div class="p-col-12 mb-1">
+                                            <input type="text" formControlName="custom7" pInputText />
+                                        </div>
+                                        <div class="p-col-12 mb-1">
+                                            <input type="text" formControlName="custom8" pInputText />
+                                        </div>
+                                        <div class="p-col-12 mb-1">
+                                            <input type="text" formControlName="custom9" pInputText />
+                                        </div>
+                                        <div class="p-col-12 mb-1">
+                                            <input type="text" formControlName="custom10" pInputText />
+                                        </div> -->
+                                    </div>
+                                    <div class="p-grid form-group ui-fluid">
+                                        <div class="p-col-12 p-md-12 p-lg-12 text-right">
+                                            <button pButton type="submit" label="Save" class="ui-button atbt"></button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </p-tabPanel>
+                <!-- Terms & Condition End -->
+
+                <!-- Attachment tab start -->
+                <p-tabPanel header="Attachment">
+                    <div class="p-grid ui-fluid">
+                        <div class="p-col-12 p-md-3 p-lg-3">
+                            <label for="sfileType">Select File Type</label>
+                            <!-- <p-dropdown id="sfileType" class="form-control" placeholder="Select" required="true">
+                            </p-dropdown> -->
+                            <p-dropdown id="sfileType" class="form-control" [options]="fileTypeData"
+                                placeholder="Select File Type" optionLabel="sDocTypeName" [(ngModel)]="selectedFileType"
+                                required="true"></p-dropdown>
+                        </div>
+                        <div class="p-col-12 p-md-2 p-lg-1">
+                            <div class="fileUpload p-0">
+                                <!-- <p-fileUpload #fubauto mode="basic" name="demo[]" url="./upload.php" accept="image/*"
+                                    maxFileSize="1000000" (onUpload)="onBasicUploadAuto($event)" [auto]="true"
+                                    chooseLabel="Browse"></p-fileUpload> -->
+                                <p-fileUpload mode="basic" [auto]="true" name="demo[]" maxFileSize="1000000"
+                                    customUpload="true" (uploadHandler)="onUpload($event)" multiple="multiple"
+                                    chooseLabel="Browse"></p-fileUpload>
+                            </div>
+                        </div>
+                        <div class="p-col-12 p-md-3 p-lg-3 text-left"><button pButton type="button" icon="pi pi-upload"
+                                (click)="uploadFile()" label="Upload" class="ui-button atbt"></button></div>
+                        <div class="p-col-12 p-md-12 p-lg-12 mt-3">
+                            <p-table [value]="attachment">
+                                <ng-template pTemplate="header">
+                                    <tr>
+                                        <th>File Type</th>
+                                        <th>File Name</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </ng-template>
+                                <ng-template pTemplate="body" let-attachment>
+                                    <tr>
+                                        <td>{{attachment.sDocTypeName}}</td>
+                                        <td>{{attachment.sActualName}}</td>
+                                        <td>
+                                            <button pButton type="button" class="ui-button-success mr-1"
+                                                (click)="downloadFile(attachment)" icon="pi pi-download"></button>
+                                            <button pButton type="button" class="ui-button-danger"
+                                                icon="pi pi-trash"></button>
+                                        </td>
+                                    </tr>
+                                </ng-template>
+                            </p-table>
+                        </div>
+                    </div>
+                </p-tabPanel>
+                <!-- Attachment tab End  -->
+            </p-tabView>
+        </div>
+    </div>
+</div>
