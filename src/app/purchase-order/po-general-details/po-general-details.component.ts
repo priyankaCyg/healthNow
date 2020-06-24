@@ -5,7 +5,7 @@ import { SelectItem, MenuItem, ConfirmationService } from 'primeng/api';
 import { GeneratedFile } from '@angular/compiler';
 import { DialogService } from 'primeng';
 import { PurchaseOrderRoutingModule } from '../purchase-order-routing.module';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
 import { POGeneralMaster } from 'src/app/model/poGeneral.model';
 import { ApiService } from 'src/app/services/api.service';
 import { supplierReqListData } from 'src/app/model/supplier-requisitionList';
@@ -16,7 +16,7 @@ import { APIService } from 'src/app/services/apieservice';
 @Component({
   selector: 'app-po-general-details',
   templateUrl: './po-general-details.component.html',
-  styleUrls: ['./po-general-details.component.css']
+  styleUrls: ['./po-general-details.component.css'],
 })
 export class PoGeneralDetailsComponent implements OnInit {
 
@@ -41,7 +41,18 @@ export class PoGeneralDetailsComponent implements OnInit {
   uploadedFiles: any[] = [];
   fileTypeData;
   selectedFileType;
-
+  TermsData;
+  General: string[] = [];
+  Selectedvalue: string[] = [];
+  Payment: string[] = [];
+  SelectedPayment: string[] = [];
+  Warranty: string[] = [];
+  SelectedWarranty: string[] = [];
+  Custom: string[] = [];
+  termsCondData = [];
+  tnc_mandate_data = [];
+  customTnc: FormArray;
+  termsCondForm: FormGroup
   constructor(private breadcrumbService: BreadcrumbService, private dialogService: DialogService, private fb: FormBuilder,
     private httpService: ApiService, private toastService: ToastService, private datePipe: DatePipe, private confirmationService: ConfirmationService,
     private _apiService: APIService) {
@@ -91,7 +102,10 @@ export class PoGeneralDetailsComponent implements OnInit {
     });
     this.getProductList();
     this.showAttachment();
-
+    this.getTermsCondList();
+    this.termsCondForm = this.fb.group({
+      customTnc: new FormArray([])
+    });
   }
 
   //code for product default dropdown data
@@ -263,6 +277,145 @@ export class PoGeneralDetailsComponent implements OnInit {
         this.productDetails = data.body;
       });
   }
+
+  //
+  // termsCondForm = this.fb.group({
+  //   custom1: [""],
+  //   custom2: [""],
+  //   custom3: [""],
+  //   custom4: [""],
+  //   custom5: [""],
+  //   custom6: [""],
+  //   custom7: [""],
+  //   custom8: [""],
+  //   custom9: [""],
+  //   custom10: [""]
+  // });
+  //code for show terms and condition data
+  getTermsCondList() {
+    const getTermsCond_data = {
+      "iRequestID": 2384,
+      "iPOID": this.poId
+    }
+    this.httpService.callPostApi(getTermsCond_data).subscribe(
+      data => {
+        this.TermsData = data.body;
+        // this.TermsData.forEach(key => {
+        //   if(key.iTnCTypeID == 51){
+        //     this.General.push(key);
+        //   }
+        //   else if(key.iTnCTypeID == 52){
+        //     this.Payment.push(key);
+        //   }
+        //   else if(key.iTnCTypeID == 54){
+        //     this.Warranty.push(key);
+        //   }
+        //   else if(key.iTnCTypeID == 55){
+        //     this.Custom.push(key);
+        //     this.createtncTable(this.Custom,this.customTnc,'customTnc');
+        //   }
+        // })
+        this.General = this.TermsData.filter(key => key.iTnCTypeID == 51);
+        this.Payment = this.TermsData.filter(key => key.iTnCTypeID == 52);
+        this.Warranty = this.TermsData.filter(key => key.iTnCTypeID == 54);
+        this.Custom = this.TermsData.filter(key => key.iTnCTypeID == 55);
+        this.createtncTable(this.Custom, this.customTnc, 'customTnc');
+      });
+    console.log(this.Custom)
+  }
+
+  //code to add new terms and condition data
+  onSubmit() {
+    this.termsCondData = [];
+    // for (let i = 0; i < 11; i++) {
+    //   var infoVarName = "sTnCDesc" + (i + 1);
+    //   let tncInput_data = this.termsCondForm.controls[infoVarName].value.toString();
+    //   if (tncInput_data != "" && tncInput_data != undefined) {
+    //     const info_obj = {
+    //       sTnCDesc: tncInput_data,
+    //       iTnCID: 1,
+    //       iTnCTypeID: 51,
+    //       iDisplayOrder: 1
+    //     }
+    //     this.termsCondData.push(info_obj);
+    //   }
+    // }
+    //this.termsCondData.push(this.Selectedvalue);
+    // var termsCondData = [
+    //   {
+    //     "iTnCID": 1,
+    //     "iTnCTypeID": 51,
+    //     "sTnCDesc": "test",
+    //     "iDisplayOrder": 1
+    //   }
+    // ]
+    this.termsCondData.push(...this.Selectedvalue, ...this.SelectedPayment, ...this.SelectedWarranty);
+    console.log(this.termsCondData);
+    this.tnc_mandate_data = [];
+    this.termsCondData.forEach((key, index) => {
+      let iTnCID = this.termsCondData[index].iTnCID;
+      let iTnCTypeID = this.termsCondData[index].iTnCTypeID;
+      let sTnCDesc = this.termsCondData[index].sTnCDesc;
+      let iDisplayOrder = this.termsCondData[index].iDisplayOrder;
+      let temp_array = {
+        "iTnCID": iTnCID,
+        "iTnCTypeID": iTnCTypeID,
+        "sTnCDesc": sTnCDesc,
+        "iDisplayOrder": iDisplayOrder
+      }
+      this.tnc_mandate_data.push(temp_array);
+    })
+    // if(this.termsCondForm.value != '' || this.termsCondForm.value != null || this.termsCondForm.value != undefined)
+    //{
+    //     let iTnCID = this.Custom[index].iTnCID;
+    //  let iTnCTypeID = this.Custom[index].iTnCTypeID;
+    //  let sTnCDesc = this.Custom[index].sTnCDesc;
+    //  let iDisplayOrder = this.Custom[index].iDisplayOrder;
+    //  let temp_array = {
+    //   "iTnCID": iTnCID,
+    //   "iTnCTypeID": iTnCTypeID,
+    //   "sTnCDesc": sTnCDesc,
+    //   "iDisplayOrder": iDisplayOrder
+    //  }
+    //  this.tnc_mandate_data.push(temp_array);
+    // }
+
+    const tncAddAPI = {
+      "iRequestID": 2385,
+      "iPOID": this.poId,
+      "sTnCDesc": this.tnc_mandate_data
+    }
+    console.log(tncAddAPI);
+    console.log(this.tnc_mandate_data);
+    console.log(this.termsCondForm.value)
+    this.httpService.callPostApi(tncAddAPI).subscribe(
+      data => {
+        this.toastService.displayApiMessage(data.headers.get('StatusMessage'), data.headers.get('StatusCode'));
+      });
+  }
+
+
+  createtncTable(curr_arr, arrayName, controlArraName) {
+    curr_arr.map(key => {
+      if (curr_arr.length) {
+        //if(key.iIsMandatory == 1)
+        this.addItem(key.sTnCDesc, arrayName, controlArraName);
+      }
+    })
+
+  }
+
+  createItem(obj): FormGroup {
+    return this.fb.group({
+      custom: obj
+    });
+  }
+
+  addItem(obj, arrayName, controlArrayName): void {
+    arrayName = this.termsCondForm.get(controlArrayName) as FormArray;
+    arrayName.push(this.createItem(obj));
+  }
+
 
   // code for select files 
   onUpload(event) {

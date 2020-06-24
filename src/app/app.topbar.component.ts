@@ -144,6 +144,18 @@ import { AppMainComponent } from './app.main.component';
                                        		 <h3>Purchase Order</h3>
                                    		 </span>
 									</li>
+									<li routerLink="/purchase-order/purchase-order-approval">
+									<i class="pi pi-circle-on"></i>
+									<span>
+											<h3>Purchase Order Approval</h3>
+										</span>
+								</li>
+								<li routerLink="/purchase-order/purchase-order-freezed">
+								<i class="pi pi-circle-on"></i>
+								<span>
+										<h3>Purchase Order Freezed</h3>
+									</span>
+							</li>
 								</ul>
 							</li>
 							<li [ngClass]="{'active-topmenuitem': activeItem === 6}" (click)="mobileMegaMenuItemClick(3)">
