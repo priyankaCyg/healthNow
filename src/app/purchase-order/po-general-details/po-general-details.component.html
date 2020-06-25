@@ -97,8 +97,8 @@
                                     </div>
                                     <div class="p-col-12 p-lg-3 mb-2">
                                         <div class="mt-4">
-                                            <p-checkbox name="group1" value="tax" label="Include Taxes"
-                                                [(ngModel)]="selectedTax" inputId="ny" formControlName="iIncludeTaxes">
+                                            <p-checkbox name="group1" label="Include Taxes"
+                                            [(ngModel)]="checked" formControlName="iIncludeTaxes" binary="true">
                                             </p-checkbox>
                                         </div>
                                     </div>
@@ -109,8 +109,7 @@
                         </div>
                         <div class="p-grid form-group ui-fluid p-justify-end mt-3">
                             <div class="p-col-12 p-md-2 p-lg-12 text-right">
-                                <button pButton type="button" label="Cancel"
-                                    routerLink="/purchase-order/create-po-detail"
+                                <button pButton type="button" label="Cancel" (click)="cancelClick()"
                                     class="ui-button-light atbt mr-2 mb-2"></button>
                                 <button pButton type="button" label="Save"
                                     [disabled]="!(!POForm.invalid && !dropDownValidityCheck())"

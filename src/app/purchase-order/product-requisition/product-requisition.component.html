@@ -34,6 +34,7 @@
                                         <th>Quantity</th>
                                         <th>Created By</th>
                                         <th>Created Date</th>
+                                        <th>Status</th>
                                         <th>Action</th>
                                     </tr>
                                 </ng-template>
@@ -49,6 +50,18 @@
                                         <td>{{orderReq.sCreatedBy}}</td>
                                         <td>{{orderReq.sCreatedDate | date:"dd-MM-yyyy"}}</td>
                                         <td>
+                                            <span *ngIf="orderReq.iStatusID == 1" class="badge badge--success badge--inline badge--pill">
+                                              {{orderReq.sStatusName}}
+                                            </span>
+                                            <span *ngIf="orderReq.iStatusID == 2" class="badge badge--warning badge--inline badge--pill">
+                                              {{orderReq.sStatusName}}
+                                            </span>
+                                            <span *ngIf="orderReq.iStatusID == 5" class="badge badge--warning badge--inline badge--pill">
+                                                {{orderReq.sStatusName}}
+                                              </span>
+                                          </td>
+                                        <td>
+                                            <span *ngIf="orderReq.iStatusID != 2">
                                             <button pButton type="button" class="ui-button-success mr-1"
                                                 (click)="openDialogForEditReq(orderReq)" icon="pi pi-pencil"
                                                 title="Edit"></button>
@@ -58,6 +71,7 @@
                                             <button routerLink="/purchase-order/map-supplier" pButton type="button"
                                                 class="ui-button-success" icon="pi pi-sitemap"
                                                 (click)="mapSupplier(orderReq)" title="Map Supplier"></button>
+                                            </span>
                                         </td>
                                     </tr>
                                 </ng-template>

@@ -12,6 +12,7 @@ import { supplierReqListData } from 'src/app/model/supplier-requisitionList';
 import { ToastService } from 'src/app/services/toast.service';
 import { DatePipe } from '@angular/common';
 import { APIService } from 'src/app/services/apieservice';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-po-general-details',
@@ -37,14 +38,15 @@ export class PoGeneralDetailsComponent implements OnInit {
   partnerContact;
   currencyData;
   selectedCurrency;
-  selectedTax: string[] = [];
+  checked: boolean = false;
   uploadedFiles: any[] = [];
   fileTypeData;
   selectedFileType;
+  editPo: string;
 
   constructor(private breadcrumbService: BreadcrumbService, private dialogService: DialogService, private fb: FormBuilder,
     private httpService: ApiService, private toastService: ToastService, private datePipe: DatePipe, private confirmationService: ConfirmationService,
-    private _apiService: APIService) {
+    private _apiService: APIService, private router: Router) {
     this.breadcrumbService.setItems([
       { label: 'Dashboard' },
       { label: 'Purchase Order', routerLink: ['/purchase-order'] }
@@ -53,23 +55,23 @@ export class PoGeneralDetailsComponent implements OnInit {
 
   ngOnInit(): void {
     this.defaultDropDwnValue();
-    // this.attachment = [
-    //   { fileName: 'Testing File', fileType: 'testing.pdf' },
-    //   { fileName: 'Demo File', fileType: 'demo.xlsx' },
-    //   { fileName: 'Detail Document', fileType: 'details.pdf' },
-    //   { fileName: 'Supplier Details', fileType: 'supplier-details.pdf' }
-    // ];
-    let editPo: string = localStorage.getItem('isPoEdit');
-    if (editPo == 'true') {
+    this.editPo  = localStorage.getItem('isPoEdit');
+    this.data = JSON.parse(localStorage.getItem('poDetails'));
+    this.poRespData = Object.values(this.data);
+    this.poId = this.poRespData[0].iPOID;
+    if (this.editPo == 'true') {
       var dataToSendEdit = {
-        // "iRequestID": 2288,
-        // "iPartnerID": this.partner_id
+        "iRequestID": 23510,
+        "iPOID": this.poId
       }
       this.httpService.callPostApi(dataToSendEdit).subscribe(
         data => {
           this.purchaseOrderData = new POGeneralMaster(data.body[0]);
           this.POForm = this.createControl(this.purchaseOrderData);
           this.poId = this.purchaseOrderData.iPOID;
+          if(this.purchaseOrderData.iIncludeTaxes ==1){
+            this.checked = true;
+          }
           Promise.all([this.getSuppContact(), this.getSuppAddress(), this.getPartnerContact(), this.getCurrency(), this.getFileType()]).then(values => {
             console.log(values);
             this.setDropDownVal()
@@ -77,8 +79,6 @@ export class PoGeneralDetailsComponent implements OnInit {
         });
     }
     else {
-      this.data = JSON.parse(localStorage.getItem('poDetails'));
-      this.poRespData = Object.values(this.data);
       this.purchaseOrderData = new POGeneralMaster(this.poRespData[0]);
       this.POForm = this.createControl(this.purchaseOrderData);
       this.poId = this.purchaseOrderData.iPOID;
@@ -233,7 +233,7 @@ export class PoGeneralDetailsComponent implements OnInit {
     let new_date = formData.sPODate;
     let po_date = this.datePipe.transform(new_date, 'dd/MM/yyyy');
     let taxVal: number = 0;
-    if (this.selectedTax.length == 1) {
+    if (this.checked == true) {
       taxVal = 1;
     }
     const addAPI = {
@@ -250,6 +250,16 @@ export class PoGeneralDetailsComponent implements OnInit {
       data => {
         this.toastService.displayApiMessage(data.headers.get('StatusMessage'), data.headers.get('StatusCode'));
       });
+  }
+
+  //Cancel button function for PO details page
+  cancelClick(){
+    if (this.editPo == 'true') {
+      this.router.navigate(['/purchase-order/po-list'])
+    }
+    else{
+      this.router.navigate(['/purchase-order/create-po-detail'])
+    }
   }
 
   //Function to fetch products in product tab
