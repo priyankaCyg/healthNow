@@ -1,0 +1,109 @@
+<p-confirmDialog header="Confirmation" icon="pi pi-info" [style]="{width: '425px'}"
+    rejectButtonStyleClass="ui-button-secondary"></p-confirmDialog>
+<div class="p-grid">
+    <div class="p-col-12">
+        <div class="card card-w-title">
+            <div class="p-grid ui-fluid vertical-container">
+                <div class="p-col p-col-align-start">
+                    <h1 class="mt-2">Purchase Order Freezed</h1>
+                </div>
+                <div class="p-col-12 mt-3">
+                    <p-table [value]="poList" #search [paginator]="true" [rows]="10" [showCurrentPageReport]="true"
+                        [rowsPerPageOptions]="[10, 25, 50]" [filterDelay]="0"
+                        [globalFilterFields]="['sPONo','sPODate','sSupName','sCreatedBy']" dataKey="sPONo"
+                        (onRowExpand)="onRowExpand()" (onRowCollapse)="onRowCollapse()"
+                        [expandedRowKeys]="expandedRows">
+                        <ng-template pTemplate="caption">
+                            <div class="ui-table-globalfilter-container text-left">
+                                <input type="text" pInputText size="50" placeholder="Search"
+                                    (input)="search.filterGlobal($event.target.value,'contains')"
+                                    style="width: 250px;" />
+                            </div>
+                        </ng-template>
+                        <ng-template pTemplate="header">
+                            <tr>
+                                <th style="width: 3em"> <a style="cursor: pointer;font-size: 16px; color:teal;"
+                                        (click)="expandAll()"><i *ngIf="!isExpanded" class="fa fa-plus-circle"
+                                            aria-hidden="true"></i>
+                                        <i *ngIf="isExpanded" class="fa fa-minus-circle" aria-hidden="true"></i></a>
+                                </th>
+                                <th>Supplier PO</th>
+                                <th>Supplier PO Date</th>
+                                <th>Supplier Name</th>
+                                <th>Currency</th>
+                                <th>Include Taxes</th>
+                                <th>Status</th>
+                                <th>Created By</th>
+                                <th>Action</th>
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="body" let-poListData let-expanded="expanded">
+                            <tr>
+                                <td>
+                                    <a href="#" [pRowToggler]="poListData">
+                                        <i [ngClass]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></i>
+                                    </a>
+                                </td>
+                                <td>{{poListData.sPONo}}</td>
+                                <td>{{poListData.sPODate | date:"dd-MM-yyyy"}}</td>
+                                <td>{{poListData.sSupName}}</td>
+                                <td>{{poListData.currency}}</td>
+                                <td>
+                                    <p-checkbox *ngIf="poListData.iIncludeTaxes==1" value="poListData.iIncludeTaxes"
+                                        readonly=true [(ngModel)]="checked" binary="true">
+                                    </p-checkbox>
+                                    <p-checkbox *ngIf="poListData.iIncludeTaxes==0" value="poListData.iIncludeTaxes"
+                                        readonly=true>
+                                    </p-checkbox>
+                                </td>
+                                <td>
+                                    <span class="badge badge--warning badge--inline badge--pill">Approved</span>
+                                </td>
+                                <td>{{poListData.sCreatedBy}}</td>
+                                <td>
+                                    <button pButton type="button" class="ui-button-danger mr-1" icon="pi pi-file-pdf"
+                                        title="View Details"></button>
+                                    <button type="button" class="ui-button-success mr-1" icon="pi pi-paperclip"
+                                        (click)="attachmentsCustomer(cus)" pButton></button>
+
+                                </td>
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="rowexpansion" let-poListData>
+                            <tr>
+                                <td [attr.colspan]="9">
+                                    <div class="ui-g ui-fluid" style="font-size:14px;padding:8px">
+                                        <div class="ui-g-12 ui-md-12">
+                                            <p-table *ngIf="batch.length>1" [value]="batch">
+                                                <ng-template pTemplate="header">
+                            <tr>
+                                <th>Batch/Lot No.</th>
+                                <th>Receive Qty</th>
+                                <th>POD No</th>
+                                <th>POD Date</th>
+                                <th>Manufacturing Date</th>
+                                <th>Expire Date</th>
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="body" let-batch>
+                            <tr>
+                                <td>{{batch.batchNo}}</td>
+                                <td>{{batch.recvQty}}</td>
+                                <td>{{batch.podNo}}</td>
+                                <td>{{batch.podDate}}</td>
+                                <td>{{batch.manfactDate}}</td>
+                                <td>{{batch.expDate}}</td>
+                            </tr>
+                        </ng-template>
+                    </p-table>
+                </div>
+            </div>
+            </td>
+            </tr>
+            </ng-template>
+            </p-table>
+        </div>
+    </div>
+</div>
+</div>
+</div>

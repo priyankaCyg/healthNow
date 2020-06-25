@@ -149,7 +149,8 @@
                                             <td>{{poDetail.totalAmt}}</td>
                                             <td>
                                                 <!-- <button pButton type="button" class="ui-button-success mr-1" icon="pi pi-pencil"></button> -->
-                                                <button pButton type="button" class="ui-button-danger mr-1" (click)="deleteProduct(poDetail.iPrdID)"
+                                                <button pButton type="button" class="ui-button-danger mr-1"
+                                                    (click)="deleteProduct(poDetail.iPrdID)"
                                                     icon="pi pi-trash"></button>
                                             </td>
                                         </tr>
@@ -171,29 +172,25 @@
                                         <h1>General</h1>
                                     </div>
                                 </div>
-                                <ul class="checkboxes">
+                                <!-- <p-table [value]="General" [(selection)]="Selectedvalue">
+
+                                        <ng-template pTemplate="body" let-general>
+                                            <tr>
+                                                <td>
+                                                    <p-tableCheckbox [value]="General"></p-tableCheckbox>
+                                                </td>
+                                                <td>{{general.sTnCDesc}}</td>
+
+                                            </tr>
+                                        </ng-template>
+                                    </p-table> -->
+                                <ul class="checkboxes" *ngFor="let general of General">
                                     <li class="checkbox-row">
                                         <div class="p-grid">
                                             <div class="p-col-12 checkbox">
-                                                <p-checkbox binary="true"></p-checkbox>
-                                                <p>Taxes As Applicable.</p>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li class="checkbox-row even">
-                                        <div class="p-grid">
-                                            <div class="p-col-12 checkbox">
-                                                <p-checkbox binary="true"></p-checkbox>
-                                                <p>Inclusive All Taxes.</p>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li class="checkbox-row">
-                                        <div class="p-grid">
-                                            <div class="p-col-12 checkbox">
-                                                <p-checkbox binary="true"></p-checkbox>
-                                                <p>All Bills Should Be Made In Favor Of Cygnus Technologies Private
-                                                    Limited</p>
+                                                <p-checkbox [value]="general" [(ngModel)]="Selectedvalue">
+                                                </p-checkbox>
+                                                <p>{{general.sTnCDesc}}</p>
                                             </div>
                                         </div>
                                     </li>
@@ -207,68 +204,13 @@
                                         <h1>Payment</h1>
                                     </div>
                                 </div>
-                                <ul class="checkboxes">
+                                <ul class="checkboxes" *ngFor="let payment of Payment">
                                     <li class="checkbox-row">
                                         <div class="p-grid">
                                             <div class="p-col-12 checkbox">
-                                                <p-checkbox binary="true"></p-checkbox>
-                                                <p>Payment Terms: 90 Days Pdc</p>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li class="checkbox-row even">
-                                        <div class="p-grid">
-                                            <div class="p-col-12 checkbox">
-                                                <p-checkbox binary="true"></p-checkbox>
-                                                <p>Payment Terms: 60 Days Pdc</p>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li class="checkbox-row">
-                                        <div class="p-grid">
-                                            <div class="p-col-12 checkbox">
-                                                <p-checkbox binary="true"></p-checkbox>
-                                                <p>Payment Terms: 45 Days Pdc</p>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li class="checkbox-row even">
-                                        <div class="p-grid">
-                                            <div class="p-col-12 checkbox">
-                                                <p-checkbox binary="true"></p-checkbox>
-                                                <p>Payment Terms: 30 Days Pdc</p>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li class="checkbox-row">
-                                        <div class="p-grid">
-                                            <div class="p-col-12 checkbox">
-                                                <p-checkbox binary="true"></p-checkbox>
-                                                <p>Payment Terms : 30 Days From The Invoice Date</p>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li class="checkbox-row">
-                                        <div class="p-grid">
-                                            <div class="p-col-12 checkbox">
-                                                <p-checkbox binary="true"></p-checkbox>
-                                                <p>Payment Terms: 15 Days Pdc</p>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li class="checkbox-row">
-                                        <div class="p-grid">
-                                            <div class="p-col-12 checkbox">
-                                                <p-checkbox binary="true"></p-checkbox>
-                                                <p>Payment Terms: 100% Advance</p>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li class="checkbox-row">
-                                        <div class="p-grid">
-                                            <div class="p-col-12 checkbox">
-                                                <p-checkbox binary="true"></p-checkbox>
-                                                <p>Payment Terms: Immediate</p>
+                                                <p-checkbox [value]="payment" [(ngModel)]="SelectedPayment">
+                                                </p-checkbox>
+                                                <p>{{payment.sTnCDesc}}</p>
                                             </div>
                                         </div>
                                     </li>
@@ -282,76 +224,13 @@
                                         <h1>Warranty</h1>
                                     </div>
                                 </div>
-                                <ul class="checkboxes">
+                                <ul class="checkboxes" *ngFor="let warranty of Warranty">
                                     <li class="checkbox-row">
                                         <div class="p-grid">
                                             <div class="p-col-12 checkbox">
-                                                <p-checkbox binary="true"></p-checkbox>
-                                                <p>5 Years Onsite Warranty.</p>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li class="checkbox-row even">
-                                        <div class="p-grid">
-                                            <div class="p-col-12 checkbox">
-                                                <p-checkbox binary="true"></p-checkbox>
-                                                <p>4 Years Onsite Warranty.</p>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li class="checkbox-row">
-                                        <div class="p-grid">
-                                            <div class="p-col-12 checkbox">
-                                                <p-checkbox binary="true"></p-checkbox>
-                                                <p>3 Years Onsite Warranty.</p>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li class="checkbox-row even">
-                                        <div class="p-grid">
-                                            <div class="p-col-12 checkbox">
-                                                <p-checkbox binary="true"></p-checkbox>
-                                                <p>3 Years Carry-in Warranty.</p>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li class="checkbox-row">
-                                        <div class="p-grid">
-                                            <div class="p-col-12 checkbox">
-                                                <p-checkbox binary="true"></p-checkbox>
-                                                <p>2 Years Carry-in Warranty.</p>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li class="checkbox-row">
-                                        <div class="p-grid">
-                                            <div class="p-col-12 checkbox">
-                                                <p-checkbox binary="true"></p-checkbox>
-                                                <p>1 Year Onsite Warranty.</p>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li class="checkbox-row">
-                                        <div class="p-grid">
-                                            <div class="p-col-12 checkbox">
-                                                <p-checkbox binary="true"></p-checkbox>
-                                                <p>1 Year Carry-in Warranty.</p>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li class="checkbox-row">
-                                        <div class="p-grid">
-                                            <div class="p-col-12 checkbox">
-                                                <p-checkbox binary="true"></p-checkbox>
-                                                <p>90 Days Warranty.</p>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li class="checkbox-row">
-                                        <div class="p-grid">
-                                            <div class="p-col-12 checkbox">
-                                                <p-checkbox binary="true"></p-checkbox>
-                                                <p>Testing Warranty.</p>
+                                                <p-checkbox [value]="warranty" [(ngModel)]="SelectedWarranty">
+                                                </p-checkbox>
+                                                <p>{{warranty.sTnCDesc}}</p>
                                             </div>
                                         </div>
                                     </li>
@@ -360,49 +239,60 @@
                         </div>
                         <div class="p-col-12 p-lg-6 p-md-6">
                             <div class="card download-files tasks mb-0 p-3">
-                                <div class="p-grid p-nogutter">
-                                    <div class="p-col-12 title">
-                                        <h1>Custom</h1>
+                                <form [formGroup]="termsCondForm" autocomplete="off" (ngSubmit)="onSubmit()">
+
+                                    <div class="p-grid p-nogutter">
+                                        <div class="p-col-12 title">
+                                            <h1>Custom</h1>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="p-grid">
-                                    <div class="p-col-12 mb-1">
-                                        <input type="text" pInputText />
+                                    <div class="p-grid">
+                                        <div class="p-col-12 mb-1" formArrayName="customTnc"
+                                            *ngFor="let item of termsCondForm.get('customTnc').controls; let i = index;">
+
+                                            <div class="p-grid" [formGroupName]="i">
+                                                <input type="text" formControlName="custom" pInputText />
+                                            </div>
+                                        </div>
+                                        <!-- <div class="p-col-12 mb-1">
+                                            <input type="text" formControlName="custom2" pInputText />
+                                        </div>
+                                        <div class="p-col-12 mb-1">
+                                            <input type="text" formControlName="custom3" pInputText />
+                                        </div>
+                                        <div class="p-col-12 mb-1">
+                                            <input type="text" formControlName="custom4" pInputText />
+                                        </div>
+                                        <div class="p-col-12 mb-1">
+                                            <input type="text" formControlName="custom5" pInputText />
+                                        </div>
+                                        <div class="p-col-12 mb-1">
+                                            <input type="text" formControlName="custom6" pInputText />
+                                        </div>
+                                        <div class="p-col-12 mb-1">
+                                            <input type="text" formControlName="custom7" pInputText />
+                                        </div>
+                                        <div class="p-col-12 mb-1">
+                                            <input type="text" formControlName="custom8" pInputText />
+                                        </div>
+                                        <div class="p-col-12 mb-1">
+                                            <input type="text" formControlName="custom9" pInputText />
+                                        </div>
+                                        <div class="p-col-12 mb-1">
+                                            <input type="text" formControlName="custom10" pInputText />
+                                        </div> -->
                                     </div>
-                                    <div class="p-col-12 mb-1">
-                                        <input type="text" pInputText />
+                                    <div class="p-grid form-group ui-fluid">
+                                        <div class="p-col-12 p-md-12 p-lg-12 text-right">
+                                            <button pButton type="submit" label="Save" class="ui-button atbt"></button>
+                                        </div>
                                     </div>
-                                    <div class="p-col-12 mb-1">
-                                        <input type="text" pInputText />
-                                    </div>
-                                    <div class="p-col-12 mb-1">
-                                        <input type="text" pInputText />
-                                    </div>
-                                    <div class="p-col-12 mb-1">
-                                        <input type="text" pInputText />
-                                    </div>
-                                    <div class="p-col-12 mb-1">
-                                        <input type="text" pInputText />
-                                    </div>
-                                    <div class="p-col-12 mb-1">
-                                        <input type="text" pInputText />
-                                    </div>
-                                    <div class="p-col-12 mb-1">
-                                        <input type="text" pInputText />
-                                    </div>
-                                    <div class="p-col-12 mb-1">
-                                        <input type="text" pInputText />
-                                    </div>
-                                    <div class="p-col-12 mb-1">
-                                        <input type="text" pInputText />
-                                    </div>
-                                    <div class="p-col-12 mb-1">
-                                        <input type="text" pInputText />
-                                    </div>
-                                </div>
+                                </form>
                             </div>
                         </div>
+
                     </div>
+
                 </p-tabPanel>
                 <!-- Terms & Condition End -->
 

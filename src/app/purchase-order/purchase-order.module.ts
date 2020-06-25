@@ -39,10 +39,12 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { CalendarModule } from 'primeng/calendar';
 import { FileUploadModule } from 'primeng/fileupload';
 import { CreatePoDetailEditComponent } from './create-po-detail-edit/create-po-detail-edit.component';
+import { PurchaseOrderApprovalComponent } from './purchase-order-approval/purchase-order-approval.component';
+import { PurchaseOrderFreezedComponent } from './purchase-order-freezed/purchase-order-freezed.component';
 
 
 @NgModule({
-  declarations: [PurchaseOrderComponent, NewPoComponent, ProductPurchasePriceComponent, ProductRequisitionComponent, AddProductPurchasePriceComponent, MapSupplierComponent, CreateRequisitionComponent, CreatePoListComponent, CreatePoDetailComponent, MapSupplierMultiReqComponent, PoGeneralDetailsComponent, PoListComponent, CreatePoDetailEditComponent],
+  declarations: [PurchaseOrderComponent, NewPoComponent, ProductPurchasePriceComponent, ProductRequisitionComponent, AddProductPurchasePriceComponent, MapSupplierComponent, CreateRequisitionComponent, CreatePoListComponent, CreatePoDetailComponent, MapSupplierMultiReqComponent, PoGeneralDetailsComponent, PoListComponent, CreatePoDetailEditComponent, PurchaseOrderApprovalComponent, PurchaseOrderFreezedComponent],
   imports: [
     CommonModule,
     PurchaseOrderRoutingModule,
@@ -67,6 +69,6 @@ import { CreatePoDetailEditComponent } from './create-po-detail-edit/create-po-d
     ReactiveFormsModule
   ],
   providers: [DialogService, ConfirmationService],
-  entryComponents: [PurchaseOrderComponent, NewPoComponent, ProductPurchasePriceComponent, ProductRequisitionComponent, AddProductPurchasePriceComponent, MapSupplierComponent, CreateRequisitionComponent, CreatePoListComponent, CreatePoDetailComponent, MapSupplierMultiReqComponent, PoGeneralDetailsComponent, PoListComponent,CreatePoDetailEditComponent]
+  entryComponents: [PurchaseOrderComponent, NewPoComponent, ProductPurchasePriceComponent, ProductRequisitionComponent, AddProductPurchasePriceComponent, MapSupplierComponent, CreateRequisitionComponent, CreatePoListComponent, CreatePoDetailComponent, MapSupplierMultiReqComponent, PoGeneralDetailsComponent, PoListComponent, CreatePoDetailEditComponent, PurchaseOrderApprovalComponent, PurchaseOrderFreezedComponent]
 })
 export class PurchaseOrderModule { }
