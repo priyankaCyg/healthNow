@@ -12,6 +12,7 @@ import { ToastService } from 'src/app/services/toast.service';
   templateUrl: './add-new-address.component.html',
   styleUrls: ['./add-new-address.component.css']
 })
+
 export class AddNewAddressComponent implements OnInit {
 
   AddressForm: FormGroup;
@@ -22,7 +23,9 @@ export class AddNewAddressComponent implements OnInit {
   setStatusData: Object;
   tempAddressTypeID;
   setAddressTypeData: object;
-  constructor(private fb: FormBuilder, private httpService: ApiService, public configData: DynamicDialogConfig, public ref: DynamicDialogRef, public toastService: ToastService, ) { }
+
+  constructor(private fb: FormBuilder, private httpService: ApiService, public configData: DynamicDialogConfig,
+    public ref: DynamicDialogRef, public toastService: ToastService, ) { }
 
   get AddressType() {
     return this.AddressForm.get('addressType');
@@ -190,7 +193,6 @@ export class AddNewAddressComponent implements OnInit {
       }
       this.httpService.callPostApi(addressAddApi).subscribe(
         data => {
-          console.log(this.AddressForm.value);
           this.ref.close(true);
           this.toastService.displayApiMessage(data.headers.get('StatusMessage'), data.headers.get('StatusCode'));
         },
@@ -227,10 +229,8 @@ export class AddNewAddressComponent implements OnInit {
           "sShortName": this.AddressForm.get('shortName').value
         }
 
-
         this.httpService.callPostApi(addressEditApi1).subscribe(
           data => {
-            console.log(this.AddressForm.value);
             this.ref.close(true);
             this.toastService.displayApiMessage(data.headers.get('StatusMessage'), data.headers.get('StatusCode'));
           },
@@ -259,7 +259,6 @@ export class AddNewAddressComponent implements OnInit {
           "iStatusID": status_id,
           "sShortName": this.AddressForm.get('shortName').value
         }
-
 
         this.httpService.callPostApi(addressEditApi2).subscribe(
           data => {

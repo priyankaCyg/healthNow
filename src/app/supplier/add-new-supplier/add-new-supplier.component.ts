@@ -36,7 +36,12 @@ export class AddNewSupplierComponent implements OnInit {
   selectedlegalEntity;
   selSuppCategory: any[];
   statusData;
+  producerData;
+  productData;
+  selectedProducer;
+  selectedProduct;
   legalEntityData;
+  suppCatData;
   isEdit: boolean = false
   public addSupplierForm: FormGroup;
   supData: SuppMaster;
@@ -55,6 +60,7 @@ export class AddNewSupplierComponent implements OnInit {
   sourceCategory: SupplierCategoryMapping[];
   targetCategory: SupplierCategoryMapping[];
   bankData: companyBankMaster[];
+  selectedSuppCat;
 
   constructor(private breadcrumbService: BreadcrumbService,
     private dialogService: DialogService,
@@ -85,7 +91,7 @@ export class AddNewSupplierComponent implements OnInit {
       this.httpService.getDropDownData(dataToSendEdit).then(response => {
         this.supData = new SuppMaster(response[0]);
         this.addSupplierForm = this.createControl(this.supData);
-        Promise.all([this.getStatusDrpDwn(), this.getLegalEntityDrpDwn()]).then(values => {
+        Promise.all([this.getStatusDrpDwn(), this.getLegalEntityDrpDwn(),this.getSuppCatDrpDwn(),this.getProducerDrpDwn()]).then(values => {
           this.setDropDownVal()
         });
         this.getSupplierAddressList();
@@ -100,7 +106,7 @@ export class AddNewSupplierComponent implements OnInit {
     }
     else {
       this.isEdit = false
-      Promise.all([this.getStatusDrpDwn(), this.getLegalEntityDrpDwn()]).then(values => {
+      Promise.all([this.getStatusDrpDwn(), this.getLegalEntityDrpDwn(),this.getSuppCatDrpDwn(),this.getProducerDrpDwn()]).then(values => {
       });
     }
   }
@@ -194,20 +200,37 @@ export class AddNewSupplierComponent implements OnInit {
   defaultDropDwnValue() {
     this.selectedstatus = { iKVID: "", sKVValue: "Select Status" }
     this.selectedlegalEntity = { iKVID: "", sKVValue: "Select Legal Entity" }
+    this.selectedSuppCat = { iSupCatID: "", sSupCName: "Select Supplier Category" }
+    this.selectedProducer = { iProducerID: "", sProducerName: "Select Producer" }
+    this.selectedProduct = { iPrdID: "", sPrdName: "Select Product" }
   }
 
   // code for set dropdown data
   setDropDownVal() {
     let selectedStatusObj = this.statusData.find(x => x.iKVID == this.supData.iStatusID);
-
     if (selectedStatusObj !== undefined) {
       this.selectedstatus = selectedStatusObj;
     }
-    let selectedlegalEntityObj = this.legalEntityData.find(x => x.iKVID == this.supData.iLegalEntityID);
 
+    let selectedlegalEntityObj = this.legalEntityData.find(x => x.iKVID == this.supData.iLegalEntityID);
     if (selectedlegalEntityObj !== undefined) {
       this.selectedlegalEntity = selectedlegalEntityObj;
     }
+
+    let selectedSuppCatObj = this.suppCatData.find(x => x.iSupCatID == this.supData.iSupCatID);
+    if (selectedSuppCatObj !== undefined) {
+      this.selectedSuppCat = selectedSuppCatObj;
+    }
+
+    // let selectedProducerObj = this.producerData.find(x => x.iProducerID == this.supData.iProducerID);
+    // if (selectedProducerObj !== undefined) {
+    //   this.selectedProducer = selectedProducerObj;
+    // }
+
+    // let selectedProductObj = this.productData.find(x => x.iPrdID == this.supData.iPrdID);
+    // if (selectedProductObj !== undefined) {
+    //   this.selectedProduct = selectedProductObj;
+    // }
   }
 
   //code for supplier status dropdown data
@@ -242,6 +265,70 @@ export class AddNewSupplierComponent implements OnInit {
     })
   }
 
+  //code for supplier Category dropdown data
+  getSuppCatDrpDwn() {
+    return new Promise((resolve, reject) => {
+      var dataToSend4 = {
+        "iRequestID": 2154
+      }
+      this.httpService.getDropDownData(dataToSend4).then(response => {
+        this.suppCatData = response
+        this.suppCatData.splice(0, 0, { iSupCatID: "", sSupCName: "Select Supplier Category" })
+        this.selectedlegalEntity = { iSupCatID: "", sSupCName: "Select Supplier Category" }
+        resolve(this.suppCatData)
+      });
+    })
+  }
+
+  //code for producer dropdown
+  getProducerDrpDwn() {
+    return new Promise((resolve, reject) => {
+      var dataToSend4 = {
+        "iRequestID": 2126,
+      }
+      this.httpService.getDropDownData(dataToSend4).then(response => {
+        this.producerData = response
+        this.producerData.splice(0, 0, { iProducerID: "", sProducerName: "Select Producer" })
+        this.selectedProducer = { iProducerID: "", sProducerName: "Select Producer" }
+        resolve(this.producerData)
+      });
+    })
+  }
+
+  // //code for product dropdown
+  // getProductDrpDwn() {
+  //   return new Promise((resolve, reject) => {
+  //     var dataToSend4 = {
+  //      // "iRequestID": 2126,
+  //     }
+  //     this.httpService.getDropDownData(dataToSend4).then(response => {
+  //       this.productData = response
+  //       this.productData.splice(0, 0, { iPrdID: "", sPrdName: "Select Product" })
+  //       this.selectedProduct = { iPrdID: "", sPrdName: "Select Product" }
+  //       resolve(this.productData)
+  //     });
+  //   })
+  // }
+
+  onProducerChange(producerID: number){
+    return new Promise((resolve, reject) => {
+      var dataToSend4 = {
+       // "iRequestID": 2126,
+       // iProducerID:producerID
+      }
+      this.httpService.getDropDownData(dataToSend4).then(response => {
+        this.productData = response
+        this.productData.splice(0, 0, { iPrdID: "", sPrdName: "Select Product" })
+        this.selectedProduct = { iPrdID: "", sPrdName: "Select Product" }
+        resolve(this.productData)
+      });
+    })
+  }
+
+  onProductChange(productID: number){
+    
+  }
+
   getFileType() {
     return new Promise((resolve, reject) => {
       var dataToSend = {
@@ -272,7 +359,8 @@ export class AddNewSupplierComponent implements OnInit {
       sShortCode: [supData.sShortCode, [Validators.required]],
       sPAN: [supData.sPAN, [Validators.required]],
       sStatusName: [supData.sStatusName],
-      iStatusID: [supData.iStatusID, Validators.required]
+      iStatusID: [supData.iStatusID, Validators.required],
+      sSupCName: [supData.iSupCatID, Validators.required]
     });
     return this.addSupplierForm;
   }
@@ -312,17 +400,18 @@ export class AddNewSupplierComponent implements OnInit {
     let telephoneno_1 = this.addSupplierForm.controls["sTelNo1"].value;
     let telephoneno_2 = this.addSupplierForm.controls["sTelNo2"].value;
     let fax_no = this.addSupplierForm.controls["sFaxNo"].value;
-    let legal_id = this.addSupplierForm.getRawValue();
+    let formData = this.addSupplierForm.getRawValue();
     const add_supplier_data = {
       "iRequestID": 2171,
       "sSupName": supp_name,
       "sWebsite": website_name,
-      "iLegalEntityID": legal_id.iLegalEntityID.iKVID,
+      "iLegalEntityID": formData.iLegalEntityID.iKVID,
       "sPAN": pan_no,
       "sShortCode": short_code,
       "sTelNo1": telephoneno_1,
       "sTelNo2": telephoneno_2,
-      "sFaxNo": fax_no
+      "sFaxNo": fax_no,
+      "iSupCatID": formData.sSupCName.iSupCatID
     }
     this.httpService.callPostApi(add_supplier_data).subscribe(
       data => {
@@ -347,7 +436,7 @@ export class AddNewSupplierComponent implements OnInit {
   editSupplier() {
     let supp_name_edit = this.addSupplierForm.controls["sSupName"].value;
     let website_name_edit = this.addSupplierForm.controls["sWebsite"].value;
-    let legal_id_edit = this.addSupplierForm.getRawValue();
+    let formData = this.addSupplierForm.getRawValue();
     let pan_no_edit = this.addSupplierForm.controls["sPAN"].value;
     let short_code_edit = this.addSupplierForm.controls["sShortCode"].value;
     let telephoneno_1_edit = this.addSupplierForm.controls["sTelNo1"].value;
@@ -358,7 +447,7 @@ export class AddNewSupplierComponent implements OnInit {
       "iRequestID": 2172,
       "sSupName": supp_name_edit,
       "sWebsite": website_name_edit,
-      "iLegalEntityID": legal_id_edit.iLegalEntityID.iKVID,
+      "iLegalEntityID": formData.iLegalEntityID.iKVID,
       "sPAN": pan_no_edit,
       "sShortCode": short_code_edit,
       "sTelNo1": telephoneno_1_edit,
@@ -366,6 +455,7 @@ export class AddNewSupplierComponent implements OnInit {
       "sFaxNo": fax_no_edit,
       "iSupID": this.supId,
       "iStatusID": status_id.iStatusID.iKVID,
+      "iSupCatID": formData.sSupCName.iSupCatID
     }
     this.httpService.callPostApi(edit_supplier_data).subscribe(
       data => {

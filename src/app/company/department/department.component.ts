@@ -4,21 +4,24 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ToastService } from "../../services/toast.service";
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { DepartmentMaster } from 'src/app/model/company.department.model';
+
 @Component({
   selector: 'app-department',
   templateUrl: './department.component.html',
   styleUrls: ['./department.component.css']
 })
+
 export class DepartmentComponent implements OnInit {
+
   selectedstatus;
   statusData;
   isEdit: boolean = false
   Dep_id;
   public DepartmentSubmit: FormGroup;
   departmentData: DepartmentMaster;
+
   constructor(private httpService: ApiService, private fb: FormBuilder, private config: DynamicDialogConfig,
-    private ref: DynamicDialogRef, private toastService: ToastService
-  ) { }
+    private ref: DynamicDialogRef, private toastService: ToastService) { }
 
   ngOnInit(): void {
     this.defaultDropDwnValue()
@@ -106,7 +109,6 @@ export class DepartmentComponent implements OnInit {
     };
     this.httpService.callPostApi(dep_submit_data).subscribe(
       data => {
-        console.log(data);
         this.ref.close(true);
         this.toastService.displayApiMessage(data.headers.get('StatusMessage'), data.headers.get('StatusCode'));
       },
@@ -128,7 +130,6 @@ export class DepartmentComponent implements OnInit {
     }
     this.httpService.callPostApi(dep_edit_data).subscribe(
       data => {
-        console.log(data);
         this.ref.close(true);
         this.toastService.displayApiMessage(data.headers.get('StatusMessage'), data.headers.get('StatusCode'));
       },
@@ -148,4 +149,5 @@ export class DepartmentComponent implements OnInit {
       return false
     }
   }
+
 }

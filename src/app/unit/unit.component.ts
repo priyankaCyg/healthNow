@@ -1,17 +1,9 @@
-/**
-Template Name: HealthNow
-Author: Priyanka Sahu
-Created Date: 
-File: unit.component
-**/
-
 import { Component, OnInit } from '@angular/core';
 import { BreadcrumbService } from '../breadcrumb.service';
 import { CountryService } from '../demo/service/countryservice';
 import { SelectItem, MenuItem } from 'primeng/api';
 import { DialogService } from 'primeng';
 import { from } from 'rxjs';
-
 import { ToastService } from "../services/toast.service";
 import { ConfirmationService } from 'primeng/api';
 import { AddUnitComponent } from './add-unit/add-unit.component';
@@ -23,10 +15,10 @@ import { UnitMaster } from '../model/unit.model';
   templateUrl: './unit.component.html',
   styleUrls: ['./unit.component.css']
 })
+
 export class UnitComponent implements OnInit {
 
   items: MenuItem[];
-
   unit: UnitMaster[];
 
   constructor(private breadcrumbService: BreadcrumbService, private dialogService: DialogService,
@@ -89,7 +81,7 @@ export class UnitComponent implements OnInit {
   //code for delete data of unit 
   deleteUnit(unitId) {
     this.confirmationService.confirm({
-      message: 'Are you sure that you want to proceed?',
+      message: 'Are you sure that you want to delete ?',
       header: 'Confirmation',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {

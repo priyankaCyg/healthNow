@@ -39,6 +39,21 @@
                                         </p-message>
                                     </div>
                                     <div class="p-col-12 p-md-6 p-lg-3 mb-2">
+                                        <label for="suppCategory">Supplier Category</label>
+                                        <p-dropdown id="suppCategory" class="form-control" [options]="suppCatData"
+                                            formControlName="sSupCName" placeholder="Select" optionLabel="sSupCName"
+                                            [(ngModel)]="selectedSuppCat" required="true"></p-dropdown>
+                                        <p-message severity="error" text="Supplier Category is required"
+                                            *ngIf="addSupplierForm.controls['sSupCName'].touched && (selectedlegalEntity.iSupCatID=='' || addSupplierForm.controls['sSupCName'].hasError('required'))">
+                                        </p-message>
+                                    </div>
+                    
+                                </div>
+                                <div
+                                    class="separator separator--border-solid separator--space-sm separator--portlet-fit">
+                                </div>
+                                <div class="p-grid form-group">
+                                    <div class="p-col-12 p-md-6 p-lg-3 mb-2">
                                         <label for="website">Website</label>
                                         <input id="website" class="form-control" type="text" formControlName="sWebsite"
                                             pInputText>
@@ -47,11 +62,6 @@
                                             *ngIf="!addSupplierForm.controls['sWebsite'].valid && addSupplierForm.controls['sWebsite'].dirty">
                                         </p-message>
                                     </div>
-                                </div>
-                                <div
-                                    class="separator separator--border-solid separator--space-sm separator--portlet-fit">
-                                </div>
-                                <div class="p-grid form-group">
                                     <div class="p-col-12 p-md-6 p-lg-3 mb-2">
                                         <label for="telNo1">Tel No. 1</label>
                                         <input id="telNo1" class="form-control" type="text" formControlName="sTelNo1"
@@ -79,8 +89,14 @@
                                             *ngIf="!addSupplierForm.controls['sFaxNo'].valid && addSupplierForm.controls['sFaxNo'].dirty">
                                         </p-message>
                                     </div>
+                                    
+                                </div>
+                                <div
+                                    class="separator separator--border-solid separator--space-sm separator--portlet-fit">
+                                </div>
+                                <div class="p-grid form-group">
                                     <div class="p-col-12 p-md-6 p-lg-3 mb-2">
-                                        <label for="pincode">Pan No.</label>
+                                        <label for="pincode">PAN No.</label>
                                         <input id="pincode" class="form-control" type="text" formControlName="sPAN"
                                             pInputText>
                                         <p-message severity="error"
@@ -88,11 +104,6 @@
                                             *ngIf="!addSupplierForm.controls['sPAN'].valid && addSupplierForm.controls['sPAN'].dirty">
                                         </p-message>
                                     </div>
-                                </div>
-                                <div
-                                    class="separator separator--border-solid separator--space-sm separator--portlet-fit">
-                                </div>
-                                <div class="p-grid form-group">
                                     <div class="p-col-12 p-md-6 p-lg-3 mb-2">
                                         <label for="status">Status</label>
                                         <p-dropdown id="status" class="form-control" [options]="statusData"
@@ -426,7 +437,27 @@
                 <!-- Attachment tab End here -->
 
                 <!-- Category Mapping tab start here -->
-                <p-tabPanel header="Category Mapping" [disabled]="tabDisabled">
+                <p-tabPanel header="Product Mapping" [disabled]="tabDisabled">
+                    <div class="p-grid ui-fluid  p-justify-end mt-3">
+                    <div class="p-col-12">
+                    
+                    <div class="p-grid form-group">
+                        
+                            <div class="p-col-12 p-md-6 p-lg-3 mb-2 ">
+                                <label for="producer">Producer</label>
+                                <p-dropdown [options]="producerData" optionLabel="sProducerName" (change)="onProducerChange(producerData.iProducerID)"
+                                     [(ngModel)]="selectedProducer"></p-dropdown>
+                               
+                            </div>
+                            <div class="p-col-12 p-md-6 p-lg-3 mb-2 ">
+                                <label for="product">Product</label>
+                                <p-dropdown [options]="productData" optionLabel="sPrdName" (change)="onProductChange(productData.iPrdID)"
+                                     [(ngModel)]="selectedProduct"></p-dropdown>
+                               
+                            </div>
+                        </div>
+                    </div>
+                </div>
                     <p-pickList [source]="sourceCategory" [target]="targetCategory" sourceHeader="UnMapped"
                         targetHeader="Mapped" [responsive]="true" filterBy="sCategoryName" dragdrop="true"
                         sourceFilterPlaceholder="Search by category" targetFilterPlaceholder="Search by category"

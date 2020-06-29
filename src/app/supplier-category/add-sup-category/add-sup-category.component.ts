@@ -15,9 +15,7 @@ export class AddSupCategoryComponent implements OnInit {
 
   isEdit: boolean = false
   selectedstatus;
-  selectedParent;
   statusData;
-  parentData;
   iSupCatID: number;
   public supplierCategoryForm: FormGroup;
   supplierCategoryData: SupplierCategoryMaster;
@@ -41,7 +39,7 @@ export class AddSupCategoryComponent implements OnInit {
         data => {
           this.supplierCategoryData = new SupplierCategoryMaster(data.body[0]);
           this.supplierCategoryForm = this.createControl(this.supplierCategoryData);
-          Promise.all([this.getStatusData(), this.getParentDrpDwn()]).then(values => {
+          Promise.all([this.getStatusData()]).then(values => {
             console.log(values);
             this.setDropDownVal();
           });
@@ -51,7 +49,7 @@ export class AddSupCategoryComponent implements OnInit {
       this.isEdit = false
       this.supplierCategoryData = new SupplierCategoryMaster();
       this.supplierCategoryForm = this.createControl(this.supplierCategoryData);
-      Promise.all([this.getStatusData(), this.getParentDrpDwn()]).then(values => {
+      Promise.all([this.getStatusData()]).then(values => {
         console.log(values);
       });
     }
@@ -63,7 +61,6 @@ export class AddSupCategoryComponent implements OnInit {
   //Function to set default dropdown values
   defaultDropDwnValue() {
     this.selectedstatus = { iKVID: "", sKVValue: "Select Status" }
-    this.selectedParent = { iSupCatID: 0, sSupCName: "Select Parent" }
   }
 
   //Function to set dropdown value on edit
@@ -72,12 +69,6 @@ export class AddSupCategoryComponent implements OnInit {
     let selectedStatusObj = this.statusData.find(x => x.iKVID == this.supplierCategoryData.iStatusID);
     if (selectedStatusObj !== undefined) {
       this.selectedstatus = selectedStatusObj;
-    }
-
-    // Parent Dropdown Select
-    let selectedParentObj = this.parentData.find(x => x.iSupCatID == this.supplierCategoryData.iParentId);
-    if (selectedParentObj !== undefined) {
-      this.selectedParent = selectedParentObj;
     }
   }
 
@@ -100,24 +91,6 @@ export class AddSupCategoryComponent implements OnInit {
     });
   }
 
-  //parent dropdown function
-  getParentDrpDwn() {
-    return new Promise((resolve, reject) => {
-      var dataToSend4 = {
-        "iRequestID": 2156
-      }
-      this.httpService.getDropDownData(dataToSend4).then(
-        data => {
-          this.parentData = data;
-          this.parentData.splice(0, 0, { iSupCatID: 0, sSupCName: "Select Parent" })
-          this.selectedParent = { iSupCatID: 0, sSupCName: "Select Parent" }
-          resolve(this.parentData)
-        },
-        error => console.log(error)
-      );
-    })
-  }
-
   // Validity Check for Dropdown
   dropDownValidityCheck() {
     if (this.selectedstatus.iKVID == '') {
@@ -134,7 +107,6 @@ export class AddSupCategoryComponent implements OnInit {
       iStatusID: [supplierCategoryData.iStatusID, Validators.required],
       iSupCatID: [supplierCategoryData.iSupCatID],
       sCreatedDate: [supplierCategoryData.sCreatedDate],
-      iParentId: [supplierCategoryData.iParentId],
       sSupCName: [supplierCategoryData.sSupCName,Validators.required],
       sStatusName: [supplierCategoryData.sStatusName]
     });
@@ -148,7 +120,6 @@ export class AddSupCategoryComponent implements OnInit {
     var dataToSendAdd = {
       "iRequestID": 2151,
       "sSupCName": formData.sSupCName,
-      "iParentID": formData.iParentId.iSupCatID
     }
     this.httpService.callPostApi(dataToSendAdd).subscribe(
       data => {
@@ -165,7 +136,6 @@ export class AddSupCategoryComponent implements OnInit {
       "iRequestID": 2152,
       "sSupCName": formData.sSupCName,
       "iStatusID": formData.iStatusID.iKVID,
-      "iParentID": formData.iParentId.iSupCatID,
       "iSupCatID": this.iSupCatID
     }
     this.httpService.callPostApi(dataToSendEdit).subscribe(

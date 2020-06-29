@@ -9,14 +9,12 @@
                 </div>
                 <div class="p-col-1 p-col-align-end text-center">
                     <button routerLink="/product/new-product" pButton icon="pi pi-fw pi-plus" label="Add New"></button>
-
                 </div>
                 <div class="p-col-12">
                     <p-table #dt [value]="product" [resizableColumns]="true" [rowHover]="true" [paginator]="true"
                         [rows]="10" [showCurrentPageReport]="true" [rowsPerPageOptions]="[10, 25, 50]" [filterDelay]="0"
-                        [globalFilterFields]="['sPrdName','sShortName','sProducerName']">
+                        [globalFilterFields]="['sPrdName','sProducerName','sVariant','sUnitName','sFoodCulture','sProducerName']">
                         <ng-template pTemplate="caption">
-
                             <div class="ui-table-globalfilter-container text-left">
                                 <input type="text" pInputText size="50" placeholder="Search"
                                     (input)="dt.filterGlobal($event.target.value, 'contains')" style="width:250px;">
@@ -25,9 +23,8 @@
                         <ng-template pTemplate="header">
                             <tr>
                                 <th style="width: 3em">#</th>
-                                <!-- <th>Product Category</th> -->
                                 <th>Product Name</th>
-                                <th>Short Code</th>
+                                <th>Variant</th>
                                 <th>Unit</th>
                                 <th>Food Culture</th>
                                 <th>Producer</th>
@@ -39,9 +36,8 @@
                             let-product>
                             <tr>
                                 <td class="ui-resizable-column">{{ rowIndex+ 1}}</td>
-                                <!-- <td class="ui-resizable-column">{{product.prCategory}}</td> -->
                                 <td class="ui-resizable-column">{{product.sPrdName}}</td>
-                                <td class="ui-resizable-column">{{product.sShortName}}</td>
+                                <td class="ui-resizable-column">{{product.sVariant}}</td>
                                 <td class="ui-resizable-column">{{product.sUnitName}}</td>
                                 <td class="ui-resizable-column">{{product.sFoodCulture}}</td>
                                 <td class="ui-resizable-column">{{product.sProducerName}}</td>
@@ -85,7 +81,6 @@
                     </p-table>
                 </div>
             </div>
-
         </div>
     </div>
 </div>

@@ -21,12 +21,8 @@ export class BankComponent implements OnInit {
   bankID: number;
 
   constructor(
-    private httpService: ApiService,
-    private fb: FormBuilder,
-    private config: DynamicDialogConfig,
-    private ref: DynamicDialogRef,
-    private toastService: ToastService,
-  ) { }
+    private httpService: ApiService, private fb: FormBuilder, private config: DynamicDialogConfig,
+    private ref: DynamicDialogRef, private toastService: ToastService) { }
 
   ngOnInit(): void {
 
@@ -110,7 +106,7 @@ export class BankComponent implements OnInit {
   createControl(bankdata?: companyBankMaster): FormGroup {
     this.bankForm = this.fb.group({
       sBankName: [bankdata.sBankName, [Validators.required, Validators.pattern('^[a-zA-Z ]*$')]],
-      sShortCode: [bankdata.sShortCode, Validators.required],
+      sShortCode: [bankdata.sShortCode, ValidationService.pincodeValidator],
       sAccountNo: [bankdata.sAccountNo, [Validators.required, Validators.pattern('^[0-9]*$')]],
       sIFSC: [bankdata.sIFSC, [Validators.required, Validators.pattern('^[0-9a-zA-Z]+$')]],
       sBankBranch: [bankdata.sBankBranch, [Validators.required, Validators.pattern('^[a-zA-Z ]*$')]],
@@ -165,4 +161,5 @@ export class BankComponent implements OnInit {
     this.ref.close();
     this.bankForm.reset();
   }
+  
 }

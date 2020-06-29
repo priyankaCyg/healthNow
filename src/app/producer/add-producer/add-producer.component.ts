@@ -1,9 +1,3 @@
-/**
-Template Name: HealthNow
-Author: Priyanka Sahu
-Created Date: 
-File: add-producer.component
-**/
 import { Component, OnInit } from '@angular/core';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { ProducerMaster } from '../../model/producer.model'
@@ -16,7 +10,9 @@ import { ApiService } from 'src/app/services/api.service';
   templateUrl: './add-producer.component.html',
   styleUrls: ['./add-producer.component.css']
 })
+
 export class AddProducerComponent implements OnInit {
+
   isEdit: boolean = false
   selectedCountry;
   selectedstatus;
@@ -34,7 +30,6 @@ export class AddProducerComponent implements OnInit {
     this.defaultDropDwnValue()
     this.producerData = new ProducerMaster();
     this.producerForm = this.createControl(this.producerData);
-
     this.producerId = this.config.data.producerId
     if (this.producerId != null) {
       this.isEdit = true
@@ -45,7 +40,6 @@ export class AddProducerComponent implements OnInit {
       this.httpService.getDropDownData(dataToSendEdit).then(response => {
         this.producerData = new ProducerMaster(response[0]);
         this.producerForm = this.createControl(this.producerData);
-
         Promise.all([this.getCountryDrpDwn(), this.getStatusDrpDwn()]).then(values => {
           this.setDropDownVal()
         });
@@ -62,13 +56,11 @@ export class AddProducerComponent implements OnInit {
   setDropDownVal() {
     // Country Dropdown Select
     let selectedCountryObj = this.countryData.find(x => x.iLocationID == this.producerData.iCountryID);
-
     if (selectedCountryObj !== undefined) {
       this.selectedCountry = selectedCountryObj;
     }
     // Status Dropdown Select
     let selectedStatusObj = this.statusData.find(x => x.iKVID == this.producerData.iStatusID);
-
     if (selectedStatusObj !== undefined) {
       this.selectedstatus = selectedStatusObj;
     }
@@ -114,7 +106,6 @@ export class AddProducerComponent implements OnInit {
   //code for add new producer data
   addProducer() {
     var formData = this.producerForm.getRawValue();
-
     var dataToSendAdd = {
       "iRequestID": 2121,
       "sProducerName": formData.sProducerName,
@@ -133,7 +124,6 @@ export class AddProducerComponent implements OnInit {
   //code for edit producer data
   updateProducer() {
     var formData = this.producerForm.getRawValue();
-
     var dataToSendEdit = {
       "iRequestID": 2122,
       "sProducerName": formData.sProducerName,
@@ -158,7 +148,6 @@ export class AddProducerComponent implements OnInit {
 
   //code for implements formbuilder 
   createControl(producerData?: ProducerMaster): FormGroup {
-
     this.producerForm = this.fb.group({
       iStatusID: [producerData.iStatusID, [Validators.required]],
       iCountryID: [producerData.iCountryID],
@@ -185,7 +174,5 @@ export class AddProducerComponent implements OnInit {
       return false
     }
   }
-
-
 
 }

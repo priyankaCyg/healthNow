@@ -172,23 +172,11 @@
                                         <h1>General</h1>
                                     </div>
                                 </div>
-                                <!-- <p-table [value]="General" [(selection)]="Selectedvalue">
-
-                                        <ng-template pTemplate="body" let-general>
-                                            <tr>
-                                                <td>
-                                                    <p-tableCheckbox [value]="General"></p-tableCheckbox>
-                                                </td>
-                                                <td>{{general.sTnCDesc}}</td>
-
-                                            </tr>
-                                        </ng-template>
-                                    </p-table> -->
                                 <ul class="checkboxes" *ngFor="let general of General">
                                     <li class="checkbox-row">
                                         <div class="p-grid">
                                             <div class="p-col-12 checkbox">
-                                                <p-checkbox [value]="general" [(ngModel)]="Selectedvalue">
+                                                <p-checkbox [value]="general"   [(ngModel)]="Selectedvalue"  [disabled]="GeneralDisable">
                                                 </p-checkbox>
                                                 <p>{{general.sTnCDesc}}</p>
                                             </div>
@@ -208,7 +196,7 @@
                                     <li class="checkbox-row">
                                         <div class="p-grid">
                                             <div class="p-col-12 checkbox">
-                                                <p-checkbox [value]="payment" [(ngModel)]="SelectedPayment">
+                                                <p-checkbox [value]="payment"  [(ngModel)]="SelectedPayment" (onChange)="checkBoxValidation(SelectedPayment)" >
                                                 </p-checkbox>
                                                 <p>{{payment.sTnCDesc}}</p>
                                             </div>
@@ -228,7 +216,7 @@
                                     <li class="checkbox-row">
                                         <div class="p-grid">
                                             <div class="p-col-12 checkbox">
-                                                <p-checkbox [value]="warranty" [(ngModel)]="SelectedWarranty">
+                                                <p-checkbox [value]="warranty"  [(ngModel)]="SelectedWarranty" (onChange)="checkBoxValidation(SelectedWarranty)">
                                                 </p-checkbox>
                                                 <p>{{warranty.sTnCDesc}}</p>
                                             </div>
@@ -247,40 +235,13 @@
                                         </div>
                                     </div>
                                     <div class="p-grid">
-                                        <div class="p-col-12 mb-1" formArrayName="customTnc"
-                                            *ngFor="let item of termsCondForm.get('customTnc').controls; let i = index;">
+                                        <div class="p-col-12 mb-1" formArrayName="customTnc" *ngFor="let item of termsCondForm.get('customTnc').controls; let i = index;">
 
-                                            <div class="p-grid" [formGroupName]="i">
-                                                <input type="text" formControlName="custom" pInputText />
-                                            </div>
+                                        <div class="p-grid" [formGroupName]="i">
+                                            <input type="text" class="form-control" 
+                                                formControlName="custom" pInputText />
                                         </div>
-                                        <!-- <div class="p-col-12 mb-1">
-                                            <input type="text" formControlName="custom2" pInputText />
-                                        </div>
-                                        <div class="p-col-12 mb-1">
-                                            <input type="text" formControlName="custom3" pInputText />
-                                        </div>
-                                        <div class="p-col-12 mb-1">
-                                            <input type="text" formControlName="custom4" pInputText />
-                                        </div>
-                                        <div class="p-col-12 mb-1">
-                                            <input type="text" formControlName="custom5" pInputText />
-                                        </div>
-                                        <div class="p-col-12 mb-1">
-                                            <input type="text" formControlName="custom6" pInputText />
-                                        </div>
-                                        <div class="p-col-12 mb-1">
-                                            <input type="text" formControlName="custom7" pInputText />
-                                        </div>
-                                        <div class="p-col-12 mb-1">
-                                            <input type="text" formControlName="custom8" pInputText />
-                                        </div>
-                                        <div class="p-col-12 mb-1">
-                                            <input type="text" formControlName="custom9" pInputText />
-                                        </div>
-                                        <div class="p-col-12 mb-1">
-                                            <input type="text" formControlName="custom10" pInputText />
-                                        </div> -->
+                                    </div> 
                                     </div>
                                     <div class="p-grid form-group ui-fluid">
                                         <div class="p-col-12 p-md-12 p-lg-12 text-right">
@@ -295,6 +256,7 @@
 
                 </p-tabPanel>
                 <!-- Terms & Condition End -->
+
 
                 <!-- Attachment tab start -->
                 <p-tabPanel header="Attachment">

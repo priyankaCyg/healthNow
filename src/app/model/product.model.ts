@@ -9,12 +9,12 @@ export class ProductMaster {
     sPrdName: string;
     iStatusID: number;
     iCreatedBy: number;
-    sShortName: string;
+    sVariant: string;
     iProducerID: number;
-    sStatusName: string;
+    sParentPrdName: string;
     sCreatedDate: string;
     sProducerName: string;
-
+    iParentID: number;
     /**
      * Constructor
      *
@@ -31,11 +31,11 @@ export class ProductMaster {
         this.sPrdName = ProductMaster.sPrdName || '';
         this.iStatusID = ProductMaster.iStatusID || '';
         this.iCreatedBy = ProductMaster.sAddress || '';
-        this.sShortName = ProductMaster.sShortName || '';
+        this.sVariant = ProductMaster.sVariant || '';
         this.iProducerID = ProductMaster.iProducerID || '';
-        this.sStatusName = ProductMaster.sStatusName || '';
+        this.sParentPrdName = ProductMaster.sParentPrdName || '';
         this.sCreatedDate = ProductMaster.sCreatedDate || '';
         this.sProducerName = ProductMaster.sProducerName || '';
-
+        this.iParentID = ProductMaster.iParentID || '';
     }
 }

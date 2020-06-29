@@ -114,7 +114,6 @@ export class CompanyComponent implements OnInit {
     );
   }
 
-
   // open modal for new address start
   openDialogForaddNewAddress() {
     const ref = this.dialogService.open(AddNewAddressComponent, {
@@ -134,7 +133,7 @@ export class CompanyComponent implements OnInit {
   openDialogForeditAddress(address: CompanyAddress) {
     const ref = this.dialogService.open(AddNewAddressComponent, {
       data: address,
-      header: 'Edit Addrees',
+      header: 'Edit Address',
       width: '80%'
     });
     ref.onClose.subscribe((success: boolean) => {
@@ -503,4 +502,5 @@ export class CompanyComponent implements OnInit {
       reject: () => { }
     });
   }
+  
 }

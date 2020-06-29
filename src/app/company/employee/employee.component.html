@@ -52,10 +52,8 @@
                         <p-message severity="error" text="Gender is required"
                             *ngIf="employeeForm.controls['sGender'].touched  && (selectedgender.iKVID=='' || employeeForm.controls['sGender'].hasError('required'))">
                         </p-message>
-
                     </div>
                 </div>
-
                 <div class="p-col-12 p-md-6 p-lg-6">
                     <label for="sFullAddress">Address</label>
                     <p-dropdown formControlName="sFullAddress" optionLabel="sAddress" id="sFullAddress"
@@ -64,7 +62,6 @@
                         <p-message severity="error" text="Address is required"
                             *ngIf="employeeForm.controls['sFullAddress'].touched  && (selectedsaddress.iAddID=='' || employeeForm.controls['sFullAddress'].hasError('required'))">
                         </p-message>
-
                     </div>
                 </div>
                 <div class="p-col-12 p-md-6 p-lg-3">
@@ -77,7 +74,6 @@
                         </p-message>
                     </div>
                 </div>
-
             </div>
             <div class="separator separator--border-dashed separator--space-sm separator--portlet-fit"></div>
             <div class="p-grid form-group">
@@ -119,14 +115,10 @@
                         <p-message severity="error" text="Status is required"
                             *ngIf="employeeForm.controls['iStatusID'].touched  && (selectedstatus.iKVID=='' || employeeForm.controls['iStatusID'].hasError('required'))">
                         </p-message>
-
                     </div>
                 </div>
-
             </div>
-
             <div class="separator separator--border-dashed separator--space-sm separator--portlet-fit"></div>
-
             <div class="p-grid form-group">
                 <div class="p-col-12 p-md-6 p-lg-3">
                     <label for="sDeptName">Department</label>
@@ -168,7 +160,6 @@
                         <p-message severity="error" text="Role is required"
                             *ngIf="employeeForm.controls['sRoleName'].touched  && (selectedstatus.iRoleID=='' || employeeForm.controls['sRoleName'].hasError('required'))">
                         </p-message>
-
                     </div>
                 </div>
             </div>
@@ -177,7 +168,6 @@
                 <div class="p-col-12 p-md-12 p-lg-12 text-right">
                     <button pButton type="button" (click)="closeDialog()" label="Cancel" style="margin-bottom:10px"
                         class="ui-button-light atbt mr-2"></button>
-
                     <button *ngIf="!isEdit" pButton type="button" label="Save"
                         [disabled]="!(!employeeForm.invalid && !dropDownValidityCheck())" (click)="addEmployee()"
                         class="ui-button atbt"></button>

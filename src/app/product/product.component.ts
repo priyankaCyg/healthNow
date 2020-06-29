@@ -17,12 +17,11 @@ import { LoginService } from '../../app/services/login.service'
   templateUrl: './product.component.html',
   styleUrls: ['./product.component.css']
 })
+
 export class ProductComponent implements OnInit {
 
   items: MenuItem[];
-
   product: any[];
-
 
   constructor(private breadcrumbService: BreadcrumbService, private dialogService: DialogService,
     private httpService: ApiService, private toastService: ToastService, private confirmationService: ConfirmationService
@@ -34,7 +33,6 @@ export class ProductComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    //this.loginService.checkBrowserClosed();
     this.getAllProduct();
   }
 
@@ -55,7 +53,7 @@ export class ProductComponent implements OnInit {
   //code for delete product
   deleteProduct(iPrdID: Number) {
     this.confirmationService.confirm({
-      message: 'Are you sure that you want to proceed?',
+      message: 'Are you sure that you want to delete ?',
       header: 'Confirmation',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
