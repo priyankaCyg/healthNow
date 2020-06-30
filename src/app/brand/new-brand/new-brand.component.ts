@@ -10,6 +10,7 @@ import { ToastService } from 'src/app/services/toast.service';
   templateUrl: './new-brand.component.html',
   styleUrls: ['./new-brand.component.css']
 })
+
 export class NewBrandComponent implements OnInit {
 
   isEdit: boolean = false
@@ -21,8 +22,8 @@ export class NewBrandComponent implements OnInit {
   public brandForm: FormGroup;
   brandData: BrandMaster;
 
-  constructor(public config: DynamicDialogConfig, public ref: DynamicDialogRef,
-    private httpService: ApiService, private fb: FormBuilder, private toastService: ToastService) { }
+  constructor(public config: DynamicDialogConfig, public ref: DynamicDialogRef, private httpService: ApiService,
+    private fb: FormBuilder, private toastService: ToastService) { }
 
   ngOnInit(): void {
     this.defaultDropDwnValue()
@@ -40,7 +41,6 @@ export class NewBrandComponent implements OnInit {
           this.brandData = new BrandMaster(data.body[0]);
           this.brandForm = this.createControl(this.brandData);
           Promise.all([this.getProducerDrpDwn(), this.getStatusData()]).then(values => {
-            console.log(values);
             this.setDropDownVal();
           });
         });
@@ -50,7 +50,6 @@ export class NewBrandComponent implements OnInit {
       this.brandData = new BrandMaster();
       this.brandForm = this.createControl(this.brandData);
       Promise.all([this.getProducerDrpDwn(), this.getStatusData()]).then(values => {
-        console.log(values);
       });
     }
     this.brandForm.valueChanges.subscribe((changedObj: any) => {
@@ -60,6 +59,7 @@ export class NewBrandComponent implements OnInit {
 
   //Function to set dropdown value on edit
   setDropDownVal() {
+
     // Producer Dropdown Select
     let selectedProducerObj = this.producerData.find(x => x.iProducerID == this.brandData.iProducerID);
     if (selectedProducerObj !== undefined) {

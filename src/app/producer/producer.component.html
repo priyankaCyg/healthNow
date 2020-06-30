@@ -1,6 +1,5 @@
 <p-confirmDialog header="Confirmation" icon="pi pi-info" [style]="{width: '425px'}"
     rejectButtonStyleClass="ui-button-secondary"></p-confirmDialog>
-
 <div class="p-grid">
     <div class="p-col-12">
         <div class="card card-w-title">
@@ -11,16 +10,13 @@
                 <div class="p-col-1 p-col-align-end text-center">
                     <button (click)="openDialogForaddProducer()" pButton icon="pi pi-fw pi-plus"
                         label="Add New"></button>
-
                 </div>
                 <div class="p-col-12">
-                    <!-- <p-table [value]="producer"> -->
                     <p-table [value]="producer" #ProducerSearch [paginator]="true" [rows]="10"
                         [showCurrentPageReport]="true" [rowsPerPageOptions]="[10, 25, 50]" [filterDelay]="0"
                         [globalFilterFields]="['sProducerName','sCountryName','sShortCode','sStatusName']"
                         class="defaultDataTable">
                         <ng-template pTemplate="caption">
-
                             <div class="ui-table-globalfilter-container text-left">
                                 <input type="text" pInputText size="50" placeholder="Search"
                                     (input)="ProducerSearch.filterGlobal($event.target.value, 'contains')"
@@ -41,7 +37,6 @@
                                 <td>{{producer.sProducerName}}</td>
                                 <td>{{producer.sCountryName}}</td>
                                 <td>{{producer.sShortCode}}</td>
-                                <!-- <td>{{producer.sStatusName}}</td> -->
                                 <td>
                                     <span *ngIf="producer.iStatusID == 1"
                                         class="badge badge--success badge--inline badge--pill">
@@ -67,7 +62,6 @@
                     </p-table>
                 </div>
             </div>
-
         </div>
     </div>
 </div>

@@ -1,4 +1,3 @@
-
 export class UnitMaster {
    
     iCreatedBy: string;
@@ -15,13 +14,11 @@ export class UnitMaster {
      */
     constructor(UnitMaster?) {
         UnitMaster = UnitMaster || {};
-
         this.iCreatedBy = UnitMaster.iCreatedBy || '';
         this.iStatusID = UnitMaster.iStatusID || '';
         this.iUnitID = UnitMaster.iUnitID || '';
         this.sCreatedDate = UnitMaster.sCreatedDate || '';
         this.sUnitName = UnitMaster.sUnitName || '';
         this.sStatusName = UnitMaster.sStatusName || '';
-
     }
 }

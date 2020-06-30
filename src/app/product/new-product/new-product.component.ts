@@ -21,6 +21,7 @@ import { ToastService } from 'src/app/services/toast.service';
 import { ProductInfoData } from 'src/app/model/productInfo';
 import { ProductCategoryMapping } from 'src/app/model/product-category-mapping.model';
 import { productQuerData } from 'src/app/model/productQueries';
+import { APIService } from 'src/app/services/apieservice';
 
 @Component({
   selector: 'app-new-product',
@@ -44,22 +45,27 @@ export class NewProductComponent implements OnInit {
   selectedproducer;
   selectedunit;
   selectedfoodculture;
-  selectedStatus;
+  selectedParent;
   producerData;
   unitData;
   foodcultureData;
-  statusData;
+  parentData;
   prdId;
   tabDisabled: boolean = true;
   sourceCategory: ProductCategoryMapping[];
   targetCategory: ProductCategoryMapping[];
+  selectedFileType;
+  fileTypeData;
+  uploadedFiles: any[] = [];
+  attachment: any[];
 
   constructor(private carService: CarService, private breadcrumbService: BreadcrumbService,
     private dialogService: DialogService,
     private route: ActivatedRoute,
     private httpService: ApiService,
     private _formBuilder: FormBuilder,
-    private toastService: ToastService, ) {
+    private toastService: ToastService,
+    private _apiService: APIService) {
     this.breadcrumbService.setItems([
       { label: 'Dashboard' },
       { label: 'Product', routerLink: ['/product'] }
@@ -84,7 +90,7 @@ export class NewProductComponent implements OnInit {
       this.httpService.getDropDownData(dataToSendEdit).then(response => {
         this.productData = new ProductMaster(response[0]);
         this.ProductForm = this.createControl(this.productData);
-        Promise.all([this.getProducerDrpDwn(), this.getUnitDrpDwn(), this.getFoodCultureDrpDwn(), this.getstatusDrpDwn()]).then(values => {
+        Promise.all([this.getProducerDrpDwn(), this.getUnitDrpDwn(), this.getFoodCultureDrpDwn(), this.getParentDrpDwn()]).then(values => {
           this.setDropDownVal()
         });
         this.getProductInfo();
@@ -95,7 +101,7 @@ export class NewProductComponent implements OnInit {
     }
     else {
       this.isEdit = false
-      Promise.all([this.getProducerDrpDwn(), this.getUnitDrpDwn(), this.getFoodCultureDrpDwn(), this.getstatusDrpDwn()]).then(values => {
+      Promise.all([this.getProducerDrpDwn(), this.getUnitDrpDwn(), this.getFoodCultureDrpDwn()]).then(values => {
       });
     }
 
@@ -104,7 +110,6 @@ export class NewProductComponent implements OnInit {
       source: 'assets/demo/images/sopranos/sopranos1.jpg',
       thumbnail: 'assets/demo/images/sopranos/sopranos1_small.jpg', title: 'Sopranos 1'
     });
-
     this.prImage = [
       { sequence: '1', imgName: 'Gluten Free Wheat' },
       { sequence: '2', imgName: 'Gluten Free Wheat' },
@@ -117,13 +122,10 @@ export class NewProductComponent implements OnInit {
       { sequence: '9', imgName: 'Gluten Free Wheat' },
       { sequence: '10', imgName: 'Gluten Free Wheat' }
     ];
-
-    this.productVariant = [
-      { Unit: 'Gram', variant: '500' },
-      { Unit: 'Kg', variant: '1' }
-    ];
-
-
+    // this.productVariant = [
+    //   { Unit: 'Gram', variant: '500' },
+    //   { Unit: 'Kg', variant: '1' }
+    // ];
     this.productDesc = [
       { prDesc: 'Handpicked from india’s finest wheat fields, fortune chakki fresh atta is made with 100 percent atta and 0 percent maida which complements your ghar ka khana perfectly. You can differentiate these fibre-rich rotis with your 5 senses - their superior quality taste, soft touch, mesmerizing aroma and a fluffy look, so words of appreciation are bound to come your way. ' }
     ];
@@ -134,7 +136,7 @@ export class NewProductComponent implements OnInit {
     this.selectedproducer = { iProducerID: "", sProducerName: "Select Producer" }
     this.selectedunit = { iUnitID: "", sUnitName: "Select Unit" }
     this.selectedfoodculture = { iKVID: "", sKVValue: "Select Foodculture" }
-    this.selectedStatus = { iStatusID: "", sStatusName: "Select Status" }
+    this.selectedParent = { iPrdID: "", sParentPrdName: "Select Parent Category" }
   }
 
   //code for product set dropdown data
@@ -159,9 +161,9 @@ export class NewProductComponent implements OnInit {
     }
 
     // Select Dropdown Select
-    let selectedStatusObj = this.statusData.find(x => x.iStatusID == this.productData.iStatusID);
-    if (selectedStatusObj !== undefined) {
-      this.selectedStatus = selectedStatusObj;
+    let selectedParentObj = this.parentData.find(x => x.iPrdID == this.productData.iParentID);
+    if (selectedParentObj !== undefined) {
+      this.selectedParent = selectedParentObj;
     }
   }
 
@@ -174,9 +176,6 @@ export class NewProductComponent implements OnInit {
       return true
     }
     else if (this.selectedfoodculture.iKVID == '') {
-      return true
-    }
-    else if (this.selectedStatus.iStatusID == '') {
       return true
     }
     else {
@@ -230,20 +229,24 @@ export class NewProductComponent implements OnInit {
     })
   }
 
-  //code for product status dropdown
-  getstatusDrpDwn() {
+  //code for parent dropdown
+  getParentDrpDwn() {
     return new Promise((resolve, reject) => {
       var dataToSend4 = {
-        "iRequestID": 2271,
-        "sProcessName": "Product"
+        "iRequestID": 2259,
+        "sPrdName": this.ProductForm.controls['sPrdName'].value
       }
       this.httpService.getDropDownData(dataToSend4).then(response => {
-        this.statusData = response
-        this.statusData.splice(0, 0, { iStatusID: "", sStatusName: "Select Status" })
-        this.selectedStatus = { iStatusID: "", sStatusName: "Select Status" }
-        resolve(this.statusData)
+        this.parentData = response
+        this.parentData.splice(0, 0, { iPrdID: "", sParentPrdName: "Select Parent Category" })
+        this.selectedParent = { iPrdID: "", sParentPrdName: "Select Parent Category" }
+        resolve(this.parentData)
       });
     })
+  }
+
+  productChange() {
+    this.getParentDrpDwn();
   }
 
   //code for implement formBuilder and validation
@@ -255,13 +258,12 @@ export class NewProductComponent implements OnInit {
       iUnitID: [productData.iUnitID],
       sUnitName: [productData.sUnitName, [Validators.required]],
       sPrdName: [productData.sPrdName, [Validators.required]],
-      iStatusID: [productData.iStatusID],
       iCreatedBy: [productData.iCreatedBy],
-      sShortName: [productData.sShortName, [Validators.required]],
+      sVariant: [productData.sVariant, [Validators.required]],
       iProducerID: [productData.iProducerID],
-      sStatusName: [productData.sStatusName, [Validators.required]],
       sCreatedDate: [productData.sCreatedDate],
       sProducerName: [productData.sProducerName, [Validators.required]],
+      sParentPrdName: [productData.sParentPrdName]
     });
     return this.ProductForm;
   }
@@ -269,14 +271,27 @@ export class NewProductComponent implements OnInit {
   //code for add product data
   addProductForm() {
     var formData = this.ProductForm.getRawValue();
-    const addProductData = {
-      "iRequestID": 2251,
-      "sPrdName": formData.sPrdName,
-      "sShortName": formData.sShortName,
-      "iUnitID": formData.sUnitName.iUnitID,
-      "iFoodCulture": formData.sFoodCulture.iKVID,
-      "iStatusID": formData.sStatusName.iStatusID,
-      "iProducerID": formData.sProducerName.iProducerID
+    var addProductData;
+    if (formData.sParentPrdName.iPrdID) {
+      addProductData = {
+        "iRequestID": 2251,
+        "sPrdName": formData.sPrdName,
+        "sVariant": formData.sVariant,
+        "iUnitID": formData.sUnitName.iUnitID,
+        "iFoodCulture": formData.sFoodCulture.iKVID,
+        "iProducerID": formData.sProducerName.iProducerID,
+        "iParentID": formData.sParentPrdName.iPrdID
+      }
+    }
+    else {
+      addProductData = {
+        "iRequestID": 2251,
+        "sPrdName": formData.sPrdName,
+        "sVariant": formData.sVariant,
+        "iUnitID": formData.sUnitName.iUnitID,
+        "iFoodCulture": formData.sFoodCulture.iKVID,
+        "iProducerID": formData.sProducerName.iProducerID,
+      }
     }
     this.httpService.callPostApi(addProductData).subscribe(
       data => {
@@ -288,24 +303,38 @@ export class NewProductComponent implements OnInit {
         this.getCategoryMappingDataTarget();
         this.tabDisabled = false
         this.toastService.displayApiMessage(data.headers.get('StatusMessage'), data.headers.get('StatusCode'));
+        this.isEdit = true
       },
       error => console.log(error)
     );
-    this.ProductForm.reset();
   }
 
   //code for edit product data
   editProductForm() {
     var formData = this.ProductForm.getRawValue();
-    const editProductData = {
-      "iRequestID": 2252,
-      "sPrdName": formData.sPrdName,
-      "sShortName": formData.sShortName,
-      "iUnitID": formData.sUnitName.iUnitID,
-      "iFoodCulture": formData.sFoodCulture.iKVID,
-      "iStatusID": formData.sStatusName.iStatusID,
-      "iProducerID": formData.sProducerName.iProducerID,
-      "iPrdID": this.prdId
+    var editProductData;
+    if (formData.sParentPrdName.iPrdID) {
+      editProductData = {
+        "iRequestID": 2252,
+        "sPrdName": formData.sPrdName,
+        "sVariant": formData.sVariant,
+        "iUnitID": formData.sUnitName.iUnitID,
+        "iFoodCulture": formData.sFoodCulture.iKVID,
+        "iProducerID": formData.sProducerName.iProducerID,
+        "iPrdID": this.prdId,
+        "iParentID": formData.sParentPrdName.iPrdID
+      }
+    }
+    else {
+      editProductData = {
+        "iRequestID": 2252,
+        "sPrdName": formData.sPrdName,
+        "sVariant": formData.sVariant,
+        "iUnitID": formData.sUnitName.iUnitID,
+        "iFoodCulture": formData.sFoodCulture.iKVID,
+        "iProducerID": formData.sProducerName.iProducerID,
+        "iPrdID": this.prdId,
+      }
     }
     this.httpService.callPostApi(editProductData).subscribe(
       data => {
@@ -458,6 +487,65 @@ export class NewProductComponent implements OnInit {
       this.toastService.addSingle("warning", "Select atleast 1 Category", "");
   }
   // add category mapping ends
+
+
+  onUpload(event) {
+    for (const file of event.files) {
+      this.uploadedFiles.push(file);
+    }
+  }
+
+  uploadFile() {
+    // alert(JSON.stringify(this.uploadedFiles))
+    var dataToSend = {
+      "iRequestID": 1111,
+      "iProcessTranID": this.prdId,
+      "iProcessID": 2,
+      "iDocTypeID": this.selectedFileType.iDocTypeID
+    }
+    this._apiService.postFile(this.uploadedFiles, dataToSend).subscribe(data => {
+      this.showAttachment();
+    }, error => {
+      console.log(error);
+    });
+  }
+
+  getFileType() {
+    return new Promise((resolve, reject) => {
+      var dataToSend = {
+        "iRequestID": 2261
+      }
+      this.httpService.getDropDownData(dataToSend).then(response => {
+        this.fileTypeData = response
+        this.fileTypeData.splice(0, 0, { iDocTypeID: "", sDocTypeName: "Select File Type" })
+        this.selectedFileType = { iDocTypeID: "", sDocTypeName: "Select File Type" }
+        resolve(this.fileTypeData)
+      });
+    })
+  }
+
+  //code for download attachments
+  downloadFile(attachment: any) {
+    var dataToSend = {
+      "iRequestID": "1112",
+      "sActualFileName": attachment.sActualName,
+      "sSystemFileName": attachment.sSystemName
+    }
+    this._apiService.downloadAPI(dataToSend)
+  }
+
+  //code for list of attachments
+  showAttachment() {
+    var dataToSend = {
+      "iRequestID": 1112,
+      "iProcessTranID": this.prdId,
+      "iProcessID": 2
+    }
+    this._apiService.getDetails(dataToSend).then(response => {
+      this.attachment = response
+    });
+  }
+
 }
 
 

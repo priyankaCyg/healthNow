@@ -1,9 +1,3 @@
-/**
-Template Name: HealthNow
-Author: Priyanka Sahu
-Created Date: 
-File: producer.component
-**/
 import { Component, OnInit } from '@angular/core';
 import { GeneratedFile } from '@angular/compiler';
 import { DialogService } from 'primeng';
@@ -23,6 +17,7 @@ import { ProducerMaster } from '../model/producer.model';
   templateUrl: './producer.component.html',
   styleUrls: ['./producer.component.css']
 })
+
 export class ProducerComponent implements OnInit {
 
   items: MenuItem[];
@@ -88,7 +83,7 @@ export class ProducerComponent implements OnInit {
   //code for delete producer data
   deleteProducer(producerId) {
     this.confirmationService.confirm({
-      message: 'Are you sure that you want to proceed?',
+      message: 'Are you sure that you want to delete ?',
       header: 'Confirmation',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {

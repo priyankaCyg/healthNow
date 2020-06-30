@@ -5,6 +5,7 @@
     <div class="card card-w-title">
       <h1>Company</h1>
       <p-tabView>
+
         <!-- General tab start here -->
         <p-tabPanel header="General">
           <div class="p-grid ui-fluid  p-justify-end" *ngFor="let dt of compData">
@@ -36,19 +37,19 @@
               <div class="p-grid form-group">
                 <div class="p-col-12 p-md-6 p-lg-3">
                   <label for="website">Website</label>
-                  <input id="website" value="{{dt.sWebsite}}" type="text" pInputText>
+                  <input id="website" value="{{dt.sWebsite}}" disabled="disabled" type="text" pInputText>
                 </div>
                 <div class="p-col-12 p-md-6 p-lg-3">
                   <label for="telNo1">Tel No.1</label>
-                  <input id="telNo1" value="{{dt.sTelNo1}}" type="text" pInputText>
+                  <input id="telNo1" value="{{dt.sTelNo1}}" disabled="disabled" type="text" pInputText>
                 </div>
                 <div class="p-col-12 p-md-6 p-lg-3">
                   <label for="telNo2">Tel No.2</label>
-                  <input id="telNo2" value="{{dt.sTelNo2}}" type="text" pInputText>
+                  <input id="telNo2" value="{{dt.sTelNo2}}" disabled="disabled" type="text" pInputText>
                 </div>
                 <div class="p-col-12 p-md-6 p-lg-3">
                   <label for="fax">Fax</label>
-                  <input id="fax" value="{{dt.sFaxNo}}" type="text" pInputText>
+                  <input id="fax" value="{{dt.sFaxNo}}" disabled="disabled" type="text" pInputText>
                 </div>
               </div>
             </div>

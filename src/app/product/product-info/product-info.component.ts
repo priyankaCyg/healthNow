@@ -10,6 +10,7 @@ import { ProductInfoData } from 'src/app/model/productInfo';
   templateUrl: './product-info.component.html',
   styleUrls: ['./product-info.component.css']
 })
+
 export class ProductInfoComponent implements OnInit {
 
   infoArray: ProductInfoData[];

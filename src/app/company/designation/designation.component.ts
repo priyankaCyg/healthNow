@@ -10,6 +10,7 @@ import { ToastService } from 'src/app/services/toast.service';
   templateUrl: "./designation.component.html",
   styleUrls: ["./designation.component.css"],
 })
+
 export class DesignationComponent implements OnInit {
 
   statusData: StatusData[];
@@ -19,12 +20,8 @@ export class DesignationComponent implements OnInit {
   isEdit: boolean = false;
 
   constructor(
-    private httpService: ApiService,
-    private fb: FormBuilder,
-    private config: DynamicDialogConfig,
-    private ref: DynamicDialogRef,
-    private toastService: ToastService,
-  ) { }
+    private httpService: ApiService, private fb: FormBuilder, private config: DynamicDialogConfig,
+    private ref: DynamicDialogRef, private toastService: ToastService) { }
 
   async ngOnInit(): Promise<void> {
     const status_data = {
@@ -53,7 +50,6 @@ export class DesignationComponent implements OnInit {
     } else {
       this.isEdit = false;
     }
-
   }
 
   desigForm = this.fb.group({
@@ -111,7 +107,6 @@ export class DesignationComponent implements OnInit {
         }
         this.desigForm.reset();
       } else {
-        console.log("Error");
       }
     }
   }

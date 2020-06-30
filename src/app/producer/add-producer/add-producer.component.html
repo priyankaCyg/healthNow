@@ -1,10 +1,7 @@
 <div class="p-grid ui-fluid">
     <form [formGroup]="producerForm" autocomplete="off">
-
         <div class="p-col-12">
-
             <div class="p-grid form-group">
-
                 <div class="p-col-12">
                     <label for="pcName">Producer Name</label>
                     <input id="pcName" type="text" formControlName="sProducerName" pInputText>
@@ -13,8 +10,6 @@
                         *ngIf="!producerForm.controls['sProducerName'].valid&&producerForm.controls['sProducerName'].dirty">
                     </p-message>
                 </div>
-
-
                 <div class="p-col-12">
                     <label for="sCountryName">Country</label>
                     <p-dropdown formControlName="sCountryName" optionLabel="sLocName" id="sCountryName"
@@ -25,7 +20,6 @@
                         </p-message>
                     </div>
                 </div>
-
                 <div class="p-col-12">
                     <label for="sShortCode">Short Code</label>
                     <input id="sShortCode" formControlName="sShortCode" type="text" pInputText>
@@ -34,7 +28,6 @@
                         *ngIf="!producerForm.controls['sShortCode'].valid&&producerForm.controls['sShortCode'].dirty">
                     </p-message>
                 </div>
-
                 <div class="p-col-12">
                     <label for="status">Status</label>
                     <!-- <p-dropdown id="status" [options]="status" [(ngModel)]="selectedstatus"></p-dropdown> -->
@@ -43,12 +36,9 @@
                     <p-message severity="error" text="Status is required"
                         *ngIf="producerForm.controls['iStatusID'].touched && (selectedstatus.iKVID=='' || producerForm.controls['iStatusID'].hasError('required'))">
                     </p-message>
-
                 </div>
-
             </div>
             <div class="separator separator--border-solid separator--space-sm separator--portlet-fit"></div>
-
             <div class="p-grid form-group ui-fluid">
                 <div class="p-col-12 p-md-12 p-lg-12 text-right">
                     <button pButton type="button" label="Cancel" (click)="closeDialog()"
@@ -61,7 +51,6 @@
                         class="ui-button atbt"></button>
                 </div>
             </div>
-
         </div>
     </form>
 </div>

@@ -34,6 +34,7 @@
                                         <th>Quantity</th>
                                         <th>Created By</th>
                                         <th>Created Date</th>
+                                        <th>Status</th>
                                         <th>Action</th>
                                     </tr>
                                 </ng-template>
@@ -41,23 +42,39 @@
                                     <tr>
                                         <td>{{rowIndex + 1}}</td>
                                         <td>{{orderReq.sRequisionNo}}</td>
-                                        <td>{{orderReq.sPCName}}</td>
-                                        <td>{{orderReq.sPrdName}}</td>
+                                        <td>{{orderReq.sParentCatName}} - {{orderReq.sPCName}}</td>
+                                        <td>{{orderReq.sPrdName}} {{orderReq.sVariant}} {{orderReq.sUnitSymbol}}</td>
                                         <td>{{orderReq.sPartnerName}}</td>
                                         <td>{{orderReq.sLocName}}</td>
                                         <td>{{orderReq.iQty}}</td>
                                         <td>{{orderReq.sCreatedBy}}</td>
                                         <td>{{orderReq.sCreatedDate | date:"dd-MM-yyyy"}}</td>
                                         <td>
-                                            <button pButton type="button" class="ui-button-success mr-1"
-                                                (click)="openDialogForEditReq(orderReq)" icon="pi pi-pencil"
-                                                title="Edit"></button>
-                                            <button pButton type="button" class="ui-button-danger mr-1"
-                                                (click)="deleteOrderReq(orderReq.iPReqID)" icon="pi pi-trash"
-                                                title="Delete"></button>
-                                            <button routerLink="/purchase-order/map-supplier" pButton type="button"
-                                                class="ui-button-success" icon="pi pi-sitemap"
-                                                (click)="mapSupplier(orderReq)" title="Map Supplier"></button>
+                                            <span *ngIf="orderReq.iStatusID == 1"
+                                                class="badge badge--success badge--inline badge--pill">
+                                                {{orderReq.sStatusName}}
+                                            </span>
+                                            <span *ngIf="orderReq.iStatusID == 2"
+                                                class="badge badge--warning badge--inline badge--pill">
+                                                {{orderReq.sStatusName}}
+                                            </span>
+                                            <span *ngIf="orderReq.iStatusID == 5"
+                                                class="badge badge--warning badge--inline badge--pill">
+                                                {{orderReq.sStatusName}}
+                                            </span>
+                                        </td>
+                                        <td>
+                                            <span *ngIf="orderReq.iStatusID != 2">
+                                                <button pButton type="button" class="ui-button-success mr-1"
+                                                    (click)="openDialogForEditReq(orderReq)" icon="pi pi-pencil"
+                                                    title="Edit"></button>
+                                                <button pButton type="button" class="ui-button-danger mr-1"
+                                                    (click)="deleteOrderReq(orderReq.iPReqID)" icon="pi pi-trash"
+                                                    title="Delete"></button>
+                                                <button routerLink="/purchase-order/map-supplier" pButton type="button"
+                                                    class="ui-button-success" icon="pi pi-sitemap"
+                                                    (click)="mapSupplier(orderReq)" title="Map Supplier"></button>
+                                            </span>
                                         </td>
                                     </tr>
                                 </ng-template>
@@ -95,7 +112,8 @@
                                     <tr>
                                         <td>{{rowIndex + 1}}</td>
                                         <td>{{productReq.sPCName}}</td>
-                                        <td>{{productReq.sPrdName}}</td>
+                                        <td>{{productReq.sPrdName}} {{productReq.sVariant}} {{productReq.sUnitSymbol}}
+                                        </td>
                                         <td>{{productReq.iReqCnt}}</td>
                                         <td>{{productReq.iQty}}</td>
                                         <td>

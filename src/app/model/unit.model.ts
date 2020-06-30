@@ -7,6 +7,7 @@ export class UnitMaster {
     sCreatedDate: string;
     sStatusName: string;
     sUnitName: string;
+    sSymbol: string;
 
     /**
      * Constructor
@@ -22,6 +23,6 @@ export class UnitMaster {
         this.sCreatedDate = UnitMaster.sCreatedDate || '';
         this.sUnitName = UnitMaster.sUnitName || '';
         this.sStatusName = UnitMaster.sStatusName || '';
-
+        this.sSymbol = UnitMaster.sSymbol || '';
     }
 }

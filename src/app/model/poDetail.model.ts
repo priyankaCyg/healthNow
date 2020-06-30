@@ -11,6 +11,7 @@ export class poDetailMaster {
     sCreatedDate: string;
     iPurchasePrice: number;
     iTotalAmount:number;
+    sRequisionNo: string;
 
     constructor(poDetailMaster?) {
         poDetailMaster = poDetailMaster || {};

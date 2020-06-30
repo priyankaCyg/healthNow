@@ -9,10 +9,10 @@ import { ToastService } from "../../services/toast.service";
   templateUrl: './general-edit.component.html',
   styleUrls: ['./general-edit.component.css']
 })
+
 export class GeneralEditComponent implements OnInit {
 
-  constructor(private fb: FormBuilder, private httpService: ApiService,
-    private config: DynamicDialogConfig,
+  constructor(private fb: FormBuilder, private httpService: ApiService, private config: DynamicDialogConfig,
     private ref: DynamicDialogRef, private toastService: ToastService) { }
 
   ngOnInit(): void {
@@ -24,6 +24,7 @@ export class GeneralEditComponent implements OnInit {
       fax: this.config.data.sFaxNo
     });
   }
+
   // code for implement formBuilder and Validation
   GeneralSubmit = this.fb.group({
     website: ['', Validators.required],
@@ -32,14 +33,12 @@ export class GeneralEditComponent implements OnInit {
     fax: ['', Validators.required]
   });
 
-
   // code for Submit Form Data 
   onSubmit() {
     let web_name = this.GeneralSubmit.controls["website"].value;
     let tele_1 = this.GeneralSubmit.controls["tele1"].value;
     let tele_2 = this.GeneralSubmit.controls["tele2"].value;
     let fax_no = this.GeneralSubmit.controls["fax"].value;
-
     const general_Submit_Data =
     {
       "iRequestID": 2002,
@@ -57,6 +56,7 @@ export class GeneralEditComponent implements OnInit {
       error => console.log(error)
     );
   }
+
   // code for Edit Dialog Box Closed 
   close() {
     this.ref.close();

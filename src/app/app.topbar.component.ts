@@ -61,12 +61,7 @@ import { AppMainComponent } from './app.main.component';
                                         <h3>Producer</h3>
                                     </span>
 									</li>
-									<li routerLink="/brand">
-										<i class="pi pi-circle-on"></i>
-										<span>
-                                        <h3>Brand</h3>
-                                    </span>
-									</li>
+									
 									<li routerLink="/unit">
 										<i class="pi pi-circle-on"></i>
 										<span>

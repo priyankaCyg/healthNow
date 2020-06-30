@@ -195,6 +195,7 @@ export class NewPartnerComponent implements OnInit {
         this.gstList();
         this.tabDisabled = false;
         this.toastService.displayApiMessage(data.headers.get('StatusMessage'), data.headers.get('StatusCode'));
+        this.isEdit = true
       },
       error => console.log(error)
     );

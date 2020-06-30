@@ -29,6 +29,10 @@ export class CreateRequisitionComponent implements OnInit {
   createrequisitionData: createRequisitionMaster;
   public createReqForm: FormGroup;
   isEdit: boolean = false;
+  productData;
+  selectedProduct;
+  unitName: string;
+  parentCateName: string;
 
   constructor(private httpService: ApiService, private fb: FormBuilder, private ref: DynamicDialogRef,
     private toastService: ToastService, private config: DynamicDialogConfig) { }
@@ -57,30 +61,48 @@ export class CreateRequisitionComponent implements OnInit {
   //code for default dropdown data
   defaultDropDwnValue() {
     this.selectedproductCategory = { "iPCID": 0, "sPCName": "Select" };
+    this.selectedProduct = { "iPCID": 0, "sPCName": "Select " }
     this.selectedPartner = { "iPartnerID": 0, "sPartnerName": "Select" };
     this.selectedpartnerLocation = { "iLocationID": 0, "sLocName": "Select" };
   }
 
   //code for set dropdown data 
   setDropDownVal() {
-    // product Category Dropdown Select
-    let selectedProductCateObj = this.productCategValue.find(x => x.iPCID == this.config.data.iPCID);
+    let selectedParProductCateObj = this.productCategValue.find(x => x.iPCID == this.config.data.iParentID);
 
-    if (selectedProductCateObj !== undefined) {
-      this.selectedproductCategory = selectedProductCateObj;
+    if (selectedParProductCateObj !== undefined) {
+      this.selectedproductCategory = selectedParProductCateObj;
     }
-
+    // product Category Dropdown Select
     if (this.selectedproductCategory.iPCID) {
-      const product_list_data = {
-        "iRequestID": 2244,
+      const dataToSend4 = {
+        "iRequestID": 2117,
         "iPCID": this.selectedproductCategory.iPCID
       }
-      this.httpService.callPostApi(product_list_data).subscribe(
-        (data) => {
-          this.products = data.body;
-        },
-        (error) => console.log(error)
-      );
+      this.httpService.getDropDownData(dataToSend4).then(response => {
+        this.productData = response
+        this.productData.splice(0, 0, { "iPCID": 0, "sPCName": "Select" })
+        this.selectedProduct = { "iPCID": 0, "sPCName": "Select" }
+        let selectedProductCateObj = this.productData.find(x => x.iPCID == this.config.data.iPCID);
+
+        if (selectedProductCateObj !== undefined) {
+          this.selectedProduct = selectedProductCateObj;
+          console.log(this.selectedProduct.iPCID, "test")
+        }
+
+        if (this.selectedProduct.iPCID) {
+          const product_list_data = {
+            "iRequestID": 2244,
+            "iPCID": this.selectedProduct.iPCID
+          }
+          this.httpService.callPostApi(product_list_data).subscribe(
+            (data) => {
+              this.products = data.body;
+            },
+            (error) => console.log(error)
+          );
+        }
+      });
     }
 
     // partner Dropdown select
@@ -110,9 +132,11 @@ export class CreateRequisitionComponent implements OnInit {
         (error) => console.log(error)
       );
     }
+    this.parentCateName = this.config.data.sParentCatName;
     this.productCateName = this.config.data.sPCName;
     this.productName = this.config.data.sPrdName;
-    this.prodshortName = this.config.data.sShortName;
+    this.prodshortName = this.config.data.sVariant;
+    this.unitName = this.config.data.sUnitSymbol;
     this.prd_Id = this.config.data.iPrdID;
     this.pc_Id = this.config.data.iPCID;
   }
@@ -133,6 +157,26 @@ export class CreateRequisitionComponent implements OnInit {
         (error) => console.log(error)
       );
     });
+  }
+
+  setPcId(event) {
+    this.pc_Id = event.value.iPCID
+    this.childCategoryData();
+  }
+
+  childCategoryData() {
+    return new Promise((resolve, reject) => {
+      var dataToSend4 = {
+        "iRequestID": 2117,
+        "iPCID": this.pc_Id
+      }
+      this.httpService.getDropDownData(dataToSend4).then(response => {
+        this.productData = response
+        this.productData.splice(0, 0, { iPCID: "", sPCName: "Select Product" })
+        this.selectedProduct = { iPCID: "", sPCName: "Select Product" }
+        resolve(this.productData)
+      });
+    })
   }
 
   //code for onchange to get partner id 
@@ -176,7 +220,7 @@ export class CreateRequisitionComponent implements OnInit {
   }
 
   // code for onchange to get pc id 
-  setpcId(event) {
+  onProductChange(event) {
     this.pc_Id = event.value.iPCID;
     this.productList();
   }
@@ -197,9 +241,11 @@ export class CreateRequisitionComponent implements OnInit {
 
   // code for fetch data onclick arrow of product list 
   fetchProductData(products) {
+    this.parentCateName = this.selectedproductCategory.sPCName;
     this.productCateName = products.sPCName;
     this.productName = products.sPrdName;
-    this.prodshortName = products.sShortName;
+    this.prodshortName = '';
+    this.unitName = '';
     this.prd_Id = products.iPrdID;
     this.pc_Id = products.iPCID;
   }

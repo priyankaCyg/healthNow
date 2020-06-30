@@ -5,6 +5,7 @@ import { ApiService } from 'src/app/services/api.service';
 import { DropdownData } from 'src/app/model/dropdown.model';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { ToastService } from 'src/app/services/toast.service';
+import { ValidationService } from 'src/app/services/validation.service';
 
 
 @Component({
@@ -12,6 +13,7 @@ import { ToastService } from 'src/app/services/toast.service';
   templateUrl: './add-new-address.component.html',
   styleUrls: ['./add-new-address.component.css']
 })
+
 export class AddNewAddressComponent implements OnInit {
 
   AddressForm: FormGroup;
@@ -22,7 +24,11 @@ export class AddNewAddressComponent implements OnInit {
   setStatusData: Object;
   tempAddressTypeID;
   setAddressTypeData: object;
-  constructor(private fb: FormBuilder, private httpService: ApiService, public configData: DynamicDialogConfig, public ref: DynamicDialogRef, public toastService: ToastService, ) { }
+  isEdit: boolean = false
+
+
+  constructor(private fb: FormBuilder, private httpService: ApiService, public configData: DynamicDialogConfig,
+    public ref: DynamicDialogRef, public toastService: ToastService, ) { }
 
   get AddressType() {
     return this.AddressForm.get('addressType');
@@ -105,6 +111,7 @@ export class AddNewAddressComponent implements OnInit {
 
     // set values in form while editing start
     if (this.configData.data.iAddID != undefined) {
+      this.isEdit = true
       this.AddressForm.patchValue({
         addressType: this.setAddressTypeData,
         address1: this.configData.data.sAdd1,
@@ -129,39 +136,41 @@ export class AddNewAddressComponent implements OnInit {
     this.resetFormData();
   }
 
-  // get states ans city name start
+  // get states and city name start
   onChangePincode() {
     this.AddressForm.patchValue({
       state: '',
       city: ''
     });
-    let pincode_value = this.AddressForm.get('pincode').value;
+    let pincode_value: number = this.AddressForm.get('pincode').value;
     const pincodeChangesApi = {
       "iRequestID": 2101,
       "sPostalCode": pincode_value
     }
-    this.httpService.callPostApi(pincodeChangesApi).subscribe(
-      data => {
-        if (data.body.length != 0) {
-          this.StatesCityData = data.body;
-          this.AddressForm.patchValue({
-            state: this.StatesCityData[0].sStateName,
-            city: this.StatesCityData[0].sCityName
-          });
+    if (this.Pincode.valid) {
+      this.httpService.callPostApi(pincodeChangesApi).subscribe(
+        data => {
+          if (data.body.length != 0) {
+            this.StatesCityData = data.body;
+            this.AddressForm.patchValue({
+              state: this.StatesCityData[0].sStateName,
+              city: this.StatesCityData[0].sCityName
+            });
+          }
+          else {
+            const nameControl = this.AddressForm.get('pincode');
+            nameControl.setErrors({});
+            //   this.AddressForm.patchValue({
+            //     state: '',
+            //     city: ''
+            //   });
+          }
+        },
+        error => {
+          console.log(error)
         }
-        else {
-          const nameControl = this.AddressForm.get('pincode');
-          nameControl.setErrors({});
-          //   this.AddressForm.patchValue({
-          //     state: '',
-          //     city: ''
-          //   });
-        }
-      },
-      error => {
-        console.log(error)
-      }
-    )
+      )
+    }
   }
   // get states and city name ends
 
@@ -190,7 +199,6 @@ export class AddNewAddressComponent implements OnInit {
       }
       this.httpService.callPostApi(addressAddApi).subscribe(
         data => {
-          console.log(this.AddressForm.value);
           this.ref.close(true);
           this.toastService.displayApiMessage(data.headers.get('StatusMessage'), data.headers.get('StatusCode'));
         },
@@ -227,10 +235,8 @@ export class AddNewAddressComponent implements OnInit {
           "sShortName": this.AddressForm.get('shortName').value
         }
 
-
         this.httpService.callPostApi(addressEditApi1).subscribe(
           data => {
-            console.log(this.AddressForm.value);
             this.ref.close(true);
             this.toastService.displayApiMessage(data.headers.get('StatusMessage'), data.headers.get('StatusCode'));
           },
@@ -259,7 +265,6 @@ export class AddNewAddressComponent implements OnInit {
           "iStatusID": status_id,
           "sShortName": this.AddressForm.get('shortName').value
         }
-
 
         this.httpService.callPostApi(addressEditApi2).subscribe(
           data => {
@@ -291,7 +296,7 @@ export class AddNewAddressComponent implements OnInit {
       address2: ['', Validators.required],
       state: [''],
       city: [''],
-      pincode: ['', Validators.compose([Validators.required, Validators.minLength(6), Validators.maxLength(6)])],
+      pincode: ['', Validators.compose([Validators.required, Validators.minLength(6), Validators.maxLength(6), Validators.pattern("^[0-9]*$")])],
       landmark: ['', Validators.required],
       shortName: ['', Validators.required],
       telNo1: ['', Validators.compose([Validators.required, Validators.minLength(10), Validators.maxLength(13)])],
