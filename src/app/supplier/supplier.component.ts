@@ -37,6 +37,7 @@ export class SupplierComponent implements OnInit {
 
 
   ngOnInit(): void {
+    localStorage.removeItem("iSupID");
     this.getAllSupplier();
     this.setButtonsVisibility();
   }

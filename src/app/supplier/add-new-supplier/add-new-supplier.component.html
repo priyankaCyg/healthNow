@@ -4,7 +4,7 @@
     <div class="p-col-12">
         <div class="card card-w-title">
             <h1>Supplier</h1>
-            <p-tabView>
+            <p-tabView [activeIndex]="index">
                 <!-- Supplier tab start here -->
                 <p-tabPanel header="Supplier">
                     <form [formGroup]="addSupplierForm" autocomplete="off">

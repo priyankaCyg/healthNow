@@ -58,6 +58,7 @@ export class NewProductComponent implements OnInit {
   fileTypeData;
   uploadedFiles: any[] = [];
   attachment: any[];
+  index: number = 0;
 
   constructor(private carService: CarService, private breadcrumbService: BreadcrumbService,
     private dialogService: DialogService,
@@ -73,14 +74,20 @@ export class NewProductComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.defaultDropDwnValue()
+  
+    this.defaultDropDwnValue();
     this.productData = new ProductMaster();
     this.ProductForm = this.createControl(this.productData);
+    if(this.route.snapshot.params['iPrdID']){
     this.prdId = +this.route.snapshot.params['iPrdID'];
     localStorage.setItem('iPrdID', this.prdId)
+    }
+    else{
+      this.prdId = +localStorage.getItem("iPrdID");
+    }
 
     //code for select product  by id
-    if (!isNaN(this.prdId)) {
+    if (this.prdId) {
       this.isEdit = true
       this.tabDisabled = false
       var dataToSendEdit = {
@@ -301,9 +308,10 @@ export class NewProductComponent implements OnInit {
         this.getProductQueries();
         this.getCategoryMappingDataSource();
         this.getCategoryMappingDataTarget();
-        this.tabDisabled = false
+        this.tabDisabled = false;
         this.toastService.displayApiMessage(data.headers.get('StatusMessage'), data.headers.get('StatusCode'));
-        this.isEdit = true
+        this.isEdit = true;
+        this.index = 1;
       },
       error => console.log(error)
     );
