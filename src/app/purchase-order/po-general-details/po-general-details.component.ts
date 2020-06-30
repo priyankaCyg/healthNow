@@ -61,7 +61,7 @@ export class PoGeneralDetailsComponent implements OnInit {
   WarrantyDisable:boolean;
   sinlgepaymentVal : PoTnc;
   selectedCustom : PoTnc[] = [];
-
+  po_no_display: string;
   constructor(private breadcrumbService: BreadcrumbService, private dialogService: DialogService, private fb: FormBuilder,
     private httpService: ApiService, private toastService: ToastService, private datePipe: DatePipe, private confirmationService: ConfirmationService,
     private _apiService: APIService, private router: Router) {
@@ -75,7 +75,10 @@ export class PoGeneralDetailsComponent implements OnInit {
     this.defaultDropDwnValue();
     this.editPo  = localStorage.getItem('isPoEdit');
     this.data = JSON.parse(localStorage.getItem('poDetails'));
+    console.log(this.data,"data");
+
     this.poRespData = Object.values(this.data);
+    console.log(this.poRespData,"resp")
     this.poId = this.poRespData[0].iPOID;
     if (this.editPo == 'true') {
       var dataToSendEdit = {
@@ -87,6 +90,7 @@ export class PoGeneralDetailsComponent implements OnInit {
           this.purchaseOrderData = new POGeneralMaster(data.body[0]);
           this.POForm = this.createControl(this.purchaseOrderData);
           this.poId = this.purchaseOrderData.iPOID;
+          this.po_no_display = this.purchaseOrderData.sPONo;
           if(this.purchaseOrderData.iIncludeTaxes ==1){
             this.checked = true;
           }
@@ -98,8 +102,10 @@ export class PoGeneralDetailsComponent implements OnInit {
     }
     else {
       this.purchaseOrderData = new POGeneralMaster(this.poRespData[0]);
+      console.log(this.purchaseOrderData,"2")
       this.POForm = this.createControl(this.purchaseOrderData);
       this.poId = this.purchaseOrderData.iPOID;
+      this.po_no_display = this.purchaseOrderData.sPONo;
       Promise.all([this.getSuppContact(), this.getSuppAddress(), this.getPartnerContact(), this.getCurrency(), this.getFileType()]).then(values => {
         console.log(values);
       });
@@ -137,13 +143,13 @@ export class PoGeneralDetailsComponent implements OnInit {
     }
 
     // Partner Contact Dropdown
-    let selectedPartnerContactObj = this.partnerContact.find(x => x.iPartnerContactID == this.purchaseOrderData.iPartnerContactID);
+    let selectedPartnerContactObj = this.partnerContact.find(x => x.iPartnerContactID == this.purchaseOrderData.iPOContactID);
     if (selectedPartnerContactObj !== undefined) {
       this.selectedPartnerContact = selectedPartnerContactObj;
     }
 
     // Currency Dropdown
-    let selectedCurrencyObj = this.currencyData.find(x => x.iKVID == this.purchaseOrderData.iKVID);
+    let selectedCurrencyObj = this.currencyData.find(x => x.iKVID == this.purchaseOrderData.iCurrencyID);
     if (selectedCurrencyObj !== undefined) {
       this.selectedCurrency = selectedCurrencyObj;
     }

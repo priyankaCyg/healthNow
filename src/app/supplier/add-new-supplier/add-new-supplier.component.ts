@@ -450,7 +450,9 @@ export class AddNewSupplierComponent implements OnInit {
         this.getCategoryMappingDataSource();
         this.getCategoryMappingDataTarget();
         this.tabDisabled = false
-        this.toastService.displayApiMessage(data.headers.get('StatusMessage'), data.headers.get('StatusCode'));
+        let supp_name ="Supplier " + formData.supp_name + " has been added successfully"
+        this.toastService.displayApiMessage(supp_name, data.headers.get('StatusCode'));
+        
       },
       error => console.log(error)
     );

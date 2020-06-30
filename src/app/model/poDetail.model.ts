@@ -12,6 +12,9 @@ export class poDetailMaster {
     iPurchasePrice: number;
     iTotalAmount:number;
     sRequisionNo: string;
+    iGrossAmt: number;
+    sVariant: string;
+    sUnitSymbol: string;
 
     constructor(poDetailMaster?) {
         poDetailMaster = poDetailMaster || {};

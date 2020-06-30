@@ -7,4 +7,6 @@ export class productReqData {
     sPrdName: string;
     sStatusName: string;
     iStatusID: number;
+    sVariant: string;
+    sUnitSymbol: string;
 }

@@ -166,8 +166,8 @@ export class NewPartnerComponent implements OnInit {
         this.getPartnerContactList();
         this.gstList();
         this.tabDisabled = false;
-        let msg = "Partner "+ formData.sPartnerName + " Added Successfully"
-        this.toastService.displayApiMessage(msg, data.headers.get('StatusCode'));
+        let partner_name = "Partner "+ formData.sPartnerName + " has been added successfully"
+        this.toastService.displayApiMessage(partner_name, data.headers.get('StatusCode'));
       },
       error => console.log(error)
     );

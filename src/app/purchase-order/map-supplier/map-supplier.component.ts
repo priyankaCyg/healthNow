@@ -61,7 +61,7 @@ export class MapSupplierComponent implements OnInit {
   getSupplierList() {
     const supplierAPI = {
       "iRequestID": 2336,
-      "iPReqID": this.requisitionData[0].iPReqID
+      "iPrdID": this.requisitionData[0].iPrdID
     }
     this.httpService.callPostApi(supplierAPI).subscribe(
       data => {
@@ -97,7 +97,7 @@ export class MapSupplierComponent implements OnInit {
       let supplierRate = this.completeSupplierData.iPurchaseAmt;
       let discountAmount = parseFloat((supplierRate * this.discountPer).toFixed(2));
       let discountPerAmount = parseFloat((discountAmount / 100).toFixed(2));
-      this.discountAmount = discountPerAmount;
+      this.discountAmount = parseFloat((discountPerAmount * this.totalquantity).toFixed(2))
       let amountEach = parseFloat((supplierRate - discountPerAmount).toFixed(2));
       this.discountAmountEach = amountEach;
       let totalAmount = parseFloat((this.totalquantity * amountEach).toFixed(2));

@@ -48,13 +48,12 @@
                                 <td>{{poListData.sPODate | date:"dd-MM-yyyy"}}</td>
                                 <td>{{poListData.sSupName}}</td>
                                 <td>{{poListData.currency}}</td>
-                                <td>
-                                    <!-- <p-checkbox *ngIf="poListData.iIncludeTaxes==1" value="poListData.iIncludeTaxes"
+                                <td>   
+ 
+                                    <p-checkbox *ngIf="poListData.iIncludeTaxes==1" value="poListData.iIncludeTaxes"
                                         readonly=true [(ngModel)]="checked" binary="true">
                                     </p-checkbox>
-                                    <p-checkbox *ngIf="poListData.iIncludeTaxes==0" value="poListData.iIncludeTaxes"
-                                        readonly=true>
-                                    </p-checkbox> -->
+                                    
                                     
                                 </td>
                                 <td>
@@ -80,24 +79,31 @@
                                 <td [attr.colspan]="9">
                                     <div class="ui-g ui-fluid" style="font-size:14px;padding:8px">
                                         <div class="ui-g-12 ui-md-12">
-                                            <p-table *ngIf="batch.length>1" [value]="batch">
+                                            <p-table  [value]="batch">
                                                 <ng-template pTemplate="header">
                             <tr>
+                                <th>Product Category Name</th>
                                 <th>Product Name</th>
                                 <th>Qty</th>
-                                <th>Discount Amt</th>
-                                <th>Discount Percentage</th>
                                 <th>Rate</th>
+                                <th>Gross Amount</th>
+                                <th>Discount Percentage</th>
+                                <th>Discount Amt</th>
+                                <th>Total Amount</th>
+                                
 
                             </tr>
                         </ng-template>
                         <ng-template pTemplate="body" let-batch>
                             <tr>
-                                <td>{{batch.sPrdName}}</td>
+                                <td>{{batch.sPCName}}</td>
+                                <td>{{batch.sPrdName}} {{batch.sVariant}} {{batch.sUnitSymbol}}</td>
                                 <td>{{batch.iQty}}</td>
-                                <td>{{batch.iDiscountAmt}}</td>
-                                <td>{{batch.iDiscountPercentage}}</td>
                                 <td>{{batch.iRate}}</td>
+                                <td>{{batch.iGrossAmt}}</td>
+                                <td>{{batch.iDiscountPercentage}}</td>
+                                <td>{{batch.iDiscountAmt}}</td>
+                                <td>{{batch.iTotalAmt}}</td>
 
                             </tr>
                         </ng-template>

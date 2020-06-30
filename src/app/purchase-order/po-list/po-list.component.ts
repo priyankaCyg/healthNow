@@ -65,6 +65,7 @@ export class PoListComponent implements OnInit {
     this.httpService.callPostApi(poListAPI).subscribe(
       data => {
         this.batch = data.body;
+        console.log(this.batch);
       },
       error => { console.log(error) }
     )

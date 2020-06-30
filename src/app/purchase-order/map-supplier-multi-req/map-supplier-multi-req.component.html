@@ -11,7 +11,7 @@
                             <div class="card bg-success p-2">Product Category : <strong>{{productCategory}}</strong></div>
                         </div>
                         <div class="p-col-12 p-md-6 p-lg-4 mb-2">
-                            <div class="card bg-success p-2">Product : <strong>{{productName}}</strong></div>
+                            <div class="card bg-success p-2">Product : <strong>{{productName}} {{productVariant}} {{productUnit}}</strong></div>
                         </div>
                     </div>
                 </div>
@@ -88,15 +88,15 @@
                                     </div>
                                     
                                     <div class="p-col-12 p-md-12 p-lg-12 mb-1">
-                                        <label for="location">Discount Amount</label>
+                                        <label for="location">Discount</label>
                                         <input id="discountAmount" name="discountAmount" [(ngModel)]="discountAmount" type="text" pInputText disabled>
                                     </div>
                                     <div class="p-col-12 p-md-12 p-lg-12 mb-1">
-                                        <label for="qty">Amount / Each</label>
+                                        <label for="qty">Amount per Qty.</label>
                                         <input id="discountAmountEach" name="discountAmountEach" [(ngModel)]="discountAmountEach" type="text" pInputText  disabled>
                                     </div>
                                     <div class="p-col-12 p-md-12 p-lg-12 mb-1">
-                                        <label for="qty">Total Amount </label>
+                                        <label for="qty">Total Amount for {{totalquantity}} Qty.</label>
                                         <input id="totalAmount" name="totalAmount" [(ngModel)]="totalAmount" type="text" pInputText  disabled>
                                     </div>
                                 </div>

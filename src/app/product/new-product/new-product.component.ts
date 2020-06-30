@@ -302,7 +302,8 @@ export class NewProductComponent implements OnInit {
         this.getCategoryMappingDataSource();
         this.getCategoryMappingDataTarget();
         this.tabDisabled = false
-        this.toastService.displayApiMessage(data.headers.get('StatusMessage'), data.headers.get('StatusCode'));
+        let prd_name ="Product " + formData.sPrdName + " " + formData.sVariant + " "  + formData.sUnitName.sUnitName + " has been created successfully"
+        this.toastService.displayApiMessage(prd_name, data.headers.get('StatusCode'));
         this.isEdit = true
       },
       error => console.log(error)

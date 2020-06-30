@@ -5,6 +5,7 @@ import { ApiService } from 'src/app/services/api.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ToastService } from 'src/app/services/toast.service';
 import { poDetailMaster } from 'src/app/model/poDetail.model';
+import { productReqData } from 'src/app/model/productRequisition.model';
 
 @Component({
   selector: 'app-create-po-detail-edit',
@@ -40,7 +41,7 @@ export class CreatePoDetailEditComponent implements OnInit {
   createControl(productData?: poDetailMaster): FormGroup {
     this.editPOForm = this.fb.group({
       sPCName: [productData.sPCName],
-      sPrdName: [productData.sPrdName],
+      sPrdName: [productData.sPrdName,productData.sVariant,productData.sUnitSymbol],
       iQty: [productData.iQty, [Validators.required, Validators.pattern('^[0-9]*$')]],
       iSupRate: [productData.iSupRate],
       iDisPer: [productData.iDisPer, [Validators.required, Validators.pattern('^[0-9]*$')]],
@@ -58,6 +59,7 @@ export class CreatePoDetailEditComponent implements OnInit {
     if(this.disper){
       let temp = parseFloat((this.disper/100).toFixed(2));
       let dis_amnt = parseFloat((temp * this.rate).toFixed(2));
+       dis_amnt = parseFloat((dis_amnt * this.qty).toFixed(2));
       let temp1 = parseFloat((this.rate-dis_amnt).toFixed(2));
       let total_amnt = parseFloat((temp1*this.qty).toFixed(2))
       this.editPOForm.patchValue({
@@ -77,6 +79,7 @@ export class CreatePoDetailEditComponent implements OnInit {
     if(this.qty){
       let temp = parseFloat((this.disper/100).toFixed(2));
       let dis_amnt = parseFloat((temp * this.rate).toFixed(2));
+      dis_amnt = parseFloat((dis_amnt * this.qty).toFixed(2));
       let temp1 = parseFloat((this.rate-dis_amnt).toFixed(2));
       let total_amnt = parseFloat((temp1*this.qty).toFixed(2))
       this.editPOForm.patchValue({

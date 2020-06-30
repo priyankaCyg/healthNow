@@ -27,6 +27,8 @@ export class MapSupplierMultiReqComponent implements OnInit {
   data : [];
   productCategory:string;
   productName : string;
+  productVariant : string;
+  productUnit : string;
   totalquantity : number;
   productId:number;
   selectedValues : string[] = [];
@@ -57,6 +59,8 @@ export class MapSupplierMultiReqComponent implements OnInit {
     console.log(this.requisitionData);
     this.productCategory = this.requisitionData[0].sPCName;
     this.productName = this.requisitionData[0].sPrdName;
+    this.productVariant = this.requisitionData[0].sVariant;
+    this.productUnit = this.requisitionData[0].sUnitSymbol;
     this.productId = +this.requisitionData[0].iPrdID;
     this.getProductReq();
     this.getSupplierRate();
@@ -139,7 +143,7 @@ export class MapSupplierMultiReqComponent implements OnInit {
     let supplierRate = this.completeSupplierData.iPurchaseAmt;
     let discountAmount = parseFloat((supplierRate * this.discountPer).toFixed(2));
     let discountPerAmount = parseFloat((discountAmount / 100).toFixed(2));
-    this.discountAmount = discountPerAmount;
+    this.discountAmount = parseFloat((discountPerAmount * this.totalquantity).toFixed(2))
     let amountEach = parseFloat((supplierRate - discountPerAmount).toFixed(2)) ;
     this.discountAmountEach = amountEach ;
     let totalAmount = parseFloat((this.totalquantity * amountEach).toFixed(2)) ;
