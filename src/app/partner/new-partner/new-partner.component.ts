@@ -58,13 +58,13 @@ export class NewPartnerComponent implements OnInit {
     this.PartnerForm = this.createControl(this.partnerData);
     // this.partner_id = +this.route.snapshot.params['iPartnerID'];
     // localStorage.setItem('iPartnerID', this.partner_id);
-    if(this.route.snapshot.params['iPartnerID']){
+    if (this.route.snapshot.params['iPartnerID']) {
       this.partner_id = +this.route.snapshot.params['iPartnerID'];
       localStorage.setItem('iPartnerID', this.partner_id)
-      }
-      else{
-        this.partner_id = +localStorage.getItem("iPartnerID");
-      }
+    }
+    else {
+      this.partner_id = +localStorage.getItem("iPartnerID");
+    }
     if (this.partner_id) {
       this.isEdit = true;
       this.tabDisabled = false;
@@ -175,8 +175,9 @@ export class NewPartnerComponent implements OnInit {
         this.gstList();
         this.tabDisabled = false;
         this.index = 1;
-        let partner_name = "Partner "+ formData.sPartnerName + " has been added successfully"
+        let partner_name = "Partner " + formData.sPartnerName + " has been added successfully"
         this.toastService.displayApiMessage(partner_name, data.headers.get('StatusCode'));
+        this.isEdit = true
       },
       error => console.log(error)
     );

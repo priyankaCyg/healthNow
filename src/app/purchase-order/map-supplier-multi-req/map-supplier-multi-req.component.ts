@@ -20,36 +20,36 @@ import { supplierReqData } from 'src/app/model/supplierRequisition.model';
   styleUrls: ['./map-supplier-multi-req.component.css']
 })
 export class MapSupplierMultiReqComponent implements OnInit {
-  
+
   requisitionDatails: orderReqData[];
   requisitionData: productReqData[];
   supplierRate: supplierReqData[];
-  data : [];
-  productCategory:string;
-  productName : string;
-  productVariant : string;
-  productUnit : string;
-  totalquantity : number;
-  productId:number;
-  selectedValues : string[] = [];
-  completeSupplierData : any;
-  discountAmount:number;
-  discountAmountEach:number;
-  totalAmount:number;
-  discountPer : number;
+  data: [];
+  productCategory: string;
+  productName: string;
+  productVariant: string;
+  productUnit: string;
+  totalquantity: number;
+  productId: number;
+  selectedValues: string[] = [];
+  completeSupplierData: any;
+  discountAmount: number;
+  discountAmountEach: number;
+  totalAmount: number;
+  discountPer: number;
   isDisable: boolean = true;
-  isDisableDiscount:boolean = true;
+  isDisableDiscount: boolean = true;
 
-  
 
-  constructor(private breadcrumbService: BreadcrumbService, private dialogService:DialogService,
-    private httpService: ApiService, private commonService: CommonService,private toastService: ToastService,
+
+  constructor(private breadcrumbService: BreadcrumbService, private dialogService: DialogService,
+    private httpService: ApiService, private commonService: CommonService, private toastService: ToastService,
     private router: Router) {
     this.breadcrumbService.setItems([
-        { label: 'Dashboard' },
-        { label: 'Purchase Order', routerLink: ['/purchase-order'] }
+      { label: 'Dashboard' },
+      { label: 'Purchase Order', routerLink: ['/purchase-order'] }
     ]);
-}
+  }
 
   ngOnInit(): void {
     // this.commonService.captureData$.subscribe(data => this.data = data);
@@ -70,16 +70,16 @@ export class MapSupplierMultiReqComponent implements OnInit {
   getProductReq() {
     const productReqAPI = {
       "iRequestID": 2338,
-      "iPrdID":this.requisitionData[0].iPrdID
+      "iPrdID": this.requisitionData[0].iPrdID
     }
     this.httpService.callPostApi(productReqAPI).subscribe(
       data => {
         this.requisitionDatails = data.body;
         this.getTotalCount();
-        if(this.requisitionDatails.length){
+        if (this.requisitionDatails.length) {
           this.isDisable = false;
         }
-        else{
+        else {
           this.isDisable = true;
         }
       },
@@ -88,31 +88,31 @@ export class MapSupplierMultiReqComponent implements OnInit {
   }
 
   //get total quantity count
-  getTotalCount(){
+  getTotalCount() {
     let temp_quantities = new Array();
-    if(this.requisitionDatails.length){
+    if (this.requisitionDatails.length) {
       this.requisitionDatails.map((val => {
         temp_quantities.push(val.iQty);
       }))
       let total = temp_quantities.map(Number);
-      let sum = total.reduce((a,b) => a + b );
+      let sum = total.reduce((a, b) => a + b);
       this.totalquantity = sum;
     }
   }
 
   // get supplier rate list 
-  getSupplierRate(){
+  getSupplierRate() {
     const suppRateAPI = {
       "iRequestID": 23312,
-      "iPrdID":this.productId
+      "iPrdID": this.productId
     }
     this.httpService.callPostApi(suppRateAPI).subscribe(
       data => {
         this.supplierRate = data.body;
-        if(this.supplierRate.length){
+        if (this.supplierRate.length) {
           this.isDisable = false;
         }
-        else{
+        else {
           this.isDisable = true;
         }
       },
@@ -121,50 +121,50 @@ export class MapSupplierMultiReqComponent implements OnInit {
   }
 
   // select single checkbox
-  checkBoxValidation(suppRate){
+  checkBoxValidation(suppRate) {
     this.completeSupplierData = suppRate;
-    const latestSupplier= this.selectedValues[this.selectedValues.length - 1];
+    const latestSupplier = this.selectedValues[this.selectedValues.length - 1];
     this.selectedValues.length = 0;
     this.selectedValues.push(latestSupplier);
     console.log(this.selectedValues)
-    if(this.selectedValues[0]){
+    if (this.selectedValues[0]) {
       this.isDisableDiscount = false;
       this.isDisable = false;
     }
-    else if(this.selectedValues[0] == undefined){
+    else if (this.selectedValues[0] == undefined) {
       this.isDisableDiscount = true;
       this.isDisable = true;
     }
   }
 
   // calculate price
-  calculateTotalPrice(){
-    if(this.discountPer){
-    let supplierRate = this.completeSupplierData.iPurchaseAmt;
-    let discountAmount = parseFloat((supplierRate * this.discountPer).toFixed(2));
-    let discountPerAmount = parseFloat((discountAmount / 100).toFixed(2));
-    this.discountAmount = parseFloat((discountPerAmount * this.totalquantity).toFixed(2))
-    let amountEach = parseFloat((supplierRate - discountPerAmount).toFixed(2)) ;
-    this.discountAmountEach = amountEach ;
-    let totalAmount = parseFloat((this.totalquantity * amountEach).toFixed(2)) ;
-    this.totalAmount = totalAmount;
-    console.log(totalAmount);
+  calculateTotalPrice() {
+    if (this.discountPer) {
+      let supplierRate = this.completeSupplierData.iPurchaseAmt;
+      let discountAmount = parseFloat((supplierRate * this.discountPer).toFixed(2));
+      let discountPerAmount = parseFloat((discountAmount / 100).toFixed(2));
+      this.discountAmount = parseFloat((discountPerAmount * this.totalquantity).toFixed(2))
+      let amountEach = parseFloat((supplierRate - discountPerAmount).toFixed(2));
+      this.discountAmountEach = amountEach;
+      let totalAmount = parseFloat((this.totalquantity * amountEach).toFixed(2));
+      this.totalAmount = totalAmount;
+      console.log(totalAmount);
     }
-    else{
+    else {
       this.discountAmount = 0;
       this.discountAmountEach = 0;
-      this.totalAmount=0
+      this.totalAmount = 0
     }
   }
 
   // save form 
-  saveProductRequisition(){
+  saveProductRequisition() {
     let discountPercentage = +this.discountPer;
     const productReqAPI = {
       "iRequestID": 2339,
-      "iPrdID":this.productId,
-      "iSupID":this.completeSupplierData.iSupID,
-      "iDisPer":discountPercentage
+      "iPrdID": this.productId,
+      "iSupID": this.completeSupplierData.iSupID,
+      "iDisPer": discountPercentage
     }
     this.httpService.callPostApi(productReqAPI).subscribe(
       data => {

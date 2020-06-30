@@ -33,7 +33,7 @@ export class ProductComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    localStorage.removeItem("iPartnerID");
+    localStorage.removeItem("iPrdID");
     this.getAllProduct();
   }
 

@@ -264,42 +264,42 @@ export class EmployeeComponent implements OnInit {
 
   //code for add new employee data
   addEmployee() {
-    if(this.submitflag == 0){
+    if (this.submitflag == 0) {
       this.submitflag = 1;
       var formData = this.employeeForm.getRawValue();
-    var dataToSendAdd = {
-      "iRequestID": 2032,
-      "iCID": 1,//logged in user company id
-      "sEmpCode": formData.sEmpCode,
-      "sFirstName": formData.sFirstName,
-      "sMiddleName": formData.sMiddleName,
-      "sLastName": formData.sLastName,
-      "iGenderID": parseInt(formData.sGender.iKVID),
-      "iAddID": parseInt(formData.sFullAddress.iAddID),
-      "iDesigID": parseInt(formData.sDesigName.iDesigID),
-      "sMobileNo": formData.sMobileNo,
-      "sContactNo": formData.sContactNo,
-      "sDirect": formData.sDirect,
-      "sPOBox": "12365",
-      "sEmailID": formData.sEmailID,
-      "iReportingToID": parseInt(formData.sReportingTo.iEmpID),
-      "iDeptID": parseInt(formData.sDeptName.iDeptID),
-      "iRoleID": parseInt(formData.sRoleName.iRoleID),
-      "iUserID": 1234 //logged in user user id
-    }
-    this.httpService.callPostApi(dataToSendAdd).subscribe(
-      data => {
-        this.submitflag =0;
-        if(data.headers.get('StatusCode') == 200){
-        this.ref.close(true);
-        }
-        this.toastService.displayApiMessage(data.headers.get('StatusMessage'), data.headers.get('StatusCode'));
+      var dataToSendAdd = {
+        "iRequestID": 2032,
+        "iCID": 1,//logged in user company id
+        "sEmpCode": formData.sEmpCode,
+        "sFirstName": formData.sFirstName,
+        "sMiddleName": formData.sMiddleName,
+        "sLastName": formData.sLastName,
+        "iGenderID": parseInt(formData.sGender.iKVID),
+        "iAddID": parseInt(formData.sFullAddress.iAddID),
+        "iDesigID": parseInt(formData.sDesigName.iDesigID),
+        "sMobileNo": formData.sMobileNo,
+        "sContactNo": formData.sContactNo,
+        "sDirect": formData.sDirect,
+        "sPOBox": "12365",
+        "sEmailID": formData.sEmailID,
+        "iReportingToID": parseInt(formData.sReportingTo.iEmpID),
+        "iDeptID": parseInt(formData.sDeptName.iDeptID),
+        "iRoleID": parseInt(formData.sRoleName.iRoleID),
+        "iUserID": 1234 //logged in user user id
+      }
+      this.httpService.callPostApi(dataToSendAdd).subscribe(
+        data => {
+          this.submitflag = 0;
+          if (data.headers.get('StatusCode') == 200) {
+            this.ref.close(true);
+          }
+          this.toastService.displayApiMessage(data.headers.get('StatusMessage'), data.headers.get('StatusCode'));
 
-      },
-      error => console.log(error)
-    );
+        },
+        error => console.log(error)
+      );
     }
-    
+
   }
 
   //code for edit employee data
@@ -329,9 +329,9 @@ export class EmployeeComponent implements OnInit {
     }
     this.httpService.callPostApi(dataToSendEdit).subscribe(
       data => {
-        if(data.headers.get('StatusCode') == 200){
+        if (data.headers.get('StatusCode') == 200) {
           this.ref.close(true);
-          }
+        }
         this.toastService.displayApiMessage(data.headers.get('StatusMessage'), data.headers.get('StatusCode'));
       },
       error => console.log(error)

@@ -13,6 +13,6 @@ export class orderReqData {
     iPReqID: number;
     sStatusName: string;
     iStatusID: number;
-    sVariant:string;
-    sUnitSymbol:string;
+    sVariant: string;
+    sUnitSymbol: string;
 }

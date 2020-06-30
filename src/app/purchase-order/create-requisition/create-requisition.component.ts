@@ -31,9 +31,8 @@ export class CreateRequisitionComponent implements OnInit {
   isEdit: boolean = false;
   productData;
   selectedProduct;
-  iPCID: number;
-  unitName;
-  
+  unitName: string;
+  parentCateName: string;
 
   constructor(private httpService: ApiService, private fb: FormBuilder, private ref: DynamicDialogRef,
     private toastService: ToastService, private config: DynamicDialogConfig) { }
@@ -133,10 +132,11 @@ export class CreateRequisitionComponent implements OnInit {
         (error) => console.log(error)
       );
     }
+    this.parentCateName = this.config.data.sParentCatName;
     this.productCateName = this.config.data.sPCName;
     this.productName = this.config.data.sPrdName;
     this.prodshortName = this.config.data.sVariant;
-    this.unitName = this.config.data.sUnitSymbol
+    this.unitName = this.config.data.sUnitSymbol;
     this.prd_Id = this.config.data.iPrdID;
     this.pc_Id = this.config.data.iPCID;
   }
@@ -160,7 +160,7 @@ export class CreateRequisitionComponent implements OnInit {
   }
 
   setPcId(event) {
-    this.iPCID = event.value.iPCID
+    this.pc_Id = event.value.iPCID
     this.childCategoryData();
   }
 
@@ -168,7 +168,7 @@ export class CreateRequisitionComponent implements OnInit {
     return new Promise((resolve, reject) => {
       var dataToSend4 = {
         "iRequestID": 2117,
-        "iPCID": this.iPCID
+        "iPCID": this.pc_Id
       }
       this.httpService.getDropDownData(dataToSend4).then(response => {
         this.productData = response
@@ -241,12 +241,14 @@ export class CreateRequisitionComponent implements OnInit {
 
   // code for fetch data onclick arrow of product list 
   fetchProductData(products) {
+    this.parentCateName = this.selectedproductCategory.sPCName;
     this.productCateName = products.sPCName;
     this.productName = products.sPrdName;
-    this.prodshortName = "";
+    this.prodshortName = '';
+    this.unitName = '';
     this.prd_Id = products.iPrdID;
     this.pc_Id = products.iPCID;
-    this.unitName ="";
+    this.unitName = "";
   }
 
   //code for implements form builder 

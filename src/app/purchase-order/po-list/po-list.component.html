@@ -53,8 +53,8 @@
                                     <p-checkbox *ngIf="poListData.iIncludeTaxes==1" value="poListData.iIncludeTaxes"
                                         readonly=true [(ngModel)]="checked" binary="true">
                                     </p-checkbox>
-                                    
-                                    
+
+
                                 </td>
                                 <td>
                                     <span *ngIf="poListData.iStatusID == 1"
@@ -95,7 +95,7 @@
                                 <td [attr.colspan]="9">
                                     <div class="ui-g ui-fluid" style="font-size:14px;padding:8px">
                                         <div class="ui-g-12 ui-md-12">
-                                            <p-table  [value]="batch">
+                                            <p-table [value]="batch">
                                                 <ng-template pTemplate="header">
                             <tr>
                                 <th>Requisition No.</th>
@@ -107,7 +107,7 @@
                                 <th>Discount %</th>
                                 <th>Discount Amount</th>
                                 <th>Total Amount</th>
-                                
+
 
                             </tr>
                         </ng-template>
