@@ -11,4 +11,6 @@ export class orderReqData {
     sPartnerName: string;
     sPrdName: string;
     iPReqID: number;
+    sStatusName: string;
+    iStatusID: number;
 }

@@ -15,9 +15,10 @@ import { LoginService } from '../../app/services/login.service'
   templateUrl: './product-category.component.html',
   styleUrls: ['./product-category.component.css']
 })
-export class ProductCategoryComponent implements OnInit {
-  items: MenuItem[];
 
+export class ProductCategoryComponent implements OnInit {
+
+  items: MenuItem[];
   productCategoryData: ProductCategory;
 
   constructor(
@@ -25,8 +26,7 @@ export class ProductCategoryComponent implements OnInit {
     private dialogService: DialogService,
     private apiService: ApiService,
     private toastService: ToastService,
-    private confirmationService: ConfirmationService, private loginService: LoginService
-  ) {
+    private confirmationService: ConfirmationService, private loginService: LoginService) {
     this.breadcrumbService.setItems([
       { label: 'Dashboard' },
       { label: 'Product Category', routerLink: ['/product-category'] }
@@ -34,8 +34,6 @@ export class ProductCategoryComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
-    // this.loginService.checkBrowserClosed();
     this.showProdCatList();
   }
 
@@ -65,7 +63,6 @@ export class ProductCategoryComponent implements OnInit {
       header: 'Edit Product Category',
       width: '28%'
     });
-
     ref.onClose.subscribe((success: any) => {
       if (success) {
         this.showProdCatList();
@@ -74,16 +71,13 @@ export class ProductCategoryComponent implements OnInit {
   }
 
   // To Edit category ends
-
   showProdCatList() {
     const prodCatListApi = {
       "iRequestID": 2114
     }
     this.apiService.callPostApi(prodCatListApi).subscribe(
       data => {
-        this.productCategoryData = data.body
-         // console.log(this.apiService.headerMessage);
-        //console.log(this.apiService.headerCode);
+        this.productCategoryData = data.body;
       },
       error => { console.log(error) }
     )
@@ -92,7 +86,6 @@ export class ProductCategoryComponent implements OnInit {
 
   // Open Dialog To Delete category
   deleteCategory(categoryID) {
-    console.log(categoryID);
     this.confirmationService.confirm({
       message: 'Are you sure you want to Delete this Record?',
       header: 'Confirmation',
@@ -102,10 +95,9 @@ export class ProductCategoryComponent implements OnInit {
           "iRequestID": 2113,
           "iPCID": categoryID
         }
-
         this.apiService.callPostApi(deleteCategoryAPI).subscribe(
           data => {
-            this.toastService.addSingle("success", data.headers.get('StatusMessage'), "");
+            this.toastService.displayApiMessage(data.headers.get('StatusMessage'), data.headers.get('StatusCode'));
             this.showProdCatList();
           },
           error => { console.log(error) }

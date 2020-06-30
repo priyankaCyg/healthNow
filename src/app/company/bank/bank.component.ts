@@ -21,12 +21,8 @@ export class BankComponent implements OnInit {
   bankID: number;
 
   constructor(
-    private httpService: ApiService,
-    private fb: FormBuilder,
-    private config: DynamicDialogConfig,
-    private ref: DynamicDialogRef,
-    private toastService: ToastService,
-  ) { }
+    private httpService: ApiService, private fb: FormBuilder, private config: DynamicDialogConfig,
+    private ref: DynamicDialogRef, private toastService: ToastService) { }
 
   ngOnInit(): void {
 
@@ -165,4 +161,5 @@ export class BankComponent implements OnInit {
     this.ref.close();
     this.bankForm.reset();
   }
+  
 }

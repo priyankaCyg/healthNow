@@ -29,7 +29,7 @@ export class MapSupplierComponent implements OnInit {
   purchase_amnt: number;
   disc: number;
   isDisable: boolean;
-
+  req_no_display: string;
   constructor(private breadcrumbService: BreadcrumbService, private dialogService: DialogService, private httpService: ApiService,
     private commonService: CommonService, private toastService: ToastService, private router: Router) {
     this.breadcrumbService.setItems([
@@ -44,6 +44,7 @@ export class MapSupplierComponent implements OnInit {
     this.isDisable = true;
     this.data = JSON.parse(localStorage.getItem('orderData'));
     this.requisitionData = Object.values(this.data);
+    this.req_no_display = this.requisitionData[0]['sRequisionNo'];
     this.getSupplierList();
   }
 

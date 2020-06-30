@@ -1,10 +1,7 @@
 <form #id [formGroup]="DepartmentSubmit" autocomplete="off">
-
     <div class="p-grid ui-fluid">
         <div class="p-col-12">
-
             <div class="p-grid form-group">
-
                 <div class="p-col-12">
                     <label for="departmentname">Department Name</label>
                     <input id="departmentname" type="text" formControlName="sDeptName" pInputText>
@@ -12,9 +9,7 @@
                         [text]="DepartmentSubmit.controls['sDeptName'].errors['required'] ? 'This Field is required' : DepartmentSubmit.controls['sDeptName'].errors"
                         *ngIf="!DepartmentSubmit.controls['sDeptName'].valid && DepartmentSubmit.controls['sDeptName'].dirty">
                     </p-message>
-
                 </div>
-
                 <div class="p-col-12">
                     <label for="iStatusID">Status</label>
                     <p-dropdown id="iStatusID" [options]="statusData" formControlName="iStatusID" optionLabel="sKVValue"
@@ -24,7 +19,6 @@
                         *ngIf="DepartmentSubmit.controls['iStatusID'].touched && (selectedstatus.iKVID == '' || DepartmentSubmit.controls['iStatusID'].hasError('required'))">
                     </p-message>
                 </div>
-
             </div>
             <div class="separator separator--border-solid separator--space-sm separator--portlet-fit"></div>
             <div class="p-grid form-group ui-fluid">
@@ -40,8 +34,6 @@
                         class="ui-button atbt"></button>
                 </div>
             </div>
-
         </div>
-
     </div>
 </form>

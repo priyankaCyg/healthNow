@@ -1,6 +1,5 @@
 <p-confirmDialog header="Confirmation" icon="pi pi-info" [style]="{width: '425px'}"
     rejectButtonStyleClass="ui-button-secondary"></p-confirmDialog>
-
 <div class="p-grid">
     <div class="p-col-12">
         <div class="card card-w-title">
@@ -12,14 +11,10 @@
                     <button (click)="openDialogForaddUnit()" pButton icon="pi pi-fw pi-pencil"
                         label=" Add New"></button>
                 </div>
-
                 <div class="p-col-12">
-                    <!-- <p-table [value]="unit">
-                    <ng-template pTemplate="caption"> -->
-
                     <p-table [value]="unit" #UnitSearch [paginator]="true" [rows]="10" [showCurrentPageReport]="true"
                         [rowsPerPageOptions]="[10, 25, 50]" [filterDelay]="0"
-                        [globalFilterFields]="['sUnitName','sStatusName']" class="defaultDataTable">
+                        [globalFilterFields]="['sUnitName','sStatusName', 'sSymbol']">
                         <ng-template pTemplate="caption">
 
                             <div class="ui-table-globalfilter-container text-left">
@@ -30,17 +25,16 @@
                         </ng-template>
                         <ng-template pTemplate="header">
                             <tr>
-                                <th style="width: 3em">Sr. No.</th>
                                 <th>Unit</th>
+                                <th>Symbol</th>
                                 <th>Status</th>
                                 <th>Action</th>
                             </tr>
                         </ng-template>
                         <ng-template pTemplate="body" let-i="rowIndex" let-unit>
                             <tr>
-                                <td>{{i+1}}</td>
                                 <td>{{unit.sUnitName}}</td>
-                                <!-- <td>{{unit.sStatusName}}</td> -->
+                                <td>{{unit.sSymbol}}</td>
                                 <td>
                                     <span *ngIf="unit.iStatusID == 1"
                                         class="badge badge--success badge--inline badge--pill">
@@ -66,7 +60,6 @@
                         </ng-template>
                     </p-table>
                 </div>
-
             </div>
         </div>
     </div>

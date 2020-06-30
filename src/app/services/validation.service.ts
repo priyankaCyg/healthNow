@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { AbstractControl } from '@angular/forms';
 
 @Injectable({
   providedIn: 'root'
@@ -8,15 +9,23 @@ export class ValidationService {
 
   constructor() { }
   
-  static bankNameValidator(control) {
+  static nameValidator(control) {
     // Validates upper case and lower case alphabets
     if(control.value == ""){
       return { Msg:  "This field is required"};
     }
-    else if(control.value.length <3 || control.value.length >10){
-      return { Msg:  "name should be between 4 to 9 characters"};
+    else if (!control.value.match(/^[A-Za-z]+$/)) {
+     // return null;
+     return { Msg:  "Enter a valid name"};
     }
-    else if (!control.value.match(/^[A-Za-z\s]+$/)) {
+  }
+
+  static PANValidator(control) {
+    // Validates upper case and lower case alphabets
+    if(control.value == ""){
+      return { Msg:  "This field is required"};
+    }
+    else if (!control.value.match(/^[A-Z0-9]+$/)) {
      // return null;
      return { Msg:  "Enter a valid name"};
     }
@@ -128,4 +137,14 @@ export class ValidationService {
   //     return { invalidCreditCard: true };
   //   }
   // }
+
+  static numeric(control: AbstractControl) {
+    let val = control.value;
+
+    // if (val === null || val === '') return null;
+
+    if (!val.toString().match(/^[0-9]+(\.?[0-9]+)?$/)) return { 'invalidNumber': true };
+
+    return null;
+  }
 }

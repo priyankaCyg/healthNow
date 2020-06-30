@@ -1,45 +1,50 @@
-
-    <div class="p-grid ui-fluid">
-        <form [formGroup]="ProductCategoryForm">
-        <div class="p-col-12"> 
-    
+<div class="p-grid ui-fluid">
+    <form [formGroup]="ProductCategoryForm">
+        <div class="p-col-12">
             <div class="p-grid form-group">
-               
                 <div class="p-col-12">
                     <label for="sPCName">Product Category Name</label>
-                    <input id="sPCName" type="text" formControlName="sPCName" pInputText >
+                    <input id="sPCName" type="text" formControlName="sPCName" pInputText>
                     <div>
-                    <p-message severity="error" text="This Field is required" *ngIf="!ProductCategoryForm.controls['sPCName'].valid && (ProductCategoryForm.controls['sPCName'].dirty || ProductCategoryForm.controls['sPCName'].touched)" ></p-message>
+                        <p-message severity="error" text="This Field is required"
+                            *ngIf="!ProductCategoryForm.controls['sPCName'].valid && (ProductCategoryForm.controls['sPCName'].dirty || ProductCategoryForm.controls['sPCName'].touched)">
+                        </p-message>
+                    </div>
                 </div>
-                </div>
-    
                 <div class="p-col-12">
                     <label for="iParentID">Parent Category</label>
-                    <p-dropdown id="iParentID" formControlName="iParentID" [options]="parentCatData" optionLabel="sPCName" [(ngModel)]="selectedparentCategory"></p-dropdown>
+                    <p-dropdown id="iParentID" formControlName="iParentID" [options]="parentCatData"
+                        optionLabel="sPCName" [(ngModel)]="selectedparentCategory"></p-dropdown>
                     <div>
-                        <p-message severity="error" text="This Field is required" *ngIf="ProductCategoryForm.controls['iParentID'].touched  && (selectedparentCategory.iPCID =='' || ProductCategoryForm.controls['iParentID'].hasError('required'))" ></p-message>
+                        <p-message severity="error" text="This Field is required"
+                            *ngIf="ProductCategoryForm.controls['iParentID'].touched  && (selectedparentCategory.iPCID =='' || ProductCategoryForm.controls['iParentID'].hasError('required'))">
+                        </p-message>
                     </div>
                 </div>
-
                 <div class="p-col-12">
                     <label for="iStatusID">Status</label>
-                    <p-dropdown id="iStatusID" formControlName="iStatusID" [options]="statusData" optionLabel="sKVValue" [(ngModel)]="selectedstatus" ></p-dropdown>
+                    <p-dropdown id="iStatusID" formControlName="iStatusID" [options]="statusData" optionLabel="sKVValue"
+                        [(ngModel)]="selectedstatus"></p-dropdown>
                     <div>
-                        <p-message severity="error" text="This Field is required" *ngIf="ProductCategoryForm.controls['iStatusID'].touched  && (selectedstatus.iKVID =='' || ProductCategoryForm.controls['iStatusID'].hasError('required'))" ></p-message>
+                        <p-message severity="error" text="This Field is required"
+                            *ngIf="ProductCategoryForm.controls['iStatusID'].touched  && (selectedstatus.iKVID =='' || ProductCategoryForm.controls['iStatusID'].hasError('required'))">
+                        </p-message>
                     </div>
                 </div>
-    
             </div>
             <div class="separator separator--border-solid separator--space-sm separator--portlet-fit"></div>
-            
             <div class="p-grid form-group ui-fluid">
                 <div class="p-col-12 p-md-12 p-lg-12 text-right">
-                    <button pButton type="button" label="Cancel" class="ui-button-light atbt mr-2" (click)="closeDialog()"></button>            
-                    <button *ngIf="!isEdit" pButton type="button" label="Save" [disabled]="!(!ProductCategoryForm.invalid && !dropDownValidityCheck())" class="ui-button atbt" (click)="addProductCategory()"></button>               
-                    <button *ngIf="isEdit" pButton type="button" label="Update" [disabled]="!(!ProductCategoryForm.invalid && !dropDownValidityCheck())" class="ui-button atbt" (click)="editProductCategory()"></button>
+                    <button pButton type="button" label="Cancel" class="ui-button-light atbt mr-2"
+                        (click)="closeDialog()"></button>
+                    <button *ngIf="!isEdit" pButton type="button" label="Save"
+                        [disabled]="!(!ProductCategoryForm.invalid && !dropDownValidityCheck())" class="ui-button atbt"
+                        (click)="addProductCategory()"></button>
+                    <button *ngIf="isEdit" pButton type="button" label="Update"
+                        [disabled]="!(!ProductCategoryForm.invalid && !dropDownValidityCheck())" class="ui-button atbt"
+                        (click)="editProductCategory()"></button>
                 </div>
             </div>
-
         </div>
-    </form>  
-    </div>
+    </form>
+</div>

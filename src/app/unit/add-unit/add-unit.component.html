@@ -1,11 +1,7 @@
 <form [formGroup]="unitForm" autocomplete="off">
-
     <div class="p-grid ui-fluid">
-
         <div class="p-col-12">
-
             <div class="p-grid form-group">
-
                 <div class="p-col-12">
                     <label for="unitName">Unit </label>
                     <input id="unitName" type="text" formControlName="sUnitName" pInputText>
@@ -13,8 +9,13 @@
                         [text]="unitForm.controls['sUnitName'].errors['required'] ? 'Unit Name is required' : unitForm.controls['sUnitName'].errors['pattern'] ? 'Should be alpha numeric' : ''"
                         *ngIf="!unitForm.controls['sUnitName'].valid&&unitForm.controls['sUnitName'].dirty"></p-message>
                 </div>
-
-
+                <div class="p-col-12">
+                    <label for="symbol">Symbol </label>
+                    <input id="symbol" type="text" formControlName="sSymbol" pInputText>
+                    <p-message severity="error"
+                        [text]="unitForm.controls['sSymbol'].errors['required'] ? 'Symbol is required' : unitForm.controls['sSymbol'].errors['pattern'] ? 'Should be alpha numeric' : ''"
+                        *ngIf="!unitForm.controls['sSymbol'].valid&&unitForm.controls['sSymbol'].dirty"></p-message>
+                </div>
                 <div class="p-col-12">
                     <label for="iStatusID">Status</label>
                     <p-dropdown id="iStatusID" optionLabel="sKVValue" formControlName="iStatusID" [options]="statusData"
@@ -22,12 +23,9 @@
                     <p-message severity="error" text="Status is required"
                         *ngIf="unitForm.controls['iStatusID'].touched && (selectedstatus.iKVID=='' || unitForm.controls['iStatusID'].hasError('required'))">
                     </p-message>
-
                 </div>
-
             </div>
             <div class="separator separator--border-solid separator--space-sm separator--portlet-fit"></div>
-
             <div class="p-grid form-group ui-fluid">
                 <div class="p-md-6 p-lg-6"></div>
                 <div class="p-col-12 p-md-3 p-lg-3">
@@ -39,14 +37,12 @@
                         [disabled]="!(!unitForm.invalid && !dropDownValidityCheck())" (click)="addUnit()"
                         style="margin-bottom:10px" class="ui-button"></button>
                 </div>
-
                 <div class="p-col-12 p-md-3 p-lg-3" *ngIf="isEdit">
                     <button pButton type="button" label="Update"
                         [disabled]="!(!unitForm.invalid && !dropDownValidityCheck())" (click)="updateUnit()"
                         style="margin-bottom:10px" class="ui-button"></button>
                 </div>
             </div>
-
         </div>
     </div>
 </form>

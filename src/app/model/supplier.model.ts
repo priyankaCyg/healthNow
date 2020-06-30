@@ -14,7 +14,7 @@ export class SuppMaster {
     sTelNo1: string;
     sTelNo2: string;
     sWebsite: string;
-
+    iSupCatID: number;
 
 
     /**
@@ -38,6 +38,6 @@ export class SuppMaster {
         this.sTelNo2 = SuppMaster.sTelNo2 || '';
         this.sWebsite = SuppMaster.sWebsite || '';
         this.sShortCode = SuppMaster.sShortCode || '';
-
+        this.iSupCatID = SuppMaster.iSupCatID || '';
     }
 }

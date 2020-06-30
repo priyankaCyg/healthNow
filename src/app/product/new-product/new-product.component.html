@@ -3,6 +3,7 @@
         <div class="card card-w-title">
             <h1>Product</h1>
             <p-tabView>
+
                 <!-- Product tab start here -->
                 <p-tabPanel header="Product">
                     <form [formGroup]="ProductForm" autocomplete="off">
@@ -10,37 +11,20 @@
                             <div class="p-col-12">
                                 <div class="p-grid form-group">
                                     <div class="p-col-12 p-md-6 p-lg-4 mb-2">
-                                        <label for="address2">Product Name</label>
-                                        <input id="address2" type="text" formControlName="sPrdName" pInputText>
+                                        <label for="sPrdName">Product Name</label>
+                                        <input id="sPrdName" type="text" formControlName="sPrdName" pInputText
+                                            (change)="productChange()">
                                         <p-message severity="error"
                                             [text]="ProductForm.controls['sPrdName'].errors['required'] ? 'Producer Name is required' : ProductForm.controls['sPrdName'].errors['required']"
                                             *ngIf="!ProductForm.controls['sPrdName'].valid && ProductForm.controls['sPrdName'].dirty">
                                         </p-message>
                                     </div>
                                     <div class="p-col-12 p-md-6 p-lg-4">
-                                        <label for="pincode">Short Description</label>
-                                        <input id="pincode" type="text" formControlName="sShortName" pInputText>
+                                        <label for="sVariant">Variant</label>
+                                        <input id="sVariant" type="text" formControlName="sVariant" pInputText>
                                         <p-message severity="error"
-                                            [text]="ProductForm.controls['sShortName'].errors['required'] ? 'Short Name is required' : ProductForm.controls['sShortName'].errors['required']"
-                                            *ngIf="!ProductForm.controls['sShortName'].valid && ProductForm.controls['sShortName'].dirty">
-                                        </p-message>
-                                    </div>
-                                    <div class="p-col-12 p-md-6 p-lg-4 mb-2">
-                                        <label for="producer">Producer</label>
-                                        <p-dropdown [options]="producerData" optionLabel="sProducerName"
-                                            formControlName="sProducerName" [(ngModel)]="selectedproducer"></p-dropdown>
-                                        <p-message severity="error" text="Producer is required"
-                                            *ngIf="ProductForm.controls['sProducerName'].touched && (selectedproducer.iProducerID=='' || ProductForm.controls['sProducerName'].hasError('required'))">
-                                        </p-message>
-                                    </div>
-                                </div>
-                                <div class="p-grid form-group">
-                                    <div class="p-col-12 p-md-6 p-lg-4">
-                                        <label for="unit">Status</label>
-                                        <p-dropdown id="unit" [options]="statusData" optionLabel="sStatusName"
-                                            formControlName="sStatusName" [(ngModel)]="selectedStatus"></p-dropdown>
-                                        <p-message severity="error" text="Status is required"
-                                            *ngIf="ProductForm.controls['sStatusName'].touched && (selectedStatus.iStatusID=='' || ProductForm.controls['sStatusName'].hasError('required'))">
+                                            [text]="ProductForm.controls['sVariant'].errors['required'] ? 'Short Name is required' : ProductForm.controls['sVariant'].errors['required']"
+                                            *ngIf="!ProductForm.controls['sVariant'].valid && ProductForm.controls['sVariant'].dirty">
                                         </p-message>
                                     </div>
                                     <div class="p-col-12 p-md-6 p-lg-4">
@@ -49,6 +33,21 @@
                                             formControlName="sUnitName" [(ngModel)]="selectedunit"></p-dropdown>
                                         <p-message severity="error" text="Unit is required"
                                             *ngIf="ProductForm.controls['sUnitName'].touched && (selectedunit.iUnitID=='' || ProductForm.controls['sUnitName'].hasError('required'))">
+                                        </p-message>
+                                    </div>
+                                </div>
+                                <div class="p-grid form-group">
+                                    <div class="p-col-12 p-md-6 p-lg-4">
+                                        <label for="sParentPrdName">Parent Product</label>
+                                        <p-dropdown id="iPrdID" [options]="parentData" optionLabel="sParentPrdName"
+                                            formControlName="sParentPrdName" [(ngModel)]="selectedParent"></p-dropdown>
+                                    </div>
+                                    <div class="p-col-12 p-md-6 p-lg-4 ">
+                                        <label for="producer">Producer</label>
+                                        <p-dropdown [options]="producerData" optionLabel="sProducerName"
+                                            formControlName="sProducerName" [(ngModel)]="selectedproducer"></p-dropdown>
+                                        <p-message severity="error" text="Producer is required"
+                                            *ngIf="ProductForm.controls['sProducerName'].touched && (selectedproducer.iProducerID=='' || ProductForm.controls['sProducerName'].hasError('required'))">
                                         </p-message>
                                     </div>
                                     <div class="p-col-12 p-md-6 p-lg-4">
@@ -60,6 +59,14 @@
                                             *ngIf="ProductForm.controls['sFoodCulture'].touched && (selectedfoodculture.iKVID=='' || ProductForm.controls['sFoodCulture'].hasError('required'))">
                                         </p-message>
                                     </div>
+                                    <!-- <div class="p-col-12 p-md-6 p-lg-4">
+                                        <label for="unit">Status</label>
+                                        <p-dropdown id="unit" [options]="statusData" optionLabel="sStatusName"
+                                            formControlName="sStatusName" [(ngModel)]="selectedStatus"></p-dropdown>
+                                        <p-message severity="error" text="Status is required"
+                                            *ngIf="ProductForm.controls['sStatusName'].touched && (selectedStatus.iStatusID=='' || ProductForm.controls['sStatusName'].hasError('required'))">
+                                        </p-message>
+                                    </div> -->
                                 </div>
                                 <div
                                     class="separator separator--border-solid separator--space-sm separator--portlet-fit mt-5">
@@ -116,7 +123,7 @@
                 <!-- Product Image tab End here -->
 
                 <!-- Product variant tab start here -->
-                <p-tabPanel header="Product Variant" [disabled]="tabDisabled">
+                <!-- <p-tabPanel header="Product Variant" [disabled]="tabDisabled">
                     <div class="p-grid ui-fluid p-justify-end">
                         <div class="p-col-1 text-center mt-1">
                             <button (click)="openDialogForProductVariant()" pButton icon="pi pi-fw pi-plus"
@@ -154,7 +161,7 @@
                             </p-table>
                         </div>
                     </div>
-                </p-tabPanel>
+                </p-tabPanel> -->
                 <!-- Product Variant tab End here -->
 
                 <!-- Product info tab start here -->
@@ -230,7 +237,7 @@
 
                 <!-- Product query tab start here -->
                 <p-tabPanel header="Product Queries" [disabled]="tabDisabled">
-                    <div class="p-grid ui-fluid p-justify-end">
+                    <div class="p-grid ui-fluid ">
                         <div class="p-col-1 text-center mt-1">
                             <button (click)="openDialogForPrQueries()" pButton icon="pi pi-fw pi-plus"
                                 label="Add / Edit"></button>
@@ -245,6 +252,56 @@
                     </div>
                 </p-tabPanel>
                 <!-- Product Queries tab End here -->
+
+                <!-- Attachment tab start here -->
+                <p-tabPanel header="Attachment">
+                    <div class="p-grid ui-fluid">
+                        <div class="p-col-12 p-md-3 p-lg-3">
+                            <!-- <label for="sfileType">Select File Type</label> -->
+                            <!-- <p-dropdown id="sfileType" class="form-control" placeholder="Select" required="true">
+                            </p-dropdown> -->
+                            <p-dropdown id="sfileType" class="form-control" [options]="fileTypeData"
+                                placeholder="Select File Type" optionLabel="sDocTypeName" [(ngModel)]="selectedFileType"
+                                required="true"></p-dropdown>
+                        </div>
+                        <div class="p-col-12 p-md-3 p-lg-1">
+                            <div class="fileUpload p-0">
+                                <!-- <p-fileUpload #fubauto mode="basic" name="demo[]" url="./upload.php" accept="image/*"
+                                    maxFileSize="1000000" (onUpload)="onBasicUploadAuto($event)" [auto]="true"
+                                    chooseLabel="Browse"></p-fileUpload> -->
+                                <p-fileUpload mode="basic" [auto]="true" name="demo[]" maxFileSize="1000000"
+                                    customUpload="true" (uploadHandler)="onUpload($event)" multiple="multiple"
+                                    chooseLabel="Browse"></p-fileUpload>
+                            </div>
+                        </div>
+                        <div class="p-col-12 p-md-3 p-lg-3 text-left"><button pButton type="button" icon="pi pi-upload"
+                                (click)="uploadFile()" label="Upload" class="ui-button atbt"></button></div>
+                        <div class="p-col-12 p-md-12 p-lg-12 mt-3">
+                            <p-table [value]="attachment">
+                                <ng-template pTemplate="header">
+                                    <tr>
+                                        <th>File Type</th>
+                                        <th>File Name</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </ng-template>
+                                <ng-template pTemplate="body" let-attachment>
+                                    <tr>
+                                        <td>{{attachment.sDocTypeName}}</td>
+                                        <td>{{attachment.sActualName}}</td>
+                                        <td>
+                                            <button pButton type="button" class="ui-button-success mr-1"
+                                                (click)="downloadFile(attachment)" icon="pi pi-download"></button>
+                                            <button pButton type="button" class="ui-button-danger"
+                                                icon="pi pi-trash"></button>
+                                        </td>
+                                    </tr>
+                                </ng-template>
+                            </p-table>
+                        </div>
+                    </div>
+                </p-tabPanel>
+                <!-- Attachment tab End here -->
 
                 <!-- Product category tab start here -->
                 <p-tabPanel header="Product Category" [disabled]="tabDisabled">
@@ -284,7 +341,6 @@
                             </div>
                         </div>
                     </div> -->
-                    <!-- Category Mapping tab start here -->
                     <p-pickList [source]="sourceCategory" [target]="targetCategory" sourceHeader="UnMapped"
                         targetHeader="Mapped" [responsive]="true" filterBy="sCategoryName" dragdrop="true"
                         sourceFilterPlaceholder="Search by category" targetFilterPlaceholder="Search by category"
@@ -300,8 +356,8 @@
                     <div class="p-grid form-group ui-fluid p-justify-end mt-3">
                         <div class="p-col-12 p-md-12 p-lg-12 text-right">
                             <button pButton type="button" label="Cancel" class="ui-button-light atbt mr-2"></button>
-
-                            <button pButton type="button" label="Save" (click)="addCategoryMappingData()" class="ui-button atbt"></button>
+                            <button pButton type="button" label="Save" (click)="addCategoryMappingData()"
+                                class="ui-button atbt"></button>
                         </div>
                     </div>
                 </p-tabPanel>

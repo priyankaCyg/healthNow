@@ -1,10 +1,3 @@
-/**
-Template Name: HealthNow
-Author: Priyanka Sahu
-Created Date: 
-File: add-unit.component
-**/
-
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
@@ -17,6 +10,7 @@ import { ToastService } from "../../services/toast.service";
   templateUrl: './add-unit.component.html',
   styleUrls: ['./add-unit.component.css']
 })
+
 export class AddUnitComponent implements OnInit {
   isEdit: boolean = false
   selectedstatus;
@@ -25,29 +19,23 @@ export class AddUnitComponent implements OnInit {
   public unitForm: FormGroup;
   unitData: UnitMaster;
 
-
   constructor(private config: DynamicDialogConfig, private ref: DynamicDialogRef, private fb: FormBuilder,
     private toastService: ToastService, private httpService: ApiService) { }
 
   ngOnInit(): void {
-
     this.defaultDropDwnValue()
     this.unitData = new UnitMaster();
     this.unitForm = this.createControl(this.unitData);
-
     this.unitId = this.config.data.unitId
     if (this.unitId != null) {
       this.isEdit = true
-
       var dataToSendEdit = {
         "iRequestID": 2145,
         "iUnitID": this.unitId
       }
-
       this.httpService.getDropDownData(dataToSendEdit).then(response => {
         this.unitData = new UnitMaster(response[0]);
         this.unitForm = this.createControl(this.unitData);
-
         Promise.all([this.getStatusDrpDwn()]).then(values => {
           this.setDropDownVal()
         });
@@ -58,7 +46,6 @@ export class AddUnitComponent implements OnInit {
       Promise.all([this.getStatusDrpDwn()]).then(values => {
       });
     }
-
   }
 
   //code for default dropdown value
@@ -95,10 +82,10 @@ export class AddUnitComponent implements OnInit {
   //code for add new unit data
   addUnit() {
     var formData = this.unitForm.getRawValue();
-
     var dataToSendAdd = {
       "iRequestID": 2141,
-      "sUnitName": formData.sUnitName
+      "sUnitName": formData.sUnitName,
+      "sSymbol": formData.sSymbol
     }
     this.httpService.callPostApi(dataToSendAdd).subscribe(
       (data) => {
@@ -112,12 +99,12 @@ export class AddUnitComponent implements OnInit {
   //code for edit unit data
   updateUnit() {
     var formData = this.unitForm.getRawValue();
-
     var dataToSendEdit = {
       "iRequestID": 2142,
       "sUnitName": formData.sUnitName,
       "iStatusID": formData.iStatusID.iKVID,
-      "iUnitID": this.unitId
+      "iUnitID": this.unitId,
+      "sSymbol": formData.sSymbol
     }
     this.httpService.callPostApi(dataToSendEdit).subscribe(
       (data) => {
@@ -135,13 +122,13 @@ export class AddUnitComponent implements OnInit {
 
   // code for implements form builder 
   createControl(unitData?: UnitMaster): FormGroup {
-
     this.unitForm = this.fb.group({
       iCreatedBy: [unitData.iCreatedBy],
       iStatusID: [unitData.iStatusID],
       iUnitID: [unitData.iUnitID],
       sCreatedDate: [unitData.sCreatedDate],
       sUnitName: [unitData.sUnitName, [Validators.required]],
+      sSymbol: [unitData.sSymbol, [Validators.required]],
       sStatusName: [unitData.sStatusName]
     });
     return this.unitForm;

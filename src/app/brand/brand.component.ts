@@ -24,8 +24,8 @@ export class BrandComponent implements OnInit {
       { label: 'Brand', routerLink: ['/brand'] }
     ]);
   }
-  ngOnInit() {
 
+  ngOnInit() {
     this.getBrandList();
   }
 
@@ -75,7 +75,7 @@ export class BrandComponent implements OnInit {
   //Function to delete brand
   deleteBrand(brandId: number) {
     this.confirmationService.confirm({
-      message: 'Are you sure that you want to proceed?',
+      message: 'Are you sure that you want to delete?',
       header: 'Confirmation',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {

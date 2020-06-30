@@ -1,11 +1,3 @@
-
-/**
-Template Name: HealthNow
-Author: Priyanka Sahu
-Created Date: 
-File: employee.component
-**/
-
 import { Component, OnInit, OnChanges, SimpleChanges } from '@angular/core';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { EmployeeMaster } from '../../model/employee.model'
@@ -18,6 +10,7 @@ import { ToastService } from "../../services/toast.service";
   templateUrl: './employee.component.html',
   styleUrls: ['./employee.component.css']
 })
+
 export class EmployeeComponent implements OnInit {
   employeeId: number;
   isEdit: boolean = false
@@ -31,7 +24,6 @@ export class EmployeeComponent implements OnInit {
   employeeData: EmployeeMaster;
   depId: number;
   desigId: number;
-  // dropdown variable
   selectedgender;
   selectedsaddress;
   selecteddepartment;
@@ -47,7 +39,6 @@ export class EmployeeComponent implements OnInit {
   ngOnInit(): void {
     this.defaultDropDwnValue();
     this.employeeId = this.config.data.employeeId
-
     this.employeeData = new EmployeeMaster();
     this.employeeForm = this.createControl(this.employeeData);
     this.reportingToData.splice(0, 0, { iEmpID: "", sReportingTo: "Select Reporting To" })
@@ -62,7 +53,6 @@ export class EmployeeComponent implements OnInit {
       this.httpService.getDropDownData(dataToSendEdit).then(response => {
         this.employeeData = new EmployeeMaster(response[0]);
         this.employeeForm = this.createControl(this.employeeData);
-
         Promise.all([this.getRoleDrpDwn(), this.getAddressDrpDwn(), this.getGenderDrpDwn(), this.getDepartmentDrpDwn(), this.getStatusDrpDwn(), this.getDesignationDrpDwn()]).then(values => {
           this.setDropDownVal()
         });
@@ -75,7 +65,6 @@ export class EmployeeComponent implements OnInit {
       Promise.all([this.getRoleDrpDwn(), this.getAddressDrpDwn(), this.getGenderDrpDwn(), this.getDepartmentDrpDwn(), this.getStatusDrpDwn(), this.getDesignationDrpDwn()]).then(values => {
       });
     }
-
     this.employeeForm.valueChanges.subscribe((changedObj: any) => {
       this.dropDownValidityCheck()
     });
@@ -239,7 +228,6 @@ export class EmployeeComponent implements OnInit {
       this.reportingToData.splice(0, 0, { iEmpID: "", sReportingTo: "Select Reporting to" })
       if (response != null || response != "") {
         let selectedReportToObj = this.reportingToData.find(x => x.iEmpID == this.employeeData.iReportingToID);
-
         if (selectedReportToObj !== undefined) {
           this.selectedreportingTo = selectedReportToObj;
         }
@@ -276,7 +264,6 @@ export class EmployeeComponent implements OnInit {
   //code for add new employee data
   addEmployee() {
     var formData = this.employeeForm.getRawValue();
-
     var dataToSendAdd = {
       "iRequestID": 2032,
       "iCID": 1,//logged in user company id
@@ -299,7 +286,6 @@ export class EmployeeComponent implements OnInit {
     }
     this.httpService.callPostApi(dataToSendAdd).subscribe(
       data => {
-        console.log(data);
         this.ref.close(true);
         this.toastService.displayApiMessage(data.headers.get('StatusMessage'), data.headers.get('StatusCode'));
       },
@@ -310,7 +296,6 @@ export class EmployeeComponent implements OnInit {
   //code for edit employee data
   updateEmployee() {
     var formData = this.employeeForm.getRawValue();
-
     var dataToSendEdit = {
       "iRequestID": 2033,
       "iCID": 1,//logged in user company id
@@ -330,11 +315,11 @@ export class EmployeeComponent implements OnInit {
       "iReportingToID": parseInt(formData.sReportingTo.iEmpID),
       "iDeptID": parseInt(formData.sDeptName.iDeptID),
       "iRoleID": parseInt(formData.sRoleName.iRoleID),
-      "iUserID": 1234 //logged in user user id
+      "iUserID": 1234, //logged in user user id
+      "iStatusID": parseInt(formData.iStatusID.iKVID)
     }
     this.httpService.callPostApi(dataToSendEdit).subscribe(
       data => {
-        console.log(data);
         this.ref.close(true);
         this.toastService.displayApiMessage(data.headers.get('StatusMessage'), data.headers.get('StatusCode'));
       },
@@ -344,7 +329,6 @@ export class EmployeeComponent implements OnInit {
 
   //code for implement form builder 
   createControl(employeeMaster?: EmployeeMaster): FormGroup {
-
     this.employeeForm = this.fb.group({
       iCID: [employeeMaster.iCID],
       iAddID: [employeeMaster.iAddID],

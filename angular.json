@@ -33,7 +33,8 @@
               "node_modules/primeflex/primeflex.css",
               "node_modules/primeicons/primeicons.css",
               "src/assets/demo/css/codehighlight.css",
-              "src/styles.scss"
+              "src/styles.scss",
+              "src/assets/css/main.css"
             ],
             "scripts": [
               "node_modules/chart.js/dist/Chart.js",
@@ -109,7 +110,8 @@
               "node_modules/quill/dist/quill.snow.css",
               "node_modules/primeflex/primeflex.css",
               "node_modules/primeicons/primeicons.css",
-              "src/styles.scss"
+              "src/styles.scss",
+              "src/assets/css/main.css"
             ],
             "scripts": [
               "node_modules/chart.js/dist/Chart.js",

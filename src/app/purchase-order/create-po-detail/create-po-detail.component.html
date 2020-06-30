@@ -25,6 +25,7 @@
                         <ng-template pTemplate="header">
                             <tr>
                                 <th style="width: 4em;">#</th>
+                                <th>Requisition No.</th>
                                 <th>Product Category</th>
                                 <th>Product</th>
                                 <th style="width: 8em;">Qty</th>
@@ -43,6 +44,7 @@
                                     <p-checkbox name="groupname" [value]=poDetail [(ngModel)]="selectedValues">
                                     </p-checkbox>
                                 </td>
+                                <td>{{poDetail.sRequisionNo}}</td>
                                 <td>{{poDetail.sPCName}}</td>
                                 <td>{{poDetail.sPrdName}}</td>
                                 <td>{{poDetail.iQty}}</td>
@@ -50,7 +52,7 @@
                                 <td>{{poDetail.iDisPer}}</td>
                                 <td>{{poDetail.iDisAmt}}</td>
                                 <td>{{poDetail.iTotalAmount}}</td>
-                                <td>{{poDetail.createdBy}}</td>
+                                <td>{{poDetail.sCreatedBy}}</td>
                                 <td>{{poDetail.sCreatedDate | date:"dd-MM-yyyy"}}</td>
                                 <td>
                                     <button pButton type="button" class="ui-button-success mr-1"

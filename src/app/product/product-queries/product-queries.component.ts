@@ -10,10 +10,13 @@ import { productQuerData } from 'src/app/model/productQueries';
   templateUrl: './product-queries.component.html',
   styleUrls: ['./product-queries.component.css']
 })
+
 export class ProductQueriesComponent implements OnInit {
+
   queriesArray: productQuerData[];
   queriesSubmitArray = [];
   prd_Id: number;
+
   constructor(private fb: FormBuilder, private httpService: ApiService,
     private toastService: ToastService, public ref: DynamicDialogRef) { }
 
@@ -98,4 +101,5 @@ export class ProductQueriesComponent implements OnInit {
     this.ref.close();
     this.queriesForm.reset();
   }
+
 }

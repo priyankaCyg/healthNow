@@ -4,21 +4,25 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ToastService } from "../../services/toast.service";
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { DepartmentMaster } from 'src/app/model/company.department.model';
+
 @Component({
   selector: 'app-department',
   templateUrl: './department.component.html',
   styleUrls: ['./department.component.css']
 })
+
 export class DepartmentComponent implements OnInit {
+
   selectedstatus;
   statusData;
   isEdit: boolean = false
   Dep_id;
   public DepartmentSubmit: FormGroup;
   departmentData: DepartmentMaster;
+  isSave : number = 0;
+
   constructor(private httpService: ApiService, private fb: FormBuilder, private config: DynamicDialogConfig,
-    private ref: DynamicDialogRef, private toastService: ToastService
-  ) { }
+    private ref: DynamicDialogRef, private toastService: ToastService) { }
 
   ngOnInit(): void {
     this.defaultDropDwnValue()
@@ -106,7 +110,6 @@ export class DepartmentComponent implements OnInit {
     };
     this.httpService.callPostApi(dep_submit_data).subscribe(
       data => {
-        console.log(data);
         this.ref.close(true);
         this.toastService.displayApiMessage(data.headers.get('StatusMessage'), data.headers.get('StatusCode'));
       },
@@ -114,6 +117,31 @@ export class DepartmentComponent implements OnInit {
     );
     this.DepartmentSubmit.reset();
   }
+
+  // addDepartment() {
+  //   var formData = this.DepartmentSubmit.getRawValue();
+  //   const dep_submit_data =
+  //   {
+  //     "iRequestID": 2051,
+  //     "iCID": 1,
+  //     "sDeptName": formData.sDeptName
+  //   };
+  //   if(this.isSave == 0){
+  //   this.httpService.callPostApi(dep_submit_data).subscribe(
+  //     data => {
+  //       let statusCode = data.headers.get('StatusCode') ; 
+  //       if(statusCode == 200){
+  //         this.isSave = 1;
+  //       this.ref.close(true);
+  //       }
+  //       this.toastService.displayApiMessage(data.headers.get('StatusMessage'), data.headers.get('StatusCode'));
+  //     },
+  //     error => console.log(error)
+  //   );
+  //   this.DepartmentSubmit.reset();
+  //   }
+  // }
+
 
   //code for edit department data 
   editDepartment() {
@@ -128,7 +156,6 @@ export class DepartmentComponent implements OnInit {
     }
     this.httpService.callPostApi(dep_edit_data).subscribe(
       data => {
-        console.log(data);
         this.ref.close(true);
         this.toastService.displayApiMessage(data.headers.get('StatusMessage'), data.headers.get('StatusCode'));
       },
@@ -148,4 +175,5 @@ export class DepartmentComponent implements OnInit {
       return false
     }
   }
+
 }
