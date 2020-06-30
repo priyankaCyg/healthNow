@@ -47,9 +47,9 @@
                                 <td>{{poListData.sPONo}}</td>
                                 <td>{{poListData.sPODate | date:"dd-MM-yyyy"}}</td>
                                 <td>{{poListData.sSupName}}</td>
-                                <td>{{poListData.currency}}</td>
-                                <td>
-
+                                <td>{{poListData.iCurrencyName}}</td>
+                                <td>   
+ 
                                     <p-checkbox *ngIf="poListData.iIncludeTaxes==1" value="poListData.iIncludeTaxes"
                                         readonly=true [(ngModel)]="checked" binary="true">
                                     </p-checkbox>
@@ -57,7 +57,23 @@
 
                                 </td>
                                 <td>
-                                    <span class="badge badge--warning badge--inline badge--pill">Draft</span>
+                                    <span *ngIf="poListData.iStatusID == 1"
+                                        class="badge badge--dark badge--inline badge--pill">
+                                        {{poListData.sStatusName}}
+                                    </span>
+                                    <span *ngIf="poListData.iStatusID == 2"
+                                        class="badge badge--success badge--inline badge--pill">
+                                        {{poListData.sStatusName}}
+                                    </span>
+                                    <span *ngIf="poListData.iStatusID == 4"
+                                        class="badge badge--danger badge--inline badge--pill">
+                                        {{poListData.sStatusName}}
+                                    </span>
+                                    <span *ngIf="poListData.iStatusID == 5"
+                                        class="badge badge--warning badge--inline badge--pill">
+                                        {{poListData.sStatusName}}
+                                    </span>
+                    
                                 </td>
                                 <td>{{poListData.sCreatedBy}}</td>
                                 <td>
@@ -82,13 +98,14 @@
                                             <p-table [value]="batch">
                                                 <ng-template pTemplate="header">
                             <tr>
+                                <th>Requisition No.</th>
                                 <th>Product Category Name</th>
                                 <th>Product Name</th>
-                                <th>Qty</th>
+                                <th>Quantity</th>
                                 <th>Rate</th>
                                 <th>Gross Amount</th>
-                                <th>Discount Percentage</th>
-                                <th>Discount Amt</th>
+                                <th>Discount %</th>
+                                <th>Discount Amount</th>
                                 <th>Total Amount</th>
 
 
@@ -96,8 +113,9 @@
                         </ng-template>
                         <ng-template pTemplate="body" let-batch>
                             <tr>
-                                <td>{{batch.sPCName}}</td>
-                                <td>{{batch.sPrdName}} {{batch.sVariant}} {{batch.sUnitSymbol}}</td>
+                                <td>{{batch.sRequisionNo}}</td>
+                                <td>{{batch.sParentCatName}} {{batch.sPCName}}</td>
+                                <td>{{batch.sPrdName}} {{batch.sVariant}} </td>
                                 <td>{{batch.iQty}}</td>
                                 <td>{{batch.iRate}}</td>
                                 <td>{{batch.iGrossAmt}}</td>

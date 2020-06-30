@@ -110,8 +110,6 @@
                         </div>
                         <div class="p-grid form-group ui-fluid p-justify-end mt-3">
                             <div class="p-col-12 p-md-2 p-lg-12 text-right">
-                                <button pButton type="button" label="Cancel" (click)="cancelClick()"
-                                    class="ui-button-light atbt mr-2 mb-2"></button>
                                 <button pButton type="button" label="Save"
                                     [disabled]="!(!POForm.invalid && !dropDownValidityCheck())"
                                     class="ui-button atbt mb-2" (click)="savePODetail()"></button>
@@ -129,21 +127,23 @@
                                 <p-table [value]="productDetails">
                                     <ng-template pTemplate="header">
                                         <tr>
-                                            <th>Product Category</th>
-                                            <th>Product</th>
-                                            <th style="width: 8em;">Qty</th>
+                                            <th>Requisition No.</th>
+                                            <th>Product Category Name</th>
+                                            <th>Product Name</th>
+                                            <th style="width: 8em;">Quantity</th>
                                             <th style="width: 8em;">Rate</th>
                                             <th style="width: 8em;">Gross Amount</th>
                                             <th style="width: 8em;">Discount %</th>
-                                            <th style="width: 8em;">Discount Amt</th>
+                                            <th style="width: 8em;">Discount Amount</th>
                                             <th>Total Amount</th>
                                             <th>Action</th>
                                         </tr>
                                     </ng-template>
                                     <ng-template pTemplate="body" let-poDetail>
                                         <tr>
-                                            <td>{{poDetail.sPCName}}</td>
-                                            <td>{{poDetail.sPrdName}}</td>
+                                            <td>{{poDetail.sRequisionNo}}</td>
+                                            <td>{{poDetail.sParentCatName}} {{poDetail.sPCName}}</td>
+                                            <td>{{poDetail.sPrdName}} {{poDetail.sVariant}} </td>
                                             <td>{{poDetail.iQty}}</td>
                                             <td>{{poDetail.iRate}}</td>
                                             <td>{{poDetail.iGrossAmt}}</td>
@@ -153,7 +153,7 @@
                                             <td>
                                                 <!-- <button pButton type="button" class="ui-button-success mr-1" icon="pi pi-pencil"></button> -->
                                                 <button pButton type="button" class="ui-button-danger mr-1"
-                                                    (click)="deleteProduct(poDetail.iPrdID)"
+                                                    (click)="deleteProduct(poDetail)"
                                                     icon="pi pi-trash"></button>
                                             </td>
                                         </tr>

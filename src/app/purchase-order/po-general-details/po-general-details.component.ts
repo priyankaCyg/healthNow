@@ -279,15 +279,15 @@ export class PoGeneralDetailsComponent implements OnInit {
       });
   }
 
-  //Cancel button function for PO details page
-  cancelClick() {
-    if (this.editPo == 'true') {
-      this.router.navigate(['/purchase-order/po-list'])
-    }
-    else {
-      this.router.navigate(['/purchase-order/create-po-detail'])
-    }
-  }
+  // //Cancel button function for PO details page
+  // cancelClick(){
+  //   if (this.editPo == 'true') {
+  //     this.router.navigate(['/purchase-order/po-list'])
+  //   }
+  //   else{
+  //     this.router.navigate(['/purchase-order/create-po-detail'])
+  //   }
+  // }
 
   //Function to fetch products in product tab
   getProductList() {
@@ -502,7 +502,30 @@ export class PoGeneralDetailsComponent implements OnInit {
     this._apiService.downloadAPI(dataToSend)
   }
   // Dialog box to delete product 
-  deleteProduct(iPrdID: number) {
+  deleteProduct(poDetail) {
+    console.log(this.productDetails.length,"1")
+    if(this.productDetails.length == 1){
+      this.confirmationService.confirm({
+        message: 'Are you sure you want to Delete the PO?',
+        header: 'Confirmation',
+        icon: 'pi pi-exclamation-triangle',
+        accept: () => {
+          var deleteAPI = {
+            "iRequestID": 2363,
+            "iPOID": this.poId,
+            "iPOPrdID":poDetail.iPOPrdID
+          }
+          this.httpService.callPostApi(deleteAPI).subscribe(
+            data => {
+              //this.getProductList();
+              this.toastService.displayApiMessage(data.headers.get('StatusMessage'), data.headers.get('StatusCode'));
+              this.router.navigate(['/purchase-order/po-list'])
+            },
+            error => { console.log(error) }
+          );
+        }
+      });
+    }else{
     this.confirmationService.confirm({
       message: 'Are you sure you want to Delete this Record?',
       header: 'Confirmation',
@@ -511,7 +534,7 @@ export class PoGeneralDetailsComponent implements OnInit {
         var deleteAPI = {
           "iRequestID": 2363,
           "iPOID": this.poId,
-          "iPrdID": iPrdID
+          "iPOPrdID":poDetail.iPOPrdID
         }
         this.httpService.callPostApi(deleteAPI).subscribe(
           data => {
@@ -522,6 +545,7 @@ export class PoGeneralDetailsComponent implements OnInit {
         );
       }
     });
+  }
   }
 
 }
