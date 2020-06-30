@@ -10,7 +10,7 @@ export class poDetailMaster {
     sPrdName: string;
     sCreatedDate: string;
     iPurchasePrice: number;
-    iTotalAmount:number;
+    iTotalAmount: number;
     sRequisionNo: string;
     iGrossAmt: number;
     sVariant: string;

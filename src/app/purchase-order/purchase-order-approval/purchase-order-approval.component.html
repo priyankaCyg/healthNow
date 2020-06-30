@@ -11,7 +11,7 @@
                     <p-table [columns]="cols" [value]="poList" #search [paginator]="true" [rows]="10"
                         [showCurrentPageReport]="true" pageLinkSize="3" [rowsPerPageOptions]="[10, 25, 50]"
                         [filterDelay]="0" (onPage)="onPage($event)"
-                        [globalFilterFields]="['sPONo','sPODate','sSupName','sCreatedBy']" dataKey="sPONo"
+                        [globalFilterFields]="['sPONo','sPODate','sSupName','sCreatedBy']" dataKey="iPOID"
                         (onRowExpand)="onRowExpand()" (onRowCollapse)="onRowCollapse()"
                         [expandedRowKeys]="expandedRows">
                         <ng-template pTemplate="caption">
@@ -31,8 +31,6 @@
                                 <th>Supplier PO</th>
                                 <th>Supplier PO Date</th>
                                 <th>Supplier Name</th>
-                                <th>Currency</th>
-                                <th>Include Taxes</th>
                                 <th>Status</th>
                                 <th>Created By</th>
                                 <th>Action</th>
@@ -41,22 +39,13 @@
                         <ng-template pTemplate="body" let-poListData let-expanded="expanded">
                             <tr>
                                 <td>
-                                    <a href="#" [pRowToggler]="poListData">
+                                    <a href="#" (click)="getPOChildList(poListData.iPOID)" [pRowToggler]="poListData">
                                         <i [ngClass]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></i>
                                     </a>
                                 </td>
                                 <td>{{poListData.sPONo}}</td>
                                 <td>{{poListData.sPODate | date:"dd-MM-yyyy"}}</td>
                                 <td>{{poListData.sSupName}}</td>
-                                <td>{{poListData.currency}}</td>
-                                <td>
-                                    <p-checkbox *ngIf="poListData.iIncludeTaxes==1" value="poListData.iIncludeTaxes"
-                                        readonly=true [(ngModel)]="checked" binary="true">
-                                    </p-checkbox>
-                                    <p-checkbox *ngIf="poListData.iIncludeTaxes==0" value="poListData.iIncludeTaxes"
-                                        readonly=true>
-                                    </p-checkbox>
-                                </td>
                                 <td>
                                     <span class="badge badge--warning badge--inline badge--pill">Sent For
                                         Approval</span>
@@ -64,9 +53,10 @@
                                 <td>{{poListData.sCreatedBy}}</td>
                                 <td>
                                     <button pButton type="button" class="ui-button-success mr-1"
-                                        (click)="approvePO(poListData)" icon="pi pi-check" title="Appprove"></button>
+                                        (click)="approvePO(poListData.iPOID)" icon="pi pi-check"
+                                        title="Appprove"></button>
                                     <button pButton type="button" class="ui-button-danger mr-1"
-                                        (click)="rejectPO(poListData)" icon="pi pi-times" title="Reject"></button>
+                                        (click)="rejectPO(poListData.iPOID)" icon="pi pi-times" title="Reject"></button>
 
                                     <button pButton type="button" class="ui-button-success mr-1" icon="pi pi-paperclip"
                                         (click)="attachments()" title="View Attachments"></button>
@@ -75,28 +65,42 @@
                         </ng-template>
                         <ng-template pTemplate="rowexpansion" let-poListData>
                             <tr>
-                                <td [attr.colspan]="9">
+                                <td [attr.colspan]="7">
                                     <div class="ui-g ui-fluid" style="font-size:14px;padding:8px">
                                         <div class="ui-g-12 ui-md-12">
-                                            <p-table *ngIf="batch.length>1" [value]="batch">
+                                            <p-table [value]="batch">
                                                 <ng-template pTemplate="header">
+
                             <tr>
-                                <th>Batch/Lot No.</th>
-                                <th>Receive Qty</th>
-                                <th>POD No</th>
-                                <th>POD Date</th>
-                                <th>Manufacturing Date</th>
-                                <th>Expire Date</th>
+                                <th>Requisition No.</th>
+                                <th>Product Category Name</th>
+                                <th>Product Name</th>
+                                <th>Quantity</th>
+                                <th>Rate</th>
+                                <th>Gross Amount</th>
+                                <th>Discount %</th>
+                                <th>Discount Amount</th>
+                                <th>Total Amount</th>
+
+
                             </tr>
+
+
+
                         </ng-template>
                         <ng-template pTemplate="body" let-batch>
                             <tr>
-                                <td>{{batch.batchNo}}</td>
-                                <td>{{batch.recvQty}}</td>
-                                <td>{{batch.podNo}}</td>
-                                <td>{{batch.podDate}}</td>
-                                <td>{{batch.manfactDate}}</td>
-                                <td>{{batch.expDate}}</td>
+                                <td>{{batch.sRequisionNo}}</td>
+                                <td>{{batch.sParentCatName}} {{batch.sPCName}}</td>
+                                <td>{{batch.sPrdName}} {{batch.sVariant}} </td>
+                                <td>{{batch.iQty}}</td>
+                                <td>{{batch.iRate}}</td>
+                                <td>{{batch.iGrossAmt}}</td>
+                                <td>{{batch.iDiscountPercentage}}</td>
+                                <td>{{batch.iDiscountAmt}}</td>
+                                <td>{{batch.iTotalAmt}}</td>
+
+
                             </tr>
                         </ng-template>
                     </p-table>

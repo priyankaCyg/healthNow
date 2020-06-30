@@ -19,7 +19,7 @@ export class DepartmentComponent implements OnInit {
   Dep_id;
   public DepartmentSubmit: FormGroup;
   departmentData: DepartmentMaster;
-  isSave : number = 0;
+  isSave: number = 0;
 
   constructor(private httpService: ApiService, private fb: FormBuilder, private config: DynamicDialogConfig,
     private ref: DynamicDialogRef, private toastService: ToastService) { }

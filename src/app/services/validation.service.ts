@@ -8,64 +8,64 @@ import { AbstractControl } from '@angular/forms';
 export class ValidationService {
 
   constructor() { }
-  
+
   static telephoneNoValidator(control) {
-    if(control.value == ""){
-      return { Msg:  "This field is required"};
+    if (control.value == "") {
+      return { Msg: "This field is required" };
     }
-     // Validates upper case and lower case alphabets
+    // Validates upper case and lower case alphabets
     else if (!control.value.match(/^[0-9]+$/)) {
-     // return null;
-     return { Msg:  "Enter a valid Number"};
-    }
-    else if (control.value.length  >11) {
       // return null;
-      return { Msg:  "Enter a valid Number"};
-     }
-  }
-  
-  static faxNoValidator(control) {
-    if(control.value == ""){
-      return { Msg:  "This field is required"};
+      return { Msg: "Enter a valid Number" };
     }
-     // Validates upper case and lower case alphabets
+    else if (control.value.length > 11) {
+      // return null;
+      return { Msg: "Enter a valid Number" };
+    }
+  }
+
+  static faxNoValidator(control) {
+    if (control.value == "") {
+      return { Msg: "This field is required" };
+    }
+    // Validates upper case and lower case alphabets
     else if (!control.value.match(/^[0-9]+$/)) {
-     // return null;
-     return { Msg:  "Enter a valid Number"};
+      // return null;
+      return { Msg: "Enter a valid Number" };
     }
   }
 
   static addressValidator(control) {
-    if(control.value == ""){
-      return { Msg:  "This field is required"};
+    if (control.value == "") {
+      return { Msg: "This field is required" };
     }
-     // Validates upper case and lower case alphabets
+    // Validates upper case and lower case alphabets
     else if (!control.value.match(/^[a-zA-Z0-9\s.\-]+$/)) {
-     // return null;
-     return { Msg:  "Enter a valid address"};
+      // return null;
+      return { Msg: "Enter a valid address" };
     }
   }
 
   static pincodeValidator(control) {
     //Validates indian pincode
-    if(control.value == ""){
-      return { Msg:  "This field is required"};
+    if (control.value == "") {
+      return { Msg: "This field is required" };
     }
     else if (control.value.match(/^[1-9]{1}[0-9]{2}\\s{0, 1}[0-9]{3}$/)) {
       return null;
     } else {
-      return { Msg:  "Enter a valid pincode"};
+      return { Msg: "Enter a valid pincode" };
     }
   }
 
   static PANValidator(control) {
     // Validates upper case and lower case alphabets
-    if(control.value == ""){
-      return { Msg:  "This field is required"};
+    if (control.value == "") {
+      return { Msg: "This field is required" };
     }
     else if (!control.value.match(/^[A-Z0-9]+$/)) {
-     // return null;
-     return { Msg:  "Enter a valid name"};
+      // return null;
+      return { Msg: "Enter a valid name" };
     }
   }
 
@@ -96,7 +96,7 @@ export class ValidationService {
     }
   }
 
-  
+
 
   static alphaNumericValidator_2(control) {
     //Alphanumeric, hyphen apostrophe, comma dash spaces
@@ -107,7 +107,7 @@ export class ValidationService {
     }
   }
 
-  
+
 
   static phoneNoValidator(control) {
     //Validates mobile numbers

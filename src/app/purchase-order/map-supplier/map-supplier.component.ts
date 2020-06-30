@@ -92,7 +92,7 @@ export class MapSupplierComponent implements OnInit {
 
   // calculate price
   calculateTotalPrice() {
-    
+
     if (this.discountPer) {
       let supplierRate = this.completeSupplierData.iPurchaseAmt;
       let discountAmount = parseFloat((supplierRate * this.discountPer).toFixed(2));

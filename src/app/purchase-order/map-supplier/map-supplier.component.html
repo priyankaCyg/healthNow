@@ -4,7 +4,8 @@
             <div class="p-grid ui-fluid vertical-container">
                 <div class="p-col p-col-align-start">
                     <h1 class="mt-2">Purchase Requisition <button pButton type="button" label={{req_no_display}}
-                            class="ui-button-raised ui-button-light" routerLink="/purchase-order/product-requisition"></button></h1>
+                            class="ui-button-raised ui-button-light"
+                            routerLink="/purchase-order/product-requisition"></button></h1>
                 </div>
                 <div class="p-col-12">
                     <div class="card download-files p-4 mb-2">
@@ -13,8 +14,8 @@
                                 <ng-template pTemplate="header">
                                     <tr>
                                         <th>Requisition No.</th>
-                                        <th>Product Category</th>
-                                        <th>Product</th>
+                                        <th>Product Category Name</th>
+                                        <th>Product Name</th>
                                         <th>Partner</th>
                                         <th>Location</th>
                                         <th>Quantity</th>
@@ -26,7 +27,8 @@
                                     <tr>
                                         <td>{{requisition.sRequisionNo}}</td>
                                         <td>{{requisition.sPCName}}</td>
-                                        <td>{{requisition.sPrdName}} {{requisition.sVariant}} {{requisition.sUnitSymbol}}</td>
+                                        <td>{{requisition.sPrdName}} {{requisition.sVariant}}
+                                            {{requisition.sUnitSymbol}}</td>
                                         <td>{{requisition.sPartnerName}}</td>
                                         <td>{{requisition.sLocName}}</td>
                                         <td>{{requisition.iQty}}</td>
@@ -82,7 +84,7 @@
                                 </p-message>
                             </div>
                             <div class="p-col-12 p-md-12 p-lg-12 mb-1">
-                                <label for="discountAmount">Discount</label>
+                                <label for="discountAmount">Discount Amount</label>
                                 <input id="discountAmount" name="discountAmount" [(ngModel)]="discountAmount"
                                     type="text" pInputText disabled>
                             </div>

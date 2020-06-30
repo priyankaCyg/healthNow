@@ -74,15 +74,15 @@ export class NewProductComponent implements OnInit {
   }
 
   ngOnInit(): void {
-  
+
     this.defaultDropDwnValue();
     this.productData = new ProductMaster();
     this.ProductForm = this.createControl(this.productData);
-    if(this.route.snapshot.params['iPrdID']){
-    this.prdId = +this.route.snapshot.params['iPrdID'];
-    localStorage.setItem('iPrdID', this.prdId)
+    if (this.route.snapshot.params['iPrdID']) {
+      this.prdId = +this.route.snapshot.params['iPrdID'];
+      localStorage.setItem('iPrdID', this.prdId)
     }
-    else{
+    else {
       this.prdId = +localStorage.getItem("iPrdID");
     }
 
@@ -309,7 +309,7 @@ export class NewProductComponent implements OnInit {
         this.getCategoryMappingDataSource();
         this.getCategoryMappingDataTarget();
         this.tabDisabled = false
-        let prd_name ="Product " + formData.sPrdName + " " + formData.sVariant + " "  + formData.sUnitName.sUnitName + " has been created successfully"
+        let prd_name = "Product " + formData.sPrdName + " " + formData.sVariant + " " + formData.sUnitName.sUnitName + " has been created successfully"
         this.toastService.displayApiMessage(prd_name, data.headers.get('StatusCode'));
         this.isEdit = true
         this.index = 1;

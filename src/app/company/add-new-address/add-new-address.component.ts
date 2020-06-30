@@ -24,6 +24,8 @@ export class AddNewAddressComponent implements OnInit {
   setStatusData: Object;
   tempAddressTypeID;
   setAddressTypeData: object;
+  isEdit: boolean = false
+
 
   constructor(private fb: FormBuilder, private httpService: ApiService, public configData: DynamicDialogConfig,
     public ref: DynamicDialogRef, public toastService: ToastService, ) { }
@@ -109,6 +111,7 @@ export class AddNewAddressComponent implements OnInit {
 
     // set values in form while editing start
     if (this.configData.data.iAddID != undefined) {
+      this.isEdit = true
       this.AddressForm.patchValue({
         addressType: this.setAddressTypeData,
         address1: this.configData.data.sAdd1,
@@ -139,34 +142,34 @@ export class AddNewAddressComponent implements OnInit {
       state: '',
       city: ''
     });
-    let pincode_value : number = this.AddressForm.get('pincode').value;
+    let pincode_value: number = this.AddressForm.get('pincode').value;
     const pincodeChangesApi = {
       "iRequestID": 2101,
       "sPostalCode": pincode_value
     }
-    if(this.Pincode.valid){
-    this.httpService.callPostApi(pincodeChangesApi).subscribe(
-      data => {
-        if (data.body.length != 0) {
-          this.StatesCityData = data.body;
-          this.AddressForm.patchValue({
-            state: this.StatesCityData[0].sStateName,
-            city: this.StatesCityData[0].sCityName
-          });
+    if (this.Pincode.valid) {
+      this.httpService.callPostApi(pincodeChangesApi).subscribe(
+        data => {
+          if (data.body.length != 0) {
+            this.StatesCityData = data.body;
+            this.AddressForm.patchValue({
+              state: this.StatesCityData[0].sStateName,
+              city: this.StatesCityData[0].sCityName
+            });
+          }
+          else {
+            const nameControl = this.AddressForm.get('pincode');
+            nameControl.setErrors({});
+            //   this.AddressForm.patchValue({
+            //     state: '',
+            //     city: ''
+            //   });
+          }
+        },
+        error => {
+          console.log(error)
         }
-        else {
-          const nameControl = this.AddressForm.get('pincode');
-          nameControl.setErrors({});
-          //   this.AddressForm.patchValue({
-          //     state: '',
-          //     city: ''
-          //   });
-        }
-      },
-      error => {
-        console.log(error)
-      }
-    )
+      )
     }
   }
   // get states and city name ends
@@ -293,7 +296,7 @@ export class AddNewAddressComponent implements OnInit {
       address2: ['', Validators.required],
       state: [''],
       city: [''],
-      pincode: ['', Validators.compose([Validators.required, Validators.minLength(6), Validators.maxLength(6),Validators.pattern("^[0-9]*$")])],
+      pincode: ['', Validators.compose([Validators.required, Validators.minLength(6), Validators.maxLength(6), Validators.pattern("^[0-9]*$")])],
       landmark: ['', Validators.required],
       shortName: ['', Validators.required],
       telNo1: ['', Validators.compose([Validators.required, Validators.minLength(10), Validators.maxLength(13)])],
