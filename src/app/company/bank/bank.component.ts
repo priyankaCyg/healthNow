@@ -106,7 +106,7 @@ export class BankComponent implements OnInit {
   createControl(bankdata?: companyBankMaster): FormGroup {
     this.bankForm = this.fb.group({
       sBankName: [bankdata.sBankName, [Validators.required, Validators.pattern('^[a-zA-Z ]*$')]],
-      sShortCode: [bankdata.sShortCode, ValidationService.pincodeValidator],
+      sShortCode: [bankdata.sShortCode, Validators.required],
       sAccountNo: [bankdata.sAccountNo, [Validators.required, Validators.pattern('^[0-9]*$')]],
       sIFSC: [bankdata.sIFSC, [Validators.required, Validators.pattern('^[0-9a-zA-Z]+$')]],
       sBankBranch: [bankdata.sBankBranch, [Validators.required, Validators.pattern('^[a-zA-Z ]*$')]],

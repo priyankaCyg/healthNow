@@ -61,7 +61,7 @@
                                         </p-message>
                                     </div>
                                     <div class="p-col-12 p-md-6 p-lg-3 mb-2">
-                                        <label for="sFaxNo">Fax</label>
+                                        <label for="sFaxNo">Fax No.</label>
                                         <input id="sFaxNo" class="form-control" type="text" formControlName="sFaxNo"
                                             pInputText>
                                         <p-message severity="error"
@@ -70,7 +70,7 @@
                                         </p-message>
                                     </div>
                                     <div class="p-col-12 p-md-6 p-lg-3 mb-2">
-                                        <label for="sPAN">Pan No.</label>
+                                        <label for="sPAN">PAN No.</label>
                                         <input id="sPAN" class="form-control" type="text" formControlName="sPAN"
                                             pInputText>
                                         <p-message severity="error"
@@ -79,19 +79,7 @@
                                         </p-message>
                                     </div>
                                 </div>
-                                <div
-                                    class="separator separator--border-solid separator--space-sm separator--portlet-fit">
-                                </div>
-                                <div class="p-grid form-group">
-                                    <div class="p-col-12 p-md-6 p-lg-3 mb-2">
-                                        <label for="unit">Status</label>
-                                        <p-dropdown id="unit" [options]="statusData" optionLabel="sStatusName"
-                                            formControlName="sStatusName" [(ngModel)]="selectedStatus"></p-dropdown>
-                                        <p-message severity="error" text="Status is required"
-                                            *ngIf="PartnerForm.controls['sStatusName'].touched && (selectedStatus.iStatusID=='' || PartnerForm.controls['sStatusName'].hasError('required'))">
-                                        </p-message>
-                                    </div>
-                                </div>
+                                
                                 <div
                                     class="separator separator--border-solid separator--space-sm separator--portlet-fit mt-5">
                                 </div>

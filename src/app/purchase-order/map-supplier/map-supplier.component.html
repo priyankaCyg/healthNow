@@ -4,7 +4,7 @@
             <div class="p-grid ui-fluid vertical-container">
                 <div class="p-col p-col-align-start">
                     <h1 class="mt-2">Purchase Requisition <button pButton type="button" label={{req_no_display}}
-                            class="ui-button-raised ui-button-light"></button></h1>
+                            class="ui-button-raised ui-button-light" routerLink="/purchase-order/product-requisition"></button></h1>
                 </div>
                 <div class="p-col-12">
                     <div class="card download-files p-4 mb-2">
@@ -26,7 +26,7 @@
                                     <tr>
                                         <td>{{requisition.sRequisionNo}}</td>
                                         <td>{{requisition.sPCName}}</td>
-                                        <td>{{requisition.sPrdName}}</td>
+                                        <td>{{requisition.sPrdName}} {{requisition.sVariant}} {{requisition.sUnitSymbol}}</td>
                                         <td>{{requisition.sPartnerName}}</td>
                                         <td>{{requisition.sLocName}}</td>
                                         <td>{{requisition.iQty}}</td>
@@ -38,7 +38,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="p-col-12">
+                <div class="p-col-8">
                     <p-table [value]="supplierData">
                         <ng-template pTemplate="header">
                             <tr>
@@ -46,16 +46,14 @@
                                 <th>Supplier</th>
                                 <th>Rate</th>
                                 <th>Default</th>
-                                <th>Discount %</th>
-                                <th>Discount Amt</th>
-                                <th>Purchase Price</th>
                             </tr>
                         </ng-template>
                         <ng-template pTemplate="body" let-supplierData let-ri="rowIndex">
                             <tr>
                                 <td>
-                                    <p-checkbox name="groupname" [value]="supplierData" [(ngModel)]="selectedValues"
-                                        (click)="checkBoxValue()"></p-checkbox>
+                                    <p-checkbox name="groupname" value={{supplierData.iSupID}}
+                                        [(ngModel)]="selectedValues" (onChange)="checkBoxValidation(supplierData)"
+                                        (click)="orderRequisitionForm.reset()"></p-checkbox>
                                 </td>
                                 <td>{{supplierData.sSupName}}</td>
                                 <td>{{supplierData.iPurchaseAmt}}</td>
@@ -67,31 +65,50 @@
                                         No
                                     </span>
                                 </td>
-                                <td pEditableColumn>
-                                    <p-cellEditor>
-                                        <ng-template pTemplate="input">
-                                            <input pInputText type="number" [(ngModel)]="supplierData.discount"
-                                                (change)="changeDiscount(supplierData.discount,ri)">
-                                        </ng-template>
-                                        <ng-template pTemplate="output">
-                                            {{supplierData.discount}}
-                                        </ng-template>
-                                    </p-cellEditor>
-                                </td>
-                                <td>{{supplierData.discount_amnt}}</td>
-                                <td>{{supplierData.purchase_amnt}}</td>
                             </tr>
                         </ng-template>
                     </p-table>
                 </div>
-            </div>
-            <div class="separator separator--border-solid separator--space-sm separator--portlet-fit mt-5"></div>
-            <div class="p-grid form-group ui-fluid p-justify-end mt-3">
-                <div class="p-col-12 p-md-2 p-lg-12 text-right">
-                    <button pButton type="button" label="Cancel" routerLink="/purchase-order/product-requisition"
-                        class="ui-button-light atbt mr-2 mb-2"></button>
-                    <button [disabled]="isDisable" pButton type="submit" label="Save" class="ui-button atbt mb-2"
-                        (click)="saveReq()"></button>
+                <div class="p-col-4 card download-files">
+                    <form #orderRequisitionForm="ngForm">
+                        <div class="p-grid form-group">
+                            <div class="p-col-12 p-md-12 p-lg-12 mb-1">
+                                <label for="discountPercentage">Discount %</label>
+                                <input id="discountPercentage" [disabled]="isDisableDiscount" name="discountPercentage"
+                                    #discountPercentage="ngModel" [(ngModel)]="discountPer" type="text" pInputText
+                                    (change)="calculateTotalPrice()" required>
+                                <p-message severity="error" text="This Field is required"
+                                    *ngIf="!discountPercentage.valid && (discountPercentage.dirty || discountPercentage.touched)">
+                                </p-message>
+                            </div>
+                            <div class="p-col-12 p-md-12 p-lg-12 mb-1">
+                                <label for="discountAmount">Discount amount per Qty.</label>
+                                <input id="discountAmount" name="discountAmount" [(ngModel)]="discountAmount"
+                                    type="text" pInputText disabled>
+                            </div>
+                            <div class="p-col-12 p-md-12 p-lg-12 mb-1">
+                                <label for="discountAmountEach">Amount per each Qty.</label>
+                                <input id="discountAmountEach" name="discountAmountEach"
+                                    [(ngModel)]="discountAmountEach" type="text" pInputText disabled>
+                            </div>
+                            <div class="p-col-12 p-md-12 p-lg-12 mb-1">
+                                <label for="totalAmount">Total Amount for {{totalquantity}} Qty.</label>
+                                <input id="totalAmount" name="totalAmount" [(ngModel)]="totalAmount" type="text"
+                                    pInputText disabled>
+                            </div>
+                        </div>
+                    </form>
+                    <div class="p-col-12 p-md-2 p-lg-12">
+                        <div class="separator separator--border-solid separator--space-sm separator--portlet-fit mt-0">
+                        </div>
+                    </div>
+                    <div class="p-col-12 p-md-2 p-lg-12 text-right mt-0">
+                        <button pButton type="button" label="Cancel" routerLink="/purchase-order/product-requisition"
+                            class="ui-button-light atbt mr-2 mb-2"></button>
+                        <button pButton type="submit"
+                            [disabled]="isDisable || orderRequisitionForm.untouched || orderRequisitionForm.invalid"
+                            label="Save" class="ui-button atbt mb-2" (click)="saveOrderRequisition()"></button>
+                    </div>
                 </div>
             </div>
         </div>

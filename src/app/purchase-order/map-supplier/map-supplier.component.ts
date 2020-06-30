@@ -23,13 +23,21 @@ export class MapSupplierComponent implements OnInit {
   requisitionData: orderReqData[];
   data: object;
   supplierData: supplierReqData[];
-  selectedValues: supplierReqData[] = [];
   discount: number;
   discount_amnt: number;
   purchase_amnt: number;
   disc: number;
-  isDisable: boolean;
   req_no_display: string;
+
+  totalquantity: number;
+  selectedValues: string[] = [];
+  completeSupplierData: any;
+  discountAmount: number;
+  discountAmountEach: number;
+  totalAmount: number;
+  discountPer: number;
+  isDisable: boolean = true;
+  isDisableDiscount: boolean = true;
   constructor(private breadcrumbService: BreadcrumbService, private dialogService: DialogService, private httpService: ApiService,
     private commonService: CommonService, private toastService: ToastService, private router: Router) {
     this.breadcrumbService.setItems([
@@ -44,6 +52,7 @@ export class MapSupplierComponent implements OnInit {
     this.isDisable = true;
     this.data = JSON.parse(localStorage.getItem('orderData'));
     this.requisitionData = Object.values(this.data);
+    this.totalquantity = this.requisitionData[0].iQty;
     this.req_no_display = this.requisitionData[0]['sRequisionNo'];
     this.getSupplierList();
   }
@@ -63,46 +72,54 @@ export class MapSupplierComponent implements OnInit {
     )
   }
 
-  //Function to check validation of Checkbox
-  checkBoxValue() {
-    if (this.selectedValues.length > 1) {
+
+  // select single checkbox
+  checkBoxValidation(suppRate) {
+    this.completeSupplierData = suppRate;
+    const latestSupplier = this.selectedValues[this.selectedValues.length - 1];
+    this.selectedValues.length = 0;
+    this.selectedValues.push(latestSupplier);
+    console.log(this.selectedValues)
+    if (this.selectedValues[0]) {
+      this.isDisableDiscount = false;
+      this.isDisable = false;
+    }
+    else if (this.selectedValues[0] == undefined) {
+      this.isDisableDiscount = true;
       this.isDisable = true;
-      this.toastService.addSingle("warn", "Please Select only one Supplier", "");
-    } else if (this.selectedValues.length == 1) {
-      if (this.selectedValues[0].discount) {
-        this.isDisable = false;
-      }
-      else {
-        this.toastService.addSingle("warn", "Please Enter Discount", "");
-        this.isDisable = true;
-      }
+    }
+  }
+
+  // calculate price
+  calculateTotalPrice() {
+    
+    if (this.discountPer) {
+      let supplierRate = this.completeSupplierData.iPurchaseAmt;
+      let discountAmount = parseFloat((supplierRate * this.discountPer).toFixed(2));
+      let discountPerAmount = parseFloat((discountAmount / 100).toFixed(2));
+      this.discountAmount = discountPerAmount;
+      let amountEach = parseFloat((supplierRate - discountPerAmount).toFixed(2));
+      this.discountAmountEach = amountEach;
+      let totalAmount = parseFloat((this.totalquantity * amountEach).toFixed(2));
+      this.totalAmount = totalAmount;
+      console.log(totalAmount);
     }
     else {
-      this.isDisable = true;
+      this.discountAmount = 0;
+      this.discountAmountEach = 0;
+      this.totalAmount = 0
     }
   }
 
-  //Function to calculate Discount amount and purchase price 
-  changeDiscount(disc: number, index: number) {
-    let obj = this.supplierData[index];
-    let discount_val: number = disc / 100;
-    this.discount_amnt = parseFloat((discount_val * obj.iPurchaseAmt).toFixed(2));
-    this.purchase_amnt = parseFloat((obj.iPurchaseAmt - this.discount_amnt).toFixed(2));
-    obj.discount_amnt = this.discount_amnt;
-    obj.purchase_amnt = this.purchase_amnt;
-    console.log(this.supplierData);
-    this.isDisable = false;
-  }
-
-  //Function to save requisition
-  saveReq() {
-    const supplierAPI = {
+  saveOrderRequisition() {
+    let discountPercentage = +this.discountPer;
+    const orderReqAPI = {
       "iRequestID": 2337,
       "iPReqID": this.requisitionData[0].iPReqID,
-      "iSupID": this.selectedValues[0].iSupID,
-      "iDisPer": this.selectedValues[0].discount
+      "iSupID": this.completeSupplierData.iSupID,
+      "iDisPer": discountPercentage
     }
-    this.httpService.callPostApi(supplierAPI).subscribe(
+    this.httpService.callPostApi(orderReqAPI).subscribe(
       data => {
         this.toastService.displayApiMessage(data.headers.get('StatusMessage'), data.headers.get('StatusCode'));
         this.router.navigate(['/purchase-order/product-requisition']);
