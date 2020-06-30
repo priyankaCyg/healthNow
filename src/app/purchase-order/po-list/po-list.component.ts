@@ -134,7 +134,7 @@ export class PoListComponent implements OnInit {
 
   onRowExpand() {
     console.log("row expanded", Object.keys(this.expandedRows).length);
-    if (Object.keys(this.expandedRows).length === this.temDataLength) {
+    if (Object.keys(this.expandedRows).length === 1) {
       this.isExpanded = true;
     }
   }
