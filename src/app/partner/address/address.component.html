@@ -60,6 +60,16 @@
                         </p-message>
                     </div>
                 </div>
+                <div class="p-col-12 p-md-6 p-lg-4 mb-2">
+                    <label for="iStatusID">Status</label>
+                    <p-dropdown id="iStatusID" [options]="statusData" optionLabel="sKVValue"
+                        formControlName="sStatusName" [(ngModel)]="selectedstatus"></p-dropdown>
+                    <div>
+                        <p-message severity="error" text="This field is required"
+                            *ngIf="PartnerAddressForm.controls['sStatusName'].touched  && (selectedstatus.iKVID =='' || PartnerAddressForm.controls['sStatusName'].hasError('required'))">
+                        </p-message>
+                    </div>
+                </div>
             </div>
             <div class="separator separator--border-solid separator--space-sm separator--portlet-fit"></div>
             <div class="p-grid form-group ui-fluid p-justify-end">

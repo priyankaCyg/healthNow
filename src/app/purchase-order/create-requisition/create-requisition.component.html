@@ -4,17 +4,24 @@
             <div class="p-col-12 p-lg-12">
                 <div class="p-grid form-group">
                     <div class="p-col-12 p-md-6 p-lg-4 mb-2">
-                        <label for="prdCategory">Product Category</label>
-                        <p-dropdown [options]="productCategValue" (onChange)="setpcId($event)" optionLabel="sPCName"
+                        <label for="prdCategory">Select Parent Product Category</label>
+                        <p-dropdown [options]="productCategValue" (onChange)="setPcId($event)" optionLabel="sPCName"
                             [(ngModel)]="selectedproductCategory">
                         </p-dropdown>
+                    </div>
+                    <div class="p-col-12 p-md-6 p-lg-4 mb-2 ">
+                        <label for="product">Select Product Category Name</label>
+                        <p-dropdown [options]="productData" optionLabel="sPCName" (onChange)="onProductChange($event)"
+                            [(ngModel)]="selectedProduct">
+                        </p-dropdown>
+
                     </div>
 
                 </div>
             </div>
 
             <div class="p-col-12 p-lg-12">
-                <p-table [value]="products">
+                <p-table [value]="products" *ngIf="products">
                     <ng-template pTemplate="header">
                         <tr>
                             <th style="width: 3em">#</th>
@@ -25,7 +32,7 @@
                     <ng-template pTemplate="body" let-i="rowIndex" let-products>
                         <tr>
                             <td>{{i+1}}</td>
-                            <td>{{products.sPrdName}} - {{products.sShortName}}</td>
+                            <td>{{products.sPrdName}}</td>
                             <td><i class="pi pi-arrow-circle-right" (click)="fetchProductData(products)"
                                     style="font-size: 1.8em; color: #76256e;"></i></td>
                         </tr>
@@ -48,8 +55,8 @@
                                 </div>
                             </div>
                             <div class="p-col-12 p-md-12 p-lg-12 mb-2">
-                                <div class="card bg-success p-2">Product : <strong> {{productName}}
-                                    </strong> {{prodshortName}}
+                                <div class="card bg-success p-2">Product : <strong> {{productName}} {{prodshortName}} {{unitName}}
+                                    </strong> 
                                 </div>
                             </div>
                             <div class="p-col-12 p-md-12 p-lg-12 mb-2">

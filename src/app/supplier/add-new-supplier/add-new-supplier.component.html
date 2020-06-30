@@ -47,7 +47,6 @@
                                             *ngIf="addSupplierForm.controls['sSupCName'].touched && (selectedlegalEntity.iSupCatID=='' || addSupplierForm.controls['sSupCName'].hasError('required'))">
                                         </p-message>
                                     </div>
-                    
                                 </div>
                                 <div
                                     class="separator separator--border-solid separator--space-sm separator--portlet-fit">
@@ -89,7 +88,6 @@
                                             *ngIf="!addSupplierForm.controls['sFaxNo'].valid && addSupplierForm.controls['sFaxNo'].dirty">
                                         </p-message>
                                     </div>
-                                    
                                 </div>
                                 <div
                                     class="separator separator--border-solid separator--space-sm separator--portlet-fit">
@@ -439,32 +437,33 @@
                 <!-- Category Mapping tab start here -->
                 <p-tabPanel header="Product Mapping" [disabled]="tabDisabled">
                     <div class="p-grid ui-fluid  p-justify-end mt-3">
-                    <div class="p-col-12">
-                    
-                    <div class="p-grid form-group">
-                        
-                            <div class="p-col-12 p-md-6 p-lg-3 mb-2 ">
-                                <label for="producer">Producer</label>
-                                <p-dropdown [options]="producerData" optionLabel="sProducerName" (change)="onProducerChange(producerData.iProducerID)"
-                                     [(ngModel)]="selectedProducer"></p-dropdown>
-                               
-                            </div>
-                            <div class="p-col-12 p-md-6 p-lg-3 mb-2 ">
-                                <label for="product">Product</label>
-                                <p-dropdown [options]="productData" optionLabel="sPrdName" (change)="onProductChange(productData.iPrdID)"
-                                     [(ngModel)]="selectedProduct"></p-dropdown>
-                               
+                        <div class="p-col-12">
+
+                            <div class="p-grid form-group">
+
+                                <div class="p-col-12 p-md-6 p-lg-3 mb-2 ">
+                                    <label for="parent category">Select Parent Category</label>
+                                    <p-dropdown [options]="parentCatData" optionLabel="sPCName"
+                                        (onChange)="setPcId($event)" [(ngModel)]="selectedparentCategory"></p-dropdown>
+
+                                </div>
+                                <div class="p-col-12 p-md-6 p-lg-3 mb-2 ">
+                                    <label for="product">Select Product Category Name</label>
+                                    <p-dropdown [options]="productData" optionLabel="sPCName"
+                                        (onChange)="onProductChange($event)" [(ngModel)]="selectedProduct">
+                                    </p-dropdown>
+
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
                     <p-pickList [source]="sourceCategory" [target]="targetCategory" sourceHeader="UnMapped"
                         targetHeader="Mapped" [responsive]="true" filterBy="sCategoryName" dragdrop="true"
                         sourceFilterPlaceholder="Search by category" targetFilterPlaceholder="Search by category"
                         [sourceStyle]="{'height':'300px'}" [targetStyle]="{'height':'300px'}">
                         <ng-template let-category pTemplate="item">
                             <div class="ui-helper-clearfix">
-                                <div style="font-size:14px;">{{category.sCategoryName}} </div>
+                                <div style="font-size:14px;">{{category.sPrdName}} </div>
                             </div>
                         </ng-template>
                     </p-pickList>

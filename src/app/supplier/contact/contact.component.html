@@ -1,9 +1,7 @@
-<div class="p-grid ui-fluid p-justify-end">
-    <form [formGroup]="supContactForm" autocomplete="off">
-
+<form [formGroup]="supContactForm" autocomplete="off">
+    <div class="p-grid ui-fluid">
         <div class="p-col-12">
             <div class="p-grid form-group">
-
                 <div class="p-col-12 p-md-6 p-lg-3 mb-2">
                     <label for="sFullName">Full Name</label>
                     <input id="sFullName" formControlName="sFullName" type="text" pInputText>
@@ -12,7 +10,6 @@
                         *ngIf="!supContactForm.controls['sFullName'].valid&&supContactForm.controls['sFullName'].dirty">
                     </p-message>
                 </div>
-
                 <div class="p-col-12 p-md-6 p-lg-3 mb-2">
                     <label for="sDesignation">Designation</label>
                     <input id="sDesignation" formControlName="sDesignation" type="text" pInputText>
@@ -21,7 +18,6 @@
                         *ngIf="!supContactForm.controls['sDesignation'].valid&&supContactForm.controls['sDesignation'].dirty">
                     </p-message>
                 </div>
-
                 <div class="p-col-12 p-md-6 p-lg-3 mb-2">
                     <label for="sEmailID">Email ID</label>
                     <input id="sEmailID" formControlName="sEmailID" type="email" pInputText>
@@ -31,9 +27,7 @@
                     </p-message>
                 </div>
             </div>
-
             <div class="separator separator--border-solid separator--space-sm separator--portlet-fit"></div>
-
             <div class="p-grid form-group">
                 <div class="p-col-12 p-md-12 p-lg-6 mb-2">
                     <label for="sAddress">Supplier Address</label>
@@ -43,11 +37,8 @@
                     <p-message severity="error" text="Address is required"
                         *ngIf="supContactForm.controls['sAddress'].touched && (selectedAddress.iSupAddID=='' || supContactForm.controls['sAddress'].hasError('required'))">
                     </p-message>
-
                 </div>
-
             </div>
-
             <div class="separator separator--border-solid separator--space-sm separator--portlet-fit"></div>
             <div class="p-grid form-group">
                 <div class="p-col-12 p-md-6 p-lg-3 mb-2">
@@ -82,7 +73,6 @@
                         *ngIf="!supContactForm.controls['sFaxNo'].valid&&supContactForm.controls['sFaxNo'].dirty">
                     </p-message>
                 </div>
-
             </div>
             <div class="separator separator--border-solid separator--space-sm separator--portlet-fit"></div>
             <div class="p-grid form-group">
@@ -94,11 +84,8 @@
                     <p-message severity="error" text="Status is required"
                         *ngIf="supContactForm.controls['iStatusID'].touched && (selectedstatus.iKVID=='' || supContactForm.controls['iStatusID'].hasError('required'))">
                     </p-message>
-
                 </div>
-
             </div>
-
             <div class="separator separator--border-solid separator--space-sm separator--portlet-fit"></div>
             <div class="p-grid form-group ui-fluid p-justify-end mt-3">
                 <div class="p-col-12 p-md-12 p-lg-12 text-right">
@@ -112,8 +99,6 @@
                         (click)="updateSupplierContact()" class="ui-button atbt"></button>
                 </div>
             </div>
-
         </div>
-    </form>
-
-</div>
+    </div>
+</form>

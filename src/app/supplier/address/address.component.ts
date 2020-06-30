@@ -20,6 +20,8 @@ export class AddressComponent implements OnInit {
   addressID: number;
   isEdit: boolean = false;
   sup_Id: number;
+  statusData;
+  selectedstatus;
 
   constructor(
     private fb: FormBuilder,
@@ -46,7 +48,7 @@ export class AddressComponent implements OnInit {
         data => {
           this.supplierAddressData = new SupplierAddress(data.body[0]);
           this.SupplierAddressForm = this.createControl(this.supplierAddressData);
-          Promise.all([this.getAddressTypeData()]).then(values => {
+          Promise.all([this.getAddressTypeData(), this.getStatusData()]).then(values => {
             console.log(values);
             this.setDropDownVal();
           });
@@ -56,7 +58,7 @@ export class AddressComponent implements OnInit {
       this.isEdit = false;
       this.supplierAddressData = new SupplierAddress();
       this.SupplierAddressForm = this.createControl(this.supplierAddressData);
-      Promise.all([this.getAddressTypeData()]).then(values => {
+      Promise.all([this.getAddressTypeData(), this.getStatusData()]).then(values => {
         console.log(values);
       });
     }
@@ -110,6 +112,25 @@ export class AddressComponent implements OnInit {
     });
   }
 
+  // Select Status Dropdown Function
+  getStatusData() {
+    return new Promise((resolve, reject) => {
+      var status_api = {
+        "iRequestID": 2071,
+        "sKVName": "Status"
+      }
+      this.httpService.getDropDownData(status_api).then(
+        data => {
+          this.statusData = data;
+          this.statusData.unshift({ iKVID: "", sKVValue: "Select Status" });
+          this.selectedstatus = { iKVID: "", sKVValue: "Select Status" };
+          resolve(this.statusData);
+        },
+        error => console.log(error)
+      );
+    });
+  }
+
   //Function to close dialog box
   closeDialog() {
     this.ref.close();
@@ -144,10 +165,6 @@ export class AddressComponent implements OnInit {
         else {
           const nameControl = this.SupplierAddressForm.get('sPostalCode');
           nameControl.setErrors({});
-          // this.SupplierAddressForm.patchValue({
-          //   state: '',
-          //   city:''
-          // });
         }
       },
       error => {
@@ -235,6 +252,7 @@ export class AddressComponent implements OnInit {
   //Function to set default dropdown value
   defaultDropDwnValue() {
     this.selectedAddressType = { iKVID: "", sKVValue: "Select Address Type" }
+    this.selectedstatus = { iKVID: "", sKVValue: "Select Status" }
   }
 
   //Function to set dropdwon value on edit
@@ -244,6 +262,12 @@ export class AddressComponent implements OnInit {
     if (selectedAdressTypeObj !== undefined) {
       this.selectedAddressType = selectedAdressTypeObj;
     }
+
+    // Status Dropdown 
+    let selectedStatus = this.statusData.find(data => data.iKVID == this.supplierAddressData.iStatusID);
+    if (selectedStatus !== undefined) {
+      this.selectedstatus = selectedStatus;
+    }
   }
 
   //Function to check dropdown validity
@@ -251,8 +275,12 @@ export class AddressComponent implements OnInit {
     if (this.selectedAddressType.iKVID == '') {
       return true;
     }
+    if (this.selectedstatus.iKVID == '') {
+      return true;
+    }
     else {
       return false
     }
   }
+
 }

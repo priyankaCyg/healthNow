@@ -12,4 +12,5 @@ export class supplierList {
     sStatusName: string;
     sCreatedDate: string;
     iLegalEntityID: Number;
+    sSupCName:string;
 }

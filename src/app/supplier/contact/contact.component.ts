@@ -1,10 +1,3 @@
-/**
-Template Name: HealthNow
-Author: Priyanka Sahu
-Created Date: 
-File: contact.component
-**/
-
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { APIService } from '../../services/apieservice';
@@ -18,34 +11,27 @@ import { ToastService } from 'src/app/services/toast.service';
   templateUrl: './contact.component.html',
   styleUrls: ['./contact.component.css']
 })
+
 export class ContactComponent implements OnInit {
 
-
   isEdit: boolean = false
-
   selectedstatus;
   selectedAddress;
-
   statusData;
   addressData;
   iSupContactID: number;
   sup_Id: number;
-
   public supContactForm: FormGroup;
   contactData: SupplierContactMaster;
-
 
   constructor(public config: DynamicDialogConfig, public ref: DynamicDialogRef,
     private toastService: ToastService, private httpService: ApiService, private fb: FormBuilder) { }
 
   ngOnInit(): void {
-
     this.sup_Id = +localStorage.getItem('iSupID');
     this.defaultDropDwnValue()
-
     this.contactData = new SupplierContactMaster();
     this.supContactForm = this.createControl(this.contactData);
-
     this.iSupContactID = this.config.data.iSupContactID;
     if (this.iSupContactID != null) {
       this.isEdit = true
@@ -67,8 +53,6 @@ export class ContactComponent implements OnInit {
         console.log(values);
       });
     }
-
-
   }
 
   defaultDropDwnValue() {
@@ -79,19 +63,16 @@ export class ContactComponent implements OnInit {
   setDropDownVal() {
     // Status Dropdown Select
     let selectedStatusObj = this.statusData.find(x => x.iKVID == this.contactData.iStatusID);
-
     if (selectedStatusObj !== undefined) {
       this.selectedstatus = selectedStatusObj;
     }
 
     // Address Dropdown Select
     let selectedAddressObj = this.addressData.find(x => x.iSupAddID == this.contactData.iSupAddID);
-
     if (selectedAddressObj !== undefined) {
       this.selectedAddress = selectedAddressObj;
     }
   }
-
 
   getStatusDrpDwn() {
     return new Promise((resolve, reject) => {
@@ -108,11 +89,11 @@ export class ContactComponent implements OnInit {
     })
   }
 
-
   getAddressDrpDwn() {
     return new Promise((resolve, reject) => {
       var dataToSend4 = {
-        "iRequestID": 2186
+        "iRequestID": 2186,
+        "iSupID": this.sup_Id
       }
       this.httpService.getDropDownData(dataToSend4).then(response => {
         this.addressData = response
@@ -123,10 +104,8 @@ export class ContactComponent implements OnInit {
     })
   }
 
-
   addSupplierContact() {
     var formData = this.supContactForm.getRawValue();
-
     var dataToSendAdd = {
       "iRequestID": 2191,
       "iSupID": this.sup_Id,
@@ -149,10 +128,8 @@ export class ContactComponent implements OnInit {
     );
   }
 
-
   updateSupplierContact() {
     var formData = this.supContactForm.getRawValue();
-
     var dataToSendEdit = {
       "iRequestID": 2192,
       "iStatusID": formData.iStatusID.iKVID,
@@ -177,15 +154,11 @@ export class ContactComponent implements OnInit {
     );
   }
 
-
-
   closeDialog() {
     this.ref.close()
   }
 
-
   createControl(contactData?: SupplierContactMaster): FormGroup {
-
     this.supContactForm = this.fb.group({
       iCreatedBy: [contactData.iCreatedBy],
       iStatusID: [contactData.iStatusID, [Validators.required]],
@@ -220,7 +193,5 @@ export class ContactComponent implements OnInit {
       return false
     }
   }
-
-
 
 }
