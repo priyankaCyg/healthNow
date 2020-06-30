@@ -5,6 +5,7 @@ import { ApiService } from 'src/app/services/api.service';
 import { DropdownData } from 'src/app/model/dropdown.model';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { ToastService } from 'src/app/services/toast.service';
+import { ValidationService } from 'src/app/services/validation.service';
 
 
 @Component({
@@ -132,17 +133,18 @@ export class AddNewAddressComponent implements OnInit {
     this.resetFormData();
   }
 
-  // get states ans city name start
+  // get states and city name start
   onChangePincode() {
     this.AddressForm.patchValue({
       state: '',
       city: ''
     });
-    let pincode_value = this.AddressForm.get('pincode').value;
+    let pincode_value : number = this.AddressForm.get('pincode').value;
     const pincodeChangesApi = {
       "iRequestID": 2101,
       "sPostalCode": pincode_value
     }
+    if(this.Pincode.valid){
     this.httpService.callPostApi(pincodeChangesApi).subscribe(
       data => {
         if (data.body.length != 0) {
@@ -165,6 +167,7 @@ export class AddNewAddressComponent implements OnInit {
         console.log(error)
       }
     )
+    }
   }
   // get states and city name ends
 
@@ -290,7 +293,7 @@ export class AddNewAddressComponent implements OnInit {
       address2: ['', Validators.required],
       state: [''],
       city: [''],
-      pincode: ['', Validators.compose([Validators.required, Validators.minLength(6), Validators.maxLength(6)])],
+      pincode: ['', Validators.compose([Validators.required, Validators.minLength(6), Validators.maxLength(6),Validators.pattern("^[0-9]*$")])],
       landmark: ['', Validators.required],
       shortName: ['', Validators.required],
       telNo1: ['', Validators.compose([Validators.required, Validators.minLength(10), Validators.maxLength(13)])],

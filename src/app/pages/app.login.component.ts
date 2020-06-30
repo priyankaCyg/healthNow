@@ -27,13 +27,13 @@ export class AppLoginComponent implements OnInit {
     this.loginService.authenticate(dataToSendEdit).then(response => {
 
       var bodyData = response.body[0];
-      localStorage.setItem('iCID', bodyData.iCID);
-      localStorage.setItem('iRoleID', bodyData.iRoleID);
+     // localStorage.setItem('iCID', bodyData.iCID);
+    //  localStorage.setItem('iRoleID', bodyData.iRoleID);
       localStorage.setItem('iUserID', bodyData.iUserID);
-      localStorage.setItem('sRoleName', bodyData.sRoleName);
-      localStorage.setItem('sUserName', bodyData.sUserName);
+     // localStorage.setItem('sRoleName', bodyData.sRoleName);
+    //  localStorage.setItem('sUserName', bodyData.sUserName);
       localStorage.setItem('sFirstName', bodyData.sFirstName);
-      localStorage.setItem('sFirstInitial', bodyData.sFirstInitial);
+     // localStorage.setItem('sFirstInitial', bodyData.sFirstInitial);
 
       let temp = ''
       this.loginService.getAccess(temp).then(response1 => {

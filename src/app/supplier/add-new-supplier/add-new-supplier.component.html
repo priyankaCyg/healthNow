@@ -4,7 +4,7 @@
     <div class="p-col-12">
         <div class="card card-w-title">
             <h1>Supplier</h1>
-            <p-tabView>
+            <p-tabView [activeIndex]="index">
                 <!-- Supplier tab start here -->
                 <p-tabPanel header="Supplier">
                     <form [formGroup]="addSupplierForm" autocomplete="off">
@@ -47,7 +47,6 @@
                                             *ngIf="addSupplierForm.controls['sSupCName'].touched && (selectedlegalEntity.iSupCatID=='' || addSupplierForm.controls['sSupCName'].hasError('required'))">
                                         </p-message>
                                     </div>
-
                                 </div>
                                 <div
                                     class="separator separator--border-solid separator--space-sm separator--portlet-fit">
@@ -89,7 +88,6 @@
                                             *ngIf="!addSupplierForm.controls['sFaxNo'].valid && addSupplierForm.controls['sFaxNo'].dirty">
                                         </p-message>
                                     </div>
-
                                 </div>
                                 <div
                                     class="separator separator--border-solid separator--space-sm separator--portlet-fit">

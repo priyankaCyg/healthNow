@@ -64,6 +64,7 @@ export class AddNewSupplierComponent implements OnInit {
   targetCategory: SupplierCategoryMapping[];
   bankData: companyBankMaster[];
   selectedSuppCat;
+  index: number = 0;
 
   constructor(private breadcrumbService: BreadcrumbService,
     private dialogService: DialogService,
@@ -82,9 +83,16 @@ export class AddNewSupplierComponent implements OnInit {
     this.defaultDropDwnValue()
     this.supData = new SuppMaster();
     this.addSupplierForm = this.createControl(this.supData);
-    this.supId = +this.route.snapshot.params['iSupID'];
-    localStorage.setItem('iSupID', this.supId)
-    if (!isNaN(this.supId)) {
+    // this.supId = +this.route.snapshot.params['iSupID'];
+    // localStorage.setItem('iSupID', this.supId);
+    if(this.route.snapshot.params['iSupID']){
+      this.supId = +this.route.snapshot.params['iSupID'];
+      localStorage.setItem('iSupID', this.supId)
+      }
+      else{
+        this.supId = +localStorage.getItem("iSupID");
+      }
+    if (this.supId) {
       this.isEdit = true
       this.tabDisabled = false
       var dataToSendEdit = {
@@ -452,7 +460,7 @@ export class AddNewSupplierComponent implements OnInit {
         this.tabDisabled = false
         let supp_name ="Supplier " + formData.supp_name + " has been added successfully"
         this.toastService.displayApiMessage(supp_name, data.headers.get('StatusCode'));
-        
+        this.index = 1;
       },
       error => console.log(error)
     );

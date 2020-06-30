@@ -30,6 +30,7 @@ export class PartnerComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    localStorage.removeItem("iPartnerID");
     this.getAllPartner();
   }
 

@@ -19,6 +19,7 @@ export class DepartmentComponent implements OnInit {
   Dep_id;
   public DepartmentSubmit: FormGroup;
   departmentData: DepartmentMaster;
+  isSave : number = 0;
 
   constructor(private httpService: ApiService, private fb: FormBuilder, private config: DynamicDialogConfig,
     private ref: DynamicDialogRef, private toastService: ToastService) { }
@@ -116,6 +117,31 @@ export class DepartmentComponent implements OnInit {
     );
     this.DepartmentSubmit.reset();
   }
+
+  // addDepartment() {
+  //   var formData = this.DepartmentSubmit.getRawValue();
+  //   const dep_submit_data =
+  //   {
+  //     "iRequestID": 2051,
+  //     "iCID": 1,
+  //     "sDeptName": formData.sDeptName
+  //   };
+  //   if(this.isSave == 0){
+  //   this.httpService.callPostApi(dep_submit_data).subscribe(
+  //     data => {
+  //       let statusCode = data.headers.get('StatusCode') ; 
+  //       if(statusCode == 200){
+  //         this.isSave = 1;
+  //       this.ref.close(true);
+  //       }
+  //       this.toastService.displayApiMessage(data.headers.get('StatusMessage'), data.headers.get('StatusCode'));
+  //     },
+  //     error => console.log(error)
+  //   );
+  //   this.DepartmentSubmit.reset();
+  //   }
+  // }
+
 
   //code for edit department data 
   editDepartment() {

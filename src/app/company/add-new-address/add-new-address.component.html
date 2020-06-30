@@ -27,7 +27,7 @@
                     <label for="pincode">Pincode</label>
                     <input id="pincode" type="text" pInputText formControlName="pincode" (change)="onChangePincode()">
                     <p-message severity="error"
-                        [text]="Pincode.errors['required'] ? 'This Field is required' : Pincode.errors['minlength'] ? 'Please enter 6 digits pincode':Pincode.errors['maxlength'] ? 'Please enter 6 digits pincode': 'Enter a valid Pincode' "
+                        [text]="Pincode.errors['required'] ? 'This Field is required' : Pincode.errors['minlength'] ? 'Please enter 6 digits pincode':Pincode.errors['maxlength'] ? 'Please enter 6 digits pincode': Pincode.errors['pattern'] ? 'Only numbers are allowed' : 'Enter a valid Pincode' "
                         *ngIf="!Pincode.valid&&(Pincode.dirty || Pincode.touched)"></p-message>
                 </div>
                 <div class="p-col-12 p-md-6 p-lg-4">
