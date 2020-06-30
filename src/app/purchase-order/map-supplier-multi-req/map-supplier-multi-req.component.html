@@ -12,14 +12,43 @@
                                         <strong>{{productCategory}}</strong></div>
                                 </div>
                                 <div class="p-col-12 p-md-6 p-lg-4 mb-2">
-                                    <div class="card bg-success p-2">Product : <strong>{{productName}} {{variantName}}
-                                            {{symbolName}}</strong></div>
+                                    <div class="card bg-success p-2">Product : <strong>{{productName}}
+                                            {{productVariant}} {{productUnit}}</strong></div>
                                 </div>
                             </div>
                         </div>
-                        <div class="p-col-12 p-md-6 p-lg-4 mb-2">
-                            <div class="card bg-success p-2">Product : <strong>{{productName}} {{productVariant}}
-                                    {{productUnit}}</strong></div>
+
+                        <div class="p-col-12">
+                            <p-table [value]="requisitionDatails">
+                                <ng-template pTemplate="header">
+                                    <tr>
+                                        <th>Requisition No.</th>
+                                        <th>Partner</th>
+                                        <th>Location</th>
+                                        <th>Quantity</th>
+                                        <!-- <th>Unit</th> -->
+                                        <th>Created By</th>
+                                        <th>Created Date</th>
+                                    </tr>
+                                </ng-template>
+                                <ng-template pTemplate="body" let-requDetail>
+                                    <tr>
+                                        <td>{{requDetail.sRequisionNo}}</td>
+                                        <td>{{requDetail.sPartnerName}}</td>
+                                        <td>{{requDetail.sLocName}}</td>
+                                        <td>{{requDetail.iQty}}</td>
+                                        <!-- <td>{{requDetail.unit}}</td> -->
+                                        <td>{{requDetail.sCreatedBy}}</td>
+                                        <td>{{requDetail.sCreatedDate | date:"dd-MM-yyyy"}}</td>
+                                    </tr>
+                                </ng-template>
+                                <ng-template pTemplate="footer">
+                                    <tr>
+                                        <td colspan="3"><b>Total</b></td>
+                                        <td colspan="3"><b>{{totalquantity}}</b></td>
+                                    </tr>
+                                </ng-template>
+                            </p-table>
                         </div>
                     </div>
                 </div>
@@ -54,20 +83,44 @@
                                         </p-table>
                                     </div>
 
-                                    <div class="p-col-12 p-md-12 p-lg-12 mb-1">
-                                        <label for="location">Discount</label>
-                                        <input id="discountAmount" name="discountAmount" [(ngModel)]="discountAmount"
-                                            type="text" pInputText disabled>
+                                    <div class="p-col-12 p-md-12 p-lg-12">
+                                        <form #productRequisitionForm="ngForm">
+                                            <div class="p-grid form-group">
+                                                <div class="p-col-12 p-md-12 p-lg-12 mb-1">
+                                                    <label for="partner">Discount %</label>
+                                                    <input id="discountPercentage" [disabled]="isDisableDiscount"
+                                                        name="discountPercentage" #discountPercentage="ngModel"
+                                                        [(ngModel)]="discountPer" type="text" pInputText
+                                                        (change)="calculateTotalPrice()" required>
+                                                    <p-message severity="error" text="This Field is required"
+                                                        *ngIf="!discountPercentage.valid && (discountPercentage.dirty || discountPercentage.touched)">
+                                                    </p-message>
+                                                </div>
+
+                                                <div class="p-col-12 p-md-12 p-lg-12 mb-1">
+                                                    <label for="location">Discount Amount</label>
+                                                    <input id="discountAmount" name="discountAmount"
+                                                        [(ngModel)]="discountAmount" type="text" pInputText disabled>
+                                                </div>
+                                                <div class="p-col-12 p-md-12 p-lg-12 mb-1">
+                                                    <label for="qty">Amount per Qty.</label>
+                                                    <input id="discountAmountEach" name="discountAmountEach"
+                                                        [(ngModel)]="discountAmountEach" type="text" pInputText
+                                                        disabled>
+                                                </div>
+                                                <div class="p-col-12 p-md-12 p-lg-12 mb-1">
+                                                    <label for="qty">Total Amount for {{totalquantity}} Qty.</label>
+                                                    <input id="totalAmount" name="totalAmount" [(ngModel)]="totalAmount"
+                                                        type="text" pInputText disabled>
+                                                </div>
+                                            </div>
+                                        </form>
                                     </div>
-                                    <div class="p-col-12 p-md-12 p-lg-12 mb-1">
-                                        <label for="qty">Amount per Qty.</label>
-                                        <input id="discountAmountEach" name="discountAmountEach"
-                                            [(ngModel)]="discountAmountEach" type="text" pInputText disabled>
-                                    </div>
-                                    <div class="p-col-12 p-md-12 p-lg-12 mb-1">
-                                        <label for="qty">Total Amount for {{totalquantity}} Qty.</label>
-                                        <input id="totalAmount" name="totalAmount" [(ngModel)]="totalAmount" type="text"
-                                            pInputText disabled>
+
+                                    <div class="p-col-12 p-md-2 p-lg-12">
+                                        <div
+                                            class="separator separator--border-solid separator--space-sm separator--portlet-fit mt-0">
+                                        </div>
                                     </div>
 
                                     <div class="p-col-12 p-md-2 p-lg-12 text-right mt-0">
