@@ -30,6 +30,7 @@
                                 <th>Product</th>
                                 <th style="width: 8em;">Qty</th>
                                 <th style="width: 8em;">Rate</th>
+                                <th style="width: 8em;">Gross Amount</th>
                                 <th style="width: 8em;">Discount %</th>
                                 <th style="width: 8em;">Discount Amt</th>
                                 <th>Total Amount</th>
@@ -46,9 +47,10 @@
                                 </td>
                                 <td>{{poDetail.sRequisionNo}}</td>
                                 <td>{{poDetail.sPCName}}</td>
-                                <td>{{poDetail.sPrdName}}</td>
+                                <td>{{poDetail.sPrdName}} {{poDetail.sVariant}} {{poDetail.sUnitSymbol}}</td>
                                 <td>{{poDetail.iQty}}</td>
                                 <td>{{poDetail.iSupRate}}</td>
+                                <td>{{poDetail.iGrossAmt}}</td>
                                 <td>{{poDetail.iDisPer}}</td>
                                 <td>{{poDetail.iDisAmt}}</td>
                                 <td>{{poDetail.iTotalAmount}}</td>

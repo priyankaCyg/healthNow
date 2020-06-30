@@ -2,7 +2,6 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { BreadcrumbService } from '../breadcrumb.service';
 import { CountryService } from '../demo/service/countryservice';
 import { SelectItem, MenuItem } from 'primeng/api';
-import { from, Subscription } from 'rxjs';
 import { Message } from 'primeng/api';
 import { ApiService } from '../services/api.service';
 import { supplierList } from '../model/supplierlist';
@@ -15,9 +14,10 @@ import { Router } from '@angular/router';
   templateUrl: './supplier.component.html',
   styleUrls: ['./supplier.component.css']
 })
+
 export class SupplierComponent implements OnInit {
+  
   isAdmin: boolean;
-  private subscription: Subscription;
   items: MenuItem[];
   supplier: supplierList[];
   disableButtonsData : any ;
@@ -37,6 +37,7 @@ export class SupplierComponent implements OnInit {
 
 
   ngOnInit(): void {
+    localStorage.removeItem("iSupID");
     this.getAllSupplier();
     this.setButtonsVisibility();
   }

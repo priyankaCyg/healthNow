@@ -14,8 +14,7 @@
                 <div class="p-col-12">
                     <p-table [value]="producer" #ProducerSearch [paginator]="true" [rows]="10"
                         [showCurrentPageReport]="true" [rowsPerPageOptions]="[10, 25, 50]" [filterDelay]="0"
-                        [globalFilterFields]="['sProducerName','sCountryName','sShortCode','sStatusName']"
-                        class="defaultDataTable">
+                        [globalFilterFields]="['sProducerName','sCountryName','sShortCode','sStatusName']">
                         <ng-template pTemplate="caption">
                             <div class="ui-table-globalfilter-container text-left">
                                 <input type="text" pInputText size="50" placeholder="Search"

@@ -23,6 +23,7 @@ import { PartnerAddress } from 'src/app/model/partner_address.model';
   templateUrl: './new-partner.component.html',
   styleUrls: ['./new-partner.component.css']
 })
+
 export class NewPartnerComponent implements OnInit {
 
   items: MenuItem[];
@@ -34,11 +35,10 @@ export class NewPartnerComponent implements OnInit {
   partnerData: PartnerMaster;
   bankData: companyBankMaster[];
   partnerAdressData: PartnerAddress;
-  statusData;
   entityData;
   partner_id;
-  selectedStatus;
   selectedEntity;
+  index: number = 0;
 
   constructor(private breadcrumbService: BreadcrumbService, private dialogService: DialogService, private route: ActivatedRoute,
     private httpService: ApiService,
@@ -56,9 +56,16 @@ export class NewPartnerComponent implements OnInit {
     this.defaultDropDwnValue()
     this.partnerData = new PartnerMaster();
     this.PartnerForm = this.createControl(this.partnerData);
-    this.partner_id = +this.route.snapshot.params['iPartnerID'];
-    localStorage.setItem('iPartnerID', this.partner_id);
-    if (!isNaN(this.partner_id)) {
+    // this.partner_id = +this.route.snapshot.params['iPartnerID'];
+    // localStorage.setItem('iPartnerID', this.partner_id);
+    if (this.route.snapshot.params['iPartnerID']) {
+      this.partner_id = +this.route.snapshot.params['iPartnerID'];
+      localStorage.setItem('iPartnerID', this.partner_id)
+    }
+    else {
+      this.partner_id = +localStorage.getItem("iPartnerID");
+    }
+    if (this.partner_id) {
       this.isEdit = true;
       this.tabDisabled = false;
       var dataToSendEdit = {
@@ -69,7 +76,7 @@ export class NewPartnerComponent implements OnInit {
         data => {
           this.partnerData = new PartnerMaster(data.body[0]);
           this.PartnerForm = this.createControl(this.partnerData);
-          Promise.all([this.getstatusDrpDwn(), this.getEntityDrpDwn()]).then(values => {
+          Promise.all([this.getEntityDrpDwn()]).then(values => {
             console.log(values);
             this.setDropDownVal()
           });
@@ -81,7 +88,7 @@ export class NewPartnerComponent implements OnInit {
     }
     else {
       this.isEdit = false;
-      Promise.all([this.getstatusDrpDwn(), this.getEntityDrpDwn()]).then(values => {
+      Promise.all([this.getEntityDrpDwn()]).then(values => {
         console.log(values);
       });
     }
@@ -89,17 +96,11 @@ export class NewPartnerComponent implements OnInit {
 
   // Function to Set Default dropdown value
   defaultDropDwnValue() {
-    this.selectedStatus = { iStatusID: "", sStatusName: "Select Status" }
     this.selectedEntity = { iKVID: "", sKVValue: "Select Legal Entity" }
   }
 
   //Function to set dropdown value on edit
   setDropDownVal() {
-    // Status Dropdown Selet
-    let selectedStatusObj = this.statusData.find(x => x.iStatusID == this.partnerData.iStatusID);
-    if (selectedStatusObj !== undefined) {
-      this.selectedStatus = selectedStatusObj;
-    }
 
     // Legal ENtity Dropdown Select
     let selectedEntityObj = this.entityData.find(x => x.iKVID == this.partnerData.iLegalEntityID);
@@ -110,9 +111,6 @@ export class NewPartnerComponent implements OnInit {
 
   //Function to check Dropdown Validation
   dropDownValidityCheck() {
-    if (this.selectedStatus.iStatusID == '') {
-      return true;
-    }
     if (this.selectedEntity.iKVID == '') {
       return true;
     }
@@ -121,21 +119,6 @@ export class NewPartnerComponent implements OnInit {
     }
   }
 
-  //Function to call Status dropdown API
-  getstatusDrpDwn() {
-    return new Promise((resolve, reject) => {
-      var dataToSend4 = {
-        "iRequestID": 2271,
-        "sProcessName": "Partner"
-      }
-      this.httpService.getDropDownData(dataToSend4).then(response => {
-        this.statusData = response
-        this.statusData.splice(0, 0, { iStatusID: "", sStatusName: "Select Status" })
-        this.selectedStatus = { iStatusID: "", sStatusName: "Select Status" }
-        resolve(this.statusData)
-      });
-    })
-  }
 
   //Function to call Legal Entity dropdown API
   getEntityDrpDwn() {
@@ -159,11 +142,9 @@ export class NewPartnerComponent implements OnInit {
       sFaxNo: [partnerData.sFaxNo, [Validators.required, Validators.pattern('^[0-9a-zA-Z]+$')]],
       sTelNo1: [partnerData.sTelNo1, Validators.compose([Validators.required, Validators.minLength(10), Validators.maxLength(13), Validators.pattern('^[0-9]*$')])],
       sTelNo2: [partnerData.sTelNo2, Validators.compose([Validators.required, Validators.minLength(10), Validators.maxLength(13), Validators.pattern('^[0-9]*$')])],
-      iStatusID: [partnerData.iStatusID],
       iCreatedBy: [partnerData.iCreatedBy],
       iPartnerID: [partnerData.iPartnerID],
       sShortCode: [partnerData.sShortCode, [Validators.required]],
-      sStatusName: [partnerData.sStatusName, [Validators.required]],
       sCreatedDate: [partnerData.sCreatedDate],
       sPartnerName: [partnerData.sPartnerName, [Validators.required, Validators.pattern('^[a-zA-Z ]*$')]],
       iLegalEntityID: [partnerData.iLegalEntityID, [Validators.required]],
@@ -183,7 +164,6 @@ export class NewPartnerComponent implements OnInit {
       "sTelNo1": formData.sTelNo1,
       "sTelNo2": formData.sTelNo2,
       "sFaxNo": formData.sFaxNo,
-      "iStatusID": formData.sStatusName.iStatusID
     }
     this.httpService.callPostApi(addPartnerData).subscribe(
       data => {
@@ -194,7 +174,9 @@ export class NewPartnerComponent implements OnInit {
         this.getPartnerContactList();
         this.gstList();
         this.tabDisabled = false;
-        this.toastService.displayApiMessage(data.headers.get('StatusMessage'), data.headers.get('StatusCode'));
+        this.index = 1;
+        let partner_name = "Partner " + formData.sPartnerName + " has been added successfully"
+        this.toastService.displayApiMessage(partner_name, data.headers.get('StatusCode'));
         this.isEdit = true
       },
       error => console.log(error)
@@ -213,7 +195,6 @@ export class NewPartnerComponent implements OnInit {
       "sTelNo1": formData.sTelNo1,
       "sTelNo2": formData.sTelNo2,
       "sFaxNo": formData.sFaxNo,
-      "iStatusID": formData.sStatusName.iStatusID,
       "iPartnerID": this.partner_id
     }
     this.httpService.callPostApi(editPartnerData).subscribe(
@@ -308,7 +289,7 @@ export class NewPartnerComponent implements OnInit {
     const ref = this.dialogService.open(BankComponent, {
       data: {},
       header: "Add New Bank",
-      width: "80%",
+      width: "50%",
     });
     ref.onClose.subscribe((success: boolean) => {
       if (success) {
@@ -322,7 +303,7 @@ export class NewPartnerComponent implements OnInit {
     const ref = this.dialogService.open(BankComponent, {
       data: bank,
       header: "Edit Bank",
-      width: "80%",
+      width: "50%",
     });
     ref.onClose.subscribe((success: boolean) => {
       if (success) {

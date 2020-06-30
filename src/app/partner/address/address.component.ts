@@ -20,6 +20,8 @@ export class AddressComponent implements OnInit {
   addressID: number;
   isEdit: boolean = false;
   partner_id: number;
+  statusData;
+  selectedstatus;
 
   constructor(
     private fb: FormBuilder, private httpService: ApiService, public config: DynamicDialogConfig, public ref: DynamicDialogRef,
@@ -42,7 +44,7 @@ export class AddressComponent implements OnInit {
         data => {
           this.partnerAddressData = new PartnerAddress(data.body[0]);
           this.PartnerAddressForm = this.createControl(this.partnerAddressData);
-          Promise.all([this.getAddressTypeData()]).then(values => {
+          Promise.all([this.getAddressTypeData(),this.getStatusData()]).then(values => {
             console.log(values);
             this.setDropDownVal();
           });
@@ -52,7 +54,7 @@ export class AddressComponent implements OnInit {
       this.isEdit = false;
       this.partnerAddressData = new PartnerAddress();
       this.PartnerAddressForm = this.createControl(this.partnerAddressData);
-      Promise.all([this.getAddressTypeData()]).then(values => {
+      Promise.all([this.getAddressTypeData(),this.getStatusData()]).then(values => {
         console.log(values);
       });
     }
@@ -104,6 +106,25 @@ export class AddressComponent implements OnInit {
         error => {
           console.log(error);
         });
+    });
+  }
+
+  // Select Status Dropdown Function
+  getStatusData() {
+    return new Promise((resolve, reject) => {
+      var status_api = {
+        "iRequestID": 2071,
+        "sKVName": "Status"
+      }
+      this.httpService.getDropDownData(status_api).then(
+        data => {
+          this.statusData = data;
+          this.statusData.unshift({ iKVID: "", sKVValue: "Select Status" });
+          this.selectedstatus = { iKVID: "", sKVValue: "Select Status" };
+          resolve(this.statusData);
+        },
+        error => console.log(error)
+      );
     });
   }
 
@@ -183,6 +204,7 @@ export class AddressComponent implements OnInit {
     let pincode_valid = this.PartnerAddressForm.controls['sPostalCode'].valid;
     let pincode_dirty = this.PartnerAddressForm.controls['sPostalCode'].dirty;
     var formData = this.PartnerAddressForm.getRawValue();
+    console.log(formData)
     if ((pincode_valid && pincode_dirty)) {
       var editPartneraddressAPI1 = {
         "iRequestID": 2292,
@@ -194,7 +216,7 @@ export class AddressComponent implements OnInit {
         "sLandmark": formData.sLandmark,
         "iLocID": this.StatesCityData[0].iLocationID,
         "sPostalCode": formData.sPostalCode,
-        "iStatusID": formData.iStatusID,
+        "iStatusID": formData.sStatusName.iKVID,
         "iPartnerID": this.partner_id,
         "iPartnerAddID": this.addressID
       }
@@ -217,7 +239,7 @@ export class AddressComponent implements OnInit {
         "sLandmark": formData.sLandmark,
         "iLocID": location_id,
         "sPostalCode": formData.sPostalCode,
-        "iStatusID": formData.iStatusID,
+        "iStatusID": formData.sStatusName.iKVID,
         "iPartnerID": this.partner_id,
         "iPartnerAddID": this.addressID
       }
@@ -233,6 +255,7 @@ export class AddressComponent implements OnInit {
   // Function to set default dropdown value
   defaultDropDwnValue() {
     this.selectedAddressType = { iKVID: "", sKVValue: "Select Address Type" }
+    this.selectedstatus = { iKVID: "", sKVValue: "Select Status" }
   }
 
   //Function to set dropdown value on edit
@@ -243,11 +266,20 @@ export class AddressComponent implements OnInit {
     if (selectedAdressTypeObj !== undefined) {
       this.selectedAddressType = selectedAdressTypeObj;
     }
+    
+    // Status Dropdown 
+    let selectedStatus = this.statusData.find(data => data.iKVID == this.partnerAddressData.iStatusID);
+    if (selectedStatus !== undefined) {
+      this.selectedstatus = selectedStatus;
+    }
   }
 
   //Function to check dropdown validity
   dropDownValidityCheck() {
     if (this.selectedAddressType.iKVID == '') {
+      return true;
+    }
+    if (this.selectedstatus.iKVID == '') {
       return true;
     }
     else {

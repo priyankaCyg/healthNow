@@ -10,8 +10,11 @@ export class poDetailMaster {
     sPrdName: string;
     sCreatedDate: string;
     iPurchasePrice: number;
-    iTotalAmount:number;
+    iTotalAmount: number;
     sRequisionNo: string;
+    iGrossAmt: number;
+    sVariant: string;
+    sUnitSymbol: string;
 
     constructor(poDetailMaster?) {
         poDetailMaster = poDetailMaster || {};

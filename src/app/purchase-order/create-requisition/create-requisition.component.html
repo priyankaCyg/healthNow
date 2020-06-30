@@ -21,7 +21,7 @@
             </div>
 
             <div class="p-col-12 p-lg-12">
-                <p-table [value]="products">
+                <p-table [value]="products" *ngIf="products">
                     <ng-template pTemplate="header">
                         <tr>
                             <th style="width: 3em">#</th>
@@ -55,8 +55,9 @@
                                 </div>
                             </div>
                             <div class="p-col-12 p-md-12 p-lg-12 mb-2">
-                                <div class="card bg-success p-2">Product : <strong> {{productName}}
-                                        {{prodshortName}} {{unitName}} </strong>
+                                <div class="card bg-success p-2">Product : <strong> {{productName}} {{prodshortName}}
+                                        {{unitName}}
+                                    </strong>
                                 </div>
                             </div>
                             <div class="p-col-12 p-md-12 p-lg-12 mb-2">

@@ -65,7 +65,7 @@ export class CreatePoDetailComponent implements OnInit {
 
   //Function to create PO
   createPO() {
-      let todayDate = this.datePipe.transform(this.myDate, 'dd/MM/yyyy');
+    let todayDate = this.datePipe.transform(this.myDate, 'dd/MM/yyyy');
     if (this.selectedValues.length >= 1) {
       let reqId = this.selectedValues.map(({ iPReqID }) => iPReqID);
       let reqIds = reqId.toString();
@@ -74,26 +74,30 @@ export class CreatePoDetailComponent implements OnInit {
         "iSupID": this.poData[0].iSupID,
         "iPartnerID": this.poData[0].iPartnerID,
         "iPartLocID": this.poData[0].iPartLocID,
-        "sPODate": todayDate
+        "sPReqIDs": reqIds
       }
       this.httpService.callPostApi(sendPoDetails).subscribe(
         data => {
-          let resData = data.body;
-          const sendProductDetails = {
-            "iRequestID": 2361,
-            "iPOID": resData[0].iPOID,
-            "sPrdReqIds": reqIds
+          if (data.headers.get('StatusCode') == 200) {
+            let resData = data.body[0];
+            console.log(resData,"test")
+            let po_no_display = resData.sPONo + " has been created successfully"
+            const getDetails = {
+              "iRequestID": 23510,
+              "iPOID": resData.iPOID
+            }
+            this.httpService.callPostApi(getDetails).subscribe(
+              data => {
+                let poFullDetail = data.body[0];
+                console.log(poFullDetail);
+                localStorage.setItem('poDetails', JSON.stringify({ poFullDetail }));
+                localStorage.setItem('isPoEdit', 'false');
+                this.toastService.displayApiMessage(po_no_display, data.headers.get('StatusCode'));
+                this.router.navigate(['/purchase-order/po-general-details'])
+              },
+              error => { console.log(error) }
+            )
           }
-          this.httpService.callPostApi(sendProductDetails).subscribe(
-            data => {
-              let responseData = data.body[0];
-              localStorage.setItem('isPoEdit', 'false');
-              localStorage.setItem('poDetails', JSON.stringify({ responseData }));
-              this.toastService.displayApiMessage(data.headers.get('StatusMessage'), data.headers.get('StatusCode'));
-              this.router.navigate(['/purchase-order/po-general-details'])
-            },
-            error => { console.log(error) }
-          )
         },
         error => { console.log(error) }
       )
@@ -119,7 +123,7 @@ export class CreatePoDetailComponent implements OnInit {
   // Dialog box to delete product list
   deletePoDetail(iPReqID: number) {
     this.confirmationService.confirm({
-      message: 'Are you sure you want to Delete this Record?',
+      message: 'Are you sure you want to Revise this Requisition?',
       header: 'Confirmation',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {

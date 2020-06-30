@@ -56,8 +56,8 @@ export class PoListComponent implements OnInit {
     )
   }
 
-   //code for get child data table
-   getPOChildList(iPOID: Number) {
+  //code for get child data table
+  getPOChildList(iPOID: Number) {
     const poListAPI = {
       "iRequestID": 2362,
       "iPOID": iPOID
@@ -65,6 +65,7 @@ export class PoListComponent implements OnInit {
     this.httpService.callPostApi(poListAPI).subscribe(
       data => {
         this.batch = data.body;
+        console.log(this.batch);
       },
       error => { console.log(error) }
     )

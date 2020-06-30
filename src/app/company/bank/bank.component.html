@@ -14,7 +14,7 @@
           <label for="sShortCode">Short Code/Account Type</label>
           <input id="sShortCode" type="text" pInputText formControlName="sShortCode" />
           <p-message severity="error"
-            [text]="bankForm.controls['sShortCode'].errors['required'] ? 'This field is required' : bankForm.controls['sShortCode'].errors "
+            [text]="bankForm.controls['sShortCode'].errors['Msg']"
             *ngIf="!bankForm.controls['sShortCode'].valid && bankForm.controls['sShortCode'].dirty">
           </p-message>
         </div>

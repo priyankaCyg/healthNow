@@ -8,5 +8,5 @@ export class productReqData {
     sStatusName: string;
     iStatusID: number;
     sVariant: string;
-    sUnitSymbol: string
+    sUnitSymbol: string;
 }

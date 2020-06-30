@@ -248,6 +248,7 @@ export class CreateRequisitionComponent implements OnInit {
     this.unitName = '';
     this.prd_Id = products.iPrdID;
     this.pc_Id = products.iPCID;
+    this.unitName = "";
   }
 
   //code for implements form builder 
@@ -283,8 +284,10 @@ export class CreateRequisitionComponent implements OnInit {
     }
     this.httpService.callPostApi(requisition_add_data).subscribe(
       (data) => {
+        console.log(data.body[0])
+        let req_no = data.body[0].sRequisionNo + " has been created successfully";
         this.ref.close(true);
-        this.toastService.displayApiMessage(data.headers.get('StatusMessage'), data.headers.get('StatusCode'));
+        this.toastService.displayApiMessage(req_no, data.headers.get('StatusCode'));
       },
       (error) => console.log(error)
     );

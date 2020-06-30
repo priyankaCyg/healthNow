@@ -3,6 +3,8 @@ export class ProductRequisition {
         "iPCID": number;
         "iPrdID": number;
         "iReqCnt": number;
-        "sPCName": string
-        "sPrdName": string
+        "sPCName": string;
+        "sPrdName": string;
+        "sVariant": string;
+        "sUnitSymbol": string;
 }

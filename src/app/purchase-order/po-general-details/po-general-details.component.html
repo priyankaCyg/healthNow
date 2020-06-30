@@ -3,7 +3,8 @@
 <div class="p-grid">
     <div class="p-col-12">
         <div class="card card-w-title">
-            <h1>Purchace Order Details</h1>
+            <h1>Purchace Order Details &nbsp;<button pButton type="button" label={{po_no_display}}
+                class="ui-button-raised ui-button-light" routerLink="/purchase-order/po-list"></button></h1>
             <p-tabView>
                 <!-- General tab start -->
                 <p-tabPanel header="General">
@@ -18,7 +19,7 @@
                                     </div>
                                     <div class="p-col-12 p-lg-3 mb-2">
                                         <label for="sPODate">Supplier PO Date</label>
-                                        <p-calendar [(ngModel)]="value" formControlName="sPODate"></p-calendar>
+                                        <p-calendar formControlName="sPODate"></p-calendar>
                                         <div>
                                             <p-message severity="error" text="This field is required"
                                                 *ngIf="POForm.controls['sPODate'].touched  && POForm.controls['sPODate'].hasError('required')">
@@ -132,6 +133,7 @@
                                             <th>Product</th>
                                             <th style="width: 8em;">Qty</th>
                                             <th style="width: 8em;">Rate</th>
+                                            <th style="width: 8em;">Gross Amount</th>
                                             <th style="width: 8em;">Discount %</th>
                                             <th style="width: 8em;">Discount Amt</th>
                                             <th>Total Amount</th>
@@ -144,9 +146,10 @@
                                             <td>{{poDetail.sPrdName}}</td>
                                             <td>{{poDetail.iQty}}</td>
                                             <td>{{poDetail.iRate}}</td>
+                                            <td>{{poDetail.iGrossAmt}}</td>
                                             <td>{{poDetail.iDiscountPercentage}}</td>
                                             <td>{{poDetail.iDiscountAmt}}</td>
-                                            <td>{{poDetail.totalAmt}}</td>
+                                            <td>{{poDetail.iTotalAmt}}</td>
                                             <td>
                                                 <!-- <button pButton type="button" class="ui-button-success mr-1" icon="pi pi-pencil"></button> -->
                                                 <button pButton type="button" class="ui-button-danger mr-1"
