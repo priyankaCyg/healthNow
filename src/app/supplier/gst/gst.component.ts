@@ -16,7 +16,7 @@ export class GstComponent implements OnInit {
   locId;
   sup_Id;
   isEdit: boolean = false
-
+  isGstSave: number = 0;
   public gstForm: FormGroup;
   gstData: GstMaster;
   constructor(public config: DynamicDialogConfig,
@@ -111,27 +111,32 @@ export class GstComponent implements OnInit {
 
   //code for add supplier gst data
   addGst() {
-    let gst_no = this.gstForm.controls["sGST"].value;
-    let state_code = this.gstForm.controls["sStateName"].value;
-    let loc_code = state_code.sLocCode;
-    let loc_int_id = +state_code.iLocationID;
-    let sup_id_add = +localStorage.getItem('iSupID');
-    const add_gst_data = {
-      "iRequestID": 2201,
-      "iSupID": sup_id_add,
-      "iLocID": loc_int_id,
-      "sGST": gst_no,
-      "sLocCode": loc_code
+    if (this.isGstSave == 0) {
+      this.isGstSave = 1;
+      let gst_no = this.gstForm.controls["sGST"].value;
+      let state_code = this.gstForm.controls["sStateName"].value;
+      let loc_code = state_code.sLocCode;
+      let loc_int_id = +state_code.iLocationID;
+      let sup_id_add = +localStorage.getItem('iSupID');
+      const add_gst_data = {
+        "iRequestID": 2201,
+        "iSupID": sup_id_add,
+        "iLocID": loc_int_id,
+        "sGST": gst_no,
+        "sLocCode": loc_code
+      }
+      this.httpService.callPostApi(add_gst_data).subscribe(
+        data => {
+          this.isGstSave = 0;
+          if (data.headers.get('StatusCode') == 200) {
+            this.ref.close(true);
+          }
+          this.toastService.displayApiMessage(data.headers.get('StatusMessage'), data.headers.get('StatusCode'));
+        },
+        error => console.log(error)
+      );
     }
-    this.httpService.callPostApi(add_gst_data).subscribe(
-      data => {
-        this.ref.close(true);
-        this.toastService.displayApiMessage(data.headers.get('StatusMessage'), data.headers.get('StatusCode'));
-      },
-      error => console.log(error)
-    );
   }
-
   //code for edit supplier gst data
   editGst() {
     let gst_no = this.gstForm.controls["sGST"].value;
@@ -148,7 +153,9 @@ export class GstComponent implements OnInit {
     }
     this.httpService.callPostApi(add_gst_data).subscribe(
       data => {
-        this.ref.close(true);
+        if (data.headers.get('StatusCode') == 201) {
+          this.ref.close(true);
+        }
         this.toastService.displayApiMessage(data.headers.get('StatusMessage'), data.headers.get('StatusCode'));
       },
       error => console.log(error)

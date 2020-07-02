@@ -10,9 +10,9 @@
                 <div class="p-col-12 mt-3">
                     <p-table [columns]="cols" [value]="poList" #search [paginator]="true" [rows]="10"
                         [showCurrentPageReport]="true" pageLinkSize="3" [rowsPerPageOptions]="[10, 25, 50]"
-                        [filterDelay]="0" (onPage)="onPage($event)"
-                        [globalFilterFields]="['sPONo','sPODate','sSupName','sCreatedBy']" dataKey="iPOID"
-                        (onRowExpand)="onRowExpand()" (onRowCollapse)="onRowCollapse()"
+                        [filterDelay]="0" (onPage)="onPage($event)" expandableRows="true" rowExpandMode="multiple"
+                        [responsive]="true" [globalFilterFields]="['sPONo','sPODate','sSupName','sCreatedBy']"
+                        dataKey="iPOID" (onRowExpand)="onRowExpand()" (onRowCollapse)="onRowCollapse()"
                         [expandedRowKeys]="expandedRows">
                         <ng-template pTemplate="caption">
                             <div class="ui-table-globalfilter-container text-left">
@@ -47,8 +47,9 @@
                                 <td>{{poListData.sPODate | date:"dd-MM-yyyy"}}</td>
                                 <td>{{poListData.sSupName}}</td>
                                 <td>
-                                    <span class="badge badge--warning badge--inline badge--pill">Sent For
-                                        Approval</span>
+                                    <span
+                                        class="badge badge--warning badge--inline badge--pill">{{poListData.sStatusName}}
+                                    </span>
                                 </td>
                                 <td>{{poListData.sCreatedBy}}</td>
                                 <td>
@@ -63,7 +64,7 @@
                                 </td>
                             </tr>
                         </ng-template>
-                        <ng-template pTemplate="rowexpansion" let-poListData>
+                        <ng-template pTemplate="rowexpansion">
                             <tr>
                                 <td [attr.colspan]="7">
                                     <div class="ui-g ui-fluid" style="font-size:14px;padding:8px">

@@ -1,4 +1,6 @@
 export class SupplierCategoryMapping {
     iPrdID: number;
-    sPrdName: string
+    sPrdName: string;
+    iPCID: number;
+    sPCName: string
 }

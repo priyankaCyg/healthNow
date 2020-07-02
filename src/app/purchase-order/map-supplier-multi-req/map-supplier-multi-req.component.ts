@@ -168,8 +168,10 @@ export class MapSupplierMultiReqComponent implements OnInit {
     }
     this.httpService.callPostApi(productReqAPI).subscribe(
       data => {
-        this.toastService.addSingle("success", data.headers.get('StatusMessage'), "");
-        this.router.navigate(['/purchase-order/product-requisition']);
+        if (data.headers.get('StatusCode') == 200) {
+          this.router.navigate(['/purchase-order/product-requisition']);
+        }
+        this.toastService.displayApiMessage(data.headers.get('StatusMessage'), data.headers.get('StatusCode'));
       },
       error => { console.log(error) }
     )

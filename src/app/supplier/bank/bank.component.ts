@@ -20,7 +20,7 @@ export class BankComponent implements OnInit {
   bankData: companyBankMaster;
   bankID: number;
   sup_Id: number;
-
+  isSuppBankSave: number = 0;
   constructor(
     private httpService: ApiService,
     private fb: FormBuilder,
@@ -122,21 +122,27 @@ export class BankComponent implements OnInit {
 
   //Add Bank Function
   addBank() {
-    var formData = this.bankForm.getRawValue();
-    const addBankAPI = {
-      "iRequestID": 2211,
-      "iSupID": this.sup_Id,
-      "sBankName": formData.sBankName,
-      "sAccountNo": formData.sAccountNo,
-      "sIFSC": formData.sIFSC,
-      "sBankBranch": formData.sBankBranch,
-      "sShortCode": formData.sShortCode,
+    if (this.isSuppBankSave == 0) {
+      this.isSuppBankSave = 1;
+      var formData = this.bankForm.getRawValue();
+      const addBankAPI = {
+        "iRequestID": 2211,
+        "iSupID": this.sup_Id,
+        "sBankName": formData.sBankName,
+        "sAccountNo": formData.sAccountNo,
+        "sIFSC": formData.sIFSC,
+        "sBankBranch": formData.sBankBranch,
+        "sShortCode": formData.sShortCode,
+      }
+      this.httpService.callPostApi(addBankAPI).subscribe(
+        data => {
+          this.isSuppBankSave = 0;
+          if (data.headers.get('StatusCode') == 200) {
+            this.ref.close(true);
+          }
+          this.toastService.displayApiMessage(data.headers.get('StatusMessage'), data.headers.get('StatusCode'));
+        });
     }
-    this.httpService.callPostApi(addBankAPI).subscribe(
-      data => {
-        this.ref.close(true);
-        this.toastService.displayApiMessage(data.headers.get('StatusMessage'), data.headers.get('StatusCode'));
-      });
   }
 
   // Edit Bank Function
@@ -155,7 +161,9 @@ export class BankComponent implements OnInit {
     }
     this.httpService.callPostApi(editBankAPI).subscribe(
       data => {
-        this.ref.close(true);
+        if (data.headers.get('StatusCode') == 200) {
+          this.ref.close(true);
+        }
         this.toastService.displayApiMessage(data.headers.get('StatusMessage'), data.headers.get('StatusCode'));
       }
     );

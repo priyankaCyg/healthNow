@@ -27,7 +27,7 @@ export class PurchaseOrderApprovalComponent implements OnInit {
   }
   ngOnInit(): void {
     this.getPOList();
-    this.batch = [];
+    //this.batch = [];
   }
 
   //code for get list of po approval data 
@@ -106,7 +106,7 @@ export class PurchaseOrderApprovalComponent implements OnInit {
   expandAll() {
     if (!this.isExpanded) {
       this.poList.forEach(data => {
-        this.expandedRows[data.iPOID] = 1;
+        this.expandedRows[data.iPOID] = true;
       })
     } else {
       this.expandedRows = {};

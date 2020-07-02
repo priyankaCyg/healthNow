@@ -33,7 +33,7 @@ export class CreateRequisitionComponent implements OnInit {
   selectedProduct;
   unitName: string;
   parentCateName: string;
-
+  isReqSave: number = 0;
   constructor(private httpService: ApiService, private fb: FormBuilder, private ref: DynamicDialogRef,
     private toastService: ToastService, private config: DynamicDialogConfig) { }
 
@@ -272,28 +272,33 @@ export class CreateRequisitionComponent implements OnInit {
 
   //code for add new requisition data
   addnewRequisition() {
-    let form = this.createReqForm.getRawValue();
+    if (this.isReqSave == 0) {
+      this.isReqSave = 1;
+      let form = this.createReqForm.getRawValue();
 
-    const requisition_add_data = {
-      "iRequestID": 2331,
-      "iPCID": this.pc_Id,
-      "iPartnerID": form.sPartnerName.iPartnerID,
-      "iPartLocID": form.iPartLocID.iLocationID,
-      "iPrdID": this.prd_Id,
-      "iQty": +form.iQty
+      const requisition_add_data = {
+        "iRequestID": 2331,
+        "iPCID": this.pc_Id,
+        "iPartnerID": form.sPartnerName.iPartnerID,
+        "iPartLocID": form.iPartLocID.iLocationID,
+        "iPrdID": this.prd_Id,
+        "iQty": +form.iQty
+      }
+      this.httpService.callPostApi(requisition_add_data).subscribe(
+        (data) => {
+          this.isReqSave = 0;
+          if (data.headers.get('StatusCode') == 200) {
+            this.ref.close(true);
+          }
+          let req_no = data.body[0].sRequisionNo + " has been created successfully";
+          //this.ref.close(true);
+          this.toastService.displayApiMessage(req_no, data.headers.get('StatusCode'));
+        },
+        (error) => console.log(error)
+      );
+      //this.createReqForm.reset();
     }
-    this.httpService.callPostApi(requisition_add_data).subscribe(
-      (data) => {
-        console.log(data.body[0])
-        let req_no = data.body[0].sRequisionNo + " has been created successfully";
-        this.ref.close(true);
-        this.toastService.displayApiMessage(req_no, data.headers.get('StatusCode'));
-      },
-      (error) => console.log(error)
-    );
-    this.createReqForm.reset();
   }
-
   //code for edit requisition data 
   editRequisition() {
     let form = this.createReqForm.getRawValue();
@@ -309,12 +314,15 @@ export class CreateRequisitionComponent implements OnInit {
     }
     this.httpService.callPostApi(requisition_edit_data).subscribe(
       (data) => {
-        this.ref.close(true);
+        //this.ref.close(true);
+        if (data.headers.get('StatusCode') == 200) {
+          this.ref.close(true);
+        }
         this.toastService.displayApiMessage(data.headers.get('StatusMessage'), data.headers.get('StatusCode'));
       },
       (error) => console.log(error)
     );
-    this.createReqForm.reset();
+    //this.createReqForm.reset();
   }
 
   //code for close dialog box
@@ -336,9 +344,12 @@ export class CreateRequisitionComponent implements OnInit {
     else if (this.productName == null) {
       return true
     }
-    // else if (this.prodshortName == null) {
-    //   return true
-    // }
+    else if (this.prodshortName == null) {
+      return true
+    }
+    else if (this.parentCateName == null) {
+      return true
+    }
     else {
       return false
     }

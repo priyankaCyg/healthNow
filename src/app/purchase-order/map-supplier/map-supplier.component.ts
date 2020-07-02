@@ -121,8 +121,10 @@ export class MapSupplierComponent implements OnInit {
     }
     this.httpService.callPostApi(orderReqAPI).subscribe(
       data => {
+        if (data.headers.get('StatusCode') == 200) {
+          this.router.navigate(['/purchase-order/product-requisition']);
+        }
         this.toastService.displayApiMessage(data.headers.get('StatusMessage'), data.headers.get('StatusCode'));
-        this.router.navigate(['/purchase-order/product-requisition']);
       },
       error => { console.log(error) }
     )

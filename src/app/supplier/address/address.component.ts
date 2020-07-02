@@ -22,6 +22,7 @@ export class AddressComponent implements OnInit {
   sup_Id: number;
   statusData;
   selectedstatus;
+  isSuppAddSave: number = 0;
 
   constructor(
     private fb: FormBuilder,
@@ -175,26 +176,31 @@ export class AddressComponent implements OnInit {
 
   // Function to add supplier address
   addSupplierAddress() {
-    var formData = this.SupplierAddressForm.getRawValue();
-    const addSupplieraddressAPI = {
-      "iRequestID": 2181,
-      "iSupID": this.sup_Id,
-      "iAddTypeID": parseInt(formData.iAddTypeID.iKVID),
-      "sAdd1": formData.sAdd1,
-      "sAdd2": formData.sAdd2,
-      "iStateCode": this.StatesCityData[0].iStateCode,
-      "iCityCode": this.StatesCityData[0].iCityCode,
-      "sLandmark": formData.sLandmark,
-      "iLocID": this.StatesCityData[0].iLocationID,
-      "sPostalCode": formData.sPostalCode
+    if (this.isSuppAddSave == 0) {
+      this.isSuppAddSave = 1;
+      var formData = this.SupplierAddressForm.getRawValue();
+      const addSupplieraddressAPI = {
+        "iRequestID": 2181,
+        "iSupID": this.sup_Id,
+        "iAddTypeID": parseInt(formData.iAddTypeID.iKVID),
+        "sAdd1": formData.sAdd1,
+        "sAdd2": formData.sAdd2,
+        "iStateCode": this.StatesCityData[0].iStateCode,
+        "iCityCode": this.StatesCityData[0].iCityCode,
+        "sLandmark": formData.sLandmark,
+        "iLocID": this.StatesCityData[0].iLocationID,
+        "sPostalCode": formData.sPostalCode
+      }
+      this.httpService.callPostApi(addSupplieraddressAPI).subscribe(
+        data => {
+          this.isSuppAddSave = 0;
+          if (data.headers.get('StatusCode') == 200) {
+            this.ref.close(true);
+          }
+          this.toastService.displayApiMessage(data.headers.get('StatusMessage'), data.headers.get('StatusCode'));
+        });
     }
-    this.httpService.callPostApi(addSupplieraddressAPI).subscribe(
-      data => {
-        this.ref.close(true);
-        this.toastService.displayApiMessage(data.headers.get('StatusMessage'), data.headers.get('StatusCode'));
-      });
   }
-
   //Function to update supplier address
   editSupplierAddress() {
     let state_code = this.supplierAddressData.iStateCode;
@@ -220,7 +226,9 @@ export class AddressComponent implements OnInit {
       }
       this.httpService.callPostApi(editSupplieraddressAPI1).subscribe(
         data => {
-          this.ref.close(true);
+          if (data.headers.get('StatusCode') == 200) {
+            this.ref.close(true);
+          }
           this.toastService.displayApiMessage(data.headers.get('StatusMessage'), data.headers.get('StatusCode'));
         }
       )
@@ -242,7 +250,9 @@ export class AddressComponent implements OnInit {
       }
       this.httpService.callPostApi(editSupplieraddressAPI2).subscribe(
         data => {
-          this.ref.close(true);
+          if (data.headers.get('StatusCode') == 200) {
+            this.ref.close(true);
+          }
           this.toastService.displayApiMessage(data.headers.get('StatusMessage'), data.headers.get('StatusCode'));
         }
       )

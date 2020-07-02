@@ -19,6 +19,7 @@ export class BankComponent implements OnInit {
   public bankForm: FormGroup;
   bankData: companyBankMaster;
   bankID: number;
+  isBankSave: number = 0;
 
   constructor(
     private httpService: ApiService, private fb: FormBuilder, private config: DynamicDialogConfig,
@@ -117,21 +118,27 @@ export class BankComponent implements OnInit {
 
   //Add Bank Function
   addBank() {
-    var formData = this.bankForm.getRawValue();
-    const addBankAPI = {
-      "iRequestID": 2041,
-      "iCID": 1,
-      "sBankName": formData.sBankName,
-      "sAccountNo": formData.sAccountNo,
-      "sIFSC": formData.sIFSC,
-      "sBankBranch": formData.sBankBranch,
-      "sShortCode": formData.sShortCode,
+    if (this.isBankSave == 0) {
+      this.isBankSave = 1;
+      var formData = this.bankForm.getRawValue();
+      const addBankAPI = {
+        "iRequestID": 2041,
+        "iCID": 1,
+        "sBankName": formData.sBankName,
+        "sAccountNo": formData.sAccountNo,
+        "sIFSC": formData.sIFSC,
+        "sBankBranch": formData.sBankBranch,
+        "sShortCode": formData.sShortCode,
+      }
+      this.httpService.callPostApi(addBankAPI).subscribe(
+        data => {
+          this.isBankSave = 0;
+          if (data.headers.get('StatusCode') == 200) {
+            this.ref.close(true);
+          }
+          this.toastService.displayApiMessage(data.headers.get('StatusMessage'), data.headers.get('StatusCode'));
+        });
     }
-    this.httpService.callPostApi(addBankAPI).subscribe(
-      data => {
-        this.ref.close(true);
-        this.toastService.displayApiMessage(data.headers.get('StatusMessage'), data.headers.get('StatusCode'));
-      });
   }
 
   // Edit Bank Function
@@ -150,7 +157,9 @@ export class BankComponent implements OnInit {
     }
     this.httpService.callPostApi(editBankAPI).subscribe(
       data => {
-        this.ref.close(true);
+        if (data.headers.get('StatusCode') == 200) {
+          this.ref.close(true);
+        }
         this.toastService.displayApiMessage(data.headers.get('StatusMessage'), data.headers.get('StatusCode'));
       }
     )
@@ -161,5 +170,5 @@ export class BankComponent implements OnInit {
     this.ref.close();
     this.bankForm.reset();
   }
-  
+
 }

@@ -83,15 +83,38 @@
                                         </p-table>
                                     </div>
 
-                                    <div class="p-col-12 p-md-12 p-lg-12 mb-1">
-                                        <label for="location">Discount Amount</label>
-                                        <input id="discountAmount" name="discountAmount" [(ngModel)]="discountAmount"
-                                            type="text" pInputText disabled>
-                                    </div>
-                                    <div class="p-col-12 p-md-12 p-lg-12 mb-1">
-                                        <label for="qty">Amount per Qty.</label>
-                                        <input id="discountAmountEach" name="discountAmountEach"
-                                            [(ngModel)]="discountAmountEach" type="text" pInputText disabled>
+                                    <div class="p-col-12 p-md-12 p-lg-12">
+                                        <form #productRequisitionForm="ngForm">
+                                            <div class="p-grid form-group">
+                                                <div class="p-col-12 p-md-12 p-lg-12 mb-1">
+                                                    <label for="partner">Discount %</label>
+                                                    <input id="discountPercentage" [disabled]="isDisableDiscount"
+                                                        name="discountPercentage" #discountPercentage="ngModel"
+                                                        [(ngModel)]="discountPer" type="text" pInputText
+                                                        (change)="calculateTotalPrice()" required>
+                                                    <p-message severity="error" text="This Field is required"
+                                                        *ngIf="!discountPercentage.valid && (discountPercentage.dirty || discountPercentage.touched)">
+                                                    </p-message>
+                                                </div>
+
+                                                <div class="p-col-12 p-md-12 p-lg-12 mb-1">
+                                                    <label for="location">Discount Amount</label>
+                                                    <input id="discountAmount" name="discountAmount"
+                                                        [(ngModel)]="discountAmount" type="text" pInputText disabled>
+                                                </div>
+                                                <div class="p-col-12 p-md-12 p-lg-12 mb-1">
+                                                    <label for="qty">Amount per Qty.</label>
+                                                    <input id="discountAmountEach" name="discountAmountEach"
+                                                        [(ngModel)]="discountAmountEach" type="text" pInputText
+                                                        disabled>
+                                                </div>
+                                                <div class="p-col-12 p-md-12 p-lg-12 mb-1">
+                                                    <label for="qty">Total Amount for {{totalquantity}} Qty.</label>
+                                                    <input id="totalAmount" name="totalAmount" [(ngModel)]="totalAmount"
+                                                        type="text" pInputText disabled>
+                                                </div>
+                                            </div>
+                                        </form>
                                     </div>
 
                                     <div class="p-col-12 p-md-2 p-lg-12">
