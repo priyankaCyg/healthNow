@@ -786,16 +786,10 @@ export class AddNewSupplierComponent implements OnInit {
     //let sup_by_id = +this.route.snapshot.params['iSupID'];
     const supplierCategoryMappingAddAPI = {
       "iRequestID": 2222,
-<<<<<<< HEAD
-      "iSupID": sup_by_id,
-      "iPCID": this.selectedProduct.iPCID,
-      "sSupCatMap": string_ids
-=======
       "iSupID": this.supId,
       "iPCID": this.selectedProduct.iPCID,
       "iProducerID": this.selectedProducer.iProducerID,
       "sPrdID": string_ids
->>>>>>> 4f9de1e32efaad95024a4a3ff3f1c4f2b26397fb
     }
     // console.log(supplierCategoryMappingAddAPI)
     this.httpService.callPostApi(supplierCategoryMappingAddAPI).subscribe(
