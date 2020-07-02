@@ -1,7 +1,7 @@
 export class POGeneralMaster {
 
     iRequestID: number;
-    sPODate: string;
+    sPODate: Date;
     iSupContactID: number;
     iSupAddID: number;
     iPOContactID: number;

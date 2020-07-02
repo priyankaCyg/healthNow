@@ -41,10 +41,11 @@ import { FileUploadModule } from 'primeng/fileupload';
 import { CreatePoDetailEditComponent } from './create-po-detail-edit/create-po-detail-edit.component';
 import { PurchaseOrderApprovalComponent } from './purchase-order-approval/purchase-order-approval.component';
 import { PurchaseOrderFreezedComponent } from './purchase-order-freezed/purchase-order-freezed.component';
+import { CustomDatePipe } from '../services/custom.datePipe';
 
 
 @NgModule({
-  declarations: [PurchaseOrderComponent, NewPoComponent, ProductPurchasePriceComponent, ProductRequisitionComponent, AddProductPurchasePriceComponent, MapSupplierComponent, CreateRequisitionComponent, CreatePoListComponent, CreatePoDetailComponent, MapSupplierMultiReqComponent, PoGeneralDetailsComponent, PoListComponent, CreatePoDetailEditComponent, PurchaseOrderApprovalComponent, PurchaseOrderFreezedComponent],
+  declarations: [PurchaseOrderComponent, NewPoComponent, ProductPurchasePriceComponent, ProductRequisitionComponent, AddProductPurchasePriceComponent, MapSupplierComponent, CreateRequisitionComponent, CreatePoListComponent, CreatePoDetailComponent, MapSupplierMultiReqComponent, PoGeneralDetailsComponent, PoListComponent, CreatePoDetailEditComponent, PurchaseOrderApprovalComponent, PurchaseOrderFreezedComponent,CustomDatePipe],
   imports: [
     CommonModule,
     PurchaseOrderRoutingModule,

@@ -60,8 +60,8 @@ export class AddNewSupplierComponent implements OnInit {
   selectedFileType;
   fileTypeData;
   uploadedFiles: any[] = [];
-  sourceCategory: SupplierCategoryMapping[];
-  targetCategory: SupplierCategoryMapping[];
+  sourceCategory: SupplierCategoryMapping[] = [];
+  targetCategory: SupplierCategoryMapping[] = [];
   bankData: companyBankMaster[];
   selectedSuppCat;
   index: number = 0;
@@ -112,7 +112,8 @@ export class AddNewSupplierComponent implements OnInit {
         this.bankSelectData();
         this.showAttachment();
         this.getCategoryMappingDataSource();
-        this.getCategoryMappingDataTarget();
+      if(this.targetCategory.length)
+         this.getCategoryMappingDataTarget();
       });
     }
     else {
@@ -356,7 +357,8 @@ export class AddNewSupplierComponent implements OnInit {
       "iPCID": this.iPCID
     }
     this.httpService.callPostApi(supplierCategoryMappingAPI1).subscribe(
-      data => { this.sourceCategory = data.body; },
+      data => { this.sourceCategory = data.body; 
+        console.log(this.sourceCategory)},
       error => { console.log(error) }
     )
   }
@@ -747,8 +749,10 @@ export class AddNewSupplierComponent implements OnInit {
     const supplierCategoryMappingAddAPI = {
       "iRequestID": 2222,
       "iSupID": sup_by_id,
+      "iPCID": this.selectedProduct.iPCID,
       "sSupCatMap": string_ids
     }
+    // console.log(supplierCategoryMappingAddAPI)
     this.httpService.callPostApi(supplierCategoryMappingAddAPI).subscribe(
       data => {
         if (this.targetCategory)

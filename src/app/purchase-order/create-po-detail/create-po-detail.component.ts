@@ -12,6 +12,7 @@ import { Router } from '@angular/router';
 import { ToastService } from 'src/app/services/toast.service';
 import { DatePipe } from '@angular/common';
 import { CreatePoDetailEditComponent } from '../create-po-detail-edit/create-po-detail-edit.component';
+import { config } from 'src/config';
 
 @Component({
   selector: 'app-create-po-detail',
@@ -65,7 +66,7 @@ export class CreatePoDetailComponent implements OnInit {
 
   //Function to create PO
   createPO() {
-    let todayDate = this.datePipe.transform(this.myDate, 'dd/MM/yyyy');
+    let todayDate = this.datePipe.transform(this.myDate, config.dateFormat);
     if (this.selectedValues.length >= 1) {
       let reqId = this.selectedValues.map(({ iPReqID }) => iPReqID);
       let reqIds = reqId.toString();
