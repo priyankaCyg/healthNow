@@ -81,7 +81,7 @@ export class UnitComponent implements OnInit {
   //code for delete data of unit 
   deleteUnit(unitId) {
     this.confirmationService.confirm({
-      message: 'Are you sure that you want to delete ?',
+      message: 'Are you sure that you want to Delete this record ?',
       header: 'Confirmation',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {

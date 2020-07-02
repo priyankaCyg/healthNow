@@ -17,6 +17,7 @@ export class GstComponent implements OnInit {
   partner_id;
   isEdit: boolean = false;
   selectedcode : string;
+  submitFlag: number =0;
 
   public gstForm: FormGroup;
   gstData: GstMaster;
@@ -105,7 +106,9 @@ export class GstComponent implements OnInit {
 
   //code for add supplier gst data
   addGst() {
-    let gst_no = this.gstForm.controls["sGST"].value;
+    if(this.submitFlag ==0){
+      this.submitFlag =1;
+      let gst_no = this.gstForm.controls["sGST"].value;
     let state_code = this.gstForm.controls["sStateName"].value;
     let loc_code = state_code.sLocCode;
     let loc_int_id = +state_code.iLocationID;
@@ -119,11 +122,17 @@ export class GstComponent implements OnInit {
     }
     this.httpService.callPostApi(add_gst_data).subscribe(
       data => {
-        this.ref.close(true);
+        if(data.headers.get('StatusCode')== 200){
+          this.ref.close(true);
+        }
+        
         this.toastService.displayApiMessage(data.headers.get('StatusMessage'), data.headers.get('StatusCode'));
+        this.submitFlag=0;
       },
       error => console.log(error)
     );
+    }
+    
   }
 
   //code for edit supplier gst data
@@ -141,7 +150,9 @@ export class GstComponent implements OnInit {
     }
     this.httpService.callPostApi(add_gst_data).subscribe(
       data => {
-        this.ref.close(true);
+        if(data.headers.get('StatusCode')== 200){
+          this.ref.close(true);
+        }
         this.toastService.displayApiMessage(data.headers.get('StatusMessage'), data.headers.get('StatusCode'));
       },
       error => console.log(error)

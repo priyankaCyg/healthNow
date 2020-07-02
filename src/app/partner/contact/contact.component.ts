@@ -20,6 +20,7 @@ export class ContactComponent implements OnInit {
   parent_id;
   public partnerContactForm: FormGroup;
   partnerData: PartnerContactMaster;
+  submitFlag: number = 0;
 
   constructor(private httpService: ApiService, private fb: FormBuilder, public config: DynamicDialogConfig
     , private toastService: ToastService, public ref: DynamicDialogRef
@@ -135,7 +136,9 @@ export class ContactComponent implements OnInit {
 
   // code for add partner contact data
   addPartnerContact() {
-    var formData = this.partnerContactForm.getRawValue();
+    if(this.submitFlag ==0){
+      this.submitFlag=1;
+      var formData = this.partnerContactForm.getRawValue();
     const add_partner_contact_data = {
       "iRequestID": 2301,
       "iPartnerID": this.parent_id,
@@ -151,11 +154,15 @@ export class ContactComponent implements OnInit {
     }
     this.httpService.callPostApi(add_partner_contact_data).subscribe(
       data => {
+        if(data.headers.get('StatusCode') ==200){
         this.ref.close(true);
+        }
         this.toastService.displayApiMessage(data.headers.get('StatusMessage'), data.headers.get('StatusCode'));
+        this.submitFlag=0;
       },
       error => console.log(error)
     );
+    }
   }
 
   // code for edit partner contact data
@@ -178,7 +185,9 @@ export class ContactComponent implements OnInit {
     }
     this.httpService.callPostApi(edit_partner_contact_data).subscribe(
       data => {
-        this.ref.close(true);
+        if(data.headers.get('StatusCode') ==200){
+          this.ref.close(true);
+          }
         this.toastService.displayApiMessage(data.headers.get('StatusMessage'), data.headers.get('StatusCode'));
       },
       error => console.log(error)

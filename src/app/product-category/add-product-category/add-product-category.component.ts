@@ -21,6 +21,7 @@ export class AddProductCategoryComponent implements OnInit {
   statusData;
   selectedparentCategory;
   selectedstatus;
+  submitFlag: number=0;
 
   constructor(public config: DynamicDialogConfig,
     public ref: DynamicDialogRef,
@@ -116,17 +117,24 @@ export class AddProductCategoryComponent implements OnInit {
   }
 
   addProductCategory() {
-    var formData = this.ProductCategoryForm.getRawValue();
-    const addProductCategoryAPI = {
-      "iRequestID": 2111,
-      "sPCName": formData.sPCName,
-      "iParentID": parseInt(formData.iParentID.iPCID)
+    if(this.submitFlag==0){
+      this.submitFlag=1;
+      var formData = this.ProductCategoryForm.getRawValue();
+      const addProductCategoryAPI = {
+        "iRequestID": 2111,
+        "sPCName": formData.sPCName,
+        "iParentID": parseInt(formData.iParentID.iPCID)
+      }
+      this.httpService.callPostApi(addProductCategoryAPI).subscribe(
+        data => {
+          if(data.headers.get('StatusCode')==200){
+          this.ref.close(true);
+          }
+          this.toastService.displayApiMessage(data.headers.get('StatusMessage'), data.headers.get('StatusCode'));
+          this.submitFlag=0;
+        });
     }
-    this.httpService.callPostApi(addProductCategoryAPI).subscribe(
-      data => {
-        this.ref.close(true);
-        this.toastService.displayApiMessage(data.headers.get('StatusMessage'), data.headers.get('StatusCode'));
-      });
+   
   }
 
   editProductCategory() {
@@ -140,7 +148,9 @@ export class AddProductCategoryComponent implements OnInit {
     }
     this.httpService.callPostApi(editProductCategoryAPI).subscribe(
       data => {
-        this.ref.close(true);
+        if(data.headers.get('StatusCode')==200){
+          this.ref.close(true);
+          }
         this.toastService.displayApiMessage(data.headers.get('StatusMessage'), data.headers.get('StatusCode'));
       }
     )

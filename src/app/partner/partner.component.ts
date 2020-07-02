@@ -51,7 +51,7 @@ export class PartnerComponent implements OnInit {
   //delete partner
   deletePartner(iPartnerID: Number) {
     this.confirmationService.confirm({
-      message: 'Are you sure that you want to proceed?',
+      message: 'Are you sure that you want to Delete this record ?',
       header: 'Confirmation',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {

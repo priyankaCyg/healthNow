@@ -4,6 +4,7 @@ import { BreadcrumbService } from 'src/app/breadcrumb.service';
 import { DialogService, ConfirmationService } from 'primeng';
 import { ApiService } from 'src/app/services/api.service';
 import { ToastService } from 'src/app/services/toast.service';
+import { PoRejectiomComponent } from '../po-rejectiom/po-rejectiom.component';
 
 @Component({
   selector: 'app-purchase-order-approval',
@@ -80,25 +81,16 @@ export class PurchaseOrderApprovalComponent implements OnInit {
     });
   }
 
-  //Function to Reject PO 
-  rejectPO(iPOID: Number) {
-    this.confirmationService.confirm({
-      message: 'Are you sure that you want to reject this record ?',
-      header: 'Confirmation',
-      icon: 'pi pi-times',
-      accept: () => {
-        let reject_data_api = {
-          "iRequestID": 2357,
-          "iPOID": iPOID
-        };
-        console.log(reject_data_api)
-        this.httpService.callPostApi(reject_data_api).subscribe(
-          (data) => {
-            this.toastService.displayApiMessage(data.headers.get('StatusMessage'), data.headers.get('StatusCode'));
-            this.getPOList();
-          },
-          (error) => console.log(error)
-        );
+   //Dialog box to reject PO
+   rejectDialoBox(poDetails) {
+    const ref = this.dialogService.open(PoRejectiomComponent, {
+      data: poDetails,
+      header: 'Reason For Rejection',
+      width: '28%'
+    });
+    ref.onClose.subscribe((success: boolean) => {
+      if (success) {
+        this.getPOList();
       }
     });
   }

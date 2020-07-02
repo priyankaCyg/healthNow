@@ -4,6 +4,7 @@ import { ProducerMaster } from '../../model/producer.model'
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ToastService } from "../../services/toast.service";
 import { ApiService } from 'src/app/services/api.service';
+import { ThrowStmt } from '@angular/compiler';
 
 @Component({
   selector: 'app-add-producer',
@@ -21,6 +22,7 @@ export class AddProducerComponent implements OnInit {
   producerId: number;
   public producerForm: FormGroup;
   producerData: ProducerMaster;
+  submitFlag=0;
 
   constructor(private config: DynamicDialogConfig, private ref: DynamicDialogRef, private fb: FormBuilder,
     private toastService: ToastService, private httpService: ApiService) { }
@@ -105,7 +107,9 @@ export class AddProducerComponent implements OnInit {
 
   //code for add new producer data
   addProducer() {
-    var formData = this.producerForm.getRawValue();
+    if(this.submitFlag==0){
+      this.submitFlag=1;
+      var formData = this.producerForm.getRawValue();
     var dataToSendAdd = {
       "iRequestID": 2121,
       "sProducerName": formData.sProducerName,
@@ -114,11 +118,16 @@ export class AddProducerComponent implements OnInit {
     }
     this.httpService.callPostApi(dataToSendAdd).subscribe(
       (data) => {
-        this.ref.close(true);
+        if(data.headers.get('StatusCode')==200){
+          this.ref.close(true);
+        }
         this.toastService.displayApiMessage(data.headers.get('StatusMessage'), data.headers.get('StatusCode'));
+        this.submitFlag=0;
       },
       (error) => console.log(error)
     );
+    }
+    
   }
 
   //code for edit producer data
@@ -134,7 +143,9 @@ export class AddProducerComponent implements OnInit {
     }
     this.httpService.callPostApi(dataToSendEdit).subscribe(
       (data) => {
-        this.ref.close(true);
+        if(data.headers.get('StatusCode')==200){
+          this.ref.close(true);
+        }
         this.toastService.displayApiMessage(data.headers.get('StatusMessage'), data.headers.get('StatusCode'));
       },
       (error) => console.log(error)

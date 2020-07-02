@@ -19,7 +19,7 @@ export class BankComponent implements OnInit {
   bankData: companyBankMaster;
   bankID: number;
   partner_id: number;
-
+  submitFlag: number = 0;
   constructor(
     private httpService: ApiService,
     private fb: FormBuilder,
@@ -121,7 +121,9 @@ export class BankComponent implements OnInit {
 
   //Add Bank Function
   addBank() {
-    var formData = this.bankForm.getRawValue();
+    if(this.submitFlag == 0){
+      this.submitFlag=1;
+      var formData = this.bankForm.getRawValue();
     const addBankAPI = {
       "iRequestID": 2311,
       "iPartnerID": this.partner_id,
@@ -133,9 +135,13 @@ export class BankComponent implements OnInit {
     }
     this.httpService.callPostApi(addBankAPI).subscribe(
       data => {
-        this.ref.close(true);
+        if(data.headers.get('StatusCode') ==200){
+          this.ref.close(true);
+        }
         this.toastService.displayApiMessage(data.headers.get('StatusMessage'), data.headers.get('StatusCode'));
+        this.submitFlag=0;
       });
+    }
   }
 
   // Edit Bank Function
@@ -154,7 +160,9 @@ export class BankComponent implements OnInit {
     }
     this.httpService.callPostApi(editBankAPI).subscribe(
       data => {
-        this.ref.close(true);
+        if(data.headers.get('StatusCode') ==200){
+          this.ref.close(true);
+        }
         this.toastService.displayApiMessage(data.headers.get('StatusMessage'), data.headers.get('StatusCode'));
       }
     );

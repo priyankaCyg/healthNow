@@ -16,6 +16,7 @@ export class ProductQueriesComponent implements OnInit {
   queriesArray: productQuerData[];
   queriesSubmitArray = [];
   prd_Id: number;
+  submitFlag: number =0;
 
   constructor(private fb: FormBuilder, private httpService: ApiService,
     private toastService: ToastService, public ref: DynamicDialogRef) { }
@@ -68,32 +69,40 @@ export class ProductQueriesComponent implements OnInit {
 
   //code for add product Queries data 
   onSubmit() {
-    for (let i = 0; i < 8; i++) {
-      var sQueVarName = "sQue" + (i + 1);
-      var sAnsVarName = "sAns" + (i + 1);
-      let sQue_data = this.queriesForm.controls[sQueVarName].value.toString();
-      let sAns_data = this.queriesForm.controls[sAnsVarName].value.toString();
-      if (sQue_data != "" && sQue_data != undefined) {
-        const info_obj = {
-          sQue: sQue_data,
-          sAns: sAns_data
+    if(this.submitFlag==0){
+      this.submitFlag=1;
+      for (let i = 0; i < 8; i++) {
+        var sQueVarName = "sQue" + (i + 1);
+        var sAnsVarName = "sAns" + (i + 1);
+        let sQue_data = this.queriesForm.controls[sQueVarName].value.toString();
+        let sAns_data = this.queriesForm.controls[sAnsVarName].value.toString();
+        if (sQue_data != "" && sQue_data != undefined) {
+          const info_obj = {
+            sQue: sQue_data,
+            sAns: sAns_data
+          }
+          this.queriesSubmitArray.push(info_obj);
         }
-        this.queriesSubmitArray.push(info_obj);
       }
+      const addQuer_data = {
+        "iRequestID": 2163,
+        "iProductID": this.prd_Id,
+        "sJson": this.queriesSubmitArray
+      };
+      this.httpService.callPostApi(addQuer_data).subscribe(
+        (data) => {
+          if(data.headers.get('StatusCode')==200){
+            this.ref.close(true);
+          }
+          this.toastService.displayApiMessage(data.headers.get('StatusMessage'), data.headers.get('StatusCode'));
+          
+          this.submitFlag=0;
+         // this.queriesForm.reset();
+        },
+        (error) => console.log(error)
+      );
     }
-    const addQuer_data = {
-      "iRequestID": 2163,
-      "iProductID": this.prd_Id,
-      "sJson": this.queriesSubmitArray
-    };
-    this.httpService.callPostApi(addQuer_data).subscribe(
-      (data) => {
-        this.toastService.displayApiMessage(data.headers.get('StatusMessage'), data.headers.get('StatusCode'));
-        this.ref.close(true);
-        this.queriesForm.reset();
-      },
-      (error) => console.log(error)
-    );
+    
   }
 
   //code for close dialog box

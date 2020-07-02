@@ -59,6 +59,7 @@ export class NewProductComponent implements OnInit {
   uploadedFiles: any[] = [];
   attachment: any[];
   index: number = 0;
+  productSubmitFlag = 0;
 
   constructor(private carService: CarService, private breadcrumbService: BreadcrumbService,
     private dialogService: DialogService,
@@ -277,45 +278,55 @@ export class NewProductComponent implements OnInit {
 
   //code for add product data
   addProductForm() {
-    var formData = this.ProductForm.getRawValue();
-    var addProductData;
-    if (formData.sParentPrdName.iPrdID) {
-      addProductData = {
-        "iRequestID": 2251,
-        "sPrdName": formData.sPrdName,
-        "sVariant": formData.sVariant,
-        "iUnitID": formData.sUnitName.iUnitID,
-        "iFoodCulture": formData.sFoodCulture.iKVID,
-        "iProducerID": formData.sProducerName.iProducerID,
-        "iParentID": formData.sParentPrdName.iPrdID
+    if (this.productSubmitFlag == 0) {
+      this.productSubmitFlag = 1;
+      var formData = this.ProductForm.getRawValue();
+      var addProductData;
+      if (formData.sParentPrdName.iPrdID) {
+        addProductData = {
+          "iRequestID": 2251,
+          "sPrdName": formData.sPrdName,
+          "sVariant": formData.sVariant,
+          "iUnitID": formData.sUnitName.iUnitID,
+          "iFoodCulture": formData.sFoodCulture.iKVID,
+          "iProducerID": formData.sProducerName.iProducerID,
+          "iParentID": formData.sParentPrdName.iPrdID
+        }
       }
-    }
-    else {
-      addProductData = {
-        "iRequestID": 2251,
-        "sPrdName": formData.sPrdName,
-        "sVariant": formData.sVariant,
-        "iUnitID": formData.sUnitName.iUnitID,
-        "iFoodCulture": formData.sFoodCulture.iKVID,
-        "iProducerID": formData.sProducerName.iProducerID,
+      else {
+        addProductData = {
+          "iRequestID": 2251,
+          "sPrdName": formData.sPrdName,
+          "sVariant": formData.sVariant,
+          "iUnitID": formData.sUnitName.iUnitID,
+          "iFoodCulture": formData.sFoodCulture.iKVID,
+          "iProducerID": formData.sProducerName.iProducerID,
+        }
       }
+      this.httpService.callPostApi(addProductData).subscribe(
+        data => {
+          if(data.headers.get('StatusCode')==200){
+            this.prdId = data.body[0].iprdId;
+          localStorage.setItem('iPrdID', this.prdId);
+          this.getProductInfo();
+          this.getProductQueries();
+          this.getCategoryMappingDataSource();
+          this.getCategoryMappingDataTarget();
+          this.tabDisabled = false
+          let prd_name = "Product " + formData.sPrdName + " " + formData.sVariant + " " + formData.sUnitName.sUnitName + " has been created successfully"
+          this.toastService.displayApiMessage(prd_name, data.headers.get('StatusCode'));
+          this.isEdit = true
+          this.index = 1;
+          }
+          else{
+            this.toastService.displayApiMessage(data.headers.get('StatusMessage'), data.headers.get('StatusCode'));
+          }
+          this.productSubmitFlag=0;
+        },
+        error => console.log(error)
+      );
     }
-    this.httpService.callPostApi(addProductData).subscribe(
-      data => {
-        this.prdId = data.body[0].iprdId;
-        localStorage.setItem('iPrdID', this.prdId);
-        this.getProductInfo();
-        this.getProductQueries();
-        this.getCategoryMappingDataSource();
-        this.getCategoryMappingDataTarget();
-        this.tabDisabled = false
-        let prd_name = "Product " + formData.sPrdName + " " + formData.sVariant + " " + formData.sUnitName.sUnitName + " has been created successfully"
-        this.toastService.displayApiMessage(prd_name, data.headers.get('StatusCode'));
-        this.isEdit = true
-        this.index = 1;
-      },
-      error => console.log(error)
-    );
+
   }
 
   //code for edit product data
