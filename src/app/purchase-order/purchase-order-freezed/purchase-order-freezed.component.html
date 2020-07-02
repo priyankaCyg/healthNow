@@ -47,7 +47,7 @@
                                 <td>{{poListData.sPONo}}</td>
                                 <td>{{poListData.sPODate | customDate}}</td>
                                 <td>{{poListData.sSupName}}</td>
-                                <td>{{poListData.currency}}</td>
+                                <td>{{poListData.sCurrencyName}}</td>
                                 <td>   
  
                                     <p-checkbox *ngIf="poListData.iIncludeTaxes==1" value="poListData.iIncludeTaxes"
@@ -57,7 +57,9 @@
                                     
                                 </td>
                                 <td>
-                                    <span class="badge badge--warning badge--inline badge--pill">Draft</span>
+                                    <span
+                                    class="badge badge--success badge--inline badge--pill">{{poListData.sStatusName}}
+                                </span>
                                 </td>
                                 <td>{{poListData.sCreatedBy}}</td>
                                 <td>
