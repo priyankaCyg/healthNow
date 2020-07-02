@@ -16,10 +16,10 @@ export class DepartmentComponent implements OnInit {
   selectedstatus;
   statusData;
   isEdit: boolean = false
-  Dep_id;
+  Dep_id: number;
   public DepartmentSubmit: FormGroup;
   departmentData: DepartmentMaster;
-  isSave: number = 0;
+  isSaveDepartment: number = 0;
 
   constructor(private httpService: ApiService, private fb: FormBuilder, private config: DynamicDialogConfig,
     private ref: DynamicDialogRef, private toastService: ToastService) { }
@@ -101,23 +101,28 @@ export class DepartmentComponent implements OnInit {
 
   //code for add department data
   addDepartment() {
-    var formData = this.DepartmentSubmit.getRawValue();
-    const dep_submit_data =
-    {
-      "iRequestID": 2051,
-      "iCID": 1,
-      "sDeptName": formData.sDeptName
-    };
-    this.httpService.callPostApi(dep_submit_data).subscribe(
-      data => {
-        this.ref.close(true);
-        this.toastService.displayApiMessage(data.headers.get('StatusMessage'), data.headers.get('StatusCode'));
-      },
-      error => console.log(error)
-    );
-    this.DepartmentSubmit.reset();
+    if (this.isSaveDepartment == 0) {
+      this.isSaveDepartment = 1;
+      var formData = this.DepartmentSubmit.getRawValue();
+      const dep_submit_data =
+      {
+        "iRequestID": 2051,
+        "iCID": 1,
+        "sDeptName": formData.sDeptName
+      };
+      this.httpService.callPostApi(dep_submit_data).subscribe(
+        data => {
+          this.isSaveDepartment = 0;
+          if (data.headers.get('StatusCode') == 200) {
+            this.ref.close(true);
+          }
+          this.toastService.displayApiMessage(data.headers.get('StatusMessage'), data.headers.get('StatusCode'));
+        },
+        error => console.log(error)
+      );
+      this.DepartmentSubmit.reset();
+    }
   }
-
   // addDepartment() {
   //   var formData = this.DepartmentSubmit.getRawValue();
   //   const dep_submit_data =
@@ -156,7 +161,9 @@ export class DepartmentComponent implements OnInit {
     }
     this.httpService.callPostApi(dep_edit_data).subscribe(
       data => {
-        this.ref.close(true);
+        if (data.headers.get('StatusCode') == 200) {
+          this.ref.close(true);
+        }
         this.toastService.displayApiMessage(data.headers.get('StatusMessage'), data.headers.get('StatusCode'));
       },
       error => console.log(error)

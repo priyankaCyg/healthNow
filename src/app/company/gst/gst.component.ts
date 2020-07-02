@@ -15,8 +15,8 @@ export class GstComponent implements OnInit {
   temp: string;
   selectedstatus;
   setStatus: Object;
-  isEdit: boolean = false
-
+  isEdit: boolean = false;
+  isGstSave: number = 0;
   constructor(private fb: FormBuilder, private httpService: ApiService, private config: DynamicDialogConfig,
     private ref: DynamicDialogRef, private toastService: ToastService) { }
 
@@ -81,13 +81,19 @@ export class GstComponent implements OnInit {
           "iUserID": 1,
           "sLocCode": loc_code,
         }
-        this.httpService.callPostApi(gst_submit_data).subscribe(
-          data => {
-            this.ref.close(true);
-            this.toastService.displayApiMessage(data.headers.get('StatusMessage'), data.headers.get('StatusCode'));
-          },
-          error => console.log(error)
-        );
+        if (this.isGstSave == 0) {
+          this.isGstSave = 1;
+          this.httpService.callPostApi(gst_submit_data).subscribe(
+            data => {
+              this.isGstSave = 0;
+              if (data.headers.get('StatusCode') == 200) {
+                this.ref.close(true);
+              }
+              this.toastService.displayApiMessage(data.headers.get('StatusMessage'), data.headers.get('StatusCode'));
+            },
+            error => console.log(error)
+          )
+        };
       } else {
         let gst_edit_no = this.GSTSubmit.controls["gst"].value;
         let loc_code_edit = this.config.data.sLocCode;
@@ -104,13 +110,15 @@ export class GstComponent implements OnInit {
         }
         this.httpService.callPostApi(gst_edit_data).subscribe(
           data => {
-            this.ref.close(true);
+            if (data.headers.get('StatusCode') == 200) {
+              this.ref.close(true);
+            }
             this.toastService.displayApiMessage(data.headers.get('StatusMessage'), data.headers.get('StatusCode'));
           },
           error => console.log(error)
         );
       }
-      this.GSTSubmit.reset();
+      // this.GSTSubmit.reset();
     }
   }
 

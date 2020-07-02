@@ -40,32 +40,37 @@
                         <ng-template pTemplate="body" let-poListData let-expanded="expanded">
                             <tr>
                                 <td>
-                                    <a href="#" [pRowToggler]="poListData">
+                                    <a href="#" (click)="getPOChildList(poListData.iPOID)" [pRowToggler]="poListData">
                                         <i [ngClass]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></i>
                                     </a>
                                 </td>
                                 <td>{{poListData.sPONo}}</td>
-                                <td>{{poListData.sPODate | date:"dd-MM-yyyy"}}</td>
+                                <td>{{poListData.sPODate | customDate}}</td>
                                 <td>{{poListData.sSupName}}</td>
                                 <td>{{poListData.currency}}</td>
-                                <td>
+                                <td>   
+ 
                                     <p-checkbox *ngIf="poListData.iIncludeTaxes==1" value="poListData.iIncludeTaxes"
                                         readonly=true [(ngModel)]="checked" binary="true">
                                     </p-checkbox>
-                                    <p-checkbox *ngIf="poListData.iIncludeTaxes==0" value="poListData.iIncludeTaxes"
-                                        readonly=true>
-                                    </p-checkbox>
+                                    
+                                    
                                 </td>
                                 <td>
-                                    <span class="badge badge--warning badge--inline badge--pill">Approved</span>
+                                    <span class="badge badge--warning badge--inline badge--pill">Draft</span>
                                 </td>
                                 <td>{{poListData.sCreatedBy}}</td>
                                 <td>
                                     <button pButton type="button" class="ui-button-danger mr-1" icon="pi pi-file-pdf"
                                         title="View Details"></button>
-                                    <button type="button" class="ui-button-success mr-1" icon="pi pi-paperclip"
-                                        (click)="attachmentsCustomer(cus)" pButton></button>
-
+                                    <!-- <button routerLink="/purchase-order/po-general-details" pButton type="button"
+                                        (click)="editPO(poListData)" class="ui-button-success mr-1"
+                                        icon="pi pi-pencil"></button>
+                                    <button pButton type="button" class="ui-button-danger mr-1"
+                                        (click)="deletePO(poListData.iPOID)" icon="pi pi-trash"></button>
+                                    <button pButton type="button" class="ui-button-success"
+                                        (click)="sendForApprovalPO(poListData.iPOID)" icon="pi pi-arrow-circle-right"
+                                        title="Send for approval"></button> -->
                                 </td>
                             </tr>
                         </ng-template>
@@ -74,25 +79,32 @@
                                 <td [attr.colspan]="9">
                                     <div class="ui-g ui-fluid" style="font-size:14px;padding:8px">
                                         <div class="ui-g-12 ui-md-12">
-                                            <p-table *ngIf="batch.length>1" [value]="batch">
+                                            <p-table  [value]="batch">
                                                 <ng-template pTemplate="header">
                             <tr>
-                                <th>Batch/Lot No.</th>
-                                <th>Receive Qty</th>
-                                <th>POD No</th>
-                                <th>POD Date</th>
-                                <th>Manufacturing Date</th>
-                                <th>Expire Date</th>
+                                <th>Product Category Name</th>
+                                <th>Product Name</th>
+                                <th>Qty</th>
+                                <th>Rate</th>
+                                <th>Gross Amount</th>
+                                <th>Discount Percentage</th>
+                                <th>Discount Amt</th>
+                                <th>Total Amount</th>
+                                
+
                             </tr>
                         </ng-template>
                         <ng-template pTemplate="body" let-batch>
                             <tr>
-                                <td>{{batch.batchNo}}</td>
-                                <td>{{batch.recvQty}}</td>
-                                <td>{{batch.podNo}}</td>
-                                <td>{{batch.podDate}}</td>
-                                <td>{{batch.manfactDate}}</td>
-                                <td>{{batch.expDate}}</td>
+                                <td>{{batch.sPCName}}</td>
+                                <td>{{batch.sPrdName}} {{batch.sVariant}} {{batch.sUnitSymbol}}</td>
+                                <td>{{batch.iQty}}</td>
+                                <td>{{batch.iRate}}</td>
+                                <td>{{batch.iGrossAmt}}</td>
+                                <td>{{batch.iDiscountPercentage}}</td>
+                                <td>{{batch.iDiscountAmt}}</td>
+                                <td>{{batch.iTotalAmt}}</td>
+
                             </tr>
                         </ng-template>
                     </p-table>

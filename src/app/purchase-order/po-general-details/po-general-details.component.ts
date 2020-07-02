@@ -14,6 +14,9 @@ import { DatePipe } from '@angular/common';
 import { APIService } from 'src/app/services/apieservice';
 import { Router } from '@angular/router';
 import { PoTnc } from 'src/app/model/po-tnc.model';
+import * as moment from 'moment';
+import {config} from 'src/config'
+
 
 @Component({
   selector: 'app-po-general-details',
@@ -72,6 +75,7 @@ export class PoGeneralDetailsComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    //console.log(this.datePipe.transform("01-07-2020",config.dateFormat));
     this.defaultDropDwnValue();
     this.editPo = localStorage.getItem('isPoEdit');
     this.data = JSON.parse(localStorage.getItem('poDetails'));
@@ -237,10 +241,10 @@ export class PoGeneralDetailsComponent implements OnInit {
       });
     })
   }
-
+  // moment(poData.sPODate,'MM-DD-YYYY').format('DD-MM-YYYY')
   createControl(poData?: POGeneralMaster): FormGroup {
     this.POForm = this.fb.group({
-      sPODate: [poData.sPODate, Validators.required],
+      sPODate: [moment(poData.sPODate).toDate(), Validators.required],
       iSuppContactName: [poData.iSupContactID, Validators.required],
       sSuppAddress: [poData.iSupAddID, Validators.required],
       iPartnerContactName: [poData.iPOContactID, Validators.required],
@@ -258,7 +262,7 @@ export class PoGeneralDetailsComponent implements OnInit {
   savePODetail() {
     var formData = this.POForm.getRawValue();
     let new_date = formData.sPODate;
-    let po_date = this.datePipe.transform(new_date, 'dd/MM/yyyy');
+    let po_date = this.datePipe.transform(new_date, config.dateFormat);
     let taxVal: number = 0;
     if (this.checked == true) {
       taxVal = 1;

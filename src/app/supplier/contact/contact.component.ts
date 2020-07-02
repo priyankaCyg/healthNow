@@ -23,7 +23,7 @@ export class ContactComponent implements OnInit {
   sup_Id: number;
   public supContactForm: FormGroup;
   contactData: SupplierContactMaster;
-
+  isSuppContSave: number = 0;
   constructor(public config: DynamicDialogConfig, public ref: DynamicDialogRef,
     private toastService: ToastService, private httpService: ApiService, private fb: FormBuilder) { }
 
@@ -105,27 +105,33 @@ export class ContactComponent implements OnInit {
   }
 
   addSupplierContact() {
-    var formData = this.supContactForm.getRawValue();
-    var dataToSendAdd = {
-      "iRequestID": 2191,
-      "iSupID": this.sup_Id,
-      "iSupAddID": formData.sAddress.iSupAddID,
-      "sFullName": formData.sFullName,
-      "sDesignation": formData.sDesignation,
-      "sMobileNo": formData.sMobileNo,
-      "sContactNo": formData.sContactNo,
-      "sDirectNo": formData.sDirectNo,
-      "sFaxNo": formData.sFaxNo,
-      "sPOBox": "7418529636",
-      "sEmailID": formData.sEmailID
+    if (this.isSuppContSave == 0) {
+      this.isSuppContSave = 1;
+      var formData = this.supContactForm.getRawValue();
+      var dataToSendAdd = {
+        "iRequestID": 2191,
+        "iSupID": this.sup_Id,
+        "iSupAddID": formData.sAddress.iSupAddID,
+        "sFullName": formData.sFullName,
+        "sDesignation": formData.sDesignation,
+        "sMobileNo": formData.sMobileNo,
+        "sContactNo": formData.sContactNo,
+        "sDirectNo": formData.sDirectNo,
+        "sFaxNo": formData.sFaxNo,
+        "sPOBox": "7418529636",
+        "sEmailID": formData.sEmailID
+      }
+      this.httpService.callPostApi(dataToSendAdd).subscribe(
+        data => {
+          this.isSuppContSave = 0;
+          if (data.headers.get('StatusCode') == 200) {
+            this.ref.close(true);
+          }
+          this.toastService.displayApiMessage(data.headers.get('StatusMessage'), data.headers.get('StatusCode'));
+        },
+        error => console.log(error)
+      );
     }
-    this.httpService.callPostApi(dataToSendAdd).subscribe(
-      data => {
-        this.ref.close(true);
-        this.toastService.displayApiMessage(data.headers.get('StatusMessage'), data.headers.get('StatusCode'));
-      },
-      error => console.log(error)
-    );
   }
 
   updateSupplierContact() {
@@ -147,7 +153,9 @@ export class ContactComponent implements OnInit {
     }
     this.httpService.callPostApi(dataToSendEdit).subscribe(
       data => {
-        this.ref.close(true);
+        if (data.headers.get('StatusCode') == 200) {
+          this.ref.close(true);
+        }
         this.toastService.displayApiMessage(data.headers.get('StatusMessage'), data.headers.get('StatusCode'));
       },
       error => console.log(error)

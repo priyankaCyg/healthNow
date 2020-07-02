@@ -146,7 +146,7 @@ export class CompanyComponent implements OnInit {
   // open modal for delete address 
   onDeleteAddress(addressId: number) {
     this.confirmationService.confirm({
-      message: 'Are you sure that you want to proceed?',
+      message: 'Are you sure that you want to Delete this Record?',
       header: 'Confirmation',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
@@ -211,7 +211,7 @@ export class CompanyComponent implements OnInit {
   // code for delete departemnt
   deleteDepartemnt(department: departmentData) {
     this.confirmationService.confirm({
-      message: 'Are you sure that you want to proceed?',
+      message: 'Are you sure that you want to Delete this Record?',
       header: 'Confirmation',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
@@ -278,7 +278,7 @@ export class CompanyComponent implements OnInit {
   //code for delete gst
   deleteGst(gst: gstData) {
     this.confirmationService.confirm({
-      message: 'Are you sure that you want to proceed?',
+      message: 'Are you sure that you want to Delete this Record?',
       header: 'Confirmation',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
@@ -345,7 +345,7 @@ export class CompanyComponent implements OnInit {
   deleteDesig(desig) {
     let desig_id = desig.iDesigID;
     this.confirmationService.confirm({
-      message: 'Are you sure that you want to proceed?',
+      message: 'Are you sure that you want to Delete this Record?',
       header: 'Confirmation',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
@@ -413,7 +413,7 @@ export class CompanyComponent implements OnInit {
   deleteBank(iBankID) {
     let bank_id = iBankID;
     this.confirmationService.confirm({
-      message: 'Are you sure that you want to proceed?',
+      message: 'Are you sure that you want to Delete this Record?',
       header: 'Confirmation',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
@@ -482,7 +482,7 @@ export class CompanyComponent implements OnInit {
   //Open Dialog To Delete Employee
   deleteEmployee(employeeId) {
     this.confirmationService.confirm({
-      message: 'Are you sure that you want to proceed?',
+      message: 'Are you sure that you want to Delete this Record?',
       header: 'Confirmation',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
@@ -502,5 +502,5 @@ export class CompanyComponent implements OnInit {
       reject: () => { }
     });
   }
-  
+
 }

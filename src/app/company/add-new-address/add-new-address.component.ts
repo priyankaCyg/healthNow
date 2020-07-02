@@ -25,7 +25,7 @@ export class AddNewAddressComponent implements OnInit {
   tempAddressTypeID;
   setAddressTypeData: object;
   isEdit: boolean = false
-
+  isAdressSave: number = 0;
 
   constructor(private fb: FormBuilder, private httpService: ApiService, public configData: DynamicDialogConfig,
     public ref: DynamicDialogRef, public toastService: ToastService, ) { }
@@ -197,15 +197,21 @@ export class AddNewAddressComponent implements OnInit {
         "iStatusID": status_id,
         "sShortName": this.AddressForm.get('shortName').value
       }
-      this.httpService.callPostApi(addressAddApi).subscribe(
-        data => {
-          this.ref.close(true);
-          this.toastService.displayApiMessage(data.headers.get('StatusMessage'), data.headers.get('StatusCode'));
-        },
-        error => {
-          console.log(error)
-        }
-      )
+      if (this.isAdressSave == 0) {
+        this.isAdressSave = 1;
+        this.httpService.callPostApi(addressAddApi).subscribe(
+          data => {
+            this.isAdressSave = 0;
+            if (data.headers.get('StatusCode') == 200) {
+              this.ref.close(true);
+            }
+            this.toastService.displayApiMessage(data.headers.get('StatusMessage'), data.headers.get('StatusCode'));
+          },
+          error => {
+            console.log(error)
+          }
+        )
+      }
     }
     else {
       let address_id = this.configData.data.iAddID;
@@ -237,7 +243,9 @@ export class AddNewAddressComponent implements OnInit {
 
         this.httpService.callPostApi(addressEditApi1).subscribe(
           data => {
-            this.ref.close(true);
+            if (data.headers.get('StatusCode') == 200) {
+              this.ref.close(true);
+            }
             this.toastService.displayApiMessage(data.headers.get('StatusMessage'), data.headers.get('StatusCode'));
           },
           error => {
@@ -269,7 +277,9 @@ export class AddNewAddressComponent implements OnInit {
         this.httpService.callPostApi(addressEditApi2).subscribe(
           data => {
             console.log(this.AddressForm.value);
-            this.ref.close(true);
+            if (data.headers.get('StatusCode') == 200) {
+              this.ref.close(true);
+            }
             this.toastService.displayApiMessage(data.headers.get('StatusMessage'), data.headers.get('StatusCode'));
           },
           error => {

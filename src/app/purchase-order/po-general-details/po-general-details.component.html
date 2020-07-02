@@ -19,7 +19,7 @@
                                     </div>
                                     <div class="p-col-12 p-lg-3 mb-2">
                                         <label for="sPODate">Supplier PO Date</label>
-                                        <p-calendar formControlName="sPODate"></p-calendar>
+                                        <p-calendar formControlName="sPODate" dateFormat="dd-mm-yy"></p-calendar>
                                         <div>
                                             <p-message severity="error" text="This field is required"
                                                 *ngIf="POForm.controls['sPODate'].touched  && POForm.controls['sPODate'].hasError('required')">
@@ -108,13 +108,12 @@
                         </div>
                         <div class="separator separator--border-solid separator--space-sm separator--portlet-fit">
                         </div>
-                        <div class="p-grid form-group ui-fluid p-justify-end mt-3">
-                            <div class="p-col-12 p-md-2 p-lg-12 text-right">
-                                <button pButton type="button" label="Save"
-                                    [disabled]="!(!POForm.invalid && !dropDownValidityCheck())"
-                                    class="ui-button atbt mb-2" (click)="savePODetail()"></button>
-                            </div>
-                        </div>
+                        <div class="p-col-12 p-md-2 p-lg-12 text-right mt-0">
+                            <button pButton type="button" label="Cancel" routerLink="/purchase-order/po-list" class="ui-button-light atbt mr-2 mb-2"></button>
+                            <button pButton type="button" label="Save"
+                            [disabled]="!(!POForm.invalid && !dropDownValidityCheck())"
+                            class="ui-button atbt mb-2" (click)="savePODetail()"></button>
+                    </div>
                     </form>
                 </p-tabPanel>
                 <!-- General Tab End -->

@@ -9,6 +9,7 @@ import { ApiService } from 'src/app/services/api.service';
 import { poListMaster } from 'src/app/model/poList.model';
 import { ToastService } from 'src/app/services/toast.service';
 import { trigger, state, style, transition, animate } from '@angular/animations';
+import { CommonService } from 'src/app/services/common.service';
 
 @Component({
   selector: 'app-po-list',
@@ -134,7 +135,7 @@ export class PoListComponent implements OnInit {
 
   onRowExpand() {
     console.log("row expanded", Object.keys(this.expandedRows).length);
-    if (Object.keys(this.expandedRows).length === this.temDataLength) {
+    if (Object.keys(this.expandedRows).length === 1) {
       this.isExpanded = true;
     }
   }

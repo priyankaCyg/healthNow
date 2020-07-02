@@ -424,7 +424,7 @@
                                             <button pButton type="button" class="ui-button-success mr-1"
                                                 (click)="downloadFile(attachment)" icon="pi pi-arrow-down"></button>
                                             <button pButton type="button" class="ui-button-danger"
-                                                icon="pi pi-trash"></button>
+                                                (click)="deleteAttFile(attachment)" icon="pi pi-trash"></button>
                                         </td>
                                     </tr>
                                 </ng-template>
@@ -454,11 +454,18 @@
                                     </p-dropdown>
 
                                 </div>
+                                <div class="p-col-12 p-md-6 p-lg-3 mb-2 ">
+                                    <label for="producer">Select Producer</label>
+                                    <p-dropdown [options]="producerData" optionLabel="sProducerName"
+                                        (onChange)="onProducerChange($event)" [(ngModel)]="selectedProducer">
+                                    </p-dropdown>
+
+                                </div>
                             </div>
                         </div>
                     </div>
                     <p-pickList [source]="sourceCategory" [target]="targetCategory" sourceHeader="UnMapped"
-                        targetHeader="Mapped" [responsive]="true" filterBy="sCategoryName" dragdrop="true"
+                        targetHeader="Mapped" [responsive]="true" filterBy="sPrdName" dragdrop="true"
                         sourceFilterPlaceholder="Search by category" targetFilterPlaceholder="Search by category"
                         [sourceStyle]="{'height':'300px'}" [targetStyle]="{'height':'300px'}">
                         <ng-template let-category pTemplate="item">
@@ -471,7 +478,8 @@
                     </div>
                     <div class="p-grid form-group ui-fluid p-justify-end mt-3">
                         <div class="p-col-12 p-md-12 p-lg-12 text-right">
-                            <button pButton type="button" label="Cancel" class="ui-button-light atbt mr-2"></button>
+                            <button pButton type="button" label="Cancel" routerLink="/supplier"
+                                class="ui-button-light atbt mr-2"></button>
 
                             <button pButton type="button" label="Save" (click)="addCategoryMappingData()"
                                 class="ui-button atbt"></button>

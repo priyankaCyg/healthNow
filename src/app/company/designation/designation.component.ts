@@ -18,7 +18,7 @@ export class DesignationComponent implements OnInit {
   temp;
   selectedstatus;
   isEdit: boolean = false;
-
+  isSaveDesignation: number = 0;
   constructor(
     private httpService: ApiService, private fb: FormBuilder, private config: DynamicDialogConfig,
     private ref: DynamicDialogRef, private toastService: ToastService) { }
@@ -79,13 +79,19 @@ export class DesignationComponent implements OnInit {
             iDesigLevel: desig_level,
             iUserID: 1,
           };
-          this.httpService.callPostApi(addDesig_data).subscribe(
-            (data) => {
-              this.ref.close(true);
-              this.toastService.displayApiMessage(data.headers.get('StatusMessage'), data.headers.get('StatusCode'));
-            },
-            (error) => console.log(error)
-          );
+          if (this.isSaveDesignation == 0) {
+            this.isSaveDesignation = 1;
+            this.httpService.callPostApi(addDesig_data).subscribe(
+              (data) => {
+                this.isSaveDesignation = 0;
+                if (data.headers.get('StatusCode') == 200) {
+                  this.ref.close(true);
+                }
+                this.toastService.displayApiMessage(data.headers.get('StatusMessage'), data.headers.get('StatusCode'));
+              },
+              (error) => console.log(error)
+            )
+          };
         } else {
           //update designation details
           const updateDesig_data = {
@@ -99,13 +105,15 @@ export class DesignationComponent implements OnInit {
           };
           this.httpService.callPostApi(updateDesig_data).subscribe(
             (data) => {
-              this.ref.close(true);
+              if (data.headers.get('StatusCode') == 201) {
+                this.ref.close(true);
+              }
               this.toastService.displayApiMessage(data.headers.get('StatusMessage'), data.headers.get('StatusCode'));
             },
             (error) => console.log(error)
           );
         }
-        this.desigForm.reset();
+        //this.desigForm.reset();
       } else {
       }
     }

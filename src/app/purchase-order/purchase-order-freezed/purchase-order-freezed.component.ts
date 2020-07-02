@@ -28,11 +28,7 @@ export class PurchaseOrderFreezedComponent implements OnInit {
 
   ngOnInit(): void {
     this.getPOList();
-    this.batch = [
-      { batchNo: 'B1', recvQty: '50', podNo: '00123', podDate: '19-05-2020', manfactDate: '01-01-2020', expDate: '31-12-2020' },
-      { batchNo: 'B2', recvQty: '50', podNo: '00124', podDate: '19-05-2020', manfactDate: '01-01-2020', expDate: '31-12-2020' }
-    ];
-
+    this.batch = [];
   }
   //Function to get all PO list
   getPOList() {
@@ -52,10 +48,25 @@ export class PurchaseOrderFreezedComponent implements OnInit {
     )
   }
 
+     //code for get child data table
+     getPOChildList(iPOID: Number) {
+      const poListAPI = {
+        "iRequestID": 2360,
+        "iPOID": iPOID
+      }
+      this.httpService.callPostApi(poListAPI).subscribe(
+        data => {
+          this.batch = data.body;
+          console.log(this.batch);
+        },
+        error => { console.log(error) }
+      )
+    }
+
   expandAll() {
     if (!this.isExpanded) {
       this.poList.forEach(data => {
-        this.expandedRows[data.sPONo] = 1;
+        this.expandedRows[data.iPOID] = 1;
       })
     } else {
       this.expandedRows = {};
