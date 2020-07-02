@@ -40,6 +40,7 @@ export class AddNewSupplierComponent implements OnInit {
   parentCatData;
   selectedparentCategory;
   iPCID: number;
+  iProducerID: number;
   productData;
   selectedProducer;
   selectedProduct;
@@ -111,9 +112,11 @@ export class AddNewSupplierComponent implements OnInit {
         this.showContact();
         this.bankSelectData();
         this.showAttachment();
-        this.getCategoryMappingDataSource();
-      if(this.targetCategory.length)
-         this.getCategoryMappingDataTarget();
+        //this.getCategoryMappingDataSource();
+        //this.getCategoryMappingDataTarget();
+        // if (this.targetCategory.length) {
+        //   this.getCategoryMappingDataTarget();
+        // }
       });
     }
     else {
@@ -311,26 +314,13 @@ export class AddNewSupplierComponent implements OnInit {
     });
   }
 
-  // //code for product dropdown
-  // getProductDrpDwn() {
-  //   return new Promise((resolve, reject) => {
-  //     var dataToSend4 = {
-  //      // "iRequestID": 2126,
-  //     }
-  //     this.httpService.getDropDownData(dataToSend4).then(response => {
-  //       this.productData = response
-  //       this.productData.splice(0, 0, { iPrdID: "", sPrdName: "Select Product" })
-  //       this.selectedProduct = { iPrdID: "", sPrdName: "Select Product" }
-  //       resolve(this.productData)
-  //     });
-  //   })
-  // }
-
   setPcId(event) {
     this.iPCID = event.value.iPCID
     this.childCategoryData();
+    this.producerData = null;
   }
 
+  //code for child product dropdown data
   childCategoryData() {
     return new Promise((resolve, reject) => {
       var dataToSend4 = {
@@ -348,13 +338,39 @@ export class AddNewSupplierComponent implements OnInit {
 
   onProductChange(event) {
     this.iPCID = event.value.iPCID
-    this.getCategoryMappingDataSource();
+    this.getProducerDrpDwn();
   }
 
+  //code for producer dropdown
+  getProducerDrpDwn() {
+    return new Promise((resolve, reject) => {
+      var dataToSend4 = {
+        "iRequestID": 2224,
+        "iPCID": this.iPCID
+      }
+      this.httpService.getDropDownData(dataToSend4).then(response => {
+        this.producerData = response
+        this.producerData.splice(0, 0, { iProducerID: "", sProducerName: "Select Product" })
+        this.selectedProducer = { iProducerID: "", sProducerName: "Select Product" }
+        resolve(this.productData)
+      });
+    })
+  }
+
+  onProducerChange(event) {
+    this.iPCID = event.value.iPCID;
+    this.iProducerID = event.value.iProducerID;
+    this.getCategoryMappingDataSource();
+    this.getCategoryMappingDataTarget();
+  };
+
+  //code for unmapped list data
   getCategoryMappingDataSource() {
     const supplierCategoryMappingAPI1 = {
-      "iRequestID": 2244,
-      "iPCID": this.iPCID
+      "iRequestID": 2225,
+      "iPCID": this.iPCID,
+      "iProducerID": this.iProducerID,
+      "iSupID": this.supId
     }
     this.httpService.callPostApi(supplierCategoryMappingAPI1).subscribe(
       data => { this.sourceCategory = data.body; 
@@ -457,8 +473,8 @@ export class AddNewSupplierComponent implements OnInit {
         this.showContact();
         this.bankSelectData();
         this.showAttachment();
-        this.getCategoryMappingDataSource();
-        this.getCategoryMappingDataTarget();
+        // this.getCategoryMappingDataSource();
+        //this.getCategoryMappingDataTarget();
         this.tabDisabled = false
         let supp_name = "Supplier " + formData.supp_name + " has been added successfully"
         this.toastService.displayApiMessage(supp_name, data.headers.get('StatusCode'));
@@ -533,7 +549,7 @@ export class AddNewSupplierComponent implements OnInit {
   //code for delete gst data
   deletesupgst(gst) {
     this.confirmationService.confirm({
-      message: 'Are you sure that you want to proceed?',
+      message: 'Are you sure that you want to Delete this Record?',
       header: 'Confirmation',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
@@ -563,6 +579,26 @@ export class AddNewSupplierComponent implements OnInit {
     this._apiService.downloadAPI(dataToSend)
   }
 
+  deleteAttFile(attachment) {
+    this.confirmationService.confirm({
+      message: 'Are you sure that you want to Delete this Record?',
+      header: 'Confirmation',
+      icon: 'pi pi-exclamation-triangle',
+      accept: () => {
+        var dataToSendDelete = {
+          "iRequestID": 1113,
+          "iFileID": attachment.iFileID
+        }
+        this.httpService.callPostApi(dataToSendDelete).subscribe(
+          (data) => {
+            this.showAttachment();
+            this.toastService.addSingle("success", data.headers.get('StatusMessage'), "");
+          },
+          (error) => console.log(error)
+        );
+      },
+    });
+  }
   showAttachment() {
     var dataToSend = {
       "iRequestID": 1112,
@@ -605,7 +641,7 @@ export class AddNewSupplierComponent implements OnInit {
 
   deleteContact(iSupContactID) {
     this.confirmationService.confirm({
-      message: 'Are you sure that you want to proceed?',
+      message: 'Are you sure that you want to Delete this Record?',
       header: 'Confirmation',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
@@ -670,7 +706,7 @@ export class AddNewSupplierComponent implements OnInit {
   deleteBank(bank) {
     let bank_id = bank.iBankID;
     this.confirmationService.confirm({
-      message: 'Are you sure that you want to proceed?',
+      message: 'Are you sure that you want to Delete this record?',
       header: 'Confirmation',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
@@ -721,10 +757,12 @@ export class AddNewSupplierComponent implements OnInit {
 
   //category mapping starts
   getCategoryMappingDataTarget() {
-    let sup_by_id = +this.route.snapshot.params['iSupID'];
+    //let sup_by_id = +this.route.snapshot.params['iSupID'];
     const supplierCategoryMappingAPI1 = {
-      "iRequestID": 2223,
-      "iSupID": sup_by_id
+      "iRequestID": 2226,
+      "iSupID": this.supId,
+      "iPCID": this.selectedProducer.iPCID,
+      "iProducerID": this.selectedProducer.iProducerID
     }
     this.httpService.callPostApi(supplierCategoryMappingAPI1).subscribe(
       data => {
@@ -745,12 +783,19 @@ export class AddNewSupplierComponent implements OnInit {
       }
     )
     let string_ids = temp_ids_arr.toString();
-    let sup_by_id = +this.route.snapshot.params['iSupID'];
+    //let sup_by_id = +this.route.snapshot.params['iSupID'];
     const supplierCategoryMappingAddAPI = {
       "iRequestID": 2222,
+<<<<<<< HEAD
       "iSupID": sup_by_id,
       "iPCID": this.selectedProduct.iPCID,
       "sSupCatMap": string_ids
+=======
+      "iSupID": this.supId,
+      "iPCID": this.selectedProduct.iPCID,
+      "iProducerID": this.selectedProducer.iProducerID,
+      "sPrdID": string_ids
+>>>>>>> 4f9de1e32efaad95024a4a3ff3f1c4f2b26397fb
     }
     // console.log(supplierCategoryMappingAddAPI)
     this.httpService.callPostApi(supplierCategoryMappingAddAPI).subscribe(

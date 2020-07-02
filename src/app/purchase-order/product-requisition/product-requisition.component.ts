@@ -83,7 +83,7 @@ export class ProductRequisitionComponent implements OnInit {
   //Function to delete Order Requisition
   deleteOrderReq(iPReqID: Number) {
     this.confirmationService.confirm({
-      message: 'Are you sure that you want to proceed?',
+      message: 'Are you sure that you want to Delete this Record?',
       header: 'Confirmation',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
