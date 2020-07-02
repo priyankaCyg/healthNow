@@ -16,6 +16,7 @@ export class ProductInfoComponent implements OnInit {
   infoArray: ProductInfoData[];
   infoSubmitArray = [];
   prd_Id: number;
+  submitFlag: number=0;
 
   constructor(public config: DynamicDialogConfig,
     private httpService: ApiService,
@@ -71,6 +72,9 @@ export class ProductInfoComponent implements OnInit {
 
   //Function to save info data
   onSubmit() {
+    if(this.submitFlag==0){
+      this.submitFlag=1;
+    }
     let seq: number = 0;
     for (let i = 0; i < 12; i++) {
       var infoVarName = "sInfo" + (i + 1);
@@ -91,9 +95,13 @@ export class ProductInfoComponent implements OnInit {
     };
     this.httpService.callPostApi(addInfo_data).subscribe(
       (data) => {
+        if(data.headers.get('StatusCode')==200){
+          this.ref.close(true);
+        }
         this.toastService.displayApiMessage(data.headers.get('StatusMessage'), data.headers.get('StatusCode'));
-        this.ref.close(true);
-        this.infoForm.reset();
+        
+        this.submitFlag=0;
+        //this.infoForm.reset();
       },
       (error) => console.log(error)
     );

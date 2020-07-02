@@ -19,6 +19,7 @@ export class AddSupCategoryComponent implements OnInit {
   iSupCatID: number;
   public supplierCategoryForm: FormGroup;
   supplierCategoryData: SupplierCategoryMaster;
+  submitFlag: number =0;
 
   constructor(public config: DynamicDialogConfig, public ref: DynamicDialogRef, private httpService: ApiService,
     private fb: FormBuilder, private toastService: ToastService) { }
@@ -115,17 +116,23 @@ export class AddSupCategoryComponent implements OnInit {
 
   //Function to add Supplier category
   addSupplierCategory() {
-    var formData = this.supplierCategoryForm.getRawValue();
-    console.log(formData, "add")
-    var dataToSendAdd = {
-      "iRequestID": 2151,
-      "sSupCName": formData.sSupCName,
+    if(this.submitFlag==0){
+      this.submitFlag=1;
+      var formData = this.supplierCategoryForm.getRawValue();
+      console.log(formData, "add")
+      var dataToSendAdd = {
+        "iRequestID": 2151,
+        "sSupCName": formData.sSupCName,
+      }
+      this.httpService.callPostApi(dataToSendAdd).subscribe(
+        data => {
+          if(data.headers.get('StatusCode')==200){
+          this.ref.close(true);
+          }
+          this.toastService.displayApiMessage(data.headers.get('StatusMessage'), data.headers.get('StatusCode'));
+          this.submitFlag=0;
+        });
     }
-    this.httpService.callPostApi(dataToSendAdd).subscribe(
-      data => {
-        this.ref.close(true);
-        this.toastService.displayApiMessage(data.headers.get('StatusMessage'), data.headers.get('StatusCode'));
-      });
   }
 
   //Function to update supplier category
@@ -140,7 +147,9 @@ export class AddSupCategoryComponent implements OnInit {
     }
     this.httpService.callPostApi(dataToSendEdit).subscribe(
       data => {
-        this.ref.close(true);
+        if(data.headers.get('StatusCode')==200){
+          this.ref.close(true);
+          }
         this.toastService.displayApiMessage(data.headers.get('StatusMessage'), data.headers.get('StatusCode'));
       });
   }

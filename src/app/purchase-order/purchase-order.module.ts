@@ -41,11 +41,11 @@ import { FileUploadModule } from 'primeng/fileupload';
 import { CreatePoDetailEditComponent } from './create-po-detail-edit/create-po-detail-edit.component';
 import { PurchaseOrderApprovalComponent } from './purchase-order-approval/purchase-order-approval.component';
 import { PurchaseOrderFreezedComponent } from './purchase-order-freezed/purchase-order-freezed.component';
+import { PoRejectiomComponent } from './po-rejectiom/po-rejectiom.component';
 import { CustomDatePipe } from '../services/custom.datePipe';
 
-
 @NgModule({
-  declarations: [PurchaseOrderComponent, NewPoComponent, ProductPurchasePriceComponent, ProductRequisitionComponent, AddProductPurchasePriceComponent, MapSupplierComponent, CreateRequisitionComponent, CreatePoListComponent, CreatePoDetailComponent, MapSupplierMultiReqComponent, PoGeneralDetailsComponent, PoListComponent, CreatePoDetailEditComponent, PurchaseOrderApprovalComponent, PurchaseOrderFreezedComponent,CustomDatePipe],
+  declarations: [PurchaseOrderComponent, NewPoComponent, ProductPurchasePriceComponent, ProductRequisitionComponent, AddProductPurchasePriceComponent, MapSupplierComponent, CreateRequisitionComponent, CreatePoListComponent, CreatePoDetailComponent, MapSupplierMultiReqComponent, PoGeneralDetailsComponent, PoListComponent, CreatePoDetailEditComponent, PurchaseOrderApprovalComponent, PurchaseOrderFreezedComponent, PoRejectiomComponent,CustomDatePipe],
   imports: [
     CommonModule,
     PurchaseOrderRoutingModule,
@@ -70,6 +70,6 @@ import { CustomDatePipe } from '../services/custom.datePipe';
     ReactiveFormsModule
   ],
   providers: [DialogService, ConfirmationService],
-  entryComponents: [PurchaseOrderComponent, NewPoComponent, ProductPurchasePriceComponent, ProductRequisitionComponent, AddProductPurchasePriceComponent, MapSupplierComponent, CreateRequisitionComponent, CreatePoListComponent, CreatePoDetailComponent, MapSupplierMultiReqComponent, PoGeneralDetailsComponent, PoListComponent, CreatePoDetailEditComponent, PurchaseOrderApprovalComponent, PurchaseOrderFreezedComponent]
+  entryComponents: [PurchaseOrderComponent, NewPoComponent, ProductPurchasePriceComponent, ProductRequisitionComponent, AddProductPurchasePriceComponent, MapSupplierComponent, CreateRequisitionComponent, CreatePoListComponent, CreatePoDetailComponent, MapSupplierMultiReqComponent, PoGeneralDetailsComponent, PoListComponent, CreatePoDetailEditComponent, PurchaseOrderApprovalComponent, PurchaseOrderFreezedComponent,PoRejectiomComponent]
 })
 export class PurchaseOrderModule { }

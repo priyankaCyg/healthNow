@@ -79,7 +79,7 @@
                                         </p-message>
                                     </div>
                                 </div>
-                                
+
                                 <div
                                     class="separator separator--border-solid separator--space-sm separator--portlet-fit mt-5">
                                 </div>
@@ -105,8 +105,8 @@
                 <p-tabPanel header="Address" [disabled]="tabDisabled">
                     <div class="p-grid ui-fluid p-justify-end">
                         <div class="p-col-1 text-center mt-1">
-                            <button (click)="openDialogForaddAddress()" pButton icon="pi pi-fw pi-plus"
-                                label="Add New"></button>
+                            <!-- <button (click)="openDialogForaddAddress()" pButton icon="pi pi-fw pi-plus"
+                                label="Add New"></button> -->
                         </div>
                         <div class="p-col-12">
                             <p-table #AddressSerach [value]="partnerAdressData" [paginator]="true" [rows]="10"
@@ -129,8 +129,10 @@
                                         <th>State</th>
                                         <th>City</th>
                                         <th>Landmark</th>
+                                        <th>Tel No.1</th>
+                                        <th>Tel No.2</th>
+                                        <th>Fax</th>
                                         <th>Status</th>
-                                        <th>Action</th>
                                     </tr>
                                 </ng-template>
                                 <ng-template pTemplate="body" let-address>
@@ -141,6 +143,9 @@
                                         <td>{{address.sStateName}}</td>
                                         <td>{{address.sCityName}}</td>
                                         <td>{{address.sLandmark}}</td>
+                                        <td>{{address.sTelNo1}}</td>
+                                        <td>{{address.sTelNo2}}</td>
+                                        <td>{{address.sFaxNo}}</td>
                                         <td style="text-align: center;">
                                             <span *ngIf="address.iStatusID == 1"
                                                 class="badge badge--success badge--inline badge--pill">
@@ -151,12 +156,12 @@
                                                 {{address.sStatusName}}
                                             </span>
                                         </td>
-                                        <td><button pButton type="button" class="ui-button-success"
+                                        <!-- <td><button pButton type="button" class="ui-button-success"
                                                 (click)="editPartnerAddress(address.iPartnerAddID)" icon="pi pi-pencil"
                                                 style="margin-right: .5em"></button>
                                             <button pButton type="button" class="ui-button-danger"
                                                 (click)="deletePartnerAddress(address.iPartnerAddID)"
-                                                icon="pi pi-trash"></button></td>
+                                                icon="pi pi-trash"></button></td> -->
                                     </tr>
                                 </ng-template>
                             </p-table>
@@ -331,11 +336,127 @@
                 </p-tabPanel>
                 <!-- GST tab End here -->
 
+                <!--Warehouse Mapping Tab Start here-->
+                <p-tabPanel header="Warehouse Mapping" [disabled]="tabDisabled">
+                    <div class="card card-body">
+                        <div class="p-grid ui-fluid">
+                            <div class="p-col-12 p-md-8 p-lg-6">
+                                <div class="p-grid timeline-content form-group">
+                                    <div class="p-col-4 p-md-4 p-lg-4 mb-3">
+                                        <label for="country">Country</label>
+                                        <p-dropdown class="ml-2" (onChange)="countryDropdownChange($event)"
+                                            [options]="countryValue" optionLabel="sLocName"
+                                            [(ngModel)]="selectedCountry"></p-dropdown>
+                                    </div>
+                                    <div class="p-col-4 p-md-4 p-lg-4 mb-3">
+                                        <label for="state">State</label>
+                                        <p-dropdown class="ml-2" (onChange)="stateDropdownChange($event)"
+                                            [options]="stateValue" optionLabel="sLocName"
+                                            [(ngModel)]="selectedState" [disabled] = "stateDisable"></p-dropdown>
+                                    </div>
+                                    <div class="p-col-4 p-md-4 p-lg-4 mb-3">
+                                        <label for="city">City</label>
+                                        <p-dropdown class="ml-2" (onChange)="cityDropdownChange($event)"
+                                            [options]="cityValue" optionLabel="sLocName"
+                                            [(ngModel)]="selectedCity" [disabled] = "cityDisable"></p-dropdown>
+                                    </div>
+<!-- 
+                                    <div class="p-col-4 p-md-4 p-lg-3 mb-3">
+                                        <button pButton type="button" label="Get Address" (click)="getAddress()"
+                                            class="ui-button" [disabled] = "getAddressDisable"></button>
+                                    </div> -->
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="p-grid ui-fluid">
+                            <div class="p-col-6 p-lg-6">
+
+                                <div class="p-grid form-group ui-fluid p-justify-end">
+                                    <div class="p-col-12 p-lg-12">
+                                        <p-table *ngIf="address" [value]="address" [(selection)]="Selectedvalue">
+                                            <ng-template pTemplate="header">
+                                                <tr>
+                                                  
+                                                    <th>Address</th>
+                                                    <th style="width: 9em">
+                                                        <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+                                                      
+                                                    </th>
+                                                </tr>
+                                            </ng-template>
+                                            <ng-template pTemplate="body" let-address>
+                                                <tr>
+                                                  
+                                                    <td>{{address.sAddress}}</td>
+                                                    <td>
+                                                        <p-tableCheckbox [value]="address"></p-tableCheckbox>
+
+                                                    </td>
+                                                </tr>
+                                            </ng-template>
+                                            <ng-template pTemplate="footer">
+                                                <tr>
+                                                    <td colspan="2">
+                                                        <div class="p-grid p-justify-end">
+                                                            
+                                                            <div class="p-col-12 p-md-2 p-lg-2"><button pButton
+                                                                    type="button" (click)="saveAddress()" label="Save"
+                                                                    class="ui-button"></button></div>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            </ng-template>
+                                        </p-table>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Left Side End here -->
+
+                            <!-- Right Side Start here -->
+                            <div class="p-col-6 p-lg-6 p-0">
+
+                                <div *ngIf="address" class="card download-files">
+                                    <div  class="p-grid p-nogutter">
+                                        <div class="p-col-12 title pt-1 text-center">
+                                            <h2>Selected Address</h2>
+                                        </div>
+                                    </div>
+                                    <ul>
+                                        <li *ngFor="let address of Selectedvalue">
+                                            <div class="p-grid list-item">
+                                                <div class="p-col-2 icon">
+                                                    <i class="pi pi-circle-on" style="font-size: 0.5em"></i>
+                                                </div>
+                                                <div class="p-col-10 file-name">
+                                                    <h2 class="name">{{address.sAddress}}</h2>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </ul>
+
+                                </div>
+
+                            </div>
+                            <!-- Right Side End here -->
+
+
+
+                        </div>
+
+
+
+                    </div>
+                </p-tabPanel>
+                <!--Warehouse Mapping tab End here-->
+
+                
                 <!--Area Mapping Tab Start here-->
                 <p-tabPanel header="Area Mapping" [disabled]="tabDisabled">
 
                 </p-tabPanel>
                 <!--Area Mapping tab End here-->
+                
             </p-tabView>
         </div>
     </div>

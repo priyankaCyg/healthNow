@@ -80,12 +80,12 @@
                                 <td>
                                     <button pButton type="button" class="ui-button-danger mr-1" icon="pi pi-file-pdf"
                                         title="View Details"></button>
-                                    <button routerLink="/purchase-order/po-general-details" pButton type="button"
+                                    <button *ngIf="poListData.iStatusID ==1 || poListData.iStatusID ==4 || poListData.iStatusID ==5" routerLink="/purchase-order/po-general-details" pButton type="button"
                                         (click)="editPO(poListData)" class="ui-button-success mr-1"
                                         icon="pi pi-pencil"></button>
-                                    <button pButton type="button" class="ui-button-danger mr-1"
+                                    <button *ngIf="poListData.iStatusID ==1 || poListData.iStatusID ==4 || poListData.iStatusID ==5" pButton type="button" class="ui-button-danger mr-1"
                                         (click)="deletePO(poListData.iPOID)" icon="pi pi-trash"></button>
-                                    <button pButton type="button" class="ui-button-success"
+                                    <button *ngIf="poListData.iStatusID ==1 || poListData.iStatusID ==4 || poListData.iStatusID ==5" pButton type="button" class="ui-button-success"
                                         (click)="sendForApprovalPO(poListData.iPOID)" icon="pi pi-arrow-circle-right"
                                         title="Send for approval"></button>
                                 </td>

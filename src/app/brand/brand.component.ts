@@ -75,7 +75,7 @@ export class BrandComponent implements OnInit {
   //Function to delete brand
   deleteBrand(brandId: number) {
     this.confirmationService.confirm({
-      message: 'Are you sure that you want to delete?',
+      message: 'Are you sure that you want to Delete this record s?',
       header: 'Confirmation',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {

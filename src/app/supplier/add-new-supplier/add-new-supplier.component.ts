@@ -66,7 +66,7 @@ export class AddNewSupplierComponent implements OnInit {
   bankData: companyBankMaster[];
   selectedSuppCat;
   index: number = 0;
-
+  supplierSubmitFlag: number =0;
   constructor(private breadcrumbService: BreadcrumbService,
     private dialogService: DialogService,
     private httpService: ApiService,
@@ -171,7 +171,7 @@ export class AddNewSupplierComponent implements OnInit {
   // Open Dialog To Delete address
   deleteSupplierAddress(supplierID) {
     this.confirmationService.confirm({
-      message: 'Are you sure you want to Delete this Record?',
+      message: 'Are you sure you want to Delete this record?',
       header: 'Confirmation',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
@@ -443,7 +443,9 @@ export class AddNewSupplierComponent implements OnInit {
 
   //code for add new supplier data
   addSupplier() {
-    let supp_name = this.addSupplierForm.controls["sSupName"].value;
+    if(this.supplierSubmitFlag==0){
+      this.supplierSubmitFlag=1;
+      let supp_name = this.addSupplierForm.controls["sSupName"].value;
     let website_name = this.addSupplierForm.controls["sWebsite"].value;
     let pan_no = this.addSupplierForm.controls["sPAN"].value;
     let short_code = this.addSupplierForm.controls["sShortCode"].value;
@@ -465,7 +467,8 @@ export class AddNewSupplierComponent implements OnInit {
     }
     this.httpService.callPostApi(add_supplier_data).subscribe(
       data => {
-        this.supId = data.body[0].isupId;
+        if(data.headers.get('StatusCode')==200){
+          this.supId = data.body[0].isupId;
         localStorage.setItem('iSupID', this.supId)
         this.getSupplierAddressList();
         this.getFileType();
@@ -480,9 +483,16 @@ export class AddNewSupplierComponent implements OnInit {
         this.toastService.displayApiMessage(supp_name, data.headers.get('StatusCode'));
         this.index = 1;
         this.isEdit = true;
+        }
+        else{
+          this.toastService.displayApiMessage(data.headers.get('StatusMessage'), data.headers.get('StatusCode'));
+        }
+        this.supplierSubmitFlag=0;
       },
       error => console.log(error)
     );
+    }
+    
   }
 
   //code for edit supplier data
@@ -549,7 +559,7 @@ export class AddNewSupplierComponent implements OnInit {
   //code for delete gst data
   deletesupgst(gst) {
     this.confirmationService.confirm({
-      message: 'Are you sure that you want to Delete this Record?',
+      message: 'Are you sure that you want to Delete this record ?',
       header: 'Confirmation',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
@@ -641,7 +651,7 @@ export class AddNewSupplierComponent implements OnInit {
 
   deleteContact(iSupContactID) {
     this.confirmationService.confirm({
-      message: 'Are you sure that you want to Delete this Record?',
+      message: 'Are you sure that you want to Delete this record ?',
       header: 'Confirmation',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
@@ -706,7 +716,7 @@ export class AddNewSupplierComponent implements OnInit {
   deleteBank(bank) {
     let bank_id = bank.iBankID;
     this.confirmationService.confirm({
-      message: 'Are you sure that you want to Delete this record?',
+      message: 'Are you sure that you want to delete this record ?',
       header: 'Confirmation',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {

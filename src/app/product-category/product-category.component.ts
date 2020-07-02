@@ -87,7 +87,7 @@ export class ProductCategoryComponent implements OnInit {
   // Open Dialog To Delete category
   deleteCategory(categoryID) {
     this.confirmationService.confirm({
-      message: 'Are you sure you want to Delete this Record?',
+      message: 'Are you sure you want to Delete this record ?',
       header: 'Confirmation',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {

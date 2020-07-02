@@ -54,7 +54,7 @@ export class ProductComponent implements OnInit {
   //code for delete product
   deleteProduct(iPrdID: Number) {
     this.confirmationService.confirm({
-      message: 'Are you sure that you want to delete ?',
+      message: 'Are you sure that you want to Delete this record ?',
       header: 'Confirmation',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {

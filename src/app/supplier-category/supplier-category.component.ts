@@ -76,7 +76,7 @@ export class SupplierCategoryComponent implements OnInit {
   //Function to delete Supplier category
   deleteSupplierCategory(iSupCatID: number) {
     this.confirmationService.confirm({
-      message: 'Are you sure that you want to proceed?',
+      message: 'Are you sure that you want to Delete this record ?',
       header: 'Confirmation',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {

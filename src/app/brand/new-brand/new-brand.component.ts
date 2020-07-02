@@ -21,6 +21,7 @@ export class NewBrandComponent implements OnInit {
   brandId: number;
   public brandForm: FormGroup;
   brandData: BrandMaster;
+  submitFlag: number = 0;
 
   constructor(public config: DynamicDialogConfig, public ref: DynamicDialogRef, private httpService: ApiService,
     private fb: FormBuilder, private toastService: ToastService) { }
@@ -143,7 +144,9 @@ export class NewBrandComponent implements OnInit {
 
   //Function to add brand
   addBrand() {
-    var formData = this.brandForm.getRawValue();
+    if(this.submitFlag==0){
+      this.submitFlag=1;
+      var formData = this.brandForm.getRawValue();
     var dataToSendAdd = {
       "iRequestID": 2131,
       "iProducerID": formData.sProducerName.iProducerID,
@@ -151,9 +154,13 @@ export class NewBrandComponent implements OnInit {
     }
     this.httpService.callPostApi(dataToSendAdd).subscribe(
       data => {
-        this.ref.close(true);
+        if(data.headers.get('StatusCode')==200){
+          this.ref.close(true);
+        }
         this.toastService.displayApiMessage(data.headers.get('StatusMessage'), data.headers.get('StatusCode'));
+        this.submitFlag=0;
       });
+    }
   }
 
   //Function to update brand 
@@ -168,7 +175,9 @@ export class NewBrandComponent implements OnInit {
     }
     this.httpService.callPostApi(dataToSendEdit).subscribe(
       data => {
-        this.ref.close(true);
+        if(data.headers.get('StatusCode')==200){
+          this.ref.close(true);
+        }
         this.toastService.displayApiMessage(data.headers.get('StatusMessage'), data.headers.get('StatusCode'));
       });
   }
