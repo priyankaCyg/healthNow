@@ -52,10 +52,6 @@ export class ReceiveProductComponent implements OnInit {
     return this.productForm;
   }
 
-  //Quantity change function
-  // qtyChange(){
-
-  // }
   //Function to add batch details in batch table
   addDetails(){
     var formData = this.productForm.getRawValue();

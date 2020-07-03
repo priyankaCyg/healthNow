@@ -290,9 +290,10 @@ export class CreateRequisitionComponent implements OnInit {
           if (data.headers.get('StatusCode') == 200) {
             this.ref.close(true);
           }
-          let req_no = data.body[0].sRequisionNo + " has been created successfully";
+        //  let req_no = data.body[0].sRequisionNo + " has been created successfully";
           //this.ref.close(true);
-          this.toastService.displayApiMessage(req_no, data.headers.get('StatusCode'));
+         // let req_no =  "Requisition has been created successfully";
+          this.toastService.displayApiMessage(data.headers.get('StatusMessage'), data.headers.get('StatusCode'));
         },
         (error) => console.log(error)
       );
