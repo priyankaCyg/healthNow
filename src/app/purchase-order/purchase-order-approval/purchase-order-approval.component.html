@@ -31,6 +31,7 @@
                                 <th>Supplier PO</th>
                                 <th>Supplier PO Date</th>
                                 <th>Supplier Name</th>
+                                <th>Warehouse</th>
                                 <th>Currency</th>
                                 <th>Include Taxes</th>
                                 <th>Status</th>
@@ -49,6 +50,7 @@
                                 <td><span *ngIf="poListData.sPODate != '0000-00-00' && poListData.sPODate != ''">
                                         {{poListData.sPODate | date: 'dd-MM-yyyy'}}</span></td>
                                 <td>{{poListData.sSupName}}</td>
+                                <td>{{poListData.sWarehouse}}</td>
                                 <td>{{poListData.sCurrencyName}}</td>
                                 <td>
 
