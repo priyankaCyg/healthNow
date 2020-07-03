@@ -17,6 +17,7 @@ export class GrnListComponent implements OnInit {
   public rows: number = 10;
   public expandedRows = {};
   public temDataLength: number = 0;
+  po_prdid;
   grnList;
   constructor(private httpService: ApiService, private confirmationService: ConfirmationService, private toastService: ToastService,
     private dialogService: DialogService) { }
@@ -56,6 +57,7 @@ export class GrnListComponent implements OnInit {
 
   //code for get child data table
   getPOChildList(iPOPrdID: Number) {
+    this.po_prdid = iPOPrdID
     const poListAPI = {
       "iRequestID": 2344,
       "iPOPrdID": iPOPrdID
@@ -83,7 +85,8 @@ export class GrnListComponent implements OnInit {
         this.httpService.callPostApi(approve_data_api).subscribe(
           (data) => {
             this.toastService.displayApiMessage(data.headers.get('StatusMessage'), data.headers.get('StatusCode'));
-            this.getgrnList();
+            //this.getgrnList();
+            this.getPOChildList(this.po_prdid);
           },
           (error) => console.log(error)
         );
@@ -106,7 +109,8 @@ export class GrnListComponent implements OnInit {
         this.httpService.callPostApi(delete_data_api).subscribe(
           (data) => {
             this.toastService.displayApiMessage(data.headers.get('StatusMessage'), data.headers.get('StatusCode'));
-            this.getgrnList();
+            //this.getgrnList();
+            this.getPOChildList(this.po_prdid);
           },
           (error) => console.log(error)
         );
