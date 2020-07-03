@@ -7,6 +7,8 @@ import { GoodExpectedComponent } from './good-expected/good-expected.component';
 import { ReceiveProductComponent } from './receive-product/receive-product.component';
 import { GrnListComponent } from './grn-list/grn-list.component';
 import { GrnApproverComponent } from './grn-approver/grn-approver.component';
+import { InventoryComponent } from './inventory/inventory.component';
+import { GrnFreezedComponent } from './grn-freezed/grn-freezed.component';
 
 //Prime Ng Service
 import { DialogService } from 'primeng';
@@ -27,8 +29,9 @@ import {CalendarModule} from 'primeng/calendar';
 
 
 
+
 @NgModule({
-  declarations: [GRNComponent, GoodExpectedComponent, ReceiveProductComponent, GrnListComponent, GrnApproverComponent],
+  declarations: [GRNComponent, GoodExpectedComponent, ReceiveProductComponent, GrnListComponent, GrnApproverComponent, InventoryComponent, GrnFreezedComponent],
   imports: [
     CommonModule,
     GrnRoutingModule,
@@ -45,6 +48,6 @@ import {CalendarModule} from 'primeng/calendar';
     CalendarModule
   ],
   providers: [DialogService, ConfirmationService],
-  entryComponents: [GRNComponent,GoodExpectedComponent,ReceiveProductComponent, GrnListComponent, GrnApproverComponent]
+  entryComponents: [GRNComponent,GoodExpectedComponent,ReceiveProductComponent, GrnListComponent, GrnApproverComponent,GrnFreezedComponent,InventoryComponent]
 })
 export class GrnModule { }
