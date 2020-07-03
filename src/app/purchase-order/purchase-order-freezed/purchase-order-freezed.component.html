@@ -45,7 +45,8 @@
                                     </a>
                                 </td>
                                 <td>{{poListData.sPONo}}</td>
-                                <td>{{poListData.sPODate |  date: 'dd-MM-yyyy'}}</td>
+                                <td><span *ngIf="poListData.sPODate != '0000-00-00' && poListData.sPODate != ''">
+                                        {{poListData.sPODate | date: 'dd-MM-yyyy'}}</span></td>
                                 <td>{{poListData.sSupName}}</td>
                                 <td>{{poListData.sCurrencyName}}</td>
                                 <td>
