@@ -325,7 +325,7 @@
                                         <td>
                                             <button pButton type="button" (click)="editDialogForGST(gst)"
                                                 class="ui-button-success mr-1" icon="pi pi-pencil"></button>
-                                            <button pButton type="button" (click)="deletesupgst(gst.iLocID)"
+                                            <button pButton type="button" (click)="deletesupgst(gst.iPSGID)"
                                                 class="ui-button-danger" icon="pi pi-trash"></button>
                                         </td>
                                     </tr>
@@ -351,16 +351,16 @@
                                     <div class="p-col-4 p-md-4 p-lg-4 mb-3">
                                         <label for="state">State</label>
                                         <p-dropdown class="ml-2" (onChange)="stateDropdownChange($event)"
-                                            [options]="stateValue" optionLabel="sLocName"
-                                            [(ngModel)]="selectedState" [disabled] = "stateDisable"></p-dropdown>
+                                            [options]="stateValue" optionLabel="sLocName" [(ngModel)]="selectedState"
+                                            [disabled]="stateDisable"></p-dropdown>
                                     </div>
                                     <div class="p-col-4 p-md-4 p-lg-4 mb-3">
                                         <label for="city">City</label>
                                         <p-dropdown class="ml-2" (onChange)="cityDropdownChange($event)"
-                                            [options]="cityValue" optionLabel="sLocName"
-                                            [(ngModel)]="selectedCity" [disabled] = "cityDisable"></p-dropdown>
+                                            [options]="cityValue" optionLabel="sLocName" [(ngModel)]="selectedCity"
+                                            [disabled]="cityDisable"></p-dropdown>
                                     </div>
-<!-- 
+                                    <!-- 
                                     <div class="p-col-4 p-md-4 p-lg-3 mb-3">
                                         <button pButton type="button" label="Get Address" (click)="getAddress()"
                                             class="ui-button" [disabled] = "getAddressDisable"></button>
@@ -377,17 +377,17 @@
                                         <p-table *ngIf="address" [value]="address" [(selection)]="Selectedvalue">
                                             <ng-template pTemplate="header">
                                                 <tr>
-                                                  
+
                                                     <th>Address</th>
                                                     <th style="width: 9em">
                                                         <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
-                                                      
+
                                                     </th>
                                                 </tr>
                                             </ng-template>
                                             <ng-template pTemplate="body" let-address>
                                                 <tr>
-                                                  
+
                                                     <td>{{address.sAddress}}</td>
                                                     <td>
                                                         <p-tableCheckbox [value]="address"></p-tableCheckbox>
@@ -417,7 +417,7 @@
                             <div class="p-col-6 p-lg-6 p-0">
 
                                 <div *ngIf="address" class="card download-files">
-                                    <div  class="p-grid p-nogutter">
+                                    <div class="p-grid p-nogutter">
                                         <div class="p-col-12 title pt-1 text-center">
                                             <h2>Selected Address</h2>
                                         </div>
@@ -450,13 +450,13 @@
                 </p-tabPanel>
                 <!--Warehouse Mapping tab End here-->
 
-                
+
                 <!--Area Mapping Tab Start here-->
                 <p-tabPanel header="Area Mapping" [disabled]="tabDisabled">
 
                 </p-tabPanel>
                 <!--Area Mapping tab End here-->
-                
+
             </p-tabView>
         </div>
     </div>

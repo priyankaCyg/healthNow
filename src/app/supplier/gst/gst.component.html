@@ -2,14 +2,22 @@
     <div class="p-grid ui-fluid">
         <div class="p-col-12">
             <div class="p-grid form-group">
-
+                <div class="p-col-12">
+                    <label for="country">Country</label>
+                    <p-dropdown id="country" [options]="countryValue" formControlName="sCountryName"
+                        (onChange)="countryDropdownChange($event)" optionLabel="sLocName" [(ngModel)]="selectedCountry">
+                    </p-dropdown>
+                    <p-message severity="error" text="select Country is required"
+                        *ngIf="gstForm.controls['sCountryName'].touched && (selectedCountry.iLocationID=='' || gstForm.controls['sCountryName'].hasError('required'))">
+                    </p-message>
+                </div>
                 <div class="p-col-12">
                     <label for="state">State</label>
                     <p-dropdown id="state" [options]="supgstData" formControlName="sStateName" optionLabel="sLocName"
-                        [(ngModel)]="selectedstatus">
+                        [(ngModel)]="selectedState" (click)="getStateCode()">
                     </p-dropdown>
                     <p-message severity="error" text="select State is required"
-                        *ngIf="gstForm.controls['sStateName'].touched && (selectedstatus.iLocationID=='' || gstForm.controls['sStateName'].hasError('required'))">
+                        *ngIf="gstForm.controls['sStateName'].touched && (selectedState.iLocationID=='' || gstForm.controls['sStateName'].hasError('required'))">
                     </p-message>
                 </div>
 

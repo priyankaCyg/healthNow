@@ -15,7 +15,7 @@ import { APIService } from 'src/app/services/apieservice';
 import { Router } from '@angular/router';
 import { PoTnc } from 'src/app/model/po-tnc.model';
 import * as moment from 'moment';
-import {config} from 'src/config'
+import { config } from 'src/config'
 
 
 @Component({
@@ -511,10 +511,33 @@ export class PoGeneralDetailsComponent implements OnInit {
     }
     this._apiService.downloadAPI(dataToSend)
   }
+
+  //delete po attachment 
+  deleteAttFile(attachment) {
+    this.confirmationService.confirm({
+      message: 'Are you sure that you want to Delete this Record?',
+      header: 'Confirmation',
+      icon: 'pi pi-exclamation-triangle',
+      accept: () => {
+        var dataToSendDelete = {
+          "iRequestID": 1113,
+          "iFileID": attachment.iFileID
+        }
+        this.httpService.callPostApi(dataToSendDelete).subscribe(
+          (data) => {
+            this.showAttachment();
+            this.toastService.addSingle("success", data.headers.get('StatusMessage'), "");
+          },
+          (error) => console.log(error)
+        );
+      },
+    });
+  }
+
   // Dialog box to delete product 
   deleteProduct(poDetail) {
-    console.log(this.productDetails.length,"1")
-    if(this.productDetails.length == 1){
+    console.log(this.productDetails.length, "1")
+    if (this.productDetails.length == 1) {
       this.confirmationService.confirm({
         message: 'Are you sure you want to Delete the PO?',
         header: 'Confirmation',
@@ -523,7 +546,7 @@ export class PoGeneralDetailsComponent implements OnInit {
           var deleteAPI = {
             "iRequestID": 2363,
             "iPOID": this.poId,
-            "iPOPrdID":poDetail.iPOPrdID
+            "iPOPrdID": poDetail.iPOPrdID
           }
           this.httpService.callPostApi(deleteAPI).subscribe(
             data => {
@@ -535,27 +558,27 @@ export class PoGeneralDetailsComponent implements OnInit {
           );
         }
       });
-    }else{
-    this.confirmationService.confirm({
-      message: 'Are you sure you want to Delete this Record?',
-      header: 'Confirmation',
-      icon: 'pi pi-exclamation-triangle',
-      accept: () => {
-        var deleteAPI = {
-          "iRequestID": 2363,
-          "iPOID": this.poId,
-          "iPOPrdID":poDetail.iPOPrdID
+    } else {
+      this.confirmationService.confirm({
+        message: 'Are you sure you want to Delete this Record?',
+        header: 'Confirmation',
+        icon: 'pi pi-exclamation-triangle',
+        accept: () => {
+          var deleteAPI = {
+            "iRequestID": 2363,
+            "iPOID": this.poId,
+            "iPOPrdID": poDetail.iPOPrdID
+          }
+          this.httpService.callPostApi(deleteAPI).subscribe(
+            data => {
+              this.getProductList();
+              this.toastService.displayApiMessage(data.headers.get('StatusMessage'), data.headers.get('StatusCode'));
+            },
+            error => { console.log(error) }
+          );
         }
-        this.httpService.callPostApi(deleteAPI).subscribe(
-          data => {
-            this.getProductList();
-            this.toastService.displayApiMessage(data.headers.get('StatusMessage'), data.headers.get('StatusCode'));
-          },
-          error => { console.log(error) }
-        );
-      }
-    });
-  }
+      });
+    }
   }
 
 }

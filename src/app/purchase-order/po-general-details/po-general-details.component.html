@@ -4,11 +4,11 @@
     <div class="p-col-12">
         <div class="card card-w-title">
             <h1>Purchace Order Details &nbsp;<button pButton type="button" label={{po_no_display}}
-                class="ui-button-raised ui-button-light" routerLink="/purchase-order/po-list"></button></h1>
+                    class="ui-button-raised ui-button-light" routerLink="/purchase-order/po-list"></button></h1>
             <p-tabView>
                 <!-- General tab start -->
                 <p-tabPanel header="General">
-                    <form [formGroup]="POForm" autocomplete="off" *ngIf="purchaseOrderData">
+                    <form *ngIf="purchaseOrderData" [formGroup]="POForm" autocomplete="off">
                         <div class="p-grid ui-fluid">
                             <div class="p-col-12 mt-2">
                                 <div class="p-grid form-group">
@@ -103,8 +103,8 @@
                                     </div>
                                     <div class="p-col-12 p-lg-3 mb-2">
                                         <div class="mt-4">
-                                            <p-checkbox name="group1" label="Include Taxes"
-                                            [(ngModel)]="checked" formControlName="iIncludeTaxes" binary="true">
+                                            <p-checkbox name="group1" label="Include Taxes" [(ngModel)]="checked"
+                                                formControlName="iIncludeTaxes" binary="true">
                                             </p-checkbox>
                                         </div>
                                     </div>
@@ -114,11 +114,12 @@
                         <div class="separator separator--border-solid separator--space-sm separator--portlet-fit">
                         </div>
                         <div class="p-col-12 p-md-2 p-lg-12 text-right mt-0">
-                            <button pButton type="button" label="Cancel" routerLink="/purchase-order/po-list" class="ui-button-light atbt mr-2 mb-2"></button>
+                            <button pButton type="button" label="Cancel" routerLink="/purchase-order/po-list"
+                                class="ui-button-light atbt mr-2 mb-2"></button>
                             <button pButton type="button" label="Save"
-                            [disabled]="!(!POForm.invalid && !dropDownValidityCheck())"
-                            class="ui-button atbt mb-2" (click)="savePODetail()"></button>
-                    </div>
+                                [disabled]="!(!POForm.invalid && !dropDownValidityCheck())" class="ui-button atbt mb-2"
+                                (click)="savePODetail()"></button>
+                        </div>
                     </form>
                 </p-tabPanel>
                 <!-- General Tab End -->
@@ -157,8 +158,7 @@
                                             <td>
                                                 <!-- <button pButton type="button" class="ui-button-success mr-1" icon="pi pi-pencil"></button> -->
                                                 <button pButton type="button" class="ui-button-danger mr-1"
-                                                    (click)="deleteProduct(poDetail)"
-                                                    icon="pi pi-trash"></button>
+                                                    (click)="deleteProduct(poDetail)" icon="pi pi-trash"></button>
                                             </td>
                                         </tr>
                                     </ng-template>
@@ -183,7 +183,8 @@
                                     <li class="checkbox-row">
                                         <div class="p-grid">
                                             <div class="p-col-12 checkbox">
-                                                <p-checkbox [value]="general"   [(ngModel)]="Selectedvalue"  [disabled]="GeneralDisable">
+                                                <p-checkbox [value]="general" [(ngModel)]="Selectedvalue"
+                                                    [disabled]="GeneralDisable">
                                                 </p-checkbox>
                                                 <p>{{general.sTnCDesc}}</p>
                                             </div>
@@ -203,7 +204,8 @@
                                     <li class="checkbox-row">
                                         <div class="p-grid">
                                             <div class="p-col-12 checkbox">
-                                                <p-checkbox [value]="payment"  [(ngModel)]="SelectedPayment" (onChange)="checkBoxValidation(SelectedPayment)" >
+                                                <p-checkbox [value]="payment" [(ngModel)]="SelectedPayment"
+                                                    (onChange)="checkBoxValidation(SelectedPayment)">
                                                 </p-checkbox>
                                                 <p>{{payment.sTnCDesc}}</p>
                                             </div>
@@ -223,7 +225,8 @@
                                     <li class="checkbox-row">
                                         <div class="p-grid">
                                             <div class="p-col-12 checkbox">
-                                                <p-checkbox [value]="warranty"  [(ngModel)]="SelectedWarranty" (onChange)="checkBoxValidation(SelectedWarranty)">
+                                                <p-checkbox [value]="warranty" [(ngModel)]="SelectedWarranty"
+                                                    (onChange)="checkBoxValidation(SelectedWarranty)">
                                                 </p-checkbox>
                                                 <p>{{warranty.sTnCDesc}}</p>
                                             </div>
@@ -242,13 +245,14 @@
                                         </div>
                                     </div>
                                     <div class="p-grid">
-                                        <div class="p-col-12 mb-1" formArrayName="customTnc" *ngFor="let item of termsCondForm.get('customTnc').controls; let i = index;">
+                                        <div class="p-col-12 mb-1" formArrayName="customTnc"
+                                            *ngFor="let item of termsCondForm.get('customTnc').controls; let i = index;">
 
-                                        <div class="p-grid" [formGroupName]="i">
-                                            <input type="text" class="form-control" 
-                                                formControlName="custom" pInputText />
+                                            <div class="p-grid" [formGroupName]="i">
+                                                <input type="text" class="form-control" formControlName="custom"
+                                                    pInputText />
+                                            </div>
                                         </div>
-                                    </div> 
                                     </div>
                                     <div class="p-grid form-group ui-fluid">
                                         <div class="p-col-12 p-md-12 p-lg-12 text-right">
@@ -305,7 +309,7 @@
                                             <button pButton type="button" class="ui-button-success mr-1"
                                                 (click)="downloadFile(attachment)" icon="pi pi-download"></button>
                                             <button pButton type="button" class="ui-button-danger"
-                                                icon="pi pi-trash"></button>
+                                                (click)="deleteAttFile(attachment)" icon="pi pi-trash"></button>
                                         </td>
                                     </tr>
                                 </ng-template>

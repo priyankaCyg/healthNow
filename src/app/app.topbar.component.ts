@@ -93,7 +93,7 @@ import { AppMainComponent } from './app.main.component';
                                        		 <h3>Supplier Category</h3>
                                    		 </span>
 									</li>
-									<li class="active-row"  routerLink="/supplier">
+									<li routerLink="/supplier">
 										<i class="pi pi-circle-on"></i>
 										<span>
                                        	 <h3>Supplier</h3>
@@ -172,6 +172,18 @@ import { AppMainComponent } from './app.main.component';
 										<i class="pi pi-circle-on"></i>
 										<span>
                                        		 <h3>GRN Approve</h3>
+                                   		 </span>
+									</li>
+									<li routerLink="/grn/grn-freezed">
+										<i class="pi pi-circle-on"></i>
+										<span>
+                                       		 <h3>GRN Freezed</h3>
+                                   		 </span>
+									</li>
+									<li routerLink="/grn/inventory">
+										<i class="pi pi-circle-on"></i>
+										<span>
+                                       		 <h3>Inventory</h3>
                                    		 </span>
 									</li>
 								</ul>
