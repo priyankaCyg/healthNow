@@ -38,6 +38,7 @@ export class CreatePoListComponent implements OnInit {
     this.httpService.callPostApi(supplierReq_list_api).subscribe(
       data => {
         this.poList = data.body;
+        console.log(this.poList)
       },
       error => console.log(error)
     );
