@@ -18,6 +18,7 @@ export class GrnApproverComponent implements OnInit {
   public rows: number = 10;
   public expandedRows = {};
   public temDataLength: number = 0;
+  po_prdid: number;
   grnList;
   constructor(private httpService: ApiService, private confirmationService: ConfirmationService, private toastService: ToastService,
     private dialogService: DialogService) { }
@@ -56,7 +57,8 @@ export class GrnApproverComponent implements OnInit {
   }
 
   //code for get child data table
-  getPOChildList(iPOPrdID: Number) {
+  getPOChildList(iPOPrdID: number) {
+    this.po_prdid = iPOPrdID
     const poListAPI = {
       "iRequestID": 23411,
       "iPOPrdID": iPOPrdID
@@ -70,7 +72,7 @@ export class GrnApproverComponent implements OnInit {
   }
 
   //Function to Approve PO
-  approvedGRN(iGRNID: Number) {
+  approvedGRN(iGRNID: number) {
     this.confirmationService.confirm({
       message: 'Are you sure that you want to approval this record?',
       header: 'Confirmation',
@@ -84,7 +86,8 @@ export class GrnApproverComponent implements OnInit {
         this.httpService.callPostApi(approve_data_api).subscribe(
           (data) => {
             this.toastService.displayApiMessage(data.headers.get('StatusMessage'), data.headers.get('StatusCode'));
-            this.getgrnList();
+            //this.getgrnList();
+            this.getPOChildList(this.po_prdid);
           },
           (error) => console.log(error)
         );
@@ -101,7 +104,8 @@ export class GrnApproverComponent implements OnInit {
     });
     ref.onClose.subscribe((success: boolean) => {
       if (success) {
-        this.getgrnList();
+        //this.getgrnList();
+        this.getPOChildList(this.po_prdid);
       }
     });
   }
