@@ -16,6 +16,7 @@ export class POGeneralMaster {
     iIncludeTaxes: number;
     iPartnerContactID: number;
     iKVID: number;
+    sScheduledDate: Date
     /**
      * Constructor
      *
@@ -37,5 +38,6 @@ export class POGeneralMaster {
         this.iSupID = POGeneralMaster.iSupID || '';
         this.iPartnerID = POGeneralMaster.iPartnerID || '';
         this.iIncludeTaxes = POGeneralMaster.iIncludeTaxes || '';
+        this.sScheduledDate = POGeneralMaster.sScheduledDate || '';
     }
 }

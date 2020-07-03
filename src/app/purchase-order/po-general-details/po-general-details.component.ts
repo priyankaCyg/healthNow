@@ -245,6 +245,7 @@ export class PoGeneralDetailsComponent implements OnInit {
   createControl(poData?: POGeneralMaster): FormGroup {
     this.POForm = this.fb.group({
       sPODate: [moment(poData.sPODate).toDate(), Validators.required],
+      sScheduledDate: [poData.sScheduledDate ? moment(poData.sScheduledDate).toDate(): null, Validators.required],
       iSuppContactName: [poData.iSupContactID, Validators.required],
       sSuppAddress: [poData.iSupAddID, Validators.required],
       iPartnerContactName: [poData.iPOContactID, Validators.required],
@@ -255,6 +256,8 @@ export class PoGeneralDetailsComponent implements OnInit {
       sPONo: [poData.sPONo],
       iIncludeTaxes: [poData.iIncludeTaxes],
     });
+    console.log(poData.sPONo,"1")
+    console.log(this.POForm.controls['sPONo'].value)
     return this.POForm;
   }
 
@@ -263,6 +266,8 @@ export class PoGeneralDetailsComponent implements OnInit {
     var formData = this.POForm.getRawValue();
     let new_date = formData.sPODate;
     let po_date = this.datePipe.transform(new_date, config.dateFormat);
+    let sch_date = formData.sScheduledDate;
+    let scheduled_date = this.datePipe.transform(sch_date, config.dateFormat);
     let taxVal: number = 0;
     if (this.checked == true) {
       taxVal = 1;
@@ -275,7 +280,8 @@ export class PoGeneralDetailsComponent implements OnInit {
       "iPOContactID": formData.iPartnerContactName.iPartnerContactID,
       "iCurrencyID": formData.iCurrencyName.iKVID,
       "iPOID": this.poId,
-      "iIncludeTaxes": taxVal
+      "iIncludeTaxes": taxVal,
+      "sScheduledDate":scheduled_date
     }
     this.httpService.callPostApi(addAPI).subscribe(
       data => {
