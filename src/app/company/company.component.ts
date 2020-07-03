@@ -37,6 +37,11 @@ export class CompanyComponent implements OnInit {
   bankData: companyBankMaster[];
   designationData: DesignationData[];
   employee;
+  EmployeeValue = [];
+  selectedEmployee : any ;
+  employee_id:number;
+  address: any[];
+  WarehouseList: any[] = [];
 
   constructor(
     private breadcrumbService: BreadcrumbService,
@@ -68,6 +73,7 @@ export class CompanyComponent implements OnInit {
     this.gstList();
     this.getAllAddressesList();
     this.showEmployee();
+    this.EmployeeDropdown();
   }
 
   // code for company field data 
@@ -501,6 +507,64 @@ export class CompanyComponent implements OnInit {
       },
       reject: () => { }
     });
+  }
+
+   //Function for Employee dropdown 
+   EmployeeDropdown() {
+    return new Promise((resolve, reject) => {
+      const dataToSendEmployee = {
+        "iRequestID":2031,
+	      "iCID" :1
+      }
+      this.httpService.getDropDownData(dataToSendEmployee).then(response => {
+        this.EmployeeValue = response
+        this.EmployeeValue.splice(0, 0, { iEmpID: "", sEmpName: "Select Employee" })
+        this.selectedEmployee = { iEmpID: "", sEmpName: "Select Employee" }
+        resolve(this.EmployeeValue)
+      });  
+    })
+  }
+
+  //On change of Employee dropdown
+  employeeDropdownChange(event){
+    this.employee_id = event.value.iEmpID;
+    this.address = [];
+    this.WarehouseList = [];
+   this.getwarehouse();
+  }
+
+  //Function to list all address
+  getwarehouse() {
+    this.WarehouseList = [];
+    const warehouse_list_data = {
+      "iRequestID":2401,
+      "iEmpID":this.employee_id
+    }
+    this.httpService.callPostApi(warehouse_list_data).subscribe(
+      (data) => {
+        this.address = data.body;
+        this.WarehouseList = this.address.filter(key => key.iIsSelected == 1)
+      },
+      (error) => console.log(error)
+    );
+  }
+
+   //Function to save warehouse mapping
+   saveAddress() {
+    const address_id = this.WarehouseList.map(({ iAddID }) => iAddID);
+    let address_id_str = address_id.toString();
+    const save_data = {
+      "iRequestID":2402,
+       "iEmpID":this.employee_id,
+       "sAddIds":address_id_str
+    }
+    this.httpService.callPostApi(save_data).subscribe(
+      (data) => {
+        this.getwarehouse();
+        this.toastService.displayApiMessage(data.headers.get('StatusMessage'), data.headers.get('StatusCode'));
+      },
+      (error) => console.log(error)
+    );
   }
 
 }

@@ -8,6 +8,6 @@ export var config = {
     authStoreUrl: 'http://13.126.132.149/healthnowstore/authenticate',
     fileUrl: 'http://13.126.132.149/healthnow/file',
     deleteMsg: "Are you sure you want to Delete this record ?",
-    dateFormat : 'yyyy-dd-MM'
+    dateFormat : 'yyyy-MM-dd'
 }
 
