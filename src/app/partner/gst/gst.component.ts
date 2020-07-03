@@ -17,7 +17,7 @@ export class GstComponent implements OnInit {
   selectedCountry;
   country_id: number
   locId: number;
-  PSGID: number;
+  iPSGID: number;
   partner_id: number;
   isEdit: boolean = false;
   selectedcode: string;
@@ -38,10 +38,10 @@ export class GstComponent implements OnInit {
     this.gstForm = this.createControl(this.gstData);
     this.locId = this.config.data.iLocID;
     this.partner_id = +localStorage.getItem('iPartnerID');
-    this.PSGID = this.config.data.PSGID;
+    this.iPSGID = this.config.data.iPSGID;
 
     //code for select data by edit
-    if (this.PSGID != null) {
+    if (this.iPSGID != null) {
       this.isEdit = true;
       this.gstData = this.config.data;
       this.gstForm = this.createControl(this.gstData);
@@ -186,7 +186,7 @@ export class GstComponent implements OnInit {
       "iLocID": loc_int_id,
       "sGST": gst_no,
       "sLocCode": loc_code,
-      "iPSGID": this.PSGID
+      "iPSGID": this.iPSGID
     }
     this.httpService.callPostApi(add_gst_data).subscribe(
       data => {
