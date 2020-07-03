@@ -51,7 +51,7 @@ export class PurchaseOrderFreezedComponent implements OnInit {
      //code for get child data table
      getPOChildList(iPOID: Number) {
       const poListAPI = {
-        "iRequestID": 2360,
+        "iRequestID": 2362,
         "iPOID": iPOID
       }
       this.httpService.callPostApi(poListAPI).subscribe(

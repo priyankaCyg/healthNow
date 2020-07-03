@@ -1,4 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { ApiService } from 'src/app/services/api.service';
+import { goodsExpectedMaster } from 'src/app/model/goodsExpected.model';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-good-expected',
@@ -7,18 +10,32 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class GoodExpectedComponent implements OnInit {
 
-  goodExp: any[];
+  goodsList: goodsExpectedMaster[];
 
-  constructor() {}
+  constructor(private httpService: ApiService, private router: Router) { }
 
   ngOnInit(): void {
-    this.goodExp = [
-      { supName:'SKK Suppliers', reqNo:'ALPHA/234/11-05', PoNo:'PO/SS/20200514/4', product:'Groundnut Oil', qty:'100'},
-      { supName:'KKB Suppliers', reqNo:'ALPHA/234/1', PoNo:'PO/SS/20200513/5', product:'Mustard Oil', qty:'150'},
-      { supName:'NOM Suppliers', reqNo:'ALPHA/234/1', PoNo:'PO/SS/20200512/6', product:'Gluten Free Wheat', qty:'100'},
-      { supName:'SRK Suppliers', reqNo:'ALPHA/234/1', PoNo:'PO/SS/20200511/7', product:'Horlicks', qty:'200'}
-    ];
+    this.getGoodsList();
+  }
 
+  //Function to get goods expected list
+  getGoodsList() {
+    var dataToSend = {
+      "iRequestID": 2342,
+      "iUserID": 12
+    }
+    this.httpService.callPostApi(dataToSend).subscribe(
+      data => {
+        this.goodsList = data.body;
+      },
+      error => console.log(error)
+    );
+  }
+
+  //GRN button click function
+  grnClick(goodsData) {
+    localStorage.setItem('goodsDetails', JSON.stringify({ goodsData }));
+    this.router.navigate(['/grn/receive-product']);
   }
 
 }
