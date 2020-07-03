@@ -75,12 +75,7 @@ import { AppMainComponent } from './app.main.component';
                                     </span>
 									</li>
 									
-									<li>
-										<i class="pi pi-circle-on"></i>
-										<span>
-                                        <h3>Product Price</h3>
-                                    </span>
-									</li>
+							
 									
 								</ul>
 							</li>
