@@ -86,7 +86,7 @@ export class GrnApproverComponent implements OnInit {
         this.httpService.callPostApi(approve_data_api).subscribe(
           (data) => {
             this.toastService.displayApiMessage(data.headers.get('StatusMessage'), data.headers.get('StatusCode'));
-            //this.getgrnList();
+            this.getgrnList();
             this.getPOChildList(this.po_prdid);
           },
           (error) => console.log(error)
@@ -104,7 +104,7 @@ export class GrnApproverComponent implements OnInit {
     });
     ref.onClose.subscribe((success: boolean) => {
       if (success) {
-        //this.getgrnList();
+        this.getgrnList();
         this.getPOChildList(this.po_prdid);
       }
     });
@@ -112,8 +112,8 @@ export class GrnApproverComponent implements OnInit {
 
   expandAll() {
     if (!this.isExpanded) {
-      this.cars.forEach(data => {
-        this.expandedRows[data.vin] = 1;
+      this.grnList.forEach(data => {
+        this.expandedRows[data.iPOPrdID] = 1;
       })
     } else {
       this.expandedRows = {};

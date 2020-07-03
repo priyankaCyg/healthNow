@@ -85,7 +85,7 @@ export class GrnListComponent implements OnInit {
         this.httpService.callPostApi(approve_data_api).subscribe(
           (data) => {
             this.toastService.displayApiMessage(data.headers.get('StatusMessage'), data.headers.get('StatusCode'));
-            //this.getgrnList();
+            this.getgrnList();
             this.getPOChildList(this.po_prdid);
           },
           (error) => console.log(error)
@@ -109,7 +109,7 @@ export class GrnListComponent implements OnInit {
         this.httpService.callPostApi(delete_data_api).subscribe(
           (data) => {
             this.toastService.displayApiMessage(data.headers.get('StatusMessage'), data.headers.get('StatusCode'));
-            //this.getgrnList();
+            this.getgrnList();
             this.getPOChildList(this.po_prdid);
           },
           (error) => console.log(error)
@@ -120,8 +120,8 @@ export class GrnListComponent implements OnInit {
 
   expandAll() {
     if (!this.isExpanded) {
-      this.cars.forEach(data => {
-        this.expandedRows[data.vin] = 1;
+      this.grnList.forEach(data => {
+        this.expandedRows[data.iPOPrdID] = 1;
       })
     } else {
       this.expandedRows = {};

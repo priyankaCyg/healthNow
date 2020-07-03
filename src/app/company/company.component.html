@@ -392,96 +392,94 @@
             </div>
           </div>
         </p-tabPanel>
-         <!--Warehouse Mapping Tab Start here-->
-         <p-tabPanel header="Warehouse Mapping" [disabled]="tabDisabled">
+        <!--Warehouse Mapping Tab Start here-->
+        <p-tabPanel header="Warehouse Mapping" [disabled]="tabDisabled">
           <div class="card card-body">
-              <div class="p-grid">
-                  <div class="p-col-12 p-md-12 p-lg-12">
-                      <div class="p-grid timeline-content form-group">
-                          <div class="p-col-12 p-md-12 p-lg-12 mb-3">
-                              <label for="country">Employee </label>
-                              <p-dropdown class="ml-2" 
-                                  [options]="EmployeeValue" optionLabel="sEmpName" (onChange)="employeeDropdownChange($event)"
-                                  [(ngModel)]="selectedEmployee"></p-dropdown>
-                          </div>
-                      </div>
+            <div class="p-grid">
+              <div class="p-col-12 p-md-12 p-lg-12">
+                <div class="p-grid timeline-content form-group">
+                  <div class="p-col-12 p-md-12 p-lg-12 mb-3">
+                    <label for="country">Employee </label>
+                    <p-dropdown class="ml-2" [options]="EmployeeValue" optionLabel="sEmpName"
+                      (onChange)="employeeDropdownChange($event)" [(ngModel)]="selectedEmployee"></p-dropdown>
                   </div>
+                </div>
               </div>
-              <div class="p-grid ui-fluid">
-                  <div class="p-col-6 p-lg-6">
+            </div>
+            <div class="p-grid ui-fluid">
+              <div class="p-col-6 p-lg-6">
 
-                      <div class="p-grid form-group ui-fluid p-justify-end">
-                          <div class="p-col-12 p-lg-12">
-                              <p-table *ngIf="address" [value]="address" [(selection)]="WarehouseList">
-                                  <ng-template pTemplate="header">
-                                      <tr>
-                                        
-                                          <th>Address</th>
-                                          <th style="width: 9em">
-                                              <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
-                                            
-                                          </th>
-                                      </tr>
-                                  </ng-template>
-                                  <ng-template pTemplate="body" let-address>
-                                      <tr>
-                                        
-                                          <td>{{address.sAddress}}</td>
-                                          <td>
-                                              <p-tableCheckbox [value]="address"></p-tableCheckbox>
+                <div class="p-grid form-group ui-fluid p-justify-end">
+                  <div class="p-col-12 p-lg-12">
+                    <p-table *ngIf="address" [value]="address" [(selection)]="WarehouseList">
+                      <ng-template pTemplate="header">
+                        <tr>
 
-                                          </td>
-                                      </tr>
-                                  </ng-template>
-                                  <ng-template pTemplate="footer">
-                                      <tr>
-                                          <td colspan="2">
-                                              <div class="p-grid p-justify-end">
-                                                  
-                                                  <div class="p-col-12 p-md-2 p-lg-2">
-                                                    <button pButton
-                                                          type="button" (click)="saveAddress()" label="Save"
-                                                          class="ui-button" [disabled]="!WarehouseList.length"></button></div>
-                                              </div>
-                                          </td>
-                                      </tr>
-                                  </ng-template>
-                              </p-table>
-                          </div>
+                          <th>Address</th>
+                          <th style="width: 9em">
+                            <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+
+                          </th>
+                        </tr>
+                      </ng-template>
+                      <ng-template pTemplate="body" let-address>
+                        <tr>
+
+                          <td>{{address.sShortName}}</td>
+                          <td>
+                            <p-tableCheckbox [value]="address"></p-tableCheckbox>
+
+                          </td>
+                        </tr>
+                      </ng-template>
+                      <ng-template pTemplate="footer">
+                        <tr>
+                          <td colspan="2">
+                            <div class="p-grid p-justify-end">
+
+                              <div class="p-col-12 p-md-2 p-lg-2">
+                                <button pButton type="button" (click)="saveAddress()" label="Save" class="ui-button"
+                                  [disabled]="!WarehouseList.length"></button></div>
+                            </div>
+                          </td>
+                        </tr>
+                      </ng-template>
+                    </p-table>
+                  </div>
+                </div>
+              </div>
+              <!-- Left Side End here -->
+
+              <!-- Right Side Start here -->
+              <div class="p-col-6 p-lg-6 p-0">
+
+                <div *ngIf="address" class="card download-files">
+                  <div class="p-grid p-nogutter">
+                    <div class="p-col-12 title pt-1 text-center">
+                      <h2>Selected Address</h2>
+                    </div>
+                  </div>
+                  <ul>
+                    <li *ngFor="let address of WarehouseList">
+                      <div class="p-grid list-item">
+                        <div class="p-col-2 icon">
+                          <i class="pi pi-circle-on" style="font-size: 0.5em"></i>
+                        </div>
+                        <div class="p-col-10 file-name">
+                          <h2 class="name">{{address.sShortName}}</h2>
+                        </div>
                       </div>
-                  </div>
-                  <!-- Left Side End here -->
+                    </li>
+                  </ul>
 
-                  <!-- Right Side Start here -->
-                  <div class="p-col-6 p-lg-6 p-0">
+                </div>
 
-                      <div *ngIf="address" class="card download-files">
-                          <div  class="p-grid p-nogutter">
-                              <div class="p-col-12 title pt-1 text-center">
-                                  <h2>Selected Address</h2>
-                              </div>
-                          </div>
-                          <ul>
-                              <li *ngFor="let address of WarehouseList">
-                                  <div class="p-grid list-item">
-                                      <div class="p-col-2 icon">
-                                          <i class="pi pi-circle-on" style="font-size: 0.5em"></i>
-                                      </div>
-                                      <div class="p-col-10 file-name">
-                                          <h2 class="name">{{address.sAddress}}</h2>
-                                      </div>
-                                  </div>
-                              </li>
-                          </ul>
-
-                      </div>
-
-                  </div>
-                  <!-- Right Side End here -->
-                  </div>
-                  </div>
-      </p-tabPanel>
-      <!--Warehouse Mapping tab End here-->
+              </div>
+              <!-- Right Side End here -->
+            </div>
+          </div>
+        </p-tabPanel>
+        <!--Warehouse Mapping tab End here-->
       </p-tabView>
     </div>
   </div>

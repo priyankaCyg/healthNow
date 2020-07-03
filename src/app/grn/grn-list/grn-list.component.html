@@ -9,10 +9,19 @@
                 </div>
                 <div class="p-col-12 mt-3">
 
-                    <p-table [columns]="cols" [value]="grnList" dataKey="vin" [paginator]="true" [rows]="10"
-                        [totalRecords]="cars.length" pageLinkSize="3" (onPage)="onPage($event)" rowExpandMode="single"
-                        (onRowExpand)="onRowExpand()" (onRowCollapse)="onRowCollapse()"
+                    <p-table [columns]="cols" #search [value]="grnList" dataKey="iPOPrdID" [paginator]="true"
+                        [rows]="10" [totalRecords]="cars.length" [showCurrentPageReport]="true"
+                        [globalFilterFields]="['sPONo','sPODate','sSupName','sRequisionNo','sPrdName']"
+                        [rowsPerPageOptions]="[10, 25, 50]" [filterDelay]="0" pageLinkSize="3" (onPage)="onPage($event)"
+                        rowExpandMode="single" (onRowExpand)="onRowExpand()" (onRowCollapse)="onRowCollapse()"
                         [expandedRowKeys]="expandedRows">
+                        <ng-template pTemplate="caption">
+                            <div class="ui-table-globalfilter-container text-left">
+                                <input type="text" pInputText size="50" placeholder="Search"
+                                    (input)="search.filterGlobal($event.target.value,'contains')"
+                                    style="width: 250px;" />
+                            </div>
+                        </ng-template>
                         <ng-template pTemplate="header" let-columns>
                             <tr>
                                 <th style="width: 3em">

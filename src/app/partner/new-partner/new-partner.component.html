@@ -388,7 +388,7 @@
                                             <ng-template pTemplate="body" let-address>
                                                 <tr>
 
-                                                    <td>{{address.sAddress}}</td>
+                                                    <td>{{address.sShortName}}</td>
                                                     <td>
                                                         <p-tableCheckbox [value]="address"></p-tableCheckbox>
 
@@ -399,10 +399,11 @@
                                                 <tr>
                                                     <td colspan="2">
                                                         <div class="p-grid p-justify-end">
-                                                            
-                                                            <div  class="p-col-12 p-md-2 p-lg-2"><button pButton
+
+                                                            <div class="p-col-12 p-md-2 p-lg-2"><button pButton
                                                                     type="button" (click)="saveAddress()" label="Save"
-                                                                    class="ui-button" [disabled]="!Selectedvalue.length>0"></button></div>
+                                                                    class="ui-button"
+                                                                    [disabled]="!Selectedvalue.length>0"></button></div>
                                                         </div>
                                                     </td>
                                                 </tr>
@@ -429,7 +430,7 @@
                                                     <i class="pi pi-circle-on" style="font-size: 0.5em"></i>
                                                 </div>
                                                 <div class="p-col-10 file-name">
-                                                    <h2 class="name">{{address.sAddress}}</h2>
+                                                    <h2 class="name">{{address.sShortName}}</h2>
                                                 </div>
                                             </div>
                                         </li>
