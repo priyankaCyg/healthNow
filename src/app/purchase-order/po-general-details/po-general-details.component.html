@@ -8,7 +8,7 @@
             <p-tabView>
                 <!-- General tab start -->
                 <p-tabPanel header="General">
-                    <form [formGroup]="POForm" autocomplete="off">
+                    <form *ngIf="purchaseOrderData" [formGroup]="POForm" autocomplete="off">
                         <div class="p-grid ui-fluid">
                             <div class="p-col-12 mt-2">
                                 <div class="p-grid form-group">
@@ -51,10 +51,15 @@
                                             </p-message>
                                         </div>
                                     </div>
-                                    <!-- <div class="p-col-12 p-lg-3 mb-2">
-                                        <label for="suppAddress">Scheduled Date</label>
-                                        <p-calendar [(ngModel)]="value" formControlName=""></p-calendar>
-                                    </div> -->
+                                    <div class="p-col-12 p-lg-3 mb-2">
+                                        <label for="sScheduledDate">Delivery Expected Date</label>
+                                        <p-calendar formControlName="sScheduledDate" dateFormat="dd-mm-yy"></p-calendar>
+                                        <div>
+                                            <p-message severity="error" text="This field is required"
+                                                *ngIf="POForm.controls['sScheduledDate'].touched  && POForm.controls['sScheduledDate'].hasError('required')">
+                                            </p-message>
+                                        </div>
+                                    </div>
                                     <div class="p-col-12 p-md-2 p-lg-12">
                                         <div
                                             class="separator separator--border-dashed separator--space-sm separator--portlet-fit">

@@ -1,0 +1,29 @@
+<div class="p-grid">
+    <div class="p-col-12">
+        <div class="card card-w-title">
+            <div class="p-grid ui-fluid vertical-container">
+                <div class="p-col p-col-align-start">
+                    <h1 class="mt-2">Inventory</h1>
+                </div>
+               <div class="p-col-12">
+                        <div class="p-grid form-group p-col-12">
+
+                            <div class="p-col-12 p-md-6 p-lg-6 mb-2 ">
+                                <label for="Warehouse">Select Warehouse</label>
+                                <p-dropdown [options]="warehouseData" optionLabel="sAddress"
+                                     [(ngModel)]="selectedWarehouseData" (onChange)="setWarehouseId($event)"></p-dropdown>
+
+                            </div>
+                            <div class="p-col-12 p-md-6 p-lg-3 mb-2 ">
+                                <label for="product">Select Partner</label>
+                                <p-dropdown [options]="partnerData" optionLabel="sPartnerName"
+                                [(ngModel)]="selectedPartnerData" [disabled]="disbalePartner"></p-dropdown>
+
+                            </div>
+                        </div>
+                    </div>
+               
+            </div>
+        </div>
+    </div>
+</div>

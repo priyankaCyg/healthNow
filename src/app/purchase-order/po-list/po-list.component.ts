@@ -35,6 +35,7 @@ export class PoListComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    localStorage.removeItem('poDetails');
     this.getPOList();
     this.batch = [];
   }

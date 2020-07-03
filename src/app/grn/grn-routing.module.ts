@@ -5,6 +5,8 @@ import {GoodExpectedComponent} from './good-expected/good-expected.component';
 import {ReceiveProductComponent} from './receive-product/receive-product.component';
 import {GrnListComponent} from './grn-list/grn-list.component';
 import {GrnApproverComponent} from './grn-approver/grn-approver.component';
+import { GrnFreezedComponent } from './grn-freezed/grn-freezed.component';
+import { InventoryComponent } from './inventory/inventory.component';
 
 const routes: Routes = [
   {
@@ -36,6 +38,18 @@ const routes: Routes = [
       component: GrnApproverComponent,
       data: {
         title: "GRN Approver"}
+    },
+    {
+      path: "grn-freezed",
+      component: GrnFreezedComponent,
+      data: {
+        title: "GRN Freezed"}
+    },
+    {
+      path: "inventory",
+      component: InventoryComponent,
+      data: {
+        title: "Inventory"}
     }
 ];
 
