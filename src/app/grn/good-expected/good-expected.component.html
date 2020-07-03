@@ -23,6 +23,8 @@
                             <th>Purchase Order No.</th>
                             <th>Product Name</th>
                             <th>Quantity</th>
+                            <th>Pending Quantity</th>
+                            <th>Delivery Expected Date</th>
                             <th>Action</th>
                         </tr>
                     </ng-template>
@@ -33,6 +35,9 @@
                             <td>{{goodsList.sPONo}}</td>
                             <td>{{goodsList.sPrdName}}</td>
                             <td>{{goodsList.iQty}}</td>
+                            <td>{{goodsList.iPendingQty}}</td>
+                            <td><span *ngIf="goodsList.sScheduledDate != '0000-00-00' && goodsList.sScheduledDate != ''">
+                                {{goodsList.sScheduledDate | date: 'dd-MM-yyyy'}}</span></td>
                             <td>
                                 <button pButton type="button" class="ui-button-success" label="GRN" (click)="grnClick(goodsList)" ></button>
                             </td>
