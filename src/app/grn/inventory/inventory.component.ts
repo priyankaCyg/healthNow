@@ -12,6 +12,8 @@ export class InventoryComponent implements OnInit {
   selectedWarehouseData;
   partnerData;
   selectedPartnerData;
+  wh_id : number;
+  disbalePartner : boolean = true;
 
   constructor(private httpService: ApiService) { 
     
@@ -27,13 +29,13 @@ export class InventoryComponent implements OnInit {
   getwarehouseDropdown() {
     return new Promise((resolve, reject) => {
       var parent_cat_api = {
-        "iRequestID": 2116
+        "iRequestID":20111
       }
       this.httpService.callPostApi(parent_cat_api).subscribe(
         data => {
           this.warehouseData = data.body;
-          this.warehouseData.unshift({ iPCID: "", sPCName: "Select Product Category" });
-          this.selectedWarehouseData = { iPCID: "", sPCName: "Select Product Category" };
+          this.warehouseData.unshift({ "iAddID": 0, "sAddress": "Select Warehouse" });
+          this.selectedWarehouseData = { "iAddID": 0, "sAddress": "Select Warehouse" };
           resolve(this.warehouseData);
         },
         error => {
@@ -42,11 +44,25 @@ export class InventoryComponent implements OnInit {
     });
   }
 
+  setWarehouseId(event) {
+    this.wh_id = event.value.iAddID;
+    console.log(this.wh_id)
+    if(this.wh_id != 0){
+      this.disbalePartner = false;
+    }
+    else {
+      this.disbalePartner = true;
+    }
+    this.partnerDropdown();
+  }
+
+
    // code for partner dropdown data
    partnerDropdown() {
     return new Promise((resolve, reject) => {
       const partner_dropdown_data = {
-        "iRequestID": 2289,
+        "iRequestID":2392,
+        "iAddID":this.wh_id
       }
       this.httpService.getDropDownData(partner_dropdown_data).then(
         (data) => {
