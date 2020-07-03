@@ -6,26 +6,35 @@
                     <h1 class="mt-2">Goods Expected</h1>
                 </div>
             <div class="p-col-12 mt-3"> 
-                <p-table [value]="goodExp">
+                <p-table [value]="goodsList" #Search [paginator]="true" [rows]="10"
+                [showCurrentPageReport]="true" [rowsPerPageOptions]="[10, 25, 50]" [filterDelay]="0"
+                [globalFilterFields]="['sSupName','sRequisionNo','sPONo','sPrdName','iQty']">
+                <ng-template pTemplate="caption">
+                    <div class="ui-table-globalfilter-container text-left">
+                        <input type="text" pInputText size="50" placeholder="Search"
+                            (input)="Search.filterGlobal($event.target.value, 'contains')"
+                            style="width:250px;">
+                    </div>
+                </ng-template>
                     <ng-template pTemplate="header">
                         <tr>
                             <th>Supplier Name</th>
-                            <th>Req. No</th>
-                            <th>PO No</th>
-                            <th>Product</th>
-                            <th>Qty</th>
+                            <th>Requisition No.</th>
+                            <th>Purchase Order No.</th>
+                            <th>Product Name</th>
+                            <th>Quantity</th>
                             <th>Action</th>
                         </tr>
                     </ng-template>
-                    <ng-template pTemplate="body" let-goodExp>
+                    <ng-template pTemplate="body" let-goodsList>
                         <tr>
-                            <td>{{goodExp.supName}}</td>
-                            <td>{{goodExp.reqNo}}</td>
-                            <td>{{goodExp.PoNo}}</td>
-                            <td>{{goodExp.product}}</td>
-                            <td>{{goodExp.qty}}</td>
+                            <td>{{goodsList.sSupName}}</td>
+                            <td>{{goodsList.sRequisionNo}}</td>
+                            <td>{{goodsList.sPONo}}</td>
+                            <td>{{goodsList.sPrdName}}</td>
+                            <td>{{goodsList.iQty}}</td>
                             <td>
-                                <button  routerLink="/grn/receive-product" pButton type="button" class="ui-button-success" label="GRN" ></button>
+                                <button pButton type="button" class="ui-button-success" label="GRN" (click)="grnClick(goodsList)" ></button>
                             </td>
                             
                         </tr>

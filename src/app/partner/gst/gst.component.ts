@@ -13,11 +13,15 @@ import { ApiService } from 'src/app/services/api.service';
 export class GstComponent implements OnInit {
   supgstData;
   selectedstate;
-  locId;
-  partner_id;
+  countryValue;
+  selectedCountry;
+  country_id: number
+  locId: number;
+  iPSGID: number;
+  partner_id: number;
   isEdit: boolean = false;
-  selectedcode : string;
-  submitFlag: number =0;
+  selectedcode: string;
+  submitFlag: number = 0;
 
   public gstForm: FormGroup;
   gstData: GstMaster;
@@ -30,61 +34,95 @@ export class GstComponent implements OnInit {
 
   ngOnInit(): void {
     this.defaultDropDwnValue()
-    this.gstData = new GstMaster();
+    this.gstData = new GstMaster(this.config.data);
     this.gstForm = this.createControl(this.gstData);
     this.locId = this.config.data.iLocID;
     this.partner_id = +localStorage.getItem('iPartnerID');
+    this.iPSGID = this.config.data.iPSGID;
 
     //code for select data by edit
-    if (this.locId != null) {
+    if (this.iPSGID != null) {
       this.isEdit = true;
       this.gstData = this.config.data;
-        this.gstForm = this.createControl(this.gstData);
-        Promise.all([this.getStatesDrpDwn()]).then(values => {
-          this.setDropDownVal()
-        });
+      this.gstForm = this.createControl(this.gstData);
+      Promise.all([this.getCountryDrpDwn()]).then(values => {
+        this.setDropDownVal()
+      });
     }
     else {
       this.isEdit = false
-      Promise.all([this.getStatesDrpDwn()]).then(values => {
+      Promise.all([this.getCountryDrpDwn()]).then(values => {
       });
     }
   }
 
   // code for default dropdown data 
   defaultDropDwnValue() {
-    this.selectedstate = {
-      "iLocationID": 0, "sLocName": "Select", "iStateCode": 0, "sLocCode": null,
-      "sStateName": null
-    }
+    this.selectedCountry = { "iLocationID": 0, "sLocName": "Select" }
+    this.selectedstate = { "iLocationID": 0, "sLocName": "Select" }
   }
 
   //code for set dropdown data 
   setDropDownVal() {
-    // Status Dropdown Select
-    let selectedstateObj = this.supgstData.find(x => x.sLocCode == this.gstData.sLocCode);
+    // Country Dropdown Select
+    let selectedCountryObj = this.countryValue.find(x => x.iLocationID == this.config.data.iCountryID);
 
-    if (selectedstateObj !== undefined) {
-      this.selectedstate = selectedstateObj;
+    if (selectedCountryObj !== undefined) {
+      this.selectedCountry = selectedCountryObj;
     }
+
+    //state dropdown Select
+    if (this.selectedCountry.iLocationID) {
+      var dataToSend = {
+        "iRequestID": 2104,
+        "iLevelCode1": this.selectedCountry.iLocationID
+      }
+      this.httpService.getDropDownData(dataToSend).then(response => {
+        this.supgstData = response
+        this.supgstData.splice(0, 0, { iLocationID: "", sLocName: "Select State" })
+        this.selectedstate = { iLocationID: "", sLocName: "Select State" }
+        let selectedStateObj = this.supgstData.find(x => x.iLocationID == this.config.data.iLocID);
+
+        if (selectedStateObj !== undefined) {
+          this.selectedstate = selectedStateObj;
+        }
+      });
+    }
+
   }
 
-  //code for supplier status dropdown data 
-  getStatesDrpDwn() {
+  //code for partner country dropdown data 
+  getCountryDrpDwn() {
     return new Promise((resolve, reject) => {
       var sup_gst_data = {
-        "iRequestID": 2102
+        "iRequestID": 2103
       }
       this.httpService.getDropDownData(sup_gst_data).then(response => {
+        this.countryValue = response
+        this.countryValue.splice(0, 0, { "iLocationID": 0, "sLocName": "Select" })
+        this.selectedCountry = { "iLocationID": 0, "sLocName": "Select" }
+        resolve(this.countryValue)
+      });
+    })
+  }
+
+  //on chanage to get country id 
+  countryDropdownChange(event) {
+    this.country_id = event.value.iLocationID
+    this.stateDropdown();
+  }
+
+  //code for partner state dropdown data
+  stateDropdown() {
+    return new Promise((resolve, reject) => {
+      var dataToSend = {
+        "iRequestID": 2104,
+        "iLevelCode1": this.country_id
+      }
+      this.httpService.getDropDownData(dataToSend).then(response => {
         this.supgstData = response
-        this.supgstData.splice(0, 0, {
-          "iLocationID": 0, "sLocName": "Select", "iStateCode": 0, "sLocCode": null,
-          "sStateName": null
-        })
-        this.selectedstate = {
-          "iLocationID": 0, "sLocName": "Select", "iStateCode": 0, "sLocCode": null,
-          "sStateName": null
-        }
+        this.supgstData.splice(0, 0, { iLocationID: "", sLocName: "Select State" })
+        this.selectedstate = { iLocationID: "", sLocName: "Select State" }
         resolve(this.supgstData)
       });
     })
@@ -99,58 +137,60 @@ export class GstComponent implements OnInit {
       sCreatedDate: [gstData.sCreatedDate],
       sGST: [gstData.sGST, [Validators.required]],
       sLocCode: [gstData.sLocCode],
-      sStateName: [gstData.sStateName, [Validators.required]]
+      sStateName: [gstData.sStateName, [Validators.required]],
+      sCountryName: [gstData.sStateName, [Validators.required]]
     });
     return this.gstForm;
   }
 
-  //code for add supplier gst data
+  //code for add partner gst data
   addGst() {
-    if(this.submitFlag ==0){
-      this.submitFlag =1;
+    if (this.submitFlag == 0) {
+      this.submitFlag = 1;
       let gst_no = this.gstForm.controls["sGST"].value;
-    let state_code = this.gstForm.controls["sStateName"].value;
-    let loc_code = state_code.sLocCode;
-    let loc_int_id = +state_code.iLocationID;
-    
-    const add_gst_data = {      
-      "iRequestID":2321,
-      "iPartnerID":this.partner_id,
-      "iLocID":loc_int_id,
-      "sGST":gst_no,
-      "sLocCode":loc_code
+      let state_code = this.gstForm.controls["sStateName"].value;
+      let loc_code = state_code.sLocCode;
+      let loc_int_id = +state_code.iLocationID;
+
+      const add_gst_data = {
+        "iRequestID": 2321,
+        "iPartnerID": this.partner_id,
+        "iLocID": loc_int_id,
+        "sGST": gst_no,
+        "sLocCode": loc_code
+      }
+      this.httpService.callPostApi(add_gst_data).subscribe(
+        data => {
+          if (data.headers.get('StatusCode') == 200) {
+            this.ref.close(true);
+          }
+
+          this.toastService.displayApiMessage(data.headers.get('StatusMessage'), data.headers.get('StatusCode'));
+          this.submitFlag = 0;
+        },
+        error => console.log(error)
+      );
     }
-    this.httpService.callPostApi(add_gst_data).subscribe(
-      data => {
-        if(data.headers.get('StatusCode')== 200){
-          this.ref.close(true);
-        }
-        
-        this.toastService.displayApiMessage(data.headers.get('StatusMessage'), data.headers.get('StatusCode'));
-        this.submitFlag=0;
-      },
-      error => console.log(error)
-    );
-    }
-    
+
   }
 
-  //code for edit supplier gst data
+  //code for edit partner gst data
   editGst() {
     let gst_no = this.gstForm.controls["sGST"].value;
     let state_code = this.gstForm.controls["sStateName"].value;
     let loc_code = state_code.sLocCode;
     let loc_int_id = +state_code.iLocationID;
     const add_gst_data = {
-      "iRequestID":2322,
-      "iPartnerID":this.partner_id,
-      "iLocID":loc_int_id,
-      "sGST":gst_no,
-      "sLocCode":loc_code
+      "iRequestID": 2322,
+      "iPartnerID": this.partner_id,
+      "iLocID": loc_int_id,
+      "sGST": gst_no,
+      "sLocCode": loc_code,
+      "iPSGID": this.iPSGID
     }
     this.httpService.callPostApi(add_gst_data).subscribe(
       data => {
-        if(data.headers.get('StatusCode')== 200){
+        if (data.headers.get('StatusCode') == 200) {
           this.ref.close(true);
         }
         this.toastService.displayApiMessage(data.headers.get('StatusMessage'), data.headers.get('StatusCode'));
@@ -166,7 +206,10 @@ export class GstComponent implements OnInit {
 
   //code for dropdown validity check
   dropDownValidityCheck() {
-    if (this.selectedstate.iLocationID == '') {
+    if (this.selectedCountry.iLocationID == '') {
+      return true
+    }
+    else if (this.selectedstate.iLocationID == '') {
       return true
     }
     else {
@@ -175,7 +218,7 @@ export class GstComponent implements OnInit {
   }
 
   // get state code 
-  getStateCode(){
+  getStateCode() {
     console.log(this.supgstData);
     let stateCode = this.selectedstate.sLocCode;
     this.gstForm.patchValue({

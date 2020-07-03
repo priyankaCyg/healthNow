@@ -66,7 +66,7 @@ export class AddNewSupplierComponent implements OnInit {
   bankData: companyBankMaster[];
   selectedSuppCat;
   index: number = 0;
-  supplierSubmitFlag: number =0;
+  supplierSubmitFlag: number = 0;
   constructor(private breadcrumbService: BreadcrumbService,
     private dialogService: DialogService,
     private httpService: ApiService,
@@ -373,8 +373,10 @@ export class AddNewSupplierComponent implements OnInit {
       "iSupID": this.supId
     }
     this.httpService.callPostApi(supplierCategoryMappingAPI1).subscribe(
-      data => { this.sourceCategory = data.body; 
-        console.log(this.sourceCategory)},
+      data => {
+        this.sourceCategory = data.body;
+        console.log(this.sourceCategory)
+      },
       error => { console.log(error) }
     )
   }
@@ -443,56 +445,56 @@ export class AddNewSupplierComponent implements OnInit {
 
   //code for add new supplier data
   addSupplier() {
-    if(this.supplierSubmitFlag==0){
-      this.supplierSubmitFlag=1;
+    if (this.supplierSubmitFlag == 0) {
+      this.supplierSubmitFlag = 1;
       let supp_name = this.addSupplierForm.controls["sSupName"].value;
-    let website_name = this.addSupplierForm.controls["sWebsite"].value;
-    let pan_no = this.addSupplierForm.controls["sPAN"].value;
-    let short_code = this.addSupplierForm.controls["sShortCode"].value;
-    let telephoneno_1 = this.addSupplierForm.controls["sTelNo1"].value;
-    let telephoneno_2 = this.addSupplierForm.controls["sTelNo2"].value;
-    let fax_no = this.addSupplierForm.controls["sFaxNo"].value;
-    let formData = this.addSupplierForm.getRawValue();
-    const add_supplier_data = {
-      "iRequestID": 2171,
-      "sSupName": supp_name,
-      "sWebsite": website_name,
-      "iLegalEntityID": formData.iLegalEntityID.iKVID,
-      "sPAN": pan_no,
-      "sShortCode": short_code,
-      "sTelNo1": telephoneno_1,
-      "sTelNo2": telephoneno_2,
-      "sFaxNo": fax_no,
-      "iSupCatID": formData.sSupCName.iSupCatID
+      let website_name = this.addSupplierForm.controls["sWebsite"].value;
+      let pan_no = this.addSupplierForm.controls["sPAN"].value;
+      let short_code = this.addSupplierForm.controls["sShortCode"].value;
+      let telephoneno_1 = this.addSupplierForm.controls["sTelNo1"].value;
+      let telephoneno_2 = this.addSupplierForm.controls["sTelNo2"].value;
+      let fax_no = this.addSupplierForm.controls["sFaxNo"].value;
+      let formData = this.addSupplierForm.getRawValue();
+      const add_supplier_data = {
+        "iRequestID": 2171,
+        "sSupName": supp_name,
+        "sWebsite": website_name,
+        "iLegalEntityID": formData.iLegalEntityID.iKVID,
+        "sPAN": pan_no,
+        "sShortCode": short_code,
+        "sTelNo1": telephoneno_1,
+        "sTelNo2": telephoneno_2,
+        "sFaxNo": fax_no,
+        "iSupCatID": formData.sSupCName.iSupCatID
+      }
+      this.httpService.callPostApi(add_supplier_data).subscribe(
+        data => {
+          if (data.headers.get('StatusCode') == 200) {
+            this.supId = data.body[0].isupId;
+            localStorage.setItem('iSupID', this.supId)
+            this.getSupplierAddressList();
+            this.getFileType();
+            this.gstList();
+            this.showContact();
+            this.bankSelectData();
+            this.showAttachment();
+            // this.getCategoryMappingDataSource();
+            //this.getCategoryMappingDataTarget();
+            this.tabDisabled = false
+            let supp_name = "Supplier " + formData.supp_name + " has been added successfully"
+            this.toastService.displayApiMessage(supp_name, data.headers.get('StatusCode'));
+            this.index = 1;
+            this.isEdit = true;
+          }
+          else {
+            this.toastService.displayApiMessage(data.headers.get('StatusMessage'), data.headers.get('StatusCode'));
+          }
+          this.supplierSubmitFlag = 0;
+        },
+        error => console.log(error)
+      );
     }
-    this.httpService.callPostApi(add_supplier_data).subscribe(
-      data => {
-        if(data.headers.get('StatusCode')==200){
-          this.supId = data.body[0].isupId;
-        localStorage.setItem('iSupID', this.supId)
-        this.getSupplierAddressList();
-        this.getFileType();
-        this.gstList();
-        this.showContact();
-        this.bankSelectData();
-        this.showAttachment();
-        // this.getCategoryMappingDataSource();
-        //this.getCategoryMappingDataTarget();
-        this.tabDisabled = false
-        let supp_name = "Supplier " + formData.supp_name + " has been added successfully"
-        this.toastService.displayApiMessage(supp_name, data.headers.get('StatusCode'));
-        this.index = 1;
-        this.isEdit = true;
-        }
-        else{
-          this.toastService.displayApiMessage(data.headers.get('StatusMessage'), data.headers.get('StatusCode'));
-        }
-        this.supplierSubmitFlag=0;
-      },
-      error => console.log(error)
-    );
-    }
-    
+
   }
 
   //code for edit supplier data
@@ -546,7 +548,7 @@ export class AddNewSupplierComponent implements OnInit {
   editDialogForGST(gst) {
     const ref = this.dialogService.open(GstComponent, {
       data: gst,
-      header: 'Add New GST',
+      header: 'Edit GST',
       width: '28%'
     });
     ref.onClose.subscribe((success: boolean) => {
@@ -563,10 +565,10 @@ export class AddNewSupplierComponent implements OnInit {
       header: 'Confirmation',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
-        let loc_id = +gst.iLocID;
+        let loc_id = +gst.iSSGID;
         let delete_data_api = {
           "iRequestID": 2205,
-          "iLocID": loc_id,
+          "iSSGID": loc_id,
           "iSupID": this.supId
         };
         this.httpService.callPostApi(delete_data_api).subscribe(

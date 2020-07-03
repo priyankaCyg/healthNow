@@ -6,4 +6,5 @@ export class gstData {
     sGST: string;
     sLocCode: string;
     sStateName: string;
+    iCSGID: number
 }

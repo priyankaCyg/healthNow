@@ -288,10 +288,10 @@ export class CompanyComponent implements OnInit {
       header: 'Confirmation',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
-        let state_id = +gst.iStateID;
+        let csg_id = +gst.iCSGID;
         let delete_gst_data_api = {
           "iRequestID": 2064,
-          "iStateID": state_id,
+          "iCSGID": csg_id,
           "iCID": 1
         };
         this.httpService.callPostApi(delete_gst_data_api).subscribe(
