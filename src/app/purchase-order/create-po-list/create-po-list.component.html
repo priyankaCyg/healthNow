@@ -9,7 +9,7 @@
                     <p-table [value]="poList" #search [paginator]="true" [rows]="10" [showCurrentPageReport]="true"
                         [rowsPerPageOptions]="[10, 25, 50]" [filterDelay]="0"
                         [globalFilterFields]="['sSupName','sPartnerName','sLocName','iReqCnt','sCreatedDate']">
-                        <ng-template pTemplate="caption" >
+                        <ng-template pTemplate="caption">
                             <div class="ui-table-globalfilter-container text-left">
                                 <input type="text" pInputText size="50" placeholder="Search"
                                     (input)="search.filterGlobal($event.target.value,'contains')"
@@ -27,7 +27,7 @@
                                 <th>Action</th>
                             </tr>
                         </ng-template>
-                        <ng-template pTemplate="body" let-i="rowIndex" let-poLis>
+                        <ng-template pTemplate="body" let-i="rowIndex" let-poList>
                             <tr>
                                 <td>{{i+1}}</td>
                                 <td>{{poList.sSupName}}</td>
