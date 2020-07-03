@@ -13,6 +13,7 @@ import { PoRejectiomComponent } from '../po-rejectiom/po-rejectiom.component';
 })
 export class PurchaseOrderApprovalComponent implements OnInit {
   poList: poListMaster[];
+  selectedValues: any[] = [];
   checked: boolean = true;
   batch: any[];
   public isExpanded: boolean = false;
@@ -39,6 +40,11 @@ export class PurchaseOrderApprovalComponent implements OnInit {
     this.httpService.callPostApi(poListAPI).subscribe(
       data => {
         this.poList = data.body;
+        for (var i = 0; i < this.poList.length; i++) {
+          if (this.poList[i].iIncludeTaxes == 1) {
+            this.selectedValues.push(this.poList[i]);
+          }
+        }
       },
       error => { console.log(error) }
     )
@@ -81,8 +87,8 @@ export class PurchaseOrderApprovalComponent implements OnInit {
     });
   }
 
-   //Dialog box to reject PO
-   rejectDialoBox(poDetails) {
+  //Dialog box to reject PO
+  rejectDialoBox(poDetails) {
     const ref = this.dialogService.open(PoRejectiomComponent, {
       data: poDetails,
       header: 'Reason For Rejection',

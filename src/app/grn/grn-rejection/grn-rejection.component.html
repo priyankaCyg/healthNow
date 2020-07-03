@@ -1,0 +1,23 @@
+<div class="p-grid ui-fluid">
+    <div class="p-col-12">
+        <div class="p-grid form-group">
+            <div class="p-col-12">
+                <label for="sBatchNo">Batch No.</label>
+                <input id="sBatchNo" type="text" [(ngModel)]="batch_no" pInputText disabled>
+            </div>
+            <div class="p-col-12">
+                <label for="sRejectedReason">Remarks</label>
+                <input id="sRejectedReason" type="text" [(ngModel)]="remarks" pInputText>
+
+            </div>
+        </div>
+        <div class="separator separator--border-solid separator--space-sm separator--portlet-fit"></div>
+        <div class="p-grid form-group ui-fluid">
+            <div class="p-col-12 p-md-12 p-lg-12 text-right">
+                <button pButton type="button" label="Cancel" (click)="closeDialog()"
+                    class="ui-button-light atbt mr-2"></button>
+                <button pButton type="button" label="Save" (click)="rejectPO()" class="ui-button atbt"></button>
+            </div>
+        </div>
+    </div>
+</div>

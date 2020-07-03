@@ -9,7 +9,7 @@
                 </div>
                 <div class="p-col-12 mt-3">
                     <p-table [value]="poList" #search [paginator]="true" [rows]="10" [showCurrentPageReport]="true"
-                        [rowsPerPageOptions]="[10, 25, 50]" [filterDelay]="0"
+                        [rowsPerPageOptions]="[10, 25, 50]" [filterDelay]="0" rowExpandMode="single"
                         [globalFilterFields]="['sPONo','sPODate','sSupName','sCreatedBy']" dataKey="sPONo"
                         (onRowExpand)="onRowExpand()" (onRowCollapse)="onRowCollapse()"
                         [expandedRowKeys]="expandedRows">
@@ -45,16 +45,16 @@
                                     </a>
                                 </td>
                                 <td>{{poListData.sPONo}}</td>
-                                <td>{{poListData.sPODate | customDate}}</td>
+                                <td>{{poListData.sPODate | date: 'dd-MM-yyyy'}}</td>
                                 <td>{{poListData.sSupName}}</td>
                                 <td>{{poListData.currency}}</td>
-                                <td>   
- 
+                                <td>
+
                                     <p-checkbox *ngIf="poListData.iIncludeTaxes==1" value="poListData.iIncludeTaxes"
                                         readonly=true [(ngModel)]="checked" binary="true">
                                     </p-checkbox>
-                                    
-                                    
+
+
                                 </td>
                                 <td>
                                     <span class="badge badge--warning badge--inline badge--pill">Draft</span>
@@ -79,7 +79,7 @@
                                 <td [attr.colspan]="9">
                                     <div class="ui-g ui-fluid" style="font-size:14px;padding:8px">
                                         <div class="ui-g-12 ui-md-12">
-                                            <p-table  [value]="batch">
+                                            <p-table [value]="batch">
                                                 <ng-template pTemplate="header">
                             <tr>
                                 <th>Product Category Name</th>
@@ -90,7 +90,7 @@
                                 <th>Discount Percentage</th>
                                 <th>Discount Amt</th>
                                 <th>Total Amount</th>
-                                
+
 
                             </tr>
                         </ng-template>

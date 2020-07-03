@@ -10,7 +10,7 @@
                 <div class="p-col-12 mt-3">
                     <p-table [columns]="cols" [value]="poList" #search [paginator]="true" [rows]="10"
                         [showCurrentPageReport]="true" pageLinkSize="3" [rowsPerPageOptions]="[10, 25, 50]"
-                        [filterDelay]="0" (onPage)="onPage($event)" expandableRows="true" rowExpandMode="multiple"
+                        [filterDelay]="0" (onPage)="onPage($event)" expandableRows="true" rowExpandMode="single"
                         [responsive]="true" [globalFilterFields]="['sPONo','sPODate','sSupName','sCreatedBy']"
                         dataKey="iPOID" (onRowExpand)="onRowExpand()" (onRowCollapse)="onRowCollapse()"
                         [expandedRowKeys]="expandedRows">
@@ -31,6 +31,8 @@
                                 <th>Supplier PO</th>
                                 <th>Supplier PO Date</th>
                                 <th>Supplier Name</th>
+                                <th>Currency</th>
+                                <th>Include Taxes</th>
                                 <th>Status</th>
                                 <th>Created By</th>
                                 <th>Action</th>
@@ -44,8 +46,17 @@
                                     </a>
                                 </td>
                                 <td>{{poListData.sPONo}}</td>
-                                <td>{{poListData.sPODate | customDate}}</td>
+                                <td>{{poListData.sPODate | date: 'dd-MM-yyyy'}}</td>
                                 <td>{{poListData.sSupName}}</td>
+                                <td>{{poListData.sCurrencyName}}</td>
+                                <td>
+
+                                    <p-checkbox *ngIf="poListData.iIncludeTaxes==1" value="poListData.iIncludeTaxes"
+                                        readonly=true [(ngModel)]="checked" binary="true">
+                                    </p-checkbox>
+
+
+                                </td>
                                 <td>
                                     <span
                                         class="badge badge--warning badge--inline badge--pill">{{poListData.sStatusName}}
@@ -66,7 +77,7 @@
                         </ng-template>
                         <ng-template pTemplate="rowexpansion">
                             <tr>
-                                <td [attr.colspan]="7">
+                                <td [attr.colspan]="9">
                                     <div class="ui-g ui-fluid" style="font-size:14px;padding:8px">
                                         <div class="ui-g-12 ui-md-12">
                                             <p-table [value]="batch">

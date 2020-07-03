@@ -11,7 +11,7 @@ import { GrnApproverComponent } from './grn-approver/grn-approver.component';
 //Prime Ng Service
 import { DialogService } from 'primeng';
 import { ConfirmationService } from 'primeng/api';
-import { FormsModule} from '@angular/forms';
+import { FormsModule } from '@angular/forms';
 
 //Prime Ng Module
 import { ButtonModule } from 'primeng/button';
@@ -23,12 +23,14 @@ import { DynamicDialogModule } from 'primeng/dynamicdialog';
 import { DropdownModule } from 'primeng/dropdown';
 import { InputTextModule } from 'primeng/inputtext';
 import { CheckboxModule } from 'primeng/checkbox';
-import {CalendarModule} from 'primeng/calendar';
+import { CalendarModule } from 'primeng/calendar';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { GrnRejectionComponent } from './grn-rejection/grn-rejection.component';
 
 
 
 @NgModule({
-  declarations: [GRNComponent, GoodExpectedComponent, ReceiveProductComponent, GrnListComponent, GrnApproverComponent],
+  declarations: [GRNComponent, GoodExpectedComponent, ReceiveProductComponent, GrnListComponent, GrnApproverComponent, GrnRejectionComponent],
   imports: [
     CommonModule,
     GrnRoutingModule,
@@ -42,9 +44,10 @@ import {CalendarModule} from 'primeng/calendar';
     DropdownModule,
     InputTextModule,
     CheckboxModule,
-    CalendarModule
+    CalendarModule,
+    ConfirmDialogModule
   ],
   providers: [DialogService, ConfirmationService],
-  entryComponents: [GRNComponent,GoodExpectedComponent,ReceiveProductComponent, GrnListComponent, GrnApproverComponent]
+  entryComponents: [GRNComponent, GoodExpectedComponent, ReceiveProductComponent, GrnListComponent, GrnApproverComponent, GrnRejectionComponent]
 })
 export class GrnModule { }
