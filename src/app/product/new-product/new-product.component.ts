@@ -22,6 +22,7 @@ import { ProductInfoData } from 'src/app/model/productInfo';
 import { ProductCategoryMapping } from 'src/app/model/product-category-mapping.model';
 import { productQuerData } from 'src/app/model/productQueries';
 import { APIService } from 'src/app/services/apieservice';
+import { ConfirmationService } from 'primeng/api';
 
 @Component({
   selector: 'app-new-product',
@@ -67,7 +68,7 @@ export class NewProductComponent implements OnInit {
     private httpService: ApiService,
     private _formBuilder: FormBuilder,
     private toastService: ToastService,
-    private _apiService: APIService) {
+    private _apiService: APIService, private confirmationService: ConfirmationService) {
     this.breadcrumbService.setItems([
       { label: 'Dashboard' },
       { label: 'Product', routerLink: ['/product'] }
@@ -103,6 +104,7 @@ export class NewProductComponent implements OnInit {
         });
         this.getProductInfo();
         this.getProductQueries();
+        this.getFileType();
         this.getCategoryMappingDataSource();
         this.getCategoryMappingDataTarget();
       });
@@ -305,23 +307,24 @@ export class NewProductComponent implements OnInit {
       }
       this.httpService.callPostApi(addProductData).subscribe(
         data => {
-          if(data.headers.get('StatusCode')==200){
+          if (data.headers.get('StatusCode') == 200) {
             this.prdId = data.body[0].iprdId;
-          localStorage.setItem('iPrdID', this.prdId);
-          this.getProductInfo();
-          this.getProductQueries();
-          this.getCategoryMappingDataSource();
-          this.getCategoryMappingDataTarget();
-          this.tabDisabled = false
-          let prd_name = "Product " + formData.sPrdName + " " + formData.sVariant + " " + formData.sUnitName.sUnitName + " has been created successfully"
-          this.toastService.displayApiMessage(prd_name, data.headers.get('StatusCode'));
-          this.isEdit = true
-          this.index = 1;
+            localStorage.setItem('iPrdID', this.prdId);
+            this.getProductInfo();
+            this.getProductQueries();
+            this.getFileType();
+            this.getCategoryMappingDataSource();
+            this.getCategoryMappingDataTarget();
+            this.tabDisabled = false
+            let prd_name = "Product " + formData.sPrdName + " " + formData.sVariant + " " + formData.sUnitName.sUnitName + " has been created successfully"
+            this.toastService.displayApiMessage(prd_name, data.headers.get('StatusCode'));
+            this.isEdit = true
+            this.index = 1;
           }
-          else{
+          else {
             this.toastService.displayApiMessage(data.headers.get('StatusMessage'), data.headers.get('StatusCode'));
           }
-          this.productSubmitFlag=0;
+          this.productSubmitFlag = 0;
         },
         error => console.log(error)
       );
@@ -552,6 +555,27 @@ export class NewProductComponent implements OnInit {
       "sSystemFileName": attachment.sSystemName
     }
     this._apiService.downloadAPI(dataToSend)
+  }
+
+  deleteAttFile(attachment) {
+    this.confirmationService.confirm({
+      message: 'Are you sure that you want to Delete this Record?',
+      header: 'Confirmation',
+      icon: 'pi pi-exclamation-triangle',
+      accept: () => {
+        var dataToSendDelete = {
+          "iRequestID": 1113,
+          "iFileID": attachment.iFileID
+        }
+        this.httpService.callPostApi(dataToSendDelete).subscribe(
+          (data) => {
+            this.showAttachment();
+            this.toastService.addSingle("success", data.headers.get('StatusMessage'), "");
+          },
+          (error) => console.log(error)
+        );
+      },
+    });
   }
 
   //code for list of attachments

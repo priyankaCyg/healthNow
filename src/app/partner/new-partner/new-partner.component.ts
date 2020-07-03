@@ -40,7 +40,7 @@ export class NewPartnerComponent implements OnInit {
   partner_id;
   selectedEntity;
   index: number = 0;
-  partnerSubmitFlag: number =0;
+  partnerSubmitFlag: number = 0;
   stateValue: any[];
   cityValue: any[];
   countryValue: any[];
@@ -171,44 +171,44 @@ export class NewPartnerComponent implements OnInit {
 
   // Function to add partnet details
   addPartnerForm() {
-    if(this.partnerSubmitFlag==0){
-      this.partnerSubmitFlag =1;
+    if (this.partnerSubmitFlag == 0) {
+      this.partnerSubmitFlag = 1;
       var formData = this.PartnerForm.getRawValue();
-    const addPartnerData = {
-      "iRequestID": 2281,
-      "sPartnerName": formData.sPartnerName,
-      "iLegalEntityID": formData.iLegalEntityID.iKVID,
-      "sPAN": formData.sPAN,
-      "sShortCode": formData.sShortCode,
-      "sTelNo1": formData.sTelNo1,
-      "sTelNo2": formData.sTelNo2,
-      "sFaxNo": formData.sFaxNo,
+      const addPartnerData = {
+        "iRequestID": 2281,
+        "sPartnerName": formData.sPartnerName,
+        "iLegalEntityID": formData.iLegalEntityID.iKVID,
+        "sPAN": formData.sPAN,
+        "sShortCode": formData.sShortCode,
+        "sTelNo1": formData.sTelNo1,
+        "sTelNo2": formData.sTelNo2,
+        "sFaxNo": formData.sFaxNo,
+      }
+      this.httpService.callPostApi(addPartnerData).subscribe(
+        data => {
+          if (data.headers.get('StatusCode') == 200) {
+            this.partner_id = data.body[0].iPartnerID;
+            localStorage.setItem('iPartnerID', this.partner_id);
+            this.getPartnerAddressList();
+            this.bankSelectData();
+            this.getPartnerContactList();
+            this.gstList();
+            this.tabDisabled = false;
+            this.index = 1;
+            let partner_name = "Partner " + formData.sPartnerName + " has been added successfully"
+            this.toastService.displayApiMessage(partner_name, data.headers.get('StatusCode'));
+            this.isEdit = true;
+
+          }
+          else {
+            this.toastService.displayApiMessage(data.headers.get('StatusMessage'), data.headers.get('StatusCode'));
+          }
+          this.partnerSubmitFlag = 0;
+        },
+        error => console.log(error)
+      );
     }
-    this.httpService.callPostApi(addPartnerData).subscribe(
-      data => {
-        if(data.headers.get('StatusCode') == 200){
-        this.partner_id = data.body[0].iPartnerID;
-        localStorage.setItem('iPartnerID', this.partner_id);
-        this.getPartnerAddressList();
-        this.bankSelectData();
-        this.getPartnerContactList();
-        this.gstList();
-        this.tabDisabled = false;
-        this.index = 1;
-        let partner_name = "Partner " + formData.sPartnerName + " has been added successfully"
-        this.toastService.displayApiMessage(partner_name, data.headers.get('StatusCode'));
-        this.isEdit = true;
-        
-        }
-        else{
-          this.toastService.displayApiMessage(data.headers.get('StatusMessage'), data.headers.get('StatusCode'));
-        }
-        this.partnerSubmitFlag =0;
-      },
-      error => console.log(error)
-    );
-    }
-    
+
   }
 
   // Function to update partner details
@@ -465,8 +465,8 @@ export class NewPartnerComponent implements OnInit {
       accept: () => {
         let delete_data_api = {
           "iRequestID": 2325,
-          "iLocID": gst_id,
-          "iPartnerID": this.partner_id
+          "iPartnerID": this.partner_id,
+          "iPSGID": gst_id,
         };
         this.httpService.callPostApi(delete_data_api).subscribe(
           (data) => {
@@ -495,7 +495,7 @@ export class NewPartnerComponent implements OnInit {
 
   //////////////////////////////////////////////
 
-  
+
   //Function for country dropdown 
   countryDropdown() {
     return new Promise((resolve, reject) => {
@@ -507,69 +507,69 @@ export class NewPartnerComponent implements OnInit {
         this.countryValue.splice(0, 0, { iLocationID: "", sLocName: "Select Country" })
         this.selectedCountry = { iLocationID: "", sLocName: "Select Country" }
         resolve(this.countryValue)
-      });  
+      });
     })
   }
   //Function for State dropdown 
   stateDropdown() {
     return new Promise((resolve, reject) => {
       var dataToSend = {
-    "iRequestID":2104,
-    "iLevelCode1":this.country_id
+        "iRequestID": 2104,
+        "iLevelCode1": this.country_id
       }
       this.httpService.getDropDownData(dataToSend).then(response => {
         this.stateValue = response
         this.stateValue.splice(0, 0, { iLocationID: "", sLocName: "Select State" })
         this.selectedState = { iLocationID: "", sLocName: "Select State" }
         resolve(this.stateValue)
-      });  
+      });
     })
   }
 
   //On change of country dropdown
-  countryDropdownChange(event){
+  countryDropdownChange(event) {
     this.country_id = event.value.iLocationID
     this.address = null;
     this.Selectedvalue = [];
-    this.stateDisable =false;
+    this.stateDisable = false;
     this.selectedCity = null;
-    this.cityDisable =true;
-    this.getAddressDisable =true;
+    this.cityDisable = true;
+    this.getAddressDisable = true;
     this.stateDropdown();
 
   }
   //On change of state dropdown
-  stateDropdownChange(event){
+  stateDropdownChange(event) {
     this.state_id = event.value.iLocationID;
     this.address = null;
     this.Selectedvalue = [];
-    this.cityDisable=false;
-    this.getAddressDisable =true;
+    this.cityDisable = false;
+    this.getAddressDisable = true;
     this.cityDropdown();
   }
 
   //On change of city dropdown
-  cityDropdownChange(event){
+  cityDropdownChange(event) {
     this.city_id = event.value.iLocationID;
     this.address = null;
     this.Selectedvalue = [];
-    this.getAddressDisable =false;
-   this.getAddress();
+    this.getAddressDisable = false;
+    this.getAddress();
   }
 
   //FUnction for city dropdown
-  cityDropdown(){
+  cityDropdown() {
     return new Promise((resolve, reject) => {
       var dataToSend = {
-        "iRequestID":2105,
-        "iLevelCode2":this.state_id
+        "iRequestID": 2105,
+        "iLevelCode2": this.state_id
       }
       this.httpService.getDropDownData(dataToSend).then(response => {
         this.cityValue = response
         this.cityValue.splice(0, 0, { iLocationID: "", sLocName: "Select City" })
         this.selectedCity = { iLocationID: "", sLocName: "Select City" }
         resolve(this.cityValue)
-      });  
+      });
     })
   }
 
@@ -577,14 +577,14 @@ export class NewPartnerComponent implements OnInit {
   getAddress() {
     this.Selectedvalue = [];
     const address_list_data = {
-    "iRequestID":20110,
-    "iLocationID":this.city_id,
-    "iPartnerID": this.partner_id
+      "iRequestID": 20110,
+      "iLocationID": this.city_id,
+      "iPartnerID": this.partner_id
     }
     this.httpService.callPostApi(address_list_data).subscribe(
       (data) => {
         this.address = data.body;
-        console.log(this.address.length,"test")
+        console.log(this.address.length, "test")
         for (var i = 0; i < this.address.length; i++) {
           if (this.address[i].iIsSelected == 1) {
             this.Selectedvalue.push(this.address[i]);
@@ -600,9 +600,9 @@ export class NewPartnerComponent implements OnInit {
     const address_id = this.Selectedvalue.map(({ iAddID }) => iAddID);
     let address_id_str = address_id.toString();
     const save_data = {
-      "iRequestID":2391,
-      "iPartnerID":this.partner_id,
-      "sAddID":address_id_str
+      "iRequestID": 2391,
+      "iPartnerID": this.partner_id,
+      "sAddID": address_id_str
     }
     this.httpService.callPostApi(save_data).subscribe(
       (data) => {
