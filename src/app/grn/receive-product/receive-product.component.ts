@@ -52,14 +52,36 @@ export class ReceiveProductComponent implements OnInit {
     return this.productForm;
   }
 
+  //Quantity change function
+  qtyChange(){
+    let total_qty: number=0;
+    let current_qty = +this.productForm.controls['iReceivedQty'].value;
+    console.log(current_qty);
+    if(this.receivedArray.length>0){
+      for(let i=0;i<this.receivedArray.length;i++){
+        total_qty = total_qty + this.receivedArray[i].iReceivedQty;
+        console.log(total_qty)
+      }
+      if(current_qty > total_qty){
+        this.toastService.displayApiMessage("Batch if full", 300);
+        this.productForm.reset();
+      }
+    }
+    else{
+      if(current_qty >this.ordered_qty){
+        this.toastService.displayApiMessage("Enter valid received quantiy", 300);
+        this.productForm.controls['iReceivedQty'].setValue(null)
+      }
+    }
+  }
   //Function to add batch details in batch table
   addDetails(){
     var formData = this.productForm.getRawValue();
-    let entered_qty = +formData.iReceivedQty;
-    if(entered_qty > this.ordered_qty){
-      this.toastService.displayApiMessage("Enter valid received quantiy", 300);
-    }
-    else{
+    // let entered_qty = +formData.iReceivedQty;
+    // if(entered_qty > this.ordered_qty){
+    //   this.toastService.displayApiMessage("Enter valid received quantiy", 300);
+    // }
+    // else{
       console.log(formData)
       let new_date_pod = formData.sPODDate;
      let pod_date = this.datePipe.transform(new_date_pod, config.dateFormat);
@@ -79,7 +101,7 @@ export class ReceiveProductComponent implements OnInit {
     this.receivedArray.push(prd_obj);
     this.productForm.reset();
     console.log(this.receivedArray)
-    }
+   // }
   }
 
   // open modal for delete batch 

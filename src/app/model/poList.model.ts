@@ -10,4 +10,5 @@ export class poListMaster {
     sPartnerName: string;
     iIncludeTaxes: number;
     sCurrencyName:string;
+    sWarehouse:string;
 }

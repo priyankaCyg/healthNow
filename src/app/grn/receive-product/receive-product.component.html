@@ -38,7 +38,7 @@
                                             <div class="p-col-12 p-md-6 p-lg-6 mb-1">
                                                 <label for="iReceivedQty">Received Quantity</label>
                                                 <input id="iReceivedQty" type="text" pInputText placeholder="Enter Qty."
-                                                    formControlName="iReceivedQty">
+                                                    formControlName="iReceivedQty" (change)="qtyChange()">
                                                     <p-message severity="error"
                                                     [text]="productForm.controls['iReceivedQty'].errors['required'] ? 'This field is required' :  productForm.controls['iReceivedQty'].errors "
                                                     *ngIf="!productForm.controls['iReceivedQty'].valid && productForm.controls['iReceivedQty'].dirty">

@@ -22,9 +22,10 @@
                             <th>Requisition No.</th>
                             <th>Purchase Order No.</th>
                             <th>Product Name</th>
-                            <th>Quantity</th>
+                            <th>Order Quantity</th>
                             <th>Pending Quantity</th>
                             <th>Scheduled Date</th>
+                            <th>Warehouse</th>
                             <th>Action</th>
                         </tr>
                     </ng-template>
@@ -41,7 +42,7 @@
                             <td>
                                 <button pButton type="button" class="ui-button-success" label="GRN" (click)="grnClick(goodsList)" ></button>
                             </td>
-                            
+                            <td>{{goodsList.sWarehouse}}</td>
                         </tr>
                     </ng-template>
                 </p-table>
