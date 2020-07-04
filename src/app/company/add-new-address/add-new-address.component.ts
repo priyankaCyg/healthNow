@@ -302,16 +302,16 @@ export class AddNewAddressComponent implements OnInit {
   resetFormData() {
     this.AddressForm = this.fb.group({
       addressType: ['', Validators.required],
-      address1: ['', Validators.required],
-      address2: ['', Validators.required],
+      address1: ['', ValidationService.addressValidator],
+      address2: ['', ValidationService.addressValidator],
       state: [''],
       city: [''],
-      pincode: ['', Validators.compose([Validators.required, Validators.minLength(6), Validators.maxLength(6), Validators.pattern("^[0-9]*$")])],
-      landmark: ['', Validators.required],
-      shortName: ['', Validators.required],
-      telNo1: ['', Validators.compose([Validators.required, Validators.minLength(10), Validators.maxLength(13)])],
-      telNo2: ['', Validators.compose([Validators.required, Validators.minLength(10), Validators.maxLength(13)])],
-      faxNo: ['', Validators.required],
+      pincode: ['', ValidationService.pincodeValidator],
+      landmark: ['', ValidationService.addressValidator],
+      shortName: ['', ValidationService.alphaNumericValidator],
+      telNo1: ['', ValidationService.telephoneNoValidator],
+      telNo2: ['', ValidationService.telephoneNoValidator],
+      faxNo: ['', ValidationService.faxNoValidator],
       Status: ['', Validators.required]
     })
   }

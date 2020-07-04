@@ -6,7 +6,7 @@
                     <label for="departmentname">Department Name</label>
                     <input id="departmentname" type="text" formControlName="sDeptName" pInputText>
                     <p-message severity="error"
-                        [text]="DepartmentSubmit.controls['sDeptName'].errors['required'] ? 'This Field is required' : DepartmentSubmit.controls['sDeptName'].errors"
+                        [text]="DepartmentSubmit.controls['sDeptName'].errors['Msg']"
                         *ngIf="!DepartmentSubmit.controls['sDeptName'].valid && DepartmentSubmit.controls['sDeptName'].dirty">
                     </p-message>
                 </div>

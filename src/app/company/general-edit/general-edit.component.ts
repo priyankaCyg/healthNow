@@ -3,6 +3,7 @@ import { ApiService } from 'src/app/services/api.service';
 import { FormBuilder, Validators } from '@angular/forms'
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { ToastService } from "../../services/toast.service";
+import { ValidationService } from 'src/app/services/validation.service';
 
 @Component({
   selector: 'app-general-edit',
@@ -28,9 +29,9 @@ export class GeneralEditComponent implements OnInit {
   // code for implement formBuilder and Validation
   GeneralSubmit = this.fb.group({
     website: ['', Validators.required],
-    tele1: ['', [Validators.required, Validators.pattern('^[0-9]*$'), Validators.minLength(10), Validators.maxLength(13)]],
-    tele2: ['', [Validators.required, Validators.pattern('^[0-9]*$'), Validators.minLength(10), Validators.maxLength(13)]],
-    fax: ['', Validators.required]
+    tele1: ['', ValidationService.telephoneNoValidator],
+    tele2: ['', ValidationService.telephoneNoValidator],
+    fax: ['', ValidationService.faxNoValidator]
   });
 
   // code for Submit Form Data 

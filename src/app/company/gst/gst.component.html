@@ -29,7 +29,7 @@
                     <label for="gst">GST</label>
                     <input id="gst" type="text" formControlName="sGST" pInputText>
                     <p-message severity="error"
-                        [text]="GSTSubmit.controls['sGST'].errors['required'] ? 'This Field is required' : GSTSubmit.controls['sGST'].errors"
+                        [text]="GSTSubmit.controls['sGST'].errors['Msg']"
                         *ngIf="!GSTSubmit.controls['sGST'].valid && GSTSubmit.controls['sGST'].dirty">
                     </p-message>
                 </div>

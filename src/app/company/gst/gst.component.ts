@@ -5,6 +5,7 @@ import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { stateData } from 'src/app/model/selState';
 import { ToastService } from "../../services/toast.service";
 import { GstMaster } from 'src/app/model/gst.model';
+import { ValidationService } from 'src/app/services/validation.service';
 
 @Component({
   selector: 'app-gst',
@@ -128,7 +129,7 @@ export class GstComponent implements OnInit {
       iSupID: [gstData.iSupID],
       iStateID: [gstData.iStateID],
       sCreatedDate: [gstData.sCreatedDate],
-      sGST: [gstData.sGST, [Validators.required]],
+      sGST: [gstData.sGST, ValidationService.alphaNumericValidator],
       sLocCode: [gstData.sLocCode],
       sStateName: [gstData.sStateName, [Validators.required]],
       sCountryName: [gstData.sStateName, [Validators.required]]

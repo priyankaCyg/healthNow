@@ -7,7 +7,7 @@
                     <input id="sEmpCode" type="text" formControlName="sEmpCode" pInputText required>
                     <div>
                         <p-message severity="error"
-                            [text]="employeeForm.controls['sEmpCode'].errors['required'] ? 'Employee Code is required' : employeeForm.controls['sEmpCode'].errors['pattern'] ? 'Should be alpha numeric' : ''"
+                            [text]="employeeForm.controls['sEmpCode'].errors['Msg']"
                             *ngIf="!employeeForm.controls['sEmpCode'].valid&&employeeForm.controls['sEmpCode'].dirty">
                         </p-message>
                     </div>
@@ -17,7 +17,7 @@
                     <input id="sFirstName" type="text" formControlName="sFirstName" pInputText>
                     <div>
                         <p-message severity="error"
-                            [text]="employeeForm.controls['sFirstName'].errors['required'] ? 'Firstname is required' : employeeForm.controls['sFirstName'].errors['pattern'] ? 'Should be alpha numeric' : ''"
+                            [text]="employeeForm.controls['sFirstName'].errors['Msg']"
                             *ngIf="!employeeForm.controls['sFirstName'].valid&&employeeForm.controls['sFirstName'].dirty">
                         </p-message>
                     </div>
@@ -27,7 +27,7 @@
                     <input id="sMiddleName" type="text" formControlName="sMiddleName" pInputText>
                     <div>
                         <p-message severity="error"
-                            [text]="employeeForm.controls['sMiddleName'].errors['required'] ? 'Middle Name is required' : employeeForm.controls['sMiddleName'].errors['pattern'] ? 'Should be alpha numeric' : ''"
+                            [text]="employeeForm.controls['sMiddleName'].errors['Msg']"
                             *ngIf="!employeeForm.controls['sMiddleName'].valid&&employeeForm.controls['sMiddleName'].dirty">
                         </p-message>
                     </div>
@@ -37,7 +37,7 @@
                     <input id="sLastName" type="text" formControlName="sLastName" pInputText>
                     <div>
                         <p-message severity="error"
-                            [text]="employeeForm.controls['sLastName'].errors['required'] ? 'Last Name is required' : employeeForm.controls['sLastName'].errors['pattern'] ? 'Should be alpha numeric' : ''"
+                            [text]="employeeForm.controls['sLastName'].errors['Msg']"
                             *ngIf="!employeeForm.controls['sLastName'].valid&&employeeForm.controls['sLastName'].dirty">
                         </p-message>
                     </div>
@@ -59,7 +59,7 @@
                     <p-dropdown formControlName="sFullAddress" optionLabel="sAddress" id="sFullAddress"
                         [options]="addressData" [(ngModel)]="selectedsaddress"></p-dropdown>
                     <div>
-                        <p-message severity="error" text="Address is required"
+                        <p-message severity="error" [text]="employeeForm.controls['sFullAddress'].errors['Msg']"
                             *ngIf="employeeForm.controls['sFullAddress'].touched  && (selectedsaddress.iAddID=='' || employeeForm.controls['sFullAddress'].hasError('required'))">
                         </p-message>
                     </div>
@@ -69,7 +69,7 @@
                     <input id="sEmailID" formControlName="sEmailID" type="text" pInputText>
                     <div>
                         <p-message severity="error"
-                            [text]="employeeForm.controls['sEmailID'].errors['required'] ? 'Email Id is required' : employeeForm.controls['sEmailID'].errors['pattern'] ? 'Should be alpha numeric' : ''"
+                            [text]="employeeForm.controls['sEmailID'].errors['required'] ? 'This field is required' : employeeForm.controls['sEmailID'].errors['email'] ? 'Enter a valid email id' : ''"
                             *ngIf="!employeeForm.controls['sEmailID'].valid&&employeeForm.controls['sEmailID'].dirty">
                         </p-message>
                     </div>
@@ -82,7 +82,7 @@
                     <input id="sMobileNo" formControlName="sMobileNo" type="text" pInputText>
                     <div>
                         <p-message severity="error"
-                            [text]="employeeForm.controls['sMobileNo'].errors['required'] ? 'Mobile No. is required' : employeeForm.controls['sMobileNo'].errors['pattern'] ? 'Should be alpha numeric' : ''"
+                            [text]="employeeForm.controls['sMobileNo'].errors['Msg']"
                             *ngIf="!employeeForm.controls['sMobileNo'].valid&&employeeForm.controls['sMobileNo'].dirty">
                         </p-message>
                     </div>
@@ -92,7 +92,7 @@
                     <input id="sContactNo" formControlName="sContactNo" type="text" pInputText>
                     <div>
                         <p-message severity="error"
-                            [text]="employeeForm.controls['sContactNo'].errors['required'] ? 'Contact No. is required' : employeeForm.controls['sContactNo'].errors['pattern'] ? 'Should be alpha numeric' : ''"
+                            [text]="employeeForm.controls['sContactNo'].errors['Msg']"
                             *ngIf="!employeeForm.controls['sContactNo'].valid&&employeeForm.controls['sContactNo'].dirty">
                         </p-message>
                     </div>
@@ -102,7 +102,7 @@
                     <input id="sDirect" formControlName="sDirect" type="text" pInputText>
                     <div>
                         <p-message severity="error"
-                            [text]="employeeForm.controls['sDirect'].errors['required'] ? 'Direct No. is required' : employeeForm.controls['sDirect'].errors['pattern'] ? 'Should be alpha numeric' : ''"
+                            [text]="employeeForm.controls['sDirect'].errors['Msg']"
                             *ngIf="!employeeForm.controls['sDirect'].valid&&employeeForm.controls['sDirect'].dirty">
                         </p-message>
                     </div>

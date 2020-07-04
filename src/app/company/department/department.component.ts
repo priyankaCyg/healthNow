@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ToastService } from "../../services/toast.service";
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { DepartmentMaster } from 'src/app/model/company.department.model';
+import { ValidationService } from 'src/app/services/validation.service';
 
 @Component({
   selector: 'app-department',
@@ -92,7 +93,7 @@ export class DepartmentComponent implements OnInit {
       iCID: [departmentData.iCID],
       iDeptID: [departmentData.iDeptID],
       iStatusID: [departmentData.iStatusID],
-      sDeptName: [departmentData.sDeptName, [Validators.required]],
+      sDeptName: [departmentData.sDeptName, ValidationService.nameValidator_space],
       iCreatedBy: [departmentData.iCreatedBy],
       sCreatedDate: [departmentData.sCreatedDate]
     });

@@ -4,6 +4,7 @@ import { ApiService } from "src/app/services/api.service";
 import { StatusData } from "src/app/model/status.model";
 import { DynamicDialogConfig, DynamicDialogRef } from "primeng/dynamicdialog";
 import { ToastService } from 'src/app/services/toast.service';
+import { ValidationService } from 'src/app/services/validation.service';
 
 @Component({
   selector: "app-designation",
@@ -53,7 +54,7 @@ export class DesignationComponent implements OnInit {
   }
 
   desigForm = this.fb.group({
-    desig_name: ["", [Validators.required, Validators.pattern('^[a-zA-Z ]*$')]],
+    desig_name: ["", ValidationService.nameValidator_space],
     desig_level: ["", Validators.required],
     status: ["", Validators.required],
   });

@@ -6,7 +6,7 @@
           <label for="designationname">Designation Name</label>
           <input id="designationname" type="text" pInputText formControlName="desig_name" />
           <p-message severity="error"
-            [text]="desigForm.controls['desig_name'].errors['required'] ? 'This field is required' : desigForm.controls['desig_name'].errors['pattern']? 'Please enter a valid Designation Name' : desigForm.controls['desig_name'].errors "
+            [text]="desigForm.controls['desig_name'].errors['Msg']"
             *ngIf="!desigForm.controls['desig_name'].valid && desigForm.controls['desig_name'].dirty">
           </p-message>
         </div>

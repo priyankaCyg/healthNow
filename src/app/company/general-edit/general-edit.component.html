@@ -14,7 +14,7 @@
                     <label for="telNo1">Tel No.1</label>
                     <input id="telNo1" type="text" class="form-control" pInputText formControlName="tele1">
                     <p-message severity="error"
-                        [text]="GeneralSubmit.controls['tele1'].errors['required'] ? 'This Field is required' :GeneralSubmit.controls['tele1'].errors['pattern'] ? 'Please Enter Valid Telephone1 No.' : GeneralSubmit.controls['tele1'].errors['minlength'] ? 'Please enter at least 10 Digits' :  GeneralSubmit.controls['tele1'].errors['maxlength'] ? 'Please enter less than 13 Digits': ''"
+                        [text]="GeneralSubmit.controls['tele1'].errors['Msg']"
                         *ngIf="!GeneralSubmit.controls['tele1'].valid && GeneralSubmit.controls['tele1'].dirty">
                     </p-message>
                 </div>
@@ -22,15 +22,15 @@
                     <label for="telNo2">Tel No.2</label>
                     <input id="telNo2" type="text" class="form-control" pInputText formControlName="tele2">
                     <p-message severity="error"
-                        [text]="GeneralSubmit.controls['tele2'].errors['required'] ? 'This Field is required': GeneralSubmit.controls['tele2'].errors['pattern'] ? 'Please Enter Valid Telephone2 No.' : GeneralSubmit.controls['tele2'].errors['minlength'] ? 'Please enter at least 10 Digits' :  GeneralSubmit.controls['tele2'].errors['maxlength'] ? 'Please enter less than 13 Digits': ''"
+                        [text]="GeneralSubmit.controls['tele2'].errors['Msg']"
                         *ngIf="!GeneralSubmit.controls['tele2'].valid && GeneralSubmit.controls['tele2'].dirty">
                     </p-message>
                 </div>
                 <div class="p-col-12">
-                    <label for="fax">Fax</label>
+                    <label for="fax">Fax No.</label>
                     <input id="fax" type="text" class="form-control" pInputText formControlName="fax">
                     <p-message severity="error"
-                        [text]="GeneralSubmit.controls['fax'].errors['required'] ? 'This Field is required' : GeneralSubmit.controls['fax'].errors"
+                        [text]="GeneralSubmit.controls['fax'].errors['Msg'] "
                         *ngIf="!GeneralSubmit.controls['fax'].valid && GeneralSubmit.controls['fax'].dirty">
                     </p-message>
                 </div>

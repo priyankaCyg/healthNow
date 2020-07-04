@@ -4,6 +4,7 @@ import { EmployeeMaster } from '../../model/employee.model'
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { ApiService } from 'src/app/services/api.service';
 import { ToastService } from "../../services/toast.service";
+import { ValidationService } from 'src/app/services/validation.service';
 
 @Component({
   selector: 'app-employee',
@@ -347,23 +348,23 @@ export class EmployeeComponent implements OnInit {
       sPOBox: [employeeMaster.sPOBox],
       iDeptID: [employeeMaster.iDeptID],
       iRoleID: [employeeMaster.iRoleID],
-      sDirect: [employeeMaster.sDirect, [Validators.required]],
+      sDirect: [employeeMaster.sDirect, ValidationService.telephoneNoValidator],
       sGender: [employeeMaster.sGender],
       iDesigID: [employeeMaster.iDesigID],
-      sEmailID: [employeeMaster.sEmailID, [Validators.required, Validators.pattern("^[a-zA-Z0-9]+[a-zA-Z0-9._-]+@[a-z]+\.[a-z.]{2,5}$")]],
-      sEmpCode: [employeeMaster.sEmpCode, [Validators.required]],
+      sEmailID: [employeeMaster.sEmailID, [Validators.required, Validators.email]],
+      sEmpCode: [employeeMaster.sEmpCode, ValidationService.alphaNumericValidator],
       sEmpName: [employeeMaster.sEmpName],
       iGenderID: [employeeMaster.iGenderID],
       iStatusID: [employeeMaster.iStatusID],
       sDeptName: [employeeMaster.sDeptName],
-      sLastName: [employeeMaster.sLastName, [Validators.required]],
-      sMobileNo: [employeeMaster.sMobileNo, [Validators.required]],
+      sLastName: [employeeMaster.sLastName, ValidationService.nameValidator],
+      sMobileNo: [employeeMaster.sMobileNo, ValidationService.telephoneNoValidator],
       sRoleName: [employeeMaster.sRoleName],
       iCreatedBy: [employeeMaster.iCreatedBy],
-      sContactNo: [employeeMaster.sContactNo, [Validators.required]],
+      sContactNo: [employeeMaster.sContactNo, ValidationService.telephoneNoValidator],
       sDesigName: [employeeMaster.sDesigName],
-      sFirstName: [employeeMaster.sFirstName, [Validators.required]],
-      sMiddleName: [employeeMaster.sMiddleName, [Validators.required]],
+      sFirstName: [employeeMaster.sFirstName, ValidationService.nameValidator],
+      sMiddleName: [employeeMaster.sMiddleName, ValidationService.nameValidator],
       sCreatedDate: [employeeMaster.sCreatedDate],
       sFullAddress: [employeeMaster.sFullAddress],
       sReportingTo: [employeeMaster.sReportingTo],

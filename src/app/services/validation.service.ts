@@ -13,14 +13,13 @@ export class ValidationService {
     if (control.value == "") {
       return { Msg: "This field is required" };
     }
-    // Validates upper case and lower case alphabets
+    //Allows only numbers
     else if (!control.value.match(/^[0-9]+$/)) {
       // return null;
-      return { Msg: "Enter a valid Number" };
+      return { Msg: "Enter a valid Tele No." };
     }
-    else if (control.value.length > 11) {
-      // return null;
-      return { Msg: "Enter a valid Number" };
+    else if (control.value.length > 13 || control.value.length < 10) {
+      return { Msg: "Tele No. should be 10 to 13 digit" };
     }
   }
 
@@ -28,10 +27,12 @@ export class ValidationService {
     if (control.value == "") {
       return { Msg: "This field is required" };
     }
-    // Validates upper case and lower case alphabets
+    //Allows only numbers
     else if (!control.value.match(/^[0-9]+$/)) {
-      // return null;
-      return { Msg: "Enter a valid Number" };
+      return { Msg: "Enter a valid Fax No." };
+    }
+    else if (control.value.length > 13 || control.value.length < 10) {
+      return { Msg: "Fax No. should be 10 to 13 digit" };
     }
   }
 
@@ -39,36 +40,79 @@ export class ValidationService {
     if (control.value == "") {
       return { Msg: "This field is required" };
     }
-    // Validates upper case and lower case alphabets
-    else if (!control.value.match(/^[a-zA-Z0-9\s.\-]+$/)) {
-      // return null;
+    // Allows uppercase lowercase alphabets, numbers, space, dot, hiphen, slash, comma, round brackets
+    else if (!control.value.match(/^[a-zA-Z0-9\s.\-\,\()\/\\]+$/)) {
       return { Msg: "Enter a valid address" };
     }
   }
 
   static pincodeValidator(control) {
-    //Validates indian pincode
     if (control.value == "") {
       return { Msg: "This field is required" };
     }
-    else if (control.value.match(/^[1-9]{1}[0-9]{2}\\s{0, 1}[0-9]{3}$/)) {
-      return null;
-    } else {
+    //Allows only numbers
+    else if (!control.value.match(/^[0-9]*$/)) {
       return { Msg: "Enter a valid pincode" };
+    }
+    else if (control.value.length != 6) {
+      return { Msg: "Enter a 6 digit pincode" };
     }
   }
 
-  static PANValidator(control) {
-    // Validates upper case and lower case alphabets
+  static nameValidator_space(control) {
     if (control.value == "") {
       return { Msg: "This field is required" };
     }
-    else if (!control.value.match(/^[A-Z0-9]+$/)) {
-      // return null;
+    //Allows both uppercase and lowercase alphabets and space
+    else if (!control.value.match(/^[a-zA-Z\s]+$/)) {
       return { Msg: "Enter a valid name" };
     }
   }
 
+  static nameValidator(control) {
+    if (control.value == "") {
+      return { Msg: "This field is required" };
+    }
+    //Allows both uppercase and lowercase alphabets
+    else if (!control.value.match(/^[a-zA-Z]+$/)) {
+      return { Msg: "Enter a valid name" };
+    }
+  }
+
+  //used for PAN no, GST, IFSC, Short code
+  static alphaNumericValidator(control) {
+    if (control.value == "") {
+      return { Msg: "This field is required" };
+    }
+    //Allows uppercase alphabets and numbers
+    else if (!control.value.match(/^[A-Z0-9]+$/)) {
+      return { Msg: "Only Uppercase alpha numeric is allowed" };
+    }
+  }
+
+  static accountValidator(control) {
+    if (control.value == "") {
+      return { Msg: "This field is required" };
+    }
+    //Allows only numbers
+    else if (!control.value.match(/^[0-9]*$/)) {
+      return { Msg: "Enter a valid Account No." };
+    }
+   
+  }
+  
+  static accountTypeValidator(control) {
+    if (control.value == "") {
+      return { Msg: "This field is required" };
+    }
+    //Allows only numbers
+    else if (!control.value.match(/^[a-zA-z\-\s]*$/)) {
+      return { Msg: "Enter a valid Short Code/Account Type." };
+    }
+   
+  }
+
+  // Testing modules below
   static alphabetValidator_1(control) {
     // Validates upper case alphabets
     if (control.value.match(/^[A-Z]+$/)) {
@@ -78,7 +122,7 @@ export class ValidationService {
     }
   }
 
-  static alphaNumericValidator(control) {
+  static alphaNumericValidator_0(control) {
     //Matches any alphanumeric string (no spaces).
     if (control.value.match(/^[a-zA-Z0-9]+$/)) {
       return null;
