@@ -4,6 +4,7 @@ import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { UnitMaster } from '../../model/unit.model'
 import { ApiService } from 'src/app/services/api.service';
 import { ToastService } from "../../services/toast.service";
+import { ValidationService } from 'src/app/services/validation.service';
 
 @Component({
   selector: 'app-add-unit',
@@ -18,7 +19,7 @@ export class AddUnitComponent implements OnInit {
   unitId: number;
   public unitForm: FormGroup;
   unitData: UnitMaster;
-  submitFlag:number =0;
+  submitFlag: number = 0;
 
   constructor(private config: DynamicDialogConfig, private ref: DynamicDialogRef, private fb: FormBuilder,
     private toastService: ToastService, private httpService: ApiService) { }
@@ -82,24 +83,24 @@ export class AddUnitComponent implements OnInit {
 
   //code for add new unit data
   addUnit() {
-    if(this.submitFlag==0){
-      this.submitFlag=1;
+    if (this.submitFlag == 0) {
+      this.submitFlag = 1;
       var formData = this.unitForm.getRawValue();
-    var dataToSendAdd = {
-      "iRequestID": 2141,
-      "sUnitName": formData.sUnitName,
-      "sSymbol": formData.sSymbol
-    }
-    this.httpService.callPostApi(dataToSendAdd).subscribe(
-      (data) => {
-        if(data.headers.get('StatusCode')==200){
-        this.ref.close(true);
-        }
-        this.toastService.displayApiMessage(data.headers.get('StatusMessage'), data.headers.get('StatusCode'));
-        this.submitFlag=0;
-      },
-      (error) => console.log(error)
-    );
+      var dataToSendAdd = {
+        "iRequestID": 2141,
+        "sUnitName": formData.sUnitName,
+        "sSymbol": formData.sSymbol
+      }
+      this.httpService.callPostApi(dataToSendAdd).subscribe(
+        (data) => {
+          if (data.headers.get('StatusCode') == 200) {
+            this.ref.close(true);
+          }
+          this.toastService.displayApiMessage(data.headers.get('StatusMessage'), data.headers.get('StatusCode'));
+          this.submitFlag = 0;
+        },
+        (error) => console.log(error)
+      );
     }
   }
 
@@ -115,9 +116,9 @@ export class AddUnitComponent implements OnInit {
     }
     this.httpService.callPostApi(dataToSendEdit).subscribe(
       (data) => {
-        if(data.headers.get('StatusCode')==200){
+        if (data.headers.get('StatusCode') == 200) {
           this.ref.close(true);
-          }
+        }
         this.toastService.displayApiMessage(data.headers.get('StatusMessage'), data.headers.get('StatusCode'));
       },
       (error) => console.log(error)
@@ -136,8 +137,8 @@ export class AddUnitComponent implements OnInit {
       iStatusID: [unitData.iStatusID],
       iUnitID: [unitData.iUnitID],
       sCreatedDate: [unitData.sCreatedDate],
-      sUnitName: [unitData.sUnitName, [Validators.required]],
-      sSymbol: [unitData.sSymbol, [Validators.required]],
+      sUnitName: [unitData.sUnitName, [ValidationService.nameValidator]],
+      sSymbol: [unitData.sSymbol, [ValidationService.nameValidator]],
       sStatusName: [unitData.sStatusName]
     });
     return this.unitForm;

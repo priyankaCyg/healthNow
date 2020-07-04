@@ -18,7 +18,7 @@
                                         <input id="sPrdName" type="text" formControlName="sPrdName" pInputText
                                             (change)="productChange()">
                                         <p-message severity="error"
-                                            [text]="ProductForm.controls['sPrdName'].errors['required'] ? 'Producer Name is required' : ProductForm.controls['sPrdName'].errors['required']"
+                                            [text]="ProductForm.controls['sPrdName'].errors['Msg']"
                                             *ngIf="!ProductForm.controls['sPrdName'].valid && ProductForm.controls['sPrdName'].dirty">
                                         </p-message>
                                     </div>
@@ -26,7 +26,7 @@
                                         <label for="sVariant">Variant</label>
                                         <input id="sVariant" type="text" formControlName="sVariant" pInputText>
                                         <p-message severity="error"
-                                            [text]="ProductForm.controls['sVariant'].errors['required'] ? 'Variant is required' : ProductForm.controls['sVariant'].errors['required']"
+                                            [text]="ProductForm.controls['sVariant'].errors['Msg']"
                                             *ngIf="!ProductForm.controls['sVariant'].valid && ProductForm.controls['sVariant'].dirty">
                                         </p-message>
                                     </div>

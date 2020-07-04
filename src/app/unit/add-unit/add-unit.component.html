@@ -5,15 +5,13 @@
                 <div class="p-col-12">
                     <label for="unitName">Unit </label>
                     <input id="unitName" type="text" formControlName="sUnitName" pInputText>
-                    <p-message severity="error"
-                        [text]="unitForm.controls['sUnitName'].errors['required'] ? 'Unit Name is required' : unitForm.controls['sUnitName'].errors['pattern'] ? 'Should be alpha numeric' : ''"
+                    <p-message severity="error" [text]="unitForm.controls['sUnitName'].errors['Msg']"
                         *ngIf="!unitForm.controls['sUnitName'].valid&&unitForm.controls['sUnitName'].dirty"></p-message>
                 </div>
                 <div class="p-col-12">
                     <label for="symbol">Symbol </label>
                     <input id="symbol" type="text" formControlName="sSymbol" pInputText>
-                    <p-message severity="error"
-                        [text]="unitForm.controls['sSymbol'].errors['required'] ? 'Symbol is required' : unitForm.controls['sSymbol'].errors['pattern'] ? 'Should be alpha numeric' : ''"
+                    <p-message severity="error" [text]="unitForm.controls['sSymbol'].errors['Msg']"
                         *ngIf="!unitForm.controls['sSymbol'].valid&&unitForm.controls['sSymbol'].dirty"></p-message>
                 </div>
                 <div class="p-col-12">
