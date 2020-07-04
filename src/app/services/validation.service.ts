@@ -69,6 +69,36 @@ export class ValidationService {
     }
   }
 
+  static nameValidator_shortcode(control) {
+    if (control.value == "") {
+      return { Msg: "This field is required" };
+    }
+    //Allows both uppercase and lowercase alphabets and space
+    else if (!control.value.match(/^[a-zA-Z0-9\s.\-\,\()]+$/)) {
+      return { Msg: "Enter a valid short code" };
+    }
+  }
+
+  static nameValidator_variant(control) {
+    if (control.value == "") {
+      return { Msg: "This field is required" };
+    }
+    //Allows both uppercase and lowercase alphabets and space
+    else if (!control.value.match(/^[a-zA-Z0-9\s.\-\,\()]+$/)) {
+      return { Msg: "Enter a valid variant" };
+    }
+  }
+
+  static nameValidator_productname(control) {
+    if (control.value == "") {
+      return { Msg: "This field is required" };
+    }
+    //Allows both uppercase and lowercase alphabets and space
+    else if (!control.value.match(/^[a-zA-Z0-9\s.\-\,\()]+$/)) {
+      return { Msg: "Enter a valid product name" };
+    }
+  }
+
   static nameValidator(control) {
     if (control.value == "") {
       return { Msg: "This field is required" };
@@ -98,9 +128,9 @@ export class ValidationService {
     else if (!control.value.match(/^[0-9]*$/)) {
       return { Msg: "Enter a valid Account No." };
     }
-   
+
   }
-  
+
   static accountTypeValidator(control) {
     if (control.value == "") {
       return { Msg: "This field is required" };
@@ -109,7 +139,7 @@ export class ValidationService {
     else if (!control.value.match(/^[a-zA-z\-\s]*$/)) {
       return { Msg: "Enter a valid Short Code/Account Type." };
     }
-   
+
   }
 
   // ********************* Testing modules below  **********************

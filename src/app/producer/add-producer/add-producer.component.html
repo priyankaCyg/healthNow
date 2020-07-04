@@ -5,8 +5,7 @@
                 <div class="p-col-12">
                     <label for="pcName">Producer Name</label>
                     <input id="pcName" type="text" formControlName="sProducerName" pInputText>
-                    <p-message severity="error"
-                        [text]="producerForm.controls['sProducerName'].errors['required'] ? 'Producer Name is required' : producerForm.controls['sProducerName'].errors['pattern'] ? 'Should be alpha numeric' : ''"
+                    <p-message severity="error" [text]="producerForm.controls['sProducerName'].errors['Msg']"
                         *ngIf="!producerForm.controls['sProducerName'].valid&&producerForm.controls['sProducerName'].dirty">
                     </p-message>
                 </div>
@@ -23,8 +22,7 @@
                 <div class="p-col-12">
                     <label for="sShortCode">Short Code</label>
                     <input id="sShortCode" formControlName="sShortCode" type="text" pInputText>
-                    <p-message severity="error"
-                        [text]="producerForm.controls['sShortCode'].errors['required'] ? 'Short Name is required' : producerForm.controls['sShortCode'].errors['pattern'] ? 'Should be alpha numeric' : ''"
+                    <p-message severity="error" [text]="producerForm.controls['sShortCode'].errors['Msg']"
                         *ngIf="!producerForm.controls['sShortCode'].valid&&producerForm.controls['sShortCode'].dirty">
                     </p-message>
                 </div>

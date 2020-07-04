@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms'
 import { ApiService } from 'src/app/services/api.service';
 import { ProductCategory } from 'src/app/model/product-category.model';
 import { ToastService } from 'src/app/services/toast.service';
+import { ValidationService } from 'src/app/services/validation.service';
 
 @Component({
   selector: 'app-add-product-category',
@@ -21,7 +22,7 @@ export class AddProductCategoryComponent implements OnInit {
   statusData;
   selectedparentCategory;
   selectedstatus;
-  submitFlag: number=0;
+  submitFlag: number = 0;
 
   constructor(public config: DynamicDialogConfig,
     public ref: DynamicDialogRef,
@@ -66,7 +67,7 @@ export class AddProductCategoryComponent implements OnInit {
   createControl(productcategory?: ProductCategory): FormGroup {
     this.ProductCategoryForm = this.fb.group({
       iPCID: [productcategory.iPCID],
-      sPCName: [productcategory.sPCName, Validators.required],
+      sPCName: [productcategory.sPCName, ValidationService.nameValidator_space],
       iStatusID: [productcategory.iStatusID, Validators.required],
       sStatusName: [productcategory.sStatusName],
       iParentID: [productcategory.iParentID, Validators.required],
@@ -117,8 +118,8 @@ export class AddProductCategoryComponent implements OnInit {
   }
 
   addProductCategory() {
-    if(this.submitFlag==0){
-      this.submitFlag=1;
+    if (this.submitFlag == 0) {
+      this.submitFlag = 1;
       var formData = this.ProductCategoryForm.getRawValue();
       const addProductCategoryAPI = {
         "iRequestID": 2111,
@@ -127,14 +128,14 @@ export class AddProductCategoryComponent implements OnInit {
       }
       this.httpService.callPostApi(addProductCategoryAPI).subscribe(
         data => {
-          if(data.headers.get('StatusCode')==200){
-          this.ref.close(true);
+          if (data.headers.get('StatusCode') == 200) {
+            this.ref.close(true);
           }
           this.toastService.displayApiMessage(data.headers.get('StatusMessage'), data.headers.get('StatusCode'));
-          this.submitFlag=0;
+          this.submitFlag = 0;
         });
     }
-   
+
   }
 
   editProductCategory() {
@@ -148,9 +149,9 @@ export class AddProductCategoryComponent implements OnInit {
     }
     this.httpService.callPostApi(editProductCategoryAPI).subscribe(
       data => {
-        if(data.headers.get('StatusCode')==200){
+        if (data.headers.get('StatusCode') == 200) {
           this.ref.close(true);
-          }
+        }
         this.toastService.displayApiMessage(data.headers.get('StatusMessage'), data.headers.get('StatusCode'));
       }
     )

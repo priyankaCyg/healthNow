@@ -6,7 +6,7 @@
                     <label for="sPCName">Product Category Name</label>
                     <input id="sPCName" type="text" formControlName="sPCName" pInputText>
                     <div>
-                        <p-message severity="error" text="This Field is required"
+                        <p-message severity="error" [text]="ProductCategoryForm.controls['sPCName'].errors['Msg']"
                             *ngIf="!ProductCategoryForm.controls['sPCName'].valid && (ProductCategoryForm.controls['sPCName'].dirty || ProductCategoryForm.controls['sPCName'].touched)">
                         </p-message>
                     </div>

@@ -5,6 +5,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ToastService } from "../../services/toast.service";
 import { ApiService } from 'src/app/services/api.service';
 import { ThrowStmt } from '@angular/compiler';
+import { ValidationService } from 'src/app/services/validation.service';
 
 @Component({
   selector: 'app-add-producer',
@@ -22,7 +23,7 @@ export class AddProducerComponent implements OnInit {
   producerId: number;
   public producerForm: FormGroup;
   producerData: ProducerMaster;
-  submitFlag=0;
+  submitFlag = 0;
 
   constructor(private config: DynamicDialogConfig, private ref: DynamicDialogRef, private fb: FormBuilder,
     private toastService: ToastService, private httpService: ApiService) { }
@@ -107,27 +108,27 @@ export class AddProducerComponent implements OnInit {
 
   //code for add new producer data
   addProducer() {
-    if(this.submitFlag==0){
-      this.submitFlag=1;
+    if (this.submitFlag == 0) {
+      this.submitFlag = 1;
       var formData = this.producerForm.getRawValue();
-    var dataToSendAdd = {
-      "iRequestID": 2121,
-      "sProducerName": formData.sProducerName,
-      "iCountryID": formData.sCountryName.iLocationID,
-      "sShortCode": formData.sShortCode
+      var dataToSendAdd = {
+        "iRequestID": 2121,
+        "sProducerName": formData.sProducerName,
+        "iCountryID": formData.sCountryName.iLocationID,
+        "sShortCode": formData.sShortCode
+      }
+      this.httpService.callPostApi(dataToSendAdd).subscribe(
+        (data) => {
+          if (data.headers.get('StatusCode') == 200) {
+            this.ref.close(true);
+          }
+          this.toastService.displayApiMessage(data.headers.get('StatusMessage'), data.headers.get('StatusCode'));
+          this.submitFlag = 0;
+        },
+        (error) => console.log(error)
+      );
     }
-    this.httpService.callPostApi(dataToSendAdd).subscribe(
-      (data) => {
-        if(data.headers.get('StatusCode')==200){
-          this.ref.close(true);
-        }
-        this.toastService.displayApiMessage(data.headers.get('StatusMessage'), data.headers.get('StatusCode'));
-        this.submitFlag=0;
-      },
-      (error) => console.log(error)
-    );
-    }
-    
+
   }
 
   //code for edit producer data
@@ -143,7 +144,7 @@ export class AddProducerComponent implements OnInit {
     }
     this.httpService.callPostApi(dataToSendEdit).subscribe(
       (data) => {
-        if(data.headers.get('StatusCode')==200){
+        if (data.headers.get('StatusCode') == 200) {
           this.ref.close(true);
         }
         this.toastService.displayApiMessage(data.headers.get('StatusMessage'), data.headers.get('StatusCode'));
@@ -163,12 +164,12 @@ export class AddProducerComponent implements OnInit {
       iStatusID: [producerData.iStatusID, [Validators.required]],
       iCountryID: [producerData.iCountryID],
       iCreatedBy: [producerData.iCreatedBy],
-      sShortCode: [producerData.sShortCode, [Validators.required]],
+      sShortCode: [producerData.sShortCode, [ValidationService.nameValidator_shortcode]],
       iProducerID: [producerData.iProducerID],
       sStatusName: [producerData.sStatusName],
       sCountryName: [producerData.sCountryName, [Validators.required]],
       sCreatedDate: [producerData.sCreatedDate],
-      sProducerName: [producerData.sProducerName, [Validators.required]]
+      sProducerName: [producerData.sProducerName, [ValidationService.nameValidator_space]]
     });
     return this.producerForm;
   }

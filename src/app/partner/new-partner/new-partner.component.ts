@@ -19,6 +19,7 @@ import { gstData } from 'src/app/model/gst';
 import { PartnerAddress } from 'src/app/model/partner_address.model';
 import { suppmapData } from 'src/app/model/sup-producer-map.model';
 import { config } from 'src/config';
+import { ValidationService } from 'src/app/services/validation.service';
 
 @Component({
   selector: 'app-new-partner',
@@ -156,15 +157,15 @@ export class NewPartnerComponent implements OnInit {
 
   createControl(partnerData?: PartnerMaster): FormGroup {
     this.PartnerForm = this.fb.group({
-      sPAN: [partnerData.sPAN, [Validators.required, Validators.pattern('^[0-9a-zA-Z]+$')]],
-      sFaxNo: [partnerData.sFaxNo, [Validators.required, Validators.pattern('^[0-9a-zA-Z]+$')]],
-      sTelNo1: [partnerData.sTelNo1, Validators.compose([Validators.required, Validators.minLength(10), Validators.maxLength(13), Validators.pattern('^[0-9]*$')])],
-      sTelNo2: [partnerData.sTelNo2, Validators.compose([Validators.required, Validators.minLength(10), Validators.maxLength(13), Validators.pattern('^[0-9]*$')])],
+      sPAN: [partnerData.sPAN, [ValidationService.alphaNumericValidator]],
+      sFaxNo: [partnerData.sFaxNo, [ValidationService.faxNoValidator]],
+      sTelNo1: [partnerData.sTelNo1, [ValidationService.telephoneNoValidator]],
+      sTelNo2: [partnerData.sTelNo2, [ValidationService.telephoneNoValidator]],
       iCreatedBy: [partnerData.iCreatedBy],
       iPartnerID: [partnerData.iPartnerID],
-      sShortCode: [partnerData.sShortCode, [Validators.required]],
+      sShortCode: [partnerData.sShortCode, [ValidationService.alphaNumericValidator]],
       sCreatedDate: [partnerData.sCreatedDate],
-      sPartnerName: [partnerData.sPartnerName, [Validators.required, Validators.pattern('^[a-zA-Z ]*$')]],
+      sPartnerName: [partnerData.sPartnerName, [ValidationService.nameValidator_space]],
       iLegalEntityID: [partnerData.iLegalEntityID, [Validators.required]],
     });
     return this.PartnerForm;

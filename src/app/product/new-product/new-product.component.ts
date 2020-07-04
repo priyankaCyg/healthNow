@@ -24,6 +24,7 @@ import { productQuerData } from 'src/app/model/productQueries';
 import { APIService } from 'src/app/services/apieservice';
 import { ConfirmationService } from 'primeng/api';
 import { config } from 'src/config';
+import { ValidationService } from 'src/app/services/validation.service';
 
 @Component({
   selector: 'app-new-product',
@@ -268,9 +269,9 @@ export class NewProductComponent implements OnInit {
       sFoodCulture: [productData.sFoodCulture, [Validators.required]],
       iUnitID: [productData.iUnitID],
       sUnitName: [productData.sUnitName, [Validators.required]],
-      sPrdName: [productData.sPrdName, [Validators.required]],
+      sPrdName: [productData.sPrdName, [ValidationService.nameValidator_productname]],
       iCreatedBy: [productData.iCreatedBy],
-      sVariant: [productData.sVariant, [Validators.required]],
+      sVariant: [productData.sVariant, [ValidationService.nameValidator_variant]],
       iProducerID: [productData.iProducerID],
       sCreatedDate: [productData.sCreatedDate],
       sProducerName: [productData.sProducerName, [Validators.required]],
