@@ -13,7 +13,7 @@
                                 class="ui-button-raised ui-button atbt"></button>
                         </div>
                         <div class="p-col-12 mt-3">
-                            <p-table [value]="orderReq" #search [paginator]="true" [rows]="10"
+                            <p-table [value]="orderReq" #search [paginator]="false" [rows]="10"
                                 [showCurrentPageReport]="true" [rowsPerPageOptions]="[10, 25, 50]" [filterDelay]="0"
                                 [globalFilterFields]="['sRequisionNo','sPCName','sPrdName','sPartnerName','sLocName','iQty','sCreatedBy','sCreatedDate']">
                                 <ng-template pTemplate="caption">
@@ -88,7 +88,7 @@
                 <p-tabPanel header="Product Requisition">
                     <div class="p-grid ui-fluid vertical-container">
                         <div class="p-col-12 mt-3">
-                            <p-table [value]="productReq" #searchprdReq [paginator]="true" [rows]="10"
+                            <p-table [value]="productReq" #searchprdReq [paginator]="false" [rows]="10"
                                 [showCurrentPageReport]="true" [rowsPerPageOptions]="[10, 25, 50]" [filterDelay]="0"
                                 [globalFilterFields]="['sPCName','sPrdName','iReqCnt','iQty']">
                                 <ng-template pTemplate="caption">

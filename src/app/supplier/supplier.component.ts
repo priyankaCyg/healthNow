@@ -8,6 +8,7 @@ import { supplierList } from '../model/supplierlist';
 import { ToastService } from '../services/toast.service';
 import { ConfirmationService } from 'primeng/api';
 import { Router } from '@angular/router';
+import { config } from 'src/config';
 
 @Component({
   selector: 'app-supplier',
@@ -59,7 +60,7 @@ export class SupplierComponent implements OnInit {
   //delete supplier
   deleteSupplier(supplier: supplierList) {
     this.confirmationService.confirm({
-      message: 'Are you sure that you want to Delete this Record?',
+      message: config.deleteMsg,
       header: 'Confirmation',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
@@ -98,27 +99,27 @@ export class SupplierComponent implements OnInit {
     this.httpService.callPostApi(disableButtonsApi).subscribe(
       (data) => {
         console.log(data.body),
-        this.disableButtonsData = data.body,
-        console.log(this.disableButtonsData),
-        this.disableButtonsData.map(
-          // (val) => {temp_btns_arr.push(val.sActionName)}
-          (val) => {
-            let actionname = val.sActionName;
-            let btnState = val.state;
-            if (actionname == "sSupplier_product_mapping_btn" && btnState == 1) {
-              this.prdMapBtn = false;
+          this.disableButtonsData = data.body,
+          console.log(this.disableButtonsData),
+          this.disableButtonsData.map(
+            // (val) => {temp_btns_arr.push(val.sActionName)}
+            (val) => {
+              let actionname = val.sActionName;
+              let btnState = val.state;
+              if (actionname == "sSupplier_product_mapping_btn" && btnState == 1) {
+                this.prdMapBtn = false;
+              }
+              else if (actionname == "sSupplier_edit_btn" && btnState == 1) {
+                this.editBtn = false;
+              }
+              else if (actionname == "sSupplier_delete_btn" && btnState == 1) {
+                this.deleteBtn = false;
+              }
+              else if (actionname == "sSupplier_send_for_approval_btn" && btnState == 1) {
+                this.sendForApprovalBtn = false;
+              }
             }
-            else if (actionname == "sSupplier_edit_btn" && btnState == 1) {
-              this.editBtn = false;
-            }
-            else if (actionname == "sSupplier_delete_btn" && btnState == 1) {
-              this.deleteBtn = false;
-            }
-            else if (actionname == "sSupplier_send_for_approval_btn" && btnState == 1) {
-              this.sendForApprovalBtn = false;
-            }
-          }
-        )
+          )
       },
       (error) => { console.log(error) })
 

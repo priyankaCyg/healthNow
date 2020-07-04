@@ -20,6 +20,7 @@ import { DesignationData } from "../model/selectAllDesignation";
 import { departmentData } from "../model/department";
 import { gstData } from "../model/gst";
 import { companyData } from '../model/company';
+import { config } from 'src/config';
 
 @Component({
   selector: "app-company",
@@ -38,8 +39,8 @@ export class CompanyComponent implements OnInit {
   designationData: DesignationData[];
   employee;
   EmployeeValue = [];
-  selectedEmployee : any ;
-  employee_id:number;
+  selectedEmployee: any;
+  employee_id: number;
   address: any[];
   WarehouseList: any[] = [];
 
@@ -152,7 +153,7 @@ export class CompanyComponent implements OnInit {
   // open modal for delete address 
   onDeleteAddress(addressId: number) {
     this.confirmationService.confirm({
-      message: 'Are you sure that you want to Delete this Record?',
+      message: config.deleteMsg,
       header: 'Confirmation',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
@@ -217,7 +218,7 @@ export class CompanyComponent implements OnInit {
   // code for delete departemnt
   deleteDepartemnt(department: departmentData) {
     this.confirmationService.confirm({
-      message: 'Are you sure that you want to Delete this Record?',
+      message: config.deleteMsg,
       header: 'Confirmation',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
@@ -284,7 +285,7 @@ export class CompanyComponent implements OnInit {
   //code for delete gst
   deleteGst(gst: gstData) {
     this.confirmationService.confirm({
-      message: 'Are you sure that you want to Delete this Record?',
+      message: config.deleteMsg,
       header: 'Confirmation',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
@@ -351,7 +352,7 @@ export class CompanyComponent implements OnInit {
   deleteDesig(desig) {
     let desig_id = desig.iDesigID;
     this.confirmationService.confirm({
-      message: 'Are you sure that you want to Delete this Record?',
+      message: config.deleteMsg,
       header: 'Confirmation',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
@@ -419,7 +420,7 @@ export class CompanyComponent implements OnInit {
   deleteBank(iBankID) {
     let bank_id = iBankID;
     this.confirmationService.confirm({
-      message: 'Are you sure that you want to Delete this Record?',
+      message: config.deleteMsg,
       header: 'Confirmation',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
@@ -488,7 +489,7 @@ export class CompanyComponent implements OnInit {
   //Open Dialog To Delete Employee
   deleteEmployee(employeeId) {
     this.confirmationService.confirm({
-      message: 'Are you sure that you want to Delete this Record?',
+      message: config.deleteMsg,
       header: 'Confirmation',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
@@ -509,36 +510,36 @@ export class CompanyComponent implements OnInit {
     });
   }
 
-   //Function for Employee dropdown 
-   EmployeeDropdown() {
+  //Function for Employee dropdown 
+  EmployeeDropdown() {
     return new Promise((resolve, reject) => {
       const dataToSendEmployee = {
-        "iRequestID":2031,
-	      "iCID" :1
+        "iRequestID": 2031,
+        "iCID": 1
       }
       this.httpService.getDropDownData(dataToSendEmployee).then(response => {
         this.EmployeeValue = response
         this.EmployeeValue.splice(0, 0, { iEmpID: "", sEmpName: "Select Employee" })
         this.selectedEmployee = { iEmpID: "", sEmpName: "Select Employee" }
         resolve(this.EmployeeValue)
-      });  
+      });
     })
   }
 
   //On change of Employee dropdown
-  employeeDropdownChange(event){
+  employeeDropdownChange(event) {
     this.employee_id = event.value.iEmpID;
     this.address = [];
     this.WarehouseList = [];
-   this.getwarehouse();
+    this.getwarehouse();
   }
 
   //Function to list all address
   getwarehouse() {
     this.WarehouseList = [];
     const warehouse_list_data = {
-      "iRequestID":2401,
-      "iEmpID":this.employee_id
+      "iRequestID": 2401,
+      "iEmpID": this.employee_id
     }
     this.httpService.callPostApi(warehouse_list_data).subscribe(
       (data) => {
@@ -549,14 +550,14 @@ export class CompanyComponent implements OnInit {
     );
   }
 
-   //Function to save warehouse mapping
-   saveAddress() {
+  //Function to save warehouse mapping
+  saveAddress() {
     const address_id = this.WarehouseList.map(({ iAddID }) => iAddID);
     let address_id_str = address_id.toString();
     const save_data = {
-      "iRequestID":2402,
-       "iEmpID":this.employee_id,
-       "sAddIds":address_id_str
+      "iRequestID": 2402,
+      "iEmpID": this.employee_id,
+      "sAddIds": address_id_str
     }
     this.httpService.callPostApi(save_data).subscribe(
       (data) => {

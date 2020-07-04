@@ -12,8 +12,8 @@
                         label="Add New"></button>
                 </div>
                 <div class="p-col-12 mb-5">
-                    <p-table #categorySearch [value]="supplierCategory" [rowHover]="true" [paginator]="true" [rows]="10"
-                        [showCurrentPageReport]="true" [rowsPerPageOptions]="[10, 25, 50]" [filterDelay]="0"
+                    <p-table #categorySearch [value]="supplierCategory" [rowHover]="true" [paginator]="false"
+                        [rows]="10" [showCurrentPageReport]="true" [rowsPerPageOptions]="[10, 25, 50]" [filterDelay]="0"
                         [globalFilterFields]="['sSupCName','sStatusName']">
                         <ng-template pTemplate="caption">
                             <div class="ui-table-globalfilter-container text-left">

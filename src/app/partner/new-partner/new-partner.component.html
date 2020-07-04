@@ -109,7 +109,7 @@
                                 label="Add New"></button> -->
                         </div>
                         <div class="p-col-12">
-                            <p-table #AddressSerach [value]="partnerAdressData" [paginator]="true" [rows]="10"
+                            <p-table #AddressSerach [value]="partnerAdressData" [paginator]="false" [rows]="10"
                                 [showCurrentPageReport]="true" [rowsPerPageOptions]="[10, 25, 50]" [filterDelay]="0"
                                 [globalFilterFields]="[
                               'sAddType','sAdd1','sAdd2','sStateName','sCityName','sLandmark','iStatusID'
@@ -310,7 +310,14 @@
                                 label="Add New"></button>
                         </div>
                         <div class="p-col-12">
-                            <p-table [value]="gst">
+                            <p-table [value]="gst" #searchGST [globalFilterFields]="['sGST','sStateName']">
+                                <ng-template pTemplate="caption">
+                                    <div class="ui-table-globalfilter-container text-left">
+                                        <input type="text" pInputText size="50" placeholder="Search" (input)="
+                                          searchGST.filterGlobal($event.target.value, 'contains')
+                                        " style="width: 250px;" />
+                                    </div>
+                                </ng-template>
                                 <ng-template pTemplate="header">
                                     <tr>
                                         <th>State</th>

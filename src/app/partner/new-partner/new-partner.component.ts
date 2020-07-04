@@ -18,6 +18,7 @@ import { companyBankMaster } from 'src/app/model/companyBank.model';
 import { gstData } from 'src/app/model/gst';
 import { PartnerAddress } from 'src/app/model/partner_address.model';
 import { suppmapData } from 'src/app/model/sup-producer-map.model';
+import { config } from 'src/config';
 
 @Component({
   selector: 'app-new-partner',
@@ -345,7 +346,7 @@ export class NewPartnerComponent implements OnInit {
     let bank_id = bank.iBankID;
     let partner_id = bank.iPartnerID;
     this.confirmationService.confirm({
-      message: 'Are you sure that you want to Delete this record ?',
+      message: config.deleteMsg,
       header: 'Confirmation',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
@@ -395,7 +396,7 @@ export class NewPartnerComponent implements OnInit {
 
   deletepartnerContact(iPartnerContactID: number) {
     this.confirmationService.confirm({
-      message: 'Are you sure that you want to Delete this record ?',
+      message: config.deleteMsg,
       header: 'Confirmation',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
@@ -459,7 +460,7 @@ export class NewPartnerComponent implements OnInit {
   //code for delete gst data
   deletesupgst(gst_id) {
     this.confirmationService.confirm({
-      message: 'Are you sure that you want to Delete this record ?',
+      message: config.deleteMsg,
       header: 'Confirmation',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {

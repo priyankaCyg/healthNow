@@ -7,6 +7,7 @@ import { ToastService } from "../services/toast.service";
 import { ConfirmationService } from 'primeng/api';
 import { SupplierCategoryMaster } from '../model/supplierCategory.model';
 import { ApiService } from '../services/api.service';
+import { config } from 'src/config';
 
 @Component({
   selector: 'app-supplier-category',
@@ -76,7 +77,7 @@ export class SupplierCategoryComponent implements OnInit {
   //Function to delete Supplier category
   deleteSupplierCategory(iSupCatID: number) {
     this.confirmationService.confirm({
-      message: 'Are you sure that you want to Delete this record ?',
+      message: config.deleteMsg,
       header: 'Confirmation',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
@@ -92,7 +93,7 @@ export class SupplierCategoryComponent implements OnInit {
           error => { console.log(error) }
         );
       },
-      reject: () => {}
+      reject: () => { }
     });
   }
 

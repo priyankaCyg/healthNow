@@ -10,6 +10,7 @@ import { poListMaster } from 'src/app/model/poList.model';
 import { ToastService } from 'src/app/services/toast.service';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import { CommonService } from 'src/app/services/common.service';
+import { config } from 'src/config';
 
 @Component({
   selector: 'app-po-list',
@@ -76,7 +77,7 @@ export class PoListComponent implements OnInit {
   //Function to delete PO
   deletePO(iPOID: Number) {
     this.confirmationService.confirm({
-      message: 'Are you sure that you want to delete?',
+      message: config.deleteMsg,
       header: 'Confirmation',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {

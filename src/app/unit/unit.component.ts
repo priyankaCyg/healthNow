@@ -9,6 +9,7 @@ import { ConfirmationService } from 'primeng/api';
 import { AddUnitComponent } from './add-unit/add-unit.component';
 import { ApiService } from '../services/api.service';
 import { UnitMaster } from '../model/unit.model';
+import { config } from 'src/config';
 
 @Component({
   selector: 'app-unit',
@@ -81,7 +82,7 @@ export class UnitComponent implements OnInit {
   //code for delete data of unit 
   deleteUnit(unitId) {
     this.confirmationService.confirm({
-      message: 'Are you sure that you want to Delete this record ?',
+      message: config.deleteMsg,
       header: 'Confirmation',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {

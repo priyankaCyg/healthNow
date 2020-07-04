@@ -12,7 +12,7 @@
                         label="Add New"></button>
                 </div>
                 <div class="p-col-12">
-                    <p-table [value]="producer" #ProducerSearch [paginator]="true" [rows]="10"
+                    <p-table [value]="producer" #ProducerSearch [paginator]="false" [rows]="10"
                         [showCurrentPageReport]="true" [rowsPerPageOptions]="[10, 25, 50]" [filterDelay]="0"
                         [globalFilterFields]="['sProducerName','sCountryName','sShortCode','sStatusName']">
                         <ng-template pTemplate="caption">

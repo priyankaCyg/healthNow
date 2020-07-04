@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ApiService } from 'src/app/services/api.service';
 import { ConfirmationService, DialogService } from 'primeng';
 import { ToastService } from 'src/app/services/toast.service';
+import { config } from 'src/config';
 
 @Component({
   selector: 'app-grn-list',
@@ -97,7 +98,7 @@ export class GrnListComponent implements OnInit {
   //Function to Approve PO
   deleteGRN(iGRNID: Number) {
     this.confirmationService.confirm({
-      message: 'Are you sure that you want to Delete this record?',
+      message: config.deleteMsg,
       header: 'Confirmation',
       icon: 'pi pi-check',
       accept: () => {

@@ -8,7 +8,7 @@
                     <h1 class="mt-2">Purchase Order Approval</h1>
                 </div>
                 <div class="p-col-12 mt-3">
-                    <p-table [columns]="cols" [value]="poList" #search [paginator]="true" [rows]="10"
+                    <p-table [columns]="cols" [value]="poList" #search [paginator]="false" [rows]="10"
                         [showCurrentPageReport]="true" pageLinkSize="3" [rowsPerPageOptions]="[10, 25, 50]"
                         [filterDelay]="0" (onPage)="onPage($event)" expandableRows="true" rowExpandMode="single"
                         [responsive]="true" [globalFilterFields]="['sPONo','sPODate','sSupName','sCreatedBy']"
