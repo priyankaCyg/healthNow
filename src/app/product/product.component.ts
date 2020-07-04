@@ -10,6 +10,7 @@ import { ToastService } from '../services/toast.service';
 import { ConfirmationService } from 'primeng/api';
 import { Router } from '@angular/router';
 import { LoginService } from '../../app/services/login.service'
+import { config } from 'src/config';
 
 
 @Component({
@@ -54,7 +55,7 @@ export class ProductComponent implements OnInit {
   //code for delete product
   deleteProduct(iPrdID: Number) {
     this.confirmationService.confirm({
-      message: 'Are you sure that you want to Delete this record ?',
+      message: config.deleteMsg,
       header: 'Confirmation',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {

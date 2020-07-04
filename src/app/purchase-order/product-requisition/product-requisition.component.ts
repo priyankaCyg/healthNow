@@ -12,6 +12,7 @@ import { ToastService } from 'src/app/services/toast.service';
 import { orderReqData } from 'src/app/model/orderRequisition.model';
 import { productReqData } from 'src/app/model/productRequisition.model';
 import { CommonService } from 'src/app/services/common.service';
+import { config } from 'src/config';
 
 @Component({
   selector: 'app-product-requisition',
@@ -83,7 +84,7 @@ export class ProductRequisitionComponent implements OnInit {
   //Function to delete Order Requisition
   deleteOrderReq(iPReqID: Number) {
     this.confirmationService.confirm({
-      message: 'Are you sure that you want to Delete this Record?',
+      message: config.deleteMsg,
       header: 'Confirmation',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {

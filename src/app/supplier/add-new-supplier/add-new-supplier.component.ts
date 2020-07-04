@@ -24,6 +24,7 @@ import { SuppMaster } from 'src/app/model/supplier.model';
 import { APIService } from '../../services/apieservice';
 import { SupplierCategoryMapping } from 'src/app/model/supplier-category-mapping.model';
 import { companyBankMaster } from 'src/app/model/companyBank.model';
+import { config } from 'src/config';
 
 @Component({
   selector: 'app-add-new-supplier',
@@ -171,7 +172,7 @@ export class AddNewSupplierComponent implements OnInit {
   // Open Dialog To Delete address
   deleteSupplierAddress(supplierID) {
     this.confirmationService.confirm({
-      message: 'Are you sure you want to Delete this record?',
+      message: config.deleteMsg,
       header: 'Confirmation',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
@@ -561,7 +562,7 @@ export class AddNewSupplierComponent implements OnInit {
   //code for delete gst data
   deletesupgst(gst) {
     this.confirmationService.confirm({
-      message: 'Are you sure that you want to Delete this record ?',
+      message: config.deleteMsg,
       header: 'Confirmation',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
@@ -593,7 +594,7 @@ export class AddNewSupplierComponent implements OnInit {
 
   deleteAttFile(attachment) {
     this.confirmationService.confirm({
-      message: 'Are you sure that you want to Delete this Record?',
+      message: config.deleteMsg,
       header: 'Confirmation',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
@@ -653,7 +654,7 @@ export class AddNewSupplierComponent implements OnInit {
 
   deleteContact(iSupContactID) {
     this.confirmationService.confirm({
-      message: 'Are you sure that you want to Delete this record ?',
+      message: config.deleteMsg,
       header: 'Confirmation',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
@@ -718,7 +719,7 @@ export class AddNewSupplierComponent implements OnInit {
   deleteBank(bank) {
     let bank_id = bank.iBankID;
     this.confirmationService.confirm({
-      message: 'Are you sure that you want to delete this record ?',
+      message: config.deleteMsg,
       header: 'Confirmation',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {

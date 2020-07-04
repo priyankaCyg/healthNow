@@ -142,7 +142,7 @@
                                 label="Add New"></button>
                         </div>
                         <div class="p-col-12">
-                            <p-table #AddressSerach [value]="supplierAdressData" [paginator]="true" [rows]="10"
+                            <p-table #AddressSerach [value]="supplierAdressData" [paginator]="false" [rows]="10"
                                 [showCurrentPageReport]="true" [rowsPerPageOptions]="[10, 25, 50]" [filterDelay]="0"
                                 [globalFilterFields]="[
                               'sAddType','sAdd1','sAdd2','sStateName','sCityName','sLandmark','iStatusID'
@@ -218,7 +218,7 @@
                                     </div>
                                 </ng-template> -->
                             <p-table #dt [value]="contact" [resizableColumns]="true" [rowHover]="true"
-                                [paginator]="true" [rows]="10" [showCurrentPageReport]="true"
+                                [paginator]="false" [rows]="10" [showCurrentPageReport]="true"
                                 [rowsPerPageOptions]="[10, 25, 50]" [filterDelay]="0"
                                 [globalFilterFields]="['sFullName','sDesignation','sEmailID','sMobileNo','sContactNo','sDirectNo','sFaxNo','sStatusName']">
                                 <ng-template pTemplate="caption">
@@ -291,7 +291,7 @@
                         </div>
                         <div class="p-col-12">
                             <p-table #bankSearch [value]="bankData" [resizableColumns]="true" [rowHover]="true"
-                                [paginator]="true" [rows]="10" [showCurrentPageReport]="true"
+                                [paginator]="false" [rows]="10" [showCurrentPageReport]="true"
                                 [rowsPerPageOptions]="[10, 25, 50]" [filterDelay]="0"
                                 [globalFilterFields]="['sBankName','sShortCode','sAccountNo','sIFSC','sBankBranch','sStatusName']">
                                 <ng-template pTemplate="caption">
@@ -352,7 +352,14 @@
                                 label="Add New"></button>
                         </div>
                         <div class="p-col-12">
-                            <p-table [value]="gst">
+                            <p-table [value]="gst" #searchGST [globalFilterFields]="['sGST','sStateName']">
+                                <ng-template pTemplate="caption">
+                                    <div class="ui-table-globalfilter-container text-left">
+                                        <input type="text" pInputText size="50" placeholder="Search" (input)="
+                                          searchGST.filterGlobal($event.target.value, 'contains')
+                                        " style="width: 250px;" />
+                                    </div>
+                                </ng-template>
                                 <ng-template pTemplate="header">
                                     <tr>
                                         <th>State</th>
@@ -399,7 +406,7 @@
                                 (click)="uploadFile()" label="Upload" class="ui-button atbt"></button></div>
                         <div class="p-col-12 p-md-12 p-lg-12 mt-3">
                             <p-table #attachmentHeader [value]="attachment" [resizableColumns]="true" [rowHover]="true"
-                                [paginator]="true" [rows]="10" [showCurrentPageReport]="true"
+                                [paginator]="false" [rows]="10" [showCurrentPageReport]="true"
                                 [rowsPerPageOptions]="[10, 25, 50]" [filterDelay]="0"
                                 [globalFilterFields]="['sDocTypeName','sActualName']">
                                 <ng-template pTemplate="caption">

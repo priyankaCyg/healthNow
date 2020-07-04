@@ -10,6 +10,7 @@ import { ToastService } from "../services/toast.service";
 import { ConfirmationService } from 'primeng/api';
 import { ApiService } from '../services/api.service';
 import { ProducerMaster } from '../model/producer.model';
+import { config } from 'src/config';
 
 
 @Component({
@@ -83,7 +84,7 @@ export class ProducerComponent implements OnInit {
   //code for delete producer data
   deleteProducer(producerId) {
     this.confirmationService.confirm({
-      message: 'Are you sure that you want to Delete this record ?',
+      message: config.deleteMsg,
       header: 'Confirmation',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {

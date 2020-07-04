@@ -9,6 +9,7 @@ import { ApiService } from '../services/api.service';
 import { ToastService } from '../services/toast.service';
 import { ConfirmationService } from 'primeng/api';
 import { Router } from '@angular/router';
+import { config } from 'src/config';
 
 @Component({
   selector: 'app-partner',
@@ -51,7 +52,7 @@ export class PartnerComponent implements OnInit {
   //delete partner
   deletePartner(iPartnerID: Number) {
     this.confirmationService.confirm({
-      message: 'Are you sure that you want to Delete this record ?',
+      message: config.deleteMsg,
       header: 'Confirmation',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {

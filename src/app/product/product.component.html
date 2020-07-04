@@ -11,7 +11,7 @@
                     <button routerLink="/product/new-product" pButton icon="pi pi-fw pi-plus" label="Add New"></button>
                 </div>
                 <div class="p-col-12">
-                    <p-table #dt [value]="product" [resizableColumns]="true" [rowHover]="true" [paginator]="true"
+                    <p-table #dt [value]="product" [resizableColumns]="true" [rowHover]="true" [paginator]="false"
                         [rows]="10" [showCurrentPageReport]="true" [rowsPerPageOptions]="[10, 25, 50]" [filterDelay]="0"
                         [globalFilterFields]="['sPrdName','sProducerName','sVariant','sUnitName','sFoodCulture','sProducerName']">
                         <ng-template pTemplate="caption">

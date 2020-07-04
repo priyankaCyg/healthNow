@@ -11,7 +11,7 @@
                     <button routerLink="/partner/new-partner" pButton icon="pi pi-fw pi-plus" label="Add New"></button>
                 </div>
                 <div class="p-col-12">
-                    <p-table #dt [value]="partner" [rowHover]="true" [paginator]="true" [rows]="10"
+                    <p-table #dt [value]="partner" [rowHover]="true" [paginator]="false" [rows]="10"
                         [showCurrentPageReport]="true" [rowsPerPageOptions]="[10, 25, 50]" [filterDelay]="0"
                         [globalFilterFields]="['sPartnerName','sShortCode','sStatusName','iLegalEntityID']">
                         <ng-template pTemplate="caption">

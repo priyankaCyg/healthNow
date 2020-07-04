@@ -6,7 +6,7 @@
                     <h1 class="mt-2">Supplier Requisition List </h1>
                 </div>
                 <div class="p-col-12">
-                    <p-table [value]="poList" #search [paginator]="true" [rows]="10" [showCurrentPageReport]="true"
+                    <p-table [value]="poList" #search [paginator]="false" [rows]="10" [showCurrentPageReport]="true"
                         [rowsPerPageOptions]="[10, 25, 50]" [filterDelay]="0"
                         [globalFilterFields]="['sSupName','sPartnerName','sLocName','iReqCnt','sCreatedDate']">
                         <ng-template pTemplate="caption">

@@ -65,7 +65,7 @@
                 class="ui-button atbt"></button>
             </div>
             <div class="p-col-12">
-              <p-table [value]="addressDataArray" #AddressSearch [paginator]="true" [rows]="10"
+              <p-table [value]="addressDataArray" #AddressSearch [paginator]="false" [rows]="10"
                 [showCurrentPageReport]="true" [rowsPerPageOptions]="[10, 25, 50]" [filterDelay]="0"
                 [globalFilterFields]="['sAddType','sAdd1','sAdd2','sStateName','sCityName','sLandmark'
                     ,'sTelNo1','sTelNo2','sFaxNo','sStatusName']">
@@ -132,7 +132,7 @@
                 class="ui-button atbt"></button>
             </div>
             <div class="p-col-12">
-              <p-table #dt [value]="department" [rowHover]="true" [paginator]="true" [rows]="10"
+              <p-table #dt [value]="department" [rowHover]="true" [paginator]="false" [rows]="10"
                 [showCurrentPageReport]="true" [rowsPerPageOptions]="[10, 25, 50]" [filterDelay]="0"
                 [globalFilterFields]="['sDeptName','iStatusID']">
                 <ng-template pTemplate="caption">
@@ -182,7 +182,7 @@
                 class="ui-button atbt"></button>
             </div>
             <div class="p-col-12">
-              <p-table #searchDesig [value]="designationData" [paginator]="true" [rows]="10"
+              <p-table #searchDesig [value]="designationData" [paginator]="false" [rows]="10"
                 [showCurrentPageReport]="true" [rowsPerPageOptions]="[10, 25, 50]" [filterDelay]="0"
                 [globalFilterFields]="[
                   'sDesigName',
@@ -240,7 +240,7 @@
             </div>
             <div class="p-col-12">
               <!-- <p-table [value]="employee"> -->
-              <p-table [value]="employee" #EmployeeSearch [paginator]="true" [rows]="10" [showCurrentPageReport]="true"
+              <p-table [value]="employee" #EmployeeSearch [paginator]="false" [rows]="10" [showCurrentPageReport]="true"
                 [rowsPerPageOptions]="[10, 25, 50]" [filterDelay]="0" [globalFilterFields]="['sEmpCode','sFirstName','sMiddleName','sLastName','sDeptName','sDesigName'
                     ,'sReportingTo','iStatusID']">
                 <ng-template pTemplate="caption">
@@ -367,7 +367,14 @@
                 class="ui-button atbt"></button>
             </div>
             <div class="p-col-12">
-              <p-table [value]="gst">
+              <p-table [value]="gst" #searchGST [globalFilterFields]="['sGST','sStateName']">
+                <ng-template pTemplate="caption">
+                  <div class="ui-table-globalfilter-container text-left">
+                    <input type="text" pInputText size="50" placeholder="Search" (input)="
+                        searchGST.filterGlobal($event.target.value, 'contains')
+                      " style="width: 250px;" />
+                  </div>
+                </ng-template>
                 <ng-template pTemplate="header">
                   <tr>
                     <th>State</th>

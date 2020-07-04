@@ -12,7 +12,7 @@
                         label="Add New"></button>
                 </div>
                 <div class="p-col-12">
-                    <p-table #dt [value]="supplier" [resizableColumns]="true" [rowHover]="true" [paginator]="true"
+                    <p-table #dt [value]="supplier" [resizableColumns]="true" [rowHover]="true" [paginator]="false"
                         [rows]="10" [showCurrentPageReport]="true" [rowsPerPageOptions]="[10, 25, 50]" [filterDelay]="0"
                         [globalFilterFields]="['sSupName','sPAN','sStatusName']">
                         <ng-template pTemplate="caption">

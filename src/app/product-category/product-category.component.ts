@@ -8,6 +8,7 @@ import { ApiService } from '../services/api.service';
 import { ConfirmationService } from 'primeng/api';
 import { ToastService } from "../services/toast.service";
 import { LoginService } from '../../app/services/login.service'
+import { config } from 'src/config';
 
 
 @Component({
@@ -87,7 +88,7 @@ export class ProductCategoryComponent implements OnInit {
   // Open Dialog To Delete category
   deleteCategory(categoryID) {
     this.confirmationService.confirm({
-      message: 'Are you sure you want to Delete this record ?',
+      message: config.deleteMsg,
       header: 'Confirmation',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {

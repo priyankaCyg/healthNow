@@ -23,6 +23,7 @@ import { ProductCategoryMapping } from 'src/app/model/product-category-mapping.m
 import { productQuerData } from 'src/app/model/productQueries';
 import { APIService } from 'src/app/services/apieservice';
 import { ConfirmationService } from 'primeng/api';
+import { config } from 'src/config';
 
 @Component({
   selector: 'app-new-product',
@@ -559,7 +560,7 @@ export class NewProductComponent implements OnInit {
 
   deleteAttFile(attachment) {
     this.confirmationService.confirm({
-      message: 'Are you sure that you want to Delete this Record?',
+      message: config.deleteMsg,
       header: 'Confirmation',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
