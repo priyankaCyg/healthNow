@@ -6,7 +6,7 @@
                     <label for="sFullName">Full Name</label>
                     <input id="sFullName" formControlName="sFullName" type="text" pInputText>
                     <p-message severity="error"
-                        [text]="supContactForm.controls['sFullName'].errors['required'] ? 'This Field is required' : supContactForm.controls['sFullName'].errors['pattern'] ? 'Should be alpha numeric' : ''"
+                        [text]="supContactForm.controls['sFullName'].errors['Msg']"
                         *ngIf="!supContactForm.controls['sFullName'].valid&&supContactForm.controls['sFullName'].dirty">
                     </p-message>
                 </div>
@@ -14,7 +14,7 @@
                     <label for="sDesignation">Designation</label>
                     <input id="sDesignation" formControlName="sDesignation" type="text" pInputText>
                     <p-message severity="error"
-                        [text]="supContactForm.controls['sDesignation'].errors['required'] ? 'This Field is required' : supContactForm.controls['sDesignation'].errors['pattern'] ? 'Should be alpha numeric' : ''"
+                        [text]="supContactForm.controls['sDesignation'].errors['Msg']"
                         *ngIf="!supContactForm.controls['sDesignation'].valid&&supContactForm.controls['sDesignation'].dirty">
                     </p-message>
                 </div>
@@ -22,7 +22,7 @@
                     <label for="sEmailID">Email ID</label>
                     <input id="sEmailID" formControlName="sEmailID" type="email" pInputText>
                     <p-message severity="error"
-                        [text]="supContactForm.controls['sEmailID'].errors['required'] ? 'This Field is required' : supContactForm.controls['sEmailID'].errors['email'] ? 'Enter Valid Email' : ''"
+                        [text]="supContactForm.controls['sEmailID'].errors['required'] ? 'This field is required' : supContactForm.controls['sEmailID'].errors['email'] ? 'Enter Valid Email Id' : ''"
                         *ngIf="!supContactForm.controls['sEmailID'].valid&&supContactForm.controls['sEmailID'].dirty">
                     </p-message>
                 </div>
@@ -45,7 +45,7 @@
                     <label for="sMobileNo">Mobile No.</label>
                     <input id="sMobileNo" type="text" formControlName="sMobileNo" pInputText>
                     <p-message severity="error"
-                        [text]="supContactForm.controls['sMobileNo'].errors['required'] ? 'This Field is required' : supContactForm.controls['sMobileNo'].errors['pattern'] ? 'Please Enter Valid Mobile No.' : ''"
+                        [text]="supContactForm.controls['sMobileNo'].errors['Msg'] "
                         *ngIf="!supContactForm.controls['sMobileNo'].valid&&supContactForm.controls['sMobileNo'].dirty">
                     </p-message>
                 </div>
@@ -53,7 +53,7 @@
                     <label for="contatNo">Contact No.</label>
                     <input id="contatNo" type="text" formControlName="sContactNo" pInputText>
                     <p-message severity="error"
-                        [text]="supContactForm.controls['sContactNo'].errors['required'] ? 'This Field is required' : supContactForm.controls['sContactNo'].errors['pattern'] ? 'Please Enter Valid Contact No.' : ''"
+                        [text]="supContactForm.controls['sContactNo'].errors['Msg']"
                         *ngIf="!supContactForm.controls['sContactNo'].valid&&supContactForm.controls['sContactNo'].dirty">
                     </p-message>
                 </div>
@@ -61,7 +61,7 @@
                     <label for="directNo">Direct No.</label>
                     <input id="directNo" type="text" formControlName="sDirectNo" pInputText>
                     <p-message severity="error"
-                        [text]="supContactForm.controls['sDirectNo'].errors['required'] ? 'This Field is required' : supContactForm.controls['sDirectNo'].errors['pattern'] ? 'Please Enter Valid Direct No. ' : ''"
+                        [text]="supContactForm.controls['sDirectNo'].errors['Msg']"
                         *ngIf="!supContactForm.controls['sDirectNo'].valid&&supContactForm.controls['sDirectNo'].dirty">
                     </p-message>
                 </div>
@@ -69,7 +69,7 @@
                     <label for="fax">Fax No.</label>
                     <input id="Fax" type="text" formControlName="sFaxNo" pInputText>
                     <p-message severity="error"
-                        [text]="supContactForm.controls['sFaxNo'].errors['required'] ? 'This Field is required' : supContactForm.controls['sFaxNo'].errors['pattern'] ? 'Should be alpha numeric' : ''"
+                        [text]="supContactForm.controls['sFaxNo'].errors['Msg']"
                         *ngIf="!supContactForm.controls['sFaxNo'].valid&&supContactForm.controls['sFaxNo'].dirty">
                     </p-message>
                 </div>

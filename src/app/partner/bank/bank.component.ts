@@ -4,6 +4,7 @@ import { ApiService } from "src/app/services/api.service";
 import { DynamicDialogConfig, DynamicDialogRef } from "primeng/dynamicdialog";
 import { companyBankMaster } from 'src/app/model/companyBank.model';
 import { ToastService } from 'src/app/services/toast.service';
+import { ValidationService } from 'src/app/services/validation.service';
 
 @Component({
   selector: 'app-bank',
@@ -109,11 +110,11 @@ export class BankComponent implements OnInit {
 
   createControl(bankdata?: companyBankMaster): FormGroup {
     this.bankForm = this.fb.group({
-      sBankName: [bankdata.sBankName, [Validators.required, Validators.pattern('^[a-zA-Z ]*$')]],
-      sShortCode: [bankdata.sShortCode, Validators.required],
-      sAccountNo: [bankdata.sAccountNo, [Validators.required, Validators.pattern('^[0-9]*$')]],
-      sIFSC: [bankdata.sIFSC, [Validators.required, Validators.pattern('^[0-9a-zA-Z]+$')]],
-      sBankBranch: [bankdata.sBankBranch, [Validators.required, Validators.pattern('^[a-zA-Z ]*$')]],
+      sBankName: [bankdata.sBankName, ValidationService.nameValidator_space],
+      sShortCode: [bankdata.sShortCode, ValidationService.accountTypeValidator],
+      sAccountNo: [bankdata.sAccountNo, ValidationService.accountValidator],
+      sIFSC: [bankdata.sIFSC, ValidationService.alphaNumericValidator],
+      sBankBranch: [bankdata.sBankBranch, ValidationService.addressValidator],
       sStatusName: [bankdata.iStatusID, Validators.required]
     });
     return this.bankForm;

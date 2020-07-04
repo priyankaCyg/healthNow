@@ -9,7 +9,7 @@
                     <label for="fullName">Full Name</label>
                     <input id="fullName" type="text" formControlName="sFullName" pInputText>
                     <p-message severity="error"
-                        [text]="partnerContactForm.controls['sFullName'].errors['required'] ? 'This Field is required' : partnerContactForm.controls['sFullName'].errors"
+                        [text]="partnerContactForm.controls['sFullName'].errors['Msg'] "
                         *ngIf="!partnerContactForm.controls['sFullName'].valid&&partnerContactForm.controls['sFullName'].dirty">
                     </p-message>
                 </div>
@@ -18,7 +18,7 @@
                     <label for="designation">Designation</label>
                     <input id="designation" type="text" formControlName="sDesignation" pInputText>
                     <p-message severity="error"
-                        [text]="partnerContactForm.controls['sDesignation'].errors['required'] ? 'This Field is required' : partnerContactForm.controls['sDesignation'].errors"
+                        [text]="partnerContactForm.controls['sDesignation'].errors['Msg'] "
                         *ngIf="!partnerContactForm.controls['sDesignation'].valid&&partnerContactForm.controls['sDesignation'].dirty">
                     </p-message>
                 </div>
@@ -27,7 +27,7 @@
                     <label for="emailId">Email ID</label>
                     <input id="emailId" type="email" formControlName="sEmailID" pInputText>
                     <p-message severity="error"
-                        [text]="partnerContactForm.controls['sEmailID'].errors['required'] ? 'This Field is required' : partnerContactForm.controls['sEmailID'].errors['email']? 'Enter Valid Email': ''"
+                        [text]="partnerContactForm.controls['sEmailID'].errors['required'] ? 'This Field is required' : partnerContactForm.controls['sEmailID'].errors['email']? 'Enter Valid Email Id': ''"
                         *ngIf="!partnerContactForm.controls['sEmailID'].valid&&partnerContactForm.controls['sEmailID'].dirty">
                     </p-message>
                 </div>
@@ -55,7 +55,7 @@
                     <label for="mobileNo">Mobile No.</label>
                     <input id="mobileNo" type="text" formControlName="sMobileNo" pInputText>
                     <p-message severity="error"
-                        [text]="partnerContactForm.controls['sMobileNo'].errors['required'] ? 'This Field is required' : partnerContactForm.controls['sMobileNo'].errors"
+                        [text]="partnerContactForm.controls['sMobileNo'].errors['Msg']"
                         *ngIf="!partnerContactForm.controls['sMobileNo'].valid&&partnerContactForm.controls['sMobileNo'].dirty">
                     </p-message>
                 </div>
@@ -63,7 +63,7 @@
                     <label for="contatNo">Contact No.</label>
                     <input id="contatNo" type="text" formControlName="sContactNo" pInputText>
                     <p-message severity="error"
-                        [text]="partnerContactForm.controls['sContactNo'].errors['required'] ? 'This Field is required' : partnerContactForm.controls['sContactNo'].errors"
+                        [text]="partnerContactForm.controls['sContactNo'].errors['Msg']"
                         *ngIf="!partnerContactForm.controls['sContactNo'].valid&&partnerContactForm.controls['sContactNo'].dirty">
                     </p-message>
                 </div>
@@ -71,7 +71,7 @@
                     <label for="directNo">Direct No.</label>
                     <input id="directNo" type="text" formControlName="sDirectNo" pInputText>
                     <p-message severity="error"
-                        [text]="partnerContactForm.controls['sDirectNo'].errors['required'] ? 'This Field is required' : partnerContactForm.controls['sDirectNo'].errors"
+                        [text]="partnerContactForm.controls['sDirectNo'].errors['Msg']"
                         *ngIf="!partnerContactForm.controls['sDirectNo'].valid&&partnerContactForm.controls['sDirectNo'].dirty">
                     </p-message>
                 </div>
@@ -79,7 +79,7 @@
                     <label for="fax">Fax No.</label>
                     <input id="Fax" type="text" formControlName="sFaxNo" pInputText>
                     <p-message severity="error"
-                        [text]="partnerContactForm.controls['sFaxNo'].errors['required'] ? 'This Field is required' : partnerContactForm.controls['sFaxNo'].errors"
+                        [text]="partnerContactForm.controls['sFaxNo'].errors['Msg']"
                         *ngIf="!partnerContactForm.controls['sFaxNo'].valid&&partnerContactForm.controls['sFaxNo'].dirty">
                     </p-message>
                 </div>

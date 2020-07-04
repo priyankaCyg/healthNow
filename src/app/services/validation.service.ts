@@ -112,73 +112,74 @@ export class ValidationService {
    
   }
 
-  // Testing modules below
-  static alphabetValidator_1(control) {
-    // Validates upper case alphabets
-    if (control.value.match(/^[A-Z]+$/)) {
-      return null;
-    } else {
-      return { invalidEntry: true };
-    }
-  }
+  // ********************* Testing modules below  **********************
+  
+  // static alphabetValidator_1(control) {
+  //   // Validates upper case alphabets
+  //   if (control.value.match(/^[A-Z]+$/)) {
+  //     return null;
+  //   } else {
+  //     return { invalidEntry: true };
+  //   }
+  // }
 
-  static alphaNumericValidator_0(control) {
-    //Matches any alphanumeric string (no spaces).
-    if (control.value.match(/^[a-zA-Z0-9]+$/)) {
-      return null;
-    } else {
-      return { invalidEntry: true };
-    }
-  }
+  // static alphaNumericValidator_0(control) {
+  //   //Matches any alphanumeric string (no spaces).
+  //   if (control.value.match(/^[a-zA-Z0-9]+$/)) {
+  //     return null;
+  //   } else {
+  //     return { invalidEntry: true };
+  //   }
+  // }
 
-  static alphaNumericValidator_1(control) {
-    //ANY alphanumeric string with spaces, commas, dashes.
-    if (control.value.match(/^[a-zA-Z0-9\s.\-]+$/)) {
-      return null;
-    } else {
-      return { invalidEntry: true };
-    }
-  }
-
-
-
-  static alphaNumericValidator_2(control) {
-    //Alphanumeric, hyphen apostrophe, comma dash spaces
-    if (control.value.match(/^[a-zA-Z0-9\s.\-_']+$/)) {
-      return null;
-    } else {
-      return { invalidEntry: true };
-    }
-  }
+  // static alphaNumericValidator_1(control) {
+  //   //ANY alphanumeric string with spaces, commas, dashes.
+  //   if (control.value.match(/^[a-zA-Z0-9\s.\-]+$/)) {
+  //     return null;
+  //   } else {
+  //     return { invalidEntry: true };
+  //   }
+  // }
 
 
 
-  static phoneNoValidator(control) {
-    //Validates mobile numbers
-    if (control.value.match(/^\\d{10}$/)) {
-      return null;
-    } else {
-      return { invalidEntry: true };
-    }
-  }
+  // static alphaNumericValidator_2(control) {
+  //   //Alphanumeric, hyphen apostrophe, comma dash spaces
+  //   if (control.value.match(/^[a-zA-Z0-9\s.\-_']+$/)) {
+  //     return null;
+  //   } else {
+  //     return { invalidEntry: true };
+  //   }
+  // }
 
-  static integerValidator(control) {
-    //Validates only integer numbers
-    if (control.value.match(/^[0-9]*$/)) {
-      return null;
-    } else {
-      return { invalidEntry: true };
-    }
-  }
 
-  static numberLengthValidator(control) {
-    //Validates only integer numbers
-    if (control.value.length >= 10 && control.value.length <= 12) {
-      return null;
-    } else {
-      return { invalidEntry: true };
-    }
-  }
+
+  // static phoneNoValidator(control) {
+  //   //Validates mobile numbers
+  //   if (control.value.match(/^\\d{10}$/)) {
+  //     return null;
+  //   } else {
+  //     return { invalidEntry: true };
+  //   }
+  // }
+
+  // static integerValidator(control) {
+  //   //Validates only integer numbers
+  //   if (control.value.match(/^[0-9]*$/)) {
+  //     return null;
+  //   } else {
+  //     return { invalidEntry: true };
+  //   }
+  // }
+
+  // static numberLengthValidator(control) {
+  //   //Validates only integer numbers
+  //   if (control.value.length >= 10 && control.value.length <= 12) {
+  //     return null;
+  //   } else {
+  //     return { invalidEntry: true };
+  //   }
+  // }
   // static emailValidator(control) {
   //   //Email validator
   //   if (
@@ -215,13 +216,13 @@ export class ValidationService {
   //   }
   // }
 
-  static numeric(control: AbstractControl) {
-    let val = control.value;
+  // static numeric(control: AbstractControl) {
+  //   let val = control.value;
 
-    // if (val === null || val === '') return null;
+  //   // if (val === null || val === '') return null;
 
-    if (!val.toString().match(/^[0-9]+(\.?[0-9]+)?$/)) return { 'invalidNumber': true };
+  //   if (!val.toString().match(/^[0-9]+(\.?[0-9]+)?$/)) return { 'invalidNumber': true };
 
-    return null;
-  }
+  //   return null;
+  // }
 }

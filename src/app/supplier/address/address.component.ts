@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms'
 import { SupplierAddress } from 'src/app/model/supplier-address.model';
 import { ApiService } from 'src/app/services/api.service';
 import { ToastService } from 'src/app/services/toast.service';
+import { ValidationService } from 'src/app/services/validation.service';
 
 @Component({
   selector: 'app-address',
@@ -70,8 +71,8 @@ export class AddressComponent implements OnInit {
 
   createControl(supplierAddress?: SupplierAddress): FormGroup {
     this.SupplierAddressForm = this.fb.group({
-      sAdd1: [supplierAddress.sAdd1, Validators.required],
-      sAdd2: [supplierAddress.sAdd2, Validators.required],
+      sAdd1: [supplierAddress.sAdd1, ValidationService.addressValidator],
+      sAdd2: [supplierAddress.sAdd2, ValidationService.addressValidator],
       iAddID: [supplierAddress.iAddID],
       iLocID: [supplierAddress.iLocID],
       sAddType: [supplierAddress.sAddType],
@@ -79,12 +80,12 @@ export class AddressComponent implements OnInit {
       iCityCode: [supplierAddress.iCityCode],
       iStatusID: [supplierAddress.iStatusID],
       sCityName: [supplierAddress.sCityName],
-      sLandmark: [supplierAddress.sLandmark, Validators.required],
+      sLandmark: [supplierAddress.sLandmark,ValidationService.addressValidator],
       iAddTypeID: [supplierAddress.iAddTypeID, Validators.required],
       iCreatedBy: [supplierAddress.iCreatedBy],
       iStateCode: [supplierAddress.iStateCode],
       sStateName: [supplierAddress.sStateName],
-      sPostalCode: [supplierAddress.sPostalCode, Validators.compose([Validators.required, Validators.minLength(6), Validators.maxLength(6)])],
+      sPostalCode: [supplierAddress.sPostalCode, ValidationService.pincodeValidator],
       sStatusName: [supplierAddress.sStatusName],
       iCountryCode: [supplierAddress.iCountryCode],
       sCountryName: [supplierAddress.sCountryName]

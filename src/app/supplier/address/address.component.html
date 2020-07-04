@@ -16,7 +16,7 @@
                     <label for="sAdd1">Address1</label>
                     <input id="sAdd1" type="text" formControlName="sAdd1" pInputText>
                     <div>
-                        <p-message severity="error" text="This Field is required"
+                        <p-message severity="error"  [text]="SupplierAddressForm.controls['sAdd1'].errors['Msg']"
                             *ngIf="!SupplierAddressForm.controls['sAdd1'].valid && (SupplierAddressForm.controls['sAdd1'].dirty || SupplierAddressForm.controls['sAdd1'].touched)">
                         </p-message>
                     </div>
@@ -25,7 +25,7 @@
                     <label for="sAdd2">Address2</label>
                     <input id="sAdd2" type="text" formControlName="sAdd2" pInputText>
                     <div>
-                        <p-message severity="error" text="This Field is required"
+                        <p-message severity="error"  [text]="SupplierAddressForm.controls['sAdd2'].errors['Msg']"
                             *ngIf="!SupplierAddressForm.controls['sAdd2'].valid && (SupplierAddressForm.controls['sAdd2'].dirty || SupplierAddressForm.controls['sAdd2'].touched)">
                         </p-message>
                     </div>
@@ -38,7 +38,7 @@
                         (change)="onChangePincode()">
                     <div>
                         <p-message severity="error"
-                            [text]="SupplierAddressForm.controls['sPostalCode'].errors['required'] ? 'This Field is required' : SupplierAddressForm.controls['sPostalCode'].errors['minlength'] ? 'Please enter 6 digits pincode':SupplierAddressForm.controls['sPostalCode'].errors['maxlength'] ? 'Please enter 6 digits pincode': 'Enter a valid Pincode'"
+                            [text]="SupplierAddressForm.controls['sPostalCode'].errors['Msg'] "
                             *ngIf="!SupplierAddressForm.controls['sPostalCode'].valid&&(SupplierAddressForm.controls['sPostalCode'].dirty ||SupplierAddressForm.controls['sPostalCode'].touched)">
                         </p-message>
                     </div>
@@ -55,7 +55,7 @@
                     <label for="sLandmark">Landmark</label>
                     <input id="sLandmark" type="text" formControlName="sLandmark" pInputText>
                     <div>
-                        <p-message severity="error" text="This Field is required"
+                        <p-message severity="error"  [text]="SupplierAddressForm.controls['sLandmark'].errors['Msg']"
                             *ngIf="!SupplierAddressForm.controls['sLandmark'].valid && (SupplierAddressForm.controls['sLandmark'].dirty || SupplierAddressForm.controls['sLandmark'].touched)">
                         </p-message>
                     </div>

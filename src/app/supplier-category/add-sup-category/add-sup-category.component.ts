@@ -4,6 +4,7 @@ import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { SupplierCategoryMaster } from '../../model/supplierCategory.model'
 import { ApiService } from 'src/app/services/api.service';
 import { ToastService } from 'src/app/services/toast.service';
+import { ValidationService } from 'src/app/services/validation.service';
 
 @Component({
   selector: 'app-add-sup-category',
@@ -108,7 +109,7 @@ export class AddSupCategoryComponent implements OnInit {
       iStatusID: [supplierCategoryData.iStatusID, Validators.required],
       iSupCatID: [supplierCategoryData.iSupCatID],
       sCreatedDate: [supplierCategoryData.sCreatedDate],
-      sSupCName: [supplierCategoryData.sSupCName,Validators.required],
+      sSupCName: [supplierCategoryData.sSupCName,ValidationService.nameValidator_space],
       sStatusName: [supplierCategoryData.sStatusName]
     });
     return this.supplierCategoryForm;

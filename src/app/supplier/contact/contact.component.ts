@@ -5,6 +5,7 @@ import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { SupplierContactMaster } from '../../model/supplierContact.model'
 import { ApiService } from 'src/app/services/api.service';
 import { ToastService } from 'src/app/services/toast.service';
+import { ValidationService } from 'src/app/services/validation.service';
 
 @Component({
   selector: 'app-contact',
@@ -174,14 +175,14 @@ export class ContactComponent implements OnInit {
       iSupContactID: [contactData.iSupContactID],
       iSupID: [contactData.iSupID],
       sAddress: [contactData.sAddress, [Validators.required]],
-      sContactNo: [contactData.sContactNo, [Validators.required, Validators.pattern('^[0-9]*$')]],
+      sContactNo: [contactData.sContactNo, ValidationService.telephoneNoValidator],
       sCreatedDate: [contactData.sCreatedDate],
-      sDesignation: [contactData.sDesignation, [Validators.required]],
-      sDirectNo: [contactData.sDirectNo, [Validators.required, Validators.pattern('^[0-9]*$')]],
+      sDesignation: [contactData.sDesignation, ValidationService.nameValidator_space],
+      sDirectNo: [contactData.sDirectNo, ValidationService.telephoneNoValidator],
       sEmailID: [contactData.sEmailID, [Validators.required, Validators.email]],
-      sFaxNo: [contactData.sFaxNo, [Validators.required]],
-      sFullName: [contactData.sFullName, [Validators.required]],
-      sMobileNo: [contactData.sMobileNo, [Validators.required, Validators.pattern('^[0-9]*$')]],
+      sFaxNo: [contactData.sFaxNo,ValidationService.faxNoValidator],
+      sFullName: [contactData.sFullName,ValidationService.nameValidator_space],
+      sMobileNo: [contactData.sMobileNo, ValidationService.telephoneNoValidator],
       sPOBox: [contactData.sPOBox],
       sStatusName: [contactData.sStatusName],
       sSupName: [contactData.sSupName]

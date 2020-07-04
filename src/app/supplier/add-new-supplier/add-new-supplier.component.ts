@@ -25,6 +25,7 @@ import { APIService } from '../../services/apieservice';
 import { SupplierCategoryMapping } from 'src/app/model/supplier-category-mapping.model';
 import { companyBankMaster } from 'src/app/model/companyBank.model';
 import { config } from 'src/config';
+import { ValidationService } from 'src/app/services/validation.service';
 
 @Component({
   selector: 'app-add-new-supplier',
@@ -400,17 +401,17 @@ export class AddNewSupplierComponent implements OnInit {
   //code for implement formBuilder and validation
   createControl(supData?: SuppMaster): FormGroup {
     this.addSupplierForm = this.fb.group({
-      sSupName: [supData.sSupName, [Validators.required]],
+      sSupName: [supData.sSupName, ValidationService.nameValidator_space],
       iCreatedBy: [supData.iCreatedBy],
       iLegalEntityID: [supData.iLegalEntityID, [Validators.required]],
       sWebsite: [supData.sWebsite, [Validators.required]],
-      sTelNo1: [supData.sTelNo1, [Validators.required, Validators.pattern('^[0-9]*$'), Validators.minLength(10), Validators.maxLength(13)]],
-      sTelNo2: [supData.sTelNo2, [Validators.required, Validators.pattern('^[0-9]*$'), Validators.minLength(10), Validators.maxLength(13)]],
+      sTelNo1: [supData.sTelNo1, ValidationService.telephoneNoValidator],
+      sTelNo2: [supData.sTelNo2, ValidationService.telephoneNoValidator],
       iSupID: [supData.iSupID],
       sCreatedDate: [supData.sCreatedDate],
-      sFaxNo: [supData.sFaxNo, [Validators.required]],
-      sShortCode: [supData.sShortCode, [Validators.required]],
-      sPAN: [supData.sPAN, [Validators.required]],
+      sFaxNo: [supData.sFaxNo, ValidationService.faxNoValidator],
+      sShortCode: [supData.sShortCode, ValidationService.alphaNumericValidator],
+      sPAN: [supData.sPAN,ValidationService.alphaNumericValidator],
       sStatusName: [supData.sStatusName],
       iStatusID: [supData.iStatusID, Validators.required],
       sSupCName: [supData.iSupCatID, Validators.required]

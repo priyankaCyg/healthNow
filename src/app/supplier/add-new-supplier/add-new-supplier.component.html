@@ -16,7 +16,7 @@
                                         <input id="suppName" class="form-control" formControlName="sSupName" type="text"
                                             pInputText>
                                         <p-message severity="error"
-                                            [text]="addSupplierForm.controls['sSupName'].errors['required'] ? 'Supplier Name is required' : addSupplierForm.controls['sSupName'].errors"
+                                            [text]="addSupplierForm.controls['sSupName'].errors['Msg']"
                                             *ngIf="!addSupplierForm.controls['sSupName'].valid && addSupplierForm.controls['sSupName'].dirty">
                                         </p-message>
                                     </div>
@@ -25,7 +25,7 @@
                                         <input id="shotCode" class="form-control" type="text"
                                             formControlName="sShortCode" pInputText>
                                         <p-message severity="error"
-                                            [text]="addSupplierForm.controls['sShortCode'].errors['required'] ? 'Short Code is required' : addSupplierForm.controls['sShortCode'].errors"
+                                            [text]="addSupplierForm.controls['sShortCode'].errors['Msg']"
                                             *ngIf="!addSupplierForm.controls['sShortCode'].valid && addSupplierForm.controls['sShortCode'].dirty">
                                         </p-message>
                                     </div>
@@ -66,7 +66,7 @@
                                         <input id="telNo1" class="form-control" type="text" formControlName="sTelNo1"
                                             pInputText>
                                         <p-message severity="error"
-                                            [text]="addSupplierForm.controls['sTelNo1'].errors['required'] ? 'Telephone 1 is required': addSupplierForm.controls['sTelNo1'].errors['pattern'] ? 'Please Enter Valid Telephone1 No.' : addSupplierForm.controls['sTelNo1'].errors['minlength'] ? 'Please enter at least 10 Digits' :  addSupplierForm.controls['sTelNo1'].errors['maxlength'] ? 'Please enter less than 13 Digits': ''"
+                                            [text]="addSupplierForm.controls['sTelNo1'].errors['Msg']"
                                             *ngIf="!addSupplierForm.controls['sTelNo1'].valid && addSupplierForm.controls['sTelNo1'].dirty">
                                         </p-message>
                                     </div>
@@ -75,7 +75,7 @@
                                         <input id="telNo2" class="form-control" type="text" formControlName="sTelNo2"
                                             pInputText>
                                         <p-message severity="error"
-                                            [text]="addSupplierForm.controls['sTelNo2'].errors['required'] ? 'Telephone 2 is required' : addSupplierForm.controls['sTelNo2'].errors['pattern'] ? 'Please Enter Valid Telephone2 No.': addSupplierForm.controls['sTelNo2'].errors['minlength'] ? 'Please enter at least 10 Digits' :  addSupplierForm.controls['sTelNo2'].errors['maxlength'] ? 'Please enter less than 13 Digits': ''"
+                                            [text]="addSupplierForm.controls['sTelNo2'].errors['Msg']"
                                             *ngIf="!addSupplierForm.controls['sTelNo2'].valid && addSupplierForm.controls['sTelNo2'].dirty">
                                         </p-message>
                                     </div>
@@ -84,7 +84,7 @@
                                         <input id="fax" class="form-control" type="text" formControlName="sFaxNo"
                                             pInputText>
                                         <p-message severity="error"
-                                            [text]="addSupplierForm.controls['sFaxNo'].errors['required'] ? 'Fax Number is required' : addSupplierForm.controls['sFaxNo'].errors"
+                                            [text]="addSupplierForm.controls['sFaxNo'].errors['Msg']"
                                             *ngIf="!addSupplierForm.controls['sFaxNo'].valid && addSupplierForm.controls['sFaxNo'].dirty">
                                         </p-message>
                                     </div>
@@ -98,7 +98,7 @@
                                         <input id="pincode" class="form-control" type="text" formControlName="sPAN"
                                             pInputText>
                                         <p-message severity="error"
-                                            [text]="addSupplierForm.controls['sPAN'].errors['required'] ? 'PAN Number is required' : addSupplierForm.controls['sPAN'].errors"
+                                            [text]="addSupplierForm.controls['sPAN'].errors['Msg']"
                                             *ngIf="!addSupplierForm.controls['sPAN'].valid && addSupplierForm.controls['sPAN'].dirty">
                                         </p-message>
                                     </div>

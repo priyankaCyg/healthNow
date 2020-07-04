@@ -4,6 +4,7 @@ import { PartnerContactMaster } from 'src/app/model/partnerContact.model';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { ToastService } from 'src/app/services/toast.service';
+import { ValidationService } from 'src/app/services/validation.service';
 
 @Component({
   selector: 'app-contact',
@@ -119,14 +120,14 @@ export class ContactComponent implements OnInit {
       iPartnerContactID: [partnerData.iPartnerContactID],
       iPartnerID: [partnerData.iPartnerID],
       sAddress: [partnerData.sAddress, [Validators.required]],
-      sContactNo: [partnerData.sContactNo, [Validators.required]],
+      sContactNo: [partnerData.sContactNo,  ValidationService.telephoneNoValidator],
       sCreatedDate: [partnerData.sCreatedDate],
-      sDesignation: [partnerData.sDesignation, [Validators.required]],
-      sDirectNo: [partnerData.sDirectNo, [Validators.required]],
+      sDesignation: [partnerData.sDesignation, ValidationService.nameValidator_space],
+      sDirectNo: [partnerData.sDirectNo, ValidationService.telephoneNoValidator],
       sEmailID: [partnerData.sEmailID, [Validators.required, Validators.email]],
-      sFaxNo: [partnerData.sFaxNo, [Validators.required]],
-      sFullName: [partnerData.sFullName, [Validators.required]],
-      sMobileNo: [partnerData.sMobileNo, [Validators.required]],
+      sFaxNo: [partnerData.sFaxNo,  ValidationService.faxNoValidator],
+      sFullName: [partnerData.sFullName,  ValidationService.nameValidator_space],
+      sMobileNo: [partnerData.sMobileNo,  ValidationService.telephoneNoValidator],
       sPOBox: [partnerData.sPOBox],
       sStatusName: [partnerData.sStatusName],
       sPartnerName: [partnerData.sPartnerName]
