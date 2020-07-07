@@ -72,14 +72,14 @@ export class AddProductPurchasePriceComponent implements OnInit {
     this.httpService.callPostApi(product_details).subscribe(
       data => {
         this.addDetails = data.body;
-        if (this.addDetails.length) {
-          let enddate = this.addDetails[this.addDetails.length - 1].sEndDate;
-          console.log(enddate, "end")
-          let start_new_date = this.datePipe.transform(enddate, config.edit_dateFormat);
-          console.log(start_new_date, "new")
-          //this.minDate = start_new_date.
-          //this.minDate.setMonth(prevMonth);
-        }
+        // if (this.addDetails.length) {
+        //   let enddate = this.addDetails[this.addDetails.length - 1].sEndDate;
+        //   console.log(enddate, "end")
+        //   let start_new_date = this.datePipe.transform(enddate, config.edit_dateFormat);
+        //   console.log(start_new_date, "new")
+        //   //this.minDate = start_new_date.
+        //   //this.minDate.setMonth(prevMonth);
+        // }
       });
   }
 

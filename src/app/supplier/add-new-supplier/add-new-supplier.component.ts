@@ -105,7 +105,7 @@ export class AddNewSupplierComponent implements OnInit {
       this.httpService.getDropDownData(dataToSendEdit).then(response => {
         this.supData = new SuppMaster(response[0]);
         this.addSupplierForm = this.createControl(this.supData);
-        Promise.all([this.getStatusDrpDwn(), this.getLegalEntityDrpDwn(), this.getSuppCatDrpDwn(), this.getParentCatData()]).then(values => {
+        Promise.all([this.getStatusDrpDwn(), this.getLegalEntityDrpDwn(), this.getSuppCatDrpDwn(), this.getProducerDrpDwn()]).then(values => {
           this.setDropDownVal()
         });
         this.getSupplierAddressList();
@@ -114,8 +114,11 @@ export class AddNewSupplierComponent implements OnInit {
         this.showContact();
         this.bankSelectData();
         this.showAttachment();
-        //this.getCategoryMappingDataSource();
-        //this.getCategoryMappingDataTarget();
+        // this.getCategoryMappingDataSource();
+        // this.getCategoryMappingDataTarget();
+        // if (this.sourceCategory.length) {
+        //   this.getCategoryMappingDataSource();
+        // }
         // if (this.targetCategory.length) {
         //   this.getCategoryMappingDataTarget();
         // }
@@ -123,7 +126,7 @@ export class AddNewSupplierComponent implements OnInit {
     }
     else {
       this.isEdit = false
-      Promise.all([this.getStatusDrpDwn(), this.getLegalEntityDrpDwn(), this.getSuppCatDrpDwn(), this.getParentCatData()]).then(values => {
+      Promise.all([this.getStatusDrpDwn(), this.getLegalEntityDrpDwn(), this.getSuppCatDrpDwn(), this.getProducerDrpDwn()]).then(values => {
       });
     }
   }
@@ -297,70 +300,69 @@ export class AddNewSupplierComponent implements OnInit {
     })
   }
 
-  //code for parent Category dropdown
-  getParentCatData() {
-    return new Promise((resolve, reject) => {
-      var parent_cat_api = {
-        "iRequestID": 2116
-      }
-      this.httpService.callPostApi(parent_cat_api).subscribe(
-        data => {
-          this.parentCatData = data.body;
-          this.parentCatData.unshift({ iPCID: "", sPCName: "Select Product Category" });
-          this.selectedparentCategory = { iPCID: "", sPCName: "Select Product Category" };
-          resolve(this.parentCatData);
-        },
-        error => {
-          console.log(error);
-        });
-    });
-  }
+  // //code for parent Category dropdown
+  // getParentCatData() {
+  //   return new Promise((resolve, reject) => {
+  //     var parent_cat_api = {
+  //       "iRequestID": 2116
+  //     }
+  //     this.httpService.callPostApi(parent_cat_api).subscribe(
+  //       data => {
+  //         this.parentCatData = data.body;
+  //         this.parentCatData.unshift({ iPCID: "", sPCName: "Select Product Category" });
+  //         this.selectedparentCategory = { iPCID: "", sPCName: "Select Product Category" };
+  //         resolve(this.parentCatData);
+  //       },
+  //       error => {
+  //         console.log(error);
+  //       });
+  //   });
+  // }
 
-  setPcId(event) {
-    this.iPCID = event.value.iPCID
-    this.childCategoryData();
-    this.producerData = null;
-  }
+  // setPcId(event) {
+  //   this.iPCID = event.value.iPCID
+  //   this.childCategoryData();
+  //   this.producerData = null;
+  // }
 
-  //code for child product dropdown data
-  childCategoryData() {
-    return new Promise((resolve, reject) => {
-      var dataToSend4 = {
-        "iRequestID": 2117,
-        "iPCID": this.iPCID
-      }
-      this.httpService.getDropDownData(dataToSend4).then(response => {
-        this.productData = response
-        this.productData.splice(0, 0, { iPCID: "", sPCName: "Select Product" })
-        this.selectedProduct = { iPCID: "", sPCName: "Select Product" }
-        resolve(this.productData)
-      });
-    })
-  }
+  // //code for child product dropdown data
+  // childCategoryData() {
+  //   return new Promise((resolve, reject) => {
+  //     var dataToSend4 = {
+  //       "iRequestID": 2117,
+  //       "iPCID": this.iPCID
+  //     }
+  //     this.httpService.getDropDownData(dataToSend4).then(response => {
+  //       this.productData = response
+  //       this.productData.splice(0, 0, { iPCID: "", sPCName: "Select Product" })
+  //       this.selectedProduct = { iPCID: "", sPCName: "Select Product" }
+  //       resolve(this.productData)
+  //     });
+  //   })
+  // }
 
-  onProductChange(event) {
-    this.iPCID = event.value.iPCID
-    this.getProducerDrpDwn();
-  }
+  // onProductChange(event) {
+  //   this.iPCID = event.value.iPCID
+  //   this.getProducerDrpDwn();
+  // }
 
   //code for producer dropdown
   getProducerDrpDwn() {
     return new Promise((resolve, reject) => {
       var dataToSend4 = {
-        "iRequestID": 2224,
-        "iPCID": this.iPCID
+        "iRequestID": 2126
       }
       this.httpService.getDropDownData(dataToSend4).then(response => {
         this.producerData = response
-        this.producerData.splice(0, 0, { iProducerID: "", sProducerName: "Select Product" })
-        this.selectedProducer = { iProducerID: "", sProducerName: "Select Product" }
+        this.producerData.splice(0, 0, { iProducerID: "", sProducerName: "Select Producer" })
+        this.selectedProducer = { iProducerID: "", sProducerName: "Select Producer" }
         resolve(this.productData)
       });
     })
   }
 
   onProducerChange(event) {
-    this.iPCID = event.value.iPCID;
+    // this.iPCID = event.value.iPCID;
     this.iProducerID = event.value.iProducerID;
     this.getCategoryMappingDataSource();
     this.getCategoryMappingDataTarget();
@@ -370,14 +372,14 @@ export class AddNewSupplierComponent implements OnInit {
   getCategoryMappingDataSource() {
     const supplierCategoryMappingAPI1 = {
       "iRequestID": 2225,
-      "iPCID": this.iPCID,
+      //"iPCID": this.iPCID,
       "iProducerID": this.iProducerID,
       "iSupID": this.supId
     }
     this.httpService.callPostApi(supplierCategoryMappingAPI1).subscribe(
       data => {
         this.sourceCategory = data.body;
-        console.log(this.sourceCategory)
+        console.log(this.sourceCategory, "source")
       },
       error => { console.log(error) }
     )
@@ -411,7 +413,7 @@ export class AddNewSupplierComponent implements OnInit {
       sCreatedDate: [supData.sCreatedDate],
       sFaxNo: [supData.sFaxNo, ValidationService.faxNoValidator],
       sShortCode: [supData.sShortCode, ValidationService.alphaNumericValidator],
-      sPAN: [supData.sPAN,ValidationService.alphaNumericValidator],
+      sPAN: [supData.sPAN, ValidationService.alphaNumericValidator],
       sStatusName: [supData.sStatusName],
       iStatusID: [supData.iStatusID, Validators.required],
       sSupCName: [supData.iSupCatID, Validators.required]
@@ -801,7 +803,7 @@ export class AddNewSupplierComponent implements OnInit {
     const supplierCategoryMappingAddAPI = {
       "iRequestID": 2222,
       "iSupID": this.supId,
-      "iPCID": this.selectedProduct.iPCID,
+      //"iPCID": this.selectedProduct.iPCID,
       "iProducerID": this.selectedProducer.iProducerID,
       "sPrdID": string_ids
     }
