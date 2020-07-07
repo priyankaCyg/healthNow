@@ -33,6 +33,7 @@ export class AddProductPurchasePriceComponent implements OnInit {
   minDate: Date;
   today: Date;
   today_con_date;
+
   constructor(private breadcrumbService: BreadcrumbService, private dialogService: DialogService,
     private httpService: ApiService, private toastService: ToastService, private datePipe: DatePipe, private config: DynamicDialogConfig,
     private fb: FormBuilder) {
@@ -42,25 +43,19 @@ export class AddProductPurchasePriceComponent implements OnInit {
     ]);
   }
 
-
   ngOnInit(): void {
     this.today = new Date();
     this.today_con_date = this.datePipe.transform(this.today, config.edit_dateFormat);
-    console.log(this.today_con_date, "today")
-    // let month = this.today.getMonth();
-    // let prevMonth = (month === 0) ? 11 : month;
-    // this.minDate = new Date();
-    // console.log(this.minDate, "min")
-    // this.minDate.setMonth(prevMonth);
-
+    let month = this.today.getMonth();
+    let prevMonth = (month === 0) ? 11 : month;
+    this.minDate = new Date();
+    this.minDate.setMonth(prevMonth);
     this.prdData = new purchaseProductMaster();
     this.productForm = this.createControl(this.prdData);
     this.productName = this.config.data.sPrdName;
     this.sup_id = this.config.data.iSupID;
     this.prd_id = this.config.data.iPrdID;
     this.product_details();
-
-
   }
 
   product_details() {
@@ -73,12 +68,32 @@ export class AddProductPurchasePriceComponent implements OnInit {
       data => {
         this.addDetails = data.body;
         if (this.addDetails.length) {
-          let enddate = this.addDetails[this.addDetails.length - 1].sEndDate;
-          console.log(enddate, "end")
-          let start_new_date = this.datePipe.transform(enddate, config.edit_dateFormat);
-          console.log(start_new_date, "new")
-          //this.minDate = start_new_date.
-          //this.minDate.setMonth(prevMonth);
+          let final_date;
+          let index_val;
+          this.addDetails.forEach((key, index) => {
+            let loop_date = this.addDetails[index].sEndDate;
+            let new_date = this.datePipe.transform(loop_date, "MM-dd-yyyy");
+            let start_new_date = this.datePipe.transform(new_date, config.edit_dateFormat);
+            if (index > 0) {
+              if (start_new_date > final_date) {
+                final_date = start_new_date;
+                index_val = index;
+              }
+            }
+            else {
+              final_date = start_new_date;
+              index_val = index;
+            }
+          });
+          let enddate = this.addDetails[index_val].sEndDate;
+          let start_new_date = this.datePipe.transform(enddate, "MM-dd-yyyy");
+          this.minDate = new Date(start_new_date);
+          let date = this.minDate.getDate();
+          let mnth = this.minDate.getMonth();
+          let year = this.minDate.getFullYear();
+          this.minDate.setDate(date + 1);
+          this.minDate.setMonth((date == 31) ? mnth + 1 : mnth);
+          this.minDate.setFullYear((mnth == 11 && date == 31 ? year + 1 : year));
         }
       });
   }
@@ -88,13 +103,23 @@ export class AddProductPurchasePriceComponent implements OnInit {
     this.productForm.controls['sStartDate'].disable();
     this.price_id = this.addDetails[rowIndex].iPPriceID;
     let purchase = this.addDetails[rowIndex].iPurchaseAmt;
-    let start_date = this.addDetails[rowIndex].sStartDate;
-    let start_new_date = this.datePipe.transform(start_date, config.edit_dateFormat);
+    let enddate = this.addDetails[this.addDetails.length - 1].sEndDate;
+    let new_date = this.datePipe.transform(enddate, "MM-dd-yyyy");
+    this.minDate = new Date(new_date);
+    let date = this.minDate.getDate();
+    let mnth = this.minDate.getMonth();
+    let year = this.minDate.getFullYear();
+    this.minDate.setDate(date + 1);
+    this.minDate.setMonth((date == 31) ? mnth + 1 : mnth);
+    this.minDate.setFullYear((mnth == 11 && date == 31 ? year + 1 : year));
+    let start_date = this.minDate;
+   // let start_new_date = this.datePipe.transform(start_date, config.edit_dateFormat);
     let end_date = this.addDetails[rowIndex].sEndDate;
     let end_new_date = this.datePipe.transform(end_date, config.edit_dateFormat);
     this.productForm.controls['iPurchaseAmt'].setValue(purchase);
-    this.productForm.controls['sStartDate'].setValue(start_new_date);
+    this.productForm.controls['sStartDate'].setValue(start_date);
     this.productForm.controls['sEndDate'].setValue(end_new_date);
+
 
   }
 
@@ -109,7 +134,6 @@ export class AddProductPurchasePriceComponent implements OnInit {
 
   addProductPrice() {
     var formData = this.productForm.getRawValue();
-
     let new_date_start = formData.sStartDate;
     let start_date = this.datePipe.transform(new_date_start, config.dateFormat);
     let new_date_end = formData.sEndDate;
@@ -137,9 +161,8 @@ export class AddProductPurchasePriceComponent implements OnInit {
 
   editProductPrice() {
     var formData = this.productForm.getRawValue();
-
     let new_date_start = formData.sStartDate;
-    let start_date = this.datePipe.transform(new_date_start, config.dateFormat);
+    let start_date = this.datePipe.transform(new_date_start, "yyyy-MM-dd");
     let new_date_end = formData.sEndDate;
     let end_date = this.datePipe.transform(new_date_end, config.dateFormat);
     const product_price_data = {
@@ -158,6 +181,7 @@ export class AddProductPurchasePriceComponent implements OnInit {
           this.product_details();
           this.productForm.reset();
           this.flag = 0;
+          this.productForm.controls['sStartDate'].enable();
         }
         this.toastService.displayApiMessage(data.headers.get('StatusMessage'), data.headers.get('StatusCode'));
       });

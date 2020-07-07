@@ -76,7 +76,7 @@
                             {{addDetails.sStatusName}}
                         </span>
                     </td>
-                    <td *ngIf="today_con_date>=addDetails.sStartDate"><button pButton type="button"
+                    <td ><button pButton type="button" *ngIf="today_con_date <= (addDetails.sStartDate | date: 'dd-MM-yyyy')"
                             class="ui-button-success mr-1" (click)="editOne(rowIndex)" icon="pi pi-pencil"></button>
                     </td>
                 </tr>
