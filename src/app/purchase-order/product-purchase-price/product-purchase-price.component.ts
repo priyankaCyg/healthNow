@@ -6,6 +6,7 @@ import { GeneratedFile } from '@angular/compiler';
 import { DialogService } from 'primeng';
 import { PurchaseOrderRoutingModule } from '../purchase-order-routing.module';
 import { AddProductPurchasePriceComponent } from '../add-product-purchase-price/add-product-purchase-price.component';
+import { ApiService } from 'src/app/services/api.service';
 
 @Component({
   selector: 'app-product-purchase-price',
@@ -16,30 +17,78 @@ import { AddProductPurchasePriceComponent } from '../add-product-purchase-price/
 export class ProductPurchasePriceComponent implements OnInit {
 
   items: MenuItem[];
-  
+  supplierlist;
+  selectedSupplier;
   supplierProduct: any[];
 
-  constructor(private breadcrumbService: BreadcrumbService, private dialogService:DialogService) {
+  constructor(private breadcrumbService: BreadcrumbService, private dialogService: DialogService,
+    private apiService: ApiService) {
     this.breadcrumbService.setItems([
-        { label: 'Dashboard' },
-        { label: 'Purchase Order', routerLink: ['/purchase-order'] }
+      { label: 'Dashboard' },
+      { label: 'Purchase Order', routerLink: ['/purchase-order'] }
     ]);
-}
+  }
 
-ngOnInit(): void {
+  ngOnInit(): void {
+    this.producerDropdown();
+    // this.supplierProduct = [
+    //   { prdCategory: 'Food', product: 'Gluten Free Wheat 5kg Pack', amount: '200', startDate: '01-06-2019', endDate: '31-12-2019' },
+    //   { prdCategory: 'Food', product: 'Horlicks 750 gm Refill Pack', amount: '430', startDate: '01-01-2020', endDate: '31-03-2019' },
+    //   { prdCategory: 'Food', product: 'Horlicks Refill Pack, 500 gm', amount: '230', startDate: '01-01-2020', endDate: '31-03-2019' }
+    // ];
+  }
 
-   
-  this.supplierProduct = [
-    { prdCategory:'Food',product:'Gluten Free Wheat 5kg Pack',amount:'200',startDate:'01-06-2019',endDate:'31-12-2019'  },
-    { prdCategory:'Food', product:'Horlicks 750 gm Refill Pack',amount:'430',startDate:'01-01-2020',endDate:'31-03-2019'},
-    { prdCategory:'Food', product:'Horlicks Refill Pack, 500 gm',amount:'230',startDate:'01-01-2020',endDate:'31-03-2019'}
-  ];
-}
-  openDialogForaddDetails() {
-    const ref = this.dialogService.open( AddProductPurchasePriceComponent , {
-      data: {
+  //code forproducer dropdown data
+  producerDropdown() {
+    return new Promise((resolve, reject) => {
+      const supplier_dropdown_data = {
+        "iRequestID": 2174,
+      }
+      this.apiService.getDropDownData(supplier_dropdown_data).then(
+        (data) => {
+          this.supplierlist = data;
+          this.supplierlist.splice(0, 0, { iSupID: "", sSupName: "Select supplier" })
+          this.selectedSupplier = { iSupID: "", sSupName: "Select supplier" }
+          resolve(this.supplierlist)
+        });
+    })
+  }
+  //code for show all list of product
+  getProduct() {
+    const product_list_data = {
+      "iRequestID": 2412,
+      "iSupID": this.selectedSupplier.iSupID
+    }
+    this.apiService.callPostApi(product_list_data).subscribe(
+      (data) => {
+        this.supplierProduct = data.body;
       },
+      (error) => console.log(error)
+    );
+  }
+
+  openDialogForaddDetails(supplierProduct) {
+    const ref = this.dialogService.open(AddProductPurchasePriceComponent, {
+      data:
+        supplierProduct
+      ,
       header: 'Add Details',
+      width: '90%'
+    });
+
+    ref.onClose.subscribe((success: boolean) => {
+      if (success) {
+        // this.toastService.addSingle("success", "Mail send successfully", "");
+      }
+    });
+  }
+
+  openDialogForeditDetails(supplierProduct) {
+    const ref = this.dialogService.open(AddProductPurchasePriceComponent, {
+      data:
+        supplierProduct
+      ,
+      header: 'Edit Details',
       width: '90%'
     });
 

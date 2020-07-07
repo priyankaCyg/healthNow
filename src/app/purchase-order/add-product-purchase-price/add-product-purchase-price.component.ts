@@ -3,8 +3,16 @@ import { BreadcrumbService } from '../../breadcrumb.service';
 import { CountryService } from '../../demo/service/countryservice';
 import { SelectItem, MenuItem } from 'primeng/api';
 import { GeneratedFile } from '@angular/compiler';
-import { DialogService } from 'primeng';
+import { DialogService, DynamicDialogConfig } from 'primeng';
 import { PurchaseOrderRoutingModule } from '../purchase-order-routing.module';
+import { ApiService } from 'src/app/services/api.service';
+import { ToastService } from 'src/app/services/toast.service';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { DatePipe } from '@angular/common';
+import * as moment from 'moment';
+import { purchaseProductMaster } from 'src/app/model/add-purchase-product-price.model';
+import { config } from 'src/config';
+import { ValidationService } from 'src/app/services/validation.service';
 
 @Component({
   selector: 'app-add-product-purchase-price',
@@ -14,28 +22,145 @@ import { PurchaseOrderRoutingModule } from '../purchase-order-routing.module';
 export class AddProductPurchasePriceComponent implements OnInit {
 
   items: MenuItem[];
-
+  public productForm: FormGroup;
   addDetails: any[];
-
-   constructor(private breadcrumbService: BreadcrumbService, private dialogService:DialogService) {
+  sup_id: number;
+  prd_id: number;
+  productName: string;
+  prdData: purchaseProductMaster;
+  price_id: number;
+  flag = 0;
+  minDate: Date;
+  today: Date;
+  today_con_date;
+  constructor(private breadcrumbService: BreadcrumbService, private dialogService: DialogService,
+    private httpService: ApiService, private toastService: ToastService, private datePipe: DatePipe, private config: DynamicDialogConfig,
+    private fb: FormBuilder) {
     this.breadcrumbService.setItems([
-        { label: 'Dashboard' },
-        { label: 'Purchase Order', routerLink: ['/purchase-order'] }
+      { label: 'Dashboard' },
+      { label: 'Purchase Order', routerLink: ['/purchase-order'] }
     ]);
-}
-
- 
-ngOnInit(): void {
-
-   
-  this.addDetails = [
-    { srNo:'1', amount:'200',startDate:'01-06-2019',endDate:'31-12-2019' },
-    { srNo:'2', amount:'230',startDate:'01-01-2020',endDate:'31-03-2019' },
-  ];
+  }
 
 
+  ngOnInit(): void {
+    this.today = new Date();
+    this.today_con_date = this.datePipe.transform(this.today, config.edit_dateFormat);
+    console.log(this.today_con_date, "today")
+    // let month = this.today.getMonth();
+    // let prevMonth = (month === 0) ? 11 : month;
+    // this.minDate = new Date();
+    // console.log(this.minDate, "min")
+    // this.minDate.setMonth(prevMonth);
 
-}
+    this.prdData = new purchaseProductMaster();
+    this.productForm = this.createControl(this.prdData);
+    this.productName = this.config.data.sPrdName;
+    this.sup_id = this.config.data.iSupID;
+    this.prd_id = this.config.data.iPrdID;
+    this.product_details();
 
+
+  }
+
+  product_details() {
+    const product_details = {
+      "iRequestID": 2413,
+      "iSupID": this.sup_id,
+      "iPrdID": this.prd_id
+    }
+    this.httpService.callPostApi(product_details).subscribe(
+      data => {
+        this.addDetails = data.body;
+        if (this.addDetails.length) {
+          let enddate = this.addDetails[this.addDetails.length - 1].sEndDate;
+          console.log(enddate, "end")
+          let start_new_date = this.datePipe.transform(enddate, config.edit_dateFormat);
+          console.log(start_new_date, "new")
+          //this.minDate = start_new_date.
+          //this.minDate.setMonth(prevMonth);
+        }
+      });
+  }
+
+  editOne(rowIndex) {
+    this.flag = 1;
+    this.productForm.controls['sStartDate'].disable();
+    this.price_id = this.addDetails[rowIndex].iPPriceID;
+    let purchase = this.addDetails[rowIndex].iPurchaseAmt;
+    let start_date = this.addDetails[rowIndex].sStartDate;
+    let start_new_date = this.datePipe.transform(start_date, config.edit_dateFormat);
+    let end_date = this.addDetails[rowIndex].sEndDate;
+    let end_new_date = this.datePipe.transform(end_date, config.edit_dateFormat);
+    this.productForm.controls['iPurchaseAmt'].setValue(purchase);
+    this.productForm.controls['sStartDate'].setValue(start_new_date);
+    this.productForm.controls['sEndDate'].setValue(end_new_date);
+
+  }
+
+  createControl(prdData?: purchaseProductMaster): FormGroup {
+    this.productForm = this.fb.group({
+      iPurchaseAmt: [prdData.iPurchaseAmt, [Validators.required]],
+      sStartDate: [prdData.sStartDate ? moment(prdData.sEndDate).toDate() : null, Validators.required],
+      sEndDate: [prdData.sEndDate ? moment(prdData.sEndDate).toDate() : null, Validators.required],
+    });
+    return this.productForm;
+  }
+
+  addProductPrice() {
+    var formData = this.productForm.getRawValue();
+
+    let new_date_start = formData.sStartDate;
+    let start_date = this.datePipe.transform(new_date_start, config.dateFormat);
+    let new_date_end = formData.sEndDate;
+    let end_date = this.datePipe.transform(new_date_end, config.dateFormat);
+    const product_price_data = {
+      "iRequestID": 2411,
+      "iPrdID": this.prd_id,
+      "iSupID": this.sup_id,
+      "iPurchaseAmt": +formData.iPurchaseAmt,
+      "sStartDate": start_date,
+      "sEndDate": end_date,
+      "iIsDefault": 1
+    }
+    console.log(product_price_data)
+    this.httpService.callPostApi(product_price_data).subscribe(
+      data => {
+        if (data.headers.get('StatusCode') == 200) {
+          this.product_details();
+          this.productForm.reset();
+        }
+        this.toastService.displayApiMessage(data.headers.get('StatusMessage'), data.headers.get('StatusCode'));
+        //this.submitFlag = 0;
+      });
+  }
+
+  editProductPrice() {
+    var formData = this.productForm.getRawValue();
+
+    let new_date_start = formData.sStartDate;
+    let start_date = this.datePipe.transform(new_date_start, config.dateFormat);
+    let new_date_end = formData.sEndDate;
+    let end_date = this.datePipe.transform(new_date_end, config.dateFormat);
+    const product_price_data = {
+      "iRequestID": 2414,
+      "iPrdID": this.prd_id,
+      "iSupID": this.sup_id,
+      "iPurchaseAmt": +formData.iPurchaseAmt,
+      "sStartDate": start_date,
+      "sEndDate": end_date,
+      "iPPriceID": this.price_id
+    }
+    console.log(product_price_data)
+    this.httpService.callPostApi(product_price_data).subscribe(
+      data => {
+        if (data.headers.get('StatusCode') == 200) {
+          this.product_details();
+          this.productForm.reset();
+          this.flag = 0;
+        }
+        this.toastService.displayApiMessage(data.headers.get('StatusMessage'), data.headers.get('StatusCode'));
+      });
+  }
 }
 

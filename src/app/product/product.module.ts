@@ -38,7 +38,7 @@ import { CheckboxModule } from 'primeng/checkbox';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { MessageModule } from 'primeng/message';
 import { PickListModule } from 'primeng/picklist';
-
+import { MultiSelectModule } from 'primeng/multiselect';
 import { APIService } from '../services/apieservice';
 
 
@@ -67,7 +67,8 @@ import { APIService } from '../services/apieservice';
     CheckboxModule,
     ConfirmDialogModule,
     ReactiveFormsModule,
-    MessageModule
+    MessageModule,
+    MultiSelectModule
 
   ],
   providers: [ConfirmationService, DialogService, APIService],

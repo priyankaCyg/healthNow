@@ -1,69 +1,89 @@
 <div class="p-grid ui-fluid">
-  <div class="p-col-4">
-      <div class="p-grid">
-          <div class="p-col-12">
-        <div class="card download-files p-3 mb-2">
-          <div class="p-grid p-nogutter">
-            <div class="p-col-12 p-lg-12">
-                <div class="p-grid">  
-                    <div class="p-col-12 p-md-12 p-lg-12 mb-2">
-                        <div class="card bg-success p-2">Product : <strong>Gluten Free Wheat 5kg Pack</strong></div>
+    <div class="p-col-4">
+        <form [formGroup]="productForm" autocomplete="off">
+
+            <div class="p-grid">
+                <div class="p-col-12">
+                    <div class="card download-files p-3 mb-2">
+                        <div class="p-grid p-nogutter">
+                            <div class="p-col-12 p-lg-12">
+                                <div class="p-grid">
+                                    <div class="p-col-12 p-md-12 p-lg-12 mb-2">
+                                        <div class="card bg-success p-2">Product : <strong>{{productName}}
+                                            </strong></div>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="p-col-12 p-md-12 p-lg-12 mb-2">
+                                <label for="amount">Amount</label>
+                                <input id="amount" formControlName="iPurchaseAmt" type="text" pInputText>
+                                <p-message severity="error" [text]="productForm.controls['iPurchaseAmt'].errors['Msg']"
+                                    *ngIf="!productForm.controls['iPurchaseAmt'].valid && productForm.controls['iPurchaseAmt'].dirty">
+                                </p-message>
+                            </div>
+
+                            <div class="p-col-12 p-md-12 p-lg-12 mb-2">
+                                <label for="sDate">Start Date</label>
+                                <p-calendar formControlName="sStartDate" [minDate]="minDate" dateFormat="dd-mm-yy"
+                                    [(ngModel)]="selectedStartDate"></p-calendar>
+                            </div>
+                            <div class="p-col-12 p-md-12 p-lg-12 mb-2">
+                                <label for="eDate">End Date</label>
+                                <p-calendar formControlName="sEndDate" dateFormat="dd-mm-yy"
+                                    [(ngModel)]="selectedendDate"></p-calendar>
+                            </div>
+                        </div>
                     </div>
-                    
-                </div>  
+                </div>
             </div>
-            <div class="p-col-12 p-md-12 p-lg-12 mb-2">
-                <label for="amount">Amount</label>
-                <input id="amount"  type="text" pInputText>
+        </form>
+
+        <div class="separator separator--border-solid separator--space-sm separator--portlet-fit"></div>
+        <div class="p-grid form-group ui-fluid p-justify-end mt-1">
+            <div class="p-col-12 p-md-2 p-lg-12 text-right">
+                <button *ngIf="!flag" pButton type="submit" label="Save" (click)="addProductPrice()"
+                    [disabled]="!productForm.valid" routerLink="/purchase-order/product-purchase-price"
+                    class="ui-button atbt mb-2"></button>
+                <button *ngIf="flag" pButton type="submit" label="Update" (click)="editProductPrice()"
+                    [disabled]="!productForm.valid" routerLink="/purchase-order/product-purchase-price"
+                    class="ui-button atbt mb-2"></button>
             </div>
-            
-          <div class="p-col-12 p-md-12 p-lg-12 mb-2">
-                <label for="sDate">Start Date</label>
-                <p-calendar [(ngModel)]="date1"></p-calendar>
-            </div>
-          <div class="p-col-12 p-md-12 p-lg-12 mb-2">
-                <label for="eDate">End Date</label>
-                <p-calendar [(ngModel)]="date1"></p-calendar>
-            </div>
-          </div>
+
         </div>
     </div>
+
+    <div class="p-col-8">
+        <p-table [value]="addDetails">
+            <ng-template pTemplate="header">
+                <tr>
+                    <th style="width: 3em">#</th>
+                    <th>Amount</th>
+                    <th>Start Date</th>
+                    <th>End Date</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-rowIndex="rowIndex" let-addDetails>
+                <tr>
+                    <td>{{rowIndex + 1}}</td>
+                    <td>{{addDetails.iPurchaseAmt}}</td>
+                    <td>{{addDetails.sStartDate| date: 'dd-MM-yyyy'}}</td>
+                    <td>{{addDetails.sEndDate | date: 'dd-MM-yyyy'}}</td>
+                    <td>
+                        <span class="badge badge--success badge--inline badge--pill">
+                            {{addDetails.sStatusName}}
+                        </span>
+                    </td>
+                    <td *ngIf="today_con_date>=addDetails.sStartDate"><button pButton type="button"
+                            class="ui-button-success mr-1" (click)="editOne(rowIndex)" icon="pi pi-pencil"></button>
+                    </td>
+                </tr>
+            </ng-template>
+        </p-table>
+
+    </div>
+
+
 </div>
-
-      <div class="separator separator--border-solid separator--space-sm separator--portlet-fit"></div>
-      <div class="p-grid form-group ui-fluid p-justify-end mt-1">
-        <div class="p-col-12 p-md-2 p-lg-12 text-right">
-            <button pButton type="submit" label="Save" routerLink="/purchase-order/product-purchase-price" class="ui-button atbt mb-2"></button>
-        </div>
-
-  </div>
-</div>
-              
-<div class="p-col-8"> 
-    <p-table [value]="addDetails">
-        <ng-template pTemplate="header">
-            <tr>
-                <th style="width: 3em">#</th>
-                <th>Amount</th>
-                <th>Start Date</th>
-                <th>End Date</th>
-            </tr>
-        </ng-template>
-        <ng-template pTemplate="body" let-addDetails>
-            <tr>
-                <td>{{addDetails.srNo}}</td>
-                <td>{{addDetails.amount}}</td>
-                <td>{{addDetails.startDate}}</td>
-                <td>{{addDetails.endDate}}</td>
-            </tr>
-        </ng-template>
-    </p-table>
-
-</div>
-
-           
-        </div>                     
-
-  
-  
-  
