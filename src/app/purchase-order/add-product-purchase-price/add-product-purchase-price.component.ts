@@ -95,6 +95,14 @@ export class AddProductPurchasePriceComponent implements OnInit {
           this.minDate.setMonth((date == 31) ? mnth + 1 : mnth);
           this.minDate.setFullYear((mnth == 11 && date == 31 ? year + 1 : year));
         }
+        // if (this.addDetails.length) {
+        //   let enddate = this.addDetails[this.addDetails.length - 1].sEndDate;
+        //   console.log(enddate, "end")
+        //   let start_new_date = this.datePipe.transform(enddate, config.edit_dateFormat);
+        //   console.log(start_new_date, "new")
+        //   //this.minDate = start_new_date.
+        //   //this.minDate.setMonth(prevMonth);
+        // }
       });
   }
 
