@@ -25,6 +25,7 @@ import { APIService } from 'src/app/services/apieservice';
 import { ConfirmationService } from 'primeng/api';
 import { config } from 'src/config';
 import { ValidationService } from 'src/app/services/validation.service';
+import { foodcultureData } from 'src/app/model/foodculture';
 
 @Component({
   selector: 'app-new-product',
@@ -47,11 +48,11 @@ export class NewProductComponent implements OnInit {
   productData: ProductMaster;
   selectedproducer;
   selectedunit;
-  selectedfoodculture;
+  selectedfoodculture: foodcultureData[] = [];
   selectedParent;
   producerData;
   unitData;
-  foodcultureData;
+  foodcultureData: any[] = [];
   parentData;
   prdId;
   tabDisabled: boolean = true;
@@ -101,6 +102,8 @@ export class NewProductComponent implements OnInit {
       this.httpService.getDropDownData(dataToSendEdit).then(response => {
         this.productData = new ProductMaster(response[0]);
         this.ProductForm = this.createControl(this.productData);
+        console.log(this.productData.iFoodCulture[0]['iFCID'], "food")
+
         Promise.all([this.getProducerDrpDwn(), this.getUnitDrpDwn(), this.getFoodCultureDrpDwn(), this.getParentDrpDwn()]).then(values => {
           this.setDropDownVal()
         });
@@ -109,6 +112,7 @@ export class NewProductComponent implements OnInit {
         this.getFileType();
         this.getCategoryMappingDataSource();
         this.getCategoryMappingDataTarget();
+
       });
     }
     else {
@@ -147,7 +151,7 @@ export class NewProductComponent implements OnInit {
   defaultDropDwnValue() {
     this.selectedproducer = { iProducerID: "", sProducerName: "Select Producer" }
     this.selectedunit = { iUnitID: "", sUnitName: "Select Unit" }
-    this.selectedfoodculture = { iKVID: "", sKVValue: "Select Foodculture" }
+    //this.selectedfoodculture = { iKVID: "", sKVValue: "Select Foodculture" }
     this.selectedParent = { iPrdID: "", sParentPrdName: "Select Parent Category" }
   }
 
@@ -166,11 +170,17 @@ export class NewProductComponent implements OnInit {
       this.selectedunit = selectedUnitObj;
     }
 
-    // Foodculture Dropdown Select
-    let selectedFoodcultureObj = this.foodcultureData.find(x => x.iKVID == this.productData.iFoodCulture);
-    if (selectedFoodcultureObj !== undefined) {
-      this.selectedfoodculture = selectedFoodcultureObj;
+    //Foodculture Dropdown Select
+    for (var i = 0; i < this.productData.iFoodCulture.length; i++) {
+      let selectedFoodcultureObj = this.foodcultureData.find(x => x.iFCID == this.productData.iFoodCulture[i]['iFCID']);
+      this.selectedfoodculture.push(selectedFoodcultureObj);
+      console.log(this.selectedfoodculture, "culture");
+      console.log(selectedFoodcultureObj, "obj")
     }
+    // let selectedFoodcultureObj = this.foodcultureData.find(x => x.iFCID == this.productData.iFCID);
+    // if (selectedFoodcultureObj !== undefined) {
+    //   this.selectedfoodculture = selectedFoodcultureObj;
+    // }
 
     // Select Dropdown Select
     let selectedParentObj = this.parentData.find(x => x.iPrdID == this.productData.iParentID);
@@ -187,9 +197,9 @@ export class NewProductComponent implements OnInit {
     else if (this.selectedunit.iUnitID == '') {
       return true
     }
-    else if (this.selectedfoodculture.iKVID == '') {
-      return true
-    }
+    // else if (this.selectedfoodculture.iKVID == '') {
+    //   return true
+    // }
     else {
       return false
     }
@@ -229,13 +239,13 @@ export class NewProductComponent implements OnInit {
   getFoodCultureDrpDwn() {
     return new Promise((resolve, reject) => {
       var dataToSend4 = {
-        "iRequestID": 2071,
-        "sKVName": "FoodType"
+        "iRequestID": 2421,
+        //"sKVName": "FoodType"
       }
       this.httpService.getDropDownData(dataToSend4).then(response => {
         this.foodcultureData = response
-        this.foodcultureData.splice(0, 0, { iKVID: "", sKVValue: "Select Foodculture" })
-        this.selectedfoodculture = { iKVID: "", sKVValue: "Select Foodculture" }
+        //this.foodcultureData.splice(0, 0, { iFCID: "", sFCName: "Select Foodculture" })
+        //this.selectedfoodculture = { iFCID: "", sFCName: "Select Foodculture" }
         resolve(this.foodcultureData)
       });
     })
@@ -265,8 +275,8 @@ export class NewProductComponent implements OnInit {
   createControl(productData?: ProductMaster): FormGroup {
     this.ProductForm = this._formBuilder.group({
       iPrdID: [productData.iPrdID],
-      iFoodCulture: [productData.iFoodCulture],
-      sFoodCulture: [productData.sFoodCulture, [Validators.required]],
+      iFoodCulture: [productData.iFoodCulture, [Validators.required]],
+      sFoodCulture: [productData.sFoodCulture],
       iUnitID: [productData.iUnitID],
       sUnitName: [productData.sUnitName, [Validators.required]],
       sPrdName: [productData.sPrdName, [ValidationService.nameValidator_productname]],
@@ -292,7 +302,7 @@ export class NewProductComponent implements OnInit {
           "sPrdName": formData.sPrdName,
           "sVariant": formData.sVariant,
           "iUnitID": formData.sUnitName.iUnitID,
-          "iFoodCulture": formData.sFoodCulture.iKVID,
+          "sFoodCulture": this.selectedfoodculture,
           "iProducerID": formData.sProducerName.iProducerID,
           "iParentID": formData.sParentPrdName.iPrdID
         }
@@ -303,7 +313,7 @@ export class NewProductComponent implements OnInit {
           "sPrdName": formData.sPrdName,
           "sVariant": formData.sVariant,
           "iUnitID": formData.sUnitName.iUnitID,
-          "iFoodCulture": formData.sFoodCulture.iKVID,
+          "sFoodCulture": this.selectedfoodculture,
           "iProducerID": formData.sProducerName.iProducerID,
         }
       }
@@ -336,6 +346,7 @@ export class NewProductComponent implements OnInit {
 
   //code for edit product data
   editProductForm() {
+    console.log(this.selectedfoodculture);
     var formData = this.ProductForm.getRawValue();
     var editProductData;
     if (formData.sParentPrdName.iPrdID) {
@@ -344,7 +355,7 @@ export class NewProductComponent implements OnInit {
         "sPrdName": formData.sPrdName,
         "sVariant": formData.sVariant,
         "iUnitID": formData.sUnitName.iUnitID,
-        "iFoodCulture": formData.sFoodCulture.iKVID,
+        "sFoodCulture": this.selectedfoodculture,
         "iProducerID": formData.sProducerName.iProducerID,
         "iPrdID": this.prdId,
         "iParentID": formData.sParentPrdName.iPrdID
@@ -356,11 +367,12 @@ export class NewProductComponent implements OnInit {
         "sPrdName": formData.sPrdName,
         "sVariant": formData.sVariant,
         "iUnitID": formData.sUnitName.iUnitID,
-        "iFoodCulture": formData.sFoodCulture.iKVID,
+        "sFoodCulture": this.selectedfoodculture,
         "iProducerID": formData.sProducerName.iProducerID,
         "iPrdID": this.prdId,
       }
     }
+    console.log(editProductData)
     this.httpService.callPostApi(editProductData).subscribe(
       data => {
         this.toastService.displayApiMessage(data.headers.get('StatusMessage'), data.headers.get('StatusCode'));

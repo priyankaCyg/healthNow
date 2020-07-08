@@ -55,11 +55,12 @@
                                     </div>
                                     <div class="p-col-12 p-md-6 p-lg-4">
                                         <label for="foodCulture">Food Culture</label>
-                                        <p-dropdown id="foodCulture" [options]="foodcultureData" optionLabel="sKVValue"
-                                            formControlName="sFoodCulture" [(ngModel)]="selectedfoodculture">
-                                        </p-dropdown>
+                                        <p-multiSelect id="foodCulture" [options]="foodcultureData"
+                                            optionLabel="sFCName" formControlName="iFoodCulture"
+                                            [(ngModel)]="selectedfoodculture">
+                                        </p-multiSelect>
                                         <p-message severity="error" text="Food Culture is required"
-                                            *ngIf="ProductForm.controls['sFoodCulture'].touched && (selectedfoodculture.iKVID=='' || ProductForm.controls['sFoodCulture'].hasError('required'))">
+                                            *ngIf="ProductForm.controls['iFoodCulture'].touched && (selectedfoodculture.iFCID=='' || ProductForm.controls['iFoodCulture'].hasError('required'))">
                                         </p-message>
                                     </div>
                                     <!-- <div class="p-col-12 p-md-6 p-lg-4">

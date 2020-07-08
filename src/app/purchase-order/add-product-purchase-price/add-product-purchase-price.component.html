@@ -1,3 +1,5 @@
+<p-confirmDialog header="Confirmation" icon="pi pi-info" [style]="{width: '425px'}"
+    rejectButtonStyleClass="ui-button-secondary"></p-confirmDialog>
 <div class="p-grid ui-fluid">
     <div class="p-col-4">
         <form [formGroup]="productForm" autocomplete="off">
@@ -30,7 +32,7 @@
                             </div>
                             <div class="p-col-12 p-md-12 p-lg-12 mb-2">
                                 <label for="eDate">End Date</label>
-                                <p-calendar formControlName="sEndDate" dateFormat="dd-mm-yy"
+                                <p-calendar formControlName="sEndDate" [minDate]="minDate" dateFormat="dd-mm-yy"
                                     [(ngModel)]="selectedendDate"></p-calendar>
                             </div>
                         </div>
@@ -76,8 +78,11 @@
                             {{addDetails.sStatusName}}
                         </span>
                     </td>
-                    <td ><button pButton type="button" *ngIf="today_con_date <= (addDetails.sStartDate | date: 'dd-MM-yyyy')"
+                    <td><button pButton type="button"
+                            *ngIf="today_con_date < (addDetails.sStartDate | date: 'dd-MM-yyyy')"
                             class="ui-button-success mr-1" (click)="editOne(rowIndex)" icon="pi pi-pencil"></button>
+                        <button pButton type="button" class="ui-button-danger" (click)="deletePprice(addDetails)"
+                            icon="pi pi-trash"></button>
                     </td>
                 </tr>
             </ng-template>

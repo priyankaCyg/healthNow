@@ -2,7 +2,7 @@
 export class ProductMaster {
 
     iPrdID: number;
-    iFoodCulture: number;
+    iFoodCulture: string;
     sFoodCulture: string;
     iUnitID: number;
     sUnitName: string;
@@ -15,6 +15,9 @@ export class ProductMaster {
     sCreatedDate: string;
     sProducerName: string;
     iParentID: number;
+    iFCID: number;
+    sFCImageURL: string;
+    sFCName: string;
     /**
      * Constructor
      *
@@ -36,6 +39,11 @@ export class ProductMaster {
         this.sParentPrdName = ProductMaster.sParentPrdName || '';
         this.sCreatedDate = ProductMaster.sCreatedDate || '';
         this.sProducerName = ProductMaster.sProducerName || '';
-        this.iParentID = ProductMaster.iParentID || '';
+        this.iFCID = ProductMaster.iFCID || '';
+        this.sFCImageURL = ProductMaster.sFCImageURL || '';
+        this.sFCName = ProductMaster.sFCName || '';
+
+
+
     }
 }

@@ -39,7 +39,11 @@
                                 <td class="ui-resizable-column">{{product.sPrdName}}</td>
                                 <td class="ui-resizable-column">{{product.sVariant}}</td>
                                 <td class="ui-resizable-column">{{product.sUnitName}}</td>
-                                <td class="ui-resizable-column">{{product.sFoodCulture}}</td>
+                                <td class="ui-resizable-column">
+                                    <span *ngFor="let dt of product.sFoodCulture">
+                                        {{dt.sFCName}}
+                                    </span>
+                                </td>
                                 <td class="ui-resizable-column">{{product.sProducerName}}</td>
                                 <td class="ui-resizable-column">
                                     <span *ngIf="product.iStatusID == 1"
