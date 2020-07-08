@@ -23,7 +23,6 @@ export class ProductComponent implements OnInit {
 
   items: MenuItem[];
   product: any[];
-  selectedFoodCulture: any[] = [];
   constructor(private breadcrumbService: BreadcrumbService, private dialogService: DialogService,
     private httpService: ApiService, private toastService: ToastService, private confirmationService: ConfirmationService
     , private router: Router, private loginService: LoginService) {
@@ -47,9 +46,6 @@ export class ProductComponent implements OnInit {
     this.httpService.callPostApi(Product_list_api).subscribe(
       data => {
         this.product = data.body;
-        this.selectedFoodCulture = this.product[0].sFoodCulture;
-        console.log(this.selectedFoodCulture)
-
       },
       error => console.log(error)
     );
