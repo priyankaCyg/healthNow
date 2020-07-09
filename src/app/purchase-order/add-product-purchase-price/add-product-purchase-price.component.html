@@ -20,7 +20,8 @@
                             <div class="p-col-12 p-md-12 p-lg-12 mb-2">
                                 <label for="amount">Amount</label>
                                 <input id="amount" formControlName="iPurchaseAmt" type="text" pInputText>
-                                <p-message severity="error" [text]="productForm.controls['iPurchaseAmt'].errors['Msg']"
+                                <p-message severity="error"
+                                    [text]="productForm.controls['iPurchaseAmt'].errors['required'] ? 'This Field is required' : productForm.controls['iPurchaseAmt'].errors['pattern'] ? 'Please Enter Valid Amount.' : ''"
                                     *ngIf="!productForm.controls['iPurchaseAmt'].valid && productForm.controls['iPurchaseAmt'].dirty">
                                 </p-message>
                             </div>
@@ -44,6 +45,8 @@
         <div class="separator separator--border-solid separator--space-sm separator--portlet-fit"></div>
         <div class="p-grid form-group ui-fluid p-justify-end mt-1">
             <div class="p-col-12 p-md-2 p-lg-12 text-right">
+                <button pButton type="button" (click)="closeDialog()" label="Cancel"
+                    class="ui-button-light atbt mr-2 mb-2"></button>
                 <button *ngIf="!flag" pButton type="submit" label="Save" (click)="addProductPrice()"
                     [disabled]="!productForm.valid" routerLink="/purchase-order/product-purchase-price"
                     class="ui-button atbt mb-2"></button>
@@ -81,8 +84,8 @@
                     <td><button pButton type="button"
                             *ngIf="today_con_date < (addDetails.sStartDate | date: 'dd-MM-yyyy')"
                             class="ui-button-success mr-1" (click)="editOne(rowIndex)" icon="pi pi-pencil"></button>
-                        <button pButton type="button" class="ui-button-danger" (click)="deletePprice(addDetails)"
-                            icon="pi pi-trash"></button>
+                        <button *ngIf="addDetails.iStatusID == 1" pButton type="button" class="ui-button-danger"
+                            (click)="deletePprice(addDetails)" icon="pi pi-trash"></button>
                     </td>
                 </tr>
             </ng-template>

@@ -56,11 +56,11 @@
                                     <div class="p-col-12 p-md-6 p-lg-4">
                                         <label for="foodCulture">Food Culture</label>
                                         <p-multiSelect id="foodCulture" [options]="foodcultureData"
-                                            optionLabel="sFCName" formControlName="iFoodCulture"
+                                            optionLabel="sFCName" formControlName="sFoodCulture"
                                             [(ngModel)]="selectedfoodculture">
                                         </p-multiSelect>
                                         <p-message severity="error" text="Food Culture is required"
-                                            *ngIf="ProductForm.controls['iFoodCulture'].touched && (selectedfoodculture.iFCID=='' || ProductForm.controls['iFoodCulture'].hasError('required'))">
+                                            *ngIf="ProductForm.controls['sFoodCulture'].touched && (selectedfoodculture.iFCID=='' || ProductForm.controls['sFoodCulture'].hasError('required'))">
                                         </p-message>
                                     </div>
                                     <!-- <div class="p-col-12 p-md-6 p-lg-4">

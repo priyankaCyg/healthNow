@@ -102,7 +102,6 @@ export class NewProductComponent implements OnInit {
       this.httpService.getDropDownData(dataToSendEdit).then(response => {
         this.productData = new ProductMaster(response[0]);
         this.ProductForm = this.createControl(this.productData);
-        console.log(this.productData.iFoodCulture[0]['iFCID'], "food")
 
         Promise.all([this.getProducerDrpDwn(), this.getUnitDrpDwn(), this.getFoodCultureDrpDwn(), this.getParentDrpDwn()]).then(values => {
           this.setDropDownVal()
@@ -171,8 +170,8 @@ export class NewProductComponent implements OnInit {
     }
 
     //Foodculture Dropdown Select
-    for (var i = 0; i < this.productData.iFoodCulture.length; i++) {
-      let selectedFoodcultureObj = this.foodcultureData.find(x => x.iFCID == this.productData.iFoodCulture[i]['iFCID']);
+    for (var i = 0; i < this.productData.sFoodCulture.length; i++) {
+      let selectedFoodcultureObj = this.foodcultureData.find(x => x.iFCID == this.productData.sFoodCulture[i]['iFCID']);
       this.selectedfoodculture.push(selectedFoodcultureObj);
       console.log(this.selectedfoodculture, "culture");
       console.log(selectedFoodcultureObj, "obj")
@@ -275,8 +274,8 @@ export class NewProductComponent implements OnInit {
   createControl(productData?: ProductMaster): FormGroup {
     this.ProductForm = this._formBuilder.group({
       iPrdID: [productData.iPrdID],
-      iFoodCulture: [productData.iFoodCulture, [Validators.required]],
-      sFoodCulture: [productData.sFoodCulture],
+      iFoodCulture: [productData.iFoodCulture],
+      sFoodCulture: [productData.sFoodCulture, [Validators.required]],
       iUnitID: [productData.iUnitID],
       sUnitName: [productData.sUnitName, [Validators.required]],
       sPrdName: [productData.sPrdName, [ValidationService.nameValidator_productname]],

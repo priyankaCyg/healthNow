@@ -3,7 +3,7 @@ import { BreadcrumbService } from '../../breadcrumb.service';
 import { CountryService } from '../../demo/service/countryservice';
 import { SelectItem, MenuItem, ConfirmationService } from 'primeng/api';
 import { GeneratedFile } from '@angular/compiler';
-import { DialogService, DynamicDialogConfig } from 'primeng';
+import { DialogService, DynamicDialogConfig, DynamicDialogRef } from 'primeng';
 import { PurchaseOrderRoutingModule } from '../purchase-order-routing.module';
 import { ApiService } from 'src/app/services/api.service';
 import { ToastService } from 'src/app/services/toast.service';
@@ -36,7 +36,7 @@ export class AddProductPurchasePriceComponent implements OnInit {
   maxDate: Date;
   constructor(private breadcrumbService: BreadcrumbService, private dialogService: DialogService,
     private httpService: ApiService, private toastService: ToastService, private datePipe: DatePipe, private config: DynamicDialogConfig,
-    private fb: FormBuilder, private confirmationService: ConfirmationService) {
+    private fb: FormBuilder, private confirmationService: ConfirmationService, private ref: DynamicDialogRef, ) {
     this.breadcrumbService.setItems([
       { label: 'Dashboard' },
       { label: 'Purchase Order', routerLink: ['/purchase-order'] }
@@ -133,7 +133,7 @@ export class AddProductPurchasePriceComponent implements OnInit {
 
   createControl(prdData?: purchaseProductMaster): FormGroup {
     this.productForm = this.fb.group({
-      iPurchaseAmt: [prdData.iPurchaseAmt, [Validators.required]],
+      iPurchaseAmt: [prdData.iPurchaseAmt, [Validators.required, Validators.pattern('^[0-9]*$')]],
       sStartDate: [prdData.sStartDate ? moment(prdData.sEndDate).toDate() : null, Validators.required],
       sEndDate: [prdData.sEndDate ? moment(prdData.sEndDate).toDate() : null, Validators.required],
     });
@@ -219,6 +219,11 @@ export class AddProductPurchasePriceComponent implements OnInit {
         }
         this.toastService.displayApiMessage(data.headers.get('StatusMessage'), data.headers.get('StatusCode'));
       });
+  }
+
+  //code for close dialog box
+  closeDialog() {
+    this.ref.close(true);
   }
 }
 

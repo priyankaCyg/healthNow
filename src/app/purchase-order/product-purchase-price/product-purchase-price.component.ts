@@ -79,6 +79,7 @@ export class ProductPurchasePriceComponent implements OnInit {
     ref.onClose.subscribe((success: boolean) => {
       if (success) {
         // this.toastService.addSingle("success", "Mail send successfully", "");
+        this.getProduct();
       }
     });
   }
