@@ -3,6 +3,7 @@ import { ApiService } from 'src/app/services/api.service';
 import { ConfirmationService, DialogService } from 'primeng';
 import { ToastService } from 'src/app/services/toast.service';
 import { config } from 'src/config';
+import { grnData } from 'src/app/model/grn.model';
 
 @Component({
   selector: 'app-grn-list',
@@ -11,24 +12,19 @@ import { config } from 'src/config';
 })
 export class GrnListComponent implements OnInit {
 
-  batch: any[];
-  cars: any[];
   public cols: any[];
   public isExpanded: boolean = false;
   public rows: number = 10;
   public expandedRows = {};
   public temDataLength: number = 0;
-  po_prdid;
-  grnList: any[];
-  constructor(private httpService: ApiService, private confirmationService: ConfirmationService, private toastService: ToastService,
-    private dialogService: DialogService) { }
+  po_prdid: number;
+  grnList: grnData[];
+  grnListChilddata: any[];
+  GRN = [];
+
+  constructor(private httpService: ApiService, private confirmationService: ConfirmationService, private toastService: ToastService) { }
 
   ngOnInit() {
-
-    // this.batch = [
-    //   { batchNo: 'B1', recvQty: '50', podNo: '00123', podDate: '19-05-2020', manfactDate: '01-01-2020', expDate: '31-12-2020' },
-    //   { batchNo: 'B2', recvQty: '50', podNo: '00124', podDate: '19-05-2020', manfactDate: '01-01-2020', expDate: '31-12-2020' }
-    // ];
 
     this.cols = [
       { field: 'sSupName', header: 'Supplier Name' },
@@ -38,9 +34,10 @@ export class GrnListComponent implements OnInit {
       { field: 'iOrderQty', header: 'Ordered Quantity' },
       // { field: 'sPODate', header: 'Scheduled Date', type: 'customDate' },
     ];
-    this.cars = grnList;
+
     this.getgrnList();
-    this.cars.length < this.rows ? this.temDataLength = this.cars.length : this.temDataLength = this.rows;
+    this.grnList = this.GRN;
+    this.grnList.length < this.rows ? this.temDataLength = this.grnList.length : this.temDataLength = this.rows;
   }
 
   //code for get list of grn list data 
@@ -57,7 +54,7 @@ export class GrnListComponent implements OnInit {
   }
 
   //code for get child data table
-  getPOChildList(iPOPrdID: Number) {
+  getPOChildList(iPOPrdID: number) {
     this.po_prdid = iPOPrdID
     const poListAPI = {
       "iRequestID": 2344,
@@ -65,14 +62,14 @@ export class GrnListComponent implements OnInit {
     }
     this.httpService.callPostApi(poListAPI).subscribe(
       data => {
-        this.batch = data.body;
+        this.grnListChilddata = data.body;
       },
       error => { console.log(error) }
     )
   }
 
   //Function to Approve PO
-  approveGRN(iGRNID: Number) {
+  approveGRN(iGRNID: number) {
     this.confirmationService.confirm({
       message: 'Are you sure that you want to approval this record?',
       header: 'Confirmation',
@@ -96,7 +93,7 @@ export class GrnListComponent implements OnInit {
   }
 
   //Function to Approve PO
-  deleteGRN(iGRNID: Number) {
+  deleteGRN(iGRNID: number) {
     this.confirmationService.confirm({
       message: config.deleteMsg,
       header: 'Confirmation',
@@ -142,12 +139,9 @@ export class GrnListComponent implements OnInit {
     }
   }
   onPage(event: any) {
-    this.temDataLength = this.cars.slice(event.first, event.first + 10).length;
+    this.temDataLength = this.grnList.slice(event.first, event.first + 10).length;
     console.log(this.temDataLength);
     this.isExpanded = false;
     this.expandedRows = {};
   }
 }
-const grnList = [
-  //{ "supName": "SKK Suppliers", "reqNo": "ALPHA/234/11-05", "PoNo": "PO/SS/20200514/4", "product": "Groundnut Oil", "qty": "100", "scldDate": "19-05-2020" }
-];

@@ -10,7 +10,7 @@
                 <div class="p-col-12 mt-3">
 
                     <p-table [columns]="cols" #search [value]="grnList" dataKey="iPOPrdID" [paginator]="false"
-                        [rows]="10" [totalRecords]="cars.length" [showCurrentPageReport]="true"
+                        [rows]="10" [totalRecords]="grnList.length" [showCurrentPageReport]="true"
                         [globalFilterFields]="['sPONo','sPODate','sSupName','sRequisionNo','sPrdName']"
                         [rowsPerPageOptions]="[10, 25, 50]" [filterDelay]="0" pageLinkSize="3" (onPage)="onPage($event)"
                         rowExpandMode="single" (onRowExpand)="onRowExpand()" (onRowCollapse)="onRowCollapse()"
@@ -62,7 +62,7 @@
                                 <td [attr.colspan]="columns.length + 2">
                                     <div class="ui-g ui-fluid" style="font-size:14px;padding:8px">
                                         <div class="ui-g-12 ui-md-12">
-                                            <p-table [value]="batch">
+                                            <p-table [value]="grnListChilddata">
                                                 <ng-template pTemplate="header">
                             <tr>
                                 <th>Batch/Lot No.</th>

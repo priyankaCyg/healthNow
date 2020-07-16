@@ -58,8 +58,10 @@
                                             <td *ngFor="let col of columns">
                                                 {{rowData[col.field]}}
                                             </td>
-                                            <td><span style="color: #76256e !important; font-weight: 600;"
-                                                    (click)="openDialogForAddress()">{{rowData.sAddress}}</span></td>
+                                            <td>{{rowData.sAddress}}</td>
+                                            <!-- <td><span style="color: #76256e !important; font-weight: 600;"
+                                                    (click)="openDialogForAddress()">{{rowData.sAddress}}</span>
+                                            </td> -->
                                             <td>
                                                 <button (click)="orderAllocClick(rowData)" pButton type="button"
                                                     class="ui-button-success" label="Allocate"></button>

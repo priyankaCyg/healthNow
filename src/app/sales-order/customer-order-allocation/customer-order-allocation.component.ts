@@ -63,11 +63,11 @@ export class CustomerOrderAllocationComponent implements OnInit {
       header: 'Confirmation',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
-        var dataToSendDelete = {
+        const dataToSendReject = {
           "iRequestID": 2034,
           "iEmpID": orderDetail,
         }
-        this.httpService.callPostApi(dataToSendDelete).subscribe(
+        this.httpService.callPostApi(dataToSendReject).subscribe(
           (data) => {
             this.toastService.displayApiMessage(data.headers.get('StatusMessage'), data.headers.get('StatusCode'));
             this.getOrderrAllocChildList();
@@ -80,8 +80,7 @@ export class CustomerOrderAllocationComponent implements OnInit {
   }
   openDialogForAddress() {
     const ref = this.dialogService.open(AddressComponent, {
-      data: {
-      },
+      data: this.address,
       header: 'Location',
       width: '30%'
     });
@@ -96,7 +95,7 @@ export class CustomerOrderAllocationComponent implements OnInit {
   openDialogForOrderAllocate(orderDetail) {
     const ref = this.dialogService.open(AllocateComponent, {
       data: orderDetail,
-      header: 'Order Allocate',
+      header: 'Customer Order Allocate',
       width: '90%'
     });
 

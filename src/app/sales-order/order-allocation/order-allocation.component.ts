@@ -35,15 +35,10 @@ export class OrderAllocationComponent implements OnInit {
     { "prdName": "Horlicks", "orders": "5", "qty": "10" }
   ];
 
-  constructor(private breadcrumbService: BreadcrumbService, private dialogService: DialogService,
+  constructor(private breadcrumbService: BreadcrumbService,
     private httpService: ApiService, private router: Router) { }
 
   ngOnInit() {
-
-    // this.orderDetail = [
-    //   { prdName: 'Groundnut Oil', qty: '2', batchNo: 'B2', expiryDate: '01-06-2021', allocatedQty: '2' },
-    //   { prdName: 'Horlicks', qty: '2', batchNo: 'B1', expiryDate: '01-06-2021', allocatedQty: '2' }
-    // ];
 
     this.productDetail = [
       { orderNo: '1120-3739', custmName: 'Amit Shah', location: 'Mumbai', qty: '2' },
@@ -68,7 +63,7 @@ export class OrderAllocationComponent implements OnInit {
     this.customerAllocData.length < this.rows ? this.temDataLength = this.customerAllocData.length : this.temDataLength = this.rows;
 
     this.products = this.PRODUCTS;
-    this.products.length < this.rows ? this.temDataLength = this.customerAllocData.length : this.temDataLength = this.rows;
+    this.products.length < this.rows ? this.temDataLength = this.products.length : this.temDataLength = this.rows;
   }
 
   //Function to get Order Allocation list
@@ -137,34 +132,6 @@ export class OrderAllocationComponent implements OnInit {
     this.router.navigate(['/sales-order/product-order-allocation']);
   }
 
-  openDialogForOrderAllocate() {
-    const ref = this.dialogService.open(AllocateComponent, {
-      data: {
-      },
-      header: 'Order Allocate',
-      width: '90%'
-    });
-
-    ref.onClose.subscribe((success: boolean) => {
-      if (success) {
-        // this.toastService.addSingle("success", "Mail send successfully", "");
-      }
-    });
-  }
-  openDialogForAddress() {
-    const ref = this.dialogService.open(AddressComponent, {
-      data: {
-      },
-      header: 'Location',
-      width: '30%'
-    });
-
-    ref.onClose.subscribe((success: boolean) => {
-      if (success) {
-        // this.toastService.addSingle("success", "Mail send successfully", "");
-      }
-    });
-  }
   expandAll() {
     if (!this.isExpanded) {
       this.customerAllocData.forEach(data => {
@@ -175,6 +142,7 @@ export class OrderAllocationComponent implements OnInit {
     }
     this.isExpanded = !this.isExpanded;
   }
+
   onRowExpand() {
     console.log("row expanded", Object.keys(this.expandedRows).length);
     if (Object.keys(this.expandedRows).length === this.temDataLength) {
@@ -187,12 +155,14 @@ export class OrderAllocationComponent implements OnInit {
       this.isExpanded = false;
     }
   }
+
   onPage(event: any) {
     this.temDataLength = this.customerAllocData.slice(event.first, event.first + 10).length;
     console.log(this.temDataLength);
     this.isExpanded = false;
     this.expandedRows = {};
   }
+
 }
 
 

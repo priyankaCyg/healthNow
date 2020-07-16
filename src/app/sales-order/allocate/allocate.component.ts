@@ -20,12 +20,9 @@ export class AllocateComponent implements OnInit {
   ngOnInit(): void {
     this.product_name = this.config.data.sPrdName;
     this.variant_name = this.config.data.sVariant;
-    this.batch = [
-      { batch: 'B1', expiryDate: '01-06-2021', qty: '100' },
-      { batch: 'B2', expiryDate: '01-06-2021', qty: '50' }
-    ];
-
+    this.batch = [this.config.data];
   }
+
   changeAllocQty(qty, index: number) {
     this.qty_data = qty;
     if (this.data[index] != null) {

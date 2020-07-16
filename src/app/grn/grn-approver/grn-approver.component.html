@@ -9,8 +9,8 @@
                 </div>
                 <div class="p-col-12 mt-3">
 
-                    <p-table [columns]="cols" #search [value]="grnList" dataKey="iPOPrdID" [paginator]="false"
-                        [rows]="10" [totalRecords]="cars.length" pageLinkSize="3" (onPage)="onPage($event)"
+                    <p-table [columns]="cols" #search [value]="grnApproverList" dataKey="iPOPrdID" [paginator]="false"
+                        [rows]="10" [totalRecords]="grnApproverList.length" pageLinkSize="3" (onPage)="onPage($event)"
                         [globalFilterFields]="['sPONo','sPODate','sSupName','sRequisionNo','sPrdName']"
                         [rowsPerPageOptions]="[10, 25, 50]" [filterDelay]="0" [showCurrentPageReport]="true"
                         rowExpandMode="single" (onRowExpand)="onRowExpand()" (onRowCollapse)="onRowCollapse()"
@@ -61,7 +61,7 @@
                                 <td [attr.colspan]="columns.length + 2">
                                     <div class="ui-g ui-fluid" style="font-size:14px;padding:8px">
                                         <div class="ui-g-12 ui-md-12">
-                                            <p-table [value]="batch">
+                                            <p-table [value]="grnAppChildData">
                                                 <ng-template pTemplate="header">
                             <tr>
                                 <th>Batch/Lot No.</th>

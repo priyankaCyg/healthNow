@@ -17,9 +17,9 @@
                     <ng-template pTemplate="body" let-batch let-ri="rowIndex">
                         <tr>
 
-                            <td>{{batch.batch}}</td>
+                            <td>{{batch.sBatchNo}}</td>
                             <td>{{batch.expiryDate}}</td>
-                            <td>{{batch.qty}}</td>
+                            <td>{{batch.iQty}}</td>
                             <td>
                                 <input type="number" pInputText [(ngModel)]="batch.quantity"
                                     (change)="changeAllocQty(batch.quantity,ri)" />
