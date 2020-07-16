@@ -12,14 +12,14 @@ import { config } from 'src/config';
 export class GrnListComponent implements OnInit {
 
   batch: any[];
-  public cars: any[];
+  cars: any[];
   public cols: any[];
   public isExpanded: boolean = false;
   public rows: number = 10;
   public expandedRows = {};
   public temDataLength: number = 0;
   po_prdid;
-  grnList;
+  grnList: any[];
   constructor(private httpService: ApiService, private confirmationService: ConfirmationService, private toastService: ToastService,
     private dialogService: DialogService) { }
 
@@ -38,7 +38,7 @@ export class GrnListComponent implements OnInit {
       { field: 'iOrderQty', header: 'Ordered Quantity' },
       // { field: 'sPODate', header: 'Scheduled Date', type: 'customDate' },
     ];
-    this.cars = CARS;
+    this.cars = grnList;
     this.getgrnList();
     this.cars.length < this.rows ? this.temDataLength = this.cars.length : this.temDataLength = this.rows;
   }
@@ -148,6 +148,6 @@ export class GrnListComponent implements OnInit {
     this.expandedRows = {};
   }
 }
-const CARS = [
-  { "supName": "SKK Suppliers", "reqNo": "ALPHA/234/11-05", "PoNo": "PO/SS/20200514/4", "product": "Groundnut Oil", "qty": "100", "scldDate": "19-05-2020" }
+const grnList = [
+  //{ "supName": "SKK Suppliers", "reqNo": "ALPHA/234/11-05", "PoNo": "PO/SS/20200514/4", "product": "Groundnut Oil", "qty": "100", "scldDate": "19-05-2020" }
 ];
