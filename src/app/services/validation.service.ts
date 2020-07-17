@@ -129,6 +129,26 @@ export class ValidationService {
     }
   }
 
+  static batchValidator(control) {
+    if (control.value == "") {
+      return { Msg: "This field is required" };
+    }
+    //Allows uppercase alphabets and numbers
+    else if (!control.value.match(/^[a-zA-Z0-9]+$/)) {
+      return { Msg: "Enter a valid batch number" };
+    }
+  }
+
+  static podNoValidator(control) {
+    if (control.value == "") {
+      return { Msg: "This field is required" };
+    }
+    //Allows uppercase alphabets and numbers
+    else if (!control.value.match(/^[a-zA-Z0-9]+$/)) {
+      return { Msg: "Enter a valid POD number" };
+    }
+  }
+
   //used for PAN no, GST, IFSC, Short code
   static alphaNumericValidator(control) {
     if (control.value == "") {

@@ -17,15 +17,16 @@
                         </div>    -->
                             <div class="p-col-12 mt-3">
 
-                                <p-table [columns]="cols" #search [value]="customerAllocData" dataKey="iSOID"
+                                <p-table [columns]="cols" #Ordersearch [value]="customerAllocData" dataKey="iSOID"
                                     [paginator]="false" [rows]="10" [totalRecords]="customerAllocData.length"
-                                    [globalFilterFields]="['sSONo','sCustomerName','sAddress']"
-                                    [showCurrentPageReport]="true" rowExpandMode="single" (onRowExpand)="onRowExpand()"
-                                    (onRowCollapse)="onRowCollapse()" [expandedRowKeys]="expandedRows">
+                                    [globalFilterFields]="['sSONo','sCustomerName','sAddress']" [filterDelay]="0"
+                                    [showCurrentPageReport]="true" [showCurrentPageReport]="true" rowExpandMode="single"
+                                    (onRowExpand)="onRowExpand()" (onRowCollapse)="onRowCollapse()"
+                                    [expandedRowKeys]="expandedRows">
                                     <ng-template pTemplate="caption">
                                         <div class="ui-table-globalfilter-container text-left">
                                             <input type="text" pInputText size="50" placeholder="Search"
-                                                (input)="search.filterGlobal($event.target.value,'contains')"
+                                                (input)="Ordersearch.filterGlobal($event.target.value,'contains')"
                                                 style="width: 250px;" />
                                         </div>
                                     </ng-template>

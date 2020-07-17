@@ -8,6 +8,7 @@ import { ToastService } from 'src/app/services/toast.service';
 import { ApiService } from 'src/app/services/api.service';
 import { ConfirmationService } from 'primeng';
 import { Router } from '@angular/router';
+import { ValidationService } from 'src/app/services/validation.service';
 
 @Component({
   selector: 'app-receive-product',
@@ -24,9 +25,9 @@ export class ReceiveProductComponent implements OnInit {
   pending_qty: number;
   recievedPrddata: receivedProductMaster;
   receivedArray = [];
-  submitFlag: number=0;
+  submitFlag: number = 0;
 
-  constructor(private fb: FormBuilder,private datePipe: DatePipe, private httpService: ApiService,
+  constructor(private fb: FormBuilder, private datePipe: DatePipe, private httpService: ApiService,
     private toastService: ToastService, private confirmationService: ConfirmationService, private router: Router) { }
 
   ngOnInit(): void {
@@ -42,66 +43,66 @@ export class ReceiveProductComponent implements OnInit {
   // moment(poData.sPODate,'MM-DD-YYYY').format('DD-MM-YYYY')
   createControl(prdData?: receivedProductMaster): FormGroup {
     this.productForm = this.fb.group({
-      sBatchNo: [prdData.sBatchNo, Validators.required],
-      iReceivedQty: [prdData.iReceivedQty, Validators.required],
-      sPODNo: [prdData.sPODNo, Validators.required],
-      sPODDate: [prdData.sPODDate ? moment(prdData.sPODDate).toDate(): null, Validators.required],
-      sManufacturingDate: [prdData.sManufacturingDate ? moment(prdData.sManufacturingDate).toDate(): null, Validators.required],
-      sExpireDate: [prdData.sExpireDate ? moment(prdData.sExpireDate).toDate(): null, Validators.required],
+      sBatchNo: [prdData.sBatchNo, ValidationService.batchValidator],
+      iReceivedQty: [prdData.iReceivedQty, ValidationService.quantityValidator],
+      sPODNo: [prdData.sPODNo, ValidationService.podNoValidator],
+      sPODDate: [prdData.sPODDate ? moment(prdData.sPODDate).toDate() : null, Validators.required],
+      sManufacturingDate: [prdData.sManufacturingDate ? moment(prdData.sManufacturingDate).toDate() : null, Validators.required],
+      sExpireDate: [prdData.sExpireDate ? moment(prdData.sExpireDate).toDate() : null, Validators.required],
     });
     return this.productForm;
   }
 
   //Quantity change function
-  qtyChange(){
-    let total_qty: number=0;
+  qtyChange() {
+    let total_qty: number = 0;
     let current_qty = +this.productForm.controls['iReceivedQty'].value;
     console.log(current_qty);
-    if(this.receivedArray.length>0){
-      for(let i=0;i<this.receivedArray.length;i++){
+    if (this.receivedArray.length > 0) {
+      for (let i = 0; i < this.receivedArray.length; i++) {
         total_qty = total_qty + this.receivedArray[i].iReceivedQty;
         console.log(total_qty)
       }
-      if(current_qty > total_qty){
+      if (current_qty > total_qty) {
         this.toastService.displayApiMessage("Batch if full", 300);
         this.productForm.reset();
       }
     }
-    else{
-      if(current_qty >this.ordered_qty){
+    else {
+      if (current_qty > this.ordered_qty) {
         this.toastService.displayApiMessage("Enter valid received quantiy", 300);
         this.productForm.controls['iReceivedQty'].setValue(null)
       }
     }
   }
   //Function to add batch details in batch table
-  addDetails(){
+  addDetails() {
     var formData = this.productForm.getRawValue();
     // let entered_qty = +formData.iReceivedQty;
     // if(entered_qty > this.ordered_qty){
     //   this.toastService.displayApiMessage("Enter valid received quantiy", 300);
     // }
     // else{
-      console.log(formData)
-      let new_date_pod = formData.sPODDate;
-     let pod_date = this.datePipe.transform(new_date_pod, config.dateFormat);
-     let new_date_mfg = formData.sManufacturingDate;
-     let mfg_date = this.datePipe.transform(new_date_mfg, config.dateFormat);
-     let new_date_exp = formData.sExpireDate;
-     let exp_date = this.datePipe.transform(new_date_exp, config.dateFormat);
+    console.log(formData)
+    let new_date_pod = formData.sPODDate;
+    let pod_date = this.datePipe.transform(new_date_pod, config.dateFormat);
+    let new_date_mfg = formData.sManufacturingDate;
+    let mfg_date = this.datePipe.transform(new_date_mfg, config.dateFormat);
+    let new_date_exp = formData.sExpireDate;
+    let exp_date = this.datePipe.transform(new_date_exp, config.dateFormat);
     const prd_obj = {
-      "sBatchNo":formData.sBatchNo,
-      "sManufacturingDate":mfg_date,
-      "sExpireDate":exp_date,
-      "sPODNo":formData.sPODNo,
-      "sPODDate":pod_date,
-      "iReceivedQty":+formData.iReceivedQty,
-      "iUserID":1
+      "sBatchNo": formData.sBatchNo,
+      "sManufacturingDate": mfg_date,
+      "sExpireDate": exp_date,
+      "sPODNo": formData.sPODNo,
+      "sPODDate": pod_date,
+      "iReceivedQty": +formData.iReceivedQty,
+      "iUserID": 1
     }
     this.receivedArray.push(prd_obj);
     this.productForm.reset();
     console.log(this.receivedArray)
-   // }
+    // }
   }
 
   // open modal for delete batch 
@@ -112,13 +113,13 @@ export class ReceiveProductComponent implements OnInit {
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
         this.receivedArray.splice(batchIndex, 1);
-        let batch_no = "Batch " + batchData.sBatchNo + " has been deleted successfully" 
-        this.toastService.displayApiMessage(batch_no,200);
+        let batch_no = "Batch " + batchData.sBatchNo + " has been deleted successfully"
+        this.toastService.displayApiMessage(batch_no, 200);
       }
     });
   }
 
-  saveGRN(){
+  saveGRN() {
     if (this.submitFlag == 0) {
       this.submitFlag = 1;
       const addbatchAPI = {
@@ -126,7 +127,7 @@ export class ReceiveProductComponent implements OnInit {
         "iPrdID": this.responseData[0].iPrdID,
         "iPOPrdID": this.responseData[0].iPOPrdID,
         "sGRNData": this.receivedArray,
-       
+
       }
       this.httpService.callPostApi(addbatchAPI).subscribe(
         data => {
