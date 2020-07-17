@@ -4,6 +4,7 @@ import { ConfirmationService, DialogService } from 'primeng';
 import { ToastService } from 'src/app/services/toast.service';
 import { GrnRejectionComponent } from '../grn-rejection/grn-rejection.component';
 import { grnData } from 'src/app/model/grn.model';
+import { config } from 'src/config';
 
 @Component({
   selector: 'app-grn-approver',
@@ -18,14 +19,16 @@ export class GrnApproverComponent implements OnInit {
   public expandedRows = {};
   public temDataLength: number = 0;
   po_prdid: number;
-  grnApproverList: grnData[];
+  grnApproverList: grnData[] = [];
   grnAppChildData: any[];
   GrnApprover = [];
+  noRecordFound: string;
 
   constructor(private httpService: ApiService, private confirmationService: ConfirmationService, private toastService: ToastService,
     private dialogService: DialogService) { }
 
   ngOnInit() {
+    this.noRecordFound = config.noRecordFound;
 
     this.cols = [
       { field: 'sSupName', header: 'Supplier Name' },

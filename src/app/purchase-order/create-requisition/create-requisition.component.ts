@@ -5,6 +5,7 @@ import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { ToastService } from 'src/app/services/toast.service';
 import { createRequisitionMaster } from 'src/app/model/createRequisition.model';
 import { ProductData } from 'src/app/model/productList-Requisition';
+import { ValidationService } from 'src/app/services/validation.service';
 
 @Component({
   selector: 'app-create-requisition',
@@ -255,7 +256,7 @@ export class CreateRequisitionComponent implements OnInit {
   createControl(createrequisitionData?: createRequisitionMaster): FormGroup {
 
     this.createReqForm = this.fb.group({
-      iQty: [createrequisitionData.iQty, [Validators.required, Validators.pattern('^[0-9]*$')]],
+      iQty: [createrequisitionData.iQty, [ValidationService.quantityValidator]],
       iPCID: [createrequisitionData.iPCID],
       iPrdID: [createrequisitionData.iPrdID],
       sPCName: [createrequisitionData.sPCName],
@@ -290,9 +291,9 @@ export class CreateRequisitionComponent implements OnInit {
           if (data.headers.get('StatusCode') == 200) {
             this.ref.close(true);
           }
-        //  let req_no = data.body[0].sRequisionNo + " has been created successfully";
+          //  let req_no = data.body[0].sRequisionNo + " has been created successfully";
           //this.ref.close(true);
-         // let req_no =  "Requisition has been created successfully";
+          // let req_no =  "Requisition has been created successfully";
           this.toastService.displayApiMessage(data.headers.get('StatusMessage'), data.headers.get('StatusCode'));
         },
         (error) => console.log(error)

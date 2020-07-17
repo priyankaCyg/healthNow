@@ -52,12 +52,12 @@ export class AddNewSupplierComponent implements OnInit {
   public addSupplierForm: FormGroup;
   supData: SuppMaster;
   items: MenuItem[];
-  supplierAdressData: SupplierAddress;
+  supplierAdressData: SupplierAddress[] = [];
   tabDisabled: boolean = true;
   bank: any[];
-  contact: any[]
-  gst: gstData[];
-  attachment: any[];
+  contact: any[] = [];
+  gst: gstData[] = [];
+  attachment: any[] = [];
   supId;
   returnSupId;
   selectedFileType;
@@ -65,10 +65,12 @@ export class AddNewSupplierComponent implements OnInit {
   uploadedFiles: any[] = [];
   sourceCategory: SupplierCategoryMapping[] = [];
   targetCategory: SupplierCategoryMapping[] = [];
-  bankData: companyBankMaster[];
+  bankData: companyBankMaster[] = [];
   selectedSuppCat;
   index: number = 0;
   supplierSubmitFlag: number = 0;
+  noRecordFound: string;
+
   constructor(private breadcrumbService: BreadcrumbService,
     private dialogService: DialogService,
     private httpService: ApiService,
@@ -83,6 +85,7 @@ export class AddNewSupplierComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.noRecordFound = config.noRecordFound;
     this.defaultDropDwnValue()
     this.supData = new SuppMaster();
     this.addSupplierForm = this.createControl(this.supData);

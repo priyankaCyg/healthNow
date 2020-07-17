@@ -9,6 +9,8 @@ export var config = {
   fileUrl: 'http://13.126.132.149/healthnow/file',
   deleteMsg: "Are you sure you want to Delete this record ?",
   dateFormat: 'yyyy-MM-dd',
-  edit_dateFormat: 'dd-MM-yyyy'
+  edit_dateFormat: 'dd-MM-yyyy',
+  noRecordFound: 'No Records Found'
+
 }
 

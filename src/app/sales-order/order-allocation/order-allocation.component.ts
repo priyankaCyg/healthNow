@@ -9,6 +9,7 @@ import { AllocateComponent } from '../allocate/allocate.component';
 import { AddressComponent } from '../address/address.component';
 import { ApiService } from 'src/app/services/api.service';
 import { Router } from '@angular/router';
+import { config } from 'src/config';
 
 @Component({
   selector: 'app-order-allocation',
@@ -19,7 +20,8 @@ export class OrderAllocationComponent implements OnInit {
 
   orderDetail: any[];
   productDetail: any[];
-  customerAllocData: any[];
+  customerAllocData: any[] = [];
+  noRecordFound: string;
   public products: any[];
   public cols: any[];
   public cols1: any[];
@@ -39,6 +41,7 @@ export class OrderAllocationComponent implements OnInit {
     private httpService: ApiService, private router: Router) { }
 
   ngOnInit() {
+    this.noRecordFound = config.noRecordFound;
 
     this.productDetail = [
       { orderNo: '1120-3739', custmName: 'Amit Shah', location: 'Mumbai', qty: '2' },

@@ -47,11 +47,9 @@
                             </tr>
                         </ng-template>
                     </p-table>
-
                 </div>
+                <div class="noRecordsFound" *ngIf="!goodsList.length">{{noRecordFound}}</div>
             </div>
-
-
         </div>
     </div>
 </div>

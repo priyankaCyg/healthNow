@@ -18,13 +18,15 @@ export class GrnListComponent implements OnInit {
   public expandedRows = {};
   public temDataLength: number = 0;
   po_prdid: number;
-  grnList: grnData[];
+  grnList: grnData[] = [];
   grnListChilddata: any[];
+  noRecordFound: string;
   GRN = [];
 
   constructor(private httpService: ApiService, private confirmationService: ConfirmationService, private toastService: ToastService) { }
 
   ngOnInit() {
+    this.noRecordFound = config.noRecordFound;
 
     this.cols = [
       { field: 'sSupName', header: 'Supplier Name' },

@@ -7,6 +7,7 @@ import { DialogService } from 'primeng';
 import { PurchaseOrderRoutingModule } from '../purchase-order-routing.module';
 import { ApiService } from 'src/app/services/api.service';
 import { supplierReqListData } from 'src/app/model/supplier-requisitionList';
+import { config } from 'src/config';
 
 @Component({
   selector: 'app-create-po-list',
@@ -16,7 +17,8 @@ import { supplierReqListData } from 'src/app/model/supplier-requisitionList';
 export class CreatePoListComponent implements OnInit {
 
   items: MenuItem[];
-  poList: supplierReqListData[];
+  poList: supplierReqListData[] = [];
+  noRecordFound: string;
 
   constructor(private breadcrumbService: BreadcrumbService, private dialogService: DialogService,
     private httpService: ApiService) {
@@ -28,6 +30,8 @@ export class CreatePoListComponent implements OnInit {
 
   ngOnInit(): void {
     this.getAllSuppplierReqList();
+    this.noRecordFound = config.noRecordFound;
+
   }
 
   getAllSuppplierReqList() {

@@ -79,6 +79,7 @@
                         </ng-template>
                     </p-table>
                 </div>
+                <div class="noRecordsFound" *ngIf="!partner.length">{{noRecordFound}}</div>
             </div>
         </div>
     </div>

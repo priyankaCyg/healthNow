@@ -199,6 +199,7 @@
                             </p-table>
                         </div>
                     </div>
+                    <div class="noRecordsFound" *ngIf="!supplierAdressData.length">{{noRecordFound}}</div>
                 </p-tabPanel>
                 <!-- Address tab End here -->
 
@@ -206,7 +207,7 @@
                 <p-tabPanel header="Contact" [disabled]="tabDisabled">
                     <div class="p-grid ui-fluid p-justify-end">
                         <div class="p-col-1 text-center mt-1">
-                            <button (click)="openDialogForaddContact()" pButton icon="pi pi-fw pi-plus" label="Add"
+                            <button (click)="openDialogForaddContact()" pButton icon="pi pi-fw pi-plus" label="Add New"
                                 class="ui-button"></button>
                         </div>
                         <div class="p-col-12">
@@ -279,6 +280,7 @@
                             </p-table>
                         </div>
                     </div>
+                    <div class="noRecordsFound" *ngIf="!contact.length">{{noRecordFound}}</div>
                 </p-tabPanel>
                 <!-- Contact tab End here -->
 
@@ -341,6 +343,7 @@
                             </p-table>
                         </div>
                     </div>
+                    <div class="noRecordsFound" *ngIf="!bankData.length">{{noRecordFound}}</div>
                 </p-tabPanel>
                 <!-- Bank tab End here -->
 
@@ -382,6 +385,7 @@
                             </p-table>
                         </div>
                     </div>
+                    <div class="noRecordsFound" *ngIf="!gst.length">{{noRecordFound}}</div>
                 </p-tabPanel>
                 <!-- GST tab End here -->
 
@@ -438,6 +442,7 @@
                             </p-table>
                         </div>
                     </div>
+                    <div class="noRecordsFound" *ngIf="!attachment.length">{{noRecordFound}}</div>
                 </p-tabPanel>
                 <!-- Attachment tab End here -->
 

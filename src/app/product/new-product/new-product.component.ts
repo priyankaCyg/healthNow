@@ -61,9 +61,10 @@ export class NewProductComponent implements OnInit {
   selectedFileType;
   fileTypeData;
   uploadedFiles: any[] = [];
-  attachment: any[];
+  attachment: any[] = [];
   index: number = 0;
   productSubmitFlag = 0;
+  noRecordFound: string;
 
   constructor(private carService: CarService, private breadcrumbService: BreadcrumbService,
     private dialogService: DialogService,
@@ -79,7 +80,7 @@ export class NewProductComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
+    this.noRecordFound = config.noRecordFound;
     this.defaultDropDwnValue();
     this.productData = new ProductMaster();
     this.ProductForm = this.createControl(this.productData);

@@ -30,14 +30,14 @@ import { ValidationService } from 'src/app/services/validation.service';
 export class NewPartnerComponent implements OnInit {
 
   items: MenuItem[];
-  contact: any[];
-  gst: gstData[];
+  contact: any[] = [];
+  gst: gstData[] = [];
   isEdit: boolean = false;
   tabDisabled: boolean = true;
   public PartnerForm: FormGroup;
   partnerData: PartnerMaster;
-  bankData: companyBankMaster[];
-  partnerAdressData: PartnerAddress;
+  bankData: companyBankMaster[] = [];
+  partnerAdressData: PartnerAddress[] = [];
   entityData;
   partner_id;
   selectedEntity;
@@ -58,6 +58,7 @@ export class NewPartnerComponent implements OnInit {
   stateDisable: boolean = true;
   cityDisable: boolean = true;
   getAddressDisable: boolean = true;
+  noRecordFound: string;
 
   constructor(private breadcrumbService: BreadcrumbService, private dialogService: DialogService, private route: ActivatedRoute,
     private httpService: ApiService,
@@ -71,6 +72,7 @@ export class NewPartnerComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.noRecordFound = config.noRecordFound;
     this.defaultDropDwnValue()
     this.partnerData = new PartnerMaster();
     this.PartnerForm = this.createControl(this.partnerData);

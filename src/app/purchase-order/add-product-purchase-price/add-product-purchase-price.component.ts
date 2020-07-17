@@ -133,7 +133,7 @@ export class AddProductPurchasePriceComponent implements OnInit {
 
   createControl(prdData?: purchaseProductMaster): FormGroup {
     this.productForm = this.fb.group({
-      iPurchaseAmt: [prdData.iPurchaseAmt, [Validators.required, Validators.pattern('^[0-9]*$')]],
+      iPurchaseAmt: [prdData.iPurchaseAmt, [ValidationService.amountValidator]],
       sStartDate: [prdData.sStartDate ? moment(prdData.sEndDate).toDate() : null, Validators.required],
       sEndDate: [prdData.sEndDate ? moment(prdData.sEndDate).toDate() : null, Validators.required],
     });

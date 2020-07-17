@@ -5,6 +5,7 @@ import { DialogService, ConfirmationService } from 'primeng';
 import { ApiService } from 'src/app/services/api.service';
 import { ToastService } from 'src/app/services/toast.service';
 import { PoRejectiomComponent } from '../po-rejectiom/po-rejectiom.component';
+import { config } from 'src/config';
 
 @Component({
   selector: 'app-purchase-order-approval',
@@ -12,10 +13,11 @@ import { PoRejectiomComponent } from '../po-rejectiom/po-rejectiom.component';
   styleUrls: ['./purchase-order-approval.component.css']
 })
 export class PurchaseOrderApprovalComponent implements OnInit {
-  poList: poListMaster[];
+  poList: poListMaster[] = [];
   selectedValues: any[] = [];
   checked: boolean = true;
   batch: any[];
+  noRecordFound: string;
   public isExpanded: boolean = false;
   public rows: number = 10;
   public expandedRows = {};
@@ -29,6 +31,7 @@ export class PurchaseOrderApprovalComponent implements OnInit {
   }
   ngOnInit(): void {
     this.getPOList();
+    this.noRecordFound = config.noRecordFound;
     //this.batch = [];
   }
 

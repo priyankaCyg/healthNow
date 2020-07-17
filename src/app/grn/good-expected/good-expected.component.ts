@@ -2,6 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { ApiService } from 'src/app/services/api.service';
 import { goodsExpectedMaster } from 'src/app/model/goodsExpected.model';
 import { Router } from '@angular/router';
+import { config } from 'src/config';
 
 @Component({
   selector: 'app-good-expected',
@@ -10,12 +11,14 @@ import { Router } from '@angular/router';
 })
 export class GoodExpectedComponent implements OnInit {
 
-  goodsList: goodsExpectedMaster[];
+  goodsList: goodsExpectedMaster[] = [];
+  noRecordFound: string;
 
   constructor(private httpService: ApiService, private router: Router) { }
 
   ngOnInit(): void {
     this.getGoodsList();
+    this.noRecordFound = config.noRecordFound;
   }
 
   //Function to get goods expected list

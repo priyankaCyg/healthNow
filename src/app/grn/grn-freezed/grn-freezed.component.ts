@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { BreadcrumbService } from 'src/app/breadcrumb.service';
 import { ApiService } from 'src/app/services/api.service';
 import { grnData } from 'src/app/model/grn.model';
+import { config } from 'src/config';
 
 @Component({
   selector: 'app-grn-freezed',
@@ -10,8 +11,9 @@ import { grnData } from 'src/app/model/grn.model';
 })
 export class GrnFreezedComponent implements OnInit {
 
-  grnListData: grnData[];
+  grnListData: grnData[] = [];
   batch: any[];
+  noRecordFound: string;
   public isExpanded: boolean = false;
   public expandedRows = {};
   public temDataLength: number = 0;
@@ -25,6 +27,7 @@ export class GrnFreezedComponent implements OnInit {
   ngOnInit(): void {
     this.getGRNList();
     this.batch = [];
+    this.noRecordFound = config.noRecordFound;
   }
 
   //Function to get all PO list

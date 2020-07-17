@@ -166,6 +166,7 @@
                             </p-table>
                         </div>
                     </div>
+                    <div class="noRecordsFound" *ngIf="!partnerAdressData.length">{{noRecordFound}}</div>
                 </p-tabPanel>
                 <!-- Address tab End here -->
 
@@ -174,12 +175,16 @@
                     <div class="p-grid ui-fluid p-justify-end">
                         <div class="p-col-1 text-center mt-1">
                             <button (click)="openDialogForaddContact()" pButton icon="pi pi-fw pi-plus"
-                                label="Add / Edit"></button>
+                                label="Add New"></button>
                         </div>
                         <div class="p-col-12">
-                            <p-table [value]="contact">
+                            <p-table #ContactSerach [value]="contact" [globalFilterFields]="[
+                            'sDesignation','sEmailID','sFullName','sPartnerName']">
                                 <ng-template pTemplate="caption">
-                                    <div class="ui-table-globalfilter-container text-left" style="width:250px;">
+                                    <div class="ui-table-globalfilter-container text-left">
+                                        <input type="text" pInputText size="50" placeholder="Search"
+                                            (input)="ContactSerach.filterGlobal($event.target.value, 'contains')"
+                                            style="width:250px;">
                                     </div>
                                 </ng-template>
                                 <ng-template pTemplate="header">
@@ -232,6 +237,7 @@
                             </p-table>
                         </div>
                     </div>
+                    <div class="noRecordsFound" *ngIf="!contact.length">{{noRecordFound}}</div>
                 </p-tabPanel>
                 <!-- Contact tab End here -->
 
@@ -298,6 +304,7 @@
                             </p-table>
                         </div>
                     </div>
+                    <div class="noRecordsFound" *ngIf="!bankData.length">{{noRecordFound}}</div>
                 </p-tabPanel>
                 <!-- Bank tab End here -->
 
@@ -339,6 +346,7 @@
                             </p-table>
                         </div>
                     </div>
+                    <div class="noRecordsFound" *ngIf="!gst.length">{{noRecordFound}}</div>
                 </p-tabPanel>
                 <!-- GST tab End here -->
 

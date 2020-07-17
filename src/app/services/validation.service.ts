@@ -109,6 +109,26 @@ export class ValidationService {
     }
   }
 
+  static amountValidator(control) {
+    if (control.value == "") {
+      return { Msg: "This field is required" };
+    }
+    //Allows only numbers
+    else if (!control.value.match(/^[0-9]*$/)) {
+      return { Msg: "Enter a valid amount" };
+    }
+  }
+
+  static quantityValidator(control) {
+    if (control.value == "") {
+      return { Msg: "This field is required" };
+    }
+    //Allows only numbers
+    else if (!control.value.match(/^[0-9]*$/)) {
+      return { Msg: "Enter a valid Quantity" };
+    }
+  }
+
   //used for PAN no, GST, IFSC, Short code
   static alphaNumericValidator(control) {
     if (control.value == "") {
@@ -143,7 +163,7 @@ export class ValidationService {
   }
 
   // ********************* Testing modules below  **********************
-  
+
   // static alphabetValidator_1(control) {
   //   // Validates upper case alphabets
   //   if (control.value.match(/^[A-Z]+$/)) {

@@ -20,8 +20,7 @@
                             <div class="p-col-12 p-md-12 p-lg-12 mb-2">
                                 <label for="amount">Amount</label>
                                 <input id="amount" formControlName="iPurchaseAmt" type="text" pInputText>
-                                <p-message severity="error"
-                                    [text]="productForm.controls['iPurchaseAmt'].errors['required'] ? 'This Field is required' : productForm.controls['iPurchaseAmt'].errors['pattern'] ? 'Please Enter Valid Amount.' : ''"
+                                <p-message severity="error" [text]="productForm.controls['iPurchaseAmt'].errors['Msg']"
                                     *ngIf="!productForm.controls['iPurchaseAmt'].valid && productForm.controls['iPurchaseAmt'].dirty">
                                 </p-message>
                             </div>
@@ -30,11 +29,19 @@
                                 <label for="sDate">Start Date</label>
                                 <p-calendar formControlName="sStartDate" [minDate]="minDate" dateFormat="dd-mm-yy"
                                     [(ngModel)]="selectedStartDate"></p-calendar>
+                                <p-message severity="error"
+                                    [text]="productForm.controls['sStartDate'].errors['required'] ? 'This Field is required' : ''"
+                                    *ngIf="!productForm.controls['sStartDate'].valid && productForm.controls['sStartDate'].dirty">
+                                </p-message>
                             </div>
                             <div class="p-col-12 p-md-12 p-lg-12 mb-2">
                                 <label for="eDate">End Date</label>
                                 <p-calendar formControlName="sEndDate" [minDate]="minDate" dateFormat="dd-mm-yy"
                                     [(ngModel)]="selectedendDate"></p-calendar>
+                                <p-message severity="error"
+                                    [text]="productForm.controls['sEndDate'].errors['required'] ? 'This Field is required' : ''"
+                                    *ngIf="!productForm.controls['sEndDate'].valid && productForm.controls['sEndDate'].dirty">
+                                </p-message>
                             </div>
                         </div>
                     </div>

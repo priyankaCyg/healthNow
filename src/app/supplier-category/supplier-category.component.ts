@@ -17,7 +17,8 @@ import { config } from 'src/config';
 export class SupplierCategoryComponent implements OnInit {
 
   items: MenuItem[];
-  supplierCategory: SupplierCategoryMaster[];
+  supplierCategory: SupplierCategoryMaster[] = [];
+  noRecordFound: string;
 
   constructor(private breadcrumbService: BreadcrumbService, private dialogService: DialogService,
     private httpService: ApiService, private toastService: ToastService, private confirmationService: ConfirmationService) {
@@ -28,7 +29,8 @@ export class SupplierCategoryComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getSupplierCategoryList()
+    this.getSupplierCategoryList();
+    this.noRecordFound = config.noRecordFound;
   }
 
   //Function to fetch supplier category list
