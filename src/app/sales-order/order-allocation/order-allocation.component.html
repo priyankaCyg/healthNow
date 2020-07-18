@@ -118,8 +118,8 @@
                 </div> -->
                 <div class="p-col-12 mt-3">
 
-                    <p-table [columns]="cols1" #search [value]="products" dataKey="iSOID" [paginator]="false"
-                        [rows]="10" [totalRecords]="products.length" rowExpandMode="single"
+                    <p-table [columns]="cols1" #search [value]="productsAllocData" dataKey="iPrdID" [paginator]="false"
+                        [rows]="10" [totalRecords]="productsAllocData.length" rowExpandMode="single"
                         (onRowExpand)="onRowExpand()" (onRowCollapse)="onRowCollapse()" [expandedRowKeys]="expandedRows"
                         [showCurrentPageReport]="true">
                         <ng-template pTemplate="caption">
@@ -145,7 +145,8 @@
                         <ng-template pTemplate="body" let-rowData let-expanded="expanded" let-columns="columns">
                             <tr>
                                 <td>
-                                    <a href="#" [pRowToggler]="rowData">
+                                    <a href="#" (click)="getProductAllocChildList(rowData.iPrdID)"
+                                        [pRowToggler]="rowData">
                                         <i [ngClass]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></i>
                                     </a>
                                 </td>
@@ -174,10 +175,10 @@
                         </ng-template>
                         <ng-template pTemplate="body" let-productDetail>
                             <tr>
-                                <td>{{productDetail.orderNo}}</td>
-                                <td>{{productDetail.custmName}}</td>
-                                <td>{{productDetail.location}}</td>
-                                <td>{{productDetail.qty}}</td>
+                                <td>{{productDetail.sSONo}}</td>
+                                <td>{{productDetail.sCustomerName}}</td>
+                                <td>{{productDetail.sAddress}}</td>
+                                <td>{{productDetail.iQty}}</td>
                             </tr>
                         </ng-template>
                     </p-table>
@@ -189,7 +190,7 @@
             </p-table>
     </div>
 </div>
-
+<div class="noRecordsFound" *ngIf="!productsAllocData.length">{{noRecordFound}}</div>
 </p-tabPanel>
 </p-tabView>
 </div>

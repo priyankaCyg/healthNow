@@ -2,6 +2,10 @@
     <div class="p-col-12 p-md-4 p-lg-4 p-col-align-start">
         <div class="card bg-success p-2">Product : <strong>{{product_name}} {{variant_name}}</strong></div>
     </div>
+    <div class="p-col-12 p-md-4 p-lg-4 p-col-align-start">
+        <div class="card bg-success p-2">Quantity : <strong>
+                {{quantity}}</strong></div>
+    </div>
     <div class="p-col-12">
         <div class="p-grid p-nogutter">
             <div class="p-col-12 p-md-12 p-lg-12 mb-2">
@@ -9,7 +13,7 @@
                     <ng-template pTemplate="header">
                         <tr>
                             <th>Batch Lot No</th>
-                            <th>Expiry Date</th>
+                            <th>Expiry Date </th>
                             <th>Qty</th>
                             <th>Allocate Quantity</th>
                         </tr>
@@ -18,11 +22,11 @@
                         <tr>
 
                             <td>{{batch.sBatchNo}}</td>
-                            <td>{{batch.expiryDate}}</td>
+                            <td>{{batch.sExpireDate | date: 'dd-MM-yyyy'}}</td>
                             <td>{{batch.iQty}}</td>
                             <td>
-                                <input type="number" pInputText [(ngModel)]="batch.quantity"
-                                    (change)="changeAllocQty(batch.quantity,ri)" />
+                                <input type="number" pInputText [(ngModel)]="batch.alocQuantity"
+                                    (change)="changeAllocQty(batch.alocQuantity,ri)" />
                             </td>
                         </tr>
                     </ng-template>
@@ -43,7 +47,7 @@
         <div class="p-col-12 p-md-2 p-lg-12 text-right mt-0">
             <button pButton type="button" label="Cancel" (click)="close()"
                 class="ui-button-light atbt mr-2 mb-2"></button>
-            <button pButton type="submit" label="Allocate" class="ui-button atbt mb-2"></button>
+            <button pButton type="submit" label="Allocate" [disabled]="isdisabled" class="ui-button atbt mb-2"></button>
         </div>
     </div>
 </div>

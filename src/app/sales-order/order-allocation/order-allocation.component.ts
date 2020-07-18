@@ -21,6 +21,7 @@ export class OrderAllocationComponent implements OnInit {
   orderDetail: any[];
   productDetail: any[];
   customerAllocData: any[] = [];
+  productsAllocData: any[];
   noRecordFound: string;
   public products: any[];
   public cols: any[];
@@ -31,10 +32,9 @@ export class OrderAllocationComponent implements OnInit {
   public expandedRows = {};
   public temDataLength: number = 0;
   customer = [];
-
   PRODUCTS = [
-    { "prdName": "Groundnut Oil", "orders": "10", "qty": "15" },
-    { "prdName": "Horlicks", "orders": "5", "qty": "10" }
+    //{ "prdName": "Groundnut Oil", "orders": "10", "qty": "15" },
+    //{ "prdName": "Horlicks", "orders": "5", "qty": "10" }
   ];
 
   constructor(private breadcrumbService: BreadcrumbService,
@@ -43,13 +43,13 @@ export class OrderAllocationComponent implements OnInit {
   ngOnInit() {
     this.noRecordFound = config.noRecordFound;
 
-    this.productDetail = [
-      { orderNo: '1120-3739', custmName: 'Amit Shah', location: 'Mumbai', qty: '2' },
-      { orderNo: '1121-1234', custmName: 'Nilesh Sable', location: 'Mumbai', qty: '3' },
-      { orderNo: '1122-3697', custmName: 'Supriya Jadhav', location: 'Mumbai', qty: '5' },
-      { orderNo: '1123-2587', custmName: 'Kiran Kumar', location: 'Mumbai', qty: '4' },
-      { orderNo: '1122-7412', custmName: 'Ravi Yadhav', location: 'Mumbai', qty: '1' }
-    ];
+    // this.productDetail = [
+    //   { orderNo: '1120-3739', custmName: 'Amit Shah', location: 'Mumbai', qty: '2' },
+    //   { orderNo: '1121-1234', custmName: 'Nilesh Sable', location: 'Mumbai', qty: '3' },
+    //   { orderNo: '1122-3697', custmName: 'Supriya Jadhav', location: 'Mumbai', qty: '5' },
+    //   { orderNo: '1123-2587', custmName: 'Kiran Kumar', location: 'Mumbai', qty: '4' },
+    //   { orderNo: '1122-7412', custmName: 'Ravi Yadhav', location: 'Mumbai', qty: '1' }
+    // ];
 
     this.cols = [
       { field: 'sSONo', header: 'Order No' },
@@ -57,16 +57,17 @@ export class OrderAllocationComponent implements OnInit {
     ];
 
     this.cols1 = [
-      { field: 'prdName', header: 'Products' },
-      { field: 'orders', header: 'Orders' },
-      { field: 'qty', header: 'Quantity' }
+      { field: 'sPrdName', header: 'Products' },
+      { field: 'sOrders', header: 'Orders' },
+      { field: 'iQty', header: 'Quantity' }
     ];
     this.getOrderAllocList();
     this.customerAllocData = this.customer;
     this.customerAllocData.length < this.rows ? this.temDataLength = this.customerAllocData.length : this.temDataLength = this.rows;
 
-    this.products = this.PRODUCTS;
-    this.products.length < this.rows ? this.temDataLength = this.products.length : this.temDataLength = this.rows;
+    this.getProductAllocList();
+    this.productsAllocData = this.PRODUCTS;
+    this.productsAllocData.length < this.rows ? this.temDataLength = this.productsAllocData.length : this.temDataLength = this.rows;
   }
 
   //Function to get Order Allocation list
@@ -105,21 +106,21 @@ export class OrderAllocationComponent implements OnInit {
   //Function to get Product Allocation list
   getProductAllocList() {
     const productAllocAPI = {
-      "iRequestID": 2359,
+      "iRequestID": 2433,
     }
     this.httpService.callPostApi(productAllocAPI).subscribe(
       data => {
-        this.products = data.body;
+        this.productsAllocData = data.body;
       },
       error => { console.log(error) }
     )
   }
 
   //code for get Product Allocation child data table
-  getProductAllocChildList(iSOID: Number) {
+  getProductAllocChildList(iPrdID: Number) {
     const productAllocChildAPI = {
-      "iRequestID": 2362,
-      "iSOID": iSOID
+      "iRequestID": 2434,
+      "iPrdID": iPrdID
     }
     this.httpService.callPostApi(productAllocChildAPI).subscribe(
       data => {
