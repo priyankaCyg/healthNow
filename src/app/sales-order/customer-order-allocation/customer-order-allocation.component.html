@@ -53,9 +53,9 @@
                                 <td *ngFor="let col of columns">
                                     {{rowData[col.field]}}
                                 </td>
-                                <td *ngIf="rowData.iStatusID == 1">
-                                    <button (click)="openDialogForOrderAllocate(rowData)" pButton type="button"
-                                        class="ui-button-success mr-1" label="Allocate"></button>
+                                <td>
+                                    <button *ngIf="rowData.iStatusID == 1" (click)="openDialogForOrderAllocate(rowData)"
+                                        pButton type="button" class="ui-button-success mr-1" label="Allocate"></button>
                                     <button pButton type="button" (click)="rejectAllocProduct(rowData)"
                                         class="ui-button-danger" icon="pi pi-times" title="Reject"></button>
                                 </td>
