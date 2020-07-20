@@ -35,7 +35,7 @@ export class AllocateProductComponent implements OnInit {
   getCusOrderAllocData() {
     const productAllocChildAPI = {
       "iRequestID": 2441,
-      "iWHAddID": 5,
+      "iWHAddID": this.config.data.iWHAddID,
       "iPrdID": this.config.data.iPrdID
     }
     this.httpService.callPostApi(productAllocChildAPI).subscribe(
@@ -73,7 +73,6 @@ export class AllocateProductComponent implements OnInit {
 
   }
 
-  
   saveAllocate() {
     this.batch.forEach((key, index) => {
       let sBatchNo = this.batch[index].sBatchNo;
