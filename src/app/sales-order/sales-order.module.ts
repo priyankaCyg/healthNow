@@ -31,10 +31,13 @@ import { CheckboxModule } from 'primeng/checkbox';
 import { CalendarModule } from 'primeng/calendar';
 import { TabViewModule } from 'primeng/tabview';
 import { ProductOrderAllocationComponent } from './product-order-allocation/product-order-allocation.component';
+import { InvoiceCreationComponent } from './invoice-creation/invoice-creation.component';
+import { CustomerInvoiceCreationComponent } from './customer-invoice-creation/customer-invoice-creation.component';
+import { ProductInvoiceCreationComponent } from './product-invoice-creation/product-invoice-creation.component';
 
 
 @NgModule({
-  declarations: [SalesOrderComponent, AddressComponent, AvailableQtyComponent, OrderAllocationComponent, AllocateComponent, DeliveryListComponent, UpdatePodComponent, DeliveredComponent, CustomerOrderAllocationComponent, AllocateProductComponent, ProductOrderAllocationComponent],
+  declarations: [SalesOrderComponent, AddressComponent, AvailableQtyComponent, OrderAllocationComponent, AllocateComponent, DeliveryListComponent, UpdatePodComponent, DeliveredComponent, CustomerOrderAllocationComponent, AllocateProductComponent, ProductOrderAllocationComponent, InvoiceCreationComponent, CustomerInvoiceCreationComponent, ProductInvoiceCreationComponent],
   imports: [
     CommonModule,
     SalesOrderRoutingModule,

@@ -192,6 +192,12 @@ import { AppMainComponent } from './app.main.component';
                                        		 <h3>Order Allocation</h3>
                                    		 </span>
 									</li>
+									<li routerLink="/sales-order/invoice-creation">
+									<i class="pi pi-circle-on"></i>
+									<span>
+											<h3>Invoice Creation</h3>
+										</span>
+								</li>
 									
 									<li routerLink="/sales-order/delivery-list">
 										<i class="pi pi-circle-on"></i>
