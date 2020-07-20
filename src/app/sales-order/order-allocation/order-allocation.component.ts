@@ -10,6 +10,8 @@ import { AddressComponent } from '../address/address.component';
 import { ApiService } from 'src/app/services/api.service';
 import { Router } from '@angular/router';
 import { config } from 'src/config';
+import { customerAllocData } from 'src/app/model/customer-order-allocation';
+import { customerAllocChildData } from 'src/app/model/customer-order-alloc-child';
 
 @Component({
   selector: 'app-order-allocation',
@@ -18,38 +20,26 @@ import { config } from 'src/config';
 })
 export class OrderAllocationComponent implements OnInit {
 
-  orderDetail: any[];
+  orderDetail: customerAllocChildData[];
   productDetail: any[];
-  customerAllocData: any[] = [];
+  customerAlloc: customerAllocData[] = [];
   productsAllocData: any[];
   noRecordFound: string;
-  public products: any[];
+
   public cols: any[];
   public cols1: any[];
-
   public isExpanded: boolean = false;
   public rows: number = 10;
   public expandedRows = {};
   public temDataLength: number = 0;
   customer = [];
-  PRODUCTS = [
-    //{ "prdName": "Groundnut Oil", "orders": "10", "qty": "15" },
-    //{ "prdName": "Horlicks", "orders": "5", "qty": "10" }
-  ];
+  PRODUCTS = [];
 
   constructor(private breadcrumbService: BreadcrumbService,
     private httpService: ApiService, private router: Router) { }
 
   ngOnInit() {
     this.noRecordFound = config.noRecordFound;
-
-    // this.productDetail = [
-    //   { orderNo: '1120-3739', custmName: 'Amit Shah', location: 'Mumbai', qty: '2' },
-    //   { orderNo: '1121-1234', custmName: 'Nilesh Sable', location: 'Mumbai', qty: '3' },
-    //   { orderNo: '1122-3697', custmName: 'Supriya Jadhav', location: 'Mumbai', qty: '5' },
-    //   { orderNo: '1123-2587', custmName: 'Kiran Kumar', location: 'Mumbai', qty: '4' },
-    //   { orderNo: '1122-7412', custmName: 'Ravi Yadhav', location: 'Mumbai', qty: '1' }
-    // ];
 
     this.cols = [
       { field: 'sSONo', header: 'Order No' },
@@ -62,8 +52,8 @@ export class OrderAllocationComponent implements OnInit {
       { field: 'iQty', header: 'Quantity' }
     ];
     this.getOrderAllocList();
-    this.customerAllocData = this.customer;
-    this.customerAllocData.length < this.rows ? this.temDataLength = this.customerAllocData.length : this.temDataLength = this.rows;
+    this.customerAlloc = this.customer;
+    this.customerAlloc.length < this.rows ? this.temDataLength = this.customerAlloc.length : this.temDataLength = this.rows;
 
     this.getProductAllocList();
     this.productsAllocData = this.PRODUCTS;
@@ -77,7 +67,7 @@ export class OrderAllocationComponent implements OnInit {
     }
     this.httpService.callPostApi(orderAllocAPI).subscribe(
       data => {
-        this.customerAllocData = data.body;
+        this.customerAlloc = data.body;
       },
       error => { console.log(error) }
     )
@@ -138,7 +128,7 @@ export class OrderAllocationComponent implements OnInit {
 
   expandAll() {
     if (!this.isExpanded) {
-      this.customerAllocData.forEach(data => {
+      this.customerAlloc.forEach(data => {
         this.expandedRows[data.iSOID] = 1;
       })
     } else {
@@ -161,7 +151,7 @@ export class OrderAllocationComponent implements OnInit {
   }
 
   onPage(event: any) {
-    this.temDataLength = this.customerAllocData.slice(event.first, event.first + 10).length;
+    this.temDataLength = this.customerAlloc.slice(event.first, event.first + 10).length;
     console.log(this.temDataLength);
     this.isExpanded = false;
     this.expandedRows = {};

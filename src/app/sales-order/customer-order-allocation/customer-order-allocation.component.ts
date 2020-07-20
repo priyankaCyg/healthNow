@@ -9,6 +9,7 @@ import { AddressComponent } from '../address/address.component';
 import { AllocateComponent } from '../allocate/allocate.component';
 import { ApiService } from 'src/app/services/api.service';
 import { ToastService } from 'src/app/services/toast.service';
+import { customerAllocChildData } from 'src/app/model/customer-order-alloc-child';
 
 @Component({
   selector: 'app-customer-order-allocation',
@@ -17,13 +18,23 @@ import { ToastService } from 'src/app/services/toast.service';
 })
 export class CustomerOrderAllocationComponent implements OnInit {
 
-  orderDetail: any[];
+  orderDetail: customerAllocChildData[];
+  batch: any[]
   data: object;
   responseData: object;
   customer_name: string;
   address: string;
   order_no: string;
   iSOID: number;
+  orderAllocation = [];
+
+  public cols: any[];
+  public cols1: any[];
+  public isExpanded: boolean = false;
+  public rows: number = 10;
+  public expandedRows = {};
+  public temDataLength: number = 0;
+
   constructor(private breadcrumbService: BreadcrumbService, private dialogService: DialogService,
     private httpService: ApiService, private toastService: ToastService, private confirmationService: ConfirmationService) { }
 
@@ -35,14 +46,15 @@ export class CustomerOrderAllocationComponent implements OnInit {
     this.order_no = this.responseData[0].sSONo;
     this.iSOID = this.responseData[0].iSOID;
 
+    this.cols = [{ field: 'iQty', header: 'Qty' }];
+
     this.getOrderrAllocChildList();
-    // this.orderDetail = [
-    //   { prdName: 'Groundnut Oil', qty: '2', batchNo: 'B2', expiryDate: '01-06-2021', allocatedQty: '2' },
-    //   { prdName: 'Horlicks', qty: '2', batchNo: '', expiryDate: '', allocatedQty: '' }
-    // ];
+    this.orderDetail = this.orderAllocation;
+    this.orderDetail.length < this.rows ? this.temDataLength = this.orderDetail.length : this.temDataLength = this.rows;
+
   }
 
-  //code for get Order Alocation child data table
+  //code for get Customer Order Alocation data table
   getOrderrAllocChildList() {
     const ordrAllocChildAPI = {
       "iRequestID": 2432,
@@ -51,6 +63,20 @@ export class CustomerOrderAllocationComponent implements OnInit {
     this.httpService.callPostApi(ordrAllocChildAPI).subscribe(
       data => {
         this.orderDetail = data.body;
+      },
+      error => { console.log(error) }
+    )
+  }
+
+  //code for get Customer Order Alocation child data table
+  getBatchAllocChildList(iSOPrdID: Number) {
+    const ordrAllocChildAPI = {
+      "iRequestID": 2436,
+      "iSOPrdID": iSOPrdID
+    }
+    this.httpService.callPostApi(ordrAllocChildAPI).subscribe(
+      data => {
+        this.batch = data.body;
       },
       error => { console.log(error) }
     )
@@ -78,13 +104,29 @@ export class CustomerOrderAllocationComponent implements OnInit {
       reject: () => { }
     });
   }
+
+  saveConfirmAllocate() {
+    const data = {
+      "iRequestID": 2435,
+      "iSOPrdID": 1,
+      "iPrdID": 1,
+      "sGINAllocation": ""
+    }
+    console.log(data, "data");
+    this.httpService.callPostApi(data).subscribe(
+      (data) => {
+        this.toastService.displayApiMessage(data.headers.get('StatusMessage'), data.headers.get('StatusCode'));
+      },
+      (error) => console.log(error)
+    );
+  }
+
   openDialogForAddress() {
     const ref = this.dialogService.open(AddressComponent, {
       data: this.address,
       header: 'Location',
       width: '30%'
     });
-
     ref.onClose.subscribe((success: boolean) => {
       if (success) {
         // this.toastService.addSingle("success", "Mail send successfully", "");
@@ -101,8 +143,40 @@ export class CustomerOrderAllocationComponent implements OnInit {
 
     ref.onClose.subscribe((success: boolean) => {
       if (success) {
-        // this.toastService.addSingle("success", "Mail send successfully", "");
+        this.getOrderrAllocChildList();
       }
     });
   }
+
+  expandAll() {
+    if (!this.isExpanded) {
+      this.orderDetail.forEach(data => {
+        this.expandedRows[data.iPrdID] = 1;
+      })
+    } else {
+      this.expandedRows = {};
+    }
+    this.isExpanded = !this.isExpanded;
+  }
+
+  onRowExpand() {
+    console.log("row expanded", Object.keys(this.expandedRows).length);
+    if (Object.keys(this.expandedRows).length === this.temDataLength) {
+      this.isExpanded = true;
+    }
+  }
+  onRowCollapse() {
+    console.log("row collapsed", Object.keys(this.expandedRows).length);
+    if (Object.keys(this.expandedRows).length === 0) {
+      this.isExpanded = false;
+    }
+  }
+
+  onPage(event: any) {
+    this.temDataLength = this.orderDetail.slice(event.first, event.first + 10).length;
+    console.log(this.temDataLength);
+    this.isExpanded = false;
+    this.expandedRows = {};
+  }
+
 }

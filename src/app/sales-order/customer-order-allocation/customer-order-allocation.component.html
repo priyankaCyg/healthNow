@@ -22,51 +22,88 @@
                     </div>
                 </div>
                 <div class="p-col-12 mt-3">
-                    <p-table [value]="orderDetail">
-                        <ng-template pTemplate="header">
+                    <p-table [columns]="cols" [value]="orderDetail" dataKey="iPrdID" [paginator]="false" [rows]="10"
+                        [totalRecords]="orderDetail.length" rowExpandMode="single" (onRowExpand)="onRowExpand()"
+                        (onRowCollapse)="onRowCollapse()" [expandedRowKeys]="expandedRows"
+                        [showCurrentPageReport]="true">
+
+                        <ng-template pTemplate="header" let-columns>
                             <tr>
+                                <th style="width: 3em">
+                                    <a style="cursor: pointer;font-size: 16px; color:teal;" (click)="expandAll()"><i
+                                            *ngIf="!isExpanded" class="fa fa-plus-circle" aria-hidden="true"></i>
+                                        <i *ngIf="isExpanded" class="fa fa-minus-circle" aria-hidden="true"></i></a>
+                                </th>
                                 <th>Product Name</th>
-                                <th>Qty</th>
-                                <th>Batch No</th>
-                                <th>Expiry Date</th>
-                                <th>Allocated Qty</th>
+                                <th *ngFor="let col of columns">
+                                    {{col.header}}
+                                </th>
                                 <th>Action</th>
                             </tr>
                         </ng-template>
-                        <ng-template pTemplate="body" let-orderDetail>
+                        <ng-template pTemplate="body" let-rowData let-expanded="expanded" let-columns="columns">
                             <tr>
-                                <td>{{orderDetail.sPrdName}} {{orderDetail.sVariant}}</td>
-                                <td>{{orderDetail.iQty}}</td>
-                                <td>{{orderDetail.sBatchNo}}</td>
-                                <td>{{orderDetail.expiryDate}}</td>
-                                <td>{{orderDetail.allocatedQty}}</td>
                                 <td>
-                                    <button (click)="openDialogForOrderAllocate(orderDetail)" pButton type="button"
+                                    <a href="#" (click)="getBatchAllocChildList(rowData.iSOPrdID)"
+                                        [pRowToggler]="rowData">
+                                        <i [ngClass]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></i>
+                                    </a>
+                                </td>
+                                <td> {{rowData.sPrdName}} {{rowData.sVariant}}</td>
+                                <td *ngFor="let col of columns">
+                                    {{rowData[col.field]}}
+                                </td>
+                                <td *ngIf="rowData.iStatusID == 1">
+                                    <button (click)="openDialogForOrderAllocate(rowData)" pButton type="button"
                                         class="ui-button-success mr-1" label="Allocate"></button>
-                                    <button pButton type="button" (click)="rejectAllocProduct(orderDetail)"
+                                    <button pButton type="button" (click)="rejectAllocProduct(rowData)"
                                         class="ui-button-danger" icon="pi pi-times" title="Reject"></button>
                                 </td>
                             </tr>
                         </ng-template>
+                        <ng-template pTemplate="rowexpansion" let-rowData let-columns="columns">
+                            <tr>
+                                <td [attr.colspan]="columns.length + 3">
+                                    <div class="ui-g ui-fluid" style="font-size:14px;padding:8px">
+                                        <div class="ui-g-12 ui-md-12">
+                                            <p-table [value]="batch">
+                                                <ng-template pTemplate="header">
+                            <tr>
+                                <th>Batch No</th>
+                                <th>Expiry Date</th>
+                                <th>Allocated Qty</th>
+
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="body" let-batch>
+                            <tr>
+                                <td>{{batch.sBatchNo}}</td>
+                                <td>{{batch.sExpiryDate | date: 'dd-MM-yyyy'}}</td>
+                                <td>{{batch.iAllocatedQty}}</td>
+
+                            </tr>
+                        </ng-template>
                     </p-table>
-
                 </div>
-
-                <div class="p-col-12 p-md-2 p-lg-12">
-                    <div class="separator separator--border-solid separator--space-sm separator--portlet-fit mt-2">
-                    </div>
-                </div>
-
-                <div class="p-col-12 p-md-2 p-lg-12 text-right mt-0">
-                    <button pButton type="button" label="Cancel" routerLink="/sales-order/order-allocation"
-                        class="ui-button-light atbt mr-2 mb-2"></button>
-                    <button pButton type="submit" label="Confirm Allocation" class="ui-button atbt mb-2"></button>
-                </div>
-
-
             </div>
+            </td>
+            </tr>
+            </ng-template>
+            </p-table>
+        </div>
 
+        <div class="p-col-12 p-md-2 p-lg-12">
+            <div class="separator separator--border-solid separator--space-sm separator--portlet-fit mt-2">
+            </div>
+        </div>
 
+        <div class="p-col-12 p-md-2 p-lg-12 text-right mt-0">
+            <button pButton type="button" label="Cancel" routerLink="/sales-order/order-allocation"
+                class="ui-button-light atbt mr-2 mb-2"></button>
+            <button pButton type="submit" label="Confirm Allocation" (click)="saveConfirmAllocate()"
+                class="ui-button atbt mb-2"></button>
         </div>
     </div>
+</div>
+</div>
 </div>

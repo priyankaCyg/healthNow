@@ -17,8 +17,8 @@
                         </div>    -->
                             <div class="p-col-12 mt-3">
 
-                                <p-table [columns]="cols" #Ordersearch [value]="customerAllocData" dataKey="iSOID"
-                                    [paginator]="false" [rows]="10" [totalRecords]="customerAllocData.length"
+                                <p-table [columns]="cols" #Ordersearch [value]="customerAlloc" dataKey="iSOID"
+                                    [paginator]="false" [rows]="10" [totalRecords]="customerAlloc.length"
                                     [globalFilterFields]="['sSONo','sCustomerName','sAddress']" [filterDelay]="0"
                                     [showCurrentPageReport]="true" [showCurrentPageReport]="true" rowExpandMode="single"
                                     (onRowExpand)="onRowExpand()" (onRowCollapse)="onRowCollapse()"
@@ -102,7 +102,7 @@
                         </p-table>
             </div>
         </div>
-        <div class="noRecordsFound" *ngIf="!customerAllocData.length">{{noRecordFound}}</div>
+        <div class="noRecordsFound" *ngIf="!customerAlloc.length">{{noRecordFound}}</div>
         </p-tabPanel>
 
         <!-- Customer Tab End -->

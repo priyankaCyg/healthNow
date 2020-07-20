@@ -19,6 +19,10 @@ export class AllocateComponent implements OnInit {
   data: any[] = [];
   showmeAdd: number;
   isdisabled: boolean = true;
+  prd_id: number;
+  so_prdid: number;
+  orderAlloc = [];
+
   constructor(private config: DynamicDialogConfig, private ref: DynamicDialogRef,
     private httpService: ApiService, private toastService: ToastService) { }
 
@@ -26,7 +30,8 @@ export class AllocateComponent implements OnInit {
     this.product_name = this.config.data.sPrdName;
     this.variant_name = this.config.data.sVariant;
     this.quantity = this.config.data.iQty;
-    //this.batch = [this.config.data];
+    this.prd_id = this.config.data.iPrdID;
+    this.so_prdid = this.config.data.iSOPrdID;
     this.getCusOrderAllocData();
   }
 
@@ -34,7 +39,7 @@ export class AllocateComponent implements OnInit {
     const productAllocChildAPI = {
       "iRequestID": 2441,
       "iWHAddID": this.config.data.iWHAddID,
-      "iPrdID": this.config.data.iPrdID
+      "iPrdID": this.prd_id
     }
     this.httpService.callPostApi(productAllocChildAPI).subscribe(
       data => {
@@ -68,6 +73,34 @@ export class AllocateComponent implements OnInit {
       this.isdisabled = true;
     }
 
+  }
+
+  saveAllocate() {
+    this.batch.forEach((key, index) => {
+      let sBatchNo = this.batch[index].sBatchNo;
+      let alocQuantity = this.batch[index].alocQuantity;
+      if (alocQuantity != null || alocQuantity != undefined) {
+        let tempArray = {
+          "sBatchNo": sBatchNo,
+          "iAllocatedQty": alocQuantity
+        }
+        this.orderAlloc.push(tempArray);
+      }
+    });
+    const allocate_data = {
+      "iRequestID": 2435,
+      "iSOPrdID": this.so_prdid,
+      "iPrdID": this.prd_id,
+      "sGINAllocation": this.orderAlloc
+    }
+    console.log(allocate_data, "data");
+    this.httpService.callPostApi(allocate_data).subscribe(
+      (data) => {
+        this.ref.close(true);
+        this.toastService.displayApiMessage(data.headers.get('StatusMessage'), data.headers.get('StatusCode'));
+      },
+      (error) => console.log(error)
+    );
   }
 
   close() {
