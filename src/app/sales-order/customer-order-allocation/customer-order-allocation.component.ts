@@ -107,10 +107,10 @@ export class CustomerOrderAllocationComponent implements OnInit {
 
   saveConfirmAllocate() {
     const data = {
-      "iRequestID": 2435,
-      "iSOPrdID": 1,
-      "iPrdID": 1,
-      "sGINAllocation": ""
+      // "iRequestID": 2435,
+      // "iSOPrdID": 1,
+      // "iPrdID": 1,
+      // "sGINAllocation": ""
     }
     console.log(data, "data");
     this.httpService.callPostApi(data).subscribe(
