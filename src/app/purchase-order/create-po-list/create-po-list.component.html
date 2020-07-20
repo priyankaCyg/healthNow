@@ -42,9 +42,24 @@
                                 </td>
                             </tr>
                         </ng-template>
+                        <ng-template pTemplate="body" let-i="rowIndex" let-poList>
+                            <tr>
+                                <td>{{i+1}}</td>
+                                <td>{{poList.sSupName}}</td>
+                                <td>{{poList.sPartnerName}}</td>
+                                <td>{{poList.sLocName}}</td>
+                                <td>{{poList.iReqCnt}}</td>
+                                <td>{{poList.sCreatedDate | date:"dd-MM-yyyy"}}</td>
+                                <td>
+                                    <button pButton type="button" (click)="createPO(poList)"
+                                        routerLink="/purchase-order/create-po-detail" label="Create PO"
+                                        class="ui-button-success mb-2"></button>
+                                </td>
+                            </tr>
+                        </ng-template>
                     </p-table>
                 </div>
-                <!-- <div *ngIf="!poList.length" class="noRecordsFound">No records found</div> -->
+                <div class="noRecordsFound" *ngIf="!poList.length">{{noRecordFound}}</div>
             </div>
         </div>
     </div>

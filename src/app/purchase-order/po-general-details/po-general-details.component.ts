@@ -27,7 +27,7 @@ export class PoGeneralDetailsComponent implements OnInit {
 
   text: string;
   disabled: boolean = true;
-  attachment: any[];
+  attachment: any[] = [];
   data: object;
   public POForm: FormGroup;
   poRespData: object;
@@ -65,6 +65,8 @@ export class PoGeneralDetailsComponent implements OnInit {
   sinlgepaymentVal: PoTnc;
   selectedCustom: PoTnc[] = [];
   po_no_display: string;
+  noRecordFound: string;
+
   constructor(private breadcrumbService: BreadcrumbService, private dialogService: DialogService, private fb: FormBuilder,
     private httpService: ApiService, private toastService: ToastService, private datePipe: DatePipe, private confirmationService: ConfirmationService,
     private _apiService: APIService, private router: Router) {
@@ -75,6 +77,7 @@ export class PoGeneralDetailsComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.noRecordFound = config.noRecordFound;
     //console.log(this.datePipe.transform("01-07-2020",config.dateFormat));
     this.defaultDropDwnValue();
     this.editPo = localStorage.getItem('isPoEdit');
@@ -250,10 +253,10 @@ export class PoGeneralDetailsComponent implements OnInit {
       sSuppAddress: [poData.iSupAddID, Validators.required],
       iPartnerContactName: [poData.iPOContactID, Validators.required],
       iCurrencyName: [poData.iCurrencyID, Validators.required],
-      sLocName: [poData.sLocName],
-      sPartnerName: [poData.sPartnerName],
-      sSupName: [poData.sSupName],
-      sPONo: [poData.sPONo],
+      sLocName: [{ value: poData.sLocName, disabled: true }],
+      sPartnerName: [{ value: poData.sPartnerName, disabled: true }],
+      sSupName: [{ value: poData.sSupName, disabled: true }],
+      sPONo: [{ value: poData.sPONo, disabled: true }],
       iIncludeTaxes: [poData.iIncludeTaxes],
     });
     console.log(poData.sPONo, "1")

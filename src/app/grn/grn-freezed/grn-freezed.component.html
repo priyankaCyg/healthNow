@@ -9,7 +9,7 @@
                     <p-table [value]="grnListData" #search [paginator]="false" [rows]="10"
                         [showCurrentPageReport]="true" [rowsPerPageOptions]="[10, 25, 50]" [filterDelay]="0"
                         [globalFilterFields]="['sSupName','sRequisionNo','sPONo','sPrdName','iOrderQty','sScheduledDate']"
-                        dataKey="iPOID" (onRowExpand)="onRowExpand()" (onRowCollapse)="onRowCollapse()"
+                        dataKey="iPOPrdID" (onRowExpand)="onRowExpand()" (onRowCollapse)="onRowCollapse()"
                         [expandedRowKeys]="expandedRows" rowExpandMode="single">
                         <ng-template pTemplate="caption">
                             <div class="ui-table-globalfilter-container text-left">
@@ -96,6 +96,7 @@
             </ng-template>
             </p-table>
         </div>
+        <div class="noRecordsFound" *ngIf="!grnListData.length">{{noRecordFound}}</div>
     </div>
 </div>
 </div>

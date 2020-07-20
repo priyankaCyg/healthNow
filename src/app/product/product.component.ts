@@ -22,7 +22,9 @@ import { config } from 'src/config';
 export class ProductComponent implements OnInit {
 
   items: MenuItem[];
-  product: any[];
+  product: any[] = [];
+  noRecordFound: string;
+
   constructor(private breadcrumbService: BreadcrumbService, private dialogService: DialogService,
     private httpService: ApiService, private toastService: ToastService, private confirmationService: ConfirmationService
     , private router: Router, private loginService: LoginService) {
@@ -35,6 +37,7 @@ export class ProductComponent implements OnInit {
   ngOnInit(): void {
     localStorage.removeItem("iPrdID");
     this.getAllProduct();
+    this.noRecordFound = config.noRecordFound;
   }
 
   // code for get list of products

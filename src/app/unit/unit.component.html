@@ -8,8 +8,7 @@
                     <h1 class="mt-2">Unit</h1>
                 </div>
                 <div class="p-col-1 p-col-align-end text-center">
-                    <button (click)="openDialogForaddUnit()" pButton icon="pi pi-fw pi-pencil"
-                        label=" Add New"></button>
+                    <button (click)="openDialogForaddUnit()" pButton icon="pi pi-fw pi-plus" label=" Add New"></button>
                 </div>
                 <div class="p-col-12">
                     <p-table [value]="unit" #UnitSearch [paginator]="false" [rows]="10" [showCurrentPageReport]="true"
@@ -60,6 +59,7 @@
                         </ng-template>
                     </p-table>
                 </div>
+                <div class="noRecordsFound" *ngIf="!unit.length">{{noRecordFound}}</div>
             </div>
         </div>
     </div>

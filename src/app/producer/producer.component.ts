@@ -22,7 +22,8 @@ import { config } from 'src/config';
 export class ProducerComponent implements OnInit {
 
   items: MenuItem[];
-  producer: ProducerMaster[];
+  producer: ProducerMaster[] = [];
+  noRecordFound: string;
 
   constructor(private breadcrumbService: BreadcrumbService, private dialogService: DialogService,
     private toastService: ToastService, private httpService: ApiService,
@@ -35,6 +36,7 @@ export class ProducerComponent implements OnInit {
 
   ngOnInit() {
     this.showProducers();
+    this.noRecordFound = config.noRecordFound;
   }
 
   //code for List of Producer data

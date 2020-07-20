@@ -4,6 +4,7 @@ import { BreadcrumbService } from 'src/app/breadcrumb.service';
 import { DialogService, ConfirmationService } from 'primeng';
 import { ApiService } from 'src/app/services/api.service';
 import { ToastService } from 'src/app/services/toast.service';
+import { config } from 'src/config';
 
 @Component({
   selector: 'app-purchase-order-freezed',
@@ -12,9 +13,10 @@ import { ToastService } from 'src/app/services/toast.service';
 })
 export class PurchaseOrderFreezedComponent implements OnInit {
   selectedValues: any[] = [];
-  poList: poListMaster[];
+  poList: poListMaster[] = [];
   checked: boolean = true;
   batch: any[];
+  noRecordFound: string;
   public isExpanded: boolean = false;
   public expandedRows = {};
   public temDataLength: number = 0;
@@ -29,6 +31,7 @@ export class PurchaseOrderFreezedComponent implements OnInit {
   ngOnInit(): void {
     this.getPOList();
     this.batch = [];
+    this.noRecordFound = config.noRecordFound;
   }
   //Function to get all PO list
   getPOList() {
@@ -48,20 +51,20 @@ export class PurchaseOrderFreezedComponent implements OnInit {
     )
   }
 
-     //code for get child data table
-     getPOChildList(iPOID: Number) {
-      const poListAPI = {
-        "iRequestID": 2362,
-        "iPOID": iPOID
-      }
-      this.httpService.callPostApi(poListAPI).subscribe(
-        data => {
-          this.batch = data.body;
-          console.log(this.batch);
-        },
-        error => { console.log(error) }
-      )
+  //code for get child data table
+  getPOChildList(iPOID: Number) {
+    const poListAPI = {
+      "iRequestID": 2362,
+      "iPOID": iPOID
     }
+    this.httpService.callPostApi(poListAPI).subscribe(
+      data => {
+        this.batch = data.body;
+        console.log(this.batch);
+      },
+      error => { console.log(error) }
+    )
+  }
 
   expandAll() {
     if (!this.isExpanded) {

@@ -1,3 +1,9 @@
 p-table{
     word-wrap: break-word;
 }
+.noRecordsFound {
+    margin-left : 620px;
+    margin-top: 50px;
+    font-size: large;
+    font-weight: bold;
+}

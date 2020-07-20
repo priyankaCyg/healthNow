@@ -121,6 +121,7 @@
               </p-table>
             </div>
           </div>
+          <div class="noRecordsFound" *ngIf="!addressDataArray.length">{{noRecordFound}}</div>
         </p-tabPanel>
         <!-- Address tab End here -->
 
@@ -171,6 +172,7 @@
               </p-table>
             </div>
           </div>
+          <div class="noRecordsFound" *ngIf="!department.length">{{noRecordFound}}</div>
         </p-tabPanel>
         <!-- Department tab End here -->
 
@@ -228,6 +230,7 @@
               </p-table>
             </div>
           </div>
+          <div class="noRecordsFound" *ngIf="!designationData.length">{{noRecordFound}}</div>
         </p-tabPanel>
         <!-- Designation tab End here -->
 
@@ -292,6 +295,7 @@
               </p-table>
             </div>
           </div>
+          <div class="noRecordsFound" *ngIf="!employee.length">{{noRecordFound}}</div>
         </p-tabPanel>
         <!-- Employee tab End here -->
 
@@ -356,6 +360,7 @@
               </p-table>
             </div>
           </div>
+          <div class="noRecordsFound" *ngIf="!bankData.length">{{noRecordFound}}</div>
         </p-tabPanel>
         <!-- Bank tab End here -->
 
@@ -398,6 +403,7 @@
               </p-table>
             </div>
           </div>
+          <div class="noRecordsFound" *ngIf="!gst.length">{{noRecordFound}}</div>
         </p-tabPanel>
         <!--Warehouse Mapping Tab Start here-->
         <p-tabPanel header="Warehouse Mapping" [disabled]="tabDisabled">

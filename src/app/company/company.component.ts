@@ -31,18 +31,19 @@ export class CompanyComponent implements OnInit {
 
   items: MenuItem[];
   compData: companyData[];
-  addressDataArray: CompanyAddress[];
+  addressDataArray: CompanyAddress[] = [];
   addressData: CompanyAddress;
-  department: departmentData[];
-  gst: gstData[];
-  bankData: companyBankMaster[];
-  designationData: DesignationData[];
-  employee;
+  department: departmentData[] = [];
+  gst: gstData[] = [];
+  bankData: companyBankMaster[] = [];
+  designationData: DesignationData[] = [];
+  employee = [];
   EmployeeValue = [];
   selectedEmployee: any;
   employee_id: number;
   address: any[];
   WarehouseList: any[] = [];
+  noRecordFound: string;
 
   constructor(
     private breadcrumbService: BreadcrumbService,
@@ -57,7 +58,6 @@ export class CompanyComponent implements OnInit {
   }
 
   ngOnInit() {
-
     this.items = [
       {
         label: "Angular.io",
@@ -66,6 +66,8 @@ export class CompanyComponent implements OnInit {
       },
       { label: "Theming", icon: "pi pi-file", routerLink: ["/theming"] },
     ];
+
+    this.noRecordFound = config.noRecordFound;
     this.companyData();
     this.showEmployee();
     this.departmentList();

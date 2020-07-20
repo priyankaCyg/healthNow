@@ -8,25 +8,36 @@
                 <p-tabView>
                     <p-tabPanel header="Customer">
 
-                     <div class="p-grid ui-fluid vertical-container">
-                        <div class="p-col p-md-4 p-lg-3 p-col-align-start">
+                        <div class="p-grid ui-fluid vertical-container">
+                            <!-- <div class="p-col p-md-4 p-lg-3 p-col-align-start">
                             <div class="ui-inputgroup">
                                 <input type="text" pInputText placeholder="search....">   
                                 <button pButton type="button" icon="pi pi-search" class="ui-button-warn"></button>  
                             </div>
-                        </div>   
-                        <div class="p-col-12 mt-3"> 
-            
-                            <p-table [columns]="cols" [value]="cars" dataKey="vin" [paginator]="true"
-                                    [rows]="10" [totalRecords]="cars.length" pageLinkSize="3" (onPage)="onPage($event)"
-                                        (onRowExpand)="onRowExpand()" (onRowCollapse)="onRowCollapse()" 
-                                        [expandedRowKeys]="expandedRows">
+                        </div>    -->
+                            <div class="p-col-12 mt-3">
+
+                                <p-table [columns]="cols" #Ordersearch [value]="customerAllocData" dataKey="iSOID"
+                                    [paginator]="false" [rows]="10" [totalRecords]="customerAllocData.length"
+                                    [globalFilterFields]="['sSONo','sCustomerName','sAddress']" [filterDelay]="0"
+                                    [showCurrentPageReport]="true" [showCurrentPageReport]="true" rowExpandMode="single"
+                                    (onRowExpand)="onRowExpand()" (onRowCollapse)="onRowCollapse()"
+                                    [expandedRowKeys]="expandedRows">
+                                    <ng-template pTemplate="caption">
+                                        <div class="ui-table-globalfilter-container text-left">
+                                            <input type="text" pInputText size="50" placeholder="Search"
+                                                (input)="Ordersearch.filterGlobal($event.target.value,'contains')"
+                                                style="width: 250px;" />
+                                        </div>
+                                    </ng-template>
                                     <ng-template pTemplate="header" let-columns>
                                         <tr>
                                             <th style="width: 3em">
-                                                <a style="cursor: pointer;font-size: 16px; color:teal;" (click)="expandAll()"><i
-                                                *ngIf="!isExpanded" class="fa fa-plus-circle" aria-hidden="true"></i>
-                                            <i *ngIf="isExpanded" class="fa fa-minus-circle" aria-hidden="true"></i></a>
+                                                <a style="cursor: pointer;font-size: 16px; color:teal;"
+                                                    (click)="expandAll()"><i *ngIf="!isExpanded"
+                                                        class="fa fa-plus-circle" aria-hidden="true"></i>
+                                                    <i *ngIf="isExpanded" class="fa fa-minus-circle"
+                                                        aria-hidden="true"></i></a>
                                             </th>
                                             <th *ngFor="let col of columns">
                                                 {{col.header}}
@@ -35,19 +46,26 @@
                                             <th>Action</th>
                                         </tr>
                                     </ng-template>
-                                    <ng-template pTemplate="body" let-rowData let-expanded="expanded" let-columns="columns">
+                                    <ng-template pTemplate="body" let-rowData let-expanded="expanded"
+                                        let-columns="columns">
                                         <tr>
                                             <td>
-                                                <a href="#" [pRowToggler]="rowData">
-                                                    <i [ngClass]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></i>
+                                                <a href="#" (click)="getOrderrAllocChildList(rowData.iSOID)"
+                                                    [pRowToggler]="rowData">
+                                                    <i
+                                                        [ngClass]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></i>
                                                 </a>
                                             </td>
                                             <td *ngFor="let col of columns">
                                                 {{rowData[col.field]}}
                                             </td>
-                                            <td><span style="color: #76256e !important; font-weight: 600;"  (click)="openDialogForAddress()">Mumbai</span></td>
+                                            <td>{{rowData.sAddress}}</td>
+                                            <!-- <td><span style="color: #76256e !important; font-weight: 600;"
+                                                    (click)="openDialogForAddress()">{{rowData.sAddress}}</span>
+                                            </td> -->
                                             <td>
-                                                <button routerLink="/sales-order/customer-order-allocation" pButton type="button" class="ui-button-success" label="Allocate" ></button>
+                                                <button (click)="orderAllocClick(rowData)" pButton type="button"
+                                                    class="ui-button-success" label="Allocate"></button>
                                             </td>
                                         </tr>
                                     </ng-template>
@@ -58,117 +76,126 @@
                                                     <div class="ui-g-12 ui-md-12">
                                                         <p-table [value]="orderDetail">
                                                             <ng-template pTemplate="header">
-                                                                <tr>
-                                                                    <th>Product Name</th>
-                                                                    <th>Qty</th>
-                                                                    <th>Batch No</th>
-                                                                    <th>Expiry Date</th>
-                                                                    <th>Allocated Qty</th>
-                                                                </tr>
-                                                            </ng-template>
-                                                            <ng-template pTemplate="body" let-orderDetail>
-                                                                <tr>
-                                                                    <td>{{orderDetail.prdName}}</td>
-                                                                    <td>{{orderDetail.qty}}</td>
-                                                                    <td>{{orderDetail.batchNo}}</td>
-                                                                    <td>{{orderDetail.expiryDate}}</td>
-                                                                    <td>{{orderDetail.allocatedQty}}</td>
-                                                                </tr>
-                                                            </ng-template>
-                                                        </p-table>
-                                                    </div>
-                                                </div>
-                                            </td>
+                                        <tr>
+                                            <th>Product Name</th>
+                                            <th>Qty</th>
+                                            <th>Batch No</th>
+                                            <th>Expiry Date</th>
+                                            <th>Allocated Qty</th>
+                                        </tr>
+                                    </ng-template>
+                                    <ng-template pTemplate="body" let-orderDetail>
+                                        <tr>
+                                            <td>{{orderDetail.sPrdName}} {{orderDetail.sVariant}}</td>
+                                            <td>{{orderDetail.iQty}}</td>
+                                            <td>{{orderDetail.sBatchNo}}</td>
+                                            <td>{{orderDetail.expiryDate}}</td>
+                                            <td>{{orderDetail.allocatedQty}}</td>
                                         </tr>
                                     </ng-template>
                                 </p-table>
-                        </div>              
-                     </div> 
-                       
-                    </p-tabPanel>
-
-                    <!-- Customer Tab End -->
-
-                    <p-tabPanel header="Product">
-                        
-                        <div class="p-grid ui-fluid vertical-container">
-                            <div class="p-col p-md-4 p-lg-3 p-col-align-start">
-                                <div class="ui-inputgroup">
-                                    <input type="text" pInputText placeholder="product">   
-                                    <button pButton type="button" icon="pi pi-search" class="ui-button-warn"></button>  
-                                </div>
                             </div>
-                        <div class="p-col-12 mt-3"> 
-            
-                            <p-table [columns]="cols1" [value]="products" dataKey="vin" [paginator]="true"
-                                    [rows]="10" [totalRecords]="products.length" pageLinkSize="3" (onPage)="onPage($event)"
-                                        (onRowExpand)="onRowExpand()" (onRowCollapse)="onRowCollapse()" 
-                                        [expandedRowKeys]="expandedRows">
-                                     <ng-template pTemplate="header" let-columns>
-                                    <tr>
-                                        <th style="width: 3em">
-                                            <a style="cursor: pointer;font-size: 16px; color:teal;" (click)="expandAll()"><i
+                        </div>
+                        </td>
+                        </tr>
+                        </ng-template>
+                        </p-table>
+            </div>
+        </div>
+        <div class="noRecordsFound" *ngIf="!customerAllocData.length">{{noRecordFound}}</div>
+        </p-tabPanel>
+
+        <!-- Customer Tab End -->
+
+        <p-tabPanel header="Product">
+
+            <div class="p-grid ui-fluid vertical-container">
+                <!-- <div class="p-col p-md-4 p-lg-3 p-col-align-start">
+                    <div class="ui-inputgroup">
+                        <input type="text" pInputText placeholder="product">
+                        <button pButton type="button" icon="pi pi-search" class="ui-button-warn"></button>
+                    </div>
+                </div> -->
+                <div class="p-col-12 mt-3">
+
+                    <p-table [columns]="cols1" #search [value]="productsAllocData" dataKey="iPrdID" [paginator]="false"
+                        [rows]="10" [totalRecords]="productsAllocData.length" rowExpandMode="single"
+                        (onRowExpand)="onRowExpand()" (onRowCollapse)="onRowCollapse()" [expandedRowKeys]="expandedRows"
+                        [showCurrentPageReport]="true">
+                        <ng-template pTemplate="caption">
+                            <div class="ui-table-globalfilter-container text-left">
+                                <input type="text" pInputText size="50" placeholder="Search"
+                                    (input)="search.filterGlobal($event.target.value,'contains')"
+                                    style="width: 250px;" />
+                            </div>
+                        </ng-template>
+                        <ng-template pTemplate="header" let-columns>
+                            <tr>
+                                <th style="width: 3em">
+                                    <a style="cursor: pointer;font-size: 16px; color:teal;" (click)="expandAll()"><i
                                             *ngIf="!isExpanded" class="fa fa-plus-circle" aria-hidden="true"></i>
                                         <i *ngIf="isExpanded" class="fa fa-minus-circle" aria-hidden="true"></i></a>
-                                        </th>
-                                        <th *ngFor="let col of columns">
-                                            {{col.header}}
-                                        </th>
-                                        <th>Action</th>
-                                    </tr>
-                                    </ng-template>
-                                    <ng-template pTemplate="body" let-rowData let-expanded="expanded" let-columns="columns">
-                                        <tr>
-                                            <td>
-                                                <a href="#" [pRowToggler]="rowData">
-                                                    <i [ngClass]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></i>
-                                                </a>
-                                            </td>
-                                            <td *ngFor="let col of columns">
-                                                {{rowData[col.field]}}
-                                            </td>
-                                            <td>
-                                                <button routerLink="/sales-order/product-order-allocation" pButton type="button" class="ui-button-success" label="Allocate" ></button>
-                                            </td>
-                                        </tr>
-                                    </ng-template>
-                                     <ng-template pTemplate="rowexpansion" let-rowData let-columns="columns">
+                                </th>
+                                <th *ngFor="let col of columns">
+                                    {{col.header}}
+                                </th>
+                                <th>Action</th>
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="body" let-rowData let-expanded="expanded" let-columns="columns">
                             <tr>
-                            <td [attr.colspan]="columns.length + 2">
-                                <div class="ui-g ui-fluid" style="font-size:14px;padding:8px">
-                                    <div class="ui-g-12 ui-md-12">
-                                        <p-table [value]="productDetail">
-                                            <ng-template pTemplate="header">
-                                                <tr>
-                                                    <th>Order No</th>
-                                                    <th>Customer Name</th>
-                                                    <th>Location</th>
-                                                    <th>Qty</th>
-                                                </tr>
-                                            </ng-template>
-                                            <ng-template pTemplate="body" let-productDetail>
-                                                <tr> 
-                                                    <td>{{productDetail.orderNo}}</td>
-                                                    <td>{{productDetail.custmName}}</td>
-                                                    <td>{{productDetail.location}}</td>
-                                                    <td>{{productDetail.qty}}</td>
-                                                </tr>
-                                            </ng-template>
-                                        </p-table>
-                                         </div>
-                                         </div>
-                                             </td>
-                                         </tr>
-                                    </ng-template>
-                            </p-table>
-                        </div>              
-                    </div> 
-
-                    </p-tabPanel>
-                </p-tabView>             
-        </div> 
-
-                                
-        </div>
+                                <td>
+                                    <a href="#" (click)="getProductAllocChildList(rowData.iPrdID)"
+                                        [pRowToggler]="rowData">
+                                        <i [ngClass]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></i>
+                                    </a>
+                                </td>
+                                <td *ngFor="let col of columns">
+                                    {{rowData[col.field]}}
+                                </td>
+                                <td>
+                                    <button (click)="productAllocClick(rowData)" pButton type="button"
+                                        class="ui-button-success" label="Allocate"></button>
+                                </td>
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="rowexpansion" let-rowData let-columns="columns">
+                            <tr>
+                                <td [attr.colspan]="columns.length + 2">
+                                    <div class="ui-g ui-fluid" style="font-size:14px;padding:8px">
+                                        <div class="ui-g-12 ui-md-12">
+                                            <p-table [value]="productDetail">
+                                                <ng-template pTemplate="header">
+                            <tr>
+                                <th>Order No.</th>
+                                <th>Customer Name</th>
+                                <th>Location</th>
+                                <th>Quantity</th>
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="body" let-productDetail>
+                            <tr>
+                                <td>{{productDetail.sSONo}}</td>
+                                <td>{{productDetail.sCustomerName}}</td>
+                                <td>{{productDetail.sAddress}}</td>
+                                <td>{{productDetail.iQty}}</td>
+                            </tr>
+                        </ng-template>
+                    </p-table>
+                </div>
+            </div>
+            </td>
+            </tr>
+            </ng-template>
+            </p-table>
     </div>
+</div>
+<div class="noRecordsFound" *ngIf="!productsAllocData.length">{{noRecordFound}}</div>
+</p-tabPanel>
+</p-tabView>
+</div>
+
+
+</div>
+</div>
 </div>

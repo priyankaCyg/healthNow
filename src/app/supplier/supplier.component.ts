@@ -20,12 +20,14 @@ export class SupplierComponent implements OnInit {
 
   isAdmin: boolean;
   items: MenuItem[];
-  supplier: supplierList[];
+  supplier: supplierList[] = [];
   disableButtonsData: any;
   prdMapBtn: boolean = true;
   editBtn: boolean = true;
   deleteBtn: boolean = true;
   sendForApprovalBtn: boolean = true;
+  noRecordFound: string;
+
   constructor(private breadcrumbService: BreadcrumbService,
     private httpService: ApiService, private toastService: ToastService,
     private confirmationService: ConfirmationService, private router: Router,
@@ -41,6 +43,7 @@ export class SupplierComponent implements OnInit {
     localStorage.removeItem("iSupID");
     this.getAllSupplier();
     this.setButtonsVisibility();
+    this.noRecordFound = config.noRecordFound;
   }
   //code for  get list of supplier
   getAllSupplier() {

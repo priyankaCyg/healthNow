@@ -21,9 +21,10 @@ import { config } from 'src/config';
 export class PoListComponent implements OnInit {
 
   selectedValues: any[] = [];
-  poList: poListMaster[];
+  poList: poListMaster[] = [];
   checked: boolean = true;
   batch: any[];
+  noRecordFound: string;
   public isExpanded: boolean = false;
   public expandedRows = {};
   public temDataLength: number = 0;
@@ -39,6 +40,7 @@ export class PoListComponent implements OnInit {
     localStorage.removeItem('poDetails');
     this.getPOList();
     this.batch = [];
+    this.noRecordFound = config.noRecordFound;
   }
 
   //Function to get all PO list

@@ -19,7 +19,8 @@ import { config } from 'src/config';
 export class PartnerComponent implements OnInit {
 
   items: MenuItem[];
-  partner: any[];
+  partner: any[] = [];
+  noRecordFound: string;
 
   constructor(private breadcrumbService: BreadcrumbService, private dialogService: DialogService,
     private httpService: ApiService, private toastService: ToastService, private confirmationService: ConfirmationService,
@@ -33,6 +34,7 @@ export class PartnerComponent implements OnInit {
   ngOnInit(): void {
     localStorage.removeItem("iPartnerID");
     this.getAllPartner();
+    this.noRecordFound = config.noRecordFound;
   }
 
   // get list of partner

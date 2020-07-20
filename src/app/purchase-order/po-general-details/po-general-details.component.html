@@ -14,7 +14,7 @@
                                 <div class="p-grid form-group">
                                     <div class="p-col-12 p-lg-3 mb-2">
                                         <label for="sPONo">Supplier PO No.</label>
-                                        <input id="sPONo" type="text" pInputText disabled placeholder="PO No."
+                                        <input id="sPONo" type="text" pInputText placeholder="PO No."
                                             formControlName="sPONo">
                                     </div>
                                     <div class="p-col-12 p-lg-3 mb-2">
@@ -28,7 +28,7 @@
                                     </div>
                                     <div class="p-col-12 p-lg-3 mb-2">
                                         <label for="sSupName">Supplier</label>
-                                        <input id="sSupName" type="text" pInputText disabled placeholder="Supplier Name"
+                                        <input id="sSupName" type="text" pInputText placeholder="Supplier Name"
                                             formControlName="sSupName">
                                     </div>
                                     <div class="p-col-12 p-lg-3 mb-2">
@@ -67,12 +67,12 @@
                                     </div>
                                     <div class="p-col-12 p-lg-3 mb-2">
                                         <label for="sPartnerName">Partner</label>
-                                        <input id="sPartnerName" type="text" pInputText disabled
-                                            placeholder=" Partner Name" formControlName="sPartnerName">
+                                        <input id="sPartnerName" type="text" pInputText placeholder=" Partner Name"
+                                            formControlName="sPartnerName">
                                     </div>
                                     <div class="p-col-12 p-lg-3 mb-2">
                                         <label for="sLocName">Location</label>
-                                        <input id="sLocName" type="text" pInputText disabled placeholder="Location"
+                                        <input id="sLocName" type="text" pInputText placeholder="Location"
                                             formControlName="sLocName">
                                     </div>
                                     <div class="p-col-12 p-md-2 p-lg-12">
@@ -316,6 +316,7 @@
                             </p-table>
                         </div>
                     </div>
+                    <div class="noRecordsFound" *ngIf="!attachment.length">{{noRecordFound}}</div>
                 </p-tabPanel>
                 <!-- Attachment tab End  -->
             </p-tabView>

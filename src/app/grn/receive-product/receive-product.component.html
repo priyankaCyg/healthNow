@@ -1,5 +1,5 @@
 <p-confirmDialog header="Confirmation" icon="pi pi-info" [style]="{width: '425px'}"
-  rejectButtonStyleClass="ui-button-secondary"></p-confirmDialog>
+    rejectButtonStyleClass="ui-button-secondary"></p-confirmDialog>
 <div class="p-grid">
     <div class="p-col-12">
         <div class="card card-w-title">
@@ -28,10 +28,10 @@
                                         <div class="p-grid form-group">
                                             <div class="p-col-12 p-md-6 p-lg-6 mb-1">
                                                 <label for="sBatchNo">Batch No. / Lot No.</label>
-                                                <input id="sBatchNo" type="text" pInputText placeholder="Enter Batch No."
-                                                    formControlName="sBatchNo">
-                                                    <p-message severity="error"
-                                                    [text]="productForm.controls['sBatchNo'].errors['required'] ? 'This field is required' :  productForm.controls['sBatchNo'].errors "
+                                                <input id="sBatchNo" type="text" pInputText
+                                                    placeholder="Enter Batch No." formControlName="sBatchNo">
+                                                <p-message severity="error"
+                                                    [text]="productForm.controls['sBatchNo'].errors['Msg']"
                                                     *ngIf="!productForm.controls['sBatchNo'].valid && productForm.controls['sBatchNo'].dirty">
                                                 </p-message>
                                             </div>
@@ -39,8 +39,8 @@
                                                 <label for="iReceivedQty">Received Quantity</label>
                                                 <input id="iReceivedQty" type="text" pInputText placeholder="Enter Qty."
                                                     formControlName="iReceivedQty" (change)="qtyChange()">
-                                                    <p-message severity="error"
-                                                    [text]="productForm.controls['iReceivedQty'].errors['required'] ? 'This field is required' :  productForm.controls['iReceivedQty'].errors "
+                                                <p-message severity="error"
+                                                    [text]="productForm.controls['iReceivedQty'].errors['Msg']"
                                                     *ngIf="!productForm.controls['iReceivedQty'].valid && productForm.controls['iReceivedQty'].dirty">
                                                 </p-message>
                                             </div>
@@ -50,13 +50,14 @@
                                                 <input id="sPODNo" type="text" pInputText placeholder="POD No."
                                                     formControlName="sPODNo">
                                                 <p-message severity="error"
-                                                    [text]="productForm.controls['sPODNo'].errors['required'] ? 'This field is required' :  productForm.controls['sPODNo'].errors "
+                                                    [text]="productForm.controls['sPODNo'].errors['Msg']"
                                                     *ngIf="!productForm.controls['sPODNo'].valid && productForm.controls['sPODNo'].dirty">
                                                 </p-message>
                                             </div>
                                             <div class="p-col-12 p-md-6 p-lg-6 mb-1">
                                                 <label for="sPODDate">POD Date</label>
-                                                <p-calendar  formControlName="sPODDate" dateFormat="dd-mm-yy" placeholder="Select Date">
+                                                <p-calendar formControlName="sPODDate" dateFormat="dd-mm-yy"
+                                                    placeholder="Select Date">
                                                 </p-calendar>
                                                 <!-- <div>
                                                     <p-message severity="error" text="This field is required"
@@ -66,7 +67,8 @@
                                             </div>
                                             <div class="p-col-12 p-md-6 p-lg-6 mb-1">
                                                 <label for="sManufacturingDate">Manufacturing Date</label>
-                                                <p-calendar formControlName="sManufacturingDate" dateFormat="dd-mm-yy" placeholder="Select Date">
+                                                <p-calendar formControlName="sManufacturingDate" dateFormat="dd-mm-yy"
+                                                    placeholder="Select Date">
                                                 </p-calendar>
                                                 <!-- <div>
                                                     <p-message severity="error" text="This field is required"
@@ -76,7 +78,8 @@
                                             </div>
                                             <div class="p-col-12 p-md-6 p-lg-6 mb-1">
                                                 <label for="sExpireDate">Expire Date</label>
-                                                <p-calendar formControlName="sExpireDate" dateFormat="dd-mm-yy" placeholder="Select Date">
+                                                <p-calendar formControlName="sExpireDate" dateFormat="dd-mm-yy"
+                                                    placeholder="Select Date">
                                                 </p-calendar>
                                                 <!-- <div>
                                                     <p-message severity="error" text="This field is required"
@@ -111,11 +114,11 @@
 
                 <div class="p-col-5">
                     <div class="p-grid">
-                        <div class="p-col-12" >
+                        <div class="p-col-12">
                             <div class="card download-files p-3 mb-2" *ngIf="receivedArray.length>0">
-                                <div class="p-grid p-nogutter" >
-                                    <div class="p-col-12 p-md-12 p-lg-12 mb-2" >
-                                        <p-table  [value]="receivedArray">
+                                <div class="p-grid p-nogutter">
+                                    <div class="p-col-12 p-md-12 p-lg-12 mb-2">
+                                        <p-table [value]="receivedArray">
                                             <ng-template pTemplate="header">
                                                 <tr>
                                                     <th>Batch No. / Lot No.</th>
@@ -130,7 +133,8 @@
                                                     <td>{{receivedArray.iReceivedQty}}</td>
                                                     <td>
                                                         <button pButton type="button" class="ui-button-danger mr-1"
-                                                            icon="pi pi-trash" (click)="deleteBatch(receivedArray,rowIndex)"></button>
+                                                            icon="pi pi-trash"
+                                                            (click)="deleteBatch(receivedArray,rowIndex)"></button>
                                                     </td>
                                                 </tr>
                                             </ng-template>
@@ -148,8 +152,8 @@
                                         <button routerLink="/grn/good-expected" pButton type="button" label="Cancel"
                                             class="ui-button-light atbt mr-2 mb-2"></button>
                                         <button routerLink="/grn/grn-list" pButton type="submit" label="Save"
-                                            [disabled]="!receivedArray.length"
-                                            class="ui-button atbt mb-2" (click)="saveGRN()"></button>
+                                            [disabled]="!receivedArray.length" class="ui-button atbt mb-2"
+                                            (click)="saveGRN()"></button>
                                     </div>
 
 

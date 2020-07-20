@@ -14,9 +14,9 @@ import { CustomerOrderAllocationComponent } from './customer-order-allocation/cu
 import { AllocateProductComponent } from './allocate-product/allocate-product.component';
 
 //Prime Ng Service
-import { DialogService } from 'primeng';
+import { DialogService, ConfirmDialogModule } from 'primeng';
 import { ConfirmationService } from 'primeng/api';
-import { FormsModule} from '@angular/forms';
+import { FormsModule } from '@angular/forms';
 
 //Prime Ng Module
 import { ButtonModule } from 'primeng/button';
@@ -28,8 +28,8 @@ import { DynamicDialogModule } from 'primeng/dynamicdialog';
 import { DropdownModule } from 'primeng/dropdown';
 import { InputTextModule } from 'primeng/inputtext';
 import { CheckboxModule } from 'primeng/checkbox';
-import {CalendarModule} from 'primeng/calendar';
-import {TabViewModule} from 'primeng/tabview';
+import { CalendarModule } from 'primeng/calendar';
+import { TabViewModule } from 'primeng/tabview';
 import { ProductOrderAllocationComponent } from './product-order-allocation/product-order-allocation.component';
 
 
@@ -49,7 +49,8 @@ import { ProductOrderAllocationComponent } from './product-order-allocation/prod
     InputTextModule,
     CheckboxModule,
     CalendarModule,
-    TabViewModule
+    TabViewModule,
+    ConfirmDialogModule
   ],
   providers: [DialogService, ConfirmationService],
   entryComponents: [SalesOrderComponent, AddressComponent, AvailableQtyComponent, OrderAllocationComponent, AllocateComponent, DeliveryListComponent, UpdatePodComponent, DeliveredComponent, CustomerOrderAllocationComponent, AllocateProductComponent, ProductOrderAllocationComponent]

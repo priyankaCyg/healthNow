@@ -22,9 +22,11 @@ import { config } from 'src/config';
 export class ProductRequisitionComponent implements OnInit {
 
   items: MenuItem[];
-  orderReq: orderReqData[];
-  productReq: productReqData[];
+  orderReq: orderReqData[] = [];
+  productReq: productReqData[] = [];
   index: number = 0;
+  noRecordFound: string;
+
   constructor(private breadcrumbService: BreadcrumbService, private dialogService: DialogService, private httpService: ApiService, private commonService: CommonService,
     private router: Router, private toastService: ToastService, private confirmationService: ConfirmationService) {
     this.breadcrumbService.setItems([
@@ -38,6 +40,7 @@ export class ProductRequisitionComponent implements OnInit {
     localStorage.removeItem('tabIndex');
     this.getOrderReq();
     this.getProductReq();
+    this.noRecordFound = config.noRecordFound;
   }
 
   //Function to list all Order Requisition

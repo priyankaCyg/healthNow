@@ -56,11 +56,11 @@
                                     <div class="p-col-12 p-md-6 p-lg-4">
                                         <label for="foodCulture">Food Culture</label>
                                         <p-multiSelect id="foodCulture" [options]="foodcultureData"
-                                            optionLabel="sFCName" formControlName="iFoodCulture"
+                                            optionLabel="sFCName" formControlName="sFoodCulture"
                                             [(ngModel)]="selectedfoodculture">
                                         </p-multiSelect>
                                         <p-message severity="error" text="Food Culture is required"
-                                            *ngIf="ProductForm.controls['iFoodCulture'].touched && (selectedfoodculture.iFCID=='' || ProductForm.controls['iFoodCulture'].hasError('required'))">
+                                            *ngIf="ProductForm.controls['sFoodCulture'].touched && (selectedfoodculture.iFCID=='' || ProductForm.controls['sFoodCulture'].hasError('required'))">
                                         </p-message>
                                     </div>
                                     <!-- <div class="p-col-12 p-md-6 p-lg-4">
@@ -241,7 +241,7 @@
 
                 <!-- Product query tab start here -->
                 <p-tabPanel header="Product Queries" [disabled]="tabDisabled">
-                    <div class="p-grid ui-fluid ">
+                    <div class="p-grid ui-fluid p-justify-end">
                         <div class="p-col-1 text-center mt-1">
                             <button (click)="openDialogForPrQueries()" pButton icon="pi pi-fw pi-plus"
                                 label="Add / Edit"></button>
@@ -304,6 +304,7 @@
                             </p-table>
                         </div>
                     </div>
+                    <div class="noRecordsFound" *ngIf="!attachment.length">{{noRecordFound}}</div>
                 </p-tabPanel>
                 <!-- Attachment tab End here -->
 

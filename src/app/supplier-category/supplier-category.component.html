@@ -55,6 +55,7 @@
                         </ng-template>
                     </p-table>
                 </div>
+                <div class="noRecordsFound" *ngIf="!supplierCategory.length">{{noRecordFound}}</div>
             </div>
         </div>
     </div>

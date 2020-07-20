@@ -7,6 +7,7 @@ import { DialogService } from 'primeng';
 import { PurchaseOrderRoutingModule } from '../purchase-order-routing.module';
 import { AddProductPurchasePriceComponent } from '../add-product-purchase-price/add-product-purchase-price.component';
 import { ApiService } from 'src/app/services/api.service';
+import { config } from 'src/config';
 
 @Component({
   selector: 'app-product-purchase-price',
@@ -19,7 +20,8 @@ export class ProductPurchasePriceComponent implements OnInit {
   items: MenuItem[];
   supplierlist;
   selectedSupplier;
-  supplierProduct: any[];
+  supplierProduct: any[] = [];
+  noRecordFound: string;
 
   constructor(private breadcrumbService: BreadcrumbService, private dialogService: DialogService,
     private apiService: ApiService) {
@@ -31,6 +33,7 @@ export class ProductPurchasePriceComponent implements OnInit {
 
   ngOnInit(): void {
     this.producerDropdown();
+    this.noRecordFound = config.noRecordFound;
     // this.supplierProduct = [
     //   { prdCategory: 'Food', product: 'Gluten Free Wheat 5kg Pack', amount: '200', startDate: '01-06-2019', endDate: '31-12-2019' },
     //   { prdCategory: 'Food', product: 'Horlicks 750 gm Refill Pack', amount: '430', startDate: '01-01-2020', endDate: '31-03-2019' },
@@ -79,6 +82,7 @@ export class ProductPurchasePriceComponent implements OnInit {
     ref.onClose.subscribe((success: boolean) => {
       if (success) {
         // this.toastService.addSingle("success", "Mail send successfully", "");
+        this.getProduct();
       }
     });
   }

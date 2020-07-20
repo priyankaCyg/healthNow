@@ -20,7 +20,8 @@ import { config } from 'src/config';
 export class UnitComponent implements OnInit {
 
   items: MenuItem[];
-  unit: UnitMaster[];
+  unit: UnitMaster[] = [];
+  noRecordFound: string;
 
   constructor(private breadcrumbService: BreadcrumbService, private dialogService: DialogService,
     private toastService: ToastService,
@@ -33,6 +34,7 @@ export class UnitComponent implements OnInit {
 
   ngOnInit(): void {
     this.showUnit();
+    this.noRecordFound = config.noRecordFound;
   }
 
   // code for list of unit data

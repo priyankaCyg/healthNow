@@ -20,7 +20,8 @@ import { config } from 'src/config';
 export class ProductCategoryComponent implements OnInit {
 
   items: MenuItem[];
-  productCategoryData: ProductCategory;
+  productCategoryData: ProductCategory[] = [];
+  noRecordFound: string;
 
   constructor(
     private breadcrumbService: BreadcrumbService,
@@ -36,6 +37,8 @@ export class ProductCategoryComponent implements OnInit {
 
   ngOnInit(): void {
     this.showProdCatList();
+    this.noRecordFound = config.noRecordFound;
+
   }
 
   // To add new category starts

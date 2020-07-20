@@ -5,85 +5,87 @@
                 <div class="p-col p-col-align-start">
                     <h1 class="mt-2">Delivered List</h1>
                 </div>
-            <div class="p-col-12 mt-3"> 
+                <div class="p-col-12 mt-3">
 
-                <p-table [columns]="cols" [value]="cars" dataKey="vin" [paginator]="true"
-        [rows]="10" [totalRecords]="cars.length" pageLinkSize="3" (onPage)="onPage($event)"
-            (onRowExpand)="onRowExpand()" (onRowCollapse)="onRowCollapse()" 
-            [expandedRowKeys]="expandedRows">
-        <ng-template pTemplate="header" let-columns>
-            <tr>
-                <th style="width: 3em">
-                    <a style="cursor: pointer;font-size: 16px; color:teal;" (click)="expandAll()"><i
-                    *ngIf="!isExpanded" class="fa fa-plus-circle" aria-hidden="true"></i>
-                <i *ngIf="isExpanded" class="fa fa-minus-circle" aria-hidden="true"></i></a>
-                </th>
-                <th *ngFor="let col of columns">
-                    {{col.header}}
-                </th>
-                <th>Action</th>
-            </tr>
-        </ng-template>
-        <ng-template pTemplate="body" let-rowData let-expanded="expanded" let-columns="columns">
-            <tr>
-                <td>
-                    <a href="#" [pRowToggler]="rowData">
-                        <i [ngClass]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></i>
-                    </a>
-                </td>
-                <td *ngFor="let col of columns">
-                    {{rowData[col.field]}}
-                </td>
-                <td>
-                    <button pButton type="button" class="ui-button-danger mr-1" icon="pi pi-file-pdf" title="View Invoice"></button> 
-                    <button pButton type="button" class="ui-button-danger mr-1" icon="pi pi-times" title="Cancel Invoice"></button>                    
-                </td>
-            </tr>
-        </ng-template>
-        <ng-template pTemplate="rowexpansion" let-rowData let-columns="columns">
-            <tr>
-                <td [attr.colspan]="columns.length + 2">
-                    <div class="ui-g ui-fluid" style="font-size:14px;padding:8px">
-                        <div class="ui-g-12 ui-md-12">
-                            <p-table [value]="deliverd">
-                                <ng-template pTemplate="header">
-                                    <tr>
-                                        <th>Product Name</th>
-                                        <th>Invoice NO</th>
-                                        <th>Qty</th>
-                                        <th>Rate</th>
-                                        <th>Amount</th>
-                                        <th>Discount Amount</th>
-                                        <th>Total Amount</th>
-                                        <!-- <th>Action</th> -->
-                                    </tr>
-                                </ng-template>
-                                <ng-template pTemplate="body" let-deliverd>
-                                    <tr> 
-                                        <td>{{deliverd.prdName}}</td>
-                                        <td>{{deliverd.invoiceNo}}</td>
-                                        <td>{{deliverd.qty}}</td>
-                                        <td>{{deliverd.rate}}</td>
-                                        <td>{{deliverd.amount}}</td>
-                                        <td>{{deliverd.discAmt}}</td>
-                                        <td>{{deliverd.totalAmt}}</td>
-                                        <!-- <td>
+                    <p-table [columns]="cols" [value]="cars" dataKey="vin" [paginator]="false" [rows]="10"
+                        [totalRecords]="cars.length" pageLinkSize="3" (onPage)="onPage($event)"
+                        (onRowExpand)="onRowExpand()" (onRowCollapse)="onRowCollapse()"
+                        [expandedRowKeys]="expandedRows">
+                        <ng-template pTemplate="header" let-columns>
+                            <tr>
+                                <th style="width: 3em">
+                                    <a style="cursor: pointer;font-size: 16px; color:teal;" (click)="expandAll()"><i
+                                            *ngIf="!isExpanded" class="fa fa-plus-circle" aria-hidden="true"></i>
+                                        <i *ngIf="isExpanded" class="fa fa-minus-circle" aria-hidden="true"></i></a>
+                                </th>
+                                <th *ngFor="let col of columns">
+                                    {{col.header}}
+                                </th>
+                                <th>Action</th>
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="body" let-rowData let-expanded="expanded" let-columns="columns">
+                            <tr>
+                                <td>
+                                    <a href="#" [pRowToggler]="rowData">
+                                        <i [ngClass]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></i>
+                                    </a>
+                                </td>
+                                <td *ngFor="let col of columns">
+                                    {{rowData[col.field]}}
+                                </td>
+                                <td>
+                                    <button pButton type="button" class="ui-button-danger mr-1" icon="pi pi-file-pdf"
+                                        title="View Invoice"></button>
+                                    <button pButton type="button" class="ui-button-danger mr-1" icon="pi pi-times"
+                                        title="Cancel Invoice"></button>
+                                </td>
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="rowexpansion" let-rowData let-columns="columns">
+                            <tr>
+                                <td [attr.colspan]="columns.length + 2">
+                                    <div class="ui-g ui-fluid" style="font-size:14px;padding:8px">
+                                        <div class="ui-g-12 ui-md-12">
+                                            <p-table [value]="deliverd">
+                                                <ng-template pTemplate="header">
+                            <tr>
+                                <th>Product Name</th>
+                                <th>Invoice NO</th>
+                                <th>Qty</th>
+                                <th>Rate</th>
+                                <th>Amount</th>
+                                <th>Discount Amount</th>
+                                <th>Total Amount</th>
+                                <!-- <th>Action</th> -->
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="body" let-deliverd>
+                            <tr>
+                                <td>{{deliverd.prdName}}</td>
+                                <td>{{deliverd.invoiceNo}}</td>
+                                <td>{{deliverd.qty}}</td>
+                                <td>{{deliverd.rate}}</td>
+                                <td>{{deliverd.amount}}</td>
+                                <td>{{deliverd.discAmt}}</td>
+                                <td>{{deliverd.totalAmt}}</td>
+                                <!-- <td>
                                             <button pButton type="button" class="ui-button-danger mr-1" icon="pi pi-times" title="Cancel Invoice"></button> 
                                             <button  (click)="openDialogForUpdatePOD()" pButton type="button" class="ui-button-success" label="Update POD" ></button>
                                         </td> -->
-                                    </tr>
-                                </ng-template>
-                            </p-table>
-                        </div>
-                    </div>
-                </td>
+                            </tr>
+                        </ng-template>
+                    </p-table>
+                </div>
+            </div>
+            </td>
             </tr>
-        </ng-template>
-</p-table>
-            </div>              
-        </div> 
-
-                                
+            </ng-template>
+            </p-table>
         </div>
     </div>
+
+
+</div>
+</div>
 </div>
