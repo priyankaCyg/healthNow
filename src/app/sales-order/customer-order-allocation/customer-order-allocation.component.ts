@@ -90,8 +90,8 @@ export class CustomerOrderAllocationComponent implements OnInit {
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
         const dataToSendReject = {
-          "iRequestID": 2034,
-          "iEmpID": orderDetail,
+          // "iRequestID": 2034,
+          // "iEmpID": orderDetail,
         }
         this.httpService.callPostApi(dataToSendReject).subscribe(
           (data) => {
