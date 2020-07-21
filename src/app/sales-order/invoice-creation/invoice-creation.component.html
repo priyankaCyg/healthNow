@@ -6,17 +6,10 @@
                     <h1 class="mt-2">Invoice Creation</h1>
                 </div>
                 <p-tabView>
+                    <!-- Customer tab start-->
                     <p-tabPanel header="Customer">
-
                         <div class="p-grid ui-fluid vertical-container">
-                            <!-- <div class="p-col p-md-4 p-lg-3 p-col-align-start">
-                            <div class="ui-inputgroup">
-                                <input type="text" pInputText placeholder="search....">   
-                                <button pButton type="button" icon="pi pi-search" class="ui-button-warn"></button>  
-                            </div>
-                        </div>    -->
                             <div class="p-col-12 mt-3">
-
                                 <p-table [columns]="cols" #Ordersearch [value]="customerAlloc" dataKey="iSOID"
                                     [paginator]="false" [rows]="10" [totalRecords]="customerAlloc.length"
                                     [globalFilterFields]="['sSONo','sCustomerName','sAddress']" [filterDelay]="0"
@@ -60,9 +53,6 @@
                                                 {{rowData[col.field]}}
                                             </td>
                                             <td>{{rowData.sAddress}}</td>
-                                            <!-- <td><span style="color: #76256e !important; font-weight: 600;"
-                                                    (click)="openDialogForAddress()">{{rowData.sAddress}}</span>
-                                            </td> -->
                                             <td>
                                                 <button (click)="orderAllocClick(rowData)" pButton type="button"
                                                     class="ui-button-success" label="Create Invoice"></button>
@@ -79,18 +69,12 @@
                                         <tr>
                                             <th>Product Name</th>
                                             <th>Quantity</th>
-                                            <th>Batch/ Lot No</th>
-                                            <th>Expiry Date</th>
-                                            <th>Allocated Quantity</th>
                                         </tr>
                                     </ng-template>
                                     <ng-template pTemplate="body" let-orderDetail>
                                         <tr>
                                             <td>{{orderDetail.sPrdName}} {{orderDetail.sVariant}}</td>
                                             <td>{{orderDetail.iQty}}</td>
-                                            <td>{{orderDetail.sBatchNo}}</td>
-                                            <td>{{orderDetail.expiryDate}}</td>
-                                            <td>{{orderDetail.allocatedQty}}</td>
                                         </tr>
                                     </ng-template>
                                 </p-table>
@@ -104,20 +88,12 @@
         </div>
         <div class="noRecordsFound" *ngIf="!customerAlloc.length">{{noRecordFound}}</div>
         </p-tabPanel>
-
         <!-- Customer Tab End -->
 
+        <!-- Product tab start-->
         <p-tabPanel header="Product">
-
             <div class="p-grid ui-fluid vertical-container">
-                <!-- <div class="p-col p-md-4 p-lg-3 p-col-align-start">
-                    <div class="ui-inputgroup">
-                        <input type="text" pInputText placeholder="product">
-                        <button pButton type="button" icon="pi pi-search" class="ui-button-warn"></button>
-                    </div>
-                </div> -->
                 <div class="p-col-12 mt-3">
-
                     <p-table [columns]="cols1" #search [value]="productsAllocData" dataKey="iPrdID" [paginator]="false"
                         [rows]="10" [totalRecords]="productsAllocData.length" rowExpandMode="single"
                         (onRowExpand)="onRowExpand()" (onRowCollapse)="onRowCollapse()" [expandedRowKeys]="expandedRows"
@@ -196,8 +172,6 @@
 </p-tabPanel>
 </p-tabView>
 </div>
-
-
 </div>
 </div>
 </div>

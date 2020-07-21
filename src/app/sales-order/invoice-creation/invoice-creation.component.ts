@@ -30,19 +30,16 @@ export class InvoiceCreationComponent implements OnInit {
   constructor(private httpService: ApiService, private router: Router) { }
 
   ngOnInit(): void {
-    this.noRecordFound = config.noRecordFound;
 
+    this.noRecordFound = config.noRecordFound;
     this.cols = [{ field: 'sSONo', header: 'Order No' },
     { field: 'sCustomerName', header: 'Customer Name' }];
-
     this.cols1 = [
       { field: 'sOrders', header: 'Orders' },
       { field: 'iQty', header: 'Quantity' }];
-
     this.getOrderAllocList();
     this.customerAlloc = this.customer;
     this.customerAlloc.length < this.rows ? this.temDataLength = this.customerAlloc.length : this.temDataLength = this.rows;
-
     this.getProductAllocList();
     this.productsAllocData = this.PRODUCTS;
     this.productsAllocData.length < this.rows ? this.temDataLength = this.productsAllocData.length : this.temDataLength = this.rows;
@@ -144,4 +141,5 @@ export class InvoiceCreationComponent implements OnInit {
     this.isExpanded = false;
     this.expandedRows = {};
   }
+
 }

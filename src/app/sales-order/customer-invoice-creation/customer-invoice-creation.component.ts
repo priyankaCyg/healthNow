@@ -4,11 +4,13 @@ import { ApiService } from 'src/app/services/api.service';
 import { ToastService } from 'src/app/services/toast.service';
 import { customerAllocChildData } from 'src/app/model/customer-order-alloc-child';
 import { DialogService } from 'primeng';
+
 @Component({
   selector: 'app-customer-invoice-creation',
   templateUrl: './customer-invoice-creation.component.html',
   styleUrls: ['./customer-invoice-creation.component.css']
 })
+
 export class CustomerInvoiceCreationComponent implements OnInit {
 
   orderDetail: customerAllocChildData[];
@@ -20,13 +22,13 @@ export class CustomerInvoiceCreationComponent implements OnInit {
   order_no: string;
   iSOID: number;
   orderAllocation = [];
-
   public cols: any[];
   public cols1: any[];
   public isExpanded: boolean = false;
   public rows: number = 10;
   public expandedRows = {};
   public temDataLength: number = 0;
+
   constructor(private httpService: ApiService, private toastService: ToastService, private confirmationService: ConfirmationService,
     private dialogService: DialogService) { }
 
@@ -38,9 +40,7 @@ export class CustomerInvoiceCreationComponent implements OnInit {
     this.address = this.responseData[0].sAddress;
     this.order_no = this.responseData[0].sSONo;
     this.iSOID = this.responseData[0].iSOID;
-
     this.cols = [{ field: 'iQty', header: 'Qty' }];
-
     this.getOrderrAllocChildList();
     this.orderDetail = this.orderAllocation;
     this.orderDetail.length < this.rows ? this.temDataLength = this.orderDetail.length : this.temDataLength = this.rows;
@@ -82,9 +82,10 @@ export class CustomerInvoiceCreationComponent implements OnInit {
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
         const dataToSendReject = {
-          // "iRequestID": 2034,
-          // "iEmpID": orderDetail,
+          "iRequestID": 24311,
+          "iSOPrdID": orderDetail.iSOPrdID,
         }
+        console.log(dataToSendReject);
         this.httpService.callPostApi(dataToSendReject).subscribe(
           (data) => {
             this.toastService.displayApiMessage(data.headers.get('StatusMessage'), data.headers.get('StatusCode'));
@@ -143,4 +144,5 @@ export class CustomerInvoiceCreationComponent implements OnInit {
     this.isExpanded = false;
     this.expandedRows = {};
   }
+
 }

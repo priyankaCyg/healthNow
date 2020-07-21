@@ -3,6 +3,7 @@ import { DialogService, ConfirmationService } from 'primeng';
 import { AllocateProductComponent } from '../allocate-product/allocate-product.component';
 import { ApiService } from 'src/app/services/api.service';
 import { ToastService } from 'src/app/services/toast.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-product-invoice-creation',
@@ -21,18 +22,18 @@ export class ProductInvoiceCreationComponent implements OnInit {
   public products: any[];
   public cols: any[];
   public cols1: any[];
-
   public isExpanded: boolean = false;
   public rows: number = 10;
   public expandedRows = {};
   public temDataLength: number = 0;
+  cusInvoice = [];
+
   constructor(private dialogService: DialogService, private httpService: ApiService, private toastService: ToastService,
-    private confirmationService: ConfirmationService) { }
+    private confirmationService: ConfirmationService, private router: Router) { }
 
   ngOnInit(): void {
     this.data = JSON.parse(localStorage.getItem('productAllocDetails'));
     this.prdOrderDetail = Object.values(this.data);
-    console.log(this.prdOrderDetail)
     this.getProductAllocChildList();
     // if(this.prdOrderDetail[0].iQty <= 5){
     //   this.allocateBtn = false; 
@@ -50,7 +51,6 @@ export class ProductInvoiceCreationComponent implements OnInit {
     ];
     this.productDetail = this.productAllocation;
     this.productDetail.length < this.rows ? this.temDataLength = this.productDetail.length : this.temDataLength = this.rows;
-
   }
 
 
@@ -68,15 +68,15 @@ export class ProductInvoiceCreationComponent implements OnInit {
   }
 
   //Open Dialog for reject alocated product
-  rejectAllocProduct(orderDetail) {
+  rejectAllocProduct(prdDetail) {
     this.confirmationService.confirm({
       message: 'Are you sure that you want to cancel this Record ?',
       header: 'Confirmation',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
         const dataToSendReject = {
-          // "iRequestID": 2034,
-          // "iEmpID": orderDetail,
+          "iRequestID": 24311,
+          "iSOPrdID": prdDetail.iSOPrdID,
         }
         this.httpService.callPostApi(dataToSendReject).subscribe(
           (data) => {
@@ -90,19 +90,6 @@ export class ProductInvoiceCreationComponent implements OnInit {
     });
   }
 
-  openDialogForOrderProductAllocate(prdDetails) {
-    const ref = this.dialogService.open(AllocateProductComponent, {
-      data: prdDetails,
-      header: 'Product Order Allocate',
-      width: '90%'
-    });
-
-    ref.onClose.subscribe((success: boolean) => {
-      if (success) {
-        // this.toastService.addSingle("success", "Mail send successfully", "");
-      }
-    });
-  }
 
   expandAll() {
     if (!this.isExpanded) {
@@ -147,4 +134,31 @@ export class ProductInvoiceCreationComponent implements OnInit {
       error => { console.log(error) }
     )
   }
+
+  saveConfirmAllocate() {
+    this.productDetail.forEach((key, index) => {
+      let iPrdID = this.productDetail[index].iPrdID;
+      let iSOPrdID = this.productDetail[index].iSOPrdID;
+      if (iSOPrdID != null || iSOPrdID != undefined) {
+        let tempArray = {
+          "iPrdID": iPrdID,
+          "iSOPrdID": iSOPrdID
+        }
+        this.cusInvoice.push(tempArray);
+      }
+    });
+    const data = {
+      "iRequestID": 2435,
+      "sGINAllocation": this.cusInvoice
+    }
+    console.log(data, "data");
+    // this.httpService.callPostApi(data).subscribe(
+    //   (data) => {
+    //     this.toastService.displayApiMessage(data.headers.get('StatusMessage'), data.headers.get('StatusCode'));
+    //     this.router.navigate(['/sales-order/delivery-list']);
+    //   },
+    //   (error) => console.log(error)
+    // );
+  }
+
 }
