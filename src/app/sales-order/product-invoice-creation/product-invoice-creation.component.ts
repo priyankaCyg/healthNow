@@ -13,8 +13,6 @@ export class ProductInvoiceCreationComponent implements OnInit {
 
   prdOrderDetail: any[];
   productDetail: any[];
-  ordersDetail: any[];
-  orderDetail: any[];
   data: object;
   responseData: object;
   batch: any[];
@@ -52,13 +50,7 @@ export class ProductInvoiceCreationComponent implements OnInit {
     ];
     this.productDetail = this.productAllocation;
     this.productDetail.length < this.rows ? this.temDataLength = this.productDetail.length : this.temDataLength = this.rows;
-    // this.ordersDetail = [
-    //   { orderNo:'1120-3739', custmName:'Amit Shah', qty:'2',batchNo:'B1',expiryDate:'01-06-2021',allocatedQty:'2'},
-    //   { orderNo:'1121-1234', custmName:'Nilesh Sable', qty:'3',batchNo:'B1',expiryDate:'01-06-2021',allocatedQty:'4'},
-    //   { orderNo:'1122-3697', custmName:'Supriya Jadhav', qty:'5',batchNo:'B1',expiryDate:'01-06-2021',allocatedQty:'5'},
-    //   { orderNo:'1123-2587', custmName:'Kiran Kumar', qty:'4',batchNo:'B2',expiryDate:'01-06-2021',allocatedQty:'4'},
-    //   { orderNo:'1122-7412', custmName:'Ravi Yadhav', qty:'1',batchNo:'B2',expiryDate:'01-06-2021',allocatedQty:'1'}
-    // ];
+
   }
 
 
@@ -137,7 +129,7 @@ export class ProductInvoiceCreationComponent implements OnInit {
   }
 
   onPage(event: any) {
-    this.temDataLength = this.orderDetail.slice(event.first, event.first + 10).length;
+    this.temDataLength = this.productDetail.slice(event.first, event.first + 10).length;
     console.log(this.temDataLength);
     this.isExpanded = false;
     this.expandedRows = {};
