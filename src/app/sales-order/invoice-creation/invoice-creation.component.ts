@@ -32,16 +32,13 @@ export class InvoiceCreationComponent implements OnInit {
   ngOnInit(): void {
     this.noRecordFound = config.noRecordFound;
 
-    this.cols = [
-      { field: 'sSONo', header: 'Order No' },
-      { field: 'sCustomerName', header: 'Customer Name' }
-    ];
+    this.cols = [{ field: 'sSONo', header: 'Order No' },
+    { field: 'sCustomerName', header: 'Customer Name' }];
 
     this.cols1 = [
-      { field: 'sPrdName', header: 'Products' },
       { field: 'sOrders', header: 'Orders' },
-      { field: 'iQty', header: 'Quantity' }
-    ];
+      { field: 'iQty', header: 'Quantity' }];
+
     this.getOrderAllocList();
     this.customerAlloc = this.customer;
     this.customerAlloc.length < this.rows ? this.temDataLength = this.customerAlloc.length : this.temDataLength = this.rows;
@@ -54,7 +51,7 @@ export class InvoiceCreationComponent implements OnInit {
   //Function to get Order Allocation list
   getOrderAllocList() {
     const orderAllocAPI = {
-      "iRequestID": 2431,
+      "iRequestID": 2437,
     }
     this.httpService.callPostApi(orderAllocAPI).subscribe(
       data => {
@@ -67,7 +64,7 @@ export class InvoiceCreationComponent implements OnInit {
   //code for get Order Alocation child data table
   getOrderrAllocChildList(iSOID: Number) {
     const ordrAllocChildAPI = {
-      "iRequestID": 2432,
+      "iRequestID": 2438,
       "iSOID": iSOID
     }
     this.httpService.callPostApi(ordrAllocChildAPI).subscribe(
@@ -81,13 +78,13 @@ export class InvoiceCreationComponent implements OnInit {
   //Order Allocation button click function
   orderAllocClick(customersData) {
     localStorage.setItem('orderAllocDetails', JSON.stringify({ customersData }));
-    this.router.navigate(['/sales-order/customer-order-allocation']);
+    this.router.navigate(['/sales-order/customer-invoice-creation']);
   }
 
   //Function to get Product Allocation list
   getProductAllocList() {
     const productAllocAPI = {
-      "iRequestID": 2433,
+      "iRequestID": 2439,
     }
     this.httpService.callPostApi(productAllocAPI).subscribe(
       data => {
@@ -100,7 +97,7 @@ export class InvoiceCreationComponent implements OnInit {
   //code for get Product Allocation child data table
   getProductAllocChildList(iPrdID: Number) {
     const productAllocChildAPI = {
-      "iRequestID": 2434,
+      "iRequestID": 24310,
       "iPrdID": iPrdID
     }
     this.httpService.callPostApi(productAllocChildAPI).subscribe(
@@ -114,7 +111,7 @@ export class InvoiceCreationComponent implements OnInit {
   //Product Allocation button click function
   productAllocClick(productsData) {
     localStorage.setItem('productAllocDetails', JSON.stringify({ productsData }));
-    this.router.navigate(['/sales-order/product-order-allocation']);
+    this.router.navigate(['/sales-order/product-invoice-creation']);
   }
 
   expandAll() {

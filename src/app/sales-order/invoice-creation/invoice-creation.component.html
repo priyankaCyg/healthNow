@@ -3,7 +3,7 @@
         <div class="card card-w-title">
             <div class="p-grid ui-fluid vertical-container">
                 <div class="p-col p-col-align-start">
-                    <h1 class="mt-2">Order Allocation</h1>
+                    <h1 class="mt-2">Invoice Creation</h1>
                 </div>
                 <p-tabView>
                     <p-tabPanel header="Customer">
@@ -65,7 +65,7 @@
                                             </td> -->
                                             <td>
                                                 <button (click)="orderAllocClick(rowData)" pButton type="button"
-                                                    class="ui-button-success" label="Allocate"></button>
+                                                    class="ui-button-success" label="Create Invoice"></button>
                                             </td>
                                         </tr>
                                     </ng-template>
@@ -78,10 +78,10 @@
                                                             <ng-template pTemplate="header">
                                         <tr>
                                             <th>Product Name</th>
-                                            <th>Qty</th>
-                                            <th>Batch No</th>
+                                            <th>Quantity</th>
+                                            <th>Batch/ Lot No</th>
                                             <th>Expiry Date</th>
-                                            <th>Allocated Qty</th>
+                                            <th>Allocated Quantity</th>
                                         </tr>
                                     </ng-template>
                                     <ng-template pTemplate="body" let-orderDetail>
@@ -136,6 +136,7 @@
                                             *ngIf="!isExpanded" class="fa fa-plus-circle" aria-hidden="true"></i>
                                         <i *ngIf="isExpanded" class="fa fa-minus-circle" aria-hidden="true"></i></a>
                                 </th>
+                                <th>Products</th>
                                 <th *ngFor="let col of columns">
                                     {{col.header}}
                                 </th>
@@ -150,18 +151,19 @@
                                         <i [ngClass]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></i>
                                     </a>
                                 </td>
+                                <td> {{rowData.sPrdName}} {{rowData.sVariant}}</td>
                                 <td *ngFor="let col of columns">
                                     {{rowData[col.field]}}
                                 </td>
                                 <td>
                                     <button (click)="productAllocClick(rowData)" pButton type="button"
-                                        class="ui-button-success" label="Allocate"></button>
+                                        class="ui-button-success" label="Create Invoice"></button>
                                 </td>
                             </tr>
                         </ng-template>
                         <ng-template pTemplate="rowexpansion" let-rowData let-columns="columns">
                             <tr>
-                                <td [attr.colspan]="columns.length + 2">
+                                <td [attr.colspan]="columns.length + 3">
                                     <div class="ui-g ui-fluid" style="font-size:14px;padding:8px">
                                         <div class="ui-g-12 ui-md-12">
                                             <p-table [value]="productDetail">

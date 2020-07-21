@@ -15,7 +15,7 @@ import { ApiService } from 'src/app/services/api.service';
 })
 export class ProductOrderAllocationComponent implements OnInit {
 
-  
+
   prdOrderDetail: any[];
   productDetail: any[];
   ordersDetail: any[];
@@ -33,7 +33,7 @@ export class ProductOrderAllocationComponent implements OnInit {
   public rows: number = 10;
   public expandedRows = {};
   public temDataLength: number = 0;
-  constructor(private breadcrumbService: BreadcrumbService, private dialogService: DialogService, private httpService:ApiService) { }
+  constructor(private breadcrumbService: BreadcrumbService, private dialogService: DialogService, private httpService: ApiService) { }
 
   ngOnInit(): void {
     this.data = JSON.parse(localStorage.getItem('productAllocDetails'));
@@ -52,7 +52,7 @@ export class ProductOrderAllocationComponent implements OnInit {
     this.cols = [
       { field: 'sSONo', header: 'Order No.' },
       { field: 'sCustomerName', header: 'Customer Name' },
-      { field: 'iQty', header: 'Quantity'}
+      { field: 'iQty', header: 'Quantity' }
     ];
     this.productDetail = this.productAllocation;
     this.productDetail.length < this.rows ? this.temDataLength = this.productDetail.length : this.temDataLength = this.rows;
@@ -80,7 +80,7 @@ export class ProductOrderAllocationComponent implements OnInit {
   }
   openDialogForOrderProductAllocate(prdDetails) {
     const ref = this.dialogService.open(AllocateProductComponent, {
-      data:prdDetails,
+      data: prdDetails,
       header: 'Product Order Allocate',
       width: '90%'
     });

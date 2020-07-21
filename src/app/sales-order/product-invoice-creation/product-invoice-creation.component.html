@@ -1,1 +1,132 @@
-<p>product-invoice-creation works!</p>
+<p-confirmDialog header="Confirmation" icon="pi pi-info" [style]="{width: '425px'}"
+    rejectButtonStyleClass="ui-button-secondary"></p-confirmDialog>
+<div class="p-grid">
+    <div class="p-col-12">
+        <div class="card card-w-title">
+            <div class="p-grid ui-fluid vertical-container">
+                <div class="p-col p-col-align-start">
+                    <h1 class="mt-1">Product Invoice Creation</h1>
+                </div>
+                <div class="p-col-12">
+                    <div class="card download-files p-2 mb-0">
+                        <div class="p-grid p-nogutter">
+                            <div class="p-col-12 p-md-12 p-lg-12 mb-1">
+                                <p-table [value]="prdOrderDetail">
+                                    <ng-template pTemplate="header">
+                                        <tr>
+                                            <th>Product Name</th>
+                                            <th>No. of Orders</th>
+                                            <th>Quantity</th>
+                                            <th>In Stock</th>
+                                            <!-- <th>Action</th> -->
+                                        </tr>
+                                    </ng-template>
+                                    <ng-template pTemplate="body" let-prdOrderDetail>
+                                        <tr>
+                                            <td style="font-weight: 600;">{{prdOrderDetail.sPrdName}}
+                                                {{prdOrderDetail.sVariant}}</td>
+                                            <td>{{prdOrderDetail.sOrders}}</td>
+                                            <td>{{prdOrderDetail.iQty}}</td>
+                                            <td>{{prdOrderDetail.inStock}}</td>
+                                            <!-- <td>
+                                                <button (click)="openDialogForOrderProductAllocate(prdOrderDetail)"
+                                                    pButton type="button" class="ui-button-success mr-1"
+                                                    label="Allocate" [disabled]="allocateBtn"></button>
+                                                <button pButton type="button" class="ui-button-danger"
+                                                    icon="pi pi-times" title="Cancel"></button>
+                                            </td> -->
+                                        </tr>
+                                    </ng-template>
+                                </p-table>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="p-col-12 mt-0">
+                    <p-table [columns]="cols" [value]="productDetail" dataKey="iSOPrdID" [paginator]="false" [rows]="10"
+                        [totalRecords]="productDetail.length" rowExpandMode="single" (onRowExpand)="onRowExpand()"
+                        (onRowCollapse)="onRowCollapse()" [expandedRowKeys]="expandedRows">
+
+                        <ng-template pTemplate="header" let-columns>
+                            <tr>
+                                <th style="width: 3em">
+                                    <a style="cursor: pointer;font-size: 16px; color:teal;" (click)="expandAll()"><i
+                                            *ngIf="!isExpanded" class="fa fa-plus-circle" aria-hidden="true"></i>
+                                        <i *ngIf="isExpanded" class="fa fa-minus-circle" aria-hidden="true"></i></a>
+                                </th>
+                                <th *ngFor="let col of columns">
+                                    {{col.header}}
+                                </th>
+                                <th>Action</th>
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="body" let-rowData let-expanded="expanded" let-columns="columns">
+                            <tr>
+                                <td>
+                                    <a href="#" (click)="getBatchAllocChildList(rowData.iSOPrdID)"
+                                        [pRowToggler]="rowData">
+                                        <i [ngClass]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></i>
+                                    </a>
+                                </td>
+                                <td *ngFor="let col of columns">
+                                    {{rowData[col.field]}}
+                                </td>
+                                <td>
+                                    <!-- <button (click)="openDialogForOrderProductAllocate(rowData)" pButton type="button"
+                                        class="ui-button-success mr-1" label="Allocate"
+                                        *ngIf="rowData.iStatusID == 1"></button> -->
+                                    <button pButton type="button" (click)="rejectAllocProduct(rowData)"
+                                        class="ui-button-danger" icon="pi pi-times" title="Cancel"></button>
+                                </td>
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="rowexpansion" let-rowData let-columns="columns">
+                            <tr>
+                                <td [attr.colspan]="columns.length + 2">
+                                    <div class="ui-g ui-fluid" style="font-size:14px;padding:8px">
+                                        <div class="ui-g-12 ui-md-12">
+                                            <p-table [value]="batch">
+                                                <ng-template pTemplate="header">
+                            <tr>
+                                <th>Batch / Lot No.</th>
+                                <th>Expiry Date</th>
+                                <th>Allocated Quantity</th>
+
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="body" let-batch>
+                            <tr>
+                                <td>{{batch.sBatchNo}}</td>
+                                <td>{{batch.sExpiryDate | date: 'dd-MM-yyyy'}}</td>
+                                <td>{{batch.iAllocatedQty}}</td>
+
+                            </tr>
+                        </ng-template>
+                    </p-table>
+                </div>
+            </div>
+            </td>
+            </tr>
+            </ng-template>
+            </p-table>
+
+        </div>
+
+        <div class="p-col-12 p-md-2 p-lg-12">
+            <div class="separator separator--border-solid separator--space-sm separator--portlet-fit mt-0">
+            </div>
+        </div>
+
+        <div class="p-col-12 p-md-12 p-lg-12 text-right mt-0 p-0">
+            <button pButton type="button" label="Cancel" routerLink="/sales-order/invoice-creation"
+                class="ui-button-light atbt mr-2 mb-3"></button>
+            <button pButton type="submit" label="Create Invoice" class="ui-button atbt mb-3"></button>
+        </div>
+
+    </div>
+
+
+</div>
+</div>
+</div>
