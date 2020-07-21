@@ -18,6 +18,7 @@ import { customerAllocChildData } from 'src/app/model/customer-order-alloc-child
   templateUrl: './order-allocation.component.html',
   styleUrls: ['./order-allocation.component.css']
 })
+
 export class OrderAllocationComponent implements OnInit {
 
   orderDetail: customerAllocChildData[];
@@ -25,7 +26,6 @@ export class OrderAllocationComponent implements OnInit {
   customerAlloc: customerAllocData[] = [];
   productsAllocData: any[];
   noRecordFound: string;
-
   public cols: any[];
   public cols1: any[];
   public isExpanded: boolean = false;
@@ -35,26 +35,22 @@ export class OrderAllocationComponent implements OnInit {
   customer = [];
   PRODUCTS = [];
 
-  constructor(private breadcrumbService: BreadcrumbService,
-    private httpService: ApiService, private router: Router) { }
+  constructor(private breadcrumbService: BreadcrumbService, private httpService: ApiService, private router: Router) { }
 
   ngOnInit() {
     this.noRecordFound = config.noRecordFound;
-
     this.cols = [
-      { field: 'sSONo', header: 'Order No' },
+      { field: 'sSONo', header: 'Order No.' },
       { field: 'sCustomerName', header: 'Customer Name' }
     ];
 
     this.cols1 = [
-      { field: 'sPrdName', header: 'Products' },
-      { field: 'sOrders', header: 'Orders' },
+      { field: 'sOrders', header: 'No. of Orders' },
       { field: 'iQty', header: 'Quantity' }
     ];
     this.getOrderAllocList();
     this.customerAlloc = this.customer;
     this.customerAlloc.length < this.rows ? this.temDataLength = this.customerAlloc.length : this.temDataLength = this.rows;
-
     this.getProductAllocList();
     this.productsAllocData = this.PRODUCTS;
     this.productsAllocData.length < this.rows ? this.temDataLength = this.productsAllocData.length : this.temDataLength = this.rows;

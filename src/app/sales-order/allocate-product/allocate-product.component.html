@@ -20,7 +20,6 @@
                     </ng-template>
                     <ng-template pTemplate="body" let-batch let-ri="rowIndex">
                         <tr>
-
                             <td>{{batch.sBatchNo}}</td>
                             <td>{{batch.sExpireDate | date: 'dd-MM-yyyy'}}</td>
                             <td>{{batch.iQty}}</td>
@@ -39,15 +38,14 @@
                 </p-table>
             </div>
         </div>
-
         <div class="p-col-12 p-md-2 p-lg-12">
             <div class="separator separator--border-solid separator--space-sm separator--portlet-fit mt-2"></div>
         </div>
-
         <div class="p-col-12 p-md-2 p-lg-12 text-right mt-0">
             <button pButton type="button" label="Cancel" (click)="close()"
                 class="ui-button-light atbt mr-2 mb-2"></button>
-            <button pButton type="submit" label="Allocate" [disabled]="isdisabled" class="ui-button atbt mb-2"></button>
+            <button pButton type="submit" label="Allocate" [disabled]="isdisabled" (click)="saveAllocate()"
+                class="ui-button atbt mb-2"></button>
         </div>
     </div>
 </div>

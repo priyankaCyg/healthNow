@@ -8,6 +8,7 @@ import { ToastService } from 'src/app/services/toast.service';
   templateUrl: './allocate.component.html',
   styleUrls: ['./allocate.component.css']
 })
+
 export class AllocateComponent implements OnInit {
 
   batch: any[];
@@ -93,7 +94,6 @@ export class AllocateComponent implements OnInit {
       "iPrdID": this.prd_id,
       "sGINAllocation": this.orderAlloc
     }
-    console.log(allocate_data, "data");
     this.httpService.callPostApi(allocate_data).subscribe(
       (data) => {
         this.ref.close(true);
