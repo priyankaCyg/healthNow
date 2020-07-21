@@ -51,7 +51,7 @@ export class CustomerOrderAllocationComponent implements OnInit {
     this.httpService.callPostApi(ordrAllocChildAPI).subscribe(
       data => {
         this.orderDetail = data.body;
-        if (!this.orderDetail.length) {
+        if (this.orderDetail == null) {
           this.router.navigate(['/sales-order/order-allocation']);
         }
       },

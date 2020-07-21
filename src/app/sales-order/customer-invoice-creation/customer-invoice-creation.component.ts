@@ -4,6 +4,7 @@ import { ApiService } from 'src/app/services/api.service';
 import { ToastService } from 'src/app/services/toast.service';
 import { customerAllocChildData } from 'src/app/model/customer-order-alloc-child';
 import { DialogService } from 'primeng';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-customer-invoice-creation',
@@ -31,7 +32,7 @@ export class CustomerInvoiceCreationComponent implements OnInit {
   public temDataLength: number = 0;
 
   constructor(private httpService: ApiService, private toastService: ToastService, private confirmationService: ConfirmationService,
-    private dialogService: DialogService) { }
+    private dialogService: DialogService, private router: Router) { }
 
   ngOnInit(): void {
 
@@ -56,6 +57,9 @@ export class CustomerInvoiceCreationComponent implements OnInit {
     this.httpService.callPostApi(ordrAllocChildAPI).subscribe(
       data => {
         this.orderDetail = data.body;
+        if (this.orderDetail == null) {
+          this.router.navigate(['/sales-order/invoice-creation']);
+        }
       },
       error => { console.log(error) }
     )

@@ -62,6 +62,9 @@ export class ProductInvoiceCreationComponent implements OnInit {
     this.httpService.callPostApi(productAllocChildAPI).subscribe(
       data => {
         this.productDetail = data.body;
+        if (this.productDetail == null) {
+          this.router.navigate(['/sales-order/invoice-creation']);
+        }
       },
       error => { console.log(error) }
     )
