@@ -45,11 +45,11 @@ export class AddProductCategoryComponent implements OnInit {
         data => {
           this.productCategoryData = new ProductCategory(data.body[0]);
           this.ProductCategoryForm = this.createControl(this.productCategoryData);
+          Promise.all([this.getParentCatData(), this.getStatusData()]).then(values => {
+            console.log(values);
+            this.setDropDownVal();
+          });
         });
-      Promise.all([this.getParentCatData(), this.getStatusData()]).then(values => {
-        console.log(values);
-        this.setDropDownVal();
-      });
     }
     else {
       this.isEdit = false;

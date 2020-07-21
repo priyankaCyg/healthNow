@@ -1,30 +1,29 @@
+<div class="p-grid ui-fluid">
 
-    <div class="p-grid ui-fluid">
-    
-                <div class="p-col-12"> 
-            
-                    <div class="p-grid form-group">
-    
-                            <div class="p-col-12">
-                                    <label for="podNo">POD No</label>
-                                    <input id="podNo" type="text" pInputText>
-                                </div>
-                       
-                        <div class="p-col-12">
-                            <label for="podDate">POD Date</label>
-                             <p-calendar [(ngModel)]="value"></p-calendar>
-                        </div>
-        
-            
-                    </div>
-                    <div class="separator separator--border-solid separator--space-sm separator--portlet-fit"></div>
-                    
-                    <div class="p-grid form-group ui-fluid">
-                        <div class="p-col-12 p-md-12 p-lg-12 text-right">
-                            <button pButton type="button" label="Cancel" class="ui-button-light atbt mr-2"></button>                                               
-                            <button pButton type="button" label="Save"  class="ui-button atbt"></button>                        
-                        </div>
-                    </div>
-        
-                </div>
+    <div class="p-col-12">
+
+        <div class="p-grid form-group">
+
+            <div class="p-col-12">
+                <label for="podNo">POD No</label>
+                <input id="podNo" type="text" pInputText>
             </div>
+
+            <div class="p-col-12">
+                <label for="podDate">POD Date</label>
+                <p-calendar></p-calendar>
+            </div>
+
+
+        </div>
+        <div class="separator separator--border-solid separator--space-sm separator--portlet-fit"></div>
+
+        <div class="p-grid form-group ui-fluid">
+            <div class="p-col-12 p-md-12 p-lg-12 text-right">
+                <button pButton type="button" label="Cancel" class="ui-button-light atbt mr-2"></button>
+                <button pButton type="button" label="Save" class="ui-button atbt"></button>
+            </div>
+        </div>
+
+    </div>
+</div>
