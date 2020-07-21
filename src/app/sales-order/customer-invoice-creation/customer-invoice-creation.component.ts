@@ -25,7 +25,6 @@ export class CustomerInvoiceCreationComponent implements OnInit {
   cusInvoice = [];
 
   public cols: any[];
-  public cols1: any[];
   public isExpanded: boolean = false;
   public rows: number = 10;
   public expandedRows = {};

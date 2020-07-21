@@ -87,7 +87,8 @@
                             <div class="p-col-12 p-md-12 p-lg-12 mb-2">
                                 <label for="qty">Quantity</label>
                                 <input id="qty" type="text" formControlName="iQty" pInputText>
-                                <p-message severity="error" [text]="createReqForm.controls['iQty'].errors['Msg']"
+                                <p-message severity="error"
+                                    [text]="createReqForm.controls['iQty'].errors['required'] ? 'This Field is required' : createReqForm.controls['iQty'].errors['pattern'] ? 'Please Enter Valid Quantity.' : ''"
                                     *ngIf="!createReqForm.controls['iQty'].valid && createReqForm.controls['iQty'].dirty">
                                 </p-message>
                             </div>

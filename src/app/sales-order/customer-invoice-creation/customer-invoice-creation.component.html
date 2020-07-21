@@ -23,9 +23,9 @@
                 </div>
                 <div class="p-col-12 mt-3">
                     <p-table [columns]="cols" [value]="orderDetail" dataKey="iPrdID" [paginator]="false" [rows]="10"
-                        [totalRecords]="orderDetail.length" rowExpandMode="single" (onRowExpand)="onRowExpand()"
-                        (onRowCollapse)="onRowCollapse()" [expandedRowKeys]="expandedRows"
-                        [showCurrentPageReport]="true">
+                        rowExpandMode="single" (onRowExpand)="onRowExpand()" (onRowCollapse)="onRowCollapse()"
+                        [expandedRowKeys]="expandedRows" [showCurrentPageReport]="true">
+
                         <ng-template pTemplate="header" let-columns>
                             <tr>
                                 <th style="width: 3em">
@@ -53,6 +53,8 @@
                                     {{rowData[col.field]}}
                                 </td>
                                 <td>
+                                    <!-- <button *ngIf="rowData.iStatusID == 1" (click)="openDialogForOrderAllocate(rowData)"
+                                        pButton type="button" class="ui-button-success mr-1" label="Allocate"></button> -->
                                     <button pButton type="button" (click)="rejectAllocProduct(rowData)"
                                         class="ui-button-danger" icon="pi pi-times" title="Cancel"></button>
                                 </td>
@@ -77,6 +79,7 @@
                                 <td>{{batch.sBatchNo}}</td>
                                 <td>{{batch.sExpiryDate | date: 'dd-MM-yyyy'}}</td>
                                 <td>{{batch.iAllocatedQty}}</td>
+
                             </tr>
                         </ng-template>
                     </p-table>
@@ -87,10 +90,12 @@
             </ng-template>
             </p-table>
         </div>
+
         <div class="p-col-12 p-md-2 p-lg-12">
             <div class="separator separator--border-solid separator--space-sm separator--portlet-fit mt-2">
             </div>
         </div>
+
         <div class="p-col-12 p-md-2 p-lg-12 text-right mt-0">
             <button pButton type="button" label="Cancel" routerLink="/sales-order/invoice-creation"
                 class="ui-button-light atbt mr-2 mb-2"></button>

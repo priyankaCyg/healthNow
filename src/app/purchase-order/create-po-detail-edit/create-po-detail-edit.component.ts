@@ -17,10 +17,10 @@ export class CreatePoDetailEditComponent implements OnInit {
   items: MenuItem[];
   poDetail: poDetailMaster;
   public editPOForm: FormGroup;
-  qty:number;
+  qty: number;
   rate: number;
-  disper:number;
-
+  disper: number;
+  productName;
   constructor(private breadcrumbService: BreadcrumbService, private dialogService: DialogService, private httpService: ApiService,
     private fb: FormBuilder,
     private config: DynamicDialogConfig,
@@ -33,20 +33,20 @@ export class CreatePoDetailEditComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log(this.config.data)
     this.poDetail = new poDetailMaster(this.config.data);
+    this.productName = this.config.data.sPrdName + " " + this.config.data.sVariant + " " + this.config.data.sUnitSymbol;
     this.editPOForm = this.createControl(this.poDetail);
   }
 
   createControl(productData?: poDetailMaster): FormGroup {
     this.editPOForm = this.fb.group({
-      sPCName: [productData.sPCName],
-      sPrdName: [productData.sPrdName,productData.sVariant,productData.sUnitSymbol],
+      sPCName: [{ value: productData.sPCName, disabled: true }],
+      sPrdName: [{ value: this.productName, disabled: true }],
       iQty: [productData.iQty, [Validators.required, Validators.pattern('^[0-9]*$')]],
-      iSupRate: [productData.iSupRate],
+      iSupRate: [{ value: productData.iSupRate, disabled: true }],
       iDisPer: [productData.iDisPer, [Validators.required, Validators.pattern('^[0-9]*$')]],
-      iDisAmt: [productData.iDisAmt],
-      iTotalAmount: [productData.iTotalAmount],
+      iDisAmt: [{ value: productData.iDisAmt, disabled: true }],
+      iTotalAmount: [{ value: productData.iTotalAmount, disabled: true }],
     });
     return this.editPOForm;
   }
@@ -55,39 +55,39 @@ export class CreatePoDetailEditComponent implements OnInit {
     this.qty = this.editPOForm.controls['iQty'].value;
     this.rate = this.editPOForm.controls['iSupRate'].value;
     this.disper = this.editPOForm.controls['iDisPer'].value;
- 
-    if(this.disper){
-      let temp = parseFloat((this.disper/100).toFixed(2));
+
+    if (this.disper) {
+      let temp = parseFloat((this.disper / 100).toFixed(2));
       let dis_amnt = parseFloat((temp * this.rate).toFixed(2));
-       dis_amnt = parseFloat((dis_amnt * this.qty).toFixed(2));
-      let temp1 = parseFloat((this.rate-dis_amnt).toFixed(2));
-      let total_amnt = parseFloat((temp1*this.qty).toFixed(2))
+      dis_amnt = parseFloat((dis_amnt * this.qty).toFixed(2));
+      let temp1 = parseFloat((this.rate - dis_amnt).toFixed(2));
+      let total_amnt = parseFloat((temp1 * this.qty).toFixed(2))
       this.editPOForm.patchValue({
         iDisAmt: [dis_amnt],
         iTotalAmount: [total_amnt]
       });
     }
-    else{
+    else {
       this.toastService.addSingle("warn", "Please enter discount ", " ")
     }
   }
-  disPerChange(){
+  disPerChange() {
     this.qty = this.editPOForm.controls['iQty'].value;
     this.rate = this.editPOForm.controls['iSupRate'].value;
     this.disper = this.editPOForm.controls['iDisPer'].value;
- 
-    if(this.qty){
-      let temp = parseFloat((this.disper/100).toFixed(2));
+
+    if (this.qty) {
+      let temp = parseFloat((this.disper / 100).toFixed(2));
       let dis_amnt = parseFloat((temp * this.rate).toFixed(2));
       dis_amnt = parseFloat((dis_amnt * this.qty).toFixed(2));
-      let temp1 = parseFloat((this.rate-dis_amnt).toFixed(2));
-      let total_amnt = parseFloat((temp1*this.qty).toFixed(2))
+      let temp1 = parseFloat((this.rate - dis_amnt).toFixed(2));
+      let total_amnt = parseFloat((temp1 * this.qty).toFixed(2))
       this.editPOForm.patchValue({
         iDisAmt: [dis_amnt],
         iTotalAmount: [total_amnt]
       });
     }
-    else{
+    else {
       this.toastService.addSingle("warn", "Please enter Quantity ", " ")
     }
   }
@@ -98,9 +98,9 @@ export class CreatePoDetailEditComponent implements OnInit {
     var formData = this.editPOForm.getRawValue();
     var editAPI = {
       "iRequestID": 23314,
-      "iPReqID":this.config.data.iPReqID,
+      "iPReqID": this.config.data.iPReqID,
       "iDisPer": +formData.iDisPer,
-      "iQty":+formData.iQty
+      "iQty": +formData.iQty
     }
     console.log(editAPI)
     this.httpService.callPostApi(editAPI).subscribe(

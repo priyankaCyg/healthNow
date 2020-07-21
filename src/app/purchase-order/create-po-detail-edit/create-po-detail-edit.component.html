@@ -4,11 +4,11 @@
             <div class="p-grid form-group">
                 <div class="p-col-12">
                     <label for="sPCName">Product Category</label>
-                    <input id="sPCName" type="text" formControlName="sPCName" pInputText disabled>
+                    <input id="sPCName" type="text" formControlName="sPCName" pInputText>
                 </div>
                 <div class="p-col-12">
                     <label for="sPrdName">Product </label>
-                    <input id="sPrdName" type="text" formControlName="sPrdName" pInputText disabled>
+                    <input id="sPrdName" type="text" formControlName="sPrdName" pInputText>
                 </div>
                 <div class="p-col-12">
                     <label for="iQty">Qty </label>
@@ -20,7 +20,7 @@
                 </div>
                 <div class="p-col-12">
                     <label for="iSupRate">Rate </label>
-                    <input id="iSupRate" type="text" formControlName="iSupRate" pInputText disabled>
+                    <input id="iSupRate" type="text" formControlName="iSupRate" pInputText>
                 </div>
                 <div class="p-col-12">
                     <label for="iDisPer">Discount%</label>
@@ -32,11 +32,11 @@
                 </div>
                 <div class="p-col-12">
                     <label for="iDisAmt">Discount Amount </label>
-                    <input id="iDisAmt" type="text" formControlName="iDisAmt" pInputText disabled>
+                    <input id="iDisAmt" type="text" formControlName="iDisAmt" pInputText>
                 </div>
                 <div class="p-col-12">
                     <label for="iTotalAmount">Total Amount </label>
-                    <input id="iTotalAmount" type="text" formControlName="iTotalAmount" pInputText disabled>
+                    <input id="iTotalAmount" type="text" formControlName="iTotalAmount" pInputText>
                 </div>
             </div>
             <div class="separator separator--border-solid separator--space-sm separator--portlet-fit"></div>
@@ -46,7 +46,7 @@
                     <button pButton type="button" label="Cancel" (click)="closeDialog()" style="margin-bottom:10px"
                         class="ui-button-light atbt mr-2"></button>
                     <button pButton type="button" label="Update" (click)="updatePOdetail()"
-                    [disabled]="!(!editPOForm.invalid)" class="ui-button atbt"></button>
+                        [disabled]="!(!editPOForm.invalid)" class="ui-button atbt"></button>
                 </div>
             </div>
         </div>
