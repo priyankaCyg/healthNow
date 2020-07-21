@@ -256,7 +256,7 @@ export class CreateRequisitionComponent implements OnInit {
   createControl(createrequisitionData?: createRequisitionMaster): FormGroup {
 
     this.createReqForm = this.fb.group({
-      iQty: [createrequisitionData.iQty, [ValidationService.quantityValidator]],
+      iQty: [createrequisitionData.iQty, [Validators.required]],
       iPCID: [createrequisitionData.iPCID],
       iPrdID: [createrequisitionData.iPrdID],
       sPCName: [createrequisitionData.sPCName],
