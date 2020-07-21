@@ -38,7 +38,7 @@
                     </div>
                 </div>
                 <div class="p-col-12 mt-0">
-                    <p-table [columns]="cols" [value]="productDetail" dataKey="iSOPrdID" [paginator]="false">
+                    <p-table [value]="productDetail" dataKey="iSOPrdID" [paginator]="false">
                         <ng-template pTemplate="header">
                             <tr>
                                 <th>Order No.</th>
@@ -53,8 +53,8 @@
                                 <td>{{prdDetails.sCustomerName}}</td>
                                 <td>{{prdDetails.iQty}}</td>
                                 <td>
-                                    <button (click)="openDialogForOrderProductAllocate(prdDetails)" pButton type="button"
-                                        class="ui-button-success mr-1" label="Allocate"></button>
+                                    <button (click)="openDialogForOrderProductAllocate(prdDetails)" pButton
+                                        type="button" class="ui-button-success mr-1" label="Allocate"></button>
                                 </td>
                             </tr>
                         </ng-template>

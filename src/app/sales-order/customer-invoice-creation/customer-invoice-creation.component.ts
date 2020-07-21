@@ -22,6 +22,8 @@ export class CustomerInvoiceCreationComponent implements OnInit {
   order_no: string;
   iSOID: number;
   orderAllocation = [];
+  cusInvoice = [];
+
   public cols: any[];
   public cols1: any[];
   public isExpanded: boolean = false;
@@ -99,19 +101,28 @@ export class CustomerInvoiceCreationComponent implements OnInit {
   }
 
   saveConfirmAllocate() {
+    this.orderDetail.forEach((key, index) => {
+      let iPrdID = this.orderDetail[index].iPrdID;
+      let iSOPrdID = this.orderDetail[index].iSOPrdID;
+      if (iSOPrdID != null || iSOPrdID != undefined) {
+        let tempArray = {
+          "iPrdID": iPrdID,
+          "iSOPrdID": iSOPrdID
+        }
+        this.cusInvoice.push(tempArray);
+      }
+    });
     const data = {
-      // "iRequestID": 2435,
-      // "iSOPrdID": 1,
-      // "iPrdID": 1,
-      // "sGINAllocation": ""
+      "iRequestID": 2435,
+      "sGINAllocation": this.cusInvoice
     }
     console.log(data, "data");
-    this.httpService.callPostApi(data).subscribe(
-      (data) => {
-        this.toastService.displayApiMessage(data.headers.get('StatusMessage'), data.headers.get('StatusCode'));
-      },
-      (error) => console.log(error)
-    );
+    // this.httpService.callPostApi(data).subscribe(
+    //   (data) => {
+    //     this.toastService.displayApiMessage(data.headers.get('StatusMessage'), data.headers.get('StatusCode'));
+    //   },
+    //   (error) => console.log(error)
+    // );
   }
 
   expandAll() {
