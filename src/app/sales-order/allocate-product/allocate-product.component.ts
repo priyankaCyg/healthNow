@@ -19,7 +19,7 @@ export class AllocateProductComponent implements OnInit {
   data: any[] = [];
   showmeAdd: number;
   isdisabled: boolean = true;
-  orderAlloc: any[];
+  orderAlloc = [];
 
   constructor(private config: DynamicDialogConfig, private ref: DynamicDialogRef,
     private httpService: ApiService, private toastService: ToastService) { }
@@ -28,7 +28,6 @@ export class AllocateProductComponent implements OnInit {
     this.product_name = this.config.data.sPrdName;
     this.variant_name = this.config.data.sVariant;
     this.quantity = this.config.data.iQty;
-    //this.batch = [this.config.data];
     this.getCusOrderAllocData();
   }
 
@@ -46,7 +45,7 @@ export class AllocateProductComponent implements OnInit {
     )
   }
 
-  
+
   changeAllocQty(qty, index: number) {
     if (qty == null) {
       qty = 0;
@@ -70,7 +69,6 @@ export class AllocateProductComponent implements OnInit {
     } else {
       this.isdisabled = true;
     }
-
   }
 
   saveAllocate() {
@@ -92,7 +90,6 @@ export class AllocateProductComponent implements OnInit {
       "iPrdID": this.config.data.iPrdID,
       "sGINAllocation": this.orderAlloc
     }
-    console.log(data, "data");
     this.httpService.callPostApi(data).subscribe(
       (data) => {
         this.ref.close(true);

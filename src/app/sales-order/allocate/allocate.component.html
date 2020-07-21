@@ -12,15 +12,14 @@
                 <p-table [value]="batch">
                     <ng-template pTemplate="header">
                         <tr>
-                            <th>Batch Lot No</th>
+                            <th>Batch / Lot No.</th>
                             <th>Expiry Date </th>
-                            <th>Qty</th>
+                            <th>Quantity</th>
                             <th>Allocate Quantity</th>
                         </tr>
                     </ng-template>
                     <ng-template pTemplate="body" let-batch let-ri="rowIndex">
                         <tr>
-
                             <td>{{batch.sBatchNo}}</td>
                             <td>{{batch.sExpireDate | date: 'dd-MM-yyyy'}}</td>
                             <td>{{batch.iQty}}</td>
@@ -32,18 +31,16 @@
                     </ng-template>
                     <ng-template pTemplate="footer">
                         <tr>
-                            <td colspan="3"><b>Totals</b></td>
+                            <td colspan="3"><b>Total</b></td>
                             <td><b>{{showmeAdd}}</b></td>
                         </tr>
                     </ng-template>
                 </p-table>
             </div>
         </div>
-
         <div class="p-col-12 p-md-2 p-lg-12">
             <div class="separator separator--border-solid separator--space-sm separator--portlet-fit mt-2"></div>
         </div>
-
         <div class="p-col-12 p-md-2 p-lg-12 text-right mt-0">
             <button pButton type="button" label="Cancel" (click)="close()"
                 class="ui-button-light atbt mr-2 mb-2"></button>
