@@ -53,7 +53,7 @@ export class ProductOrderAllocationComponent implements OnInit {
     this.httpService.callPostApi(productAllocChildAPI).subscribe(
       data => {
         this.productDetail = data.body;
-        if (!this.productDetail.length) {
+        if (this.productDetail.length==0) {
           this.router.navigate(['/sales-order/order-allocation']);
         }
       },
