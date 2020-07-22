@@ -26,6 +26,8 @@ export class OrderAllocationComponent implements OnInit {
   customerAlloc: customerAllocData[] = [];
   productsAllocData: any[];
   noRecordFound: string;
+  index: number = 0;
+
   public cols: any[];
   public cols1: any[];
   public isExpanded: boolean = false;
@@ -38,6 +40,8 @@ export class OrderAllocationComponent implements OnInit {
   constructor(private breadcrumbService: BreadcrumbService, private httpService: ApiService, private router: Router) { }
 
   ngOnInit() {
+    this.index = +localStorage.getItem('tabIndex');
+    localStorage.removeItem('tabIndex');
     this.noRecordFound = config.noRecordFound;
     this.cols = [
       { field: 'sSONo', header: 'Order No.' },
@@ -85,6 +89,7 @@ export class OrderAllocationComponent implements OnInit {
 
   //Order Allocation button click function
   orderAllocClick(customersData) {
+    localStorage.setItem('tabIndex', '0');
     localStorage.setItem('orderAllocDetails', JSON.stringify({ customersData }));
     this.router.navigate(['/sales-order/customer-order-allocation']);
   }
@@ -118,6 +123,7 @@ export class OrderAllocationComponent implements OnInit {
 
   //Product Allocation button click function
   productAllocClick(productsData) {
+    localStorage.setItem('tabIndex', '1');
     localStorage.setItem('productAllocDetails', JSON.stringify({ productsData }));
     this.router.navigate(['/sales-order/product-order-allocation']);
   }

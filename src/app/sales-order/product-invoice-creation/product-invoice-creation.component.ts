@@ -27,6 +27,10 @@ export class ProductInvoiceCreationComponent implements OnInit {
   public expandedRows = {};
   public temDataLength: number = 0;
   cusInvoice = [];
+  custPrdid = [];
+  so_prd_ids = [];
+  final_soPrdid;
+  invoiceArray = [];
 
   constructor(private dialogService: DialogService, private httpService: ApiService, private toastService: ToastService,
     private confirmationService: ConfirmationService, private router: Router) { }
@@ -138,30 +142,55 @@ export class ProductInvoiceCreationComponent implements OnInit {
     )
   }
 
+  // saveConfirmAllocate() {
+  //   this.productDetail.forEach((key, index) => {
+  //     let iPrdID = this.productDetail[index].iPrdID;
+  //     let iSOPrdID = this.productDetail[index].iSOPrdID;
+  //     if (iSOPrdID != null || iSOPrdID != undefined) {
+  //       let tempArray = {
+  //         "iPrdID": iPrdID,
+  //         "iSOPrdID": iSOPrdID
+  //       }
+  //       this.cusInvoice.push(tempArray);
+  //     }
+  //   });
+  //   const data = {
+  //     "iRequestID": 24312,
+  //     "sInvoice": this.cusInvoice
+  //   }
+  //   console.log(data, "data");
+  //   // this.httpService.callPostApi(data).subscribe(
+  //   //   (data) => {
+  //   //     this.toastService.displayApiMessage(data.headers.get('StatusMessage'), data.headers.get('StatusCode'));
+  //   //     this.router.navigate(['/sales-order/delivery-list']);
+  //   //   },
+  //   //   (error) => console.log(error)
+  //   // );
+  // }
+
   saveConfirmAllocate() {
     this.productDetail.forEach((key, index) => {
-      let iPrdID = this.productDetail[index].iPrdID;
       let iSOPrdID = this.productDetail[index].iSOPrdID;
-      if (iSOPrdID != null || iSOPrdID != undefined) {
-        let tempArray = {
-          "iPrdID": iPrdID,
-          "iSOPrdID": iSOPrdID
-        }
-        this.cusInvoice.push(tempArray);
-      }
+      this.custPrdid.push(iSOPrdID);
+      this.final_soPrdid = this.custPrdid.join('/');
     });
+    let tempArray = {
+      "iPrdID": this.prdOrderDetail[0].iPrdID,
+      "sSOPrdID": this.final_soPrdid
+    }
+    this.invoiceArray.push(tempArray);
     const data = {
-      "iRequestID": 2435,
-      "sGINAllocation": this.cusInvoice
+      "iRequestID": 24312,
+      "sInvoice": this.invoiceArray
     }
     console.log(data, "data");
-    // this.httpService.callPostApi(data).subscribe(
-    //   (data) => {
-    //     this.toastService.displayApiMessage(data.headers.get('StatusMessage'), data.headers.get('StatusCode'));
-    //     this.router.navigate(['/sales-order/delivery-list']);
-    //   },
-    //   (error) => console.log(error)
-    // );
+    this.httpService.callPostApi(data).subscribe(
+      (data) => {
+        this.toastService.displayApiMessage(data.headers.get('StatusMessage'), data.headers.get('StatusCode'));
+        this.router.navigate(['/sales-order/delivery-list']);
+      },
+      (error) => console.log(error)
+    );
   }
 
 }

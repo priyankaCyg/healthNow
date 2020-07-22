@@ -27,7 +27,8 @@
                         <ng-template pTemplate="body" let-rowData let-expanded="expanded" let-columns="columns">
                             <tr>
                                 <td>
-                                    <a href="#" [pRowToggler]="rowData">
+                                    <a href="#" (click)="getOrderrAllocChildList(rowData.iSOID)"
+                                        [pRowToggler]="rowData">
                                         <i [ngClass]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></i>
                                     </a>
                                 </td>
@@ -62,13 +63,13 @@
                         </ng-template>
                         <ng-template pTemplate="body" let-orderDetail>
                             <tr>
-                                <td>{{orderDetail.prdName}}</td>
-                                <td>{{orderDetail.invoiceNo}}</td>
-                                <td>{{orderDetail.qty}}</td>
-                                <td>{{orderDetail.rate}}</td>
-                                <td>{{orderDetail.amount}}</td>
-                                <td>{{orderDetail.discAmt}}</td>
-                                <td>{{orderDetail.totalAmt}}</td>
+                                <td>{{orderDetail.sPrdName}}</td>
+                                <td>{{orderDetail.sInvoiceNo}}</td>
+                                <td>{{orderDetail.iQty}}</td>
+                                <td>{{orderDetail.nRate}}</td>
+                                <td>{{orderDetail.nAmount}}</td>
+                                <td>{{orderDetail.nDisAmt}}</td>
+                                <td>{{orderDetail.nTotalAmt}}</td>
                                 <td>
                                     <button pButton type="button" class="ui-button-danger mr-1" icon="pi pi-times"
                                         title="Cancel Invoice"></button>

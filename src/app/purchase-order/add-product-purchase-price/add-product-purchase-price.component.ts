@@ -111,7 +111,7 @@ export class AddProductPurchasePriceComponent implements OnInit {
     this.productForm.controls['sStartDate'].disable();
     this.price_id = this.addDetails[rowIndex].iPPriceID;
     let purchase = this.addDetails[rowIndex].iPurchaseAmt;
-    let enddate = this.addDetails[rowIndex - 1].sEndDate;
+    let enddate = this.addDetails[rowIndex].sEndDate;
     let new_date = this.datePipe.transform(enddate, "MM-dd-yyyy");
     this.minDate = new Date(new_date);
     let date = this.minDate.getDate();
@@ -133,8 +133,8 @@ export class AddProductPurchasePriceComponent implements OnInit {
 
   createControl(prdData?: purchaseProductMaster): FormGroup {
     this.productForm = this.fb.group({
-      iPurchaseAmt: [prdData.iPurchaseAmt, [ValidationService.amountValidator]],
-      sStartDate: [prdData.sStartDate ? moment(prdData.sEndDate).toDate() : null, Validators.required],
+      iPurchaseAmt: [prdData.iPurchaseAmt, [Validators.required]],
+      sStartDate: [prdData.sStartDate ? moment(prdData.sStartDate).toDate() : null, Validators.required],
       sEndDate: [prdData.sEndDate ? moment(prdData.sEndDate).toDate() : null, Validators.required],
     });
     return this.productForm;
@@ -199,6 +199,8 @@ export class AddProductPurchasePriceComponent implements OnInit {
     let start_date = this.datePipe.transform(new_date_start, "yyyy-MM-dd");
     let new_date_end = formData.sEndDate;
     let end_date = this.datePipe.transform(new_date_end, config.dateFormat);
+    console.log(new_date_end, "end date")
+
     const product_price_data = {
       "iRequestID": 2414,
       "iPrdID": this.prd_id,

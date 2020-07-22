@@ -23,8 +23,10 @@ export class CustomerInvoiceCreationComponent implements OnInit {
   order_no: string;
   iSOID: number;
   orderAllocation = [];
-  cusInvoice = [];
-
+  custPrdid = [];
+  so_prd_ids = [];
+  final_soPrdid;
+  invoiceArray = [];
   public cols: any[];
   public isExpanded: boolean = false;
   public rows: number = 10;
@@ -106,26 +108,36 @@ export class CustomerInvoiceCreationComponent implements OnInit {
   saveConfirmAllocate() {
     this.orderDetail.forEach((key, index) => {
       let iPrdID = this.orderDetail[index].iPrdID;
-      let iSOPrdID = this.orderDetail[index].iSOPrdID;
-      if (iSOPrdID != null || iSOPrdID != undefined) {
-        let tempArray = {
-          "iPrdID": iPrdID,
-          "iSOPrdID": iSOPrdID
+      this.custPrdid.push(iPrdID);
+    });
+    this.custPrdid.forEach((key, index) => {
+      let prd_id = this.custPrdid[index];
+      this.orderDetail.forEach((key, index) => {
+        let prd_id_order = this.orderDetail[index].iPrdID;
+        if (prd_id == prd_id_order) {
+          this.so_prd_ids.push(this.orderDetail[index].iSOPrdID);
+          this.final_soPrdid = this.so_prd_ids.join('/');
         }
-        this.cusInvoice.push(tempArray);
+      });
+      let tempArray = {
+        "iPrdID": prd_id,
+        "sSOPrdID": this.final_soPrdid
       }
+      this.invoiceArray.push(tempArray);
+      this.so_prd_ids = [];
     });
     const data = {
-      "iRequestID": 2435,
-      "sGINAllocation": this.cusInvoice
+      "iRequestID": 24312,
+      "sInvoice": this.invoiceArray
     }
     console.log(data, "data");
-    // this.httpService.callPostApi(data).subscribe(
-    //   (data) => {
-    //     this.toastService.displayApiMessage(data.headers.get('StatusMessage'), data.headers.get('StatusCode'));
-    //   },
-    //   (error) => console.log(error)
-    // );
+    this.httpService.callPostApi(data).subscribe(
+      (data) => {
+        this.toastService.displayApiMessage(data.headers.get('StatusMessage'), data.headers.get('StatusCode'));
+        this.router.navigate(['/sales-order/delivery-list']);
+      },
+      (error) => console.log(error)
+    );
   }
 
   expandAll() {

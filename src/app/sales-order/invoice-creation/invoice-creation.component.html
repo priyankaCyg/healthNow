@@ -5,7 +5,7 @@
                 <div class="p-col p-col-align-start">
                     <h1 class="mt-2">Invoice Creation</h1>
                 </div>
-                <p-tabView>
+                <p-tabView [activeIndex]="index">
                     <!-- Customer tab start-->
                     <p-tabPanel header="Customer">
                         <div class="p-grid ui-fluid vertical-container">
@@ -13,9 +13,8 @@
                                 <p-table [columns]="cols" #Ordersearch [value]="customerAlloc" dataKey="iSOID"
                                     [paginator]="false" [rows]="10" [totalRecords]="customerAlloc.length"
                                     [globalFilterFields]="['sSONo','sCustomerName','sAddress']" [filterDelay]="0"
-                                    [showCurrentPageReport]="true" [showCurrentPageReport]="true" rowExpandMode="single"
-                                    (onRowExpand)="onRowExpand()" (onRowCollapse)="onRowCollapse()"
-                                    [expandedRowKeys]="expandedRows">
+                                    [showCurrentPageReport]="true" rowExpandMode="single" (onRowExpand)="onRowExpand()"
+                                    (onRowCollapse)="onRowCollapse()" [expandedRowKeys]="expandedRows">
                                     <ng-template pTemplate="caption">
                                         <div class="ui-table-globalfilter-container text-left">
                                             <input type="text" pInputText size="50" placeholder="Search"

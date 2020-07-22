@@ -17,6 +17,7 @@ export class InvoiceCreationComponent implements OnInit {
   customerAlloc: customerAllocData[] = [];
   productsAllocData: any[];
   noRecordFound: string;
+  index: number = 0;
 
   public cols: any[];
   public cols1: any[];
@@ -30,7 +31,8 @@ export class InvoiceCreationComponent implements OnInit {
   constructor(private httpService: ApiService, private router: Router) { }
 
   ngOnInit(): void {
-
+    this.index = +localStorage.getItem('tabIndex');
+    localStorage.removeItem('tabIndex');
     this.noRecordFound = config.noRecordFound;
     this.cols = [{ field: 'sSONo', header: 'Order No' },
     { field: 'sCustomerName', header: 'Customer Name' }];
@@ -74,6 +76,7 @@ export class InvoiceCreationComponent implements OnInit {
 
   //Order Allocation button click function
   orderAllocClick(customersData) {
+    localStorage.setItem('tabIndex', '0');
     localStorage.setItem('orderAllocDetails', JSON.stringify({ customersData }));
     this.router.navigate(['/sales-order/customer-invoice-creation']);
   }
@@ -107,6 +110,7 @@ export class InvoiceCreationComponent implements OnInit {
 
   //Product Allocation button click function
   productAllocClick(productsData) {
+    localStorage.setItem('tabIndex', '1');
     localStorage.setItem('productAllocDetails', JSON.stringify({ productsData }));
     this.router.navigate(['/sales-order/product-invoice-creation']);
   }
