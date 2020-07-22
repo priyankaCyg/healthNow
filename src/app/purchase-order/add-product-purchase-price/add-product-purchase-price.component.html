@@ -20,7 +20,7 @@
                             <div class="p-col-12 p-md-12 p-lg-12 mb-2">
                                 <label for="amount">Amount</label>
                                 <input id="amount" formControlName="iPurchaseAmt" type="text" pInputText>
-                                <p-message severity="error" [text]="productForm.controls['iPurchaseAmt'].errors['Msg']"
+                                <p-message severity="error" text="this field is required"
                                     *ngIf="!productForm.controls['iPurchaseAmt'].valid && productForm.controls['iPurchaseAmt'].dirty">
                                 </p-message>
                             </div>
@@ -36,7 +36,8 @@
                             </div>
                             <div class="p-col-12 p-md-12 p-lg-12 mb-2">
                                 <label for="eDate">End Date</label>
-                                <p-calendar formControlName="sEndDate" [minDate]="minDate" dateFormat="dd-mm-yy">
+                                <p-calendar id="endDate" formControlName="sEndDate" [minDate]="minDate"
+                                    dateFormat="dd-mm-yy" (onSelect)="dateChange()">
                                 </p-calendar>
                                 <p-message severity="error"
                                     [text]="productForm.controls['sEndDate'].errors['required'] ? 'This Field is required' : ''"

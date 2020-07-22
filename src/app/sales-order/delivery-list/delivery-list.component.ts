@@ -1,13 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { BreadcrumbService } from '../../breadcrumb.service';
-import { CountryService } from '../../demo/service/countryservice';
 import { SelectItem, MenuItem, ConfirmationService } from 'primeng/api';
-import { GeneratedFile } from '@angular/compiler';
 import { DialogService } from 'primeng';
-import { SalesOrderRoutingModule } from '../sales-order-routing.module';
 import { UpdatePodComponent } from '../update-pod/update-pod.component';
 import { ApiService } from 'src/app/services/api.service';
-
 
 
 @Component({
@@ -17,67 +12,57 @@ import { ApiService } from 'src/app/services/api.service';
 })
 export class DeliveryListComponent implements OnInit {
 
+  deliveryList: any[] = [];
+  deliveryChildList: any[];
+  Delivery = [];
 
-  orderDetail: any[];
-  public cars: any[];
   public cols: any[];
   public isExpanded: boolean = false;
   public rows: number = 10;
   public expandedRows = {};
   public temDataLength: number = 0;
 
-  CARS = [
-    //{ "orderNo": "1120-3739", "custrName": "Amit Shah", "location": "Mumbai" }
-  ];
-
-  constructor(private breadcrumbService: BreadcrumbService, private dialogService: DialogService,
-    private httpService: ApiService) { }
+  constructor(private dialogService: DialogService, private httpService: ApiService) { }
 
   ngOnInit() {
-
-    this.orderDetail = [
-      //{ prdName: 'Groundnut Oil', "invoiceNo": "INV/2020/122", qty: '2', rate: '500', amount: '1000', discAmt: '15', totalAmt: '970' },
-      //{ prdName: 'Horlicks', "invoiceNo": "INV/2020/124", qty: '3', rate: '200', amount: '600', discAmt: '15', totalAmt: '555' }
-    ];
-
 
     this.cols = [
       { field: 'sSONo', header: 'Order No' },
       { field: 'sCustomerName', header: 'Customer Name' },
-      { field: 'sAddress', header: 'Location' }
-    ];
-    this.cars = this.CARS;
+      { field: 'sAddress', header: 'Location' }];
 
-    this.cars.length < this.rows ? this.temDataLength = this.cars.length : this.temDataLength = this.rows;
-    this.getProductAllocList();
+    this.getDeliveryList();
+    this.deliveryList = this.Delivery;
+    this.deliveryList.length < this.rows ? this.temDataLength = this.deliveryList.length : this.temDataLength = this.rows;
   }
 
-  //Function to get Product Allocation list
-  getProductAllocList() {
-    const productAllocAPI = {
+  //Function to get Delivery list
+  getDeliveryList() {
+    const DeliveryListAPI = {
       "iRequestID": 24313,
     }
-    this.httpService.callPostApi(productAllocAPI).subscribe(
+    this.httpService.callPostApi(DeliveryListAPI).subscribe(
       data => {
-        this.cars = data.body;
+        this.deliveryList = data.body;
       },
       error => { console.log(error) }
     )
   }
 
-  //code for get Order Alocation child data table
-  getOrderrAllocChildList(iSOID: Number) {
-    const ordrAllocChildAPI = {
+  //code for get Delivery List child data table
+  getDeliveryChildList(iSOID: Number) {
+    const deliveryChildAPI = {
       "iRequestID": 24314,
       "iSOID": iSOID
     }
-    this.httpService.callPostApi(ordrAllocChildAPI).subscribe(
+    this.httpService.callPostApi(deliveryChildAPI).subscribe(
       data => {
-        this.orderDetail = data.body;
+        this.deliveryChildList = data.body;
       },
       error => { console.log(error) }
     )
   }
+
   openDialogForUpdatePOD() {
     const ref = this.dialogService.open(UpdatePodComponent, {
       data: {
@@ -95,31 +80,35 @@ export class DeliveryListComponent implements OnInit {
 
   expandAll() {
     if (!this.isExpanded) {
-      this.cars.forEach(data => {
-        this.expandedRows[data.vin] = 1;
+      this.deliveryList.forEach(data => {
+        this.expandedRows[data.iSOID] = 1;
       })
     } else {
       this.expandedRows = {};
     }
     this.isExpanded = !this.isExpanded;
   }
+
   onRowExpand() {
     console.log("row expanded", Object.keys(this.expandedRows).length);
     if (Object.keys(this.expandedRows).length === this.temDataLength) {
       this.isExpanded = true;
     }
   }
+
   onRowCollapse() {
     console.log("row collapsed", Object.keys(this.expandedRows).length);
     if (Object.keys(this.expandedRows).length === 0) {
       this.isExpanded = false;
     }
   }
+
   onPage(event: any) {
-    this.temDataLength = this.cars.slice(event.first, event.first + 10).length;
+    this.temDataLength = this.deliveryList.slice(event.first, event.first + 10).length;
     console.log(this.temDataLength);
     this.isExpanded = false;
     this.expandedRows = {};
   }
+
 }
 

@@ -7,10 +7,17 @@
                 </div>
                 <div class="p-col-12 mt-3">
 
-                    <p-table [columns]="cols" [value]="cars" dataKey="vin" [paginator]="false" [rows]="10"
-                        [totalRecords]="cars.length" pageLinkSize="3" (onPage)="onPage($event)"
-                        (onRowExpand)="onRowExpand()" (onRowCollapse)="onRowCollapse()"
-                        [expandedRowKeys]="expandedRows">
+                    <p-table [columns]="cols" #deliverySearch [value]="deliveryList" dataKey="iSOID" [paginator]="false"
+                        [rows]="10" [totalRecords]="deliveryList.length" pageLinkSize="3" (onPage)="onPage($event)"
+                        (onRowExpand)="onRowExpand()" (onRowCollapse)="onRowCollapse()" [expandedRowKeys]="expandedRows"
+                        [globalFilterFields]="['sSONo','sCustomerName','sAddress']">
+                        <ng-template pTemplate="caption">
+                            <div class="ui-table-globalfilter-container text-left">
+                                <input type="text" pInputText size="50" placeholder="Search"
+                                    (input)="deliverySearch.filterGlobal($event.target.value,'contains')"
+                                    style="width: 250px;" />
+                            </div>
+                        </ng-template>
                         <ng-template pTemplate="header" let-columns>
                             <tr>
                                 <th style="width: 3em">
@@ -27,8 +34,7 @@
                         <ng-template pTemplate="body" let-rowData let-expanded="expanded" let-columns="columns">
                             <tr>
                                 <td>
-                                    <a href="#" (click)="getOrderrAllocChildList(rowData.iSOID)"
-                                        [pRowToggler]="rowData">
+                                    <a href="#" (click)="getDeliveryChildList(rowData.iSOID)" [pRowToggler]="rowData">
                                         <i [ngClass]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></i>
                                     </a>
                                 </td>
@@ -48,12 +54,12 @@
                                 <td [attr.colspan]="columns.length + 2">
                                     <div class="ui-g ui-fluid" style="font-size:14px;padding:8px">
                                         <div class="ui-g-12 ui-md-12">
-                                            <p-table [value]="orderDetail">
+                                            <p-table [value]="deliveryChildList">
                                                 <ng-template pTemplate="header">
                             <tr>
                                 <th>Product Name</th>
                                 <th>Invoice NO</th>
-                                <th>Qty</th>
+                                <th>Quantity</th>
                                 <th>Rate</th>
                                 <th>Amount</th>
                                 <th>Discount Amount</th>
@@ -61,15 +67,15 @@
                                 <th>Action</th>
                             </tr>
                         </ng-template>
-                        <ng-template pTemplate="body" let-orderDetail>
+                        <ng-template pTemplate="body" let-deliveryChildList>
                             <tr>
-                                <td>{{orderDetail.sPrdName}}</td>
-                                <td>{{orderDetail.sInvoiceNo}}</td>
-                                <td>{{orderDetail.iQty}}</td>
-                                <td>{{orderDetail.nRate}}</td>
-                                <td>{{orderDetail.nAmount}}</td>
-                                <td>{{orderDetail.nDisAmt}}</td>
-                                <td>{{orderDetail.nTotalAmt}}</td>
+                                <td>{{deliveryChildList.sPrdName}} {{deliveryChildList.sVariant}}</td>
+                                <td>{{deliveryChildList.sInvoiceNo}}</td>
+                                <td>{{deliveryChildList.iQty}}</td>
+                                <td>{{deliveryChildList.nRate}}</td>
+                                <td>{{deliveryChildList.nAmount}}</td>
+                                <td>{{deliveryChildList.nDisAmt}}</td>
+                                <td>{{deliveryChildList.nTotalAmt}}</td>
                                 <td>
                                     <button pButton type="button" class="ui-button-danger mr-1" icon="pi pi-times"
                                         title="Cancel Invoice"></button>

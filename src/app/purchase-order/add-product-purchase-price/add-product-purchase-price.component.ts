@@ -30,10 +30,13 @@ export class AddProductPurchasePriceComponent implements OnInit {
   prdData: purchaseProductMaster;
   price_id: number;
   flag = 0;
+  end_date;
+  dateflag = 0;
   minDate: Date;
   today: Date;
   today_con_date;
   maxDate: Date;
+
   constructor(private breadcrumbService: BreadcrumbService, private dialogService: DialogService,
     private httpService: ApiService, private toastService: ToastService, private datePipe: DatePipe, private config: DynamicDialogConfig,
     private fb: FormBuilder, private confirmationService: ConfirmationService, private ref: DynamicDialogRef, ) {
@@ -108,6 +111,7 @@ export class AddProductPurchasePriceComponent implements OnInit {
 
   editOne(rowIndex) {
     this.flag = 1;
+    this.dateflag = 0;
     this.productForm.controls['sStartDate'].disable();
     this.price_id = this.addDetails[rowIndex].iPPriceID;
     let purchase = this.addDetails[rowIndex].iPurchaseAmt;
@@ -127,7 +131,6 @@ export class AddProductPurchasePriceComponent implements OnInit {
     this.productForm.controls['iPurchaseAmt'].setValue(purchase);
     this.productForm.controls['sStartDate'].setValue(start_date);
     this.productForm.controls['sEndDate'].setValue(end_new_date);
-
 
   }
 
@@ -193,13 +196,21 @@ export class AddProductPurchasePriceComponent implements OnInit {
       });
   }
 
+  dateChange() {
+    this.dateflag = 1;
+    console.log(this.dateflag, "1")
+  }
+
   editProductPrice() {
     var formData = this.productForm.getRawValue();
     let new_date_start = formData.sStartDate;
     let start_date = this.datePipe.transform(new_date_start, "yyyy-MM-dd");
     let new_date_end = formData.sEndDate;
-    let end_date = this.datePipe.transform(new_date_end, config.dateFormat);
-    console.log(new_date_end, "end date")
+    if (this.dateflag == 0) {
+      this.end_date = new_date_end.split("-").reverse().join("-");
+    } else {
+      this.end_date = this.datePipe.transform(new_date_end, config.dateFormat);
+    }
 
     const product_price_data = {
       "iRequestID": 2414,
@@ -207,7 +218,7 @@ export class AddProductPurchasePriceComponent implements OnInit {
       "iSupID": this.sup_id,
       "iPurchaseAmt": +formData.iPurchaseAmt,
       "sStartDate": start_date,
-      "sEndDate": end_date,
+      "sEndDate": this.end_date,
       "iPPriceID": this.price_id
     }
     console.log(product_price_data)
@@ -217,6 +228,7 @@ export class AddProductPurchasePriceComponent implements OnInit {
           this.product_details();
           this.productForm.reset();
           this.flag = 0;
+          this.dateflag = 0;
           this.productForm.controls['sStartDate'].enable();
         }
         this.toastService.displayApiMessage(data.headers.get('StatusMessage'), data.headers.get('StatusCode'));
