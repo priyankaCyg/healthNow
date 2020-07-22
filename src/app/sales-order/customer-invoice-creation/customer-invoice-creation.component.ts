@@ -14,7 +14,7 @@ import { Router } from '@angular/router';
 
 export class CustomerInvoiceCreationComponent implements OnInit {
 
-  orderDetail: customerAllocChildData[];
+  orderDetail= [];
   batch: any[]
   data: object;
   responseData: object;
@@ -32,6 +32,7 @@ export class CustomerInvoiceCreationComponent implements OnInit {
   public rows: number = 10;
   public expandedRows = {};
   public temDataLength: number = 0;
+
 
   constructor(private httpService: ApiService, private toastService: ToastService, private confirmationService: ConfirmationService,
     private dialogService: DialogService, private router: Router) { }
@@ -58,10 +59,7 @@ export class CustomerInvoiceCreationComponent implements OnInit {
     }
     this.httpService.callPostApi(ordrAllocChildAPI).subscribe(
       data => {
-        this.orderDetail = data.body;
-        if (this.orderDetail == null) {
-          this.router.navigate(['/sales-order/invoice-creation']);
-        }
+        this.orderDetail = data.body;       
       },
       error => { console.log(error) }
     )
@@ -83,6 +81,7 @@ export class CustomerInvoiceCreationComponent implements OnInit {
 
   //Open Dialog for reject alocated product
   rejectAllocProduct(orderDetail) {
+    
     this.confirmationService.confirm({
       message: 'Are you sure that you want to cancel this Record ?',
       header: 'Confirmation',
@@ -95,14 +94,23 @@ export class CustomerInvoiceCreationComponent implements OnInit {
         console.log(dataToSendReject);
         this.httpService.callPostApi(dataToSendReject).subscribe(
           (data) => {
-            this.toastService.displayApiMessage(data.headers.get('StatusMessage'), data.headers.get('StatusCode'));
+            this.toastService.displayApiMessage(data.headers.get('StatusMessage'), data.headers.get('StatusCode')); 
             this.getOrderrAllocChildList();
+          //   if(this.orderDetail.length==1){
+       
+          //     this.router.navigate(['/sales-order/delivery-list']);
+      
+          // }
           },
           (error) => console.log(error)
         );
+       
       },
       reject: () => { }
+      
     });
+    
+    
   }
 
   saveConfirmAllocate() {

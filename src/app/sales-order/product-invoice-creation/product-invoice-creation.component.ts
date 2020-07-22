@@ -12,8 +12,8 @@ import { Router } from '@angular/router';
 })
 export class ProductInvoiceCreationComponent implements OnInit {
 
-  prdOrderDetail: any[];
-  productDetail: any[];
+  prdOrderDetail=[];
+  productDetail =[];
   data: object;
   responseData: object;
   batch: any[];
@@ -31,6 +31,7 @@ export class ProductInvoiceCreationComponent implements OnInit {
   so_prd_ids = [];
   final_soPrdid;
   invoiceArray = [];
+  productsAllocData: any[];
 
   constructor(private dialogService: DialogService, private httpService: ApiService, private toastService: ToastService,
     private confirmationService: ConfirmationService, private router: Router) { }
@@ -66,9 +67,7 @@ export class ProductInvoiceCreationComponent implements OnInit {
     this.httpService.callPostApi(productAllocChildAPI).subscribe(
       data => {
         this.productDetail = data.body;
-        if (this.productDetail == null) {
-          this.router.navigate(['/sales-order/invoice-creation']);
-        }
+        console.log(this.productDetail.length)
       },
       error => { console.log(error) }
     )
@@ -89,6 +88,7 @@ export class ProductInvoiceCreationComponent implements OnInit {
           (data) => {
             this.toastService.displayApiMessage(data.headers.get('StatusMessage'), data.headers.get('StatusCode'));
             this.getProductAllocChildList();
+            this.getProductAllocList(prdDetail.iPrdID);
           },
           (error) => console.log(error)
         );
@@ -191,6 +191,23 @@ export class ProductInvoiceCreationComponent implements OnInit {
       },
       (error) => console.log(error)
     );
+  }
+
+  getProductAllocList(prd_id) {
+    const productAllocAPI = {
+      "iRequestID": 2439,
+    }
+    this.httpService.callPostApi(productAllocAPI).subscribe(
+      data => {
+        this.productsAllocData = data.body;
+        let new_data = this.productsAllocData.filter(item => item.iPrdID == prd_id)
+        this.prdOrderDetail = new_data;
+        // if (!this.productDetail.length) {
+        //   this.router.navigate(['/sales-order/invoice-creation']);
+        // }
+      },
+      error => { console.log(error) }
+    )
   }
 
 }
