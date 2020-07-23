@@ -1,3 +1,5 @@
+<p-confirmDialog header="Confirmation" icon="pi pi-info" [style]="{width: '425px'}"
+    rejectButtonStyleClass="ui-button-secondary"></p-confirmDialog>
 <div class="p-grid">
     <div class="p-col-12">
         <div class="card card-w-title">
@@ -10,7 +12,7 @@
                     <p-table [columns]="cols" #deliverySearch [value]="deliveryList" dataKey="iSOID" [paginator]="false"
                         [rows]="10" [totalRecords]="deliveryList.length" pageLinkSize="3" (onPage)="onPage($event)"
                         (onRowExpand)="onRowExpand()" (onRowCollapse)="onRowCollapse()" [expandedRowKeys]="expandedRows"
-                        [globalFilterFields]="['sSONo','sCustomerName','sAddress']">
+                        [globalFilterFields]="['sSONo','sCustomerName','sAddress']" rowExpandMode="single">
                         <ng-template pTemplate="caption">
                             <div class="ui-table-globalfilter-container text-left">
                                 <input type="text" pInputText size="50" placeholder="Search"
@@ -44,8 +46,8 @@
                                 <td>
                                     <button pButton type="button" class="ui-button-danger mr-1" icon="pi pi-file-pdf"
                                         title="View Invoice"></button>
-                                    <button pButton type="button" class="ui-button-danger mr-1" icon="pi pi-times"
-                                        title="Cancel Invoice"></button>
+                                    <!-- <button pButton type="button" class="ui-button-danger mr-1" icon="pi pi-times"
+                                        title="Cancel Invoice"></button> -->
                                 </td>
                             </tr>
                         </ng-template>
@@ -78,7 +80,7 @@
                                 <td>{{deliveryChildList.nTotalAmt}}</td>
                                 <td>
                                     <button pButton type="button" class="ui-button-danger mr-1" icon="pi pi-times"
-                                        title="Cancel Invoice"></button>
+                                        (click)="rejectDelivery(deliveryChildList)" title="Cancel Invoice"></button>
                                     <button (click)="openDialogForUpdatePOD()" pButton type="button"
                                         class="ui-button-success" label="Update POD"></button>
                                 </td>
@@ -92,9 +94,8 @@
             </ng-template>
             </p-table>
         </div>
+        <div class="noRecordsFound" *ngIf="!deliveryList.length">{{noRecordFound}}</div>
     </div>
-
-
 </div>
 </div>
 </div>

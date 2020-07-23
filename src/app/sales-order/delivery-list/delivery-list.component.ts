@@ -3,6 +3,8 @@ import { SelectItem, MenuItem, ConfirmationService } from 'primeng/api';
 import { DialogService } from 'primeng';
 import { UpdatePodComponent } from '../update-pod/update-pod.component';
 import { ApiService } from 'src/app/services/api.service';
+import { config } from 'src/config';
+import { ToastService } from 'src/app/services/toast.service';
 
 
 @Component({
@@ -15,6 +17,7 @@ export class DeliveryListComponent implements OnInit {
   deliveryList: any[] = [];
   deliveryChildList: any[];
   Delivery = [];
+  noRecordFound: string;
 
   public cols: any[];
   public isExpanded: boolean = false;
@@ -22,9 +25,11 @@ export class DeliveryListComponent implements OnInit {
   public expandedRows = {};
   public temDataLength: number = 0;
 
-  constructor(private dialogService: DialogService, private httpService: ApiService) { }
+  constructor(private dialogService: DialogService, private httpService: ApiService,
+    private toastService: ToastService, private confirmationService: ConfirmationService, ) { }
 
   ngOnInit() {
+    this.noRecordFound = config.noRecordFound;
 
     this.cols = [
       { field: 'sSONo', header: 'Order No' },
@@ -61,6 +66,30 @@ export class DeliveryListComponent implements OnInit {
       },
       error => { console.log(error) }
     )
+  }
+
+  //Open Dialog for reject alocated product
+  rejectDelivery(prdDetail) {
+    this.confirmationService.confirm({
+      message: 'Are you sure that you want to cancel this Record ?',
+      header: 'Confirmation',
+      icon: 'pi pi-exclamation-triangle',
+      accept: () => {
+        // const dataToSendReject = {
+        //   "iRequestID": 24311,
+        //   "iSOPrdID": prdDetail.iSOPrdID,
+        // }
+        // this.httpService.callPostApi(dataToSendReject).subscribe(
+        //   (data) => {
+        //     this.toastService.displayApiMessage(data.headers.get('StatusMessage'), data.headers.get('StatusCode'));
+        //     this.getDeliveryList();
+        //     //this.getDeliveryChildList(prdDetail.iPrdID);
+        //   },
+        //   (error) => console.log(error)
+        // );
+      },
+      reject: () => { }
+    });
   }
 
   openDialogForUpdatePOD() {
