@@ -43,9 +43,9 @@ export class ReceiveProductComponent implements OnInit {
   // moment(poData.sPODate,'MM-DD-YYYY').format('DD-MM-YYYY')
   createControl(prdData?: receivedProductMaster): FormGroup {
     this.productForm = this.fb.group({
-      sBatchNo: [prdData.sBatchNo, ValidationService.batchValidator],
-      iReceivedQty: [prdData.iReceivedQty, ValidationService.quantityValidator],
-      sPODNo: [prdData.sPODNo, ValidationService.podNoValidator],
+      sBatchNo: [prdData.sBatchNo, [Validators.required, Validators.pattern('^[a-zA-Z0-9]+$')]],
+      iReceivedQty: [prdData.iReceivedQty, [Validators.required, Validators.pattern('^[0-9]*$')]],
+      sPODNo: [prdData.sPODNo, [Validators.required, Validators.pattern('^[a-zA-Z0-9]+$')]],
       sPODDate: [prdData.sPODDate ? moment(prdData.sPODDate).toDate() : null, Validators.required],
       sManufacturingDate: [prdData.sManufacturingDate ? moment(prdData.sManufacturingDate).toDate() : null, Validators.required],
       sExpireDate: [prdData.sExpireDate ? moment(prdData.sExpireDate).toDate() : null, Validators.required],

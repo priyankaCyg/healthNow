@@ -15,7 +15,7 @@ export class InvoiceCreationComponent implements OnInit {
   orderDetail: customerAllocChildData[];
   productDetail: any[];
   customerAlloc: customerAllocData[] = [];
-  productsAllocData: any[];
+  productsAllocData: any[] = [];
   noRecordFound: string;
   index: number = 0;
 

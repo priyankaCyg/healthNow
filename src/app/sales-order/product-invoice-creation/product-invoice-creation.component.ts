@@ -12,13 +12,14 @@ import { Router } from '@angular/router';
 })
 export class ProductInvoiceCreationComponent implements OnInit {
 
-  prdOrderDetail=[];
-  productDetail =[];
+  prdOrderDetail = [];
+  productDetail = [];
   data: object;
   responseData: object;
   batch: any[];
   productAllocation = [];
   allocateBtn: boolean = false;
+
   public products: any[];
   public cols: any[];
   public cols1: any[];
@@ -37,6 +38,7 @@ export class ProductInvoiceCreationComponent implements OnInit {
     private confirmationService: ConfirmationService, private router: Router) { }
 
   ngOnInit(): void {
+
     this.data = JSON.parse(localStorage.getItem('productAllocDetails'));
     this.prdOrderDetail = Object.values(this.data);
     this.getProductAllocChildList();
@@ -67,6 +69,9 @@ export class ProductInvoiceCreationComponent implements OnInit {
     this.httpService.callPostApi(productAllocChildAPI).subscribe(
       data => {
         this.productDetail = data.body;
+        if (this.productDetail.length == 0) {
+          this.router.navigate(['/sales-order/invoice-creation']);
+        }
         console.log(this.productDetail.length)
       },
       error => { console.log(error) }

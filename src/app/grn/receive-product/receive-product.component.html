@@ -31,7 +31,7 @@
                                                 <input id="sBatchNo" type="text" pInputText
                                                     placeholder="Enter Batch No." formControlName="sBatchNo">
                                                 <p-message severity="error"
-                                                    [text]="productForm.controls['sBatchNo'].errors['Msg']"
+                                                    [text]="productForm.controls['sBatchNo'].errors['required'] ? 'This field is required' :  productForm.controls['sBatchNo'].errors['pattern'] ? 'Please Enter Valid Batch No.' : '' "
                                                     *ngIf="!productForm.controls['sBatchNo'].valid && productForm.controls['sBatchNo'].dirty">
                                                 </p-message>
                                             </div>
@@ -40,7 +40,7 @@
                                                 <input id="iReceivedQty" type="text" pInputText placeholder="Enter Qty."
                                                     formControlName="iReceivedQty" (change)="qtyChange()">
                                                 <p-message severity="error"
-                                                    [text]="productForm.controls['iReceivedQty'].errors['Msg']"
+                                                    [text]="productForm.controls['iReceivedQty'].errors['required'] ? 'This field is required' :  productForm.controls['iReceivedQty'].errors['pattern'] ? 'Please Enter Valid Quantity.' : '' "
                                                     *ngIf="!productForm.controls['iReceivedQty'].valid && productForm.controls['iReceivedQty'].dirty">
                                                 </p-message>
                                             </div>
@@ -50,7 +50,7 @@
                                                 <input id="sPODNo" type="text" pInputText placeholder="POD No."
                                                     formControlName="sPODNo">
                                                 <p-message severity="error"
-                                                    [text]="productForm.controls['sPODNo'].errors['Msg']"
+                                                    [text]="productForm.controls['sPODNo'].errors['required'] ? 'This field is required' :  productForm.controls['sPODNo'].errors['pattern'] ? 'Please Enter Valid POD No.' : '' "
                                                     *ngIf="!productForm.controls['sPODNo'].valid && productForm.controls['sPODNo'].dirty">
                                                 </p-message>
                                             </div>

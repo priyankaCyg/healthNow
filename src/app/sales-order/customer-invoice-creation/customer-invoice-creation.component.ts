@@ -5,6 +5,7 @@ import { ToastService } from 'src/app/services/toast.service';
 import { customerAllocChildData } from 'src/app/model/customer-order-alloc-child';
 import { DialogService } from 'primeng';
 import { Router } from '@angular/router';
+import { config } from 'src/config';
 
 @Component({
   selector: 'app-customer-invoice-creation',
@@ -14,8 +15,8 @@ import { Router } from '@angular/router';
 
 export class CustomerInvoiceCreationComponent implements OnInit {
 
-  orderDetail= [];
-  batch: any[]
+  orderDetail: any[] = [];
+  batch: any[];
   data: object;
   responseData: object;
   customer_name: string;
@@ -27,6 +28,7 @@ export class CustomerInvoiceCreationComponent implements OnInit {
   so_prd_ids = [];
   final_soPrdid;
   invoiceArray = [];
+
   public cols: any[];
   public isExpanded: boolean = false;
   public rows: number = 10;
@@ -59,7 +61,10 @@ export class CustomerInvoiceCreationComponent implements OnInit {
     }
     this.httpService.callPostApi(ordrAllocChildAPI).subscribe(
       data => {
-        this.orderDetail = data.body;       
+        this.orderDetail = data.body;
+        if (this.orderDetail.length == 0) {
+          this.router.navigate(['/sales-order/invoice-creation']);
+        }
       },
       error => { console.log(error) }
     )
@@ -81,7 +86,7 @@ export class CustomerInvoiceCreationComponent implements OnInit {
 
   //Open Dialog for reject alocated product
   rejectAllocProduct(orderDetail) {
-    
+
     this.confirmationService.confirm({
       message: 'Are you sure that you want to cancel this Record ?',
       header: 'Confirmation',
@@ -94,23 +99,20 @@ export class CustomerInvoiceCreationComponent implements OnInit {
         console.log(dataToSendReject);
         this.httpService.callPostApi(dataToSendReject).subscribe(
           (data) => {
-            this.toastService.displayApiMessage(data.headers.get('StatusMessage'), data.headers.get('StatusCode')); 
+            this.toastService.displayApiMessage(data.headers.get('StatusMessage'), data.headers.get('StatusCode'));
             this.getOrderrAllocChildList();
-          //   if(this.orderDetail.length==1){
-       
-          //     this.router.navigate(['/sales-order/delivery-list']);
-      
-          // }
+            this.getBatchAllocChildList(orderDetail.iSOPrdID);
+
           },
           (error) => console.log(error)
         );
-       
+
       },
       reject: () => { }
-      
+
     });
-    
-    
+
+
   }
 
   saveConfirmAllocate() {

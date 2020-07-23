@@ -20,7 +20,8 @@
                             <div class="p-col-12 p-md-12 p-lg-12 mb-2">
                                 <label for="amount">Amount</label>
                                 <input id="amount" formControlName="iPurchaseAmt" type="text" pInputText>
-                                <p-message severity="error" text="this field is required"
+                                <p-message severity="error"
+                                    [text]="productForm.controls['iPurchaseAmt'].errors['required'] ? 'This field is required' :  productForm.controls['iPurchaseAmt'].errors['pattern'] ? 'Please Enter Valid Amount.' : '' "
                                     *ngIf="!productForm.controls['iPurchaseAmt'].valid && productForm.controls['iPurchaseAmt'].dirty">
                                 </p-message>
                             </div>
