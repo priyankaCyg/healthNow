@@ -13,7 +13,10 @@
                     <label for="iStatusID">Status</label>
                     <p-dropdown id="iStatusID" [options]="statusData" formControlName="status" optionLabel="sKVValue">
                     </p-dropdown>
-                    <p-message severity="error" text="select Status is required"
+                    <!-- <p-message severity="error" text="select Status is required"
+                        *ngIf="!DepartmentSubmit.controls['status'].valid && DepartmentSubmit.controls['status'].dirty">
+                    </p-message> -->
+                    <p-message severity="error" [text]="DepartmentSubmit.controls['status'].errors['Msg']"
                         *ngIf="!DepartmentSubmit.controls['status'].valid && DepartmentSubmit.controls['status'].dirty">
                     </p-message>
                     <!-- <div *ngIf="status.hasError('removeSpaceFromUserName')">

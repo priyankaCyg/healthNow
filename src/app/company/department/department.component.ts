@@ -95,7 +95,7 @@ export class DepartmentComponent implements OnInit {
     this.DepartmentSubmit = this.fb.group({
       iCID: [departmentData.iCID],
       iDeptID: [departmentData.iDeptID],
-      status: [departmentData.iStatusID, [UserNameValiditors.removeSpaceFromUserName]],
+      status: [departmentData.iStatusID, ValidationService.dropdownValidator],
       sDeptName: [departmentData.sDeptName, [Validators.required]],
       iCreatedBy: [departmentData.iCreatedBy],
       sCreatedDate: [departmentData.sCreatedDate]
@@ -103,9 +103,9 @@ export class DepartmentComponent implements OnInit {
     return this.DepartmentSubmit;
   }
 
-  get status() {
-    return this.DepartmentSubmit.get('status');
-  }
+  // get status() {
+  //   return this.DepartmentSubmit.get('status');
+  // }
 
   //code for add department data
   addDepartment() {

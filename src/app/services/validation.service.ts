@@ -9,6 +9,13 @@ export class ValidationService {
 
   constructor() { }
 
+  static dropdownValidator(control) {
+    console.log(control.value.iKVID,"control")
+    if (control.value.iKVID == "") {
+      return { Msg: "This field is required" };
+    }
+    
+  }
   static telephoneNoValidator(control) {
     if (control.value == "") {
       return { Msg: "This field is required" };
