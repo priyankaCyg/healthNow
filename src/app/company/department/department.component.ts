@@ -103,9 +103,6 @@ export class DepartmentComponent implements OnInit {
     return this.DepartmentSubmit;
   }
 
-  // get status() {
-  //   return this.DepartmentSubmit.get('status');
-  // }
 
   //code for add department data
   addDepartment() {
@@ -181,31 +178,7 @@ export class DepartmentComponent implements OnInit {
   close() {
     this.ref.close();
   }
-  // code for dropDown validity check
-  dropDownValidityCheck() {
-    let test = this.DepartmentSubmit.controls['status'].value;
-    if (test.iKVID == "") {
-      return { Msg: "select status is required" };
-    }
-    else {
-      return null
-    }
-  }
+
 
 }
 
-import { AbstractControl, ValidationErrors } from "@angular/forms";
-
-export class UserNameValiditors {
-  static removeSpaceFromUserName(control: AbstractControl): ValidationErrors | null {
-    if (control.value == '') {
-      console.log('hii')
-      return {
-        removeSpaceFromUserName: true
-      };
-    }
-    else {
-      return null;
-    }
-  }
-}

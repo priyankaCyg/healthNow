@@ -10,11 +10,11 @@ export class ValidationService {
   constructor() { }
 
   static dropdownValidator(control) {
-    console.log(control.value.iKVID,"control")
-    if (control.value.iKVID == "") {
+    console.log(control.value.iKVID, "control")
+    if (control.value.iKVID == "" || control.value.iKVID == undefined) {
       return { Msg: "This field is required" };
     }
-    
+
   }
   static telephoneNoValidator(control) {
     if (control.value == "") {
