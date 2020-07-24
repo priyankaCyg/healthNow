@@ -39,6 +39,9 @@
                                         </p-message>
                                     </div>
                                 </div>
+                                <div
+                                    class="separator separator--border-solid separator--space-sm separator--portlet-fit">
+                                </div>
                                 <div class="p-grid form-group">
                                     <div class="p-col-12 p-md-6 p-lg-4">
                                         <label for="sParentPrdName">Parent Product</label>
@@ -71,6 +74,33 @@
                                             *ngIf="ProductForm.controls['sStatusName'].touched && (selectedStatus.iStatusID=='' || ProductForm.controls['sStatusName'].hasError('required'))">
                                         </p-message>
                                     </div> -->
+                                </div>
+                                <div
+                                    class="separator separator--border-solid separator--space-sm separator--portlet-fit">
+                                </div>
+                                <div class="p-grid form-group">
+                                    <div class="p-col-12 p-md-6 p-lg-4 ">
+                                        <label for="producer">Tax</label>
+                                        <p-dropdown [options]="taxData" optionLabel="sTaxName"
+                                            formControlName="sTaxName" [(ngModel)]="selectedTax"></p-dropdown>
+                                        <p-message severity="error" text="Tax is required"
+                                            *ngIf="ProductForm.controls['sTaxName'].touched && (selectedTax.iTaxID=='' || ProductForm.controls['sTaxName'].hasError('required'))">
+                                        </p-message>
+                                    </div>
+                                    <div class="p-col-12 p-md-6 p-lg-4 mb-2">
+                                        <label for="sPrdDesc">Product Description</label>
+                                        <input id="sPrdDesc" type="text" formControlName="sPrdDesc" pInputText>
+                                        <p-message severity="error" text="This field is required"
+                                            *ngIf="!ProductForm.controls['sPrdDesc'].valid && ProductForm.controls['sPrdDesc'].dirty">
+                                        </p-message>
+                                    </div>
+                                    <div class="p-col-12 p-md-6 p-lg-4 mb-2">
+                                        <label for="sHSN">HSN No</label>
+                                        <input id="sHSN" type="text" formControlName="sHSN" pInputText>
+                                        <p-message severity="error" [text]="ProductForm.controls['sHSN'].errors['Msg']"
+                                            *ngIf="!ProductForm.controls['sHSN'].valid && ProductForm.controls['sHSN'].dirty">
+                                        </p-message>
+                                    </div>
                                 </div>
                                 <div
                                     class="separator separator--border-solid separator--space-sm separator--portlet-fit mt-5">

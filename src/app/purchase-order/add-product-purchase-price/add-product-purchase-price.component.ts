@@ -115,7 +115,11 @@ export class AddProductPurchasePriceComponent implements OnInit {
     this.productForm.controls['sStartDate'].disable();
     this.price_id = this.addDetails[rowIndex].iPPriceID;
     let purchase = this.addDetails[rowIndex].iPurchaseAmt;
-    let enddate = this.addDetails[rowIndex].sEndDate;
+    if (this.addDetails.length > 1) {
+      var enddate = this.addDetails[rowIndex - 1].sEndDate;
+    } else {
+      var enddate = this.addDetails[rowIndex].sEndDate;
+    }
     let new_date = this.datePipe.transform(enddate, "MM-dd-yyyy");
     this.minDate = new Date(new_date);
     let date = this.minDate.getDate();

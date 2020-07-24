@@ -3,7 +3,7 @@ export class ProductMaster {
 
     iPrdID: number;
     iFoodCulture: string;
-    sFoodCulture: string;
+    sFoodtags: string;
     iUnitID: number;
     sUnitName: string;
     sPrdName: string;
@@ -18,6 +18,10 @@ export class ProductMaster {
     iFCID: number;
     sFCImageURL: string;
     sFCName: string;
+    sTaxName: string;
+    iTaxID: number;
+    sHSN: string;
+    sPrdDesc: string;
     /**
      * Constructor
      *
@@ -28,7 +32,7 @@ export class ProductMaster {
 
         this.iPrdID = ProductMaster.iPrdID || '';
         this.iFoodCulture = ProductMaster.iFoodCulture || '';
-        this.sFoodCulture = ProductMaster.sFoodCulture || '';
+        this.sFoodtags = ProductMaster.sFoodtags || '';
         this.iUnitID = ProductMaster.iUnitID || '';
         this.sUnitName = ProductMaster.sUnitName || '';
         this.sPrdName = ProductMaster.sPrdName || '';
@@ -42,6 +46,12 @@ export class ProductMaster {
         this.iFCID = ProductMaster.iFCID || '';
         this.sFCImageURL = ProductMaster.sFCImageURL || '';
         this.sFCName = ProductMaster.sFCName || '';
+        this.sTaxName = ProductMaster.sTaxName || '';
+        this.iTaxID = ProductMaster.iTaxID || '';
+        this.sHSN = ProductMaster.sHSN || '';
+        this.sPrdDesc = ProductMaster.sPrdDesc || '';
+
+
 
 
 

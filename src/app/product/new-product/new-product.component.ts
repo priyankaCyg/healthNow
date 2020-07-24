@@ -1,13 +1,7 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { BreadcrumbService } from '../../breadcrumb.service';
-import { CountryService } from '../../demo/service/countryservice';
 import { SelectItem, MenuItem } from 'primeng/api';
 import { DialogService } from 'primeng';
-import { from } from 'rxjs';
-import { Message } from 'primeng/api';
-import { Car } from '../../demo/domain/car';
-import { CarService } from '../../demo/service/carservice';
-import { ProductRoutingModule } from '../product-routing.module';
 import { ProductImageComponent } from '../product-image/product-image.component';
 import { ProductVariantComponent } from '../product-variant/product-variant.component';
 import { ProductInfoComponent } from '../product-info/product-info.component';
@@ -65,8 +59,10 @@ export class NewProductComponent implements OnInit {
   index: number = 0;
   productSubmitFlag = 0;
   noRecordFound: string;
+  taxData;
+  selectedTax;
 
-  constructor(private carService: CarService, private breadcrumbService: BreadcrumbService,
+  constructor(private breadcrumbService: BreadcrumbService,
     private dialogService: DialogService,
     private route: ActivatedRoute,
     private httpService: ApiService,
@@ -96,7 +92,7 @@ export class NewProductComponent implements OnInit {
     if (this.prdId) {
       this.isEdit = true
       this.tabDisabled = false
-      var dataToSendEdit = {
+      const dataToSendEdit = {
         "iRequestID": 2255,
         "iPrdID": this.prdId
       }
@@ -104,7 +100,7 @@ export class NewProductComponent implements OnInit {
         this.productData = new ProductMaster(response[0]);
         this.ProductForm = this.createControl(this.productData);
 
-        Promise.all([this.getProducerDrpDwn(), this.getUnitDrpDwn(), this.getFoodCultureDrpDwn(), this.getParentDrpDwn()]).then(values => {
+        Promise.all([this.getProducerDrpDwn(), this.getUnitDrpDwn(), this.getFoodCultureDrpDwn(), this.getParentDrpDwn(), this.getTaxDrpDwn()]).then(values => {
           this.setDropDownVal()
         });
         this.getProductInfo();
@@ -117,7 +113,7 @@ export class NewProductComponent implements OnInit {
     }
     else {
       this.isEdit = false
-      Promise.all([this.getProducerDrpDwn(), this.getUnitDrpDwn(), this.getFoodCultureDrpDwn()]).then(values => {
+      Promise.all([this.getProducerDrpDwn(), this.getUnitDrpDwn(), this.getFoodCultureDrpDwn(), this.getTaxDrpDwn()]).then(values => {
       });
     }
 
@@ -151,7 +147,7 @@ export class NewProductComponent implements OnInit {
   defaultDropDwnValue() {
     this.selectedproducer = { iProducerID: "", sProducerName: "Select Producer" }
     this.selectedunit = { iUnitID: "", sUnitName: "Select Unit" }
-    //this.selectedfoodculture = { iKVID: "", sKVValue: "Select Foodculture" }
+    this.selectedTax = { iTaxID: "", sTaxName: "Select Tax" }
     this.selectedParent = { iPrdID: "", sParentPrdName: "Select Parent Category" }
   }
 
@@ -171,21 +167,25 @@ export class NewProductComponent implements OnInit {
     }
 
     //Foodculture Dropdown Select
-    for (var i = 0; i < this.productData.sFoodCulture.length; i++) {
-      let selectedFoodcultureObj = this.foodcultureData.find(x => x.iFCID == this.productData.sFoodCulture[i]['iFCID']);
+    for (let i = 0; i < this.productData.sFoodtags.length; i++) {
+      let selectedFoodcultureObj = this.foodcultureData.find(x => x.iFCID == this.productData.sFoodtags[i]['iFCID']);
       this.selectedfoodculture.push(selectedFoodcultureObj);
-      console.log(this.selectedfoodculture, "culture");
-      console.log(selectedFoodcultureObj, "obj")
     }
     // let selectedFoodcultureObj = this.foodcultureData.find(x => x.iFCID == this.productData.iFCID);
     // if (selectedFoodcultureObj !== undefined) {
     //   this.selectedfoodculture = selectedFoodcultureObj;
     // }
 
-    // Select Dropdown Select
+    // Parent Dropdown Select
     let selectedParentObj = this.parentData.find(x => x.iPrdID == this.productData.iParentID);
     if (selectedParentObj !== undefined) {
       this.selectedParent = selectedParentObj;
+    }
+
+    // Tax Dropdown Select
+    let selectedTaxObj = this.taxData.find(x => x.iTaxID == this.productData.iTaxID);
+    if (selectedTaxObj !== undefined) {
+      this.selectedTax = selectedTaxObj;
     }
   }
 
@@ -197,9 +197,9 @@ export class NewProductComponent implements OnInit {
     else if (this.selectedunit.iUnitID == '') {
       return true
     }
-    // else if (this.selectedfoodculture.iKVID == '') {
-    //   return true
-    // }
+    else if (this.selectedTax.iTaxID == '') {
+      return true
+    }
     else {
       return false
     }
@@ -208,7 +208,7 @@ export class NewProductComponent implements OnInit {
   //code for producer dropdown
   getProducerDrpDwn() {
     return new Promise((resolve, reject) => {
-      var dataToSend4 = {
+      const dataToSend4 = {
         "iRequestID": 2126,
       }
       this.httpService.getDropDownData(dataToSend4).then(response => {
@@ -223,7 +223,7 @@ export class NewProductComponent implements OnInit {
   //code for product unit dropdown
   getUnitDrpDwn() {
     return new Promise((resolve, reject) => {
-      var dataToSend4 = {
+      const dataToSend4 = {
         "iRequestID": 2146,
       }
       this.httpService.getDropDownData(dataToSend4).then(response => {
@@ -238,12 +238,12 @@ export class NewProductComponent implements OnInit {
   //code for product foodculture dropdown
   getFoodCultureDrpDwn() {
     return new Promise((resolve, reject) => {
-      var dataToSend4 = {
+      const dataToSend4 = {
         "iRequestID": 2421,
         //"sKVName": "FoodType"
       }
       this.httpService.getDropDownData(dataToSend4).then(response => {
-        this.foodcultureData = response
+        this.foodcultureData = response;
         //this.foodcultureData.splice(0, 0, { iFCID: "", sFCName: "Select Foodculture" })
         //this.selectedfoodculture = { iFCID: "", sFCName: "Select Foodculture" }
         resolve(this.foodcultureData)
@@ -251,10 +251,24 @@ export class NewProductComponent implements OnInit {
     })
   }
 
+  getTaxDrpDwn() {
+    return new Promise((resolve, reject) => {
+      const dataToSend4 = {
+        "iRequestID": 2451,
+      }
+      this.httpService.getDropDownData(dataToSend4).then(response => {
+        this.taxData = response
+        this.taxData.splice(0, 0, { iTaxID: "", sTaxName: "Select Tax" })
+        this.selectedTax = { iTaxID: "", sTaxName: "Select Tax" }
+        resolve(this.taxData)
+      });
+    })
+  }
+
   //code for parent dropdown
   getParentDrpDwn() {
     return new Promise((resolve, reject) => {
-      var dataToSend4 = {
+      const dataToSend4 = {
         "iRequestID": 2259,
         "sPrdName": this.ProductForm.controls['sPrdName'].value
       }
@@ -276,7 +290,7 @@ export class NewProductComponent implements OnInit {
     this.ProductForm = this._formBuilder.group({
       iPrdID: [productData.iPrdID],
       iFoodCulture: [productData.iFoodCulture],
-      sFoodCulture: [productData.sFoodCulture, [Validators.required]],
+      sFoodCulture: [productData.sFoodtags, [Validators.required]],
       iUnitID: [productData.iUnitID],
       sUnitName: [productData.sUnitName, [Validators.required]],
       sPrdName: [productData.sPrdName, [ValidationService.nameValidator_productname]],
@@ -285,7 +299,11 @@ export class NewProductComponent implements OnInit {
       iProducerID: [productData.iProducerID],
       sCreatedDate: [productData.sCreatedDate],
       sProducerName: [productData.sProducerName, [Validators.required]],
-      sParentPrdName: [productData.sParentPrdName]
+      sParentPrdName: [productData.sParentPrdName],
+      sTaxName: [productData.sTaxName, [Validators.required]],
+      iTaxID: [productData.iTaxID],
+      sHSN: [productData.sHSN, [ValidationService.sHSNValidator]],
+      sPrdDesc: [productData.sPrdDesc, [Validators.required]]
     });
     return this.ProductForm;
   }
@@ -294,17 +312,20 @@ export class NewProductComponent implements OnInit {
   addProductForm() {
     if (this.productSubmitFlag == 0) {
       this.productSubmitFlag = 1;
-      var formData = this.ProductForm.getRawValue();
-      var addProductData;
+      let formData = this.ProductForm.getRawValue();
+      let addProductData;
       if (formData.sParentPrdName.iPrdID) {
         addProductData = {
           "iRequestID": 2251,
           "sPrdName": formData.sPrdName,
           "sVariant": formData.sVariant,
           "iUnitID": formData.sUnitName.iUnitID,
-          "sFoodCulture": this.selectedfoodculture,
+          "sFoodtags": this.selectedfoodculture,
           "iProducerID": formData.sProducerName.iProducerID,
-          "iParentID": formData.sParentPrdName.iPrdID
+          "iParentID": formData.sParentPrdName.iPrdID,
+          "iTaxID": formData.sTaxName.iTaxID,
+          "sHSN": formData.sHSN,
+          "sPrdDesc": formData.sPrdDesc
         }
       }
       else {
@@ -313,10 +334,14 @@ export class NewProductComponent implements OnInit {
           "sPrdName": formData.sPrdName,
           "sVariant": formData.sVariant,
           "iUnitID": formData.sUnitName.iUnitID,
-          "sFoodCulture": this.selectedfoodculture,
+          "sFoodtags": this.selectedfoodculture,
           "iProducerID": formData.sProducerName.iProducerID,
+          "iTaxID": formData.sTaxName.iTaxID,
+          "sHSN": formData.sHSN,
+          "sPrdDesc": formData.sPrdDesc
         }
       }
+      console.log(addProductData, "add")
       this.httpService.callPostApi(addProductData).subscribe(
         data => {
           if (data.headers.get('StatusCode') == 200) {
@@ -347,18 +372,21 @@ export class NewProductComponent implements OnInit {
   //code for edit product data
   editProductForm() {
     console.log(this.selectedfoodculture);
-    var formData = this.ProductForm.getRawValue();
-    var editProductData;
+    let formData = this.ProductForm.getRawValue();
+    let editProductData;
     if (formData.sParentPrdName.iPrdID) {
       editProductData = {
         "iRequestID": 2252,
         "sPrdName": formData.sPrdName,
         "sVariant": formData.sVariant,
         "iUnitID": formData.sUnitName.iUnitID,
-        "sFoodCulture": this.selectedfoodculture,
+        "sFoodtags": this.selectedfoodculture,
         "iProducerID": formData.sProducerName.iProducerID,
         "iPrdID": this.prdId,
-        "iParentID": formData.sParentPrdName.iPrdID
+        "iParentID": formData.sParentPrdName.iPrdID,
+        "iTaxID": formData.sTaxName.iTaxID,
+        "sHSN": formData.sHSN,
+        "sPrdDesc": formData.sPrdDesc
       }
     }
     else {
@@ -367,9 +395,12 @@ export class NewProductComponent implements OnInit {
         "sPrdName": formData.sPrdName,
         "sVariant": formData.sVariant,
         "iUnitID": formData.sUnitName.iUnitID,
-        "sFoodCulture": this.selectedfoodculture,
+        "sFoodtags": this.selectedfoodculture,
         "iProducerID": formData.sProducerName.iProducerID,
         "iPrdID": this.prdId,
+        "iTaxID": formData.sTaxName.iTaxID,
+        "sHSN": formData.sHSN,
+        "sPrdDesc": formData.sPrdDesc
       }
     }
     console.log(editProductData)
@@ -534,7 +565,7 @@ export class NewProductComponent implements OnInit {
 
   uploadFile() {
     // alert(JSON.stringify(this.uploadedFiles))
-    var dataToSend = {
+    const dataToSend = {
       "iRequestID": 1111,
       "iProcessTranID": this.prdId,
       "iProcessID": 2,
@@ -549,7 +580,7 @@ export class NewProductComponent implements OnInit {
 
   getFileType() {
     return new Promise((resolve, reject) => {
-      var dataToSend = {
+      const dataToSend = {
         "iRequestID": 2261
       }
       this.httpService.getDropDownData(dataToSend).then(response => {
@@ -563,7 +594,7 @@ export class NewProductComponent implements OnInit {
 
   //code for download attachments
   downloadFile(attachment: any) {
-    var dataToSend = {
+    const dataToSend = {
       "iRequestID": "1112",
       "sActualFileName": attachment.sActualName,
       "sSystemFileName": attachment.sSystemName
@@ -577,7 +608,7 @@ export class NewProductComponent implements OnInit {
       header: 'Confirmation',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
-        var dataToSendDelete = {
+        const dataToSendDelete = {
           "iRequestID": 1113,
           "iFileID": attachment.iFileID
         }
@@ -594,7 +625,7 @@ export class NewProductComponent implements OnInit {
 
   //code for list of attachments
   showAttachment() {
-    var dataToSend = {
+    const dataToSend = {
       "iRequestID": 1112,
       "iProcessTranID": this.prdId,
       "iProcessID": 2

@@ -139,6 +139,16 @@ export class ValidationService {
     }
   }
 
+  static sHSNValidator(control) {
+    if (control.value == "") {
+      return { Msg: "This field is required" };
+    }
+    //Allows uppercase alphabets and numbers
+    else if (!control.value.match(/^[a-zA-Z0-9]+$/)) {
+      return { Msg: "Enter a valid HSN Number" };
+    }
+  }
+
   static podNoValidator(control) {
     if (control.value == "") {
       return { Msg: "This field is required" };

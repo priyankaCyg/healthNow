@@ -5,19 +5,22 @@
                 <div class="p-col-12">
                     <label for="departmentname">Department Name</label>
                     <input id="departmentname" type="text" formControlName="sDeptName" pInputText>
-                    <p-message severity="error"
-                        [text]="DepartmentSubmit.controls['sDeptName'].errors['Msg']"
+                    <p-message severity="error" [text]="DepartmentSubmit.controls['sDeptName'].errors['Msg']"
                         *ngIf="!DepartmentSubmit.controls['sDeptName'].valid && DepartmentSubmit.controls['sDeptName'].dirty">
                     </p-message>
                 </div>
                 <div class="p-col-12">
                     <label for="iStatusID">Status</label>
-                    <p-dropdown id="iStatusID" [options]="statusData" formControlName="iStatusID" optionLabel="sKVValue"
-                        [(ngModel)]="selectedstatus">
+                    <p-dropdown id="iStatusID" [options]="statusData" formControlName="status" optionLabel="sKVValue">
                     </p-dropdown>
                     <p-message severity="error" text="select Status is required"
-                        *ngIf="DepartmentSubmit.controls['iStatusID'].touched && (selectedstatus.iKVID == '' || DepartmentSubmit.controls['iStatusID'].hasError('required'))">
+                        *ngIf="!DepartmentSubmit.controls['status'].valid && DepartmentSubmit.controls['status'].dirty">
                     </p-message>
+                    <!-- <div *ngIf="status.hasError('removeSpaceFromUserName')">
+                        removeSpaceFromUserName </div> -->
+                    <!-- <p-message severity="error" text="select Status is required"
+                        *ngIf=" status.hasError('removeSpaceFromUserName')">
+                    </p-message> -->
                 </div>
             </div>
             <div class="separator separator--border-solid separator--space-sm separator--portlet-fit"></div>

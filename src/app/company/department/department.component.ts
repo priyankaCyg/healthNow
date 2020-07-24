@@ -15,6 +15,7 @@ import { ValidationService } from 'src/app/services/validation.service';
 export class DepartmentComponent implements OnInit {
 
   selectedstatus;
+  iStatusID;
   statusData;
   isEdit: boolean = false
   Dep_id: number;
@@ -58,17 +59,19 @@ export class DepartmentComponent implements OnInit {
 
   //code for default dropdown data
   defaultDropDwnValue() {
-    this.selectedstatus = { iKVID: "", sKVValue: "Select Status" }
+    this.iStatusID = { iKVID: "", sKVValue: "Select Status" }
   }
 
   //code for set dropdown data
   setDropDownVal() {
     // Status Dropdown Select
     let selectedStatusObj = this.statusData.find(x => x.iKVID == this.departmentData.iStatusID);
-
+    console.log(selectedStatusObj, "try")
     if (selectedStatusObj !== undefined) {
-      this.selectedstatus = selectedStatusObj;
+      this.iStatusID = selectedStatusObj;
     }
+    this.DepartmentSubmit.get('status').setValue(this.iStatusID);
+    console.log(this.iStatusID.iKVID, "catch")
   }
 
   //code for status dropdown data
@@ -81,7 +84,7 @@ export class DepartmentComponent implements OnInit {
       this.httpService.getDropDownData(dataToSend4).then(response => {
         this.statusData = response
         this.statusData.splice(0, 0, { iKVID: "", sKVValue: "Select Status" })
-        this.selectedstatus = { iKVID: "", sKVValue: "Select Status" }
+        this.iStatusID = { iKVID: "", sKVValue: "Select Status" }
         resolve(this.statusData)
       });
     })
@@ -92,12 +95,16 @@ export class DepartmentComponent implements OnInit {
     this.DepartmentSubmit = this.fb.group({
       iCID: [departmentData.iCID],
       iDeptID: [departmentData.iDeptID],
-      iStatusID: [departmentData.iStatusID],
-      sDeptName: [departmentData.sDeptName, ValidationService.nameValidator_space],
+      status: [departmentData.iStatusID, [UserNameValiditors.removeSpaceFromUserName]],
+      sDeptName: [departmentData.sDeptName, [Validators.required]],
       iCreatedBy: [departmentData.iCreatedBy],
       sCreatedDate: [departmentData.sCreatedDate]
     });
     return this.DepartmentSubmit;
+  }
+
+  get status() {
+    return this.DepartmentSubmit.get('status');
   }
 
   //code for add department data
@@ -158,7 +165,7 @@ export class DepartmentComponent implements OnInit {
       "iCID": 1,
       "sDeptName": formData.sDeptName,
       "iDeptID": this.Dep_id,
-      "iStatusID": formData.iStatusID.iKVID
+      "iStatusID": formData.status.iKVID
     }
     this.httpService.callPostApi(dep_edit_data).subscribe(
       data => {
@@ -176,12 +183,29 @@ export class DepartmentComponent implements OnInit {
   }
   // code for dropDown validity check
   dropDownValidityCheck() {
-    if (this.selectedstatus.iKVID == '') {
-      return true
+    let test = this.DepartmentSubmit.controls['status'].value;
+    if (test.iKVID == "") {
+      return { Msg: "select status is required" };
     }
     else {
-      return false
+      return null
     }
   }
 
+}
+
+import { AbstractControl, ValidationErrors } from "@angular/forms";
+
+export class UserNameValiditors {
+  static removeSpaceFromUserName(control: AbstractControl): ValidationErrors | null {
+    if (control.value == '') {
+      console.log('hii')
+      return {
+        removeSpaceFromUserName: true
+      };
+    }
+    else {
+      return null;
+    }
+  }
 }
