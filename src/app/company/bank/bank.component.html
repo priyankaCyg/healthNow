@@ -5,40 +5,35 @@
         <div class="p-col-12 p-md-6 p-lg-6">
           <label for="sBankName">Bank Name</label>
           <input id="sBankName" type="text" pInputText formControlName="sBankName" />
-          <p-message severity="error"
-            [text]="bankForm.controls['sBankName'].errors['Msg']"
+          <p-message severity="error" [text]="bankForm.controls['sBankName'].errors['Msg']"
             *ngIf="!bankForm.controls['sBankName'].valid && bankForm.controls['sBankName'].dirty">
           </p-message>
         </div>
         <div class="p-col-12 p-md-6 p-lg-6">
           <label for="sShortCode">Short Code/Account Type</label>
           <input id="sShortCode" type="text" pInputText formControlName="sShortCode" />
-          <p-message severity="error"
-            [text]="bankForm.controls['sShortCode'].errors['Msg']"
+          <p-message severity="error" [text]="bankForm.controls['sShortCode'].errors['Msg']"
             *ngIf="!bankForm.controls['sShortCode'].valid && bankForm.controls['sShortCode'].dirty">
           </p-message>
         </div>
         <div class="p-col-12 p-md-6 p-lg-6">
           <label for="sAccountNo">Account No</label>
           <input id="sAccountNo" type="text" pInputText formControlName="sAccountNo" />
-          <p-message severity="error"
-            [text]="bankForm.controls['sAccountNo'].errors['Msg']"
+          <p-message severity="error" [text]="bankForm.controls['sAccountNo'].errors['Msg']"
             *ngIf="!bankForm.controls['sAccountNo'].valid && bankForm.controls['sAccountNo'].dirty">
           </p-message>
         </div>
         <div class="p-col-12 p-md-6 p-lg-6">
           <label for="sIFSC">IFSC</label>
           <input id="sIFSC" type="text" pInputText formControlName="sIFSC" />
-          <p-message severity="error"
-            [text]="bankForm.controls['sIFSC'].errors['Msg']"
+          <p-message severity="error" [text]="bankForm.controls['sIFSC'].errors['Msg']"
             *ngIf="!bankForm.controls['sIFSC'].valid && bankForm.controls['sIFSC'].dirty">
           </p-message>
         </div>
         <div class="p-col-12 p-md-12 p-lg-12">
           <label for="sBankBranch">Bank Branch</label>
           <textarea rows="3" pInputTextarea autoResize="autoResize" formControlName="sBankBranch"></textarea>
-          <p-message severity="error"
-            [text]="bankForm.controls['sBankBranch'].errors['Msg']"
+          <p-message severity="error" [text]="bankForm.controls['sBankBranch'].errors['Msg']"
             *ngIf="!bankForm.controls['sBankBranch'].valid && bankForm.controls['sBankBranch'].dirty">
           </p-message>
         </div>
@@ -47,11 +42,12 @@
       <div class="p-grid form-group">
         <div class="p-col-12 p-md-6 p-lg-6">
           <label for="iStatusID">Status</label>
-          <p-dropdown id="iStatusID" [options]="statusData" optionLabel="sKVValue" formControlName="sStatusName"
-            [(ngModel)]="selectedstatus"></p-dropdown>
+          <p-dropdown id="iStatusID" [options]="statusData" optionLabel="sKVValue" formControlName="sStatusName">
+          </p-dropdown>
+
           <div>
-            <p-message severity="error" text="This field is required"
-              *ngIf="bankForm.controls['sStatusName'].touched  && (selectedstatus.iKVID =='' || bankForm.controls['sStatusName'].hasError('required'))">
+            <p-message severity="error" [text]="bankForm.controls['sStatusName'].errors['Msg']"
+              *ngIf="!bankForm.controls['sStatusName'].valid && bankForm.controls['sStatusName'].dirty">
             </p-message>
           </div>
         </div>
@@ -61,12 +57,10 @@
         <div class="p-col-12 p-md-22 p-lg-12 text-right">
           <button pButton type="button" label="Cancel" class="ui-button-light atbt mr-2"
             (click)="closeDialog()"></button>
-          <button *ngIf="!isEdit" pButton type="button" label="Save"
-            [disabled]="!(!bankForm.invalid && !dropDownValidityCheck())" class="ui-button atbt"
-            (click)="addBank()"></button>
-          <button *ngIf="isEdit" pButton type="button" label="Update"
-            [disabled]="!(!bankForm.invalid && !dropDownValidityCheck())" class="ui-button atbt"
-            (click)="editBank()"></button>
+          <button *ngIf="!isEdit" pButton type="button" label="Save" [disabled]="!(!bankForm.invalid )"
+            class="ui-button atbt" (click)="addBank()"></button>
+          <button *ngIf="isEdit" pButton type="button" label="Update" [disabled]="!(!bankForm.invalid )"
+            class="ui-button atbt" (click)="editBank()"></button>
         </div>
       </div>
     </div>

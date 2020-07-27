@@ -12,10 +12,10 @@
                 <div class="p-col-12">
                     <label for="sCountryName">Country</label>
                     <p-dropdown formControlName="sCountryName" optionLabel="sLocName" id="sCountryName"
-                        [options]="countryData" [(ngModel)]="selectedCountry"></p-dropdown>
+                        [options]="countryData"></p-dropdown>
                     <div>
-                        <p-message severity="error" text="Country is required"
-                            *ngIf="producerForm.controls['sCountryName'].touched && (selectedCountry.iLocationID=='' || producerForm.controls['sCountryName'].hasError('required'))">
+                        <p-message severity="error" [text]="producerForm.controls['sCountryName'].errors['Msg']"
+                            *ngIf="!producerForm.controls['sCountryName'].valid && producerForm.controls['sCountryName'].dirty">
                         </p-message>
                     </div>
                 </div>
@@ -29,10 +29,10 @@
                 <div class="p-col-12">
                     <label for="status">Status</label>
                     <!-- <p-dropdown id="status" [options]="status" [(ngModel)]="selectedstatus"></p-dropdown> -->
-                    <p-dropdown formControlName="iStatusID" optionLabel="sKVValue" id="iStatusID" [options]="statusData"
-                        [(ngModel)]="selectedstatus"></p-dropdown>
-                    <p-message severity="error" text="Status is required"
-                        *ngIf="producerForm.controls['iStatusID'].touched && (selectedstatus.iKVID=='' || producerForm.controls['iStatusID'].hasError('required'))">
+                    <p-dropdown formControlName="iStatusID" optionLabel="sKVValue" id="iStatusID"
+                        [options]="statusData"></p-dropdown>
+                    <p-message severity="error" [text]="producerForm.controls['iStatusID'].errors['Msg']"
+                        *ngIf="!producerForm.controls['iStatusID'].valid && producerForm.controls['iStatusID'].dirty">
                     </p-message>
                 </div>
             </div>
@@ -41,12 +41,10 @@
                 <div class="p-col-12 p-md-12 p-lg-12 text-right">
                     <button pButton type="button" label="Cancel" (click)="closeDialog()"
                         class="ui-button-light atbt mr-2"></button>
-                    <button *ngIf="!isEdit" pButton type="button" label="Save"
-                        [disabled]="!(!producerForm.invalid && !dropDownValidityCheck())" (click)="addProducer()"
-                        class="ui-button atbt"></button>
-                    <button *ngIf="isEdit" pButton type="button" label="Update"
-                        [disabled]="!(!producerForm.invalid && !dropDownValidityCheck())" (click)="updateProducer()"
-                        class="ui-button atbt"></button>
+                    <button *ngIf="!isEdit" pButton type="button" label="Save" [disabled]="!(!producerForm.invalid)"
+                        (click)="addProducer()" class="ui-button atbt"></button>
+                    <button *ngIf="isEdit" pButton type="button" label="Update" [disabled]="!(!producerForm.invalid)"
+                        (click)="updateProducer()" class="ui-button atbt"></button>
                 </div>
             </div>
         </div>

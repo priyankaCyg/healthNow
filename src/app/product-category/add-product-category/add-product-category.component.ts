@@ -60,7 +60,7 @@ export class AddProductCategoryComponent implements OnInit {
       });
     }
     this.ProductCategoryForm.valueChanges.subscribe((changedObj: any) => {
-      this.dropDownValidityCheck()
+      //this.dropDownValidityCheck()
     });
   }
 
@@ -68,9 +68,9 @@ export class AddProductCategoryComponent implements OnInit {
     this.ProductCategoryForm = this.fb.group({
       iPCID: [productcategory.iPCID],
       sPCName: [productcategory.sPCName, ValidationService.nameValidator_space],
-      iStatusID: [productcategory.iStatusID, Validators.required],
+      iStatusID: [productcategory.iStatusID, ValidationService.dropdownValidator],
       sStatusName: [productcategory.sStatusName],
-      iParentID: [productcategory.iParentID, Validators.required],
+      iParentID: [productcategory.iParentID, ValidationService.parentCateDropdownValidator],
       sParentCategoryName: [productcategory.sParentCategoryName]
     });
     return this.ProductCategoryForm;
@@ -164,12 +164,16 @@ export class AddProductCategoryComponent implements OnInit {
     if (selectedParentCat !== undefined) {
       this.selectedparentCategory = selectedParentCat;
     }
+    this.ProductCategoryForm.get('iParentID').setValue(this.selectedparentCategory);
+
 
     // status Dropdown Select
     let selectedStatus = this.statusData.find(data => data.iKVID == this.productCategoryData.iStatusID);
     if (selectedStatus !== undefined) {
       this.selectedstatus = selectedStatus;
     }
+    this.ProductCategoryForm.get('iStatusID').setValue(this.selectedstatus);
+
   }
 
   defaultDropDwnValue() {
@@ -177,16 +181,16 @@ export class AddProductCategoryComponent implements OnInit {
     this.selectedparentCategory = { iPCID: "", sPCName: "Select Parent category" }
   }
 
-  dropDownValidityCheck() {
-    if (this.selectedstatus.iKVID == '') {
-      return true;
-    }
-    else if (this.selectedparentCategory.iPCID == '') {
-      return true
-    }
-    else {
-      return false
-    }
-  }
+  // dropDownValidityCheck() {
+  //   if (this.selectedstatus.iKVID == '') {
+  //     return true;
+  //   }
+  //   else if (this.selectedparentCategory.iPCID == '') {
+  //     return true
+  //   }
+  //   else {
+  //     return false
+  //   }
+  // }
 
 }

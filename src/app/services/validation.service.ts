@@ -15,7 +15,19 @@ export class ValidationService {
       return { Msg: "This field is required" };
     }
   }
+  static parentCateDropdownValidator(control) {
+    //console.log(control.value.iKVID, "control")
+    if (control.value.iPCID == '' || control.value.iPCID == undefined) {
+      return { Msg: "This field is required" };
+    }
+  }
 
+  static producerlocDropdownValidator(control) {
+    //console.log(control.value.iKVID, "control")
+    if (control.value.iLocationID == '' || control.value.iLocationID == undefined) {
+      return { Msg: "This field is required" };
+    }
+  }
   static telephoneNoValidator(control) {
     if (control.value == "") {
       return { Msg: "This field is required" };

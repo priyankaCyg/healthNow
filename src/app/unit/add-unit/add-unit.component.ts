@@ -63,6 +63,8 @@ export class AddUnitComponent implements OnInit {
     if (selectedStatusObj !== undefined) {
       this.selectedstatus = selectedStatusObj;
     }
+    this.unitForm.get('iStatusID').setValue(this.selectedstatus);
+
   }
 
   //code for status dropdown data
@@ -134,7 +136,7 @@ export class AddUnitComponent implements OnInit {
   createControl(unitData?: UnitMaster): FormGroup {
     this.unitForm = this.fb.group({
       iCreatedBy: [unitData.iCreatedBy],
-      iStatusID: [unitData.iStatusID],
+      iStatusID: [unitData.iStatusID, [ValidationService.dropdownValidator]],
       iUnitID: [unitData.iUnitID],
       sCreatedDate: [unitData.sCreatedDate],
       sUnitName: [unitData.sUnitName, [ValidationService.nameValidator]],
@@ -145,13 +147,13 @@ export class AddUnitComponent implements OnInit {
   }
 
   //code for dropdown validity check
-  dropDownValidityCheck() {
-    if (this.selectedstatus.iKVID == '') {
-      return true
-    }
-    else {
-      return false
-    }
-  }
+  // dropDownValidityCheck() {
+  //   if (this.selectedstatus.iKVID == '') {
+  //     return true
+  //   }
+  //   else {
+  //     return false
+  //   }
+  // }
 
 }

@@ -62,11 +62,15 @@ export class AddProducerComponent implements OnInit {
     if (selectedCountryObj !== undefined) {
       this.selectedCountry = selectedCountryObj;
     }
+    this.producerForm.get('sCountryName').setValue(this.selectedCountry);
+
     // Status Dropdown Select
     let selectedStatusObj = this.statusData.find(x => x.iKVID == this.producerData.iStatusID);
     if (selectedStatusObj !== undefined) {
       this.selectedstatus = selectedStatusObj;
     }
+    this.producerForm.get('iStatusID').setValue(this.selectedstatus);
+
   }
 
   //code for default dropdown value
@@ -161,13 +165,13 @@ export class AddProducerComponent implements OnInit {
   //code for implements formbuilder 
   createControl(producerData?: ProducerMaster): FormGroup {
     this.producerForm = this.fb.group({
-      iStatusID: [producerData.iStatusID, [Validators.required]],
+      iStatusID: [producerData.iStatusID, [ValidationService.dropdownValidator]],
       iCountryID: [producerData.iCountryID],
       iCreatedBy: [producerData.iCreatedBy],
       sShortCode: [producerData.sShortCode, [ValidationService.nameValidator_shortcode]],
       iProducerID: [producerData.iProducerID],
       sStatusName: [producerData.sStatusName],
-      sCountryName: [producerData.sCountryName, [Validators.required]],
+      sCountryName: [producerData.sCountryName, [ValidationService.producerlocDropdownValidator]],
       sCreatedDate: [producerData.sCreatedDate],
       sProducerName: [producerData.sProducerName, [ValidationService.nameValidator_space]]
     });
@@ -175,16 +179,16 @@ export class AddProducerComponent implements OnInit {
   }
 
   //code for dropdown validity check 
-  dropDownValidityCheck() {
-    if (this.selectedCountry.iLocationID == '') {
-      return true;
-    }
-    else if (this.selectedstatus.iKVID == '') {
-      return true
-    }
-    else {
-      return false
-    }
-  }
+  // dropDownValidityCheck() {
+  //   if (this.selectedCountry.iLocationID == '') {
+  //     return true;
+  //   }
+  //   else if (this.selectedstatus.iKVID == '') {
+  //     return true
+  //   }
+  //   else {
+  //     return false
+  //   }
+  // }
 
 }

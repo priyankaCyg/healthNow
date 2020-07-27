@@ -106,6 +106,7 @@ export class NewProductComponent implements OnInit {
         this.getProductInfo();
         this.getProductQueries();
         this.getFileType();
+        this.showAttachment();
         this.getCategoryMappingDataSource();
         this.getCategoryMappingDataTarget();
 
@@ -350,6 +351,7 @@ export class NewProductComponent implements OnInit {
             this.getProductInfo();
             this.getProductQueries();
             this.getFileType();
+            this.showAttachment();
             this.getCategoryMappingDataSource();
             this.getCategoryMappingDataTarget();
             this.tabDisabled = false
@@ -566,9 +568,10 @@ export class NewProductComponent implements OnInit {
   uploadFile() {
     // alert(JSON.stringify(this.uploadedFiles))
     const dataToSend = {
-      "iRequestID": 1111,
+      "iRequestID": 1131,
       "iProcessTranID": this.prdId,
       "iProcessID": 2,
+      "sPrdCode": "NNO123",
       "iDocTypeID": this.selectedFileType.iDocTypeID
     }
     this._apiService.postFile(this.uploadedFiles, dataToSend).subscribe(data => {
@@ -595,9 +598,10 @@ export class NewProductComponent implements OnInit {
   //code for download attachments
   downloadFile(attachment: any) {
     const dataToSend = {
-      "iRequestID": "1112",
+      "iRequestID": 1134,
       "sActualFileName": attachment.sActualName,
-      "sSystemFileName": attachment.sSystemName
+      "sSystemFileName": attachment.sSystemName,
+      "sPrdCode": "NNO123"
     }
     this._apiService.downloadAPI(dataToSend)
   }
@@ -609,7 +613,7 @@ export class NewProductComponent implements OnInit {
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
         const dataToSendDelete = {
-          "iRequestID": 1113,
+          "iRequestID": 1133,
           "iFileID": attachment.iFileID
         }
         this.httpService.callPostApi(dataToSendDelete).subscribe(
@@ -626,7 +630,7 @@ export class NewProductComponent implements OnInit {
   //code for list of attachments
   showAttachment() {
     const dataToSend = {
-      "iRequestID": 1112,
+      "iRequestID": 1132,
       "iProcessTranID": this.prdId,
       "iProcessID": 2
     }

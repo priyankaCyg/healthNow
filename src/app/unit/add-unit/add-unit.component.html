@@ -16,30 +16,36 @@
                 </div>
                 <div class="p-col-12">
                     <label for="iStatusID">Status</label>
-                    <p-dropdown id="iStatusID" optionLabel="sKVValue" formControlName="iStatusID" [options]="statusData"
-                        [(ngModel)]="selectedstatus"></p-dropdown>
-                    <p-message severity="error" text="Status is required"
-                        *ngIf="unitForm.controls['iStatusID'].touched && (selectedstatus.iKVID=='' || unitForm.controls['iStatusID'].hasError('required'))">
+                    <p-dropdown id="iStatusID" optionLabel="sKVValue" formControlName="iStatusID"
+                        [options]="statusData"></p-dropdown>
+                    <p-message severity="error" [text]="unitForm.controls['iStatusID'].errors['Msg']"
+                        *ngIf="!unitForm.controls['iStatusID'].valid && unitForm.controls['iStatusID'].dirty">
                     </p-message>
                 </div>
             </div>
             <div class="separator separator--border-solid separator--space-sm separator--portlet-fit"></div>
             <div class="p-grid form-group ui-fluid">
-                <div class="p-md-6 p-lg-6"></div>
+                <div class="p-col-12 p-md-12 p-lg-12 text-right">
+                    <button pButton type="button" label="Cancel" (click)="closeDialog()"
+                        class="ui-button-light atbt mr-2"></button>
+                    <button *ngIf="!isEdit" pButton type="button" label="Save" [disabled]="!(!unitForm.invalid)"
+                        (click)="addUnit()" class="ui-button atbt"></button>
+                    <button *ngIf="isEdit" pButton type="button" label="Update" [disabled]="!(!unitForm.invalid)"
+                        (click)="updateUnit()" class="ui-button atbt"></button>
+                </div>
+                <!-- <div class="p-md-6 p-lg-6"></div>
                 <div class="p-col-12 p-md-3 p-lg-3">
                     <button pButton type="button" label="Cancel" (click)="closeDialog()" style="margin-bottom:10px"
                         class="ui-button-light"></button>
                 </div>
                 <div class="p-col-12 p-md-3 p-lg-3" *ngIf="!isEdit">
-                    <button pButton type="button" label="Save"
-                        [disabled]="!(!unitForm.invalid && !dropDownValidityCheck())" (click)="addUnit()"
+                    <button pButton type="button" label="Save" [disabled]="!(!unitForm.invalid)" (click)="addUnit()"
                         style="margin-bottom:10px" class="ui-button"></button>
                 </div>
                 <div class="p-col-12 p-md-3 p-lg-3" *ngIf="isEdit">
-                    <button pButton type="button" label="Update"
-                        [disabled]="!(!unitForm.invalid && !dropDownValidityCheck())" (click)="updateUnit()"
-                        style="margin-bottom:10px" class="ui-button"></button>
-                </div>
+                    <button pButton type="button" label="Update" [disabled]="!(!unitForm.invalid)"
+                        (click)="updateUnit()" style="margin-bottom:10px" class="ui-button"></button>
+                </div> -->
             </div>
         </div>
     </div>
