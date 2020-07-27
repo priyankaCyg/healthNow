@@ -40,10 +40,11 @@ import { MessageModule } from 'primeng/message';
 import { PickListModule } from 'primeng/picklist';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { APIService } from '../services/apieservice';
+import { ViewProductImageComponent } from './view-product-image/view-product-image.component';
 
 
 @NgModule({
-  declarations: [ProductComponent, NewProductComponent, ProductImageComponent, ProductVariantComponent, ProductInfoComponent, ProductDescriptionComponent, ProductQueriesComponent, NewProductComponent, PrcategoriesComponent],
+  declarations: [ProductComponent, NewProductComponent, ProductImageComponent, ProductVariantComponent, ProductInfoComponent, ProductDescriptionComponent, ProductQueriesComponent, NewProductComponent, PrcategoriesComponent, ViewProductImageComponent],
   imports: [
     CommonModule,
     ProductRoutingModule,
@@ -72,6 +73,6 @@ import { APIService } from '../services/apieservice';
 
   ],
   providers: [ConfirmationService, DialogService, APIService],
-  entryComponents: [ProductComponent, NewProductComponent, ProductImageComponent, ProductVariantComponent, ProductInfoComponent, ProductDescriptionComponent, ProductQueriesComponent, PrcategoriesComponent]
+  entryComponents: [ProductComponent, NewProductComponent, ProductImageComponent, ProductVariantComponent, ProductInfoComponent, ProductDescriptionComponent, ProductQueriesComponent, PrcategoriesComponent,ViewProductImageComponent]
 })
 export class ProductModule { }

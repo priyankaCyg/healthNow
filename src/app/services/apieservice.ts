@@ -13,6 +13,7 @@ import { config } from '../../config';
 
 const baseUrl: string = config.url
 const fileUrl: string = config.fileUrl
+const imageUrl: string = config.imageUrl
 
 @Injectable()
 export class APIService {
@@ -72,41 +73,45 @@ export class APIService {
 
 
 
-    postFile(filesToUpload: any[], dataToSend: any): Observable<any> {
-
+    postImage(filesToUpload: any[], dataToSend: any): Observable<any> {
         const formData: FormData = new FormData();
         for (let file of filesToUpload) {
             formData.append('uploadFile', file);
         }
+        console.log(dataToSend)
+        formData.append('iRequestID', dataToSend.iRequestID);
+        formData.append('iPrdID', dataToSend.iPrdID);
+        formData.append('sPrdCode', dataToSend.sPrdCode);
+        formData.append('iSequence', dataToSend.iSequence);
+        formData.append('iDocTypeID', dataToSend.iDocTypeID);
+        console.log(formData);
+        let headers = new HttpHeaders();
+        return this.http.post(imageUrl, formData, { headers: headers });
+    }
 
-
+    postFile(filesToUpload: any[], dataToSend: any): Observable<any> {
+        const formData: FormData = new FormData();
+        for (let file of filesToUpload) {
+            formData.append('uploadFile', file);
+        }
         formData.append('iRequestID', dataToSend.iRequestID.toString());
         formData.append('iProcessID', dataToSend.iProcessID.toString());
         formData.append('sPrdCode', dataToSend.sPrdCode.toString());
         formData.append('iProcessTranID', dataToSend.iProcessTranID.toString());
         formData.append('iDocTypeID', dataToSend.iDocTypeID.toString());
-
-
         console.log(formData);
-
         let headers = new HttpHeaders();
-
         return this.http.post(fileUrl, formData, { headers: headers });
     }
 
     //Download API Call
     public downloadAPI(dataToSend: any) {
-
         console.log("IN DOWNLOAD Image")
-
         const formData: FormData = new FormData();
-
-
         formData.append('iRequestID', '1134');
         formData.append('sActualFileName', dataToSend.sActualFileName);
         formData.append('sSystemFileName', dataToSend.sSystemFileName);
         formData.append('sPrdCode', dataToSend.sPrdCode);
-
 
         this.http.post(fileUrl, formData, { responseType: 'arraybuffer' })
             .subscribe(response => this.downLoadFile(response, "application/octet-stream"));

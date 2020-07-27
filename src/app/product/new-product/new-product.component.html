@@ -137,15 +137,19 @@
                                             <th></th>
                                         </tr>
                                     </ng-template>
-                                    <ng-template pTemplate="body" let-prImage>
+                                    <ng-template pTemplate="body" let-prImage let-ri="rowIndex">
                                         <tr>
                                             <td>{{prImage.sequence}}</td>
-                                            <td></td>
-                                            <td></td>
+                                            <td>{{prImage.imgName}}</td>
+                                            <td width="100" height="100"><span *ngIf="prImage.imagePath" (click)="openDialogForViewImage(prImage.imagePath)"><img src="{{ prImage.imagePath }}" width="100" height="100">{{prImage.simage}}</span></td>
+
                                             <td>
-                                                <button class="ui-button-success"
-                                                    (click)="openDialogForaddProductImage()" pButton
+                                                <button class="ui-button-success mr-3"
+                                                    (click)="openDialogForaddProductImage(ri)" pButton
                                                     icon="pi pi-fw pi-upload" title="Upload Product Image"></button>
+                                                    <button pButton type="button" class="ui-button-danger mr-3"
+                                                    (click)="deleteImage(prImage)" icon="pi pi-trash" ></button>
+                                                    <span *ngIf="ri==0"><strong>[Default Image]</strong></span>
                                             </td>
                                         </tr>
                                     </ng-template>

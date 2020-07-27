@@ -7,10 +7,10 @@ export var config = {
   authAccess: 'http://13.126.132.149/healthnowauth/access',
   authStoreUrl: 'http://13.126.132.149/healthnowstore/authenticate',
   fileUrl: 'http://13.126.132.149/healthnowstore/file',
+  imageUrl: 'http://13.126.132.149/healthnowstore/productimage',
   deleteMsg: "Are you sure you want to Delete this record ?",
   dateFormat: 'yyyy-MM-dd',
   edit_dateFormat: 'dd-MM-yyyy',
   noRecordFound: 'No Records Found'
 
 }
-
