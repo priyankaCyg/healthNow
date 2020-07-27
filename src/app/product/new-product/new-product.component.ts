@@ -62,7 +62,7 @@ export class NewProductComponent implements OnInit {
   noRecordFound: string;
   taxData;
   selectedTax;
-  imageattachment =[];
+  imageattachment = [];
 
   constructor(private breadcrumbService: BreadcrumbService,
     private dialogService: DialogService,
@@ -127,10 +127,10 @@ export class NewProductComponent implements OnInit {
       thumbnail: 'assets/demo/images/sopranos/sopranos1_small.jpg', title: 'Sopranos 1'
     });
     this.prImage = [
-      { sequence: '1', imgName: 'Gluten Free Wheat',imagePath:'assets/images/oil.jpg' },
-      { sequence: '2', imgName: 'Gluten Free Wheat',imagePath:'assets/images/oil.jpg' },
-      { sequence: '3', imgName: 'Gluten Free Wheat',imagePath:'assets/images/oil.jpg' },
-      { sequence: '4', imgName: 'Gluten Free Wheat',imagePath:'' },
+      { sequence: '1', imgName: 'Gluten Free Wheat', imagePath: 'assets/images/oil.jpg' },
+      { sequence: '2', imgName: 'Gluten Free Wheat', imagePath: 'assets/images/oil.jpg' },
+      { sequence: '3', imgName: 'Gluten Free Wheat', imagePath: 'assets/images/oil.jpg' },
+      { sequence: '4', imgName: 'Gluten Free Wheat', imagePath: '' },
       // { sequence: '1', sImageName: '', iCreatedBy: '',iPrdID: '',iPrdImgID: '',sCreatedDate: '',sMimeType: '',sSystemImageName: '' },
       // { sequence: '2', sImageName: '', iCreatedBy: '',iPrdID: '',iPrdImgID: '',sCreatedDate: '',sMimeType: '',sSystemImageName: '' }, 
       // { sequence: '3', sImageName: '',iCreatedBy: '',iPrdID: '',iPrdImgID: '',sCreatedDate: '',sMimeType: '',sSystemImageName: '' }, 
@@ -422,16 +422,16 @@ export class NewProductComponent implements OnInit {
   }
 
   openDialogForaddProductImage(index) {
-    index= index+1;
+    index = index + 1;
     const ref = this.dialogService.open(ProductImageComponent, {
-      data:index,
+      data: index,
       header: 'Upload Product Image',
       width: '80%'
     });
     ref.onClose.subscribe((success: boolean) => {
       if (success) {
         this.showImageAttach();
-       }
+      }
     });
   }
 
@@ -448,7 +448,7 @@ export class NewProductComponent implements OnInit {
     });
   }
 
-  
+
   openDialogForViewImage(imgPath) {
     const ref = this.dialogService.open(ViewProductImageComponent, {
       data: imgPath,
@@ -596,6 +596,7 @@ export class NewProductComponent implements OnInit {
       "iDocTypeID": this.selectedFileType.iDocTypeID
     }
     this._apiService.postFile(this.uploadedFiles, dataToSend).subscribe(data => {
+      this.toastService.addSingle("success", "File Uploaded Successfully", "")
       this.showAttachment();
     }, error => {
       console.log(error);
@@ -667,11 +668,11 @@ export class NewProductComponent implements OnInit {
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
         const dataToSendDelete = {
-          "iRequestID":1113,
-          "iPrdID":this.prdId,
-          "iPrdImgID":imageDetails.iPrdImgID,
-          "sPrdCode":"NNO3125",
-          "sSystemImageName":imageDetails.sSystemImageName
+          "iRequestID": 1113,
+          "iPrdID": this.prdId,
+          "iPrdImgID": imageDetails.iPrdImgID,
+          "sPrdCode": "NNO3125",
+          "sSystemImageName": imageDetails.sSystemImageName
         }
         this.httpService.callPostApi(dataToSendDelete).subscribe(
           (data) => {
