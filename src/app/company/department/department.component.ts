@@ -27,7 +27,7 @@ export class DepartmentComponent implements OnInit {
     private ref: DynamicDialogRef, private toastService: ToastService) { }
 
   ngOnInit(): void {
-    this.defaultDropDwnValue()
+    //this.defaultDropDwnValue()
     this.departmentData = new DepartmentMaster();
     this.DepartmentSubmit = this.createControl(this.departmentData);
     this.Dep_id = this.config.data.iDeptID;
@@ -120,12 +120,12 @@ export class DepartmentComponent implements OnInit {
           this.isSaveDepartment = 0;
           if (data.headers.get('StatusCode') == 200) {
             this.ref.close(true);
+            //this.DepartmentSubmit.reset();
           }
           this.toastService.displayApiMessage(data.headers.get('StatusMessage'), data.headers.get('StatusCode'));
         },
         error => console.log(error)
       );
-     // this.DepartmentSubmit.reset();
     }
   }
   // addDepartment() {
