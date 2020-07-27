@@ -125,7 +125,7 @@ export class DepartmentComponent implements OnInit {
         },
         error => console.log(error)
       );
-      this.DepartmentSubmit.reset();
+     // this.DepartmentSubmit.reset();
     }
   }
   // addDepartment() {

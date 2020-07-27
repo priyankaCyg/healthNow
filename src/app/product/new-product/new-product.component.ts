@@ -20,6 +20,7 @@ import { ConfirmationService } from 'primeng/api';
 import { config } from 'src/config';
 import { ValidationService } from 'src/app/services/validation.service';
 import { foodcultureData } from 'src/app/model/foodculture';
+import { ViewProductImageComponent } from '../view-product-image/view-product-image.component';
 
 @Component({
   selector: 'app-new-product',
@@ -61,6 +62,7 @@ export class NewProductComponent implements OnInit {
   noRecordFound: string;
   taxData;
   selectedTax;
+  imageattachment =[];
 
   constructor(private breadcrumbService: BreadcrumbService,
     private dialogService: DialogService,
@@ -108,7 +110,8 @@ export class NewProductComponent implements OnInit {
         this.getFileType();
         this.getCategoryMappingDataSource();
         this.getCategoryMappingDataTarget();
-
+        this.showAttachment();
+        this.showImageAttach();
       });
     }
     else {
@@ -123,16 +126,20 @@ export class NewProductComponent implements OnInit {
       thumbnail: 'assets/demo/images/sopranos/sopranos1_small.jpg', title: 'Sopranos 1'
     });
     this.prImage = [
-      { sequence: '1', imgName: 'Gluten Free Wheat' },
-      { sequence: '2', imgName: 'Gluten Free Wheat' },
-      { sequence: '3', imgName: 'Gluten Free Wheat' },
-      { sequence: '4', imgName: 'Gluten Free Wheat' },
-      { sequence: '5', imgName: 'Gluten Free Wheat' },
-      { sequence: '6', imgName: 'Gluten Free Wheat' },
-      { sequence: '7', imgName: 'Gluten Free Wheat' },
-      { sequence: '8', imgName: 'Gluten Free Wheat' },
-      { sequence: '9', imgName: 'Gluten Free Wheat' },
-      { sequence: '10', imgName: 'Gluten Free Wheat' }
+      { sequence: '1', imgName: 'Gluten Free Wheat',imagePath:'assets/images/oil.jpg' },
+      { sequence: '2', imgName: 'Gluten Free Wheat',imagePath:'assets/images/oil.jpg' },
+      { sequence: '3', imgName: 'Gluten Free Wheat',imagePath:'assets/images/oil.jpg' },
+      { sequence: '4', imgName: 'Gluten Free Wheat',imagePath:'' },
+      // { sequence: '1', sImageName: '', iCreatedBy: '',iPrdID: '',iPrdImgID: '',sCreatedDate: '',sMimeType: '',sSystemImageName: '' },
+      // { sequence: '2', sImageName: '', iCreatedBy: '',iPrdID: '',iPrdImgID: '',sCreatedDate: '',sMimeType: '',sSystemImageName: '' }, 
+      // { sequence: '3', sImageName: '',iCreatedBy: '',iPrdID: '',iPrdImgID: '',sCreatedDate: '',sMimeType: '',sSystemImageName: '' }, 
+      // { sequence: '4', sImageName: '',iCreatedBy: '',iPrdID: '',iPrdImgID: '',sCreatedDate: '',sMimeType: '',sSystemImageName: '' }, 
+      // { sequence: '5', sImageName: '',iCreatedBy: '',iPrdID: '',iPrdImgID: '',sCreatedDate: '',sMimeType: '',sSystemImageName: '' }, 
+      // { sequence: '6', sImageName: '',iCreatedBy: '',iPrdID: '',iPrdImgID: '',sCreatedDate: '',sMimeType: '',sSystemImageName: '' }, 
+      // { sequence: '7', sImageName: '',iCreatedBy: '',iPrdID: '',iPrdImgID: '',sCreatedDate: '',sMimeType: '',sSystemImageName: '' },
+      // { sequence: '8', sImageName: '',iCreatedBy: '',iPrdID: '',iPrdImgID: '',sCreatedDate: '',sMimeType: '',sSystemImageName: '' },
+      // { sequence: '9', sImageName: '',iCreatedBy: '',iPrdID: '',iPrdImgID: '',sCreatedDate: '',sMimeType: '',sSystemImageName: '' },
+      // { sequence: '10', sImageName: '',iCreatedBy: '',iPrdID: '',iPrdImgID: '',sCreatedDate: '',sMimeType: '',sSystemImageName: '' }
     ];
     // this.productVariant = [
     //   { Unit: 'Gram', variant: '500' },
@@ -412,15 +419,17 @@ export class NewProductComponent implements OnInit {
     );
   }
 
-  openDialogForaddProductImage() {
+  openDialogForaddProductImage(index) {
+    index= index+1;
     const ref = this.dialogService.open(ProductImageComponent, {
-      data: {
-      },
+      data:index,
       header: 'Upload Product Image',
       width: '80%'
     });
     ref.onClose.subscribe((success: boolean) => {
-      if (success) { }
+      if (success) {
+        this.showImageAttach();
+       }
     });
   }
 
@@ -430,6 +439,19 @@ export class NewProductComponent implements OnInit {
       },
       header: 'Add New Product Variant',
       width: '28%'
+    });
+
+    ref.onClose.subscribe((success: boolean) => {
+      if (success) { }
+    });
+  }
+
+  
+  openDialogForViewImage(imgPath) {
+    const ref = this.dialogService.open(ViewProductImageComponent, {
+      data: imgPath,
+      header: 'View Product',
+      width: '50%'
     });
 
     ref.onClose.subscribe((success: boolean) => {
@@ -556,7 +578,6 @@ export class NewProductComponent implements OnInit {
   }
   // add category mapping ends
 
-
   onUpload(event) {
     for (const file of event.files) {
       this.uploadedFiles.push(file);
@@ -566,9 +587,10 @@ export class NewProductComponent implements OnInit {
   uploadFile() {
     // alert(JSON.stringify(this.uploadedFiles))
     const dataToSend = {
-      "iRequestID": 1111,
+      "iRequestID": 1131,
       "iProcessTranID": this.prdId,
       "iProcessID": 2,
+      "sPrdCode": "NNO123",
       "iDocTypeID": this.selectedFileType.iDocTypeID
     }
     this._apiService.postFile(this.uploadedFiles, dataToSend).subscribe(data => {
@@ -595,9 +617,10 @@ export class NewProductComponent implements OnInit {
   //code for download attachments
   downloadFile(attachment: any) {
     const dataToSend = {
-      "iRequestID": "1112",
+      "iRequestID": 1134,
       "sActualFileName": attachment.sActualName,
-      "sSystemFileName": attachment.sSystemName
+      "sSystemFileName": attachment.sSystemName,
+      "sPrdCode": "NNO123"
     }
     this._apiService.downloadAPI(dataToSend)
   }
@@ -609,7 +632,7 @@ export class NewProductComponent implements OnInit {
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
         const dataToSendDelete = {
-          "iRequestID": 1113,
+          "iRequestID": 1133,
           "iFileID": attachment.iFileID
         }
         this.httpService.callPostApi(dataToSendDelete).subscribe(
@@ -626,12 +649,47 @@ export class NewProductComponent implements OnInit {
   //code for list of attachments
   showAttachment() {
     const dataToSend = {
-      "iRequestID": 1112,
+      "iRequestID": 1132,
       "iProcessTranID": this.prdId,
       "iProcessID": 2
     }
     this._apiService.getDetails(dataToSend).then(response => {
       this.attachment = response
+    });
+  }
+
+  deleteImage(imageDetails) {
+    this.confirmationService.confirm({
+      message: config.deleteMsg,
+      header: 'Confirmation',
+      icon: 'pi pi-exclamation-triangle',
+      accept: () => {
+        const dataToSendDelete = {
+          "iRequestID":1113,
+          "iPrdID":this.prdId,
+          "iPrdImgID":imageDetails.iPrdImgID,
+          "sPrdCode":"NNO3125",
+          "sSystemImageName":imageDetails.sSystemImageName
+        }
+        this.httpService.callPostApi(dataToSendDelete).subscribe(
+          (data) => {
+            this.showImageAttach();
+            this.toastService.addSingle("success", data.headers.get('StatusMessage'), "");
+          },
+          (error) => console.log(error)
+        );
+      },
+    });
+  }
+
+
+  showImageAttach() {
+    const dataToSend = {
+      "iRequestID": 1112,
+      "iPrdID": this.prdId
+    }
+    this._apiService.getDetails(dataToSend).then(response => {
+      this.imageattachment = response
     });
   }
 
