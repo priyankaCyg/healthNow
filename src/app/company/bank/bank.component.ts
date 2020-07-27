@@ -57,7 +57,7 @@ export class BankComponent implements OnInit {
       });
     }
     this.bankForm.valueChanges.subscribe((changedObj: any) => {
-      this.dropDownValidityCheck()
+      // this.dropDownValidityCheck()
     });
   }
 
@@ -68,6 +68,7 @@ export class BankComponent implements OnInit {
     if (selectedStatus !== undefined) {
       this.selectedstatus = selectedStatus;
     }
+    this.bankForm.get('sStatusName').setValue(this.selectedstatus);
   }
 
   // Set Defalut  Dropdown value
@@ -76,14 +77,14 @@ export class BankComponent implements OnInit {
   }
 
   // Validity Check for Dropdown
-  dropDownValidityCheck() {
-    if (this.selectedstatus.iKVID == '') {
-      return true;
-    }
-    else {
-      return false
-    }
-  }
+  // dropDownValidityCheck() {
+  //   if (this.selectedstatus.iKVID == '') {
+  //     return true;
+  //   }
+  //   else {
+  //     return false
+  //   }
+  // }
 
   // Select Status Dropdown Function
   getStatusData() {
@@ -111,7 +112,7 @@ export class BankComponent implements OnInit {
       sAccountNo: [bankdata.sAccountNo, ValidationService.accountValidator],
       sIFSC: [bankdata.sIFSC, ValidationService.alphaNumericValidator],
       sBankBranch: [bankdata.sBankBranch, ValidationService.addressValidator],
-      sStatusName: [bankdata.iStatusID, Validators.required]
+      sStatusName: [bankdata.iStatusID, ValidationService.dropdownValidator]
     });
     return this.bankForm;
   }
@@ -168,7 +169,7 @@ export class BankComponent implements OnInit {
   // Close Bank Popup
   closeDialog() {
     this.ref.close();
-    this.bankForm.reset();
+    //this.bankForm.reset();
   }
 
 }

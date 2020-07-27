@@ -108,6 +108,7 @@ export class NewProductComponent implements OnInit {
         this.getProductInfo();
         this.getProductQueries();
         this.getFileType();
+        this.showAttachment();
         this.getCategoryMappingDataSource();
         this.getCategoryMappingDataTarget();
         this.showAttachment();
@@ -357,6 +358,7 @@ export class NewProductComponent implements OnInit {
             this.getProductInfo();
             this.getProductQueries();
             this.getFileType();
+            this.showAttachment();
             this.getCategoryMappingDataSource();
             this.getCategoryMappingDataTarget();
             this.tabDisabled = false
