@@ -24,7 +24,7 @@
         "@fullcalendar/daygrid": "4.0.1",
         "@fullcalendar/interaction": "4.0.2",
         "@fullcalendar/timegrid": "4.0.1",
-        "chart.js": "2.7.3",
+        "chart.js": "2.9.4",
         "fast-json-stable-stringify": "^2.1.0",
         "intl": "1.2.5",
         "primeflex": "1.0.0",
